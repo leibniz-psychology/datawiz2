@@ -1,0 +1,7 @@
+controllers:
+    resource: ../../source/View/Controller/
+    type: annotation
+
+kernel:
+    resource: ../../source/Kernel.php
+    type: annotation

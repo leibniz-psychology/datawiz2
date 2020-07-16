@@ -6,7 +6,6 @@ namespace App\View\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
 
 class GreetingController extends AbstractController
 {
@@ -15,7 +14,7 @@ class GreetingController extends AbstractController
      */
     public function hello()
     {
-        return new Response("Hello structure");
+        return $this->render('greeting.html.twig');
     }
 
 }

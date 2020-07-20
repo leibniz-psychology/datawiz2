@@ -164,6 +164,9 @@
             "config/packages/test/monolog.yaml"
         ]
     },
+    "symfony/orm-pack": {
+        "version": "v2.0.0"
+    },
     "symfony/polyfill-intl-idn": {
         "version": "v1.17.1"
     },

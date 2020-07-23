@@ -8,6 +8,6 @@ vendor/: composer.lock
 npm-shrinkwrap.json: package.json
 	npm shrinkwrap 
 
-node_modules/: package-lock.json
+node_modules/: npm-shrinkwrap.json
 	npm install
 

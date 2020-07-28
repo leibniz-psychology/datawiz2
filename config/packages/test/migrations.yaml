@@ -1,0 +1,4 @@
+doctrine_migrations:
+    migrations_path:
+        App\Domain\State\Test: 'source/Domain/State/Test'
+    all_or_nothing: true

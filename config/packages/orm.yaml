@@ -1,10 +1,16 @@
 doctrine:
     dbal:
-        url: '%env(resolve:DATABASE_URL)%'
-
-        # IMPORTANT: You MUST configure your server version,
-        # either here or in the DATABASE_URL env var (see .env file)
-        server_version: '8.0'
+        default_connection: dev
+        connections:
+            sqlite:
+                # sqlite, but overwritten by DATA_URL
+                url: '%env(resolve:DATABASE_URL)%'
+            mysql:
+                # mysql, but overwritten by DATA_URL
+                url: '%env(resolve:DATABASE_URL)%'
+                driver: 'pdo_mysql'
+                server_version: '8.0'
+                charset: utf8mb4
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
@@ -14,5 +20,5 @@ doctrine:
                 is_bundle: false
                 type: annotation
                 dir: '%kernel.project_dir%/source/Domain/Model'
-                prefix: 'App\Entity'
+                prefix: 'App\Domain\Model'
                 alias: App

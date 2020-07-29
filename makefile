@@ -41,13 +41,13 @@ node_modules/: package.json
 	npm install
 
 $(DEV_STATE_DIR):
-	mkdir $@
+	mkdir -p $@
 
 $(TEST_STATE_DIR):
-	mkdir $@
+	mkdir -p $@
 
 $(PROD_STATE_DIR):
-	mkdir $@
+	mkdir -p $@
 
 $(DEV_DB_FILE):
 	./bin/console doctrine:database:create --env=$(ENV)

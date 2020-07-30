@@ -14,7 +14,7 @@ class GreetingController extends AbstractController
      */
     public function hello()
     {
-        return $this->render('greeting.html.twig');
+        return $this->render('Pages/greeting.html.twig');
     }
 
 }

@@ -7,14 +7,13 @@ namespace App\View\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class GreetingController extends AbstractController
+class GreetingController extends NamingAwareController
 {
     /**
      * @Route("/")
      */
     public function hello()
     {
-        return $this->render('Pages/greeting.html.twig');
+        return $this->renderPageByControllerName();
     }
-
 }

@@ -7,19 +7,54 @@ namespace App\View\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Additional layer for classic mvc applications
+ * Assuming a one template to one controller relationship
+ *
+ * Class NamingAwareController
+ * @package App\View\Controller
+ */
 abstract class NamingAwareController extends AbstractController
 {
-    private function getPageNameFromControllerName(): string
+    /**
+     * Resolves the template path for calling controller
+     *
+     * For GreetingController with "Pages", ".html.twig" and "Controller" as parameter
+     * Result: "Pages/greeting.html.twig"
+     *
+     * @param string $subdir
+     * @param string $mimeType
+     * @param string $suffixCutted
+     * @return string
+     */
+    private function getTemplatePathFromControllerName(string $subdir, string $mimeType, string $suffixCutted): string
     {
+        // converts complete namepace App\View\Controller\NameController into array
         $path = explode('\\', get_called_class());
+        // get NameController part
         $controllerName = array_pop($path);
-        $pageName = str_replace("Controller", "", $controllerName);
-        $templatePath = "Pages/" . strtolower($pageName) . ".html.twig";
-        return $templatePath;
+        // cut suffix from NameController (commonly 'Controller')
+        $pageName = str_replace($suffixCutted, "", $controllerName);
+        // create template path $subdir/name$mimeType
+        // example Pages/greeting.html.twig
+        return $subdir ."/" . strtolower($pageName) . $mimeType; // Path to template
+
     }
 
-    protected function renderPageByControllerName(array $parameters = [], Response $response = null)
+    /**
+     * Simple convenience method which hides the getTemplatePathFromControllerName call from child classes
+     *
+     * @param array $parameters
+     * @param Response|null $response
+     * @return Response
+     */
+    protected function renderPageByControllerName(array $parameters = [], Response $response = null): Response
     {
-        return $this->render($this->getPageNameFromControllerName(), $parameters, $response);
+        return $this->render(
+            $this->getTemplatePathFromControllerName("Pages",
+                                            ".html.twig",
+                                        "Controller"),
+            $parameters,
+            $response);
     }
 }

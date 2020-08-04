@@ -96,6 +96,24 @@
     "php": {
         "version": "7.4"
     },
+    "phpdocumentor/reflection-common": {
+        "version": "2.2.0"
+    },
+    "phpdocumentor/reflection-docblock": {
+        "version": "5.2.0"
+    },
+    "phpdocumentor/type-resolver": {
+        "version": "1.3.0"
+    },
+    "phpspec/php-diff": {
+        "version": "v1.1.0"
+    },
+    "phpspec/phpspec": {
+        "version": "6.2.1"
+    },
+    "phpspec/prophecy": {
+        "version": "1.11.1"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -104,6 +122,18 @@
     },
     "psr/log": {
         "version": "1.1.3"
+    },
+    "sebastian/comparator": {
+        "version": "4.0.3"
+    },
+    "sebastian/diff": {
+        "version": "4.0.2"
+    },
+    "sebastian/exporter": {
+        "version": "4.0.2"
+    },
+    "sebastian/recursion-context": {
+        "version": "4.0.2"
     },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
@@ -119,6 +149,9 @@
     },
     "symfony/asset": {
         "version": "v4.4.10"
+    },
+    "symfony/browser-kit": {
+        "version": "v4.4.11"
     },
     "symfony/cache": {
         "version": "v4.4.10"
@@ -142,6 +175,9 @@
             "config/bootstrap.php"
         ]
     },
+    "symfony/css-selector": {
+        "version": "v4.4.11"
+    },
     "symfony/debug": {
         "version": "v4.4.10"
     },
@@ -164,6 +200,9 @@
         "version": "v4.4.10"
     },
     "symfony/doctrine-bridge": {
+        "version": "v4.4.11"
+    },
+    "symfony/dom-crawler": {
         "version": "v4.4.11"
     },
     "symfony/dotenv": {
@@ -246,6 +285,21 @@
     "symfony/orm-pack": {
         "version": "v2.0.0"
     },
+    "symfony/phpunit-bridge": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "6d0e35f749d5f4bfe1f011762875275cd3f9874f"
+        },
+        "files": [
+            ".env.test",
+            "bin/phpunit",
+            "phpunit.xml.dist",
+            "tests/bootstrap.php"
+        ]
+    },
     "symfony/polyfill-intl-idn": {
         "version": "v1.17.1"
     },
@@ -263,6 +317,9 @@
     },
     "symfony/polyfill-php80": {
         "version": "v1.17.1"
+    },
+    "symfony/process": {
+        "version": "v4.4.11"
     },
     "symfony/profiler-pack": {
         "version": "v1.0.4"
@@ -286,6 +343,9 @@
     },
     "symfony/stopwatch": {
         "version": "v4.4.10"
+    },
+    "symfony/test-pack": {
+        "version": "v1.0.6"
     },
     "symfony/translation-contracts": {
         "version": "v2.1.3"
@@ -360,5 +420,8 @@
     },
     "webimpress/safe-writer": {
         "version": "2.0.1"
+    },
+    "webmozart/assert": {
+        "version": "1.9.1"
     }
 }

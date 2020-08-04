@@ -31,6 +31,9 @@ migration: ## Generates and applies a doctrine migration
 	./bin/console doctrine:migrations:diff -n --allow-empty-diff --env=$(ENV)
 	./bin/console doctrine:migrations:migrate -n --env=$(ENV)
 
+test: ## Run phpunit
+	./bin/phpunit
+
 # Helper targets
 # Not relevant for Operation
 

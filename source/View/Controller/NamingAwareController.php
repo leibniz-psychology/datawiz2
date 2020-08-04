@@ -27,7 +27,7 @@ abstract class NamingAwareController extends AbstractController
      * @param string $suffixCutted
      * @return string
      */
-    private function getTemplatePathFromControllerName(string $subdir, string $mimeType, string $suffixCutted): string
+    public function getTemplatePathFromControllerName(string $subdir, string $mimeType, string $suffixCutted): string
     {
         // converts complete namepace App\View\Controller\NameController into array
         $path = explode('\\', get_called_class());
@@ -42,7 +42,7 @@ abstract class NamingAwareController extends AbstractController
     }
 
     /**
-     * Simple convenience method which hides the getTemplatePathFromControllerName call from child classes
+     * Simple convenience method which trims the parameter list of AbstractController->render
      *
      * @param array $parameters
      * @param Response|null $response

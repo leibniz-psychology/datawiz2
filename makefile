@@ -32,7 +32,7 @@ migration: ## Generates and applies a doctrine migration
 	./bin/console doctrine:migrations:migrate -n --env=$(ENV)
 
 test: ## Run phpunit
-	./bin/phpunit
+	./bin/phpunit -c ./config/packages/test/phpunit.xml.dist
 
 # Helper targets
 # Not relevant for Operation

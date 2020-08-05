@@ -4,6 +4,7 @@ PROD_STATE_DIR = ./source/Domain/State/Production
 TEST_STATE_DIR = ./source/Domain/State/Test
 DEV_DB_FILE = ./var/data.db
 
+# Thanks to Romain Gautier for his slides from symfony live 2018 providing this ->
 .DEFAULT_GOAL := help
 help: ## Show this help text
 	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'

@@ -17,8 +17,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class GreetingController extends NamingAwareController
 {
+
+
     /**
-     * @Route("/", methods="GET")
+     * TODO: Remove this dummy controller as soon as you have homepage
+     * @Route("/", name="dw_hello", methods="GET")
      */
     public function hello()
     {

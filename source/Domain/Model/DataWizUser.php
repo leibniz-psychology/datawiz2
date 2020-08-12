@@ -3,34 +3,61 @@
 
 namespace App\Domain\Model;
 
-
+use App\Domain\Access\DataWizUserRepository;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * @ORM\Entity(repositoryClass=DataWizUserRepository::class)
+ */
 class DataWizUser implements UserInterface
 {
+    /**
+     * @ORM\Id()
+     * @ORM\Column(type="string")
+     */
+    private $uuid;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles;
+
+    public function __construct($uuid)
+    {
+        $this->uuid = $uuid;
+        $this->roles = [];
+    }
 
     public function getRoles()
     {
-        // TODO: Implement getRoles() method.
+        // Ensure at least one valid role on each user
+        if (! in_array('ROLE_USER', $this->roles, true))
+        {
+            $this->roles[] = 'ROLE_USER';
+        }
+
+        // better be sure than sorry
+        return array_unique($this->roles);
     }
 
     public function getPassword()
     {
-        // TODO: Implement getPassword() method.
+        // should never be called
     }
 
     public function getSalt()
     {
-        // TODO: Implement getSalt() method.
+        // should never be called
     }
 
     public function getUsername()
     {
-        // TODO: Implement getUsername() method.
+        return $this->uuid;
     }
 
     public function eraseCredentials()
     {
-        // TODO: Implement eraseCredentials() method.
+        // should never be called
     }
 }

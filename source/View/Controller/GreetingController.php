@@ -21,7 +21,7 @@ class GreetingController extends NamingAwareController
 
     /**
      * TODO: Remove this dummy controller as soon as you have homepage
-     * @Route("/", name="dw_hello", methods="GET")
+     * @Route("/index", name="dw_hello", methods="GET")
      */
     public function hello()
     {

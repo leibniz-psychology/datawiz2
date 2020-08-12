@@ -1,3 +1,6 @@
-#index:
-#    path: /
-#    Controller: App\Controller\DefaultController::index
+index:
+    path: /
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+    defaults:
+      route: dw_hello
+      permanent: true

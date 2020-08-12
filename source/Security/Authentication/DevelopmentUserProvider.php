@@ -4,6 +4,7 @@
 namespace App\Security\Authentication;
 
 
+use App\Domain\Model\DataWizUser;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -20,7 +21,7 @@ class DevelopmentUserProvider implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
-        // TODO: Implement loadUserByUsername() method.
+
     }
 
     /**
@@ -38,7 +39,7 @@ class DevelopmentUserProvider implements UserProviderInterface
      */
     public function refreshUser(UserInterface $user)
     {
-        // TODO: Implement refreshUser() method.
+
     }
 
     /**
@@ -46,6 +47,6 @@ class DevelopmentUserProvider implements UserProviderInterface
      */
     public function supportsClass($class)
     {
-        // TODO: Implement supportsClass() method.
+        return DataWizUser::class === $class;
     }
 }

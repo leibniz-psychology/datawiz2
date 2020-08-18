@@ -4,7 +4,6 @@
 namespace App\View\Controller;
 
 
-use App\Domain\Model\DataWizUser;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -23,17 +22,6 @@ class DevelopmentLoginController extends NamingAwareController
      */
     public function login(AuthenticationUtils $authenticationUtils)
     {
-        $user = $this->entitymanager
-            ->getRepository(DataWizUser::class)
-            ->find('dummy');
-
-        if ($user === null)
-        {
-            $user = new DataWizUser('dummy');
-            $this->entitymanager->persist($user);
-            $this->entitymanager->flush();
-        }
-
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user

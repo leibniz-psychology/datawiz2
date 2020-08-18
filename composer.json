@@ -32,6 +32,7 @@
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.3"
     },
     "config": {
         "preferred-install": {

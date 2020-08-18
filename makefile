@@ -1,4 +1,4 @@
-ENV = dev
+ENV = dev # never use prod - NEVER
 DEV_STATE_DIR = ./source/Domain/State/Development
 PROD_STATE_DIR = ./source/Domain/State/Production
 TEST_STATE_DIR = ./source/Domain/State/Test
@@ -26,6 +26,7 @@ clear: ## Deletes all dependencies and temporary files
 install: $(DEV_STATE_DIR) $(TEST_STATE_DIR) $(PROD_STATE_DIR) vendor/ node_modules/ $(DEV_DB_FILE) ## Setup the project
 	./bin/console doctrine:schema:drop --force --env=$(ENV)
 	./bin/console doctrine:schema:create --env=$(ENV)
+	./bin/console doctrine:fixture:load --no-interaction --env=$(ENV)
 
 .PHONY: migration
 migration: ## Generates and applies a doctrine migration

@@ -54,7 +54,14 @@ Encore
     })
 
     // enables Sass/SCSS support
-    //.enableSassLoader()
+  .enableSassLoader()
+  // enables PostCSS support
+  .enablePostCssLoader((options) => {
+    options.plugins = [
+      require('tailwindcss')('./source/View/Assets/tailwind.config.js'),
+      require('postcss-preset-env')(),
+    ];
+  });
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()

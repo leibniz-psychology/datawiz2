@@ -2,7 +2,19 @@
     "devDependencies": {
         "@symfony/webpack-encore": "^0.30.0",
         "core-js": "^3.0.0",
+        "cross-env": "^7.0.2",
+        "node-sass": "^4.14.1",
+        "postcss-loader": "^3.0.0",
+        "postcss-preset-env": "^6.7.0",
+        "prettier": "^2.0.5",
         "regenerator-runtime": "^0.13.2",
+        "sass-loader": "^8.0.2",
+        "stylelint": "^13.6.1",
+        "stylelint-config-idiomatic-order": "^8.1.0",
+        "stylelint-config-prettier": "^8.0.2",
+        "stylelint-config-standard": "^20.0.0",
+        "stylelint-scss": "^3.18.0",
+        "tailwindcss": "^1.6.0",
         "webpack-notifier": "^1.6.0"
     },
     "license": "UNLICENSED",
@@ -11,6 +23,6 @@
         "dev-server": "encore dev-server --config ./source/View/Assets/webpack.config.js",
         "dev": "encore dev --config ./source/View/Assets/webpack.config.js",
         "watch": "encore dev --watch --config ./source/View/Assets/webpack.config.js",
-        "build": "encore production --progress --config ./source/View/Assets/webpack.config.js"
+        "build": "cross-env NODE_ENV=production encore production --progress --config ./source/View/Assets/webpack.config.js"
     }
 }

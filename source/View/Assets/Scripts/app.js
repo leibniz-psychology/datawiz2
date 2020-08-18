@@ -6,7 +6,7 @@
  */
 
 // any CSS you import will output into a single Style file (app.Style in this case)
-import '../Styles/app.css';
+import '../Styles/app.scss';
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 // import $ from 'jquery';

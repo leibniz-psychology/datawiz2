@@ -266,6 +266,9 @@ $RECYCLE.BIN/
 # Versioning is pointless, if you can generate them at install
 source/Domain/State/Development
 
+# This directory tracks the state of actions which would
+# require one file to have multpile make targets
+.markers
 ########
 
 

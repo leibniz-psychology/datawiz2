@@ -3,6 +3,8 @@ ENV = dev # never use prod - NEVER
 
 MARK_DIR = ./.markers
 VAR_DIR = ./var
+ANSIBLE_DIR = ./infrastructure
+INVENTORY_DIR = $(ANSIBLE_DIR)/inventory
 FIXTURES_DIR = ./source/Domain/Fixtures
 DEV_STATE_DIR = ./source/Domain/State/Development
 PROD_STATE_DIR = ./source/Domain/State/Production
@@ -13,6 +15,7 @@ PHP_DEPS = ./vendor/
 DEV_DB_FILE = $(VAR_DIR)/data.db
 FIXTURE_MARK = $(MARK_DIR)/fixtures
 SCHEMA_MARK = $(MARK_DIR)/schema
+
 
 # ------------------------------
 # Developer Interface
@@ -38,6 +41,14 @@ migration: ## Generate and apply a doctrine migration
 
 .PHONY: fixtures
 fixtures: $(FIXTURE_MARK) ## Apply fixtures changes
+
+.PHONY: deploy-local
+deploy-local:
+	ansible-playbook $(ANSIBLE_DIR)/setup.yaml -i $(INVENTORY_DIR)/local.ini
+
+.PHONY: deploy-remote
+deploy-remote:
+	ansible-playbook $(ANSIBLE_DIR)/setup.yaml -i $(INVENTORY_DIR)/remote.ini
 
 .PHONY: clear
 clear: ## Delete all temporary files

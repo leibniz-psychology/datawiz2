@@ -43,11 +43,11 @@ migration: ## Generate and apply a doctrine migration
 fixtures: $(FIXTURE_MARK) ## Apply fixtures changes
 
 .PHONY: deploy-local
-deploy-local:
+deploy-local: ## Run ansible for your local server
 	ansible-playbook $(ANSIBLE_DIR)/setup.yaml -i $(INVENTORY_DIR)/local.ini
 
 .PHONY: deploy-remote
-deploy-remote:
+deploy-remote: ## Run ansible for the remote server
 	ansible-playbook $(ANSIBLE_DIR)/setup.yaml -i $(INVENTORY_DIR)/remote.ini
 
 .PHONY: clear

@@ -1,6 +1,7 @@
 # DataWiz - Research Data Documentation Assisstant
 ![Maintenance](https://img.shields.io/maintenance/yes/2020)
 
+
 DataWiz helps Psychlogist with their research documentation. 
 As web based system DataWiz is free to use by anyone and contributions are welcome.
 More details of how to use DataWiz and how to contribute can be found at our homepage.
@@ -9,6 +10,14 @@ More details of how to use DataWiz and how to contribute can be found at our hom
 
 This is the second iteration of the DataWiz application.
 For today, you can't use this code in production and changes will occur.
+
+## Supported development environments
+
+If you use `macos` or `ubuntu` you should have no problems, 
+because those operating systems are used by the main contributors.
+For those who wanna use `windows`, please consider running 'Windows Subsystem For Linux (WSL)'.
+While there is no intention to maintain any `windows` specific configuration from our side, 
+you are still welcome to contribute and maintain those changes.
 
 ## Installation
 

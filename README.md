@@ -12,11 +12,11 @@ For today, you can't use this code in production and changes will occur.
 
 ## Installation
 
-To start developing you will need a local installation of `php, nodejs, yarn, make and the symfony cli`.
+To start developing you will need a local installation of `php, nodejs (optional yarn), make and the symfony cli`.
 With those in your $PATH you can run the following commands to see a running application:
 
 ```
 make install
-yarn encore dev
+npm encore dev # or yarn encore dev
 symfony serve
 ```

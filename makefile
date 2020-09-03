@@ -5,16 +5,19 @@ MARK_DIR = ./.markers
 VAR_DIR = ./var
 ANSIBLE_DIR = ./infrastructure
 INVENTORY_DIR = $(ANSIBLE_DIR)/inventory
-FIXTURES_DIR = ./source/Domain/Fixtures
-DEV_STATE_DIR = ./source/Domain/State/Development
-PROD_STATE_DIR = ./source/Domain/State/Production
-TEST_STATE_DIR = ./source/Domain/State/Test
+DOMAIN_DIR = ./source/Domain
+ENTITY_DIR = $(DOMAIN_DIR)/Model
+FIXTURES_DIR = $(DOMAIN_DIR)/Fixtures
+DEV_STATE_DIR = $(DOMAIN_DIR)/State/Development
+PROD_STATE_DIR = $(DOMAIN_DIR)/State/Production
+TEST_STATE_DIR = $(DOMAIN_DIR)/State/Test
 
 JS_DEPS = ./node_modules/
 PHP_DEPS = ./vendor/
-DEV_DB_FILE = $(VAR_DIR)/data.db
-FIXTURE_MARK = $(MARK_DIR)/fixtures
+# Those files signal different states of the sqlite file
 SCHEMA_MARK = $(MARK_DIR)/schema
+FIXTURE_MARK = $(MARK_DIR)/fixture
+MIGRATION_MARK = $(MARK_DIR)/migration
 
 
 # ------------------------------
@@ -35,9 +38,7 @@ test: ## Run phpunit
 	./bin/phpunit -c ./config/packages/test/phpunit.xml.dist
 
 .PHONY: migration
-migration: ## Generate and apply a doctrine migration
-	./bin/console doctrine:migrations:diff -n --allow-empty-diff --env=$(ENV)
-	./bin/console doctrine:migrations:migrate -n --env=$(ENV)
+migration: $(MIGRATION_MARK) ## Generate and apply a doctrine migration
 
 .PHONY: fixtures
 fixtures: $(FIXTURE_MARK) ## Apply fixtures changes
@@ -87,12 +88,8 @@ $(PROD_STATE_DIR):
 	mkdir -p $@
 
 # This creates the sqlite database for development
-$(DEV_DB_FILE):
+$(SCHEMA_MARK):
 	./bin/console doctrine:database:create --env=$(ENV)
-
-# With the sqlite file in place, the schema will be created
-# This should only run once at install and needs the marker file to do so
-$(SCHEMA_MARK): $(DEV_DB_FILE)
 	./bin/console doctrine:schema:create --env=$(ENV)
 	touch $@
 
@@ -100,6 +97,11 @@ $(SCHEMA_MARK): $(DEV_DB_FILE)
 # This should only rerun if the fixture files change and therefore also needs a marker
 $(FIXTURE_MARK): $(MARK_DIR) $(SCHEMA_MARK) $(FIXTURES_DIR)/*.php
 	./bin/console doctrine:fixture:load -n --env=$(ENV)
+	touch $@
+
+$(MIGRATION_MARK): $(MARK_DIR) $(SCHEMA_MARK) $(ENTITY_DIR)/*.php
+	./bin/console doctrine:migrations:diff -n --allow-empty-diff --env=$(ENV)
+	./bin/console doctrine:migrations:migrate -n --env=$(ENV)
 	touch $@
 
 # all dependencies in one target to save space within the developer interface definition above

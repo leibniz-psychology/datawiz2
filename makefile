@@ -33,6 +33,12 @@ help: ## Show this help text
 .PHONY: install
 install: ALL_DIRS ALL_DEPS $(FIXTURE_MARK) ## Setup the project
 
+.PHONY: run 
+run: $(MIGRATION_MARK) $(FIXTURE_MARK) ## Apply migrations and fixtures, build assets and run the application
+	npm run-script dev
+	symfony serve
+	
+
 .PHONY: test
 test: ## Run phpunit
 	./bin/phpunit -c ./config/packages/test/phpunit.xml.dist
@@ -41,7 +47,7 @@ test: ## Run phpunit
 migration: $(MIGRATION_MARK) ## Generate and apply a doctrine migration
 
 .PHONY: fixtures
-fixtures: $(FIXTURE_MARK) ## Apply fixtures changes
+fixtures: $(FIXTURE_MARK) ## Apply doctrine fixtures
 
 .PHONY: deploy-local
 deploy-local: ## Run ansible for your local server
@@ -91,11 +97,12 @@ $(PROD_STATE_DIR):
 $(SCHEMA_MARK):
 	./bin/console doctrine:database:create --env=$(ENV)
 	./bin/console doctrine:schema:create --env=$(ENV)
+	touch $(MIGRATION_MARK)
 	touch $@
 
 # With the schema in place, the fixture can be loaded
 # This should only rerun if the fixture files change and therefore also needs a marker
-$(FIXTURE_MARK): $(MARK_DIR) $(SCHEMA_MARK) $(FIXTURES_DIR)/*.php
+$(FIXTURE_MARK): $(MARK_DIR) $(SCHEMA_MARK) $(MIGRATION_MARK) $(FIXTURES_DIR)/*.php
 	./bin/console doctrine:fixture:load -n --env=$(ENV)
 	touch $@
 

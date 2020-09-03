@@ -21,11 +21,11 @@ you are still welcome to contribute and maintain those changes.
 
 ## Installation
 
-To start developing you will need a local installation of `php, nodejs (optional yarn), make and the symfony cli`.
+To start developing you will need a local installation of `php, nodejs, make and the symfony cli`.
 With those in your $PATH you can run the following commands to see a running application:
 
 ```
-make install
-npm encore dev # or yarn encore dev
-symfony serve
+make install # will setup everything for you
+make run # applies all changes and starts a dev server
+
 ```

@@ -13,16 +13,16 @@ For today, you can't use this code in production and changes will occur.
 
 ## Supported development environments
 
-If you use `macos` or `ubuntu` you should have no problems, 
+If you use `macos` or `ubuntu` you should have __no problems__, 
 because those operating systems are used by the main contributors.
-For those who wanna use `windows`, please consider running 'Windows Subsystem For Linux (WSL)'.
+For those who wanna use `windows`, please consider running __Windows Subsystem For Linux__ (_WSL_).
 While there is no intention to maintain any `windows` specific configuration from our side, 
 you are still welcome to contribute and maintain those changes.
 
 ## Installation
 
-To start developing you will need a local installation of `php, nodejs, make and the symfony cli`.
-With those in your $PATH you can run the following commands to see a running application:
+To start developing you will need a local installation of `php`, `nodejs (and npm)`, `make` and the `symfony cli`.
+With those in your `$PATH` you can run the following commands to see a running application:
 
 ```
 make install # will setup everything for you

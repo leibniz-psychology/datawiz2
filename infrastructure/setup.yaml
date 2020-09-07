@@ -1,7 +1,28 @@
 ---
 - hosts: all
+  vars:
+    keycloak_version: 11.0.2
+    keycloak_install_dir: /opt
+  become: yes
   tasks:
-        - name: Hello infrastructure
-          file:
-            dest: $HOME/works
-            state: touch
+    - name: Install third party dependcies from apt repositories
+      apt:
+        name:
+          - php
+          - mysql-server
+          - default-jre-headless
+          - wget
+        state: present
+        update_cache: yes
+    - name: Download Keycloak {{keycloak_version}} archive
+      command: wget https://downloads.jboss.org/keycloak/{{keycloak_version}}/keycloak-{{keycloak_version}}.tar.gz -O {{keycloak_install_dir}}/keycloak-{{keycloak_version}}.tar.gz
+      args:
+        creates: "{{keycloak_install_dir}}/keycloak-{{keycloak_version}}.tar.gz"
+        warn: false # needed because we would use 2 tasks and skip around with get_url
+    - name: Unarchive Keycloak {{keycloak_version}}
+      unarchive:
+        src: "{{keycloak_install_dir}}/keycloak-{{keycloak_version}}.tar.gz"
+        dest: "{{keycloak_install_dir}}/"
+        remote_src: yes
+
+

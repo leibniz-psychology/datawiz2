@@ -1,6 +1,10 @@
-# Variables
-ENV = dev # never use prod - NEVER
+include makevars
+# Variable defaults
+# Those can be changed with your own makevars file
+ENV ?= test # never use prod - NEVER
+INVENTORY ?= remote.ini # see infrastructure/inventory for valid options
 
+# Paths
 MARK_DIR = ./.markers
 VAR_DIR = ./var
 ANSIBLE_DIR = ./infrastructure
@@ -11,9 +15,9 @@ FIXTURES_DIR = $(DOMAIN_DIR)/Fixtures
 DEV_STATE_DIR = $(DOMAIN_DIR)/State/Development
 PROD_STATE_DIR = $(DOMAIN_DIR)/State/Production
 TEST_STATE_DIR = $(DOMAIN_DIR)/State/Test
-
 JS_DEPS = ./node_modules/
 PHP_DEPS = ./vendor/
+
 # Those files signal different states of the sqlite file
 SCHEMA_MARK = $(MARK_DIR)/schema
 FIXTURE_MARK = $(MARK_DIR)/fixture
@@ -49,13 +53,9 @@ migration: $(MIGRATION_MARK) ## Generate and apply a doctrine migration
 .PHONY: fixtures
 fixtures: $(FIXTURE_MARK) ## Apply doctrine fixtures
 
-.PHONY: deploy-local
-deploy-local: ## Run ansible for your local server
-	ansible-playbook $(ANSIBLE_DIR)/setup.yaml -i $(INVENTORY_DIR)/local.ini
-
-.PHONY: deploy-remote
-deploy-remote: ## Run ansible for the remote server
-	ansible-playbook $(ANSIBLE_DIR)/setup.yaml -i $(INVENTORY_DIR)/remote.ini
+.PHONY: deploy
+deploy: ## Run ansible for your local server
+	ansible-playbook $(ANSIBLE_DIR)/setup.yaml -i $(INVENTORY_DIR)/$(INVENTORY) -K
 
 .PHONY: clear
 clear: ## Delete all temporary files

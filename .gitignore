@@ -269,8 +269,11 @@ source/Domain/State/Development
 # This directory tracks the state of actions which would
 # require one file to have multpile make targets
 .markers
-########
 
+# The user configuration of the makefile should not be shared
+makevars
+
+###
 
 ###> symfony/framework-bundle ###
 /.env.local

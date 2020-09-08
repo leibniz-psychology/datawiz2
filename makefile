@@ -1,4 +1,4 @@
-include makevars
+-include makevars
 # Variable defaults
 # Those can be changed with your own makevars file
 ENV ?= test # never use prod - NEVER

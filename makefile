@@ -22,7 +22,8 @@ PHP_DEPS = ./vendor/
 SCHEMA_MARK = $(MARK_DIR)/schema
 FIXTURE_MARK = $(MARK_DIR)/fixture
 MIGRATION_MARK = $(MARK_DIR)/migration
-
+# Those files signal if a UI Message was displayed already
+INSTALL_ALL = $(MARK_DIR)/install_all
 
 # ------------------------------
 # Developer Interface
@@ -35,14 +36,13 @@ help: ## Show this help text
 
 ## General
 .PHONY: install
-install: ALL_DIRS ALL_DEPS $(FIXTURE_MARK) ## Setup the project
+install: $(MARK_DIR) $(DEV_STATE_DIR) $(PROD_STATE_DIR) $(TEST_STATE_DIR) $(JS_DEPS) $(PHP_DEPS) $(FIXTURE_MARK) ## Setup the project
 
 .PHONY: run 
 run: $(MIGRATION_MARK) $(FIXTURE_MARK) ## Apply migrations and fixtures, build assets and run the application
 	npm run-script dev
 	symfony serve
 	
-
 .PHONY: test
 test: ## Run phpunit
 	./bin/phpunit -c ./config/packages/test/phpunit.xml.dist
@@ -57,13 +57,14 @@ fixtures: $(FIXTURE_MARK) ## Apply doctrine fixtures
 deploy: ## Run ansible for your local server
 	ansible-playbook $(ANSIBLE_DIR)/setup.yaml -i $(INVENTORY_DIR)/$(INVENTORY) -K
 
-.PHONY: clear
-clear: ## Delete all temporary files
+.PHONY: clean
+clean: ## Delete all temporary files
 	@rm -rf $(JS_DEPS) # delete npm dependencies
 	@rm -rf $(PHP_DEPS) # delete composer dependencies
 	@rm -rf $(DEV_STATE_DIR) # clear all migrations only for development!
 	@rm -rf $(VAR_DIR) # clear all temporary data
 	@rm -rf $(MARK_DIR) # created with this makefile to track more information
+	@echo "Tabula rasa!"
 
 # -------------------------------------------------
 # Helper targets
@@ -71,49 +72,45 @@ clear: ## Delete all temporary files
 
 # run composer
 $(PHP_DEPS): composer.json
-	composer install
+	@composer install &> /dev/null
+	@echo "composer install successful"
 
 # run npm
 $(JS_DEPS): package.json
-	npm install
+	@npm install &> /dev/null
+	@echo "npm install successful"
 
 # create the directory needed
 $(MARK_DIR):
-	mkdir -p $@
+	@mkdir -p $@
 
 # see above
 $(DEV_STATE_DIR):
-	mkdir -p $@
+	@mkdir -p $@
 
 # see above
 $(TEST_STATE_DIR):
-	mkdir -p $@
+	@mkdir -p $@
 
 # see above
 $(PROD_STATE_DIR):
-	mkdir -p $@
+	@mkdir -p $@
 
 # This creates the sqlite database for development
 $(SCHEMA_MARK):
-	./bin/console doctrine:database:create --env=$(ENV)
-	./bin/console doctrine:schema:create --env=$(ENV)
-	touch $(MIGRATION_MARK)
-	touch $@
+	@./bin/console doctrine:database:create -q --env=$(ENV)
+	@./bin/console doctrine:schema:create -q --env=$(ENV)
+	@touch $@
 
 # With the schema in place, the fixture can be loaded
 # This should only rerun if the fixture files change and therefore also needs a marker
 $(FIXTURE_MARK): $(MARK_DIR) $(SCHEMA_MARK) $(MIGRATION_MARK) $(FIXTURES_DIR)/*.php
-	./bin/console doctrine:fixture:load -n --env=$(ENV)
-	touch $@
+	@./bin/console doctrine:fixture:load -n --env=$(ENV)
+	@touch $@
 
 $(MIGRATION_MARK): $(MARK_DIR) $(SCHEMA_MARK) $(ENTITY_DIR)/*.php
-	./bin/console doctrine:migrations:diff -n --allow-empty-diff --env=$(ENV)
-	./bin/console doctrine:migrations:migrate -n --env=$(ENV)
-	touch $@
+	@./bin/console doctrine:migrations:diff -n -q --allow-empty-diff --env=$(ENV)
+	@./bin/console doctrine:migrations:migrate -n --allow-no-migration --env=$(ENV)
+	@touch $@
 
-# all dependencies in one target to save space within the developer interface definition above
-ALL_DEPS: $(MARK_DIR) $(JS_DEPS) $(PHP_DEPS)
-
-# all directories in one target to save space within the developer interface definition above
-ALL_DIRS: $(MARK_DIR) $(DEV_STATE_DIR) $(PROD_STATE_DIR) $(TEST_STATE_DIR)
 

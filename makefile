@@ -22,8 +22,6 @@ PHP_DEPS = ./vendor/
 SCHEMA_MARK = $(MARK_DIR)/schema
 FIXTURE_MARK = $(MARK_DIR)/fixture
 MIGRATION_MARK = $(MARK_DIR)/migration
-# Those files signal if a UI Message was displayed already
-INSTALL_ALL = $(MARK_DIR)/install_all
 
 # ------------------------------
 # Developer Interface

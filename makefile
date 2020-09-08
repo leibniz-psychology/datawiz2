@@ -1,8 +1,8 @@
 -include makevars
 # Variable defaults
 # Those can be changed with your own makevars file
-ENV ?= test # never use prod - NEVER
-INVENTORY ?= remote.ini # see infrastructure/inventory for valid options
+ENV ?= dev # never use prod - NEVER
+INVENTORY ?= local.ini # see infrastructure/inventory for valid options
 
 # Paths
 MARK_DIR = ./.markers

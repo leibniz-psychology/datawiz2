@@ -41,11 +41,11 @@ run: $(MIGRATION_MARK) $(FIXTURE_MARK) ## Apply migrations and fixtures, build a
 	npm run-script dev
 	symfony serve
 	
-.PHONY: test
+.PHONY: tests
 test: ## Run phpunit
 	./bin/phpunit -c ./config/packages/test/phpunit.xml.dist
 
-.PHONY: migration
+.PHONY: migrations
 migration: $(MIGRATION_MARK) ## Generate and apply a doctrine migration
 
 .PHONY: fixtures

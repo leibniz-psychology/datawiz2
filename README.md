@@ -26,6 +26,7 @@ With those in your `$PATH` you can run the following commands to see a running a
 
 ```
 make install # will setup everything for you
+# a warning could occur, if you have no migrations yet (very likely)
 make run # applies all changes and starts a dev server
 
 ```

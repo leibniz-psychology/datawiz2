@@ -1,8 +1,18 @@
 -include makevars
+MAKEVAR_FILE = makevars
+
 # Variable defaults
 # Those can be changed with your own makevars file
-ENV ?= dev # never use prod - NEVER
-INVENTORY ?= local.ini # see infrastructure/inventory for valid options
+
+# Controls for which environment the commands run - never use prod
+ENV ?= dev
+# Which inventory file will you use - a local.ini or a remote.ini
+# You can create your own inventories and use them as option here
+INVENTORY ?= local.ini
+# IP of your local development server
+LOCAL_IP ?= 0.0.0.0
+# IP of your remote server - this could be productions or testing
+REMOTE_IP ?= 0.0.0.0
 
 # Paths
 MARK_DIR = ./.markers
@@ -17,6 +27,10 @@ PROD_STATE_DIR = $(DOMAIN_DIR)/State/Production
 TEST_STATE_DIR = $(DOMAIN_DIR)/State/Test
 JS_DEPS = ./node_modules/
 PHP_DEPS = ./vendor/
+
+# Files
+REMOTE_INV = $(INVENTORY_DIR)/remote.ini
+LOCAL_INV = $(INVENTORY_DIR)/local.ini
 
 # Those files signal different states of the sqlite file
 SCHEMA_MARK = $(MARK_DIR)/schema
@@ -51,8 +65,11 @@ migration: $(MIGRATION_MARK) ## Generate and apply a doctrine migration
 .PHONY: fixtures
 fixtures: $(FIXTURE_MARK) ## Apply doctrine fixtures
 
+.PHONY: inventories
+inventories: $(LOCAL_INV) $(REMOTE_INV) ## Create your ansible inventories according to your makevars
+
 .PHONY: deploy
-deploy: ## Run ansible for your local server
+deploy: $(LOCAL_INV) $(REMOTE_INV) ## Run ansible for your local server
 	ansible-playbook $(ANSIBLE_DIR)/setup.yaml -i $(INVENTORY_DIR)/$(INVENTORY) -K
 
 .PHONY: clean
@@ -93,6 +110,22 @@ $(TEST_STATE_DIR):
 # see above
 $(PROD_STATE_DIR):
 	@mkdir -p $@
+
+# see above
+$(INVENTORY_DIR):
+	@mkdir -p $@
+
+# this will create a single ip inventory with your configured ip
+$(REMOTE_INV): $(INVENTORY_DIR) $(MAKEVAR_FILE) 
+	@echo $(REMOTE_IP) >| $@
+
+# see above, but for a local server ip
+$(LOCAL_INV): $(INVENTORY_DIR) $(MAKEVAR_FILE)
+	@echo $(LOCAL_IP) >| $@
+
+# creates a makevars file, which is needed to fill in the server ip's
+$(MAKEVAR_FILE):
+	touch $@
 
 # This creates the sqlite database for development
 $(SCHEMA_MARK):

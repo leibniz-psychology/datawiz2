@@ -27,6 +27,7 @@ PROD_STATE_DIR = $(DOMAIN_DIR)/State/Production
 TEST_STATE_DIR = $(DOMAIN_DIR)/State/Test
 JS_DEPS = ./node_modules/
 PHP_DEPS = ./vendor/
+ASSET_OUT = ./public/build
 
 # Files
 REMOTE_INV = $(INVENTORY_DIR)/remote.ini
@@ -48,7 +49,7 @@ help: ## Show this help text
 
 ## General
 .PHONY: install
-install: $(MARK_DIR) $(DEV_STATE_DIR) $(PROD_STATE_DIR) $(TEST_STATE_DIR) $(JS_DEPS) $(PHP_DEPS) $(FIXTURE_MARK) ## Setup the project
+install: $(MARK_DIR) $(DEV_STATE_DIR) $(PROD_STATE_DIR) $(TEST_STATE_DIR) $(JS_DEPS) $(PHP_DEPS) $(FIXTURE_MARK) ## Setup dependencies for local development
 
 .PHONY: run 
 run: $(MIGRATION_MARK) $(FIXTURE_MARK) ## Apply migrations and fixtures, build assets and run the application
@@ -56,11 +57,11 @@ run: $(MIGRATION_MARK) $(FIXTURE_MARK) ## Apply migrations and fixtures, build a
 	symfony serve
 	
 .PHONY: tests
-test: ## Run phpunit
+tests: ## Run all tests
 	./bin/phpunit -c ./config/packages/test/phpunit.xml.dist
 
 .PHONY: migrations
-migration: $(MIGRATION_MARK) ## Generate and apply a doctrine migration
+migrations: $(MIGRATION_MARK) ## Generate and apply a doctrine migration
 
 .PHONY: fixtures
 fixtures: $(FIXTURE_MARK) ## Apply doctrine fixtures
@@ -69,20 +70,22 @@ fixtures: $(FIXTURE_MARK) ## Apply doctrine fixtures
 inventories: $(LOCAL_INV) $(REMOTE_INV) ## Create your ansible inventories according to your makevars
 
 .PHONY: deploy
-deploy: $(LOCAL_INV) $(REMOTE_INV) ## Run ansible for your local server
+deploy: $(LOCAL_INV) $(REMOTE_INV) ## Deploy this project with ansible 
 	ansible-playbook $(ANSIBLE_DIR)/setup.yaml -i $(INVENTORY_DIR)/$(INVENTORY) -K
 
 .PHONY: clean
-clean: ## Delete all temporary files
-	@rm -rf $(JS_DEPS) # delete npm dependencies
-	@rm -rf $(PHP_DEPS) # delete composer dependencies
-	@rm -rf $(DEV_STATE_DIR) # clear all migrations only for development!
+clean: ## Remove all temporary files
+	@rm -rf $(JS_DEPS) # clear npm dependencies
+	@rm -rf $(PHP_DEPS) # clear composer dependencies
+	@rm -rf $(DEV_STATE_DIR) # clear all migrations (only for development!)
 	@rm -rf $(VAR_DIR) # clear all temporary data
-	@rm -rf $(MARK_DIR) # created with this makefile to track more information
+	@rm -rf $(MARK_DIR) # clear the state-tracker files
+	@rm -rf $(INVENTORY_DIR) # clear the generated inventories
+	@rm -rf $(ASSET_OUT) # clear webpack build
 	@echo "Tabula rasa!"
 
 # -------------------------------------------------
-# Helper targets
+# Plumber targets
 # -------------------------------------------------
 
 # run composer

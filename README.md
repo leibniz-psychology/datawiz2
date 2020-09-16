@@ -21,7 +21,7 @@ you are still welcome to contribute and maintain those changes.
 
 ## Installation
 
-To start developing you will need a local installation of `php`, `nodejs (and npm)`, `make`, `ansible` and the `symfony cli`.
+To start developing you will need a local installation of `php`, `nodejs (and npm)`, `make`, `core utils`, `awk`, `ansible` and the `symfony cli`.
 With those in your `$PATH` you can run the following commands to see a running application:
 
 ```

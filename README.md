@@ -21,7 +21,7 @@ you are still welcome to contribute and maintain those changes.
 
 ## Installation
 
-To start developing you will need a local installation of `php`, `nodejs (and npm)`, `make`, `core utils`, `awk`, `ansible` and the `symfony cli`.
+To start developing you will need a local installation of `php`, `nodejs (and npm)`, `make`, `core utils`, `awk`, and the `symfony cli`.
 With those in your `$PATH` you can run the following commands to see a running application:
 
 ```sh
@@ -38,3 +38,12 @@ If you are new to the codebase, there are multiple resources provided for you to
 - Many decision made within development are explained and/or discussed within our [issue](https://github.com/leibniz-psychology/datawiz2/issues) pages.
 - The most important concepts are explained in the projects [wiki](https://github.com/leibniz-psychology/datawiz2/wiki) page.
 - Run `make` to see all actions available for this project. It can run migrations, fixtures and even deploy the application for you.
+
+## Can you help me with deployment?
+
+Yes, the `makefile` gives you special deployment targets.
+Server configuration management is a complex topic and a makefile alone can't handle this task.
+You will need `ansible` on your development machine to use our deployment process.
+The process is currently not even in an alpha stage and therefore not suitable for real work yet.
+As soon as something changes about that, you will see updated information here.
+

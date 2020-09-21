@@ -1,8 +1,14 @@
 -include makevars
+# reference to makevars within the targets
 MAKEVAR_FILE = makevars
+# save the name of this file - important for help target
+SELF = $(firstword $(MAKEFILE_LIST))
 
-# Variable defaults
-# Those can be changed with your own makevars file
+# --------------------------------------------------------------
+# Variables
+# --------------------------------------------------------------
+
+# Variable defaults - can be changed with your own makevars file
 
 # Controls for which environment the commands run - never use prod
 ENV ?= dev
@@ -16,14 +22,13 @@ REMOTE_IP ?= 0.0.0.0
 # Enable debug mode for some make targets
 DEBUG ?= false
 
-# name of this file
-SELF = $(firstword $(MAKEFILE_LIST))
+# If you debug the makefile, set a variable VERBOSE to print all commands out
+ifndef VERBOSE
+.SILENT:
+endif
 
-# Paths
-MARK_DIR = ./.markers
-VAR_DIR = ./var
-ANSIBLE_DIR = ./infrastructure
-INVENTORY_DIR = $(ANSIBLE_DIR)/inventory
+# Paths - should not be changed without reconfiguration
+# Code paths - used to detect changes or to place generated files
 SOURCE_DIR = ./source
 DOMAIN_DIR = $(SOURCE_DIR)/Domain
 ENTITY_DIR = $(DOMAIN_DIR)/Model
@@ -31,12 +36,18 @@ FIXTURES_DIR = $(DOMAIN_DIR)/Fixtures
 DEV_STATE_DIR = $(DOMAIN_DIR)/State/Development
 PROD_STATE_DIR = $(DOMAIN_DIR)/State/Production
 TEST_STATE_DIR = $(DOMAIN_DIR)/State/Test
+ASSET_IN = $(SOURCE_DIR)/View/*
+# Infrastructure as Code
+ANSIBLE_DIR = ./infrastructure
+INVENTORY_DIR = $(ANSIBLE_DIR)/inventory
+# Output directories - not maintained by the developer
+MARK_DIR = ./.markers
+VAR_DIR = ./var
 JS_DEPS = ./node_modules
 PHP_DEPS = ./vendor
 ASSET_OUT = ./public/build
-ASSET_IN = $(SOURCE_DIR)/View/*
 
-# Files
+# Files created within this makefile
 REMOTE_INV = $(INVENTORY_DIR)/remote.ini
 LOCAL_INV = $(INVENTORY_DIR)/local.ini
 
@@ -45,33 +56,31 @@ SCHEMA_MARK = $(MARK_DIR)/schema
 FIXTURE_MARK = $(MARK_DIR)/fixture
 MIGRATION_MARK = $(MARK_DIR)/migration
 
-# If you debug the makefile, set a variable VERBOSE to print all commands out
-ifndef VERBOSE
-.SILENT:
-endif
 
-# ------------------------------
+# --------------------------------------------------------------
 # Developer Interface
-# ------------------------------
+# --------------------------------------------------------------
+
+# Those are all commands of the developer interface
+# Everything under phony will run even if a file with that name exists
+.PHONY: help install run tests clean assets migrations fixtures inventories deploy
+
+# The target used, if you call just make without any argument
+.DEFAULT_GOAL := help
 
 # Thanks to Romain Gautier for his slides from symfony live 2018 providing this ->
-.DEFAULT_GOAL := help
 help: ## Show this help text
 	grep -E '(^[a-zA-Z_]+:.*?##.*$$)|(^##)' $(SELF) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
 
 ##-----General-------------------
-.PHONY: install
 install: $(MARK_DIR) $(DEV_STATE_DIR) $(PROD_STATE_DIR) $(TEST_STATE_DIR) $(JS_DEPS) $(PHP_DEPS) $(FIXTURE_MARK) ## Setup dependencies for local development
 
-.PHONY: run 
 run: $(MIGRATION_MARK) $(FIXTURE_MARK) $(ASSET_OUT) ## Apply migrations and fixtures, build assets and run the application
 	symfony serve
 	
-.PHONY: tests
 tests: ## Run all tests
 	./bin/phpunit -c ./config/packages/test/phpunit.xml.dist
 
-.PHONY: clean
 clean: ## Remove all temporary files
 ifeq ($(DEBUG), true)
 	@echo "These files would have been removed - disable debuging to delete them"
@@ -88,26 +97,21 @@ endif
 	@echo $(ASSET_OUT) # static asset output
 
 ##-----Symfony-------------------
-.PHONY: assets
 assets: $(ASSET_OUT) ## Compile static assets
 
-.PHONY: migrations
 migrations: $(MIGRATION_MARK) ## Generate and apply a doctrine migration
 
-.PHONY: fixtures
 fixtures: $(FIXTURE_MARK) ## Apply doctrine fixtures
 
 ##-----Deployment----------------
-.PHONY: inventories
 inventories: $(LOCAL_INV) $(REMOTE_INV) ## Create your ansible inventories according to your makevars
 
-.PHONY: deploy
 deploy: $(LOCAL_INV) $(REMOTE_INV) ## Deploy this project with ansible 
 	ansible-playbook $(ANSIBLE_DIR)/setup.yaml -i $(INVENTORY_DIR)/$(INVENTORY) -K
 
-# -------------------------------------------------
+# --------------------------------------------------------------
 # Plumber targets
-# -------------------------------------------------
+# --------------------------------------------------------------
 
 # run composer
 $(PHP_DEPS): composer.json
@@ -151,22 +155,24 @@ $(REMOTE_INV): $(INVENTORY_DIR) $(MAKEVAR_FILE)
 $(LOCAL_INV): $(INVENTORY_DIR) $(MAKEVAR_FILE)
 	@echo $(LOCAL_IP) >| $@
 
-# creates a makevars file, which is needed to fill in the server ip's
+# creates a makevars file, which is needed to fill in secrets
 $(MAKEVAR_FILE):
 	touch $@
 
-# This creates the sqlite database for development
+# This creates the sqlite database for development and applies the schema according to current entity mapping
 $(SCHEMA_MARK):
 	./bin/console doctrine:database:create -q --env=$(ENV)
 	./bin/console doctrine:schema:create -q --env=$(ENV)
 	touch $@
 
-# With the schema in place, the fixture can be loaded
-# This should only rerun if the fixture files change and therefore also needs a marker
+# With the schema up to date, the fixture can be loaded
+# This should only rerun, if the fixture files change
 $(FIXTURE_MARK): $(MARK_DIR) $(SCHEMA_MARK) $(MIGRATION_MARK) $(FIXTURES_DIR)/*.php
 	./bin/console doctrine:fixture:load -n --env=$(ENV)
 	touch $@
 
+# When your entities change, your schema needs to adapt to those changes
+# This should only rerun, if your entities change
 $(MIGRATION_MARK): $(MARK_DIR) $(SCHEMA_MARK) $(ENTITY_DIR)/*.php
 	./bin/console doctrine:migrations:diff -n -q --allow-empty-diff --env=$(ENV)
 	./bin/console doctrine:migrations:migrate -n --allow-no-migration --env=$(ENV)

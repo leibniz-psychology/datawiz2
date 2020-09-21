@@ -85,7 +85,7 @@ clean: ## Remove all temporary files
 ifeq ($(DEBUG), true)
 	@echo "These files would have been removed - disable debuging to delete them"
 else
-	rm -rf $(RMPARAM) $(JS_DEPS) $(PHP_DEPS) $(DEV_STATE_DIR) $(VAR_DIR) $(MARK_DIR) $(INVENTORY_DIR) $(ASSET_OUT)
+	rm -rf $(JS_DEPS) $(PHP_DEPS) $(DEV_STATE_DIR) $(VAR_DIR) $(MARK_DIR) $(INVENTORY_DIR) $(ASSET_OUT)
 	@echo "This removed the following:"
 endif
 	@echo $(JS_DEPS) # npm dependencies

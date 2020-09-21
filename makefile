@@ -14,6 +14,9 @@ LOCAL_IP ?= 0.0.0.0
 # IP of your remote server - this could be productions or testing
 REMOTE_IP ?= 0.0.0.0
 
+# name of this file
+SELF = $(firstword $(MAKEFILE_LIST))
+
 # Paths
 MARK_DIR = ./.markers
 VAR_DIR = ./var
@@ -45,7 +48,10 @@ MIGRATION_MARK = $(MARK_DIR)/migration
 # Thanks to Romain Gautier for his slides from symfony live 2018 providing this ->
 .DEFAULT_GOAL := help
 help: ## Show this help text
-	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
+	@grep -E '(^[a-zA-Z_]+:.*?##.*$$)|(^##)' $(SELF) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
+
+debug:
+	echo $(MAKEFILE_LIST)
 
 ## General
 .PHONY: install

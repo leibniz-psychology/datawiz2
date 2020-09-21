@@ -13,6 +13,8 @@ INVENTORY ?= local.ini
 LOCAL_IP ?= 0.0.0.0
 # IP of your remote server - this could be productions or testing
 REMOTE_IP ?= 0.0.0.0
+# Enable debug mode for some make targets
+DEBUG ?= false
 
 # name of this file
 SELF = $(firstword $(MAKEFILE_LIST))
@@ -29,8 +31,8 @@ FIXTURES_DIR = $(DOMAIN_DIR)/Fixtures
 DEV_STATE_DIR = $(DOMAIN_DIR)/State/Development
 PROD_STATE_DIR = $(DOMAIN_DIR)/State/Production
 TEST_STATE_DIR = $(DOMAIN_DIR)/State/Test
-JS_DEPS = ./node_modules/
-PHP_DEPS = ./vendor/
+JS_DEPS = ./node_modules
+PHP_DEPS = ./vendor
 ASSET_OUT = ./public/build
 ASSET_IN = $(SOURCE_DIR)/View/*
 
@@ -43,6 +45,11 @@ SCHEMA_MARK = $(MARK_DIR)/schema
 FIXTURE_MARK = $(MARK_DIR)/fixture
 MIGRATION_MARK = $(MARK_DIR)/migration
 
+# If you debug the makefile, set a variable VERBOSE to print all commands out
+ifndef VERBOSE
+.SILENT:
+endif
+
 # ------------------------------
 # Developer Interface
 # ------------------------------
@@ -50,10 +57,7 @@ MIGRATION_MARK = $(MARK_DIR)/migration
 # Thanks to Romain Gautier for his slides from symfony live 2018 providing this ->
 .DEFAULT_GOAL := help
 help: ## Show this help text
-	@grep -E '(^[a-zA-Z_]+:.*?##.*$$)|(^##)' $(SELF) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
-
-debug:
-	echo $(MAKEFILE_LIST)
+	grep -E '(^[a-zA-Z_]+:.*?##.*$$)|(^##)' $(SELF) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
 
 ##-----General-------------------
 .PHONY: install
@@ -69,14 +73,19 @@ tests: ## Run all tests
 
 .PHONY: clean
 clean: ## Remove all temporary files
-	@rm -rf $(JS_DEPS) # clear npm dependencies
-	@rm -rf $(PHP_DEPS) # clear composer dependencies
-	@rm -rf $(DEV_STATE_DIR) # clear all migrations (only for development!)
-	@rm -rf $(VAR_DIR) # clear all temporary data
-	@rm -rf $(MARK_DIR) # clear the state-tracker files
-	@rm -rf $(INVENTORY_DIR) # clear the generated inventories
-	@rm -rf $(ASSET_OUT) # clear webpack build
-	@echo "Tabula rasa!"
+ifeq ($(DEBUG), true)
+	@echo "These files would have been removed - disable debuging to delete them"
+else
+	rm -rf $(RMPARAM) $(JS_DEPS) $(PHP_DEPS) $(DEV_STATE_DIR) $(VAR_DIR) $(MARK_DIR) $(INVENTORY_DIR) $(ASSET_OUT)
+	@echo "This removed the following:"
+endif
+	@echo $(JS_DEPS) # npm dependencies
+	@echo $(PHP_DEPS) # composer dependencies
+	@echo $(DEV_STATE_DIR) # all migrations (only for development!)
+	@echo $(VAR_DIR) # all temporary symfony app data
+	@echo $(MARK_DIR) # state-tracker files
+	@echo $(INVENTORY_DIR) # generated inventories
+	@echo $(ASSET_OUT) # static asset output
 
 ##-----Symfony-------------------
 .PHONY: assets
@@ -102,33 +111,33 @@ deploy: $(LOCAL_INV) $(REMOTE_INV) ## Deploy this project with ansible
 
 # run composer
 $(PHP_DEPS): composer.json
-	@composer install &> /dev/null
+	composer install &> /dev/null
 	@echo "composer install successful"
 
 # run npm
 $(JS_DEPS): package.json
-	@npm install &> /dev/null
+	npm install &> /dev/null
 	@echo "npm install successful"
 
 # create the directory needed
 $(MARK_DIR):
-	@mkdir -p $@
+	mkdir -p $@
 
 # see above
 $(DEV_STATE_DIR):
-	@mkdir -p $@
+	mkdir -p $@
 
 # see above
 $(TEST_STATE_DIR):
-	@mkdir -p $@
+	mkdir -p $@
 
 # see above
 $(PROD_STATE_DIR):
-	@mkdir -p $@
+	mkdir -p $@
 
 # see above
 $(INVENTORY_DIR):
-	@mkdir -p $@
+	mkdir -p $@
 
 # rebuild static assets if the asset folder has changes
 $(ASSET_OUT): $(ASSET_IN)
@@ -148,19 +157,18 @@ $(MAKEVAR_FILE):
 
 # This creates the sqlite database for development
 $(SCHEMA_MARK):
-	@./bin/console doctrine:database:create -q --env=$(ENV)
-	@./bin/console doctrine:schema:create -q --env=$(ENV)
-	@touch $@
+	./bin/console doctrine:database:create -q --env=$(ENV)
+	./bin/console doctrine:schema:create -q --env=$(ENV)
+	touch $@
 
 # With the schema in place, the fixture can be loaded
 # This should only rerun if the fixture files change and therefore also needs a marker
 $(FIXTURE_MARK): $(MARK_DIR) $(SCHEMA_MARK) $(MIGRATION_MARK) $(FIXTURES_DIR)/*.php
-	@./bin/console doctrine:fixture:load -n --env=$(ENV)
-	@touch $@
+	./bin/console doctrine:fixture:load -n --env=$(ENV)
+	touch $@
 
 $(MIGRATION_MARK): $(MARK_DIR) $(SCHEMA_MARK) $(ENTITY_DIR)/*.php
-	@./bin/console doctrine:migrations:diff -n -q --allow-empty-diff --env=$(ENV)
-	@./bin/console doctrine:migrations:migrate -n --allow-no-migration --env=$(ENV)
-	@touch $@
-
+	./bin/console doctrine:migrations:diff -n -q --allow-empty-diff --env=$(ENV)
+	./bin/console doctrine:migrations:migrate -n --allow-no-migration --env=$(ENV)
+	touch $@
 

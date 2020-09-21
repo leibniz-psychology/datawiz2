@@ -22,7 +22,8 @@ MARK_DIR = ./.markers
 VAR_DIR = ./var
 ANSIBLE_DIR = ./infrastructure
 INVENTORY_DIR = $(ANSIBLE_DIR)/inventory
-DOMAIN_DIR = ./source/Domain
+SOURCE_DIR = ./source
+DOMAIN_DIR = $(SOURCE_DIR)/Domain
 ENTITY_DIR = $(DOMAIN_DIR)/Model
 FIXTURES_DIR = $(DOMAIN_DIR)/Fixtures
 DEV_STATE_DIR = $(DOMAIN_DIR)/State/Development
@@ -31,6 +32,7 @@ TEST_STATE_DIR = $(DOMAIN_DIR)/State/Test
 JS_DEPS = ./node_modules/
 PHP_DEPS = ./vendor/
 ASSET_OUT = ./public/build
+ASSET_IN = $(SOURCE_DIR)/View/*
 
 # Files
 REMOTE_INV = $(INVENTORY_DIR)/remote.ini
@@ -53,31 +55,17 @@ help: ## Show this help text
 debug:
 	echo $(MAKEFILE_LIST)
 
-## General
+##-----General-------------------
 .PHONY: install
 install: $(MARK_DIR) $(DEV_STATE_DIR) $(PROD_STATE_DIR) $(TEST_STATE_DIR) $(JS_DEPS) $(PHP_DEPS) $(FIXTURE_MARK) ## Setup dependencies for local development
 
 .PHONY: run 
-run: $(MIGRATION_MARK) $(FIXTURE_MARK) ## Apply migrations and fixtures, build assets and run the application
-	npm run-script dev
+run: $(MIGRATION_MARK) $(FIXTURE_MARK) $(ASSET_OUT) ## Apply migrations and fixtures, build assets and run the application
 	symfony serve
 	
 .PHONY: tests
 tests: ## Run all tests
 	./bin/phpunit -c ./config/packages/test/phpunit.xml.dist
-
-.PHONY: migrations
-migrations: $(MIGRATION_MARK) ## Generate and apply a doctrine migration
-
-.PHONY: fixtures
-fixtures: $(FIXTURE_MARK) ## Apply doctrine fixtures
-
-.PHONY: inventories
-inventories: $(LOCAL_INV) $(REMOTE_INV) ## Create your ansible inventories according to your makevars
-
-.PHONY: deploy
-deploy: $(LOCAL_INV) $(REMOTE_INV) ## Deploy this project with ansible 
-	ansible-playbook $(ANSIBLE_DIR)/setup.yaml -i $(INVENTORY_DIR)/$(INVENTORY) -K
 
 .PHONY: clean
 clean: ## Remove all temporary files
@@ -89,6 +77,24 @@ clean: ## Remove all temporary files
 	@rm -rf $(INVENTORY_DIR) # clear the generated inventories
 	@rm -rf $(ASSET_OUT) # clear webpack build
 	@echo "Tabula rasa!"
+
+##-----Symfony-------------------
+.PHONY: assets
+assets: $(ASSET_OUT) ## Compile static assets
+
+.PHONY: migrations
+migrations: $(MIGRATION_MARK) ## Generate and apply a doctrine migration
+
+.PHONY: fixtures
+fixtures: $(FIXTURE_MARK) ## Apply doctrine fixtures
+
+##-----Deployment----------------
+.PHONY: inventories
+inventories: $(LOCAL_INV) $(REMOTE_INV) ## Create your ansible inventories according to your makevars
+
+.PHONY: deploy
+deploy: $(LOCAL_INV) $(REMOTE_INV) ## Deploy this project with ansible 
+	ansible-playbook $(ANSIBLE_DIR)/setup.yaml -i $(INVENTORY_DIR)/$(INVENTORY) -K
 
 # -------------------------------------------------
 # Plumber targets
@@ -123,6 +129,10 @@ $(PROD_STATE_DIR):
 # see above
 $(INVENTORY_DIR):
 	@mkdir -p $@
+
+# rebuild static assets if the asset folder has changes
+$(ASSET_OUT): $(ASSET_IN)
+	npm run-script dev
 
 # this will create a single ip inventory with your configured ip
 $(REMOTE_INV): $(INVENTORY_DIR) $(MAKEVAR_FILE) 

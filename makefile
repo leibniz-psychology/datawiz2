@@ -15,12 +15,16 @@ ENV ?= dev
 # Which inventory file will you use - a local.ini or a remote.ini
 # You can create your own inventories and use them as option here
 INVENTORY ?= local.ini
-# IP of your local development server
-LOCAL_IP ?= 0.0.0.0
-# IP of your remote server - this could be productions or testing
-REMOTE_IP ?= 0.0.0.0
 # Enable debug mode for some make targets
 DEBUG ?= false
+# IP of your local development server
+LOCAL_IP ?= 0.0.0.0
+# User for the ansible login (local)
+LOCAL_ANSIBLE_USER ?= ansible
+# IP of your remote server - this could be productions or testing
+REMOTE_IP ?= 0.0.0.0
+# User for the remote ansible login (remote)
+REMOTE_ANSIBLE_USER ?= ansible
 
 # If you debug the makefile, set a variable VERBOSE to print all commands out
 ifndef VERBOSE
@@ -149,11 +153,11 @@ $(ASSET_OUT): $(ASSET_IN)
 
 # this will create a single ip inventory with your configured ip
 $(REMOTE_INV): $(INVENTORY_DIR) $(MAKEVAR_FILE) 
-	@echo $(REMOTE_IP) >| $@
+	@echo "$(REMOTE_IP) 	ansible_user=$(REMOTE_ANSIBLE_USER)" >| $@
 
 # see above, but for a local server ip
 $(LOCAL_INV): $(INVENTORY_DIR) $(MAKEVAR_FILE)
-	@echo $(LOCAL_IP) >| $@
+	@echo "$(LOCAL_IP) 	ansible_user=$(LOCAL_ANSIBLE_USER)" >| $@
 
 # creates a makevars file, which is needed to fill in secrets
 $(MAKEVAR_FILE):

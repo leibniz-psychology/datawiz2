@@ -1,10 +1,10 @@
 ---
 - hosts: all
-  vars:
-    keycloak_version: 11.0.2
-    keycloak_install_dir: /opt
   become: yes
   tasks:
+    - name: Import variables defined in vars.yaml
+      include_vars: vars.yaml
+
     - name: Install third party dependcies from apt repositories
       apt:
         name:
@@ -14,15 +14,57 @@
           - wget
         state: present
         update_cache: yes
-    - name: Download Keycloak {{keycloak_version}} archive
-      command: wget https://downloads.jboss.org/keycloak/{{keycloak_version}}/keycloak-{{keycloak_version}}.tar.gz -O {{keycloak_install_dir}}/keycloak-{{keycloak_version}}.tar.gz
-      args:
-        creates: "{{keycloak_install_dir}}/keycloak-{{keycloak_version}}.tar.gz"
-        warn: false # needed because we would use 2 tasks and skip around with get_url
+
+    - name: Download Keycloak {{keycloak_version}} and check integrity
+      get_url:
+        url: "{{keycloak_archive_url}}"
+        dest: "{{keycloak_archive_path}}"
+        checksum: sha1:{{keycloak_archive_checksum}}
+
     - name: Unarchive Keycloak {{keycloak_version}}
       unarchive:
-        src: "{{keycloak_install_dir}}/keycloak-{{keycloak_version}}.tar.gz"
-        dest: "{{keycloak_install_dir}}/"
+        src: "{{keycloak_archive_path}}"
+        dest: "{{keycloak_dir_base}}/"
+        creates: "{{keycloak_install_dir}}"
         remote_src: yes
 
+    - name: Ensure group "{{keycloak_group}}" exists
+      group:
+        name: "{{keycloak_group}}"
+        state: present
 
+    - name: Create a '{{keycloak_user}}' user within the {{keycloak_group}} group
+      user:
+        name: "{{keycloak_user}}"
+        group: "{{keycloak_group}}"
+        home: "{{keycloak_install_dir}}"
+
+    - name: Create keyloak config directory
+      file:
+        path: "{{keycloak_config_dir}}"
+        state: directory
+        mode: '0755'
+
+    - name: Copy {{keycloak_config_origin}} to {{keycloak_config_file}}
+      copy:
+        src: "{{keycloak_config_origin}}"
+        dest: "{{keycloak_config_file}}"
+        remote_src: yes
+
+    - name: Copy launch.sh into {{keycloak_bin}}
+      copy:
+        src: "{{keycloak_launch_origin}}"
+        dest: "{{keycloak_launch_file}}"
+        remote_src: yes
+
+    - name: Make the files in {{keycloak_bin}} executable
+      file:
+        path: "{{keycloak_bin}}"
+        mode: o+x
+
+    - name: Let {{keycloak_user}} own {{keycloak_install_dir}}
+      file:
+        path: "{{keycloak_install_dir}}"
+        owner: "{{keycloak_user}}"
+        group: "{{keycloak_group}}"
+        recurse: yes

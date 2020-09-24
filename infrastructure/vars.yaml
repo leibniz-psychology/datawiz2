@@ -1,0 +1,36 @@
+################################################################################
+# Changeable by user - document configuration details
+################################################################################
+# Used to build the download link
+keycloak_version: 11.0.2
+# Checksum for the installation archive
+keycloak_archive_checksum: 9c870a2fdf7bb44933c23d264ee9a360af4b6a44
+# General location of keycloak (archive and installation)
+keycloak_dir_base: /opt
+# Keycloak should never run as root so a dummy user is needed
+keycloak_user: keycloak
+# This dummy user should belong to his own group without peers
+keycloak_group: keycloak
+# Directory to run keycloak
+keycloak_config_dir: /etc/keycloak
+
+
+################################################################################
+# Immutable by user - changes from above will be reflected
+################################################################################
+# URL for keycloak download
+keycloak_archive_url: https://downloads.jboss.org/keycloak/{{keycloak_version}}/keycloak-{{keycloak_version}}.tar.gz
+# Absolute path to the downloaded archive
+keycloak_archive_path: "{{keycloak_dir_base}}/keycloak-{{keycloak_version}}.tar.gz"
+# Directory of the keycloak installation
+keycloak_install_dir: "{{keycloak_dir_base}}/keycloak-{{keycloak_version}}"
+# Location of the admin scripts
+keycloak_bin: "{{keycloak_install_dir}}/bin"
+# File for running keycloak (copied from below)
+keycloak_config_file: "{{keycloak_config_dir}}/keycloak.conf"
+# Origin of the configuration file
+keycloak_config_origin: "{{keycloak_install_dir}}/docs/contrib/scripts/systemd/wildfly.conf"
+# Launch script to start keycloak
+keycloak_launch_file: "{{keycloak_bin}}/launch.sh"
+# Launch script origin path
+keycloak_launch_origin: "{{keycloak_install_dir}}/docs/contrib/scripts/systemd/launch.sh"

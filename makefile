@@ -81,7 +81,7 @@ install: $(MARK_DIR) $(DEV_STATE_DIR) $(PROD_STATE_DIR) $(TEST_STATE_DIR) $(JS_D
 
 run: $(MIGRATION_MARK) $(FIXTURE_MARK) $(ASSET_OUT) ## Apply migrations and fixtures, build assets and run the application
 	symfony serve
-	
+
 tests: ## Run all tests
 	./bin/phpunit -c ./config/packages/test/phpunit.xml.dist
 
@@ -119,12 +119,12 @@ deploy: $(LOCAL_INV) $(REMOTE_INV) ## Deploy this project with ansible
 
 # run composer
 $(PHP_DEPS): composer.json
-	composer install &> /dev/null
+	composer install -q
 	@echo "composer install successful"
 
 # run npm
 $(JS_DEPS): package.json
-	npm install &> /dev/null
+	npm install --silent --no-audit --no-fund --no-update-notifier --no-progress > /dev/null
 	@echo "npm install successful"
 
 # create the directory needed

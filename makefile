@@ -119,12 +119,12 @@ deploy: $(LOCAL_INV) $(REMOTE_INV) ## Deploy this project with ansible
 
 # run composer
 $(PHP_DEPS): composer.json
-	composer install &> /dev/null
+	composer install > /dev/null 2>&1
 	@echo "composer install successful"
 
 # run npm
 $(JS_DEPS): package.json
-	npm install &> /dev/null
+	npm install > /dev/null 2>&1
 	@echo "npm install successful"
 
 # create the directory needed

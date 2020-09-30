@@ -35,8 +35,10 @@ make run # applies all changes and starts a dev server
 The `makefile` also gives you special deployment targets.
 Server configuration management is a complex topic and a `makefile` alone can't handle this task.
 You will need `ansible` on your development machine to use our deployment process.
+Any deployments will assume an `Ubuntu 20.04.1` installation.
 The process is currently not even in an alpha stage and is therefore not suitable for real work yet.
 As soon as something changes about that, you will see updated information here.
+
 
 ## How to get help?
 

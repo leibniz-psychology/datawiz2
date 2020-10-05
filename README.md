@@ -1,6 +1,7 @@
 # DataWiz - Research Data Documentation Assistant
-![Maintenance](https://img.shields.io/maintenance/yes/2020)
-
+![Symfony Version](https://img.shields.io/badge/Symfony-4.4_LTS-blue?logo=symfony&style=flat-square)
+![Nodejs Version](https://img.shields.io/badge/Nodejs-14_LTS-blue?logo=node.js&style=flat-square&logoColor=white)
+![MySql Version](https://img.shields.io/badge/MySql-8.0-green?logo=mysql&style=flat-square&logoColor=white)
 
 DataWiz helps Psychologist with their research documentation. 
 As web based system DataWiz is free to use by anyone and contributions are welcome.
@@ -10,6 +11,7 @@ More details of how to use DataWiz and how to contribute can be found at our hom
 
 This is the second iteration of the DataWiz application.
 For today, you can't use this code in production and changes will occur.
+The first release is planed for late 2021.
 
 ## Supported development environments
 
@@ -27,7 +29,7 @@ With those in your `$PATH` you can run the following commands to see a running a
 ```sh
 make install # will setup everything for you
 # a warning could occur, if you have no migrations yet (very likely)
-make run # applies all changes and starts a dev server
+make run # will apply all changes and starts a dev server
 
 ```
 ## Deployment
@@ -46,6 +48,6 @@ If you are new to the codebase, there are multiple resources provided for you to
 
 - Many decision made within development are explained and/or discussed within our [issue](https://github.com/leibniz-psychology/datawiz2/issues) pages.
 - The most important concepts are explained in the projects [wiki](https://github.com/leibniz-psychology/datawiz2/wiki) page.
-- Run `make` to see all actions available for this project. It can run migrations, fixtures and even deploy the application for you.
+- Run `make help` to see all actions available for this project. It can run migrations, fixtures and even run the application for you.
 
 

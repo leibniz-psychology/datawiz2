@@ -92,6 +92,7 @@ clean: ## Remove all temporary files
 ifeq ($(DEBUG), true)
 	@echo "These files would have been removed - disable debuging to delete them"
 else
+	@echo "Start cleanup..."
 	rm -rf $(JS_DEPS) $(PHP_DEPS) $(DEV_STATE_DIR) $(VAR_DIR) $(MARK_DIR) $(INVENTORY_DIR) $(ASSET_OUT)
 	@echo "This removed the following:"
 endif
@@ -122,37 +123,51 @@ deploy: $(LOCAL_INV) $(REMOTE_INV) ## Deploy this project with ansible
 
 # run composer
 $(PHP_DEPS): composer.json
+	@echo "Installing Php dependencies... \c"
 	composer install -q
-	@echo "composer install successful"
+	@echo "Done"
 
 # run npm
 $(JS_DEPS): package.json
+	@echo "Installing NodeJS dependencies... \c"
 	npm install --silent --no-audit --no-fund --no-update-notifier --no-progress > /dev/null
-	@echo "npm install successful"
+	@echo "Done"
 
 # create the directory needed
 $(MARK_DIR):
+	@echo "Creating $@... \c"
 	mkdir -p $@
+	@echo "Done"
 
 # see above
 $(DEV_STATE_DIR):
+	@echo "Creating $@... \c"
 	mkdir -p $@
+	@echo "Done"
 
 # see above
 $(TEST_STATE_DIR):
+	@echo "Creating $@... \c"
 	mkdir -p $@
+	@echo "Done"
 
 # see above
 $(PROD_STATE_DIR):
+	@echo "Creating $@... \c"
 	mkdir -p $@
+	@echo "Done"
 
 # see above
 $(INVENTORY_DIR):
+	@echo "Creating $@... \c"
 	mkdir -p $@
+	@echo "Done"
 
 # rebuild static assets if the asset folder has changes
 $(ASSET_OUT): $(ASSET_IN)
-	npm run-script dev
+	@echo "Running Webpack... \c"
+	npm run-script dev > /dev/null 2>&1
+	@echo "Done"
 
 # this will create a single ip inventory with your configured ip
 $(REMOTE_INV): $(INVENTORY_DIR) $(MAKEVAR_FILE) 

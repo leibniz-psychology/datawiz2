@@ -1,4 +1,4 @@
 doctrine_migrations:
     migrations_path:
-        'App\Domain\State\Production': 'source/Domain/State/Production'
+        'App\Domain\State\Production': 'source/Domain/State/Migrations/Production'
     all_or_nothing: true

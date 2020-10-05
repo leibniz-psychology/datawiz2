@@ -217,7 +217,6 @@ fabric.properties
 
 # PHPUnit
 /app/phpunit.xml
-/phpunit.xml
 
 # Build data
 /build/
@@ -264,7 +263,7 @@ $RECYCLE.BIN/
 
 # Every developer will create his/her own dev database
 # Versioning is pointless, if you can generate them at install
-source/Domain/State/Development
+source/Domain/State/Migrations/Development
 
 # This directory tracks the state of actions which would
 # require one file to have multpile make targets

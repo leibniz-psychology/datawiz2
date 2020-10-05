@@ -36,10 +36,12 @@ endif
 SOURCE_DIR = ./source
 DOMAIN_DIR = $(SOURCE_DIR)/Domain
 ENTITY_DIR = $(DOMAIN_DIR)/Model
-FIXTURES_DIR = $(DOMAIN_DIR)/Fixtures
-DEV_STATE_DIR = $(DOMAIN_DIR)/State/Development
-PROD_STATE_DIR = $(DOMAIN_DIR)/State/Production
-TEST_STATE_DIR = $(DOMAIN_DIR)/State/Test
+STATE_DIR = $(DOMAIN_DIR)/State
+FIXTURES_DIR = $(STATE_DIR)/Fixtures
+MIG_DIR = $(STATE_DIR)/Migrations
+DEV_STATE_DIR = $(MIG_DIR)/Development
+PROD_STATE_DIR = $(MIG_DIR)/Production
+TEST_STATE_DIR = $(MIG_DIR)/Test
 ASSET_IN = $(SOURCE_DIR)/View/*
 # Infrastructure as Code
 ANSIBLE_DIR = ./infrastructure

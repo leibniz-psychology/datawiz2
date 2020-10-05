@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Fixtures;
+namespace App\Domain\State\Fixtures;
 
 
 use App\Domain\Model\DataWizUser;

@@ -15,7 +15,10 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../source/*'
-        exclude: '../source/{DependencyInjection,Entity,Migrations,Tests,Domain/{Model,State/Migrations},Kernel.php}'
+        exclude:
+            - '../source/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}' # Symfony defaults untouched
+            - '../source/Domain/Model' # our Entity/ folder
+            - '../source/Domain/State/Migrations' # our Migrations/ folder
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base Controller class

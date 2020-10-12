@@ -1,7 +1,8 @@
 # DataWiz - Research Data Documentation Assistant
-![Symfony Version](https://img.shields.io/badge/Symfony-4.4_LTS-blue?logo=symfony&style=flat-square)
-![Nodejs Version](https://img.shields.io/badge/Nodejs-14_LTS-blue?logo=node.js&style=flat-square&logoColor=white)
-![MySql Version](https://img.shields.io/badge/MySql-8.0-green?logo=mysql&style=flat-square&logoColor=white)
+![Symfony Version](https://img.shields.io/badge/Symfony-4.4_LTS-success?logo=symfony&style=flat-square)
+![PHP Version](https://img.shields.io/badge/Php-7.4-informational?logo=PHP&style=flat-square&logoColor=white)
+![Nodejs Version](https://img.shields.io/badge/Nodejs-14_LTS-informational?logo=node.js&style=flat-square&logoColor=white)
+![MySql Version](https://img.shields.io/badge/MySql-8.0-informational?logo=mysql&style=flat-square&logoColor=white)
 
 DataWiz helps Psychologist with their research documentation. 
 As web based system DataWiz is free to use by anyone and contributions are welcome.

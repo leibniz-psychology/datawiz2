@@ -1,0 +1,62 @@
+- name: Install tools to get and run Keycloak
+  apt:
+    name:
+      - default-jre-headless
+      - wget
+  become: yes
+
+- name: Download Keycloak {{keycloak_version}} and check integrity
+  get_url:
+    url: "{{keycloak_archive_url}}"
+    dest: "{{keycloak_archive_path}}"
+    checksum: sha1:{{keycloak_archive_checksum}}
+
+- name: Unarchive Keycloak {{keycloak_version}}
+  unarchive:
+    src: "{{keycloak_archive_path}}"
+    dest: "{{keycloak_dir_base}}/"
+    creates: "{{keycloak_install_dir}}"
+    remote_src: yes
+
+- name: Ensure group "{{keycloak_group}}" exists
+  group:
+    name: "{{keycloak_group}}"
+    state: present
+
+- name: Create a '{{keycloak_user}}' user within the {{keycloak_group}} group
+  user:
+    name: "{{keycloak_user}}"
+    group: "{{keycloak_group}}"
+    home: "{{keycloak_install_dir}}"
+
+- name: Create keyloak config directory
+  file:
+    path: "{{keycloak_config_dir}}"
+    state: directory
+    mode: '0755'
+
+- name: Copy {{keycloak_config_origin}} to {{keycloak_config_file}}
+  copy:
+    src: "{{keycloak_config_origin}}"
+    dest: "{{keycloak_config_file}}"
+    remote_src: yes
+  become: yes
+
+- name: Copy launch.sh into {{keycloak_bin}}
+  copy:
+    src: "{{keycloak_launch_origin}}"
+    dest: "{{keycloak_launch_file}}"
+    remote_src: yes
+  become: yes
+
+- name: Make the files in {{keycloak_bin}} executable
+  file:
+    path: "{{keycloak_bin}}"
+    mode: o+x
+
+- name: Let {{keycloak_user}} own {{keycloak_install_dir}}
+  file:
+    path: "{{keycloak_install_dir}}"
+    owner: "{{keycloak_user}}"
+    group: "{{keycloak_group}}"
+    recurse: yes

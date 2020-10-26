@@ -1,0 +1,19 @@
+---
+- name: Install Php components from Ubuntu repositories
+  apt:
+    name:
+      - php
+      - php-fpm
+      - php-xml
+      - php-xdebug
+      - php-apcu
+      - php-sqlite3
+      - php-mysql
+      - php-curl
+      - php-gd
+      - composer
+      - nodejs
+      - npm
+      - libnss3-tools
+      - git
+  become: yes

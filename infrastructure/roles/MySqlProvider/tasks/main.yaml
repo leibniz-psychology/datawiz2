@@ -1,0 +1,4 @@
+- name: Install MySQL Database
+  apt:
+    name:
+      - mysql-server

@@ -115,7 +115,7 @@ fixtures: $(FIXTURE_MARK) ## Apply doctrine fixtures
 inventories: $(LOCAL_INV) $(REMOTE_INV) ## Create your ansible inventories according to your makevars
 
 deploy: $(LOCAL_INV) $(REMOTE_INV) ## Deploy this project with ansible 
-	ansible-playbook $(ANSIBLE_DIR)/setup.yaml -i $(INVENTORY_DIR)/$(INVENTORY) -K
+	ansible-playbook $(ANSIBLE_DIR)/testing.yaml -i $(INVENTORY_DIR)/$(INVENTORY) -K
 
 # --------------------------------------------------------------
 # Plumber targets

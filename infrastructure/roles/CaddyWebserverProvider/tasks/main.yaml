@@ -1,0 +1,11 @@
+- name: Add caddy repository into sources list
+  apt_repository:
+    repo: deb https://repo.fury.io/caddy/
+    state: present
+
+- name: Install caddy over the fury.io repository
+  apt:
+    name: caddy
+    state: present
+    update_cache: yes
+  become: yes

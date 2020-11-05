@@ -88,6 +88,9 @@ run: $(MIGRATION_MARK) $(FIXTURE_MARK) $(ASSET_OUT) ## Apply migrations and fixt
 tests: ## Run all tests
 	./bin/phpunit -c ./config/packages/test/phpunit.xml.dist
 
+codestyle: ## Run php-cs-fixer
+	php-cs-fixer fix
+
 clean: ## Remove all temporary files
 ifeq ($(DEBUG), true)
 	@echo "These files would have been removed - disable debuging to delete them"

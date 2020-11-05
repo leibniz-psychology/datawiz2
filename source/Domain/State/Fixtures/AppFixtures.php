@@ -2,11 +2,9 @@
 
 namespace App\Domain\State\Fixtures;
 
-
 use App\Domain\Model\DataWizUser;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-
 
 class AppFixtures extends Fixture
 {

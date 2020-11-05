@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Domain\Access;
 
 use App\Domain\Model\DataWizUser;

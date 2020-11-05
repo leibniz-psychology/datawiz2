@@ -1,16 +1,12 @@
 <?php
 
-
 namespace App\Security\Authentication;
-
 
 use App\Domain\Model\DataWizUser;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Security;
@@ -23,10 +19,9 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 /**
  * This authenticator is ONLY for the development environment
- * There are no security checks at all, so double checks it's usage
+ * There are no security checks at all, so double checks it's usage.
  *
  * Class DevelopmentAuthenticator
- * @package App\Security\Authentication
  */
 class DevelopmentAuthenticator extends AbstractFormLoginAuthenticator
 {
@@ -54,7 +49,6 @@ class DevelopmentAuthenticator extends AbstractFormLoginAuthenticator
         return self::LOGIN_ROUTE === $request->attributes->get('_route')
             && $request->isMethod('POST');
     }
-
 
     public function getCredentials(Request $request)
     {

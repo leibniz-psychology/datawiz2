@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Domain\Model;
 
 use App\Domain\Access\DataWizUserRepository;
@@ -32,8 +31,7 @@ class DataWizUser implements UserInterface
     public function getRoles()
     {
         // Ensure at least one valid role on each user
-        if (! in_array('ROLE_USER', $this->roles, true))
-        {
+        if (!in_array('ROLE_USER', $this->roles, true)) {
             $this->roles[] = 'ROLE_USER';
         }
 

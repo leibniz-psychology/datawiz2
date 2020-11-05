@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\View\Controller;
-
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,7 +28,7 @@ class DevelopmentLoginController extends NamingAwareController
         return $this->render('Pages/developmentlogin.html.twig',
         [
             'last_username' => $lastUsername,
-            'error' => $error
+            'error' => $error,
         ]);
     }
 

@@ -42,7 +42,7 @@ MIG_DIR = $(STATE_DIR)/Migrations
 DEV_STATE_DIR = $(MIG_DIR)/Development
 PROD_STATE_DIR = $(MIG_DIR)/Production
 TEST_STATE_DIR = $(MIG_DIR)/Test
-ASSET_IN = $(SOURCE_DIR)/View/*
+ASSET_IN = $(SOURCE_DIR)/View/Assets/*
 # Infrastructure as Code
 ANSIBLE_DIR = ./infrastructure
 INVENTORY_DIR = $(ANSIBLE_DIR)/inventory
@@ -90,6 +90,8 @@ tests: ## Run all tests
 
 codestyle: ## Run php-cs-fixer
 	php-cs-fixer fix
+	npx stylelint --fix $(ASSET_IN:*=)
+	npx prettier -w $(ASSET_IN:*=)
 
 clean: ## Remove all temporary files
 ifeq ($(DEBUG), true)

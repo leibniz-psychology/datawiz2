@@ -25,6 +25,9 @@ LOCAL_ANSIBLE_USER ?= ansible
 REMOTE_IP ?= 0.0.0.0
 # User for the remote ansible login (remote)
 REMOTE_ANSIBLE_USER ?= ansible
+# The playbook that will be executed against the server 
+# (valid is currently 'testing.yaml' and 'production.yaml')
+PLAYBOOK ?= testing.yaml
 
 # If you debug the makefile, set a variable VERBOSE to print all commands out
 ifndef VERBOSE
@@ -120,7 +123,7 @@ fixtures: $(FIXTURE_MARK) ## Apply doctrine fixtures
 inventories: $(LOCAL_INV) $(REMOTE_INV) ## Create your ansible inventories according to your makevars
 
 deploy: $(LOCAL_INV) $(REMOTE_INV) ## Deploy this project with ansible 
-	ansible-playbook $(ANSIBLE_DIR)/testing.yaml -i $(INVENTORY_DIR)/$(INVENTORY) -K
+	ansible-playbook $(ANSIBLE_DIR)/$(PLAYBOOK) -i $(INVENTORY_DIR)/$(INVENTORY) -K
 
 # --------------------------------------------------------------
 # Plumber targets

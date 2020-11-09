@@ -13,6 +13,7 @@ More details of how to use DataWiz and how to contribute can be found at our hom
 This is the second iteration of the DataWiz application.
 For today, you can't use this code in production and changes will occur.
 The first release is planed for late 2021.
+You can check out the currently running [DataWiz version](https://github.com/ZPID/DataWiz/)
 
 ## Supported development environments
 
@@ -25,14 +26,16 @@ you are still welcome to contribute and maintain those changes.
 ## Development requirements
 
 To start developing you will need a local installation of `php`, `nodejs (and npm)`, `make`, `core utils`, `awk`, and the `symfony cli`.
+Please consider our recommended versions, 
+if you encouter any problems running a development instance of DataWiz.
 With those in your `$PATH` you can run the following commands to see a running application:
 
 ```sh
 make install # will setup everything for you
 # a warning could occur, if you have no migrations yet (very likely)
 make run # will apply all changes and starts a dev server
-
 ```
+
 ## Deployment
 
 The `makefile` also gives you special deployment targets.

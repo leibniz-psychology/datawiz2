@@ -1,6 +1,7 @@
 # DataWiz - Research Data Documentation Assistant
 ![Symfony Version](https://img.shields.io/badge/Symfony-4.4_LTS-success?logo=symfony&style=flat-square)
 ![PHP Version](https://img.shields.io/badge/Php-7.4-informational?logo=PHP&style=flat-square&logoColor=white)
+![Composer Version](https://img.shields.io/badge/Composer-2.0-informational?logo=Composer&style=flat-square&logoColor=white)
 ![Nodejs Version](https://img.shields.io/badge/Nodejs-14_LTS-informational?logo=node.js&style=flat-square&logoColor=white)
 ![MySql Version](https://img.shields.io/badge/MySql-8.0-informational?logo=mysql&style=flat-square&logoColor=white)
 
@@ -25,7 +26,7 @@ you are still welcome to contribute and maintain those changes.
 
 ## Development requirements
 
-To start developing you will need a local installation of `php`, `nodejs (and npm)`, `make`, `core utils`, `awk`, and the `symfony cli`.
+To start developing you will need a local installation of `php`, `composer`, `nodejs (and npm)`, `make`, `core utils`, `awk`, and the `symfony cli`.
 Please consider our recommended versions, 
 if you encouter any problems running a development instance of DataWiz.
 With those in your `$PATH` you can run the following commands to see a running application:

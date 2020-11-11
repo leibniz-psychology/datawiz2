@@ -4,3 +4,4 @@
     - PhpApplicationProvider
     - MySqlProvider
     - KeycloakSsoProvider
+    - CaddyWebserverProvider

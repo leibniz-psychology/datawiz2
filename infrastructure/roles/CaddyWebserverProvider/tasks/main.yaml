@@ -1,7 +1,15 @@
 - name: Add caddy repository into sources list
   apt_repository:
-    repo: deb https://repo.fury.io/caddy/
+    repo: deb [trusted=yes] https://repo.fury.io/caddy/ /
     state: present
+  become: yes
+
+- name: Remove apache webserver to ensure caddy can use port 80
+  apt:
+    name: apache2
+    state: absent
+  become: yes
+
 
 - name: Install caddy over the fury.io repository
   apt:
@@ -9,3 +17,26 @@
     state: present
     update_cache: yes
   become: yes
+
+- name: Enable service caddy and ensure it is not masked
+  systemd:
+    name: caddy
+    enabled: yes
+    daemon_reload: yes
+    masked: no
+  become: yes
+
+- name: Start caddy webserver service
+  systemd:
+    name: caddy
+    state: started
+  become: yes
+
+- name: Copy caddy template to remote
+  template:
+    src: Caddyfile
+    dest: /etc/caddy/Caddyfile
+  become: yes
+  notify:
+    - Reload Caddyfile
+

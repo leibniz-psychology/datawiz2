@@ -92,7 +92,7 @@ tests: ## Run all tests
 	./bin/phpunit -c ./config/packages/test/phpunit.xml.dist
 
 codestyle: ## Run php-cs-fixer
-	php-cs-fixer fix
+	./bin/php-cs-fixer fix
 	npx stylelint --fix $(ASSET_IN:*=)
 	npx prettier -w $(ASSET_IN:*=)
 

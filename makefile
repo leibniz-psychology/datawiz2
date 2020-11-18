@@ -12,6 +12,8 @@ SELF = $(firstword $(MAKEFILE_LIST))
 
 # Controls for which environment the commands run - never use prod
 ENV ?= dev
+# This is required with a localhost definition to run symfony cli - we should fail if it is missing
+HOSTS_FILE ?= /etc/hosts
 # Which inventory file will you use - a local.ini or a remote.ini
 # You can create your own inventories and use them as option here
 INVENTORY ?= local.ini
@@ -85,7 +87,7 @@ help: ## Show this help text
 ##-----General-------------------
 install: $(MARK_DIR) $(DEV_STATE_DIR) $(PROD_STATE_DIR) $(TEST_STATE_DIR) $(JS_DEPS) $(PHP_DEPS) $(FIXTURE_MARK) ## Setup dependencies for local development
 
-run: $(MIGRATION_MARK) $(FIXTURE_MARK) $(ASSET_OUT) ## Apply migrations and fixtures, build assets and run the application
+run: $(MIGRATION_MARK) $(FIXTURE_MARK) $(ASSET_OUT) $(HOSTS_FILE) ## Apply migrations and fixtures, build assets and run the application
 	symfony serve
 
 tests: ## Run all tests

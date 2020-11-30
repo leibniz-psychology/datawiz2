@@ -68,26 +68,26 @@ LOGFILE = $(VAR_DIR)/tools_log.txt
 
 # Thanks to Romain Gautier for his slides from symfony live 2018 providing this ->
 ##-----Developer Interface-------
-help: ## Show this help text
+help: ## Print this help text
 	grep -E '(^[a-zA-Z_]+:.*?##.*$$)|(^##)' $(SELF) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
 
 debug: ## Print all information for debugging the makefile
 	echo "Following is marked for the clean target: $(TEMPORARY)"
 	echo "Directories made by make: $(ALL_DIRS)"
 
-log: ## Print the logfile
+log: ## Print the logfile created by this makefile
 	cat $(LOGFILE)
 
 ##-----General-------------------
-install: $(ALL_DIRS) $(JS_DEPS) $(PHP_DEPS) $(FIXTURE_MARK) ## Setup dependencies for local development
+install: $(ALL_DIRS) $(JS_DEPS) $(PHP_DEPS) $(FIXTURE_MARK) ## Run all tasks necessary to run
 
-run: $(MIGRATION_MARK) $(FIXTURE_MARK) $(ASSET_OUT) $(HOSTS_FILE) ## Apply migrations and fixtures, build assets and run the application
+run: $(MIGRATION_MARK) $(FIXTURE_MARK) $(ASSET_OUT) $(HOSTS_FILE) ## Apply all Symfony targets and run the application
 	symfony serve
 
-tests: ## Run all tests
+tests: ## Run all tests using phpunit
 	./bin/phpunit -c ./config/packages/test/phpunit.xml.dist
 
-codestyle: ## Run php-cs-fixer
+codestyle: ## Run code formatter tools (prettier, stylelint, php-cs-fixer)
 	./bin/php-cs-fixer fix
 	npx stylelint --fix $(ASSET_IN)
 	npx prettier -w $(ASSET_IN)
@@ -99,18 +99,18 @@ clean: ## Remove all temporary files
 	@echo $(sort $(TEMPORARY))
 
 ##-----Symfony-------------------
-assets: $(ASSET_OUT) ## Compile static assets
+assets: $(ASSET_OUT) ## Compile static assets using webpack
 
 migrations: $(MIGRATION_MARK) ## Generate and apply a doctrine migration
 
 fixtures: $(FIXTURE_MARK) ## Apply doctrine fixtures
 
 ##-----Deployment----------------
-deploy: ## Deploy this project with ansible 
+deploy: ## Deploy this project using ansible 
 	ansible-playbook $(ANSIBLE_DIR)/$(PLAYBOOK) -i $(INVENTORY_DIR)/$(INVENTORY) -K
 
 # --------------------------------------------------------------
-# Plumber targets
+# Helper targets
 # --------------------------------------------------------------
 
 # run composer

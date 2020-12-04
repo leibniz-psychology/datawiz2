@@ -1,4 +1,19 @@
 {
+    "amphp/amp": {
+        "version": "v2.5.1"
+    },
+    "amphp/byte-stream": {
+        "version": "v1.8.0"
+    },
+    "composer/semver": {
+        "version": "3.2.4"
+    },
+    "composer/xdebug-handler": {
+        "version": "1.4.5"
+    },
+    "dnoegel/php-xdg-base-dir": {
+        "version": "v0.1.1"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -93,6 +108,12 @@
     "doctrine/sql-formatter": {
         "version": "1.1.0"
     },
+    "felixfbecker/advanced-json-rpc": {
+        "version": "v3.1.1"
+    },
+    "felixfbecker/language-server-protocol": {
+        "version": "v1.5.0"
+    },
     "firebase/php-jwt": {
         "version": "v4.0.0"
     },
@@ -132,8 +153,17 @@
     "monolog/monolog": {
         "version": "1.25.4"
     },
+    "netresearch/jsonmapper": {
+        "version": "v2.1.0"
+    },
+    "nikic/php-parser": {
+        "version": "v4.10.3"
+    },
     "ocramius/proxy-manager": {
         "version": "2.8.0"
+    },
+    "openlss/lib-array2xml": {
+        "version": "1.0.0"
     },
     "php": {
         "version": "7.4"
@@ -153,8 +183,8 @@
     "phpspec/phpspec": {
         "version": "6.2.1"
     },
-    "phpspec/prophecy": {
-        "version": "1.11.1"
+    "psalm/plugin-symfony": {
+        "version": "v2.0.2"
     },
     "psr/cache": {
         "version": "1.0.1"
@@ -174,16 +204,7 @@
     "ralouphie/getallheaders": {
         "version": "3.0.3"
     },
-    "sebastian/comparator": {
-        "version": "4.0.3"
-    },
     "sebastian/diff": {
-        "version": "4.0.2"
-    },
-    "sebastian/exporter": {
-        "version": "4.0.2"
-    },
-    "sebastian/recursion-context": {
         "version": "4.0.2"
     },
     "sensio/framework-extra-bundle": {
@@ -508,10 +529,16 @@
     "twig/twig": {
         "version": "v3.0.4"
     },
+    "vimeo/psalm": {
+        "version": "4.3.1"
+    },
     "webimpress/safe-writer": {
         "version": "2.0.1"
     },
     "webmozart/assert": {
         "version": "1.9.1"
+    },
+    "webmozart/path-util": {
+        "version": "2.3.0"
     }
 }

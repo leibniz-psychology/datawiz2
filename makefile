@@ -92,6 +92,9 @@ codestyle: ## Run code formatter tools (prettier, stylelint, php-cs-fixer)
 	npx stylelint --fix $(ASSET_IN)
 	npx prettier -w $(ASSET_IN)
 
+analysis: ## Run psalm static analyzer
+	./vendor/bin/psalm --config .tools/config/psalm.xml
+
 clean: ## Remove all temporary files
 	@echo "Start cleanup..."
 	rm -rf $(TEMPORARY)

@@ -33,7 +33,9 @@
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
-        "doctrine/doctrine-fixtures-bundle": "^3.3"
+        "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "psalm/plugin-symfony": "^2.0",
+        "vimeo/psalm": "^4.3"
     },
     "config": {
         "preferred-install": {

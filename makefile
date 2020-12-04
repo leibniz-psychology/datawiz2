@@ -85,7 +85,7 @@ run: $(MIGRATION_MARK) $(FIXTURE_MARK) $(ASSET_OUT) $(HOSTS_FILE) ## Apply all S
 	symfony serve
 
 tests: ## Run all tests using phpunit
-	./vendor/bin/simple-phpunit -c ./.tools/config/phpunit.xml.dist
+	./bin/phpunit -c ./config/packages/test/phpunit.xml.dist
 
 codestyle: ## Run code formatter tools (prettier, stylelint, php-cs-fixer)
 	./bin/php-cs-fixer fix

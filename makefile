@@ -22,7 +22,10 @@ PLAYBOOK ?= $(ENV).yaml
 
 # Paths - should not be changed without reconfiguration
 # Code paths - used to detect changes or to place generated files
+TOOLS_DIR = ./.tools
+TOOL_CONFIG_DIR = $(TOOLS_DIR)/config
 SOURCE_DIR = ./source
+TEST_DIR = ./tests
 DOMAIN_DIR = $(SOURCE_DIR)/Domain
 ENTITY_DIR = $(DOMAIN_DIR)/Model
 STATE_DIR = $(DOMAIN_DIR)/State
@@ -34,7 +37,7 @@ ASSET_IN = $(SOURCE_DIR)/View/Assets
 ANSIBLE_DIR = ./infrastructure
 INVENTORY_DIR = $(ANSIBLE_DIR)/inventory
 # Output directories - not maintained by the developer
-MARK_DIR = ./.markers
+MARK_DIR = $(TOOLS_DIR)/markers
 VAR_DIR = ./var
 JS_DEPS = ./node_modules
 PHP_DEPS = ./vendor
@@ -85,15 +88,15 @@ run: $(MIGRATION_MARK) $(FIXTURE_MARK) $(ASSET_OUT) $(HOSTS_FILE) ## Apply all S
 	symfony serve
 
 tests: ## Run all tests using phpunit
-	./bin/phpunit -c ./config/packages/test/phpunit.xml.dist
+	./bin/phpunit -c $(TOOL_CONFIG_DIR)/phpunit.xml.dist
 
 codestyle: ## Run code formatter tools (prettier, stylelint, php-cs-fixer)
-	./bin/php-cs-fixer fix
+	./bin/php-cs-fixer fix $(SOURCE_DIR) $(TEST_DIR) --config $(TOOL_CONFIG_DIR)/php_cs.dist
 	npx stylelint --fix $(ASSET_IN)
 	npx prettier -w $(ASSET_IN)
 
 analysis: ## Run psalm static analyzer
-	./vendor/bin/psalm --config .tools/config/psalm.xml
+	./vendor/bin/psalm --config $(TOOL_CONFIG_DIR)/psalm.xml
 
 clean: ## Remove all temporary files
 	@echo "Start cleanup..."

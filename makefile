@@ -24,6 +24,8 @@ PLAYBOOK ?= $(ENV).yaml
 # Code paths - used to detect changes or to place generated files
 TOOLS_DIR = ./.tools
 TOOL_CONFIG_DIR = $(TOOLS_DIR)/config
+HOOKS_DIR = $(TOOLS_DIR)/hooks
+GIT_HOOKS_DIR = ./.git/hooks
 SOURCE_DIR = ./source
 TEST_DIR = ./tests
 DOMAIN_DIR = $(SOURCE_DIR)/Domain
@@ -50,7 +52,8 @@ MIGRATION_MARK = $(MARK_DIR)/migration
 
 ALL_DIRS = $(MARK_DIR) $(DEV_STATE_DIR) $(VAR_DIR)
 TEMPORARY = $(JS_DEPS) $(PHP_DEPS) $(DEV_STATE_DIR) $(VAR_DIR) $(MARK_DIR) $(ASSET_OUT)
-
+HOOK_REQ_FILES = $(wildcard $(HOOKS_DIR)/*)
+HOOK_TAR_FILES = $(HOOK_REQ_FILES:$(HOOKS_DIR)%=$(GIT_HOOKS_DIR)%)
 LOGFILE = $(VAR_DIR)/tools_log.txt
 
 # --------------------------------------------------------------
@@ -98,6 +101,8 @@ codestyle: ## Run code formatter tools (prettier, stylelint, php-cs-fixer)
 analysis: ## Run psalm static analyzer
 	./vendor/bin/psalm --config $(TOOL_CONFIG_DIR)/psalm.xml
 
+hooks: $(HOOK_TAR_FILES) ## Link the hooks into .git/hooks
+
 clean: ## Remove all temporary files
 	@echo "Start cleanup..."
 	rm -rf $(TEMPORARY)
@@ -115,9 +120,16 @@ fixtures: $(FIXTURE_MARK) ## Apply doctrine fixtures
 deploy: ## Deploy this project using ansible 
 	ansible-playbook $(ANSIBLE_DIR)/$(PLAYBOOK) -i $(INVENTORY_DIR)/$(INVENTORY) -K
 
+
 # --------------------------------------------------------------
 # Helper targets
 # --------------------------------------------------------------
+
+# link the hooks into .git/hooks
+$(GIT_HOOKS_DIR)/%: $(HOOKS_DIR)/%
+	echo "Link $< to $@... \c"
+	ln -b $< $@
+	echo "Done"
 
 # run composer
 $(PHP_DEPS): composer.json

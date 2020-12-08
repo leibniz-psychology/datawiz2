@@ -175,8 +175,8 @@ $(FIXTURE_MARK): $(MIGRATION_MARK) $(FIXTURES_DIR)/*.php | $(MARK_DIR) $(SCHEMA_
 # This should only rerun, if your entities change
 $(MIGRATION_MARK): $(ENTITY_DIR)/*.php | $(MARK_DIR) $(SCHEMA_MARK)
 	echo "Apply Migrations... \c"
-	./bin/console doctrine:migrations:diff -n -q --allow-empty-diff --env=$(ENV)
-	./bin/console doctrine:migrations:migrate -n -q --allow-no-migration --env=$(ENV)
+	./bin/console doctrine:migrations:diff -n -q --allow-empty-diff --env=$(ENV) >> $(LOGFILE)
+	./bin/console doctrine:migrations:migrate -n -q --allow-no-migration --env=$(ENV) >> $(LOGFILE)
 	touch $@
 	echo "Done"
 

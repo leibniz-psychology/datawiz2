@@ -73,22 +73,38 @@ LOGFILE = $(VAR_DIR)/tools_log.txt
 .DELETE_ON_ERROR:
 
 # Thanks to Romain Gautier for his slides from symfony live 2018 providing this ->
-##-----Developer Interface-------
+##--------Developer Interface----
 help: ## Print this help text
 	grep -E '(^[a-zA-Z_]+:.*?##.*$$)|(^##)' $(SELF) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
 
 debug: ## Print all information for debugging the makefile
 	echo "Following is marked for the clean target: $(TEMPORARY)"
 	echo "Directories made by make: $(ALL_DIRS)"
+	echo "Hooks detected: $(HOOK_REQ_FILES)"
 
-log: ## Print the logfile created by this makefile
-	cat $(LOGFILE)
-
-##-----General-------------------
-install: $(ALL_DIRS) $(JS_DEPS) $(PHP_DEPS) $(FIXTURE_MARK) ## Run all tasks necessary to run
+##--------General----------------
+install: $(ALL_DIRS) $(JS_DEPS) $(PHP_DEPS) $(FIXTURE_MARK) ## Run all tasks necessary to run the application
 
 run: $(MIGRATION_MARK) $(FIXTURE_MARK) $(ASSET_OUT) $(HOSTS_FILE) ## Apply all Symfony targets and run the application
 	symfony serve
+
+deploy: ## Deploy this project using ansible 
+	ansible-playbook $(ANSIBLE_DIR)/$(PLAYBOOK) -i $(INVENTORY_DIR)/$(INVENTORY) -K
+
+clean: ## Remove all temporary files
+	@echo "Start cleanup..."
+	rm -rf $(TEMPORARY)
+	@echo "This removed the following:"
+	@echo $(sort $(TEMPORARY))
+
+##--------Symfony----------------
+assets: $(ASSET_OUT) ## Compile static assets using webpack
+
+migrations: $(MIGRATION_MARK) ## Generate and apply a doctrine migration
+
+fixtures: $(FIXTURE_MARK) ## Apply doctrine fixtures
+
+##--------Code Quality-----------
 
 tests: ## Run all tests using phpunit
 	./bin/phpunit -c $(TOOL_CONFIG_DIR)/phpunit.xml.dist
@@ -102,24 +118,6 @@ analysis: ## Run psalm static analyzer
 	./vendor/bin/psalm --config $(TOOL_CONFIG_DIR)/psalm.xml
 
 hooks: $(HOOK_TAR_FILES) ## Link the hooks into .git/hooks
-
-clean: ## Remove all temporary files
-	@echo "Start cleanup..."
-	rm -rf $(TEMPORARY)
-	@echo "This removed the following:"
-	@echo $(sort $(TEMPORARY))
-
-##-----Symfony-------------------
-assets: $(ASSET_OUT) ## Compile static assets using webpack
-
-migrations: $(MIGRATION_MARK) ## Generate and apply a doctrine migration
-
-fixtures: $(FIXTURE_MARK) ## Apply doctrine fixtures
-
-##-----Deployment----------------
-deploy: ## Deploy this project using ansible 
-	ansible-playbook $(ANSIBLE_DIR)/$(PLAYBOOK) -i $(INVENTORY_DIR)/$(INVENTORY) -K
-
 
 # --------------------------------------------------------------
 # Helper targets

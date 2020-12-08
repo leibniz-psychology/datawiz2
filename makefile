@@ -64,7 +64,7 @@ LOGFILE = $(VAR_DIR)/tools_log.txt
 .SILENT: 
 # Those are all commands of the developer interface
 # Everything under phony will run even if a file with that name exists
-.PHONY: help debug log install run tests clean assets migrations fixtures deploy
+.PHONY: help debug install run tests clean assets migrations fixtures deploy codestyle analysis
 
 # The target used, if you call just make without any argument
 .DEFAULT_GOAL := help

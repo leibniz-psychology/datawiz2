@@ -1,0 +1,46 @@
+# Those files signal different states of the sqlite file
+MARK_DIR = $(TOOLS_DIR)/markers
+SCHEMA_MARK = $(MARK_DIR)/schema
+FIXTURE_MARK = $(MARK_DIR)/fixture
+MIGRATION_MARK = $(MARK_DIR)/migration
+ASSET_IN = $(SOURCE_DIR)/View/Assets
+ASSET_OUT = ./public/build
+##--------Symfony----------------
+assets: $(ASSET_OUT) ## Compile static assets using webpack
+
+database: $(SCHEMA_MARK) ## Initialize the database
+
+migrations: $(MIGRATION_MARK) ## Generate and apply a doctrine migration
+
+fixtures: $(FIXTURE_MARK) ## Apply doctrine fixtures
+
+# rebuild static assets if the asset folder has changes
+$(ASSET_OUT): $(ASSET_IN)/*
+	echo "Running Webpack... \c"
+	npm run-script dev
+	echo "Done"
+
+# This creates the sqlite database for development and applies the schema according to current entity mapping
+$(SCHEMA_MARK):
+	echo "Creating new Database and Schema... \c"
+	./bin/console doctrine:database:create -q --env=$(ENV)
+	./bin/console doctrine:schema:create -q --env=$(ENV)
+	touch $@
+	echo "Done"
+
+# With the schema up to date, the fixture can be loaded
+# This should only rerun, if the fixture files change
+$(FIXTURE_MARK): $(MIGRATION_MARK) $(FIXTURES_DIR)/*.php | $(MARK_DIR) $(SCHEMA_MARK)
+	echo "Loading Fixtures... \c"
+	./bin/console doctrine:fixture:load -n --env=$(ENV)
+	touch $@
+	echo "Done"
+
+# When your entities change, your schema needs to adapt to those changes
+# This should only rerun, if your entities change
+$(MIGRATION_MARK): $(ENTITY_DIR)/*.php | $(MARK_DIR) $(SCHEMA_MARK)
+	echo "Apply Migrations... \c"
+	./bin/console doctrine:migrations:diff -n -q --allow-empty-diff --env=$(ENV)
+	./bin/console doctrine:migrations:migrate -n -q --allow-no-migration --env=$(ENV)
+	touch $@
+	echo "Done"

@@ -1,0 +1,24 @@
+HOOKS_DIR = $(TOOLS_DIR)/hooks
+GIT_HOOKS_DIR = ./.git/hooks
+HOOK_REQ_FILES = $(wildcard $(HOOKS_DIR)/*)
+HOOK_TAR_FILES = $(HOOK_REQ_FILES:$(HOOKS_DIR)%=$(GIT_HOOKS_DIR)%)
+
+##--------Code Quality-----------
+tests: ## Run all tests using phpunit
+	./bin/phpunit -c $(TOOL_CONFIG_DIR)/phpunit.xml.dist
+
+codestyle: ## Run code formatter tools (prettier, stylelint, php-cs-fixer)
+	./bin/php-cs-fixer fix $(SOURCE_DIR) $(TEST_DIR) --config $(TOOL_CONFIG_DIR)/php_cs.dist
+	npx stylelint --fix $(ASSET_IN)
+	npx prettier -w $(ASSET_IN)
+
+analysis: ## Run psalm static analyzer
+	./vendor/bin/psalm --config $(TOOL_CONFIG_DIR)/psalm.xml
+
+hooks: $(HOOK_TAR_FILES) ## Link the hooks into .git/hooks
+
+# link the hooks into .git/hooks
+$(GIT_HOOKS_DIR)/%: $(HOOKS_DIR)/%
+	echo "Link $< to $@... \c"
+	ln -b $< $@
+	echo "Done"

@@ -1,8 +1,6 @@
 -include makevars
 # reference to makevars within the targets
 MAKEVAR_FILE = makevars
-# save the name of this file - important for help target
-SELF = $(firstword $(MAKEFILE_LIST))
 
 # --------------------------------------------------------------
 # Variables
@@ -24,8 +22,6 @@ PLAYBOOK ?= $(ENV).yaml
 # Code paths - used to detect changes or to place generated files
 TOOLS_DIR = ./.tools
 TOOL_CONFIG_DIR = $(TOOLS_DIR)/config
-HOOKS_DIR = $(TOOLS_DIR)/hooks
-GIT_HOOKS_DIR = ./.git/hooks
 SOURCE_DIR = ./source
 TEST_DIR = ./tests
 DOMAIN_DIR = $(SOURCE_DIR)/Domain
@@ -36,26 +32,12 @@ MIG_DIR = $(STATE_DIR)/Migrations
 DEV_STATE_DIR = $(MIG_DIR)/Development
 ASSET_IN = $(SOURCE_DIR)/View/Assets
 # Infrastructure as Code
-ANSIBLE_DIR = ./infrastructure
-INVENTORY_DIR = $(ANSIBLE_DIR)/inventory
-# Output directories - not maintained by the developer
-MARK_DIR = $(TOOLS_DIR)/markers
 VAR_DIR = ./var
 JS_DEPS = ./node_modules
 PHP_DEPS = ./vendor
-ASSET_OUT = ./public/build
-
-# Those files signal different states of the sqlite file
-SCHEMA_MARK = $(MARK_DIR)/schema
-FIXTURE_MARK = $(MARK_DIR)/fixture
-MIGRATION_MARK = $(MARK_DIR)/migration
 
 ALL_DIRS = $(MARK_DIR) $(DEV_STATE_DIR) $(VAR_DIR)
 TEMPORARY = $(JS_DEPS) $(PHP_DEPS) $(DEV_STATE_DIR) $(VAR_DIR) $(MARK_DIR) $(ASSET_OUT)
-HOOK_REQ_FILES = $(wildcard $(HOOKS_DIR)/*)
-HOOK_TAR_FILES = $(HOOK_REQ_FILES:$(HOOKS_DIR)%=$(GIT_HOOKS_DIR)%)
-LOGFILE = $(VAR_DIR)/tools_log.txt
-
 # --------------------------------------------------------------
 # Developer Interface
 # --------------------------------------------------------------
@@ -72,10 +54,20 @@ LOGFILE = $(VAR_DIR)/tools_log.txt
 # If something went wrong, delete the broken parts
 .DELETE_ON_ERROR:
 
+
+# Import after all vars set is important to have them in the recipes
+-include .tools/recipes/symfony.makerecipe
+-include .tools/recipes/quality.makerecipe
+-include .tools/recipes/deployment.makerecipe
+
+
 # Thanks to Romain Gautier for his slides from symfony live 2018 providing this ->
 ##--------Developer Interface----
 help: ## Print this help text
-	grep -E '(^[a-zA-Z_]+:.*?##.*$$)|(^##)' $(SELF) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
+	$(foreach FILE, $(MAKEFILE_LIST), grep -E '(^[a-zA-Z_]+:.*?##.*$$)|(^##)' $(FILE) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/';)
+
+files: ## echo all files imported
+	echo $(MAKEFILE_LIST)
 
 debug: ## Print all information for debugging the makefile
 	echo "Following is marked for the clean target: $(TEMPORARY)"
@@ -88,93 +80,27 @@ install: $(ALL_DIRS) $(JS_DEPS) $(PHP_DEPS) $(FIXTURE_MARK) ## Run all tasks nec
 run: $(MIGRATION_MARK) $(FIXTURE_MARK) $(ASSET_OUT) $(HOSTS_FILE) ## Apply all Symfony targets and run the application
 	symfony serve
 
-deploy: ## Deploy this project using ansible 
-	ansible-playbook $(ANSIBLE_DIR)/$(PLAYBOOK) -i $(INVENTORY_DIR)/$(INVENTORY) -K
-
 clean: ## Remove all temporary files
 	@echo "Start cleanup..."
 	rm -rf $(TEMPORARY)
 	@echo "This removed the following:"
 	@echo $(sort $(TEMPORARY))
 
-##--------Symfony----------------
-assets: $(ASSET_OUT) ## Compile static assets using webpack
-
-migrations: $(MIGRATION_MARK) ## Generate and apply a doctrine migration
-
-fixtures: $(FIXTURE_MARK) ## Apply doctrine fixtures
-
-##--------Code Quality-----------
-
-tests: ## Run all tests using phpunit
-	./bin/phpunit -c $(TOOL_CONFIG_DIR)/phpunit.xml.dist
-
-codestyle: ## Run code formatter tools (prettier, stylelint, php-cs-fixer)
-	./bin/php-cs-fixer fix $(SOURCE_DIR) $(TEST_DIR) --config $(TOOL_CONFIG_DIR)/php_cs.dist
-	npx stylelint --fix $(ASSET_IN)
-	npx prettier -w $(ASSET_IN)
-
-analysis: ## Run psalm static analyzer
-	./vendor/bin/psalm --config $(TOOL_CONFIG_DIR)/psalm.xml
-
-hooks: $(HOOK_TAR_FILES) ## Link the hooks into .git/hooks
-
-# --------------------------------------------------------------
-# Helper targets
-# --------------------------------------------------------------
-
-# link the hooks into .git/hooks
-$(GIT_HOOKS_DIR)/%: $(HOOKS_DIR)/%
-	echo "Link $< to $@... \c"
-	ln -b $< $@
-	echo "Done"
-
 # run composer
 $(PHP_DEPS): composer.json
 	echo "Running composer... \c"
-	composer install -q >> $(LOGFILE)
+	composer install -q
 	echo "Done"
 
 # run npm
 $(JS_DEPS): package.json
 	echo "Running npm... \c"
-	npm install --no-audit --no-fund --no-update-notifier --no-progress >> $(LOGFILE)
+	npm install --no-audit --no-fund --no-update-notifier --no-progress
 	echo "Done"
 
 # create all the directories needed
 $(ALL_DIRS):
 	echo "Creating $@... \c"
 	mkdir -p $@
-	echo "Done"
-
-# rebuild static assets if the asset folder has changes
-$(ASSET_OUT): $(ASSET_IN)/*
-	echo "Running Webpack... \c"
-	npm run-script dev >> $(LOGFILE)
-	echo "Done"
-
-# This creates the sqlite database for development and applies the schema according to current entity mapping
-$(SCHEMA_MARK):
-	echo "Creating new Database and Schema... \c"
-	./bin/console doctrine:database:create -q --env=$(ENV) >> $(LOGFILE)
-	./bin/console doctrine:schema:create -q --env=$(ENV) >> $(LOGFILE)
-	touch $@
-	echo "Done"
-
-# With the schema up to date, the fixture can be loaded
-# This should only rerun, if the fixture files change
-$(FIXTURE_MARK): $(MIGRATION_MARK) $(FIXTURES_DIR)/*.php | $(MARK_DIR) $(SCHEMA_MARK)
-	echo "Loading Fixtures... \c"
-	./bin/console doctrine:fixture:load -n --env=$(ENV) >> $(LOGFILE)
-	touch $@
-	echo "Done"
-
-# When your entities change, your schema needs to adapt to those changes
-# This should only rerun, if your entities change
-$(MIGRATION_MARK): $(ENTITY_DIR)/*.php | $(MARK_DIR) $(SCHEMA_MARK)
-	echo "Apply Migrations... \c"
-	./bin/console doctrine:migrations:diff -n -q --allow-empty-diff --env=$(ENV) >> $(LOGFILE)
-	./bin/console doctrine:migrations:migrate -n -q --allow-no-migration --env=$(ENV) >> $(LOGFILE)
-	touch $@
 	echo "Done"
 

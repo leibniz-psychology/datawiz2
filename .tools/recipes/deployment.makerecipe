@@ -1,0 +1,6 @@
+ANSIBLE_DIR = ./infrastructure
+INVENTORY_DIR = $(ANSIBLE_DIR)/inventory
+
+##--------Deployment-------------
+deploy: ## Deploy this project using ansible 
+	ansible-playbook $(ANSIBLE_DIR)/$(PLAYBOOK) -i $(INVENTORY_DIR)/$(INVENTORY) -K

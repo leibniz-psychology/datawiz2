@@ -78,6 +78,7 @@ debug: ## Print all information for debugging the makefile
 install: $(ALL_DIRS) $(JS_DEPS) $(PHP_DEPS) $(FIXTURE_MARK) ## Run all tasks necessary to run the application
 
 run: $(MIGRATION_MARK) $(FIXTURE_MARK) $(ASSET_OUT) $(HOSTS_FILE) ## Apply all Symfony targets and run the application
+	./bin/console cache:clear
 	symfony serve
 
 clean: ## Remove all temporary files

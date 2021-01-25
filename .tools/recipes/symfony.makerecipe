@@ -1,8 +1,8 @@
 # Those files signal different states of the sqlite file
 MARK_DIR = $(TOOLS_DIR)/markers
-SCHEMA_MARK = $(MARK_DIR)/schema
-FIXTURE_MARK = $(MARK_DIR)/fixture
-MIGRATION_MARK = $(MARK_DIR)/migration
+SCHEMA_MARK = $(MARK_DIR)/schema.mark
+FIXTURE_MARK = $(MARK_DIR)/fixture.mark
+MIGRATION_MARK = $(MARK_DIR)/migration.mark
 ASSET_IN = $(SOURCE_DIR)/View/Assets
 ASSET_OUT = ./public/build
 ##--------Symfony----------------

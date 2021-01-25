@@ -35,15 +35,13 @@ ASSET_IN = $(SOURCE_DIR)/View/Assets
 VAR_DIR = ./var
 JS_DEPS = ./node_modules
 PHP_DEPS = ./vendor
-
-ALL_DIRS = $(MARK_DIR) $(DEV_STATE_DIR) $(VAR_DIR)
-TEMPORARY = $(JS_DEPS) $(PHP_DEPS) $(DEV_STATE_DIR) $(VAR_DIR) $(MARK_DIR) $(ASSET_OUT)
 # --------------------------------------------------------------
 # Developer Interface
 # --------------------------------------------------------------
 
 # Don't print the commands, only their output
 .SILENT: 
+
 # Those are all commands of the developer interface
 # Everything under phony will run even if a file with that name exists
 .PHONY: help debug install run tests clean assets migrations fixtures deploy codestyle analysis
@@ -54,12 +52,10 @@ TEMPORARY = $(JS_DEPS) $(PHP_DEPS) $(DEV_STATE_DIR) $(VAR_DIR) $(MARK_DIR) $(ASS
 # If something went wrong, delete the broken parts
 .DELETE_ON_ERROR:
 
-
 # Import after all vars set is important to have them in the recipes
 -include .tools/recipes/symfony.makerecipe
 -include .tools/recipes/quality.makerecipe
 -include .tools/recipes/deployment.makerecipe
-
 
 # Thanks to Romain Gautier for his slides from symfony live 2018 providing this ->
 ##--------Developer Interface----
@@ -70,8 +66,6 @@ files: ## echo all files imported
 	echo $(MAKEFILE_LIST)
 
 debug: ## Print all information for debugging the makefile
-	echo "Following is marked for the clean target: $(TEMPORARY)"
-	echo "Directories made by make: $(ALL_DIRS)"
 	echo "Hooks detected: $(HOOK_REQ_FILES)"
 
 ##--------General----------------
@@ -81,11 +75,10 @@ run: $(MIGRATION_MARK) $(FIXTURE_MARK) $(ASSET_OUT) $(HOSTS_FILE) ## Apply all S
 	./bin/console cache:clear
 	symfony serve
 
+# This should dynamically run tasks
 clean: ## Remove all temporary files
-	@echo "Start cleanup..."
-	rm -rf $(TEMPORARY)
-	@echo "This removed the following:"
-	@echo $(sort $(TEMPORARY))
+	./bin/console cache:clear
+	rm -rf $(MARK_DIR)/*.mark $(PHP_DEPS) $(JS_DEPS) $(DEV_STATE)/*.php $(VAR_DIR)/data.db
 
 # run composer
 $(PHP_DEPS): composer.json
@@ -97,11 +90,5 @@ $(PHP_DEPS): composer.json
 $(JS_DEPS): package.json
 	echo "Running npm... \c"
 	npm install --no-audit --no-fund --no-update-notifier --no-progress
-	echo "Done"
-
-# create all the directories needed
-$(ALL_DIRS):
-	echo "Creating $@... \c"
-	mkdir -p $@
 	echo "Done"
 

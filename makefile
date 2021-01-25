@@ -78,7 +78,7 @@ run: $(MIGRATION_MARK) $(FIXTURE_MARK) $(ASSET_OUT) $(HOSTS_FILE) ## Apply all S
 # This should dynamically run tasks
 clean: ## Remove all temporary files
 	./bin/console cache:clear
-	rm -rf $(MARK_DIR)/*.mark $(PHP_DEPS) $(JS_DEPS) $(DEV_STATE)/*.php $(VAR_DIR)/data.db
+	rm -rf $(MARK_DIR)/*.mark $(PHP_DEPS) $(JS_DEPS) $(DEV_STATE)/*.php $(VAR_DIR)/data.db .php_cs.cache
 
 # run composer
 $(PHP_DEPS): composer.json

@@ -19,7 +19,7 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 /**
  * This authenticator is ONLY for the development environment
- * There are no security checks at all, so double checks it's usage.
+ * There are no security checks beside CRSF Token, so double check the usage.
  *
  * Class DevelopmentAuthenticator
  */
@@ -27,7 +27,8 @@ class DevelopmentAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
 
-    public const LOGIN_ROUTE = 'dw_dev_login';
+    private const LOGIN_ROUTE = 'Security-login';
+    private const HOMEPAGE_ROUTE = 'Studies-index';
 
     private $urlGenerator;
     private $csrfTokenManager;
@@ -95,7 +96,6 @@ class DevelopmentAuthenticator extends AbstractFormLoginAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        // TODO: Redirect to homepage as soon as you have one
-        return new RedirectResponse($this->urlGenerator->generate('dw_hello'));
+        return new RedirectResponse($this->urlGenerator->generate(self::HOMEPAGE_ROUTE));
     }
 }

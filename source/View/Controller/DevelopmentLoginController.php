@@ -2,40 +2,34 @@
 
 namespace App\View\Controller;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class DevelopmentLoginController extends AbstractController
 {
-    private $entitymanager;
+    private $authenticationUtils;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(AuthenticationUtils $authenticationUtils)
     {
-        $this->entitymanager = $entityManager;
+        $this->authenticationUtils = $authenticationUtils;
     }
 
-    /**
-     * @Route("/login", name="dw_dev_login")
-     */
-    public function login(AuthenticationUtils $authenticationUtils)
+    public function loginAction(): Response
     {
         // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
+        $error = $this->authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
+        $lastUsername = $this->authenticationUtils->getLastUsername();
 
-        return $this->render('Pages/developmentlogin.html.twig',
+        return $this->render('Pages/Security/developmentlogin.html.twig',
         [
             'last_username' => $lastUsername,
             'error' => $error,
         ]);
     }
 
-    /**
-     * @Route("/logout", name="dw_dev_logout")
-     */
-    public function logout()
+    public function logoutAction(): Response
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }

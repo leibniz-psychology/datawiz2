@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class DevelopmentLoginController extends NamingAwareController
+class DevelopmentLoginController extends AbstractController
 {
     private $entitymanager;
 

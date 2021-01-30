@@ -1,6 +1,23 @@
 index:
-    path: /
+    path: /index
     controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
     defaults:
-      route: dw_hello
+      route: Studies-index
       permanent: true
+
+root:
+  path: /
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+  defaults:
+    route: index
+    permanent: true
+
+# Add /web/ before all routes that render a template
+pages:
+  resource: './routes/pages.yaml'
+  prefix: pages
+
+# Add /api/ before all routes that are purely for api purpose
+api:
+  resource: './routes/api.yaml'
+  prefix: api

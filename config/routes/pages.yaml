@@ -1,0 +1,27 @@
+Studies-index:
+  path: /studies
+  controller: App\View\Controller\StudyController::indexAction
+
+Studies-new:
+  path: /studies/new
+  controller: App\View\Controller\StudyController::newAction
+
+Studies-documentation:
+  path: /studies/documentation
+  controller: App\View\Controller\StudyController::documentationAction
+
+Studies-admin:
+  path: /studies/admin
+  controller: App\View\Controller\StudyController::adminAction
+
+Studies-theory:
+  path: /studies/theory
+  controller: App\View\Controller\StudyController::theoryAction
+
+Studies-design:
+  path: /studies/design
+  controller: App\View\Controller\StudyController::designAction
+
+Studies-sample:
+  path: /studies/sample
+  controller: App\View\Controller\StudyController::sampleAction

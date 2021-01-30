@@ -1,0 +1,25 @@
+security:
+    providers:
+        users:
+            entity:
+                # the class of the entity that represents users
+                class: 'App\Domain\Model\DataWizUser'
+                # the property to query by - e.g. username, email, etc
+                property: 'uuid'
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: lazy
+            guard:
+                authenticators:
+                    - App\Security\Authentication\DevelopmentAuthenticator
+
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true

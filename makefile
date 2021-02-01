@@ -38,15 +38,20 @@ help: ## Print this help text
 ##--------Developer Interface----
 install: | node_modules vendor .git/hooks/commit-msg .git/hooks/pre-commit ## Install all dependencies
 
-local-instance: install var/data.db ./public/build ## Start DataWiz locally
-	./bin/console cache:clear > /dev/null 2>&1
-	#TODO: this should become like a watch command in the future
-	symfony serve
+run: install var/data.db ## Start the local development server
+	symfony run -d npm run-script watch
+	symfony server:start -d
 
-development-instance: ## Deploy DataWiz on a development server
+stop: ## Stop the local development server
+	symfony server:stop
+
+status: ## Check if a local development server is running
+	symfony server:status
+
+development-instance: ## Deploy DataWiz on a remote development server
 	echo 'smart ansible call'
 
-production-instance: ## Deploy DataWiz to production
+production-instance: ## Deploy DataWiz to production server
 	echo 'smart ansible call'
 
 # This should dynamically run tasks

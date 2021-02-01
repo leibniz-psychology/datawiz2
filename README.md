@@ -32,7 +32,8 @@ if you encouter any problems running a development instance of DataWiz.
 With those in your `$PATH` you can run the following commands to see a running application:
 
 ```sh
-make local-instance
+make run # start developing with webpack live recompile
+make stop # stop the local web server 
 ```
 
 ## Deployment

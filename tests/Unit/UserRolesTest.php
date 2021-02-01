@@ -38,4 +38,16 @@ class UserRolesTest extends TestCase
         $this->assertStringEndsWith('USER', $this->normalUser->getRoles()[0]);
         $this->assertStringEndsWith('ADMIN', $this->adminUser->getRoles()[1]);
     }
+
+    public function testUserPromotion()
+    {
+        $this->normalUser->promotion();
+        $this->assertCount(2, $this->normalUser->getRoles());
+    }
+
+    public function testUserDemotion()
+    {
+        $this->adminUser->demotion();
+        $this->assertCount(1, $this->normalUser->getRoles());
+    }
 }

@@ -22,16 +22,21 @@ class DataWizUser implements UserInterface
      */
     private $roles;
 
+    public static $rolesDefinition = [
+        'user' => 'ROLE_USER',
+        'admin' => 'ROLE_ADMIN',
+    ];
+
     public function __construct($uuid, bool $admin = false)
     {
         $this->uuid = $uuid;
         $this->roles = [];
 
         // Ensure at least one valid role on each user
-        $this->roles[] = 'ROLE_USER';
+        $this->roles[] = self::$rolesDefinition['user'];
         // Create an admin if needed
         if ($admin) {
-            $this->roles[] = 'ROLE_ADMIN';
+            $this->roles[] = self::$rolesDefinition['admin'];
         }
     }
 
@@ -59,5 +64,15 @@ class DataWizUser implements UserInterface
     public function eraseCredentials()
     {
         throw new \Exception('DataWiz uses a SSO and eraseCredentials() should therefore never be called');
+    }
+
+    public function promotion()
+    {
+        $this->roles[] = self::$rolesDefinition['admin'];
+    }
+
+    public function demotion()
+    {
+        array_diff($this->getRoles(), [self::$rolesDefinition['admin']]);
     }
 }

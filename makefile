@@ -48,6 +48,9 @@ stop: ## Stop the local development server
 status: ## Check if a local development server is running
 	symfony server:status
 
+logs: ## Check the symfony cli logs
+	symfony server:log
+
 development-instance: ## Deploy DataWiz on a remote development server
 	echo 'smart ansible call'
 

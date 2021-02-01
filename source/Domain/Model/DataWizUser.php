@@ -22,31 +22,33 @@ class DataWizUser implements UserInterface
      */
     private $roles;
 
-    public function __construct($uuid)
+    public function __construct($uuid, bool $admin = false)
     {
         $this->uuid = $uuid;
         $this->roles = [];
+
+        // Ensure at least one valid role on each user
+        $this->roles[] = 'ROLE_USER';
+        // Create an admin if needed
+        if ($admin) {
+            $this->roles[] = 'ROLE_ADMIN';
+        }
     }
 
     public function getRoles()
     {
-        // Ensure at least one valid role on each user
-        if (!in_array('ROLE_USER', $this->roles, true)) {
-            $this->roles[] = 'ROLE_USER';
-        }
-
         // better be sure than sorry
         return array_unique($this->roles);
     }
 
     public function getPassword()
     {
-        // should never be called
+        throw new \Exception('DataWiz uses a SSO and getPassword() should therefore never be called');
     }
 
     public function getSalt()
     {
-        // should never be called
+        throw new \Exception('DataWiz uses a SSO and getSalt() should therefore never be called');
     }
 
     public function getUsername()
@@ -56,6 +58,6 @@ class DataWizUser implements UserInterface
 
     public function eraseCredentials()
     {
-        // should never be called
+        throw new \Exception('DataWiz uses a SSO and eraseCredentials() should therefore never be called');
     }
 }

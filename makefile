@@ -1,23 +1,7 @@
--include makevars
-# reference to makevars within the targets
-MAKEVAR_FILE = makevars
-
 # --------------------------------------------------------------
 # Variables
 # --------------------------------------------------------------
-
-# Variable defaults - can be changed with your own makevars file
-
-# Controls for which environment the commands run - never use prod
-ENV ?= dev
-# This is required with a localhost definition to run symfony cli - we should fail if it is missing
-HOSTS_FILE ?= /etc/hosts
-# Which inventory file will you use - a local.ini or a remote.ini
-# You can create your own inventories and use them as option here
-INVENTORY ?= $(ENV).ini
-# Playbook used against the selected hosts found in INVENTORY
-PLAYBOOK ?= $(ENV).yaml
-
+ENV ?= local
 # Paths - should not be changed without reconfiguration
 # Code paths - used to detect changes or to place generated files
 TOOLS_DIR = ./.tools
@@ -29,12 +13,7 @@ ENTITY_DIR = $(DOMAIN_DIR)/Model
 STATE_DIR = $(DOMAIN_DIR)/State
 FIXTURES_DIR = $(STATE_DIR)/Fixtures
 MIG_DIR = $(STATE_DIR)/Migrations
-DEV_STATE_DIR = $(MIG_DIR)/Development
-ASSET_IN = $(SOURCE_DIR)/View/Assets
-# Infrastructure as Code
-VAR_DIR = ./var
-JS_DEPS = ./node_modules
-PHP_DEPS = ./vendor
+ASSETS = $(SOURCE_DIR)/View/Assets
 # --------------------------------------------------------------
 # Developer Interface
 # --------------------------------------------------------------
@@ -44,7 +23,7 @@ PHP_DEPS = ./vendor
 
 # Those are all commands of the developer interface
 # Everything under phony will run even if a file with that name exists
-.PHONY: help debug install run tests clean assets migrations fixtures deploy codestyle analysis
+.PHONY: help install local-instance development-instance production-instance clean tests codestyle analysis database diff migrate fixtures assets
 
 # The target used, if you call just make without any argument
 .DEFAULT_GOAL := help
@@ -52,43 +31,108 @@ PHP_DEPS = ./vendor
 # If something went wrong, delete the broken parts
 .DELETE_ON_ERROR:
 
-# Import after all vars set is important to have them in the recipes
--include .tools/recipes/symfony.makerecipe
--include .tools/recipes/quality.makerecipe
--include .tools/recipes/deployment.makerecipe
-
 # Thanks to Romain Gautier for his slides from symfony live 2018 providing this ->
-##--------Developer Interface----
 help: ## Print this help text
-	$(foreach FILE, $(MAKEFILE_LIST), grep -E '(^[a-zA-Z_]+:.*?##.*$$)|(^##)' $(FILE) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/';)
+	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/';
 
-files: ## echo all files imported
-	echo $(MAKEFILE_LIST)
+##--------Developer Interface----
+install: | node_modules vendor .git/hooks/commit-msg .git/hooks/pre-commit ## Install all dependencies
 
-debug: ## Print all information for debugging the makefile
-	echo "Hooks detected: $(HOOK_REQ_FILES)"
-
-##--------General----------------
-install: $(ALL_DIRS) $(JS_DEPS) $(PHP_DEPS) $(FIXTURE_MARK) ## Run all tasks necessary to run the application
-
-run: $(MIGRATION_MARK) $(FIXTURE_MARK) $(ASSET_OUT) $(HOSTS_FILE) ## Apply all Symfony targets and run the application
-	./bin/console cache:clear
+local-instance: install var/data.db ./public/build ## Start DataWiz locally
+	./bin/console cache:clear > /dev/null 2>&1
+	#TODO: this should become like a watch command in the future
 	symfony serve
+
+development-instance: ## Deploy DataWiz on a development server
+	echo 'smart ansible call'
+
+production-instance: ## Deploy DataWiz to production
+	echo 'smart ansible call'
 
 # This should dynamically run tasks
 clean: ## Remove all temporary files
-	./bin/console cache:clear
-	rm -rf $(MARK_DIR)/*.mark $(PHP_DEPS) $(JS_DEPS) $(DEV_STATE)/*.php $(VAR_DIR)/data.db .php_cs.cache
+	echo "Running clean up..."
+	rm -rf vendor node_modules $(MIG_DIR)/Development/*.php $(MIG_DIR)/Test/*.php ./public/build var .php_cs.cache
+	echo "All temporary files deleted"
 
-# run composer
-$(PHP_DEPS): composer.json
+##--------Code Quality-----------
+tests: ## Run all tests using phpunit
+	./bin/phpunit -c $(TOOL_CONFIG_DIR)/phpunit.xml.dist
+
+codestyle: ## Run code formatter tools (prettier, stylelint, php-cs-fixer)
+	./bin/php-cs-fixer fix $(SOURCE_DIR) $(TEST_DIR) --config $(TOOL_CONFIG_DIR)/php_cs.dist
+	npx stylelint --fix $(ASSETS)
+	npx prettier -w $(ASSETS)
+
+analysis: ## Run psalm static analyzer
+	./vendor/bin/psalm --config $(TOOL_CONFIG_DIR)/psalm.xml
+
+##--------Symfony----------------
+database: ## Create a database and schema
+	echo "Creating new Database and Schema if non exists... \c"
+	./bin/console doctrine:database:create -q --if-not-exists --env=$(ENV)
+	./bin/console doctrine:schema:create -q --env=$(ENV)
+	echo "Done"
+
+diff: ## Create a new migration
+	echo "Creating Migration... \c"
+	./bin/console doctrine:migrations:diff -n -q --allow-empty-diff --env=$(ENV)
+	echo "Done"
+
+migrate: ## Apply all migrations
+	echo "Applying Migration... \c"
+	./bin/console doctrine:migrations:migrate -n -q --allow-no-migration --env=$(ENV)
+	echo "Done"
+
+fixtures: ## Apply fixtures
+	echo "Loading Fixtures... \c"
+	./bin/console doctrine:fixture:load -n -q --env=$(ENV)
+	echo "Done"
+
+assets: ./public/build ## Process static assets
+
+#------------------------------------------------------------------------------------------------------------
+
+# This creates the sqlite database for development
+# and applies the schema according to current entity mapping
+# and loads the fixtures
+var/data.db: $(ENTITY_DIR)/*.php
+	echo "Removing old database... \c"
+	rm -f $@
+	echo "Done"
+	echo "Creating new Database and Schema... \c"
+	./bin/console doctrine:database:create -q --env=local
+	./bin/console doctrine:schema:create -q --env=local
+	echo "Done"
+	echo "Loading fixtures... \c"
+	./bin/console doctrine:fixture:load -n -q --env=local
+	echo "Done"
+
+# This builds the static assets
+./public/build: $(ASSETS)/*
+	echo "Running Webpack... \c"
+	npm run-script dev > /dev/null 2>&1
+	echo "Done"
+
+# Run composer install without noise
+vendor: composer.json #
 	echo "Running composer... \c"
 	composer install -q
 	echo "Done"
 
-# run npm
-$(JS_DEPS): package.json
+# Run npm install without noise
+node_modules: package.json
 	echo "Running npm... \c"
-	npm install --no-audit --no-fund --no-update-notifier --no-progress
+	npm install --no-audit --no-fund --no-update-notifier --no-progress > /dev/null 2>&1
 	echo "Done"
 
+# Link from .tools to .git to enable hooks
+.git/hooks/commit-msg:
+	echo "Linking commit-msg hook... \c"
+	ln -f .tools/hooks/commit-msg $@
+	echo "Done"
+
+.git/hooks/pre-commit:
+	echo "Linking pre-commit hook... \c"
+	ln -f .tools/hooks/pre-commit $@
+	echo "Done"

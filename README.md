@@ -32,9 +32,7 @@ if you encouter any problems running a development instance of DataWiz.
 With those in your `$PATH` you can run the following commands to see a running application:
 
 ```sh
-make install # will setup everything for you
-# a warning could occur, if you have no migrations yet (very likely)
-make run # will apply all changes and starts a dev server
+make local-instance
 ```
 
 ## Deployment

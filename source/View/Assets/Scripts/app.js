@@ -6,9 +6,12 @@
  */
 
 // any CSS you import will output into a single Style file (app.Style in this case)
-import "../Styles/app.scss";
+import "../Styles/tailwind-base.scss";
+import "../Styles/app-base.scss";
+import "../Styles/tailwind-components.scss";
+import "../Styles/tailwind-utilities.scss";
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 // import $ from 'jquery';
 
-console.log("Hello Webpack Encore! Edit me in Assets/Scripts/app.js");
+// console.log("Hello Webpack Encore! Edit me in Assets/Scripts/app.js");

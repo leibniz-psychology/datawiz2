@@ -43,7 +43,7 @@ Encore
    */
   .cleanupOutputBeforeBuild()
   .enableBuildNotifications()
-  .enableSourceMaps(!Encore.isProduction())
+  // .enableSourceMaps(!Encore.isProduction())
   // enables hashed filenames (e.g. app.abc123.Style)
   .enableVersioning(Encore.isProduction())
 
@@ -55,6 +55,10 @@ Encore
 
   // enables Sass/SCSS support
   .enableSassLoader()
+  // .enableSassLoader((options) => {
+  //   options.sourceMap = true;
+  // }, {})
+
   // enables PostCSS support
   .enablePostCssLoader((options) => {
     options.postcssOptions = {
@@ -63,6 +67,7 @@ Encore
         require("postcss-preset-env")(),
       ],
     };
+    // options.sourceMap = true;
   });
 
 // uncomment if you use TypeScript

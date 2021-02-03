@@ -261,19 +261,15 @@ $RECYCLE.BIN/
 
 ### project specific ####
 
-# Every developer will create his/her own dev database
-# Versioning is pointless, if you can generate them at install
-source/Domain/State/Migrations/Development
-
-# This directory tracks the state of actions which would
-# require one file to have multpile make targets
-.tools/markers
-
-# The user configuration of the makefile should not be shared
-makevars
-
 # Php Code Fixer cache is temporary
 .php_cs.cache
+
+# Config will be found in .tools/config
+# symlinks are temporary
+webpack.config.js
+psalm.xml
+php_cs.dist
+phpunit.xml.dist
 
 ###
 

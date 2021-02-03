@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Security\Authorization;
-
 
 trait AuthorizableDefault
 {
@@ -13,7 +11,7 @@ trait AuthorizableDefault
 
     /**
      * @var string[]
-     * Define all possible roles
+     *               Define all possible roles
      */
     public static $rolesDefinition = [
         'user' => 'ROLE_USER',
@@ -22,9 +20,10 @@ trait AuthorizableDefault
 
     /**
      * @param bool $admin
-     * Helper function to initialize a new user with valid roles array
+     *                    Helper function to initialize a new user with valid roles array
      */
-    private function initializeRoles(bool $admin) {
+    private function initializeRoles(bool $admin)
+    {
         // Ensure at least one valid role on each user
         $this->roles[] = self::$rolesDefinition['user'];
         // Create an admin if needed
@@ -35,7 +34,7 @@ trait AuthorizableDefault
 
     /**
      * @return string[]
-     * Getter for the roles property
+     *                  Getter for the roles property
      */
     public function getRoles(): array
     {
@@ -45,7 +44,7 @@ trait AuthorizableDefault
 
     /**
      * @return void
-     * Promote user to admin
+     *              Promote user to admin
      */
     public function promotion(): void
     {
@@ -54,7 +53,7 @@ trait AuthorizableDefault
 
     /**
      * @return void
-     * Demote admin to normal user
+     *              Demote admin to normal user
      */
     public function demotion(): void
     {

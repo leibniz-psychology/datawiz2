@@ -17,7 +17,7 @@ class UserRolesTest extends TestCase
     }
 
     /**
-     * Expects all toles to start with ROLE_
+     * Expects all toles to start with ROLE_.
      */
     public function testUserRoleFormat()
     {
@@ -40,7 +40,7 @@ class UserRolesTest extends TestCase
     }
 
     /**
-     * Test for all valid roles if there are useable
+     * Test for all valid roles if there are useable.
      */
     public function testUserRoleStrings()
     {
@@ -69,7 +69,8 @@ class UserRolesTest extends TestCase
     /**
      * Do we leak our roles array by accident?
      */
-    public function testIfRolesAreImmutableFromOutside() {
+    public function testIfRolesAreImmutableFromOutside()
+    {
         $roles = $this->normalUser->getRoles(); // has one from init
         $roles[] = 'admin'; // add one
         $roles[] = 'hacker'; // add two - invalid one

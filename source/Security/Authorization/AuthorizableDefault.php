@@ -58,6 +58,6 @@ trait AuthorizableDefault
      */
     public function demotion(): void
     {
-        array_diff($this->getRoles(), [self::$rolesDefinition['admin']]);
+        $this->roles = array_diff($this->roles, [self::$rolesDefinition['admin']]);
     }
 }

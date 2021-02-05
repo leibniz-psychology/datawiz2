@@ -39,7 +39,7 @@ help: ## Print this help text
 install: | node_modules vendor .git/hooks/commit-msg .git/hooks/pre-commit ## Install all dependencies
 
 run: install var/data.db ## Start the local development server
-	symfony run -d npm run-script watch
+	symfony run -d npm run dev-server
 	symfony server:start -d
 
 stop: ## Stop the local development server

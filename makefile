@@ -60,7 +60,7 @@ production-instance: ## Deploy DataWiz to production server
 # This should dynamically run tasks
 clean: ## Remove all temporary files
 	echo "Running clean up..."
-	rm -rf vendor node_modules $(MIG_DIR)/Development/*.php $(MIG_DIR)/Test/*.php ./public/build var .php_cs.cache
+	rm -rf vendor node_modules $(MIG_DIR)/Development/*.php $(MIG_DIR)/Test/*.php ./public/build var .php_cs.cache ./.git/hooks/pre-commit ./.git/hooks/commit-msg
 	echo "All temporary files deleted"
 
 ##--------Code Quality-----------
@@ -123,24 +123,24 @@ var/data.db: $(ENTITY_DIR)/*.php
 	echo "Done"
 
 # Run composer install without noise
-vendor: composer.json #
+./vendor: composer.json
 	echo "Running composer... \c"
 	composer install -q
 	echo "Done"
 
 # Run npm install without noise
-node_modules: package.json
+./node_modules: package.json
 	echo "Running npm... \c"
 	npm install --no-audit --no-fund --no-update-notifier --no-progress > /dev/null 2>&1
 	echo "Done"
 
 # Link from .tools to .git to enable hooks
-.git/hooks/commit-msg:
-	echo "Linking commit-msg hook... \c"
-	ln -f .tools/hooks/commit-msg $@
+./.git/hooks/commit-msg: ./.tools/hooks/commit-msg
+	echo "Linking $@ hook... \c"
+	ln -f $< $@
 	echo "Done"
 
-.git/hooks/pre-commit:
-	echo "Linking pre-commit hook... \c"
-	ln -f .tools/hooks/pre-commit $@
+./.git/hooks/pre-commit: ./.tools/hooks/pre-commit
+	echo "Linking $@ hook... \c"
+	ln -f $< $@
 	echo "Done"

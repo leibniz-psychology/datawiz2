@@ -35,12 +35,12 @@ class DataWizUser implements UserInterface, Authorizable
 
     public function getPassword()
     {
-        throw new \Exception('DataWiz uses a SSO and getPassword() should therefore never be called');
+        return null;
     }
 
     public function getSalt()
     {
-        throw new \Exception('DataWiz uses a SSO and getSalt() should therefore never be called');
+        return null;
     }
 
     public function getUsername()
@@ -50,6 +50,6 @@ class DataWizUser implements UserInterface, Authorizable
 
     public function eraseCredentials()
     {
-        throw new \Exception('DataWiz uses a SSO and eraseCredentials() should therefore never be called');
+        return null;
     }
 }

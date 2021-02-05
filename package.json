@@ -23,7 +23,7 @@
     "license": "MIT",
     "private": true,
     "scripts": {
-        "dev-server": "encore dev-server --config ./source/View/Assets/webpack.config.js",
+        "dev-server": "encore dev-server --config ./source/View/Assets/webpack.config.js --https --pfx=$HOME/.symfony/certs/default.p12",
         "dev": "encore dev --config ./source/View/Assets/webpack.config.js",
         "watch": "encore dev --watch --config ./source/View/Assets/webpack.config.js",
         "build": "cross-env NODE_ENV=production encore production --progress --config ./source/View/Assets/webpack.config.js"

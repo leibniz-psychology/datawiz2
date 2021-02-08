@@ -2,13 +2,31 @@
 
 namespace App\View\Controller;
 
+use App\Domain\Model\StudySettingsMetaDataGroup;
+use App\Questionaire\Forms\StudySettingsType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class StudyController extends DataWizController
 {
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     public function indexAction(): Response
     {
-        return $this->render('Pages/Studies/index.html.twig');
+        $studySetting = new StudySettingsMetaDataGroup();
+
+        // Just a dummy form without processing for now
+        // TODO: Implement save
+        $form = $this->createForm(StudySettingsType::class, $studySetting);
+
+        return $this->render('Pages/Studies/index.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     public function newAction(): Response

@@ -18,6 +18,10 @@ ASSETS = $(SOURCE_DIR)/View/Assets
 # Developer Interface
 # --------------------------------------------------------------
 
+# Execute all commands per task in one shell, allowing for environment variables to be set for
+# all following commands.
+.ONESHELL:
+
 # Don't print the commands, only their output
 .SILENT: 
 

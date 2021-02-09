@@ -14,6 +14,8 @@ STATE_DIR = $(DOMAIN_DIR)/State
 FIXTURES_DIR = $(STATE_DIR)/Fixtures
 MIG_DIR = $(STATE_DIR)/Migrations
 ASSETS = $(SOURCE_DIR)/View/Assets
+
+REQUIRED_SOFTWARE = php composer node npm make awk symfony # core utils are expected and not easy to detect
 # --------------------------------------------------------------
 # Developer Interface
 # --------------------------------------------------------------
@@ -38,6 +40,10 @@ ASSETS = $(SOURCE_DIR)/View/Assets
 # Thanks to Romain Gautier for his slides from symfony live 2018 providing this ->
 help: ## Print this help text
 	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/';
+
+missings: ## Display missing required software (Should return nothing)
+	$(foreach program,$(REQUIRED_SOFTWARE), \
+	$(shell command -v $(program) >/dev/null 2>&1 || { echo "DataWiz requires $(program) but it's not found in your PATH." >&2; exit 1; }))
 
 ##--------Developer Interface----
 install: | node_modules vendor .git/hooks/commit-msg .git/hooks/pre-commit ## Install all dependencies

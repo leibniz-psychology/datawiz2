@@ -24,9 +24,6 @@ REQUIRED_SOFTWARE = php composer node npm make awk symfony # core utils are expe
 # all following commands.
 .ONESHELL:
 
-# Don't print the commands, only their output
-.SILENT: 
-
 # Those are all commands of the developer interface
 # Everything under phony will run even if a file with that name exists
 .PHONY: help install local-instance development-instance production-instance clean tests codestyle analysis database diff migrate fixtures assets
@@ -42,115 +39,118 @@ help: ## Print this help text
 	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/';
 
 missings: ## Display missing required software (Should return nothing)
+	@echo "Please be aware that only the specified name of a software is searched." 
+	@echo "An alias like gawk are not found." 
+	@echo "You will see only missing software below:"
 	$(foreach program,$(REQUIRED_SOFTWARE), \
 	$(shell command -v $(program) >/dev/null 2>&1 || { echo "DataWiz requires $(program) but it's not found in your PATH." >&2; exit 1; }))
 
 ##--------Developer Interface----
-install: | node_modules vendor .git/hooks/commit-msg .git/hooks/pre-commit ## Install all dependencies
+install: | ./node_modules ./vendor .git/hooks/commit-msg .git/hooks/pre-commit assets## Install all dependencies
 
-run: install var/data.db ## Start the local development server
-	symfony run -d npm run dev-server
-	symfony server:start -d
+run: install var/data.db assets## Start the local development server
+	@symfony run -d npm run dev-server
+	@symfony server:start -d
 
 stop: ## Stop the local development server
-	symfony server:stop
+	@symfony server:stop
 
 status: ## Check if a local development server is running
-	symfony server:status
+	@symfony server:status
 
 logs: ## Check the symfony cli logs
-	symfony server:log
+	@symfony server:log
 
 development-instance: ## Deploy DataWiz on a remote development server
-	echo 'smart ansible call'
+	@echo 'smart ansible call'
 
 production-instance: ## Deploy DataWiz to production server
-	echo 'smart ansible call'
+	@echo 'smart ansible call'
 
 # This should dynamically run tasks
 clean: ## Remove all temporary files
-	echo "Running clean up..."
-	rm -rf vendor node_modules $(MIG_DIR)/Development/*.php $(MIG_DIR)/Test/*.php ./public/build var .php_cs.cache ./.git/hooks/pre-commit ./.git/hooks/commit-msg
-	echo "All temporary files deleted"
+	@echo "Running clean up..."
+	@rm -rf vendor node_modules $(MIG_DIR)/Development/*.php $(MIG_DIR)/Test/*.php ./public/build var .php_cs.cache ./.git/hooks/pre-commit ./.git/hooks/commit-msg
+	@echo "All temporary files deleted"
 
 ##--------Code Quality-----------
-tests: ## Run all tests using phpunit
-	./bin/phpunit -c $(TOOL_CONFIG_DIR)/phpunit.xml.dist
+tests: | install ## Run all tests using phpunit
+	@./bin/phpunit -c $(TOOL_CONFIG_DIR)/phpunit.xml.dist
 
-codestyle: ## Run code formatter tools (prettier, stylelint, php-cs-fixer)
-	./bin/php-cs-fixer fix $(SOURCE_DIR) $(TEST_DIR) --config $(TOOL_CONFIG_DIR)/php_cs.dist
-	npx stylelint --fix $(ASSETS)
-	npx prettier -w $(ASSETS)
+codestyle: | ./vendor ## Run code formatter tools (prettier, stylelint, php-cs-fixer)
+	@./bin/php-cs-fixer fix $(SOURCE_DIR) $(TEST_DIR) --config $(TOOL_CONFIG_DIR)/php_cs.dist
+	@npx stylelint --fix $(ASSETS)
+	@npx prettier -w $(ASSETS)
 
-analysis: ## Run psalm static analyzer
-	./vendor/bin/psalm --config $(TOOL_CONFIG_DIR)/psalm.xml
+analysis: | ./vendor ## Run psalm static analyzer
+	@./vendor/bin/psalm --config $(TOOL_CONFIG_DIR)/psalm.xml
 
 ##--------Symfony----------------
-database: ## Create a database and schema
-	echo "Creating new Database and Schema if non exists... \c"
-	./bin/console doctrine:database:create -q --if-not-exists --env=$(ENV)
-	./bin/console doctrine:schema:create -q --env=$(ENV)
-	echo "Done"
+database: | ./vendor ## Create a database and schema
+	@echo "Creating new Database and Schema if non exists... \c"
+	@./bin/console doctrine:database:create -q --if-not-exists --env=$(ENV)
+	@./bin/console doctrine:schema:create -q --env=$(ENV)
+	@echo "Done"
 
-diff: ## Create a new migration
-	echo "Creating Migration... \c"
-	./bin/console doctrine:migrations:diff -n -q --allow-empty-diff --env=$(ENV)
-	echo "Done"
+diff: | ./vendor ## Create a new migration
+	@echo "Creating Migration... \c"
+	@./bin/console doctrine:migrations:diff -n -q --allow-empty-diff --env=$(ENV)
+	@echo "Done"
 
-migrate: ## Apply all migrations
-	echo "Applying Migration... \c"
-	./bin/console doctrine:migrations:migrate -n -q --allow-no-migration --env=$(ENV)
-	echo "Done"
+migrate: | ./vendor ## Apply all migrations
+	@echo "Applying Migration... \c"
+	@./bin/console doctrine:migrations:migrate -n -q --allow-no-migration --env=$(ENV)
+	@echo "Done"
 
-fixtures: ## Apply fixtures
-	echo "Loading Fixtures... \c"
-	./bin/console doctrine:fixture:load -n -q --env=$(ENV)
-	echo "Done"
+fixtures: | ./vendor ## Apply fixtures
+	@echo "Loading Fixtures... \c"
+	@./bin/console doctrine:fixture:load -n -q --env=$(ENV)
+	@echo "Done"
 
 assets: ./public/build ## Process static assets
 
-#------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 
 # This creates the sqlite database for development
 # and applies the schema according to current entity mapping
 # and loads the fixtures
 var/data.db: $(ENTITY_DIR)/*.php
-	echo "Removing old database... \c"
-	rm -f $@
-	echo "Done"
-	echo "Creating new Database and Schema... \c"
-	./bin/console doctrine:database:create -q --env=local
-	./bin/console doctrine:schema:create -q --env=local
-	echo "Done"
-	echo "Loading fixtures... \c"
-	./bin/console doctrine:fixture:load -n -q --env=local
-	echo "Done"
+	@echo "Removing old database... \c"
+	@rm -f $@
+	@echo "Done"
+	@echo "Creating new Database and Schema... \c"
+	@./bin/console doctrine:database:create -q --env=local
+	@./bin/console doctrine:schema:create -q --env=local
+	@echo "Done"
+	@echo "Loading fixtures... \c"
+	@./bin/console doctrine:fixture:load -n -q --env=local
+	@echo "Done"
 
 # This builds the static assets
-./public/build: $(ASSETS)/*
-	echo "Running Webpack... \c"
-	npm run-script dev > /dev/null 2>&1
-	echo "Done"
+./public/build: $(ASSETS)/* | ./node_modules
+	@echo "Running Webpack... \c"
+	@npm run-script dev > /dev/null 2>&1
+	@echo "Done"
 
 # Run composer install without noise
 ./vendor: composer.json
-	echo "Running composer... \c"
-	composer install -q
-	echo "Done"
+	@echo "Running composer... \c"
+	@composer install -q
+	@echo "Done"
 
 # Run npm install without noise
 ./node_modules: package.json
-	echo "Running npm... \c"
-	npm install --no-audit --no-fund --no-update-notifier --no-progress > /dev/null 2>&1
-	echo "Done"
+	@echo "Running npm... \c"
+	@npm install --no-audit --no-fund --no-update-notifier --no-progress > /dev/null 2>&1
+	@echo "Done"
 
 # Link from .tools to .git to enable hooks
 ./.git/hooks/commit-msg: ./.tools/hooks/commit-msg
-	echo "Linking $@ hook... \c"
-	ln -f $< $@
-	echo "Done"
+	@echo "Linking $@ hook... \c"
+	@ln -f $< $@
+	@echo "Done"
 
 ./.git/hooks/pre-commit: ./.tools/hooks/pre-commit
-	echo "Linking $@ hook... \c"
-	ln -f $< $@
-	echo "Done"
+	@echo "Linking $@ hook... \c"
+	@ln -f $< $@
+	@echo "Done"

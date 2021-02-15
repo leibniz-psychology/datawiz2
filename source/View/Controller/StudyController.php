@@ -5,6 +5,8 @@ namespace App\View\Controller;
 use App\Domain\Model\StudySettingsMetaDataGroup;
 use App\Questionaire\Forms\StudySettingsType;
 use Doctrine\ORM\EntityManagerInterface;
+
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class StudyController extends DataWizController
@@ -16,13 +18,18 @@ class StudyController extends DataWizController
         $this->em = $em;
     }
 
-    public function indexAction(): Response
+    public function indexAction(Request $request): Response
     {
-        $studySetting = new StudySettingsMetaDataGroup();
+        $studySetting = $this->em->getRepository(StudySettingsMetaDataGroup::class)->findAll();
 
-        // Just a dummy form without processing for now
-        // TODO: Implement save
-        $form = $this->createForm(StudySettingsType::class, $studySetting);
+        $form = $this->createForm(StudySettingsType::class, $studySetting[1]);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $studySetting = $form->getData();
+            $this->em->persist($studySetting);
+            $this->em->flush();
+        }
 
         return $this->render('Pages/Studies/index.html.twig', [
             'form' => $form->createView(),

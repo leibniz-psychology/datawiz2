@@ -21,7 +21,7 @@ class StudyController extends DataWizController
     {
         $studySetting = $this->em->getRepository(StudySettingsMetaDataGroup::class)->findAll();
 
-        $form = $this->createForm(StudySettingsType::class, $studySetting[1]);
+        $form = $this->createForm(StudySettingsType::class, null);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

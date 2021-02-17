@@ -46,9 +46,9 @@ missings: ## Display missing required software (Should return nothing)
 	$(shell command -v $(program) >/dev/null 2>&1 || { echo "DataWiz requires $(program) but it's not found in your PATH." >&2; exit 1; }))
 
 ##--------Developer Interface----
-install: | ./node_modules ./vendor .git/hooks/commit-msg .git/hooks/pre-commit assets## Install all dependencies
+install: ./node_modules ./vendor .git/hooks/commit-msg .git/hooks/pre-commit assets## Install all dependencies
 
-run: install var/data.db assets## Start the local development server
+run: install var/data.db assets ## Start the local development server
 	@symfony run -d npm run dev-server
 	@symfony server:start -d
 
@@ -74,35 +74,35 @@ clean: ## Remove all temporary files
 	@echo "All temporary files deleted"
 
 ##--------Code Quality-----------
-tests: | install ## Run all tests using phpunit
+tests: ./vendor var/data.db assets ## Run all tests using phpunit
 	@./bin/phpunit -c $(TOOL_CONFIG_DIR)/phpunit.xml.dist
 
-codestyle: | ./vendor ## Run code formatter tools (prettier, stylelint, php-cs-fixer)
+codestyle: ./vendor ## Run code formatter tools (prettier, stylelint, php-cs-fixer)
 	@./bin/php-cs-fixer fix $(SOURCE_DIR) $(TEST_DIR) --config $(TOOL_CONFIG_DIR)/php_cs.dist
 	@npx stylelint --fix $(ASSETS)
 	@npx prettier -w $(ASSETS)
 
-analysis: | ./vendor ## Run psalm static analyzer
+analysis: ./vendor ## Run psalm static analyzer
 	@./vendor/bin/psalm --config $(TOOL_CONFIG_DIR)/psalm.xml
 
 ##--------Symfony----------------
-database: | ./vendor ## Create a database and schema
+database: ./vendor ## Create a database and schema
 	@echo "Creating new Database and Schema if non exists... \c"
 	@./bin/console doctrine:database:create -q --if-not-exists --env=$(ENV)
 	@./bin/console doctrine:schema:create -q --env=$(ENV)
 	@echo "Done"
 
-diff: | ./vendor ## Create a new migration
+diff: ./vendor ## Create a new migration
 	@echo "Creating Migration... \c"
 	@./bin/console doctrine:migrations:diff -n -q --allow-empty-diff --env=$(ENV)
 	@echo "Done"
 
-migrate: | ./vendor ## Apply all migrations
+migrate: ./vendor ## Apply all migrations
 	@echo "Applying Migration... \c"
 	@./bin/console doctrine:migrations:migrate -n -q --allow-no-migration --env=$(ENV)
 	@echo "Done"
 
-fixtures: | ./vendor ## Apply fixtures
+fixtures: ./vendor ## Apply fixtures
 	@echo "Loading Fixtures... \c"
 	@./bin/console doctrine:fixture:load -n -q --env=$(ENV)
 	@echo "Done"

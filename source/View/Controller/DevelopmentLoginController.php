@@ -2,9 +2,7 @@
 
 namespace App\View\Controller;
 
-use App\Domain\Model\DataWizUser;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -22,13 +20,6 @@ class DevelopmentLoginController extends AbstractController
 
     public function loginAction(): Response
     {
-        // Pretty ugly error if there is no user after a make clean
-        // More errors if you try to break the unique constraints of the entity
-        if (null === $this->em->getRepository(DataWizUser::class)->find('dummy')) {
-            $user = new DataWizUser('dummy');
-            $this->em->persist($user);
-            $this->em->flush();
-        }
         // get the login error if there is one
         $error = $this->authenticationUtils->getLastAuthenticationError();
         // last username entered by the user

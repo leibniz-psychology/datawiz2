@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Tests\Unit;
+namespace App\Tests\Functional;
 
-use App\View\Controller\StudyController;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -25,8 +24,14 @@ class StudyFeatureTest extends WebTestCase
      */
     public function testIndexAction()
     {
-        $this->client->request('GET', '/pages/studies');
+        $this->client->request('GET', '/pages/studies/index');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testRootRedirect()
+    {
+        $this->client->request('GET', '/pages/studies');
+        $this->assertEquals(301, $this->client->getResponse()->getStatusCode());
     }
 
     public function testNewAction()

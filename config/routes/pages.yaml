@@ -1,5 +1,12 @@
-Studies-index:
+Studies-root:
   path: /studies
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+  defaults:
+    route: Studies-index
+    permanent: true
+
+Studies-index:
+  path: /studies/index
   controller: App\View\Controller\StudyController::indexAction
 
 Studies-new:

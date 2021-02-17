@@ -5,7 +5,6 @@ namespace App\View\Controller;
 use App\Domain\Model\StudySettingsMetaDataGroup;
 use App\Questionaire\Forms\StudySettingsType;
 use Doctrine\ORM\EntityManagerInterface;
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

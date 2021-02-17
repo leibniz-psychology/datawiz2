@@ -12,7 +12,7 @@ root:
     route: index
     permanent: true
 
-# Add /web/ before all routes that render a template
+# Add /pages/ before all routes that render a template
 pages:
   resource: './routes/pages.yaml'
   prefix: pages

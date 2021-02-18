@@ -14,7 +14,7 @@ class StudyController extends DataWizController
     {
         $form = $questionnaire->createAndHandleForm(StudySettingsType::class, $request);
 
-        if ($questionnaire->SubmittedAndValid($form)) {
+        if ($questionnaire->submittedAndValid($form)) {
             $crud->update($form->getData());
         }
 

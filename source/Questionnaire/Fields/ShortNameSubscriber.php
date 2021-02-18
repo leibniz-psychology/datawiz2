@@ -4,14 +4,14 @@
  * in different forms within DataWiz.
  */
 
-namespace App\Questionaire\Fields;
+namespace App\Questionnaire\Fields;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
-class shortNameSubscriber implements EventSubscriberInterface
+class ShortNameSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(): array
     {

@@ -4,10 +4,10 @@
  * means one entire form page within the application.
  */
 
-namespace App\Questionaire\Forms;
+namespace App\Questionnaire\Forms;
 
 use App\Domain\Model\StudySettingsMetaDataGroup;
-use App\Questionaire\Fields\shortNameSubscriber;
+use App\Questionnaire\Fields\ShortNameSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,7 +18,7 @@ class StudySettingsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->addEventSubscriber(new shortNameSubscriber())
+            ->addEventSubscriber(new ShortNameSubscriber())
             ->add('save', SubmitType::class)
         ;
     }

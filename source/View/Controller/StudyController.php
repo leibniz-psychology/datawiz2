@@ -2,32 +2,20 @@
 
 namespace App\View\Controller;
 
-use App\Domain\Model\StudySettingsMetaDataGroup;
+use App\Crud\Crudable;
 use App\Questionnaire\Forms\StudySettingsType;
 use App\Questionnaire\Questionable;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class StudyController extends DataWizController
 {
-    private $em;
-
-    public function __construct(EntityManagerInterface $em)
+    public function indexAction(Questionable $questionnaire, Crudable $crud, Request $request): Response
     {
-        $this->em = $em;
-    }
-
-    public function indexAction(Questionable $questionnaire, Request $request): Response
-    {
-        $studySetting = $this->em->getRepository(StudySettingsMetaDataGroup::class)->findAll();
-
         $form = $questionnaire->createAndHandleForm(StudySettingsType::class, $request);
 
         if ($questionnaire->SubmittedAndValid($form)) {
-            $studySetting = $form->getData();
-            $this->em->persist($studySetting);
-            $this->em->flush();
+            $crud->update($form->getData());
         }
 
         return $this->render('Pages/Studies/index.html.twig', [

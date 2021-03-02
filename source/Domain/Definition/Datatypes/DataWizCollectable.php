@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Domain\Definition\Datatypes;
 
 /**
@@ -8,5 +7,4 @@ namespace App\Domain\Definition\Datatypes;
  */
 interface DataWizCollectable
 {
-
 }

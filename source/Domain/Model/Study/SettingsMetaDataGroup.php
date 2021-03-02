@@ -3,16 +3,16 @@
  * This class provides the short name metadata.
  */
 
-namespace App\Domain\Model;
+namespace App\Domain\Model\Study;
 
-use App\Domain\Access\StudySettingsMetaDataRepository;
 use App\Domain\Definition\Study\ShortNameable;
+use App\Domain\Model\DataWizMetaDataGroup;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=StudySettingsMetaDataRepository::class)
  */
-class StudySettingsMetaDataGroup extends DataWizMetaDataGroup implements ShortNameable
+class SettingsMetaDataGroup extends DataWizMetaDataGroup implements ShortNameable
 {
     /**
      * @ORM\Id()

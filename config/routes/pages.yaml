@@ -1,34 +1,34 @@
-Studies-root:
+Study-root:
   path: /studies
   controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
   defaults:
-    route: Studies-index
+    route: Study-index
     permanent: true
 
-Studies-index:
+Study-index:
   path: /studies/index
   controller: App\View\Controller\StudyController::indexAction
 
-Studies-new:
+Study-new:
   path: /studies/new
   controller: App\View\Controller\StudyController::newAction
 
-Studies-documentation:
+Study-documentation:
   path: /studies/documentation
   controller: App\View\Controller\StudyController::documentationAction
 
-Studies-admin:
+Study-admin:
   path: /studies/admin
   controller: App\View\Controller\StudyController::adminAction
 
-Studies-theory:
+Study-theory:
   path: /studies/theory
   controller: App\View\Controller\StudyController::theoryAction
 
-Studies-design:
+Study-design:
   path: /studies/design
   controller: App\View\Controller\StudyController::designAction
 
-Studies-sample:
+Study-sample:
   path: /studies/sample
   controller: App\View\Controller\StudyController::sampleAction

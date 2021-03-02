@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Model;
+namespace App\Domain\Model\Administration;
 
 use App\Domain\Access\DataWizUserRepository;
 use App\Security\Authorization\Authorizable;

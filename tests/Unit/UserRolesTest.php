@@ -2,7 +2,7 @@
 
 namespace App\Tests\Unit;
 
-use App\Domain\Model\DataWizUser;
+use App\Domain\Model\Administration\DataWizUser;
 use PHPUnit\Framework\TestCase;
 
 class UserRolesTest extends TestCase

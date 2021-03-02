@@ -6,7 +6,7 @@
 
 namespace App\Questionnaire\Forms;
 
-use App\Domain\Model\StudySettingsMetaDataGroup;
+use App\Domain\Model\Study\SettingsMetaDataGroup;
 use App\Questionnaire\Fields\ShortNameSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -26,7 +26,7 @@ class StudySettingsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => StudySettingsMetaDataGroup::class,
+            'data_class' => SettingsMetaDataGroup::class,
         ]);
     }
 }

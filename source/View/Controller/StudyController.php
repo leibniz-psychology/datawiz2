@@ -18,38 +18,38 @@ class StudyController extends DataWizController
             $crud->update($form->getData());
         }
 
-        return $this->render('Pages/Studies/index.html.twig', [
+        return $this->render('Pages/Study/index.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
     public function newAction(): Response
     {
-        return $this->render('Pages/Studies/new.html.twig');
+        return $this->render('Pages/Study/new.html.twig');
     }
 
     public function documentationAction(): Response
     {
-        return $this->render('Pages/Studies/documentation.html.twig');
+        return $this->render('Pages/Study/documentation.html.twig');
     }
 
     public function adminAction(): Response
     {
-        return $this->render('Pages/Studies/admin.html.twig');
+        return $this->render('Pages/Study/admin.html.twig');
     }
 
     public function designAction(): Response
     {
-        return $this->render('Pages/Studies/design.html.twig');
+        return $this->render('Pages/Study/design.html.twig');
     }
 
     public function theoryAction(): Response
     {
-        return $this->render('Pages/Studies/theory.html.twig');
+        return $this->render('Pages/Study/theory.html.twig');
     }
 
     public function sampleAction(): Response
     {
-        return $this->render('Pages/Studies/sample.html.twig');
+        return $this->render('Pages/Study/sample.html.twig');
     }
 }

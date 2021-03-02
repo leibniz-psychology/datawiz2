@@ -2,7 +2,7 @@
 
 namespace App\Domain\State\Fixtures;
 
-use App\Domain\Model\DataWizUser;
+use App\Domain\Model\Administration\DataWizUser;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 

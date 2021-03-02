@@ -2,7 +2,7 @@
 
 namespace App\Domain\Model\Administration;
 
-use App\Domain\Access\DataWizUserRepository;
+use App\Domain\Access\Administration\DataWizUserRepository;
 use App\Security\Authorization\Authorizable;
 use App\Security\Authorization\AuthorizableDefault;
 use Doctrine\ORM\Mapping as ORM;

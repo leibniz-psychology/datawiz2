@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domain\Access;
+namespace App\Domain\Access\Administration;
 
-use App\Domain\Model\DataWizUser;
+use App\Domain\Model\Administration\DataWizUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

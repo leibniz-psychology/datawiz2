@@ -2,13 +2,30 @@
 
 namespace App\Security\Authentication;
 
-use App\Domain\Model\DataWizUser;
+use App\Crud\Crudable;
+use App\Domain\Model\Administration\DataWizUser;
+use Monolog\Logger;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class DevelopmentUserProvider implements UserProviderInterface
 {
+    /**
+     * @var Crudable
+     */
+    private $crud;
+    /**
+     * @var Logger
+     */
+    private $log;
+
+    public function __construct(Crudable $crud, Logger $log)
+    {
+        $this->crud = $crud;
+        $this->log = $log;
+    }
+
     /**
      * If you're not using these features, you do not need to implement
      * this method.
@@ -17,8 +34,15 @@ class DevelopmentUserProvider implements UserProviderInterface
      *
      * @throws UsernameNotFoundException if the user is not found
      */
-    public function loadUserByUsername($username)
+    public function loadUserByUsername(string $username)
     {
+        /**
+         * @var DataWizUser
+         */
+        $user = $this->crud->readForAll(DataWizUser::class)[0];
+        $this->log->debug('You found'.$user->getUsername());
+
+        return $user;
     }
 
     /**
@@ -41,7 +65,7 @@ class DevelopmentUserProvider implements UserProviderInterface
     /**
      * Tells Symfony to use this provider for this User class.
      */
-    public function supportsClass($class)
+    public function supportsClass(string $class)
     {
         return DataWizUser::class === $class;
     }

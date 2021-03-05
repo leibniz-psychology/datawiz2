@@ -11,24 +11,23 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass=DataWizUserRepository::class)
  */
-class DataWizUser implements UserInterface, Authorizable
+class DataWizUser extends UuidEntity implements UserInterface, Authorizable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\Column(type="string")
-     */
-    private $uuid;
-
     /**
      * @ORM\Column(type="json")
      */
     private $roles;
 
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $displayName;
+
     use AuthorizableDefault;
 
-    public function __construct($uuid, bool $admin = false)
+    public function __construct(string $displayName, bool $admin = false)
     {
-        $this->uuid = $uuid;
+        $this->displayName = $displayName;
         // use the trait logic to create a valid role array
         $this->initializeRoles($admin);
     }
@@ -45,7 +44,7 @@ class DataWizUser implements UserInterface, Authorizable
 
     public function getUsername()
     {
-        return $this->uuid;
+        return $this->displayName;
     }
 
     public function eraseCredentials()

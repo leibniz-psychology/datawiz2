@@ -3,9 +3,9 @@ security:
         users:
             entity:
                 # the class of the entity that represents users
-                class: 'App\Domain\Model\DataWizUser'
+                class: 'App\Domain\Model\Administration\DataWizUser'
                 # the property to query by - e.g. username, email, etc
-                property: 'uuid'
+                property: 'displayName'
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     firewalls:
         dev:

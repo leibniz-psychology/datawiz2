@@ -2,7 +2,8 @@
 
 namespace App\Security\Authentication;
 
-use App\Domain\Model\DataWizUser;
+use App\Domain\Model\Administration\DataWizUser;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -28,16 +29,19 @@ class DevelopmentAuthenticator extends AbstractFormLoginAuthenticator
     use TargetPathTrait;
 
     private const LOGIN_ROUTE = 'Security-login';
-    private const HOMEPAGE_ROUTE = 'Studies-index';
+    private const HOMEPAGE_ROUTE = 'Study-index';
 
     private $urlGenerator;
     private $csrfTokenManager;
+    private $em;
 
     public function __construct(UrlGeneratorInterface $urlGenerator,
-                                CsrfTokenManagerInterface $csrfTokenManager)
+                                CsrfTokenManagerInterface $csrfTokenManager,
+                                EntityManagerInterface $em)
     {
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
+        $this->em = $em;
     }
 
     protected function getLoginUrl()
@@ -73,7 +77,7 @@ class DevelopmentAuthenticator extends AbstractFormLoginAuthenticator
             throw new InvalidCsrfTokenException();
         }
 
-        $user = new DataWizUser($credentials['email']);
+        $user = $this->em->getRepository(DataWizUser::class)->findAll()[0];
 
         if (!$user) {
             // fail authentication with a custom error
@@ -89,7 +93,7 @@ class DevelopmentAuthenticator extends AbstractFormLoginAuthenticator
         return true;
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
     {
         // Redirect to previous selected route
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {

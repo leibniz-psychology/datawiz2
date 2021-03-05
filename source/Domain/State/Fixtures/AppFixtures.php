@@ -8,11 +8,24 @@ use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
+    private $testUserNames;
+
+    public function __construct()
+    {
+        $this->testUserNames = ['mc@leibniz-psychology.org',
+                                'fg@leibniz-psychology.org', ];
+    }
+
     public function load(ObjectManager $manager)
     {
-        $user = new DataWizUser('dummy');
-        $manager->persist($user);
-
+        $this->createTestUser($manager);
         $manager->flush();
+    }
+
+    public function createTestUser(ObjectManager $manager)
+    {
+        foreach ($this->testUserNames as $userName) {
+            $manager->persist(new DataWizUser($userName));
+        }
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Domain\Definition\Datatypes;
 
-interface DataWizNumerable
+use App\Domain\Definition\MetaDataValuable;
+
+interface DataWizNumerable extends MetaDataValuable
 {
     const NumberSize = 'int';
 }

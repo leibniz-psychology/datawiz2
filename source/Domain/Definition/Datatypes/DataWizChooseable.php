@@ -2,6 +2,8 @@
 
 namespace App\Domain\Definition\Datatypes;
 
-interface DataWizChooseable
+use App\Domain\Definition\MetaDataValuable;
+
+interface DataWizChooseable extends MetaDataValuable
 {
 }

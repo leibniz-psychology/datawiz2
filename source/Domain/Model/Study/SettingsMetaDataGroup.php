@@ -5,31 +5,20 @@
 
 namespace App\Domain\Model\Study;
 
+use App\Domain\Access\Study\SettingsMetaDataRepository;
 use App\Domain\Definition\Study\ShortNameable;
-use App\Domain\Model\DataWizMetaDataGroup;
+use App\Domain\Model\Administration\UuidEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=StudySettingsMetaDataRepository::class)
+ * @ORM\Entity(repositoryClass=SettingsMetaDataRepository::class)
  */
-class SettingsMetaDataGroup extends DataWizMetaDataGroup implements ShortNameable
+class SettingsMetaDataGroup extends UuidEntity implements ShortNameable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer", unique=true)
-     */
-    private $id;
-
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $shortName;
-
-    public function getId()
-    {
-        return $this->id;
-    }
 
     public function getShortName(): ?string
     {

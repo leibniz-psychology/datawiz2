@@ -6,22 +6,15 @@
 
 namespace App\Questionnaire\Fields;
 
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use App\Domain\Definition\MetaDataValuable;
+use App\Questionnaire\MetaDataSubscriber;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 
-class ShortNameSubscriber implements EventSubscriberInterface
+class ShortNameSubscriber extends MetaDataSubscriber
 {
-    public static function getSubscribedEvents(): array
+    protected function preSetData(?MetaDataValuable $entity, FormInterface $form): void
     {
-        return [
-            FormEvents::PRE_SET_DATA => 'onPreSetData',
-        ];
-    }
-
-    public function onPreSetData(FormEvent $event): void
-    {
-        $event->getForm()->add('shortName', TextType::class);
+        $form->add('shortName', TextType::class);
     }
 }

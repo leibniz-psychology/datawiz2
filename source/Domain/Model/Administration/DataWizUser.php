@@ -13,21 +13,52 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class DataWizUser extends UuidEntity implements UserInterface, Authorizable
 {
+    use AuthorizableDefault;
+
     /**
      * @ORM\Column(type="json")
      */
     private $roles;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
-    private $displayName;
+    private $email;
 
-    use AuthorizableDefault;
+    /**
+     * @ORM\Column(type="uuid", nullable=true)
+     */
+    private $keycloakUuid;
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKeycloakUuid()
+    {
+        return $this->keycloakUuid;
+    }
+
+    /**
+     * @param mixed $keycloakUuid
+     */
+    public function setKeycloakUuid($keycloakUuid): void
+    {
+        $this->keycloakUuid = $keycloakUuid;
+    }
 
     public function __construct(string $displayName, bool $admin = false)
     {
-        $this->displayName = $displayName;
+        $this->email = $displayName;
         // use the trait logic to create a valid role array
         $this->initializeRoles($admin);
     }
@@ -44,7 +75,7 @@ class DataWizUser extends UuidEntity implements UserInterface, Authorizable
 
     public function getUsername()
     {
-        return $this->displayName;
+        return $this->email;
     }
 
     public function eraseCredentials()

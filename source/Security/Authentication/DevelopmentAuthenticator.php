@@ -2,8 +2,6 @@
 
 namespace App\Security\Authentication;
 
-use App\Domain\Model\Administration\DataWizUser;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -33,15 +31,12 @@ class DevelopmentAuthenticator extends AbstractFormLoginAuthenticator
 
     private $urlGenerator;
     private $csrfTokenManager;
-    private $em;
 
     public function __construct(UrlGeneratorInterface $urlGenerator,
-                                CsrfTokenManagerInterface $csrfTokenManager,
-                                EntityManagerInterface $em)
+                                CsrfTokenManagerInterface $csrfTokenManager)
     {
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
-        $this->em = $em;
     }
 
     protected function getLoginUrl()
@@ -77,11 +72,11 @@ class DevelopmentAuthenticator extends AbstractFormLoginAuthenticator
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->em->getRepository(DataWizUser::class)->findAll()[0];
+        $user = $userProvider->loadUserByUsername($credentials['email']);
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+            throw new CustomUserMessageAuthenticationException('User could not be found in the demo database.');
         }
 
         return $user;

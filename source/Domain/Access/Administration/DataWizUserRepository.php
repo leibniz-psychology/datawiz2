@@ -5,6 +5,7 @@ namespace App\Domain\Access\Administration;
 use App\Domain\Model\Administration\DataWizUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
 /**
  * @method DataWizUser|null find($id, $lockMode = null, $lockVersion = null)
@@ -12,39 +13,25 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method DataWizUser[]    findAll()
  * @method DataWizUser[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class DataWizUserRepository extends ServiceEntityRepository
+class DataWizUserRepository extends ServiceEntityRepository implements UserLoaderInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, DataWizUser::class);
     }
 
-    // /**
-    //  * @return Label[] Returns an array of Label objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function loadUserByUsername(string $uuidOrEmail): ?DataWizUser
     {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('l.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $entityManager = $this->getEntityManager();
 
-    /*
-    public function findOneBySomeField($value): ?Label
-    {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        // TODO: Double check if the uid component supports this type of query
+        return $entityManager->createQuery(
+            'SELECT u
+                FROM App\Domain\Model\Administration\DataWizUser u
+                WHERE u.keycloakUuid = :query
+                OR u.email = :query'
+        )
+            ->setParameter('query', $uuidOrEmail)
+            ->getOneOrNullResult();
     }
-    */
 }

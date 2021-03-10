@@ -87,23 +87,23 @@ analysis: ./vendor ## Run psalm static analyzer
 
 ##--------Symfony----------------
 database: ./vendor ## Create a database and schema
-	@echo "Creating new Database and Schema if non exists... \c"
+	@echo "Creating new database and schema if non exists... \c"
 	@./bin/console doctrine:database:create -q --if-not-exists --env=$(ENV)
 	@./bin/console doctrine:schema:create -q --env=$(ENV)
 	@echo "Done"
 
 diff: ./vendor ## Create a new migration
-	@echo "Creating Migration... \c"
+	@echo "Creating a new migration... \c"
 	@./bin/console doctrine:migrations:diff -n -q --allow-empty-diff --env=$(ENV)
 	@echo "Done"
 
 migrate: ./vendor ## Apply all migrations
-	@echo "Applying Migration... \c"
+	@echo "Applying migration... \c"
 	@./bin/console doctrine:migrations:migrate -n -q --allow-no-migration --env=$(ENV)
 	@echo "Done"
 
 fixtures: ./vendor ## Apply fixtures
-	@echo "Loading Fixtures... \c"
+	@echo "Loading fixtures... \c"
 	@./bin/console doctrine:fixture:load -n -q --env=$(ENV)
 	@echo "Done"
 
@@ -118,7 +118,7 @@ var/data.db: $(ENTITY_DIR)/*/*.php
 	@echo "Removing old database... \c"
 	@rm -f $@
 	@echo "Done"
-	@echo "Creating new Database and Schema... \c"
+	@echo "Creating new database and schema... \c"
 	@./bin/console doctrine:database:create -q --env=local
 	@./bin/console doctrine:schema:create -q --env=local
 	@echo "Done"
@@ -128,7 +128,7 @@ var/data.db: $(ENTITY_DIR)/*/*.php
 
 # This builds the static assets
 ./public/build: $(ASSETS)/* | ./node_modules
-	@echo "Running Webpack... \c"
+	@echo "Running webpack... \c"
 	@npm run-script dev > /dev/null 2>&1
 	@echo "Done"
 

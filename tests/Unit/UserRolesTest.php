@@ -12,8 +12,8 @@ class UserRolesTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->normalUser = new DataWizUser('D3FF720E-DF50-4C56-9572-8CD06B011EA2');
-        $this->adminUser = new DataWizUser('D3FF720E-DF50-4C56-9572-8CD06B011EA2', true);
+        $this->normalUser = new DataWizUser('someone@gmail.com');
+        $this->adminUser = new DataWizUser('weirdspecialChararacterLikeÖ@testing.de', true);
     }
 
     /**

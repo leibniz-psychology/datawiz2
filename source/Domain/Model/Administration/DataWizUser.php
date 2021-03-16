@@ -30,35 +30,15 @@ class DataWizUser extends UuidEntity implements UserInterface, Authorizable
      */
     private $keycloakUuid;
 
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): void
-    {
-        $this->email = $email;
-    }
-
     /**
-     * @return mixed
+     * @ORM\OneToOne(targetEntity="App\Domain\Model\Administration\DataWizSettings", mappedBy="owner", cascade={"persist"})
      */
-    public function getKeycloakUuid()
-    {
-        return $this->keycloakUuid;
-    }
-
-    /**
-     * @param mixed $keycloakUuid
-     */
-    public function setKeycloakUuid($keycloakUuid): void
-    {
-        $this->keycloakUuid = $keycloakUuid;
-    }
+    private $datawizSettings;
 
     public function __construct(string $displayName, bool $admin = false)
     {
         $this->email = $displayName;
+        $this->datawizSettings = new DataWizSettings();
         // use the trait logic to create a valid role array
         $this->initializeRoles($admin);
     }
@@ -82,4 +62,35 @@ class DataWizUser extends UuidEntity implements UserInterface, Authorizable
     {
         return null;
     }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function getKeycloakUuid()
+    {
+        return $this->keycloakUuid;
+    }
+
+    public function setKeycloakUuid($keycloakUuid): void
+    {
+        $this->keycloakUuid = $keycloakUuid;
+    }
+
+    public function getDatawizSettings()
+    {
+        return $this->datawizSettings;
+    }
+
+    public function setDatawizSettings($datawizSettings): void
+    {
+        $this->datawizSettings = $datawizSettings;
+    }
+
 }

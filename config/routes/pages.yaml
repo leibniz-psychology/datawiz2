@@ -36,3 +36,7 @@ Study-design:
 Study-sample:
   path: /studies/sample
   controller: App\View\Controller\StudyController::sampleAction
+
+Administration-profile:
+  path: /administration/profile
+  controller: App\View\Controller\AdministrationController::profileAction

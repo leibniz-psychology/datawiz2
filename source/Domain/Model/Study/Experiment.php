@@ -15,35 +15,30 @@ class Experiment extends UuidEntity
 {
     /**
      * @ORM\ManyToOne(targetEntity="App\Domain\Model\Administration\DataWizUser")
-     * @ORM\JoinColumn(name="user_uuid", referencedColumnName="uuid")
      */
     private $owner;
 
     /**
      * One Experiment has One Sample section.
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\SampleMetaDataGroup", mappedBy="uuid", cascade={"persist"})
-     * @ORM\JoinColumn(name="sample_meta_data_uuid", referencedColumnName="uuid")
+     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\SampleMetaDataGroup", mappedBy="experiment", cascade={"persist"})
      */
     private $sampleMetaDataGroup;
 
     /**
      * One Experiment has One Settings section.
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\SettingsMetaDataGroup", mappedBy="uuid", cascade={"persist"})
-     * @ORM\JoinColumn(name="settings_meta_data_uuid", referencedColumnName="uuid")
+     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\SettingsMetaDataGroup", mappedBy="experiment", cascade={"persist"})
      */
     private $settingsMetaDataGroup;
 
     /**
      * One Experiment has One basic Information section.
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\BasicInformationMetaDataGroup", mappedBy="uuid", cascade={"persist"})
-     * @ORM\JoinColumn(name="basic_information_meta_data_uuid", referencedColumnName="uuid")
+     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\BasicInformationMetaDataGroup", mappedBy="experiment", cascade={"persist"})
      */
     private $basicInformationMetaDataGroup;
 
     /**
      * One Experiment has One Theory section.
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\TheoryMetaDataGroup", mappedBy="uuid", cascade={"persist"})
-     * @ORM\JoinColumn(name="theory_meta_data_uuid", referencedColumnName="uuid")
+     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\TheoryMetaDataGroup", mappedBy="experiment", cascade={"persist"})
      */
     private $theoryMetaDataGroup;
 

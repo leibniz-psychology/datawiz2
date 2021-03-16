@@ -19,7 +19,6 @@ class SampleMetaDataGroup extends UuidEntity implements Criteriable, Populatable
     /**
      * One Sample section has One Experiment.
      * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\Experiment", inversedBy="sampleMetaDataGroup")
-     * @ORM\JoinColumn(name="experiment_uuid", referencedColumnName="uuid")
      */
     protected $experiment;
 

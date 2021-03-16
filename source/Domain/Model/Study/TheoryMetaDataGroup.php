@@ -15,7 +15,6 @@ class TheoryMetaDataGroup extends UuidEntity implements Objectivable, Hypothesia
     /**
      * One Theory section has One Experiment.
      * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\Experiment", inversedBy="theoryMetaDataGroup")
-     * @ORM\JoinColumn(name="experiment_uuid", referencedColumnName="uuid")
      */
     protected $experiment;
 

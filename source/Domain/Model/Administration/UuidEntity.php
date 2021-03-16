@@ -14,20 +14,20 @@ abstract class UuidEntity
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class=UuidV4Generator::class)
      */
-    protected $uuid;
+    protected $id;
 
     public function getId()
     {
-        return $this->uuid;
+        return $this->id;
     }
 
     public function uuidEquals(UuidV4 $uuid): bool
     {
-        return $uuid->equals($this->uuid);
+        return $uuid->equals($this->id);
     }
 
     public function uuidEqualsString(string $uuid): bool
     {
-        return UuidV4::fromString($uuid)->equals($this->uuid);
+        return UuidV4::fromString($uuid)->equals($this->id);
     }
 }

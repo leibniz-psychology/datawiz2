@@ -16,7 +16,6 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Abstractable, 
     /**
      * One basic Information section has One Experiment.
      * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\Experiment", inversedBy="basicInformationMetaDataGroup")
-     * @ORM\JoinColumn(name="experiment_uuid", referencedColumnName="uuid")
      */
     protected $experiment;
 

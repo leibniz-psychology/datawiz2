@@ -22,9 +22,9 @@ class StudyFeatureTest extends WebTestCase
      * Better testing will be possible as soon as we can test a real workflow
      * The following tests should only break if a url gets changed - which is not trivial to circumvent.
      */
-    public function testIndexAction()
+    public function testOverviewAction()
     {
-        $this->client->request('GET', '/pages/studies/index');
+        $this->client->request('GET', '/pages/studies/overview');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 

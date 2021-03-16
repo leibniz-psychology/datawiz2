@@ -16,19 +16,6 @@ use Symfony\Component\Uid\Uuid;
 
 class StudyController extends DataWizController
 {
-    public function indexAction(Questionable $questionnaire, Crudable $crud, Request $request): Response
-    {
-        $form = $questionnaire->createAndHandleForm(StudySettingsType::class, $request);
-
-        if ($questionnaire->submittedAndValid($form)) {
-            $crud->update($form->getData());
-        }
-
-        return $this->render('Pages/Study/index.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
     public function overviewAction(Crudable $crud):Response
     {
         $all_experiments = $crud->readForAll(Experiment::class);

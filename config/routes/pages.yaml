@@ -5,10 +5,6 @@ Study-root:
     route: Study-overview
     permanent: true
 
-Study-index:
-  path: /studies/index
-  controller: App\View\Controller\StudyController::indexAction
-
 Study-overview:
   path: /studies/overview
   controller: App\View\Controller\StudyController::overviewAction

@@ -20,23 +20,9 @@ class SettingsMetaDataGroup extends UuidEntity implements ShortNameable
      * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\Experiment", inversedBy="settingsMetaDataGroup")
      * @ORM\JoinColumn(name="experiment_uuid", referencedColumnName="uuid")
      */
-    private $experiment;
+    protected $experiment;
 
-    /**
-     * @return mixed
-     */
-    public function getExperiment(): Experiment
-    {
-        return $this->experiment;
-    }
-
-    /**
-     * @param Experiment $experiment
-     */
-    public function setExperiment(Experiment $experiment): void
-    {
-        $this->experiment = $experiment;
-    }
+    use ExperimentRelatable;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)

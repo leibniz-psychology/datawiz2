@@ -3,10 +3,16 @@
 namespace App\View\Controller;
 
 use App\Crud\Crudable;
+use App\Domain\Model\Study\Experiment;
+use App\Domain\Model\Study\SettingsMetaDataGroup;
+use App\Questionnaire\Fields\ShortNameSubscriber;
 use App\Questionnaire\Forms\StudySettingsType;
 use App\Questionnaire\Questionable;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Uid\Uuid;
 
 class StudyController extends DataWizController
 {
@@ -23,9 +29,51 @@ class StudyController extends DataWizController
         ]);
     }
 
-    public function newAction(): Response
+    public function overviewAction(Crudable $crud):Response
     {
-        return $this->render('Pages/Study/new.html.twig');
+        $all_experiments = $crud->readForAll(Experiment::class);
+        return $this->render('Pages/Study/overview.html.twig', [
+            'all_experiments' => $all_experiments
+        ]);
+    }
+
+    public function newAction(Questionable $questionnaire, Crudable $crud, Request $request): Response
+    {
+
+        $newExperiment = Experiment::createNewExperiment();
+        $form = $this->createFormBuilder($newExperiment->getSettingsMetaDataGroup())
+            ->addEventSubscriber(new ShortNameSubscriber())
+            ->add('new', SubmitType::class )
+            ->getForm();
+
+        $form->handleRequest($request);
+        if ($questionnaire->submittedAndValid($form)) {
+            $crud->update($newExperiment);
+        }
+
+        return $this->render('Pages/Study/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    public function settingsAction(string $uuid, Questionable $questionaire, Crudable $crud, Request $request): Response
+    {
+        /**
+         * @var \App\Domain\Model\Study\Experiment
+         */
+        $entityAtChange = $crud->readById(Experiment::class, $uuid);
+
+        $form = $questionaire->createAndHandleForm(StudySettingsType::class,
+                                                    $request,
+                                                    $entityAtChange->getSettingsMetaDataGroup());
+
+        if ($questionaire->submittedAndValid($form)) {
+            $crud->update($entityAtChange);
+        }
+
+        return $this->render('Pages/Study/settings.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     public function documentationAction(): Response

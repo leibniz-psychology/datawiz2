@@ -2,16 +2,24 @@ Study-root:
   path: /studies
   controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
   defaults:
-    route: Study-index
+    route: Study-overview
     permanent: true
 
 Study-index:
   path: /studies/index
   controller: App\View\Controller\StudyController::indexAction
 
+Study-overview:
+  path: /studies/overview
+  controller: App\View\Controller\StudyController::overviewAction
+
 Study-new:
   path: /studies/new
   controller: App\View\Controller\StudyController::newAction
+
+Study-settings:
+  path: /studies/{uuid}/settings
+  controller: App\View\Controller\StudyController::settingsAction
 
 Study-documentation:
   path: /studies/documentation

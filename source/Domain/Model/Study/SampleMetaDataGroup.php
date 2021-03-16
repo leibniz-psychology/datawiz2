@@ -16,4 +16,26 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class SampleMetaDataGroup extends UuidEntity implements Criteriable, Populatable, SamplingMethodable, Assignable, SampleSizable, Powerable
 {
+    /**
+     * One Sample section has One Experiment.
+     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\Experiment", inversedBy="sampleMetaDataGroup")
+     * @ORM\JoinColumn(name="experiment_uuid", referencedColumnName="uuid")
+     */
+    private $experiment;
+
+    /**
+     * @return Experiment
+     */
+    public function getExperiment(): Experiment
+    {
+        return $this->experiment;
+    }
+
+    /**
+     * @param mixed $experiment
+     */
+    public function setExperiment(Experiment $experiment): void
+    {
+        $this->experiment = $experiment;
+    }
 }

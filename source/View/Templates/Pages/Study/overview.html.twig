@@ -5,6 +5,13 @@
         With great <strong class="italic">New Studies</strong> comes great <strong class="italic">design</strong>.
     </div>
 
-    {{ form(form) }}
-
+    <ul>
+        {% for experiment in all_experiments %}
+           <li>
+               <a href="{{ path('Study-settings', {uuid: experiment.id}) }}">
+                   {{ experiment.settingsMetaDataGroup.shortName }}
+               </a>
+           </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

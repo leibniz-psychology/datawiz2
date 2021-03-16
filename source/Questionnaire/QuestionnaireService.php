@@ -2,6 +2,7 @@
 
 namespace App\Questionnaire;
 
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,5 +38,12 @@ class QuestionnaireService implements Questionable
     public function submittedAndValid(FormInterface $formToHandle): bool
     {
         return $formToHandle->isSubmitted() && $formToHandle->isValid();
+    }
+
+    /**
+     * Return formbuilder for free actions
+     */
+    public function getFormBuilder(): FormFactoryInterface {
+        return $this->formBuilder;
     }
 }

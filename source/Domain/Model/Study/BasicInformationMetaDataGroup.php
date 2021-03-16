@@ -13,4 +13,28 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class BasicInformationMetaDataGroup extends UuidEntity implements Abstractable, Authorable, Titleable
 {
+    /**
+     * One basic Information section has One Experiment.
+     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\Experiment", inversedBy="basicInformationMetaDataGroup")
+     * @ORM\JoinColumn(name="experiment_uuid", referencedColumnName="uuid")
+     */
+    private $experiment;
+
+    /**
+     * @return Experiment
+     */
+    public function getExperiment(): Experiment
+    {
+        return $this->experiment;
+    }
+
+    /**
+     * @param mixed $experiment
+     */
+    public function setExperiment(Experiment $experiment): void
+    {
+        $this->experiment = $experiment;
+    }
+
+
 }

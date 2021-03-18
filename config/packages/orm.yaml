@@ -22,3 +22,5 @@ doctrine:
                 dir: '%kernel.project_dir%/source/Domain/Model'
                 prefix: 'App\Domain\Model'
                 alias: App
+        filters:
+            ownership: App\Security\Authorization\OwnershipFilter

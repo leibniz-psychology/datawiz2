@@ -4,14 +4,17 @@
 namespace App\Domain\Model\Study;
 
 
+use App\Domain\Model\Administration\DataWizUser;
 use App\Domain\Model\Administration\UuidEntity;
 use App\Domain\Access\Study\ExperimentRepository;
+use App\Security\Authorization\Ownable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=ExperimentRepository::class)
  */
-class Experiment extends UuidEntity
+class Experiment extends UuidEntity implements Ownable
 {
     /**
      * @ORM\ManyToOne(targetEntity="App\Domain\Model\Administration\DataWizUser")
@@ -48,6 +51,11 @@ class Experiment extends UuidEntity
     public function getOwner()
     {
         return $this->owner;
+    }
+
+    private function setOwner(DataWizUser $owner)
+    {
+        $this->owner = $owner;
     }
 
     /**
@@ -118,13 +126,14 @@ class Experiment extends UuidEntity
         $theoryMetaDataGroup->setExperiment($this);
     }
 
-    public static function createNewExperiment(): Experiment
+    public static function createNewExperiment(UserInterface $owner): Experiment
     {
         $newExperiment = new Experiment();
         $newExperiment->setSettingsMetaDataGroup(new SettingsMetaDataGroup());
         $newExperiment->setBasicInformationMetaDataGroup(new BasicInformationMetaDataGroup());
         $newExperiment->setTheoryMetaDataGroup(new TheoryMetaDataGroup());
         $newExperiment->setSampleMetaDataGroup(new SampleMetaDataGroup());
+        $newExperiment->setOwner($owner);
 
         return $newExperiment;
     }

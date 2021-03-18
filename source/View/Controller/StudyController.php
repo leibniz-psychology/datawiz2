@@ -8,14 +8,23 @@ use App\Domain\Model\Study\SettingsMetaDataGroup;
 use App\Questionnaire\Fields\ShortNameSubscriber;
 use App\Questionnaire\Forms\StudySettingsType;
 use App\Questionnaire\Questionable;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Uid\Uuid;
 
 class StudyController extends DataWizController
 {
+    private $currentUser;
+
+    public function __construct(Security $security)
+    {
+        $this->currentUser = $security->getUser();
+    }
+
     public function overviewAction(Crudable $crud):Response
     {
         $all_experiments = $crud->readForAll(Experiment::class);
@@ -27,7 +36,7 @@ class StudyController extends DataWizController
     public function newAction(Questionable $questionnaire, Crudable $crud, Request $request): Response
     {
 
-        $newExperiment = Experiment::createNewExperiment();
+        $newExperiment = Experiment::createNewExperiment($this->currentUser);
         $form = $this->createFormBuilder($newExperiment->getSettingsMetaDataGroup())
             ->addEventSubscriber(new ShortNameSubscriber())
             ->add('new', SubmitType::class )

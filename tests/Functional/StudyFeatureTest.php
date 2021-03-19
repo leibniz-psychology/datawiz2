@@ -2,6 +2,8 @@
 
 namespace App\Tests\Functional;
 
+use App\Domain\Access\Administration\DataWizUserRepository;
+use App\Domain\Model\Administration\DataWizUser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -14,7 +16,10 @@ class StudyFeatureTest extends WebTestCase
 
     public function setUp(): void
     {
-        $this->client = static::createClient();
+        $this->client = static::createClient(); // get mock client for mock requests
+        $userRepository = static::$container->get(DataWizUserRepository::class); // get repo to load user
+        $testuser = $userRepository->findOneByEmail('mc@leibniz-psychology.org'); // read the user for testing
+        $this->client->loginUser($testuser); // authenticate the testuser for the testing
     }
 
     /**
@@ -25,48 +30,49 @@ class StudyFeatureTest extends WebTestCase
     public function testOverviewAction()
     {
         $this->client->request('GET', '/pages/studies/overview');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertResponseIsSuccessful();
     }
 
     public function testRootRedirect()
     {
         $this->client->request('GET', '/pages/studies');
-        $this->assertEquals(301, $this->client->getResponse()->getStatusCode());
+        $this->assertResponseRedirects();
     }
 
     public function testNewAction()
     {
         $this->client->request('GET', '/pages/studies/new');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertResponseIsSuccessful();
     }
 
     public function testDocumentationAction()
     {
+
         $this->client->request('GET', '/pages/studies/documentation');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertResponseIsSuccessful();
     }
 
     public function testAdminAction()
     {
         $this->client->request('GET', '/pages/studies/admin');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertResponseIsSuccessful();
     }
 
     public function testDesignAction()
     {
         $this->client->request('GET', '/pages/studies/design');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertResponseIsSuccessful();
     }
 
     public function testTheoryAction()
     {
         $this->client->request('GET', '/pages/studies/theory');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertResponseIsSuccessful();
     }
 
     public function testSampleAction()
     {
         $this->client->request('GET', '/pages/studies/sample');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertResponseIsSuccessful();
     }
 }

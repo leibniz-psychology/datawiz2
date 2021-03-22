@@ -4,16 +4,15 @@ namespace App\Domain\Model\Administration;
 
 use App\Domain\Access\Administration\DataWizUserRepository;
 use App\Security\Authorization\Authorizable;
-use App\Security\Authorization\AuthorizableDefault;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=DataWizUserRepository::class)
  */
-class DataWizUser extends UuidEntity implements UserInterface, Authorizable
+class DataWizUser extends UuidEntity implements UserInterface
 {
-    use AuthorizableDefault;
+    use Authorizable;
 
     /**
      * @ORM\Column(type="json")

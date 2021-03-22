@@ -5,7 +5,7 @@
 
 namespace App\Domain\Model\Study;
 
-use App\Domain\Access\Study\ExperiementRepository;
+use App\Domain\Definition\MetaDataValuable;
 use App\Domain\Definition\Study\ShortNameable;
 use App\Domain\Model\Administration\UuidEntity;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,28 +13,21 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  */
-class SettingsMetaDataGroup extends UuidEntity implements ShortNameable
+class SettingsMetaDataGroup extends UuidEntity implements MetaDataValuable
 {
     /**
      * One Settings section has One Experiment.
      * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\Experiment", inversedBy="settingsMetaDataGroup")
      */
     protected $experiment;
-
     use ExperimentRelatable;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $shortName;
+    use ShortNameable;
 
-    public function getShortName(): ?string
+    public function getMetaData(): array
     {
-        return $this->shortName;
-    }
-
-    public function setShortName(string $newShortName): void
-    {
-        $this->shortName = $newShortName;
+        return [
+            SettingsMetaDataGroup::getShortNameLabel() => $this->getShortName(),
+        ];
     }
 }

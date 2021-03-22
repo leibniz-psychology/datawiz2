@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class QuestionnaireService implements Questionable
+class QuestionnaireService implements Questionnairable
 {
     private $formBuilder;
 

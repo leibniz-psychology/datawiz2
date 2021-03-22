@@ -1,16 +1,33 @@
 <?php
 
+
 namespace App\Domain\Definition\Study;
 
-use App\Domain\Definition\Datatypes\DataWizTextable;
 
-/**
- * A study will have a short name to become easily recognizable by the user
- * Gurantee a writable/readable property exists through the given methods.
- */
-interface ShortNameable extends DataWizTextable
+use Doctrine\ORM\Mapping as ORM;
+
+trait ShortNameable
 {
-    public function getShortName(): ?string;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $short_name;
 
-    public function setShortName(string $newShortName): void;
+    public function getShortName(): ?string
+    {
+        return $this->short_name;
+    }
+
+    public function setShortName(string $newShortName): void
+    {
+        $this->short_name = $newShortName;
+    }
+
+    public static function getShortNameOptions(): array
+    {
+        return [
+            'label' => 'Short name:',
+            'help' => 'Shorter name than your title. For internal reference only.'
+        ];
+    }
 }

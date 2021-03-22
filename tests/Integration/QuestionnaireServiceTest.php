@@ -3,7 +3,7 @@
 namespace App\Tests\Integration;
 
 use App\Questionnaire\Forms\StudySettingsType;
-use App\Questionnaire\Questionable;
+use App\Questionnaire\Questionnairable;
 use App\Questionnaire\QuestionnaireService;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Form\FormInterface;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 class QuestionnaireServiceTest extends KernelTestCase
 {
     /**
-     * @var Questionable
+     * @var Questionnairable
      */
     private $questionnaire;
 

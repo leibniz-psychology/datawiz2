@@ -4,7 +4,7 @@
 namespace App\Domain\Model\Study;
 
 
-use App\Domain\Model\Administration\DataWizUser;
+
 use App\Domain\Model\Administration\UuidEntity;
 use App\Domain\Access\Study\ExperimentRepository;
 use App\Security\Authorization\Ownable;
@@ -53,7 +53,7 @@ class Experiment extends UuidEntity implements Ownable
         return $this->owner;
     }
 
-    private function setOwner(DataWizUser $owner)
+    private function setOwner($owner)
     {
         $this->owner = $owner;
     }

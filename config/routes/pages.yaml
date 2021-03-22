@@ -18,7 +18,7 @@ Study-settings:
   controller: App\View\Controller\StudyController::settingsAction
 
 Study-documentation:
-  path: /studies/documentation
+  path: /studies/{uuid}/documentation
   controller: App\View\Controller\StudyController::documentationAction
 
 Study-admin:

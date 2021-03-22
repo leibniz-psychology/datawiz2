@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-interface Questionable
+interface Questionnairable
 {
     public function createForm(string $type, $data = null, array $options = []): FormInterface;
 

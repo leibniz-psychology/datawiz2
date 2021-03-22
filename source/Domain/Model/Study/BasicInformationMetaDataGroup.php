@@ -2,6 +2,7 @@
 
 namespace App\Domain\Model\Study;
 
+use App\Domain\Definition\MetaDataDictionary;
 use App\Domain\Definition\MetaDataValuable;
 use App\Domain\Definition\Study\Contactable;
 use App\Domain\Definition\Study\Creatorable;
@@ -9,6 +10,8 @@ use App\Domain\Definition\Study\Descriptable;
 use App\Domain\Definition\Study\RelatedPublicationable;
 use App\Domain\Definition\Study\Titleable;
 use App\Domain\Model\Administration\UuidEntity;
+use App\Questionnaire\Forms\BasicInformationType;
+use App\Questionnaire\Questionable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,11 +35,11 @@ class BasicInformationMetaDataGroup extends UuidEntity implements MetaDataValuab
     public function getMetaData(): array
     {
        return [
-           BasicInformationMetaDataGroup::getCreatorLabel() => $this->getCreator(),
-           BasicInformationMetaDataGroup::getContactLabel() => $this->getContact(),
-           BasicInformationMetaDataGroup::getTitleLabel() => $this->getTitle(),
-           BasicInformationMetaDataGroup::getDescriptionLabel() => $this->getDescription(),
-           BasicInformationMetaDataGroup::getRelatedPublicationsLabel() => $this->getRelatedPublications()
+           MetaDataDictionary::CREATOR => $this->getCreator(),
+           MetaDataDictionary::CONTACT => $this->getContact(),
+           MetaDataDictionary::TITLE => $this->getTitle(),
+           MetaDataDictionary::DESCRIPTION => $this->getDescription(),
+           MetaDataDictionary::RELATED_PUBS => $this->getRelatedPublications()
        ];
     }
 }

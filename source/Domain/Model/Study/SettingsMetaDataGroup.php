@@ -5,6 +5,7 @@
 
 namespace App\Domain\Model\Study;
 
+use App\Domain\Definition\MetaDataDictionary;
 use App\Domain\Definition\MetaDataValuable;
 use App\Domain\Definition\Study\ShortNameable;
 use App\Domain\Model\Administration\UuidEntity;
@@ -27,7 +28,7 @@ class SettingsMetaDataGroup extends UuidEntity implements MetaDataValuable
     public function getMetaData(): array
     {
         return [
-            SettingsMetaDataGroup::getShortNameLabel() => $this->getShortName(),
+            MetaDataDictionary::SHORTNAME => $this->getShortName(),
         ];
     }
 }

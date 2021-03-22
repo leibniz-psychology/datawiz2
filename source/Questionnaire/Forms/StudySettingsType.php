@@ -6,6 +6,7 @@
 
 namespace App\Questionnaire\Forms;
 
+use App\Domain\Definition\MetaDataDictionary;
 use App\Domain\Model\Study\BasicInformationMetaDataGroup;
 use App\Domain\Model\Study\SettingsMetaDataGroup;
 use App\Questionnaire\Fields\ShortNameSubscriber;
@@ -20,7 +21,7 @@ class StudySettingsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('shortName', TextType::class)
+            ->add(MetaDataDictionary::SHORTNAME, TextType::class)
             ->add('save', SubmitType::class)
         ;
     }

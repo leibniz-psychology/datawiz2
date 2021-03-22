@@ -4,6 +4,7 @@
 namespace App\Questionnaire\Forms;
 
 
+use App\Domain\Definition\MetaDataDictionary;
 use App\Domain\Model\Study\BasicInformationMetaDataGroup;
 use App\Domain\Model\Study\SettingsMetaDataGroup;
 use Symfony\Component\Form\AbstractType;
@@ -17,12 +18,14 @@ class BasicInformationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
+
         $builder
-            ->add('creator', TextType::class)
-            ->add('contact', TextareaType::class)
-            ->add('title', TextareaType::class)
-            ->add('description', TextareaType::class)
-            ->add('relatedPublications', TextareaType::class)
+            ->add(MetaDataDictionary::CREATOR, TextType::class)
+            ->add(MetaDataDictionary::CONTACT, TextareaType::class)
+            ->add(MetaDataDictionary::TITLE, TextareaType::class)
+            ->add(MetaDataDictionary::DESCRIPTION, TextareaType::class)
+            ->add(MetaDataDictionary::RELATED_PUBS, TextareaType::class)
             ->add('save', SubmitType::class)
         ;
     }

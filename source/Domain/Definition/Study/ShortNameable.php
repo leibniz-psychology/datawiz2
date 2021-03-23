@@ -4,7 +4,9 @@
 namespace App\Domain\Definition\Study;
 
 
+use App\Questionnaire\FormInstructionValue;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 trait ShortNameable
 {
@@ -23,11 +25,11 @@ trait ShortNameable
         $this->short_name = $newShortName;
     }
 
-    private static function getShortNameOptions(): array
+    private static function getShortNameOptions(): FormInstructionValue
     {
-        return [
-            'label' => 'Short name:',
+        return new FormInstructionValue(TextType::class, [
+            'label' => 'Short name',
             'help' => 'Shorter name than your title. For internal reference only.'
-        ];
+        ]);
     }
 }

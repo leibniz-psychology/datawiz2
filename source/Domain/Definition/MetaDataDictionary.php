@@ -10,9 +10,9 @@ final class MetaDataDictionary
     const SHORTNAME = 'short_name';
 
     // BasicInformationMetaData
-    const TITLE = 'title,';
-    const CREATOR = 'creator,';
-    const CONTACT = 'contact,';
+    const TITLE = 'title';
+    const CREATOR = 'creator';
+    const CONTACT = 'contact';
     const DESCRIPTION = 'description';
     const RELATED_PUBS = 'related_publications';
 

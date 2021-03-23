@@ -4,9 +4,10 @@
 namespace App\Questionnaire;
 
 
+use App\Domain\Definition\MetaDataValuable;
+
 interface Questionable
 {
-    public static function provideFormConfigurationFor(string $metadatadictionaryEntry): ?array;
-
-    public static function provideAllFormConfigurations(): array;
+    public static function getDictionaryKeys(): array;
+    public static function lookUpFormInstructions(string $metadatadictionaryEntry): ?FormInstructionValue;
 }

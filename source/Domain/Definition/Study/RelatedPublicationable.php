@@ -4,7 +4,9 @@
 namespace App\Domain\Definition\Study;
 
 
+use App\Questionnaire\FormInstructionValue;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 trait RelatedPublicationable
 {
@@ -23,12 +25,12 @@ trait RelatedPublicationable
         $this->related_publications = $related_publications;
     }
 
-    private static function getRelatedPublicationOptions(): array
+    private static function getRelatedPublicationOptions(): FormInstructionValue
     {
-        return [
+        return new FormInstructionValue(TextType::class, [
             'label' => 'Related publications',
             'help' => 'Any publications that refers to the subject of your study'
-        ];
+        ]);
     }
 
 }

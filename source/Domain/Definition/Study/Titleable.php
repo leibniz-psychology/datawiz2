@@ -4,7 +4,9 @@
 namespace App\Domain\Definition\Study;
 
 
+use App\Questionnaire\FormInstructionValue;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 trait Titleable
 {
@@ -23,11 +25,11 @@ trait Titleable
         $this->title = $title;
     }
 
-    private static function getTitleOptions(): array
+    private static function getTitleOptions(): FormInstructionValue
     {
-        return [
+        return new FormInstructionValue(TextareaType::class, [
             'label' => 'Title',
             'help' => 'The headline of your study'
-        ];
+        ]);
     }
 }

@@ -10,6 +10,7 @@ use App\Domain\Definition\Study\Descriptable;
 use App\Domain\Definition\Study\RelatedPublicationable;
 use App\Domain\Definition\Study\Titleable;
 use App\Domain\Model\Administration\UuidEntity;
+use App\Questionnaire\FormInstructionValue;
 use App\Questionnaire\Forms\BasicInformationType;
 use App\Questionnaire\Questionable;
 use Doctrine\ORM\Mapping as ORM;
@@ -32,18 +33,18 @@ class BasicInformationMetaDataGroup extends UuidEntity implements MetaDataValuab
     use Descriptable;
     use RelatedPublicationable;
 
-    public function getMetaData(): array
+    public static function getImplementedMetaData(): array
     {
-       return [
-           MetaDataDictionary::CREATOR => $this->getCreator(),
-           MetaDataDictionary::CONTACT => $this->getContact(),
-           MetaDataDictionary::TITLE => $this->getTitle(),
-           MetaDataDictionary::DESCRIPTION => $this->getDescription(),
-           MetaDataDictionary::RELATED_PUBS => $this->getRelatedPublications()
-       ];
+       return array(
+           MetaDataDictionary::CREATOR,
+           MetaDataDictionary::CONTACT,
+           MetaDataDictionary::TITLE,
+           MetaDataDictionary::DESCRIPTION,
+           MetaDataDictionary::RELATED_PUBS
+       );
     }
 
-    public static function provideFormConfigurationFor(string $metadatadictionaryEntry): ?array
+    public static function lookUpFormInstructions(string $metadatadictionaryEntry): ?FormInstructionValue
     {
         switch ($metadatadictionaryEntry) {
             case MetaDataDictionary::CREATOR:
@@ -61,14 +62,8 @@ class BasicInformationMetaDataGroup extends UuidEntity implements MetaDataValuab
         }
     }
 
-    public static function provideAllFormConfigurations(): array
+    public static function getDictionaryKeys(): array
     {
-        return [
-            MetaDataDictionary::CREATOR => self::getCreatorOptions(),
-            MetaDataDictionary::CONTACT => self::getContactOptions(),
-            MetaDataDictionary::TITLE => self::getTitleOptions(),
-            MetaDataDictionary::DESCRIPTION => self::getDescriptionOptions(),
-            MetaDataDictionary::RELATED_PUBS => self::getRelatedPublicationOptions()
-        ];
+        return self::getImplementedMetaData();
     }
 }

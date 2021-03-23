@@ -4,7 +4,9 @@
 namespace App\Domain\Definition\Study;
 
 
+use App\Questionnaire\FormInstructionValue;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 trait Creatorable
 {
@@ -13,7 +15,7 @@ trait Creatorable
      */
     private $creator;
 
-    public function getCreator(): string
+    public function getCreator(): ?string
     {
         return $this->creator;
     }
@@ -23,12 +25,12 @@ trait Creatorable
         $this->creator = $creator;
     }
 
-    private static function getCreatorOptions(): array
+    private static function getCreatorOptions(): FormInstructionValue
     {
-        return [
+        return new FormInstructionValue(TextType::class, [
             'label' => 'Creator',
             'help' => 'Person who created this study'
-        ];
+        ]);
     }
 
 }

@@ -4,7 +4,9 @@
 namespace App\Domain\Definition\Study;
 
 
+use App\Questionnaire\FormInstructionValue;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 trait Contactable
 {
@@ -13,7 +15,7 @@ trait Contactable
      */
     private $contact;
 
-    public function getContact()
+    public function getContact(): ?string
     {
         return $this->contact;
     }
@@ -23,12 +25,12 @@ trait Contactable
         $this->contact = $contact;
     }
 
-    private static function getContactOptions(): array
+    private static function getContactOptions(): FormInstructionValue
     {
-        return [
+        return new FormInstructionValue(TextareaType::class, [
             'label' => 'Contact',
             'help' => 'Please provide an Email Adress for further contact'
-        ];
+        ]);
     }
 
 }

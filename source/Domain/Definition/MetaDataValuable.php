@@ -4,5 +4,5 @@ namespace App\Domain\Definition;
 
 interface MetaDataValuable
 {
-    public function getMetaData(): array;
+    public static function getImplementedMetaData(): array;
 }

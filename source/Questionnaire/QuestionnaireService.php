@@ -2,6 +2,9 @@
 
 namespace App\Questionnaire;
 
+use phpDocumentor\Reflection\Types\Callable_;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -16,34 +19,23 @@ class QuestionnaireService implements Questionnairable
         $this->formBuilder = $formBuilder;
     }
 
-    /**
-     * Wrapper function to create a new form with the FormBuilder service.
-     */
-    public function createForm(string $type, $data = null, array $options = []): FormInterface
-    {
-        return $this->formBuilder->create($type, $data, $options);
+    public function createFormFromQuestionable(Questionable $entity): FormInterface {
+        $form = $this->formBuilder->createBuilder(FormType::class, $entity);
+        foreach ($entity::getDictionaryKeys() as $dictKey) {
+            /** @var FormInstructionValue $instructions */
+            $instructions = $entity::lookUpFormInstructions($dictKey);
+            $form->add($dictKey, $instructions->getFormType(), $instructions->getFormOptions());
+        }
+        $form->add('save', SubmitType::class);
+        return $form->getForm();
     }
 
-    /**
-     * Create a new form and handle it in one call.
-     */
-    public function createAndHandleForm(string $type, Request $request, $data = null, array $options = []): FormInterface
-    {
-        return $this->formBuilder->create($type, $data, $options)->handleRequest($request);
-    }
-
-    /**
-     * Wrapper function to check if a form was submitted and valid.
-     */
-    public function submittedAndValid(FormInterface $formToHandle): bool
-    {
-        return $formToHandle->isSubmitted() && $formToHandle->isValid();
-    }
-
-    /**
-     * Return formbuilder for free actions
-     */
-    public function getFormBuilder(): FormFactoryInterface {
-        return $this->formBuilder;
+    public function askAndHandle(Questionable $entity, Request $request, \Closure $onSuccessCallback): FormInterface {
+        $form = $this->createFormFromQuestionable($entity);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $onSuccessCallback();
+        }
+        return $form;
     }
 }

@@ -18,6 +18,7 @@ services:
         exclude:
             - '../source/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}' # Symfony defaults untouched
             - '../source/Domain/Model' # our Entity/ folder
+            - '../source/Domain/Definition' # not services but input for the Model
             - '../source/Domain/State/Migrations' # our Migrations/ folder
 
     # controllers are imported separately to make sure services can be injected

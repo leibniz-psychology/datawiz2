@@ -23,4 +23,12 @@ trait Descriptable
         $this->description = $description;
     }
 
+    private static function getDescriptionOptions(): array
+    {
+        return [
+            'label' => 'Creator',
+            'help' => 'Person who created this study'
+        ];
+    }
+
 }

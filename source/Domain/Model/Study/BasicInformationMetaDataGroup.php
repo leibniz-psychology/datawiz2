@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  */
-class BasicInformationMetaDataGroup extends UuidEntity implements MetaDataValuable
+class BasicInformationMetaDataGroup extends UuidEntity implements MetaDataValuable, Questionable
 {
     /**
      * One basic Information section has One Experiment.
@@ -41,5 +41,34 @@ class BasicInformationMetaDataGroup extends UuidEntity implements MetaDataValuab
            MetaDataDictionary::DESCRIPTION => $this->getDescription(),
            MetaDataDictionary::RELATED_PUBS => $this->getRelatedPublications()
        ];
+    }
+
+    public static function provideFormConfigurationFor(string $metadatadictionaryEntry): ?array
+    {
+        switch ($metadatadictionaryEntry) {
+            case MetaDataDictionary::CREATOR:
+                return self::getCreatorOptions();
+            case MetaDataDictionary::CONTACT:
+                return self::getContactOptions();
+            case MetaDataDictionary::TITLE:
+                return self::getTitleOptions();
+            case MetaDataDictionary::DESCRIPTION:
+                return self::getDescriptionOptions();
+            case MetaDataDictionary::RELATED_PUBS:
+                return self::getRelatedPublicationOptions();
+            default:
+                return null;
+        }
+    }
+
+    public static function provideAllFormConfigurations(): array
+    {
+        return [
+            MetaDataDictionary::CREATOR => self::getCreatorOptions(),
+            MetaDataDictionary::CONTACT => self::getContactOptions(),
+            MetaDataDictionary::TITLE => self::getTitleOptions(),
+            MetaDataDictionary::DESCRIPTION => self::getDescriptionOptions(),
+            MetaDataDictionary::RELATED_PUBS => self::getRelatedPublicationOptions()
+        ];
     }
 }

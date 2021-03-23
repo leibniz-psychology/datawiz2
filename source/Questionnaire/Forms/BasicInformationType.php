@@ -18,8 +18,6 @@ class BasicInformationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
-
         $builder
             ->add(MetaDataDictionary::CREATOR, TextType::class)
             ->add(MetaDataDictionary::CONTACT, TextareaType::class)

@@ -23,7 +23,7 @@ trait ShortNameable
         $this->short_name = $newShortName;
     }
 
-    public static function getShortNameOptions(): array
+    private static function getShortNameOptions(): array
     {
         return [
             'label' => 'Short name:',

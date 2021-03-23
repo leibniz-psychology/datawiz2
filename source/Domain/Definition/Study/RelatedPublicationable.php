@@ -23,4 +23,12 @@ trait RelatedPublicationable
         $this->related_publications = $related_publications;
     }
 
+    private static function getRelatedPublicationOptions(): array
+    {
+        return [
+            'label' => 'Related publications',
+            'help' => 'Any publications that refers to the subject of your study'
+        ];
+    }
+
 }

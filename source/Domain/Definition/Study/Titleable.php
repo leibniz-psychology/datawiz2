@@ -22,4 +22,12 @@ trait Titleable
     {
         $this->title = $title;
     }
+
+    private static function getTitleOptions(): array
+    {
+        return [
+            'label' => 'Title',
+            'help' => 'The headline of your study'
+        ];
+    }
 }

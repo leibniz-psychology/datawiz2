@@ -23,7 +23,7 @@ trait Contactable
         $this->contact = $contact;
     }
 
-    public static function getContactOptions(): array
+    private static function getContactOptions(): array
     {
         return [
             'label' => 'Contact',

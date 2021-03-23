@@ -23,4 +23,12 @@ trait Creatorable
         $this->creator = $creator;
     }
 
+    private static function getCreatorOptions(): array
+    {
+        return [
+            'label' => 'Creator',
+            'help' => 'Person who created this study'
+        ];
+    }
+
 }

@@ -44,7 +44,7 @@ trait Authorizable
 
     /**
      * @return void
-     * Promote user to admin
+     *              Promote user to admin
      */
     public function promotion(): void
     {
@@ -53,7 +53,7 @@ trait Authorizable
 
     /**
      * @return void
-     * Demote admin to normal user
+     *              Demote admin to normal user
      */
     public function demotion(): void
     {

@@ -91,5 +91,4 @@ class DataWizUser extends UuidEntity implements UserInterface
     {
         $this->datawizSettings = $datawizSettings;
     }
-
 }

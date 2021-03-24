@@ -1,11 +1,8 @@
 <?php
 
-
 namespace App\Security\Authorization;
 
-
 use App\Domain\Model\Administration\DataWizUser;
-use App\Kernel;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -29,7 +26,8 @@ class FilterConfigurationSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onKernelRequest() {
+    public function onKernelRequest()
+    {
         /** @var DataWizUser $currentUser */
         $currentUser = $this->security->getUser();
 
@@ -37,7 +35,7 @@ class FilterConfigurationSubscriber implements EventSubscriberInterface
             ->getFilters()
             ->enable('ownership');
 
-        if ($currentUser != null) {
+        if (null != $currentUser) {
             $filter->setParameter('currentUserId', $currentUser->getId(), 'uuid');
         }
     }

@@ -9,7 +9,6 @@ use App\Domain\Definition\MetaDataDictionary;
 use App\Domain\Definition\MetaDataValuable;
 use App\Domain\Definition\Study\ShortNameable;
 use App\Domain\Model\Administration\UuidEntity;
-use App\Questionnaire\FormInstructionValue;
 use App\Questionnaire\Forms\SettingsType;
 use App\Questionnaire\Questionable;
 use Doctrine\ORM\Mapping as ORM;
@@ -21,6 +20,7 @@ class SettingsMetaDataGroup extends UuidEntity implements MetaDataValuable, Ques
 {
     /**
      * One Settings section has One Experiment.
+     *
      * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\Experiment", inversedBy="settingsMetaDataGroup")
      */
     protected $experiment;
@@ -30,9 +30,9 @@ class SettingsMetaDataGroup extends UuidEntity implements MetaDataValuable, Ques
 
     public static function getImplementedMetaData(): array
     {
-        return array(
-            MetaDataDictionary::SHORTNAME
-        );
+        return [
+            MetaDataDictionary::SHORTNAME,
+        ];
     }
 
     public function getFormTypeForEntity(): string

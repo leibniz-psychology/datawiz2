@@ -3,7 +3,6 @@
 namespace App\Tests\Integration;
 
 use App\Domain\Model\Study\SettingsMetaDataGroup;
-use App\Questionnaire\Forms\SettingsType;
 use App\Questionnaire\Questionnairable;
 use App\Questionnaire\QuestionnaireService;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

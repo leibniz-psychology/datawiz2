@@ -1,10 +1,6 @@
 <?php
 
-
 namespace App\Security\Authorization;
-
-
-use Symfony\Component\Security\Core\User\UserInterface;
 
 interface Ownable
 {

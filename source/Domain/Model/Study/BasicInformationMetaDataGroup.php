@@ -10,7 +10,6 @@ use App\Domain\Definition\Study\Descriptable;
 use App\Domain\Definition\Study\RelatedPublicationable;
 use App\Domain\Definition\Study\Titleable;
 use App\Domain\Model\Administration\UuidEntity;
-use App\Questionnaire\FormInstructionValue;
 use App\Questionnaire\Forms\BasicInformationType;
 use App\Questionnaire\Questionable;
 use Doctrine\ORM\Mapping as ORM;
@@ -22,6 +21,7 @@ class BasicInformationMetaDataGroup extends UuidEntity implements MetaDataValuab
 {
     /**
      * One basic Information section has One Experiment.
+     *
      * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\Experiment", inversedBy="basicInformationMetaDataGroup")
      */
     protected $experiment;
@@ -35,13 +35,13 @@ class BasicInformationMetaDataGroup extends UuidEntity implements MetaDataValuab
 
     public static function getImplementedMetaData(): array
     {
-       return array(
+        return [
            MetaDataDictionary::CREATOR,
            MetaDataDictionary::CONTACT,
            MetaDataDictionary::TITLE,
            MetaDataDictionary::DESCRIPTION,
-           MetaDataDictionary::RELATED_PUBS
-       );
+           MetaDataDictionary::RELATED_PUBS,
+       ];
     }
 
     public function getFormTypeForEntity(): string

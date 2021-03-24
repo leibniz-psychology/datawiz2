@@ -2,7 +2,6 @@
 
 namespace App\Domain\Model\Study;
 
-
 use App\Domain\Definition\MetaDataValuable;
 use App\Domain\Model\Administration\UuidEntity;
 use App\Questionnaire\Forms\SampleType;
@@ -16,6 +15,7 @@ class SampleMetaDataGroup extends UuidEntity implements MetaDataValuable, Questi
 {
     /**
      * One Sample section has One Experiment.
+     *
      * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\Experiment", inversedBy="sampleMetaDataGroup")
      */
     protected $experiment;
@@ -24,7 +24,7 @@ class SampleMetaDataGroup extends UuidEntity implements MetaDataValuable, Questi
 
     public static function getImplementedMetaData(): array
     {
-        return array();
+        return [];
     }
 
     public function getFormTypeForEntity(): string

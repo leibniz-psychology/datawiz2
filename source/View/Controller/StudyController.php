@@ -5,7 +5,6 @@ namespace App\View\Controller;
 use App\Crud\Crudable;
 use App\Domain\Model\Study\Experiment;
 use App\Questionnaire\Questionnairable;
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,11 +27,12 @@ class StudyController extends DataWizController
         $this->urlGenerator = $urlGenerator;
     }
 
-    public function overviewAction(Crudable $crud):Response
+    public function overviewAction(Crudable $crud): Response
     {
         $all_experiments = $crud->readForAll(Experiment::class);
+
         return $this->render('Pages/Study/overview.html.twig', [
-            'all_experiments' => $all_experiments
+            'all_experiments' => $all_experiments,
         ]);
     }
 
@@ -47,12 +47,13 @@ class StudyController extends DataWizController
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {
             $this->crud->update($newExperiment);
+
             return $this->redirectToOverview();
         }
 
         return $this->render('Pages/Study/new.html.twig', [
             'form' => $form->createView(),
-            'experiment' => $newExperiment
+            'experiment' => $newExperiment,
         ]);
     }
 
@@ -67,12 +68,13 @@ class StudyController extends DataWizController
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {
             $this->crud->update($entityAtChange);
+
             return $this->redirectToOverview();
         }
 
         return $this->render('Pages/Study/settings.html.twig', [
             'form' => $form->createView(),
-            'experiment' => $entityAtChange
+            'experiment' => $entityAtChange,
         ]);
     }
 
@@ -87,12 +89,13 @@ class StudyController extends DataWizController
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {
             $this->crud->update($entityAtChange);
+
             return $this->redirectToOverview();
         }
 
         return $this->render('Pages/Study/documentation.html.twig', [
             'form' => $form->createView(),
-            'experiment' => $entityAtChange
+            'experiment' => $entityAtChange,
         ]);
     }
 
@@ -106,7 +109,7 @@ class StudyController extends DataWizController
         $entityAtChange = $this->getExperimentForUuid($uuid);
 
         return $this->render('Pages/Study/design.html.twig', [
-            'experiment' => $entityAtChange
+            'experiment' => $entityAtChange,
         ]);
     }
 
@@ -115,7 +118,7 @@ class StudyController extends DataWizController
         $entityAtChange = $this->getExperimentForUuid($uuid);
 
         return $this->render('Pages/Study/theory.html.twig', [
-            'experiment' => $entityAtChange
+            'experiment' => $entityAtChange,
         ]);
     }
 
@@ -124,15 +127,17 @@ class StudyController extends DataWizController
         $entityAtChange = $this->getExperimentForUuid($uuid);
 
         return $this->render('Pages/Study/sample.html.twig', [
-            'experiment' => $entityAtChange
+            'experiment' => $entityAtChange,
         ]);
     }
 
-    private function getExperimentForUuid(string $uuid): Experiment {
+    private function getExperimentForUuid(string $uuid): Experiment
+    {
         return $this->crud->readById(Experiment::class, $uuid);
     }
 
-    private function redirectToOverview(): RedirectResponse {
+    private function redirectToOverview(): RedirectResponse
+    {
         return new RedirectResponse($this->urlGenerator->generate('Study-overview'));
     }
 }

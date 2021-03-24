@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Domain\Model\Administration;
-
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -20,5 +18,4 @@ class DataWizSettings extends UuidEntity
      * @ORM\Column(type="boolean", nullable=true)
      */
     public $dummySetting;
-
 }

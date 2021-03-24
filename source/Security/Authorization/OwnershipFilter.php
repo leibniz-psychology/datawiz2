@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Security\Authorization;
-
 
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query\Filter\SQLFilter;

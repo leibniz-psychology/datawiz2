@@ -1,12 +1,9 @@
 <?php
 
-
 namespace App\Domain\Model\Study;
 
-
-
-use App\Domain\Model\Administration\UuidEntity;
 use App\Domain\Access\Study\ExperimentRepository;
+use App\Domain\Model\Administration\UuidEntity;
 use App\Security\Authorization\Ownable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -23,24 +20,28 @@ class Experiment extends UuidEntity implements Ownable
 
     /**
      * One Experiment has One Sample section.
+     *
      * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\SampleMetaDataGroup", mappedBy="experiment", cascade={"persist"})
      */
     private $sampleMetaDataGroup;
 
     /**
      * One Experiment has One Settings section.
+     *
      * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\SettingsMetaDataGroup", mappedBy="experiment", cascade={"persist"})
      */
     private $settingsMetaDataGroup;
 
     /**
      * One Experiment has One basic Information section.
+     *
      * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\BasicInformationMetaDataGroup", mappedBy="experiment", cascade={"persist"})
      */
     private $basicInformationMetaDataGroup;
 
     /**
      * One Experiment has One Theory section.
+     *
      * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\TheoryMetaDataGroup", mappedBy="experiment", cascade={"persist"})
      */
     private $theoryMetaDataGroup;
@@ -137,6 +138,4 @@ class Experiment extends UuidEntity implements Ownable
 
         return $newExperiment;
     }
-
-
 }

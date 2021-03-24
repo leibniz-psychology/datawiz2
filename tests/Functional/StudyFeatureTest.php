@@ -3,7 +3,6 @@
 namespace App\Tests\Functional;
 
 use App\Domain\Access\Administration\DataWizUserRepository;
-use App\Domain\Model\Administration\DataWizUser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -44,35 +43,36 @@ class StudyFeatureTest extends WebTestCase
         $this->client->request('GET', '/pages/studies/new');
         $this->assertResponseIsSuccessful();
     }
-/*
-    public function testDocumentationAction()
-    {
 
-        $this->client->request('GET', '/pages/studies/22b7a92f-9338-4f25-9fb6-eec52e64b43d/documentation');
-        $this->assertResponseIsSuccessful();
-    }
+    /*
+        public function testDocumentationAction()
+        {
 
-    public function testAdminAction()
-    {
-        $this->client->request('GET', '/pages/studies/admin');
-        $this->assertResponseIsSuccessful();
-    }
+            $this->client->request('GET', '/pages/studies/22b7a92f-9338-4f25-9fb6-eec52e64b43d/documentation');
+            $this->assertResponseIsSuccessful();
+        }
 
-    public function testDesignAction()
-    {
-        $this->client->request('GET', '/pages/studies/design');
-        $this->assertResponseIsSuccessful();
-    }
+        public function testAdminAction()
+        {
+            $this->client->request('GET', '/pages/studies/admin');
+            $this->assertResponseIsSuccessful();
+        }
 
-    public function testTheoryAction()
-    {
-        $this->client->request('GET', '/pages/studies/theory');
-        $this->assertResponseIsSuccessful();
-    }
+        public function testDesignAction()
+        {
+            $this->client->request('GET', '/pages/studies/design');
+            $this->assertResponseIsSuccessful();
+        }
 
-    public function testSampleAction()
-    {
-        $this->client->request('GET', '/pages/studies/sample');
-        $this->assertResponseIsSuccessful();
-    }*/
+        public function testTheoryAction()
+        {
+            $this->client->request('GET', '/pages/studies/theory');
+            $this->assertResponseIsSuccessful();
+        }
+
+        public function testSampleAction()
+        {
+            $this->client->request('GET', '/pages/studies/sample');
+            $this->assertResponseIsSuccessful();
+        }*/
 }

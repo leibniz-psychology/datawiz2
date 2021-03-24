@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Domain\Definition;
-
 
 final class MetaDataDictionary
 {
@@ -19,5 +17,4 @@ final class MetaDataDictionary
     // SampleMetaData
 
     // TheoryMetaData
-
 }

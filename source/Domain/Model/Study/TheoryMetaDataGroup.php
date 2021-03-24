@@ -2,7 +2,6 @@
 
 namespace App\Domain\Model\Study;
 
-
 use App\Domain\Definition\MetaDataValuable;
 use App\Domain\Model\Administration\UuidEntity;
 use App\Questionnaire\Forms\TheoryType;
@@ -16,6 +15,7 @@ class TheoryMetaDataGroup extends UuidEntity implements MetaDataValuable, Questi
 {
     /**
      * One Theory section has One Experiment.
+     *
      * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\Experiment", inversedBy="theoryMetaDataGroup")
      */
     protected $experiment;
@@ -24,7 +24,7 @@ class TheoryMetaDataGroup extends UuidEntity implements MetaDataValuable, Questi
 
     public static function getImplementedMetaData(): array
     {
-        return array();
+        return [];
     }
 
     public function getFormTypeForEntity(): string

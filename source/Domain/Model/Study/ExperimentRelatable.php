@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Domain\Model\Study;
-
 
 trait ExperimentRelatable
 {
@@ -17,5 +15,4 @@ trait ExperimentRelatable
     {
         $this->experiment = $experiment;
     }
-
 }

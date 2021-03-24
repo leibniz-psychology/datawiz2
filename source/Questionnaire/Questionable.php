@@ -1,9 +1,6 @@
 <?php
 
-
 namespace App\Questionnaire;
-
-
 
 interface Questionable
 {

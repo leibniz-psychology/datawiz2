@@ -24,13 +24,4 @@ trait Contactable
     {
         $this->contact = $contact;
     }
-
-    private static function getContactOptions(): FormInstructionValue
-    {
-        return new FormInstructionValue(TextareaType::class, [
-            'label' => 'Contact',
-            'help' => 'Please provide an Email Adress for further contact'
-        ]);
-    }
-
 }

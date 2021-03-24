@@ -24,13 +24,4 @@ trait RelatedPublicationable
     {
         $this->related_publications = $related_publications;
     }
-
-    private static function getRelatedPublicationOptions(): FormInstructionValue
-    {
-        return new FormInstructionValue(TextType::class, [
-            'label' => 'Related publications',
-            'help' => 'Any publications that refers to the subject of your study'
-        ]);
-    }
-
 }

@@ -24,13 +24,4 @@ trait Creatorable
     {
         $this->creator = $creator;
     }
-
-    private static function getCreatorOptions(): FormInstructionValue
-    {
-        return new FormInstructionValue(TextType::class, [
-            'label' => 'Creator',
-            'help' => 'Person who created this study'
-        ]);
-    }
-
 }

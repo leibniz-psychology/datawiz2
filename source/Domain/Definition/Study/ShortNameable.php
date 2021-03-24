@@ -24,12 +24,4 @@ trait ShortNameable
     {
         $this->short_name = $newShortName;
     }
-
-    private static function getShortNameOptions(): FormInstructionValue
-    {
-        return new FormInstructionValue(TextType::class, [
-            'label' => 'Short name',
-            'help' => 'Shorter name than your title. For internal reference only.'
-        ]);
-    }
 }

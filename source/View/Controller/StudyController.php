@@ -19,10 +19,8 @@ class StudyController extends DataWizController
     private $crud;
     private $urlGenerator;
 
-    public function __construct(Security $security,
-                                Questionnairable $questionnaire,
-                                Crudable $crud,
-                                UrlGeneratorInterface $urlGenerator)
+    public function __construct(Security $security, Questionnairable $questionnaire,
+                                Crudable $crud, UrlGeneratorInterface $urlGenerator)
     {
         $this->currentUser = $security->getUser();
         $this->crud = $crud;
@@ -44,6 +42,7 @@ class StudyController extends DataWizController
 
         $form = $questionnaire->askAndHandle(
             $newExperiment->getSettingsMetaDataGroup(),
+            'create',
             $request);
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {
@@ -62,6 +61,7 @@ class StudyController extends DataWizController
 
         $form = $this->questionnaire->askAndHandle(
             $entityAtChange->getSettingsMetaDataGroup(),
+            'save',
             $request);
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {
@@ -80,6 +80,7 @@ class StudyController extends DataWizController
 
         $form = $this->questionnaire->askAndHandle(
             $entityAtChange->getBasicInformationMetaDataGroup(),
+            'save',
             $request);
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {

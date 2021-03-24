@@ -17,19 +17,14 @@ class QuestionnaireService implements Questionnairable
         $this->formBuilder = $formBuilder;
     }
 
-    public function createFormFromQuestionable(Questionable $entity): FormInterface {
-        $form = $this->formBuilder->createBuilder(FormType::class, $entity);
-        foreach ($entity::getDictionaryKeys() as $dictKey) {
-            /** @var FormInstructionValue $instructions */
-            $instructions = $entity::lookUpFormInstructions($dictKey);
-            $form->add($dictKey, $instructions->getFormType(), $instructions->getFormOptions());
-        }
-        $form->add('save', SubmitType::class);
+    public function formFromEntity(Questionable $entity, string $buttonLabel): ?FormInterface {
+        $form = $this->formBuilder->createBuilder($entity->getFormTypeForEntity(), $entity);
+        $form->add('submit', SubmitType::class, ['label' => $buttonLabel]);
         return $form->getForm();
     }
 
-    public function askAndHandle(Questionable $entity, Request $request): FormInterface {
-        $form = $this->createFormFromQuestionable($entity);
+    public function askAndHandle(Questionable $entity, string $buttonLabel, Request $request): ?FormInterface {
+        $form = $this->formFromEntity($entity, $buttonLabel);
         $form->handleRequest($request);
         return $form;
     }

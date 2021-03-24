@@ -24,12 +24,4 @@ trait Titleable
     {
         $this->title = $title;
     }
-
-    private static function getTitleOptions(): FormInstructionValue
-    {
-        return new FormInstructionValue(TextareaType::class, [
-            'label' => 'Title',
-            'help' => 'The headline of your study'
-        ]);
-    }
 }

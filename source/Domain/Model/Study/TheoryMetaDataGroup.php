@@ -3,13 +3,16 @@
 namespace App\Domain\Model\Study;
 
 
+use App\Domain\Definition\MetaDataValuable;
 use App\Domain\Model\Administration\UuidEntity;
+use App\Questionnaire\Forms\TheoryType;
+use App\Questionnaire\Questionable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
  */
-class TheoryMetaDataGroup extends UuidEntity
+class TheoryMetaDataGroup extends UuidEntity implements MetaDataValuable, Questionable
 {
     /**
      * One Theory section has One Experiment.
@@ -18,4 +21,14 @@ class TheoryMetaDataGroup extends UuidEntity
     protected $experiment;
 
     use ExperimentRelatable;
+
+    public static function getImplementedMetaData(): array
+    {
+        return array();
+    }
+
+    public function getFormTypeForEntity(): string
+    {
+        return TheoryType::class;
+    }
 }

@@ -25,13 +25,4 @@ trait Descriptable
     {
         $this->description = $description;
     }
-
-    private static function getDescriptionOptions(): FormInstructionValue
-    {
-        return new FormInstructionValue(TextareaType::class, [
-            'label' => 'Creator',
-            'help' => 'Person who created this study'
-        ]);
-    }
-
 }

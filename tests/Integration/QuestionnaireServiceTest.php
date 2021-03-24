@@ -2,7 +2,7 @@
 
 namespace App\Tests\Integration;
 
-use App\Questionnaire\Forms\StudySettingsType;
+use App\Questionnaire\Forms\SettingsType;
 use App\Questionnaire\Questionnairable;
 use App\Questionnaire\QuestionnaireService;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -27,7 +27,7 @@ class QuestionnaireServiceTest extends KernelTestCase
     public function testCreateFormReturnsForm()
     {
         $form = $this->questionnaire
-            ->createForm(StudySettingsType::class);
+            ->createForm(SettingsType::class);
 
         $this->assertNotEmpty($form);
         $this->assertInstanceOf(FormInterface::class, $form);
@@ -36,7 +36,7 @@ class QuestionnaireServiceTest extends KernelTestCase
     public function testCreateAndHanleFormReturnsForm()
     {
         $form = $this->questionnaire
-            ->createAndHandleForm(StudySettingsType::class, new Request());
+            ->createAndHandleForm(SettingsType::class, new Request());
 
         $this->assertNotEmpty($form);
         $this->assertInstanceOf(FormInterface::class, $form);
@@ -45,7 +45,7 @@ class QuestionnaireServiceTest extends KernelTestCase
     public function testSubmittedAndValidReturnsFalseWhenDataIsMissing()
     {
         $form = $this->questionnaire
-            ->createAndHandleForm(StudySettingsType::class, new Request());
+            ->createAndHandleForm(SettingsType::class, new Request());
 
         $this->assertFalse($this->questionnaire->submittedAndValid($form));
     }

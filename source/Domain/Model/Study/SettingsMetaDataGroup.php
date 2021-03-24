@@ -10,6 +10,7 @@ use App\Domain\Definition\MetaDataValuable;
 use App\Domain\Definition\Study\ShortNameable;
 use App\Domain\Model\Administration\UuidEntity;
 use App\Questionnaire\FormInstructionValue;
+use App\Questionnaire\Forms\SettingsType;
 use App\Questionnaire\Questionable;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,19 +35,8 @@ class SettingsMetaDataGroup extends UuidEntity implements MetaDataValuable, Ques
         );
     }
 
-    public static function lookUpFormInstructions(string $metadatadictionaryEntry): ?FormInstructionValue
+    public function getFormTypeForEntity(): string
     {
-        switch ($metadatadictionaryEntry) {
-            case MetaDataDictionary::SHORTNAME:
-                return self::getShortNameOptions();
-            default:
-                return null;
-
-        }
-    }
-
-    public static function getDictionaryKeys(): array
-    {
-        return self::getImplementedMetaData();
+        return SettingsType::class;
     }
 }

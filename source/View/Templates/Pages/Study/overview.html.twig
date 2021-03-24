@@ -1,15 +1,35 @@
 {% extends "Layouts/base.html.twig" %}
 
 {% block body %}
+    <a href="{{ path('Administration-profile') }}">
+        <div>User Profile</div>
+    </a>
     <div class="text-2xl m-8 rounded-lg p-4 shadow-lg border-2 border-gray-800 inline-block">
-        With great <strong class="italic">New Studies</strong> comes great <strong class="italic">design</strong>.
+        Overview
     </div>
+
+    <a href="{{ path('Study-new')}}">
+        <button>new study</button>
+    </a>
 
     <ul>
         {% for experiment in all_experiments %}
            <li>
+               {{ experiment.settingsMetaDataGroup.shortName }}
                <a href="{{ path('Study-settings', {uuid: experiment.id}) }}">
-                   {{ experiment.settingsMetaDataGroup.shortName }}
+                   <span>|change name|</span>
+               </a>
+               <a href="{{ path('Study-documentation', {uuid: experiment.id}) }}">
+                   <span>|Basic Information| </span>
+               </a>
+               <a href="{{ path('Study-theory', {uuid: experiment.id}) }}">
+                   <span>|Theory| </span>
+               </a>
+               <a href="{{ path('Study-sample', {uuid: experiment.id}) }}">
+                   <span>|Sample| </span>
+               </a>
+               <a href="{{ path('Study-design', {uuid: experiment.id}) }}">
+                   <span>|Design| </span>
                </a>
            </li>
         {% endfor %}

@@ -52,6 +52,7 @@ class StudyController extends DataWizController
 
         return $this->render('Pages/Study/new.html.twig', [
             'form' => $form->createView(),
+            'experiment' => $newExperiment
         ]);
     }
 
@@ -70,7 +71,8 @@ class StudyController extends DataWizController
         }
 
         return $this->render('Pages/Study/settings.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'experiment' => $entityAtChange
         ]);
     }
 
@@ -89,7 +91,8 @@ class StudyController extends DataWizController
         }
 
         return $this->render('Pages/Study/documentation.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'experiment' => $entityAtChange
         ]);
     }
 
@@ -98,19 +101,31 @@ class StudyController extends DataWizController
         return $this->render('Pages/Study/admin.html.twig');
     }
 
-    public function designAction(): Response
+    public function designAction(string $uuid, Request $request): Response
     {
-        return $this->render('Pages/Study/design.html.twig');
+        $entityAtChange = $this->getExperimentForUuid($uuid);
+
+        return $this->render('Pages/Study/design.html.twig', [
+            'experiment' => $entityAtChange
+        ]);
     }
 
-    public function theoryAction(): Response
+    public function theoryAction(string $uuid, Request $request): Response
     {
-        return $this->render('Pages/Study/theory.html.twig');
+        $entityAtChange = $this->getExperimentForUuid($uuid);
+
+        return $this->render('Pages/Study/theory.html.twig', [
+            'experiment' => $entityAtChange
+        ]);
     }
 
-    public function sampleAction(): Response
+    public function sampleAction(string $uuid, Request $request): Response
     {
-        return $this->render('Pages/Study/sample.html.twig');
+        $entityAtChange = $this->getExperimentForUuid($uuid);
+
+        return $this->render('Pages/Study/sample.html.twig', [
+            'experiment' => $entityAtChange
+        ]);
     }
 
     private function getExperimentForUuid(string $uuid): Experiment {

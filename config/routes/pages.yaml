@@ -22,19 +22,19 @@ Study-documentation:
   controller: App\View\Controller\StudyController::documentationAction
 
 Study-admin:
-  path: /studies/admin
+  path: /studies/{uuid}/admin
   controller: App\View\Controller\StudyController::adminAction
 
 Study-theory:
-  path: /studies/theory
+  path: /studies/{uuid}/theory
   controller: App\View\Controller\StudyController::theoryAction
 
 Study-design:
-  path: /studies/design
+  path: /studies/{uuid}/design
   controller: App\View\Controller\StudyController::designAction
 
 Study-sample:
-  path: /studies/sample
+  path: /studies/{uuid}/sample
   controller: App\View\Controller\StudyController::sampleAction
 
 Administration-profile:

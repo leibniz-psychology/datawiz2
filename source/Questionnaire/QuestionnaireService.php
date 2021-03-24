@@ -2,10 +2,8 @@
 
 namespace App\Questionnaire;
 
-use phpDocumentor\Reflection\Types\Callable_;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,12 +28,13 @@ class QuestionnaireService implements Questionnairable
         return $form->getForm();
     }
 
-    public function askAndHandle(Questionable $entity, Request $request, \Closure $onSuccessCallback): FormInterface {
+    public function askAndHandle(Questionable $entity, Request $request): FormInterface {
         $form = $this->createFormFromQuestionable($entity);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $onSuccessCallback();
-        }
         return $form;
+    }
+
+    public function isSubmittedAndValid(FormInterface $form): bool {
+        return $form->isSubmitted() && $form->isValid();
     }
 }

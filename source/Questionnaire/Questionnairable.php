@@ -9,5 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface Questionnairable
 {
-    public function askAndHandle(Questionable $entity, Request $request, \Closure $onSuccessCallback): ?FormInterface;
+    public function askAndHandle(Questionable $entity, Request $request): ?FormInterface;
+
+    public function isSubmittedAndValid(FormInterface $form): bool;
 }

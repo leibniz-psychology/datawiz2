@@ -5,8 +5,11 @@ namespace App\View\Controller;
 use App\Crud\Crudable;
 use App\Domain\Model\Study\Experiment;
 use App\Questionnaire\Questionnairable;
+use phpDocumentor\Reflection\Types\This;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Security;
 
 class StudyController extends DataWizController
@@ -14,14 +17,17 @@ class StudyController extends DataWizController
     private $currentUser;
     private $questionnaire;
     private $crud;
+    private $urlGenerator;
 
     public function __construct(Security $security,
                                 Questionnairable $questionnaire,
-                                Crudable $crud)
+                                Crudable $crud,
+                                UrlGeneratorInterface $urlGenerator)
     {
         $this->currentUser = $security->getUser();
         $this->crud = $crud;
         $this->questionnaire = $questionnaire;
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function overviewAction(Crudable $crud):Response
@@ -38,11 +44,12 @@ class StudyController extends DataWizController
 
         $form = $questionnaire->askAndHandle(
             $newExperiment->getSettingsMetaDataGroup(),
-            $request,
-            function() use ($newExperiment) {
-                $this->crud->update($newExperiment);
-            }
-        );
+            $request);
+
+        if ($this->questionnaire->isSubmittedAndValid($form)) {
+            $this->crud->update($newExperiment);
+            return $this->redirectToOverview();
+        }
 
         return $this->render('Pages/Study/new.html.twig', [
             'form' => $form->createView(),
@@ -51,16 +58,16 @@ class StudyController extends DataWizController
 
     public function settingsAction(string $uuid, Request $request): Response
     {
-        /** @var Experiment $entityAtChange */
-        $entityAtChange = $this->crud->readById(Experiment::class, $uuid);
+        $entityAtChange = $this->getExperimentForUuid($uuid);
 
         $form = $this->questionnaire->askAndHandle(
             $entityAtChange->getSettingsMetaDataGroup(),
-            $request,
-            function () use ($entityAtChange) {
-                $this->crud->update($entityAtChange);
-            }
-        );
+            $request);
+
+        if ($this->questionnaire->isSubmittedAndValid($form)) {
+            $this->crud->update($entityAtChange);
+            return $this->redirectToOverview();
+        }
 
         return $this->render('Pages/Study/settings.html.twig', [
             'form' => $form->createView()
@@ -69,16 +76,16 @@ class StudyController extends DataWizController
 
     public function documentationAction(string $uuid, Request $request): Response
     {
-        /** @var Experiment $entityAtChange */
-        $entityAtChange = $this->crud->readById(Experiment::class, $uuid);
+        $entityAtChange = $this->getExperimentForUuid($uuid);
 
         $form = $this->questionnaire->askAndHandle(
             $entityAtChange->getBasicInformationMetaDataGroup(),
-            $request,
-            function () use ($entityAtChange){
-                $this->crud->update($entityAtChange);
-            }
-        );
+            $request);
+
+        if ($this->questionnaire->isSubmittedAndValid($form)) {
+            $this->crud->update($entityAtChange);
+            return $this->redirectToOverview();
+        }
 
         return $this->render('Pages/Study/documentation.html.twig', [
             'form' => $form->createView()
@@ -103,5 +110,13 @@ class StudyController extends DataWizController
     public function sampleAction(): Response
     {
         return $this->render('Pages/Study/sample.html.twig');
+    }
+
+    private function getExperimentForUuid(string $uuid): Experiment {
+        return $this->crud->readById(Experiment::class, $uuid);
+    }
+
+    private function redirectToOverview(): RedirectResponse {
+        return new RedirectResponse($this->urlGenerator->generate('Study-overview'));
     }
 }

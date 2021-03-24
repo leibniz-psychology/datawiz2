@@ -44,7 +44,7 @@ class StudyFeatureTest extends WebTestCase
         $this->client->request('GET', '/pages/studies/new');
         $this->assertResponseIsSuccessful();
     }
-
+/*
     public function testDocumentationAction()
     {
 
@@ -74,5 +74,5 @@ class StudyFeatureTest extends WebTestCase
     {
         $this->client->request('GET', '/pages/studies/sample');
         $this->assertResponseIsSuccessful();
-    }
+    }*/
 }

@@ -2,6 +2,7 @@
 
 namespace App\Tests\Integration;
 
+use App\Domain\Model\Study\SettingsMetaDataGroup;
 use App\Questionnaire\Forms\SettingsType;
 use App\Questionnaire\Questionnairable;
 use App\Questionnaire\QuestionnaireService;
@@ -27,7 +28,7 @@ class QuestionnaireServiceTest extends KernelTestCase
     public function testCreateFormReturnsForm()
     {
         $form = $this->questionnaire
-            ->createForm(SettingsType::class);
+            ->formFromEntity(new SettingsMetaDataGroup(), 'save');
 
         $this->assertNotEmpty($form);
         $this->assertInstanceOf(FormInterface::class, $form);
@@ -36,7 +37,7 @@ class QuestionnaireServiceTest extends KernelTestCase
     public function testCreateAndHanleFormReturnsForm()
     {
         $form = $this->questionnaire
-            ->createAndHandleForm(SettingsType::class, new Request());
+            ->askAndHandle(new SettingsMetaDataGroup(), 'save', new Request());
 
         $this->assertNotEmpty($form);
         $this->assertInstanceOf(FormInterface::class, $form);
@@ -45,8 +46,8 @@ class QuestionnaireServiceTest extends KernelTestCase
     public function testSubmittedAndValidReturnsFalseWhenDataIsMissing()
     {
         $form = $this->questionnaire
-            ->createAndHandleForm(SettingsType::class, new Request());
+            ->askAndHandle(new SettingsMetaDataGroup(), 'save', new Request());
 
-        $this->assertFalse($this->questionnaire->submittedAndValid($form));
+        $this->assertFalse($this->questionnaire->isSubmittedAndValid($form));
     }
 }

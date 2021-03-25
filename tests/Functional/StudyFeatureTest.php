@@ -52,12 +52,6 @@ class StudyFeatureTest extends WebTestCase
             $this->assertResponseIsSuccessful();
         }
 
-        public function testAdminAction()
-        {
-            $this->client->request('GET', '/pages/studies/admin');
-            $this->assertResponseIsSuccessful();
-        }
-
         public function testDesignAction()
         {
             $this->client->request('GET', '/pages/studies/design');

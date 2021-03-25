@@ -99,20 +99,6 @@ class StudyController extends DataWizController
         ]);
     }
 
-    public function adminAction(): Response
-    {
-        return $this->render('Pages/Study/admin.html.twig');
-    }
-
-    public function designAction(string $uuid, Request $request): Response
-    {
-        $entityAtChange = $this->getExperimentForUuid($uuid);
-
-        return $this->render('Pages/Study/design.html.twig', [
-            'experiment' => $entityAtChange,
-        ]);
-    }
-
     public function theoryAction(string $uuid, Request $request): Response
     {
         $entityAtChange = $this->getExperimentForUuid($uuid);

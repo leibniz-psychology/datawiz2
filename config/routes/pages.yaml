@@ -21,10 +21,6 @@ Study-documentation:
   path: /studies/{uuid}/documentation
   controller: App\View\Controller\StudyController::documentationAction
 
-Study-admin:
-  path: /studies/{uuid}/admin
-  controller: App\View\Controller\StudyController::adminAction
-
 Study-theory:
   path: /studies/{uuid}/theory
   controller: App\View\Controller\StudyController::theoryAction

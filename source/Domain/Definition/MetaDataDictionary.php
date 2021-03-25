@@ -15,6 +15,12 @@ final class MetaDataDictionary
     const RELATED_PUBS = 'related_publications';
 
     // SampleMetaData
+    const INCLUSION_CRITERIA = 'inclusion_criteria';
+    const EXCLUSION_CRITERIA = 'exclusion_criteria';
+    const POPULATION = 'population';
+    const SAMPLING_METHOD = 'sampling_method';
+    const SAMPLE_SIZE = 'sample_size';
+    const POWER_ANALYSIS = 'power_analysis';
 
     // TheoryMetaData
     const OBJECTIVE = 'objective';

@@ -176,7 +176,6 @@ class StudyController extends DataWizController
         ]);
     }
 
-
     public function methodAction(string $uuid, Request $request): Response
     {
         $entityAtChange = $this->getExperimentForUuid($uuid);

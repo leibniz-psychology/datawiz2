@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Domain\Definition\Study;
-
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,5 +20,4 @@ trait SampleMethodable
     {
         $this->sampling_method = $sampling_method;
     }
-
 }

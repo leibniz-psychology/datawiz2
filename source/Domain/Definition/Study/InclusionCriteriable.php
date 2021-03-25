@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Domain\Definition\Study;
-
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,5 +20,4 @@ trait InclusionCriteriable
     {
         $this->inclusion_criteria = $inclusion_criteria;
     }
-
 }

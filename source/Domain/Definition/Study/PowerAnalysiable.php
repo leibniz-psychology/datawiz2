@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Domain\Definition\Study;
 
 // hopefully a real word

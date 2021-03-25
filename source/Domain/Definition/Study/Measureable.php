@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Domain\Definition\Study;
-
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,6 +20,4 @@ trait Measureable
     {
         $this->measures = $measures;
     }
-
-
 }

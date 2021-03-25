@@ -21,23 +21,23 @@ class SampleType extends AbstractType
             ])
             ->add(MetaDataDictionary::EXCLUSION_CRITERIA, TextareaType::class, [
                 'label' => 'Exclusion criteria',
-                'help' => 'State exclusion criteria for participants'
+                'help' => 'State exclusion criteria for participants',
             ])
             ->add(MetaDataDictionary::POPULATION, TextareaType::class, [
                 'label' => 'Population',
-                'help' => 'Provide information on the group of individuals to which your results can be generalized'
+                'help' => 'Provide information on the group of individuals to which your results can be generalized',
             ])
             ->add(MetaDataDictionary::SAMPLING_METHOD, TextareaType::class, [
-                'label'=>'Sampling method',
-                'help'=>''
+                'label' => 'Sampling method',
+                'help' => '',
             ])
-            ->add(MetaDataDictionary::SAMPLE_SIZE, TextType::class,[
-                'label'=>'Sample size',
-                'help'=>'Provide the achieved sample size as total number of cases N or as number of cases in subsamples n'
+            ->add(MetaDataDictionary::SAMPLE_SIZE, TextType::class, [
+                'label' => 'Sample size',
+                'help' => 'Provide the achieved sample size as total number of cases N or as number of cases in subsamples n',
             ])
             ->add(MetaDataDictionary::POWER_ANALYSIS, TextareaType::class, [
-                'label'=>'Power analysis (statistical)',
-                'help'=>'Provide details of the power analysis used to calculate your sample size '
+                'label' => 'Power analysis (statistical)',
+                'help' => 'Provide details of the power analysis used to calculate your sample size ',
             ])
         ;
     }

@@ -32,7 +32,7 @@ class TheoryMetaDataGroup extends UuidEntity implements MetaDataValuable, Questi
     {
         return [
             MetaDataDictionary::OBJECTIVE,
-            MetaDataDictionary::HYPOTHESIS
+            MetaDataDictionary::HYPOTHESIS,
         ];
     }
 

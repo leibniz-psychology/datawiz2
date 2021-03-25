@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Domain\Model\Study;
-
 
 use App\Domain\Definition\MetaDataDictionary;
 use App\Domain\Definition\MetaDataValuable;
@@ -33,7 +31,7 @@ class MeasureMetaDataGroup extends UuidEntity implements MetaDataValuable, Quest
     {
         return [
             MetaDataDictionary::MEASURES,
-            MetaDataDictionary::APPARATUS
+            MetaDataDictionary::APPARATUS,
         ];
     }
 

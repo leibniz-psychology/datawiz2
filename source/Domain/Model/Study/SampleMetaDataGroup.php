@@ -44,7 +44,7 @@ class SampleMetaDataGroup extends UuidEntity implements MetaDataValuable, Questi
             MetaDataDictionary::POPULATION,
             MetaDataDictionary::SAMPLING_METHOD,
             MetaDataDictionary::SAMPLE_SIZE,
-            MetaDataDictionary::POWER_ANALYSIS
+            MetaDataDictionary::POWER_ANALYSIS,
         ];
     }
 

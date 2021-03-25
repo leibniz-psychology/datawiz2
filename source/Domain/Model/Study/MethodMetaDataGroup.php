@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Domain\Model\Study;
-
 
 use App\Domain\Definition\MetaDataDictionary;
 use App\Domain\Definition\MetaDataValuable;
@@ -20,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  */
-class MethodMetaDataGroup  extends UuidEntity implements MetaDataValuable, Questionable
+class MethodMetaDataGroup extends UuidEntity implements MetaDataValuable, Questionable
 {
     /**
      * One basic Information section has One Experiment.
@@ -45,7 +43,7 @@ class MethodMetaDataGroup  extends UuidEntity implements MetaDataValuable, Quest
             MetaDataDictionary::MANIPULATIONS,
             MetaDataDictionary::ASSIGNMENT,
             MetaDataDictionary::EXPERIMENTAL_DESIGN,
-            MetaDataDictionary::CONTROL_OPERATIONS
+            MetaDataDictionary::CONTROL_OPERATIONS,
         ];
     }
 

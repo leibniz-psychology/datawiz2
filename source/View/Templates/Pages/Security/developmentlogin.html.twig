@@ -26,4 +26,11 @@
             Sign in
         </button>
     </form>
+
+    <h3>Available Users for this Demo</h3>
+    <ul>
+        {% for user in all_users %}
+            <li> {{ user.email }} </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

@@ -2,7 +2,8 @@
 
 namespace App\View\Controller;
 
-use Doctrine\ORM\EntityManagerInterface;
+use App\Crud\Crudable;
+use App\Domain\Model\Administration\DataWizUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -10,12 +11,12 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class DevelopmentLoginController extends AbstractController
 {
     private $authenticationUtils;
-    private $em;
+    private $crud;
 
-    public function __construct(AuthenticationUtils $authenticationUtils, EntityManagerInterface $em)
+    public function __construct(AuthenticationUtils $authenticationUtils, Crudable $crud)
     {
-        $this->em = $em;
         $this->authenticationUtils = $authenticationUtils;
+        $this->crud = $crud;
     }
 
     public function loginAction(): Response
@@ -25,10 +26,13 @@ class DevelopmentLoginController extends AbstractController
         // last username entered by the user
         $lastUsername = $this->authenticationUtils->getLastUsername();
 
+        $all_users = $this->crud->readForAll(DataWizUser::class);
+
         return $this->render('Pages/Security/developmentlogin.html.twig',
         [
             'last_username' => $lastUsername,
             'error' => $error,
+            'all_users' => $all_users,
         ]);
     }
 

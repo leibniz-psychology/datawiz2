@@ -2,7 +2,10 @@
 
 namespace App\Domain\Model\Study;
 
+use App\Domain\Definition\MetaDataDictionary;
 use App\Domain\Definition\MetaDataValuable;
+use App\Domain\Definition\Study\Hypothesable;
+use App\Domain\Definition\Study\Objectivable;
 use App\Domain\Model\Administration\UuidEntity;
 use App\Questionnaire\Forms\TheoryType;
 use App\Questionnaire\Questionable;
@@ -22,9 +25,15 @@ class TheoryMetaDataGroup extends UuidEntity implements MetaDataValuable, Questi
 
     use ExperimentRelatable;
 
+    use Objectivable;
+    use Hypothesable;
+
     public static function getImplementedMetaData(): array
     {
-        return [];
+        return [
+            MetaDataDictionary::OBJECTIVE,
+            MetaDataDictionary::HYPOTHESIS
+        ];
     }
 
     public function getFormTypeForEntity(): string

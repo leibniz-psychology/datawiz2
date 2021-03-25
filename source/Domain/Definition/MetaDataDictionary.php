@@ -17,4 +17,6 @@ final class MetaDataDictionary
     // SampleMetaData
 
     // TheoryMetaData
+    const OBJECTIVE = 'objective';
+    const HYPOTHESIS = 'hypothesis';
 }

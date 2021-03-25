@@ -4,8 +4,12 @@
 namespace App\Domain\Model\Study;
 
 
+use App\Domain\Definition\MetaDataDictionary;
 use App\Domain\Definition\MetaDataValuable;
+use App\Domain\Definition\Study\Apparaturable;
+use App\Domain\Definition\Study\Measureable;
 use App\Domain\Model\Administration\UuidEntity;
+use App\Questionnaire\Forms\MeasureType;
 use App\Questionnaire\Questionable;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,13 +26,19 @@ class MeasureMetaDataGroup extends UuidEntity implements MetaDataValuable, Quest
     protected $experiment;
     use ExperimentRelatable;
 
+    use Measureable;
+    use Apparaturable;
+
     public static function getImplementedMetaData(): array
     {
-        // TODO: Implement getImplementedMetaData() method.
+        return [
+            MetaDataDictionary::MEASURES,
+            MetaDataDictionary::APPARATUS
+        ];
     }
 
     public function getFormTypeForEntity(): string
     {
-        // TODO: Implement getFormTypeForEntity() method.
+        return MeasureType::class;
     }
 }

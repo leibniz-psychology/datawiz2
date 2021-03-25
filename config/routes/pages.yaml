@@ -37,6 +37,10 @@ Study-sample:
   path: /studies/{uuid}/sample
   controller: App\View\Controller\StudyController::sampleAction
 
+Study-measure:
+  path: /studies/{uuid}/measure
+  controller: App\View\Controller\StudyController::measureAction
+
 Administration-profile:
   path: /administration/profile
   controller: App\View\Controller\AdministrationController::profileAction

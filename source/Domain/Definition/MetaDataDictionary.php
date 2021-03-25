@@ -25,4 +25,8 @@ final class MetaDataDictionary
     // TheoryMetaData
     const OBJECTIVE = 'objective';
     const HYPOTHESIS = 'hypothesis';
+
+    // MeasureMetaData
+    const MEASURES = 'measures';
+    const APPARATUS = 'apparatus';
 }

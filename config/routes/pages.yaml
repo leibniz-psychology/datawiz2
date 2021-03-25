@@ -41,6 +41,10 @@ Study-measure:
   path: /studies/{uuid}/measure
   controller: App\View\Controller\StudyController::measureAction
 
+Study-method:
+  path: /studies/{uuid}/method
+  controller: App\View\Controller\StudyController::methodAction
+
 Administration-profile:
   path: /administration/profile
   controller: App\View\Controller\AdministrationController::profileAction

@@ -176,6 +176,28 @@ class StudyController extends DataWizController
         ]);
     }
 
+
+    public function methodAction(string $uuid, Request $request): Response
+    {
+        $entityAtChange = $this->getExperimentForUuid($uuid);
+
+        $form = $this->questionnaire->askAndHandle(
+            $entityAtChange->getMethodMetaDataGroup(),
+            'save',
+            $request);
+
+        if ($this->questionnaire->isSubmittedAndValid($form)) {
+            $this->crud->update($entityAtChange);
+
+            return $this->redirectToOverview();
+        }
+
+        return $this->render('Pages/Study/method.html.twig', [
+            'form' => $form->createView(),
+            'experiment' => $entityAtChange,
+        ]);
+    }
+
     private function getExperimentForUuid(string $uuid): Experiment
     {
         return $this->crud->readById(Experiment::class, $uuid);

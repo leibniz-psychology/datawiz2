@@ -29,4 +29,12 @@ final class MetaDataDictionary
     // MeasureMetaData
     const MEASURES = 'measures';
     const APPARATUS = 'apparatus';
+
+    // MethodMetaData
+    const SETTING = 'setting';
+    const RESEARCH_DESIGN = 'research_design';
+    const MANIPULATIONS = 'manipulations';
+    const ASSIGNMENT = 'assignment';
+    const EXPERIMENTAL_DESIGN = 'experimental_design';
+    const CONTROL_OPERATIONS = 'control_operations';
 }

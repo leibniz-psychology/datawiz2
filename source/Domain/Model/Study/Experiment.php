@@ -169,9 +169,10 @@ class Experiment extends UuidEntity implements Ownable
     /**
      * @param mixed $methodMetaDataGroup
      */
-    public function setMethodMetaDataGroup($methodMetaDataGroup): void
+    public function setMethodMetaDataGroup(MethodMetaDataGroup $methodMetaDataGroup): void
     {
         $this->methodMetaDataGroup = $methodMetaDataGroup;
+        $methodMetaDataGroup->setExperiment($this);
     }
 
     public static function createNewExperiment(UserInterface $owner): Experiment

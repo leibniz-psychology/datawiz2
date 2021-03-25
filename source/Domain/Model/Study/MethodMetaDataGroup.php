@@ -4,8 +4,16 @@
 namespace App\Domain\Model\Study;
 
 
+use App\Domain\Definition\MetaDataDictionary;
 use App\Domain\Definition\MetaDataValuable;
+use App\Domain\Definition\Study\Assignable;
+use App\Domain\Definition\Study\ControlOperationable;
+use App\Domain\Definition\Study\ExperimentalDesignable;
+use App\Domain\Definition\Study\Manipulatable;
+use App\Domain\Definition\Study\ResearchDesignable;
+use App\Domain\Definition\Study\Settable;
 use App\Domain\Model\Administration\UuidEntity;
+use App\Questionnaire\Forms\MethodType;
 use App\Questionnaire\Questionable;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,13 +30,27 @@ class MethodMetaDataGroup  extends UuidEntity implements MetaDataValuable, Quest
     protected $experiment;
     use ExperimentRelatable;
 
+    use Settable;
+    use ResearchDesignable;
+    use Manipulatable;
+    use Assignable;
+    use ExperimentalDesignable;
+    use ControlOperationable;
+
     public static function getImplementedMetaData(): array
     {
-        // TODO: Implement getImplementedMetaData() method.
+        return [
+            MetaDataDictionary::SETTING,
+            MetaDataDictionary::RESEARCH_DESIGN,
+            MetaDataDictionary::MANIPULATIONS,
+            MetaDataDictionary::ASSIGNMENT,
+            MetaDataDictionary::EXPERIMENTAL_DESIGN,
+            MetaDataDictionary::CONTROL_OPERATIONS
+        ];
     }
 
     public function getFormTypeForEntity(): string
     {
-        // TODO: Implement getFormTypeForEntity() method.
+        return MethodType::class;
     }
 }

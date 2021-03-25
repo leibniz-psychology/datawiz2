@@ -47,6 +47,20 @@ class Experiment extends UuidEntity implements Ownable
     private $theoryMetaDataGroup;
 
     /**
+     * One Experiment has One Theory section.
+     *
+     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\MeasureMetaDataGroup", mappedBy="experiment", cascade={"persist"})
+     */
+    private $measureMetaDataGroup;
+
+    /**
+     * One Experiment has One Theory section.
+     *
+     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\MethodMetaDataGroup", mappedBy="experiment", cascade={"persist"})
+     */
+    private $methodMetaDataGroup;
+
+    /**
      * @return mixed
      */
     public function getOwner()
@@ -127,6 +141,38 @@ class Experiment extends UuidEntity implements Ownable
         $theoryMetaDataGroup->setExperiment($this);
     }
 
+    /**
+     * @return mixed
+     */
+    public function getMeasureMetaDataGroup()
+    {
+        return $this->measureMetaDataGroup;
+    }
+
+    /**
+     * @param mixed $measureMetaDataGroup
+     */
+    public function setMeasureMetaDataGroup($measureMetaDataGroup): void
+    {
+        $this->measureMetaDataGroup = $measureMetaDataGroup;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMethodMetaDataGroup()
+    {
+        return $this->methodMetaDataGroup;
+    }
+
+    /**
+     * @param mixed $methodMetaDataGroup
+     */
+    public function setMethodMetaDataGroup($methodMetaDataGroup): void
+    {
+        $this->methodMetaDataGroup = $methodMetaDataGroup;
+    }
+
     public static function createNewExperiment(UserInterface $owner): Experiment
     {
         $newExperiment = new Experiment();
@@ -134,6 +180,8 @@ class Experiment extends UuidEntity implements Ownable
         $newExperiment->setBasicInformationMetaDataGroup(new BasicInformationMetaDataGroup());
         $newExperiment->setTheoryMetaDataGroup(new TheoryMetaDataGroup());
         $newExperiment->setSampleMetaDataGroup(new SampleMetaDataGroup());
+        $newExperiment->setMeasureMetaDataGroup(new MeasureMetaDataGroup());
+        $newExperiment->setMethodMetaDataGroup(new MethodMetaDataGroup());
         $newExperiment->setOwner($owner);
 
         return $newExperiment;

@@ -1,5 +1,0 @@
-- name: Reload Caddyfile
-  systemd:
-    name: caddy
-    state: reloaded
-  become: yes

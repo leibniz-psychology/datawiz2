@@ -27,7 +27,7 @@ REQUIRED_SOFTWARE = php composer node npm make awk symfony # core utils are expe
 
 # Those are all commands of the developer interface
 # Everything under phony will run even if a file with that name exists
-.PHONY: help install local-instance development-instance production-instance clean tests codestyle analysis database diff migrate fixtures assets
+.PHONY: help install run status stop logs clean tests codestyle analysis database diff migrate fixtures assets
 
 # The target used, if you call just make without any argument
 .DEFAULT_GOAL := help
@@ -38,13 +38,6 @@ REQUIRED_SOFTWARE = php composer node npm make awk symfony # core utils are expe
 # Thanks to Romain Gautier for his slides from symfony live 2018 providing this ->
 help: ## Print this help text
 	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/';
-
-missings: ## Display missing required software (Should return nothing)
-	@echo "Please be aware that only the specified name of a software is searched." 
-	@echo "An alias like gawk are not found." 
-	@echo "You will see only missing software below:"
-	$(foreach program,$(REQUIRED_SOFTWARE), \
-	$(shell command -v $(program) >/dev/null 2>&1 || { echo "DataWiz requires $(program) but it's not found in your PATH." >&2; exit 1; }))
 
 ##--------Developer Interface----
 install: ./node_modules ./vendor .git/hooks/commit-msg .git/hooks/pre-commit assets## Install all dependencies
@@ -61,12 +54,6 @@ status: ## Check if a local development server is running
 
 logs: ## Check the symfony cli logs
 	@symfony server:log
-
-development-instance: ## Deploy DataWiz on a remote development server
-	@echo 'smart ansible call'
-
-production-instance: ## Deploy DataWiz to production server
-	@echo 'smart ansible call'
 
 # This should dynamically run tasks
 clean: ## Remove all temporary files

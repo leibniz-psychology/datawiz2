@@ -1,7 +1,0 @@
----
-- hosts: all
-  roles:
-    - PhpApplicationProvider
-    - MySqlProvider
-    - KeycloakSsoProvider
-    - CaddyWebserverProvider

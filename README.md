@@ -38,12 +38,15 @@ make stop # stop the local web server
 
 ## Deployment
 
-The `makefile` also gives you an deployment target.
-Server configuration management is a complex topic and a `makefile` can't handle this task.
-You will need `ansible` on your development machine to use our deployment process.
-Any deployments will assume an `Ubuntu 20.04.1` installation.
-The process is currently not even in an alpha stage and is therefore not suitable for real work yet.
-As soon as something changes about that, you will see updated information here.
+DataWiz depends on multiple big vendors.
+- All metadata is stored in a **MySql/MariaDB**.
+- The Single Sign On requires a running **Keycloak**.
+- The research data is send to **Minio**, an free S3 clone. 
+
+A full production deployment is therefore a complicated process which is beyond the scope of this repository.
+The `makefile` is intended as local solution and should be used to deploy the application.
+If you still wish to deploy DataWiz yourself, please contact our IT-Service department for further information and available ressources.
+Consider before your deployment, that we offer a production instance free of charge under our product portfolio.
 
 
 ## How to get help?

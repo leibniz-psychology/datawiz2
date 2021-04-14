@@ -27,7 +27,7 @@ class DevelopmentAuthenticator extends AbstractFormLoginAuthenticator
     use TargetPathTrait;
 
     private const LOGIN_ROUTE = 'Security-login';
-    private const HOMEPAGE_ROUTE = 'Study-overview';
+    private const HOMEPAGE_ROUTE = 'Administration-dashboard';
 
     private $urlGenerator;
     private $csrfTokenManager;

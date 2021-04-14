@@ -2,7 +2,7 @@ index:
     path: /index
     controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
     defaults:
-      route: Study-overview
+      route: Administration-landing
       permanent: true
 
 root:

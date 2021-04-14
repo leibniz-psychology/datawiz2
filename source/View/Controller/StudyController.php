@@ -183,6 +183,20 @@ class StudyController extends DataWizController
         ]);
     }
 
+    public function materialsAction(string $uuid): Response
+    {
+        return $this->render('Pages/Study/materials.html.twig', [
+
+        ]);
+    }
+
+    public function datasetsAction(string $uuid): Response
+    {
+        return $this->render('Pages/Study/datasets.html.twig', [
+
+        ]);
+    }
+
     private function getExperimentForUuid(string $uuid): Experiment
     {
         return $this->crud->readById(Experiment::class, $uuid);

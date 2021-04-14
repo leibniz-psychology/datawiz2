@@ -1,0 +1,20 @@
+{% extends "Layouts/base.html.twig" %}
+
+{% block body %}
+    {{ include('Components/_navigationHeader.html.twig') }}
+    {{ include('Components/_userProfileReference.html.twig') }}
+    <a href="{{ path('Study-overview', {uuid: experiment.id}) }}">
+        <div>Back to overview</div>
+    </a>
+    <section id="dw-side-navigation">
+            {{ include('Components/_navigationSidebar.html.twig') }}
+    </section>
+    <section id="dw-main-content">
+        {% block content %}
+            Something went wrong. Please return to the <a href="{{ path('Study-overview') }}">Study overview</a>
+        {% endblock %}
+    </section>
+    <aside id="dw-context-help">
+        Help is under construction. Please come back later.
+    </aside>
+{% endblock %}

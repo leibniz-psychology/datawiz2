@@ -25,10 +25,6 @@ Study-theory:
   path: /studies/{uuid}/theory
   controller: App\View\Controller\StudyController::theoryAction
 
-Study-design:
-  path: /studies/{uuid}/design
-  controller: App\View\Controller\StudyController::designAction
-
 Study-sample:
   path: /studies/{uuid}/sample
   controller: App\View\Controller\StudyController::sampleAction
@@ -41,6 +37,22 @@ Study-method:
   path: /studies/{uuid}/method
   controller: App\View\Controller\StudyController::methodAction
 
+Study-datasets:
+  path: /studies/{uuid}/datasets
+  controller: App\View\Controller\StudyController::datasetsAction
+
+Study-materials:
+  path: /studies/{uuid}/materials
+  controller: App\View\Controller\StudyController::materialsAction
+
 Administration-profile:
   path: /administration/profile
   controller: App\View\Controller\AdministrationController::profileAction
+
+Administration-landing:
+  path: /administration/landing
+  controller: App\View\Controller\AdministrationController::landingAction
+
+Administration-dashboard:
+  path: /administration/dashboard
+  controller: App\View\Controller\AdministrationController::dashboardAction

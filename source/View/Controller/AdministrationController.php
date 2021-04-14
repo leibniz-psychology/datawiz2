@@ -13,4 +13,14 @@ class AdministrationController extends DataWizController
             'currentUser' => $security->getUser(),
         ]);
     }
+
+    public function landingAction(): Response
+    {
+        return $this->render('Pages/Administration/landing.html.twig');
+    }
+
+    public function dashboardAction(): Response
+    {
+        return $this->render('Pages/Administration/dashboard.html.twig');
+    }
 }

@@ -3,7 +3,7 @@
 {% block body %}
     {{ include('Components/_navigationHeader.html.twig') }}
     {{ include('Components/_userProfileReference.html.twig') }}
-    <a href="{{ path('Study-overview', {uuid: experiment.id}) }}">
+    <a href="{{ path('Study-overview') }}">
         <div>Back to overview</div>
     </a>
     <section id="dw-side-navigation">

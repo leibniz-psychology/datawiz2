@@ -1,5 +1,9 @@
 {% extends "Layouts/base.html.twig" %}
 
+{% block title %}
+    Your Profile
+{% endblock %}
+
 {% block body %}
     <a href="{{ path('Study-overview') }}">
         <div>Back to overview</div>
@@ -9,8 +13,8 @@
     </div>
 
     <ul>
-        <li>{{ currentUser.id }}</li>
-        <li>{{ currentUser.email }}</li>
+        <li>{{ app.user.id }}</li>
+        <li>{{ app.user.email }}</li>
     </ul>
     
 {% endblock %}

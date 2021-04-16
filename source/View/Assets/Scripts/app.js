@@ -11,7 +11,8 @@ import "../Styles/app-base.scss";
 import "../Styles/tailwind-components.scss";
 import "../Styles/tailwind-utilities.scss";
 
-// Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
-// import $ from 'jquery';
+import a2lix_lib from '@a2lix/symfony-collection/src/a2lix_sf_collection';
+
+a2lix_lib.sfCollection.init()
 
 // console.log("Hello Webpack Encore! Edit me in Assets/Scripts/app.js");

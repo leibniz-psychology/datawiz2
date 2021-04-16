@@ -52,5 +52,8 @@
             ],
             "comment-empty-line-before": null
         }
+    },
+    "dependencies": {
+        "@a2lix/symfony-collection": "^0.4.0"
     }
 }

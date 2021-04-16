@@ -1,3 +1,5 @@
+dependencies:
+  '@a2lix/symfony-collection': 0.4.0
 devDependencies:
   '@symfony/webpack-encore': 1.1.2
   autoprefixer: 10.2.5_postcss@8.2.9
@@ -20,6 +22,10 @@ devDependencies:
   webpack-notifier: 1.13.0
 lockfileVersion: 5.2
 packages:
+  /@a2lix/symfony-collection/0.4.0:
+    dev: false
+    resolution:
+      integrity: sha512-dtpOFF3WQGdAGBnn0T6K0r26HVncnqQ1q0Tv/BzRLTZysprFGnf0mM9WtEH9Ga+oy3qTD3Zz2AEpesGFr2Z7XQ==
   /@babel/code-frame/7.12.13:
     dependencies:
       '@babel/highlight': 7.13.10
@@ -7320,6 +7326,7 @@ packages:
     resolution:
       integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==
 specifiers:
+  '@a2lix/symfony-collection': ^0.4.0
   '@symfony/webpack-encore': ^1.1.2
   autoprefixer: ^10.2.5
   core-js: ^3.10.0

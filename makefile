@@ -132,7 +132,7 @@ $(NPMROOT)/pnpm:
 	@echo "Done"
 
 # Run npm install without noise
-./node_modules: $(NPMROOT)/pnpm/bin/pnpm.js package.json
+./node_modules: $(NPMROOT)/pnpm package.json
 	@echo "Running pnpm... \c"
 	@pnpm install > /dev/null 2>&1
 	@echo "Done"

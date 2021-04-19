@@ -5,9 +5,11 @@ doctrine:
             sqlite:
                 # sqlite, but overwritten by DATA_URL
                 url: '%env(resolve:DATABASE_URL)%'
+                override_url: true
             mysql:
                 # mysql, but overwritten by DATA_URL
                 url: '%env(resolve:DATABASE_URL)%'
+                override_url: true
                 driver: 'pdo_mysql'
                 server_version: '8.0'
                 charset: utf8mb4

@@ -2,4 +2,6 @@
 <a href="{{ path('Administration-profile') }}">
     <div>{{ referenceName }}</div>
 </a>
+{% if app.environment != 'test' %}
 <a href="{{ path('Security-logout') }}">Logout</a>
+{% endif %}

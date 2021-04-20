@@ -7,16 +7,20 @@ use Doctrine\ORM\Mapping as ORM;
 trait Contactable
 {
     /**
-     * @ORM\Column(type="text", length=255, nullable=true)
+     * @ORM\Column(type="array", length=1500, nullable=true)
+     * @var $contact array
      */
     private $contact;
 
-    public function getContact(): ?string
+    public function getContact(): ?array
     {
+        if ($this->contact === null) {
+            $this->contact = array('');
+        }
         return $this->contact;
     }
 
-    public function setContact($contact): void
+    public function setContact(array $contact): void
     {
         $this->contact = $contact;
     }

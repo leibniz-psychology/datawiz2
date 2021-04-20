@@ -23,7 +23,13 @@ class BasicInformationType extends AbstractType
                 'prototype' => true,
                 'allow_delete' => true,
             ])
-            ->add(MetaDataDictionary::CONTACT, TextareaType::class)
+            ->add(MetaDataDictionary::CONTACT, CollectionType::class, [
+                'entry_type' => TextType::class,
+                'entry_options' => ['label'=>false],
+                'allow_add' => true,
+                'prototype' => true,
+                'allow_delete' => true,
+            ])
             ->add(MetaDataDictionary::TITLE, TextareaType::class)
             ->add(MetaDataDictionary::DESCRIPTION, TextareaType::class)
             ->add(MetaDataDictionary::RELATED_PUBS, TextareaType::class)

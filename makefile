@@ -17,7 +17,6 @@ FIXTURES_DIR = $(STATE_DIR)/Fixtures
 MIG_DIR = $(STATE_DIR)/Migrations
 ASSETS = $(SOURCE_DIR)/View/Assets
 
-REQUIRED_SOFTWARE = php composer node npm make awk symfony # core utils are expected and not easy to detect
 # --------------------------------------------------------------
 # Developer Interface
 # --------------------------------------------------------------
@@ -70,9 +69,6 @@ codestyle: ./vendor ## Run code formatter tools (prettier, stylelint, php-cs-fix
 	@./bin/php-cs-fixer fix $(SOURCE_DIR) $(TEST_DIR) --config $(TOOL_CONFIG_DIR)/php_cs.dist
 	@npx stylelint --fix $(ASSETS)
 	@npx prettier -w $(ASSETS)
-
-analysis: ./vendor ## Run psalm static analyzer
-	@./vendor/bin/psalm --config $(TOOL_CONFIG_DIR)/psalm.xml
 
 ##--------Symfony----------------
 database: ./vendor ## Create a database and schema

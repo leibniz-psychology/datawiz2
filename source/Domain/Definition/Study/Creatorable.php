@@ -14,20 +14,14 @@ trait Creatorable
 
     public function getCreator(): ?array
     {
+        if ($this->creator === null) {
+            $this->creator = array('');
+        }
         return $this->creator;
     }
 
     public function setCreator(array $creator): void
     {
         $this->creator = $creator;
-    }
-
-    private function initializeCreator(): void
-    {
-        // prevent accidental overrides
-        if ($this->creator === null) {
-            // The empty string is needed to display the first form
-            $this->creator = array('');
-        }
     }
 }

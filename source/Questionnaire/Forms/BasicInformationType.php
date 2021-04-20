@@ -32,7 +32,13 @@ class BasicInformationType extends AbstractType
             ])
             ->add(MetaDataDictionary::TITLE, TextareaType::class)
             ->add(MetaDataDictionary::DESCRIPTION, TextareaType::class)
-            ->add(MetaDataDictionary::RELATED_PUBS, TextareaType::class)
+            ->add(MetaDataDictionary::RELATED_PUBS, CollectionType::class, [
+                'entry_type' => TextareaType::class,
+                'entry_options' => ['label'=>false],
+                'allow_add' => true,
+                'prototype' => true,
+                'allow_delete' => true,
+            ])
         ;
     }
 

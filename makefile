@@ -16,6 +16,8 @@ STATE_DIR = $(DOMAIN_DIR)/State
 FIXTURES_DIR = $(STATE_DIR)/Fixtures
 MIG_DIR = $(STATE_DIR)/Migrations
 ASSETS = $(SOURCE_DIR)/View/Assets
+# Facts --------------------------------------------------------
+SERVER_RUNNING := $(shell symfony server:status | awk '/Listening/ {print 1}')
 
 # --------------------------------------------------------------
 # Developer Interface
@@ -43,11 +45,15 @@ help: ## Print this help text
 install: ./node_modules ./vendor .git/hooks/commit-msg .git/hooks/pre-commit assets## Install all dependencies
 
 run: install var/data.db assets ## Start the local development server
+ifneq ($(SERVER_RUNNING), 1)
 	@symfony run -d npm run dev-server
 	@symfony server:start -d
+endif
 
 stop: ## Stop the local development server
+ifeq ($(SERVER_RUNNING), 1)
 	@symfony server:stop
+endif
 
 status: ## Check if a local development server is running
 	@symfony server:status

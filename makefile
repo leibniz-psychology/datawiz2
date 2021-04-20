@@ -10,6 +10,7 @@ TOOL_CONFIG_DIR = $(TOOLS_DIR)/config
 SOURCE_DIR = ./source
 TEST_DIR = ./tests
 DOMAIN_DIR = $(SOURCE_DIR)/Domain
+DEFINITION_DIR = $(DOMAIN_DIR)/Definition
 ENTITY_DIR = $(DOMAIN_DIR)/Model
 STATE_DIR = $(DOMAIN_DIR)/State
 FIXTURES_DIR = $(STATE_DIR)/Fixtures
@@ -102,7 +103,7 @@ assets: ./public/build ## Process static assets
 # This creates the sqlite database for development
 # and applies the schema according to current entity mapping
 # and loads the fixtures
-var/data.db: $(ENTITY_DIR)/*/*.php
+var/data.db: $(ENTITY_DIR)/*/*.php $(DEFINITION_DIR)/*/*.php
 	@echo "Removing old database... \c"
 	@rm -f $@
 	@echo "Done"

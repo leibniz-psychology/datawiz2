@@ -1,12 +1,99 @@
+<div class="pt-3 pb-2 pl-3 pr-3 text-2xl font-semibold bg-mono-200">
+    <span>{{ experiment.settingsMetaDataGroup.shortName }}</span>
+    {# prettier-ignore #}
+    <a href="{{ path('Study-settings', {uuid: experiment.id}) }}" class="inline-flex items-center text-sm underline">(Edit)</a>
+</div>
+
 <nav>
-    <a href="{{ path('Study-documentation', {uuid: experiment.id}) }}">Basic Information</a>
-    <a href="{{ path('Study-theory', {uuid: experiment.id}) }}">Objectives & hypotheses</a>
-    <a href="{{ path('Study-method', {uuid: experiment.id}) }}">Study method</a>
-    <a href="{{ path('Study-measure', {uuid: experiment.id}) }}">Data collection</a>
-    <a href="{{ path('Study-sample', {uuid: experiment.id}) }}">Sampling</a>
-    <a href="{{ path('Study-datasets', {uuid: experiment.id}) }}">Datasets</a>
-    <a href="{{ path('Study-materials', {uuid: experiment.id}) }}">Materials</a>
-    <a href="{{ path('Study-documentation', {uuid: experiment.id}) }}">Review</a>
-    <a href="{{ path('Study-documentation', {uuid: experiment.id}) }}">Export</a>
-    <a href="{{ path('Study-settings', {uuid: experiment.id}) }}">Settings</a>
+    <ul>
+        <li><a href="#" class="StudyNav-NavItem">Getting started</a></li>
+        <li>
+            {# prettier-ignore #}
+            <a href="{{ path('Study-documentation', {uuid: experiment.id}) }}"
+                class="StudyNav-NavItem
+                {{- app.request.pathinfo == path('Study-documentation', {uuid: experiment.id}) or
+                    app.request.pathinfo == path('Study-theory', {uuid: experiment.id}) or
+                    app.request.pathinfo == path('Study-method', {uuid: experiment.id}) or
+                    app.request.pathinfo == path('Study-measure', {uuid: experiment.id}) or
+                    app.request.pathinfo == path('Study-sample', {uuid: experiment.id}) ?' StudyNav-NavItem_active StudyNav-NavItem_active_isParent'
+                -}}">
+                1. Describe your study
+            </a>
+            <ul class="ml-4">
+                <li>
+                    {# prettier-ignore #}
+                    <a href="{{ path('Study-documentation', {uuid: experiment.id}) }}"
+                        class="StudyNav-SubNavItem 
+                        {{- app.request.pathinfo == path('Study-documentation', {uuid: experiment.id}) ? ' StudyNav-SubNavItem_active' -}}">
+                        Basic Information
+                    </a>
+                </li>
+                <li>
+                    {# prettier-ignore #}
+                    <a href="{{ path('Study-theory', {uuid: experiment.id}) }}"
+                        class="StudyNav-SubNavItem 
+                        {{- app.request.pathinfo == path('Study-theory', {uuid: experiment.id}) ? ' StudyNav-SubNavItem_active' -}}">
+                        Objectives &amp; hypotheses
+                    </a>
+                </li>
+                <li>
+                    {# prettier-ignore #}
+                    <a href="{{ path('Study-method', {uuid: experiment.id}) }}"
+                        class="StudyNav-SubNavItem 
+                        {{- app.request.pathinfo == path('Study-method', {uuid: experiment.id}) ? ' StudyNav-SubNavItem_active' -}}">
+                        Study method
+                    </a>
+                </li>
+                <li>
+                    {# prettier-ignore #}
+                    <a href="{{ path('Study-measure', {uuid: experiment.id}) }}"
+                        class="StudyNav-SubNavItem 
+                        {{- app.request.pathinfo == path('Study-measure', {uuid: experiment.id}) ? ' StudyNav-SubNavItem_active' -}}">
+                        Data collection
+                    </a>
+                </li>
+                <li>
+                    {# prettier-ignore #}
+                    <a href="{{ path('Study-sample', {uuid: experiment.id}) }}"
+                        class="StudyNav-SubNavItem 
+                        {{- app.request.pathinfo == path('Study-sample', {uuid: experiment.id}) ? ' StudyNav-SubNavItem_active' -}}">
+                        Sampling
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            {# prettier-ignore #}
+            <a href="{{ path('Study-datasets', {uuid: experiment.id}) }}"
+                class="StudyNav-NavItem">
+                2. Manage datasets</a>
+        </li>
+        <li>
+            {# prettier-ignore #}
+            <a href="{{ path('Study-materials', {uuid: experiment.id}) }}"
+                class="StudyNav-NavItem">
+                3. Upload materials</a>
+        </li>
+        <li>
+            {# prettier-ignore #}
+            <a href="{{ path('Study-documentation', {uuid: experiment.id}) }}"
+                class="StudyNav-NavItem">
+                4. Review input</a>
+        </li>
+        <li>
+            {# prettier-ignore #}
+            <a href="{{ path('Study-documentation', {uuid: experiment.id}) }}"
+                class="StudyNav-NavItem">
+                5. Export study</a>
+        </li>
+        <hr class="border border-mono-400" />
+        <li>
+            {# prettier-ignore #}
+            <a href="{{ path('Study-settings', {uuid: experiment.id}) }}"
+                class="StudyNav-NavItem StudyNav-NavItem_settings
+                {{- app.request.pathinfo == path('Study-settings', {uuid: experiment.id}) ? ' StudyNav-NavItem_active' -}}">
+                <i class="iconify w-4 h-4 mt-px mr-0.5 text-mono-600" data-icon="ic-round-settings"></i>
+                Study settings</a>
+        </li>
+    </ul>
 </nav>

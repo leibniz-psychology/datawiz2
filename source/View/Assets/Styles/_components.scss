@@ -1,0 +1,22 @@
+.StudyNav-NavItem {
+  @apply block py-2 pl-3 pr-3 mt-1 underline bg-mono-300;
+}
+
+.StudyNav-NavItem_active {
+  @apply pl-2 font-bold no-underline border-l-4 border-black;
+  &_isParent {
+    @apply border-l-0;
+  }
+}
+
+.StudyNav-NavItem_settings {
+  @apply inline-flex items-center mt-0 bg-transparent;
+}
+
+.StudyNav-SubNavItem {
+  @apply block py-1 pl-4 pr-3 leading-tight underline bg-mono-200;
+}
+
+.StudyNav-SubNavItem_active {
+  @apply pl-3 font-bold no-underline border-l-4 border-black;
+}

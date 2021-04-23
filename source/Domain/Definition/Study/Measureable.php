@@ -7,16 +7,20 @@ use Doctrine\ORM\Mapping as ORM;
 trait Measureable
 {
     /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
+     * @ORM\Column(type="array", length=1500, nullable=true)
+     * @var $measures array
      */
     private $measures;
 
-    public function getMeasures()
+    public function getMeasures(): ?array
     {
+        if ($this->measures === null) {
+            $this->measures = array('');
+        }
         return $this->measures;
     }
 
-    public function setMeasures($measures): void
+    public function setMeasures(array $measures): void
     {
         $this->measures = $measures;
     }

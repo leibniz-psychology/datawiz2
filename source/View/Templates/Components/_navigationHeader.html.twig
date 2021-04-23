@@ -1,1 +1,24 @@
-<h6>Some Header</h6>
+{% if app.user %}
+    <div class="inline-flex items-center ml-16">
+        {# prettier-ignore #}
+        <a href="{{ path("Administration-dashboard") }}"
+            class="flex px-1 pt-1 pb-1 text-base border-b-4 border-transparent hover:border-mono-600
+            {{- app.request.pathinfo == path("Administration-dashboard") ? ' border-mono-600' -}}">
+            <span class="iconify iconify--mdi mr-0.5 h-4 w-4 self-center"
+                data-icon="mdi:view-grid">
+
+            </span>
+            Dashboard
+        </a>
+
+        {# prettier-ignore #}
+        <a href="{{ path("Study-overview") }}"
+            class="px-1 pt-1 pb-1 ml-8 text-base border-b-4 hover:border-mono-600 border-transparent
+            {{- app.request.pathinfo == path("Study-overview") or 
+                app.request.pathinfo matches "{^\/pages\/studies\/.*$}"? ' border-mono-600' -}}">
+            <div>
+                Study Documentation
+            </div>
+        </a>
+    </div>
+{% endif %}

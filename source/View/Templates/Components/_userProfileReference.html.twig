@@ -1,7 +1,27 @@
-{% set referenceName = 'User Profile' %}
-<a href="{{ path('Administration-profile') }}">
-    <div>{{ referenceName }}</div>
-</a>
-{% if app.environment != 'test' %}
-<a href="{{ path('Security-logout') }}">Logout</a>
+{% if app.user %}
+    {% set referenceName = "User Profile" %}
+    <a href="{{ path("Administration-profile") }}" class="underline">
+        <span class="w-4 h-4 mr-0.5 inline iconify-inline"
+            data-icon="gg:profile">
+
+        </span>
+        {{- referenceName -}}
+    </a>
+{% endif %}
+{% if app.environment != "test" %}
+    {% if app.user %}
+        <a href="{{ path("Security-logout") }}" class="underline">
+            <span class="w-4 h-4 mr-0.5 inline iconify-inline"
+                data-icon="ic-baseline-log-out">
+
+            </span>Logout
+        </a>
+    {% else %}
+        <a href="{{ path("Security-login") }}" class="underline">
+            <span class="w-4 h-4 mr-0.5 inline iconify-inline"
+                data-icon="ic-baseline-log-in">
+
+            </span>Login
+        </a>
+    {% endif %}
 {% endif %}

@@ -7,12 +7,16 @@ use Doctrine\ORM\Mapping as ORM;
 trait Apparaturable
 {
     /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
+     * @ORM\Column(type="array", length=1500, nullable=true)
+     * @var $apparatus array
      */
     private $apparatus;
 
     public function getApparatus()
     {
+        if ($this->apparatus === null) {
+            $this->apparatus = array('');
+        }
         return $this->apparatus;
     }
 

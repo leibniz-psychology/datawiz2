@@ -25,7 +25,12 @@ class MeasureType extends AbstractType
                 'label' => 'Tests and measures',
                 'help' => 'Provide definitions of all measures you collected on participants. Provide the proper name of standardized measures (tests).',
             ])
-            ->add(MetaDataDictionary::APPARATUS, TextareaType::class, [
+            ->add(MetaDataDictionary::APPARATUS, CollectionType::class, [
+                'entry_type' => TextType::class,
+                'entry_options' => ['label'=>false],
+                'allow_add' => true,
+                'prototype' => true,
+                'allow_delete' => true,
                 'label' => 'Apparatus (Instruments, Equipment)',
                 'help' => 'Which instruments (apparatus, equipment) did you use in your study?',
             ])

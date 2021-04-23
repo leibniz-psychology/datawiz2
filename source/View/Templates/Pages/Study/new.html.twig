@@ -5,9 +5,15 @@
 {% endblock %}
 
 {% block body %}
-    <div class="text-2xl m-8 rounded-lg p-4 shadow-lg border-2 border-gray-800 inline-block">
-        New Study
-    </div>
+    <div class="col-span-full xl:col-start-3 xl:col-end-11">
+        <main>
+            <h2 class="mt-6 text-2xl font-semibold">
+                New Study
+            </h2>
 
-    {{ form(form) }}
+            <div class="mt-6">
+                {{ form(form) }}
+            </div>
+        </main>
+    </div>
 {% endblock %}

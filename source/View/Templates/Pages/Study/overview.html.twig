@@ -5,37 +5,42 @@
 {% endblock %}
 
 {% block body %}
-    <div class="text-2xl m-8 rounded-lg p-4 shadow-lg border-2 border-gray-800 inline-block">
-        Overview
+    <div class="col-span-full xl:col-start-3 xl:col-end-11">
+        <main>
+            <div class="flex mt-6">
+                <h2 class="inline text-2xl font-semibold">
+                    My studies
+                </h2>
+                <span class="self-center">
+                    {# prettier-ignore #}
+                    <button class="px-2 ml-2 bg-white border rounded-md border-mono-500 hover:bg-mono-100" onclick="window.location.href='{{ path("Study-new") }}'">
+                        Create new study
+                    </button>
+                </span>
+            </div>
+            <ul>
+                {% for experiment in all_experiments %}
+                    <li>
+                        {# prettier-ignore #}
+                        <div class="px-3 py-2 mt-2 border border-mono-300 hover:shadow hover:bg-mono-100 bg-mono-50 hover:border-mono-500">
+                            <a href="{{ path('Study-documentation', {uuid: experiment.id}) }}">
+                                    <span class="text-xl underline">
+                                        {{ experiment.settingsMetaDataGroup.shortName }}
+                                    </span>
+                                    <div>
+                                        <span class="font-semibold">Title:</span>
+                                        <span>
+                                            {{ experiment.basicInformationMetaDataGroup.title }}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="font-semibold">Datasets:</span>
+                                    </div>
+                            </a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </main>
     </div>
-
-    {{ include('Components/_userProfileReference.html.twig') }}
-
-    <a href="{{ path('Study-new')}}">Create new Study (now!)</a>
-    
-    <ul>
-        {% for experiment in all_experiments %}
-           <li>
-               {{ experiment.settingsMetaDataGroup.shortName }}
-               <a href="{{ path('Study-settings', {uuid: experiment.id}) }}">
-                   <span>|change name|</span>
-               </a>
-               <a href="{{ path('Study-documentation', {uuid: experiment.id}) }}">
-                   <span>|Basic Information| </span>
-               </a>
-               <a href="{{ path('Study-theory', {uuid: experiment.id}) }}">
-                   <span>|Theory| </span>
-               </a>
-               <a href="{{ path('Study-sample', {uuid: experiment.id}) }}">
-                   <span>|Sample| </span>
-               </a>
-               <a href="{{ path('Study-measure', {uuid: experiment.id}) }}">
-                   <span>|Measure| </span>
-               </a>
-               <a href="{{ path('Study-method', {uuid: experiment.id}) }}">
-                   <span>|Method| </span>
-               </a>
-           </li>
-        {% endfor %}
-    </ul>
 {% endblock %}

@@ -1,13 +1,13 @@
-body {
-  @apply bg-gray-100;
+html {
+  @apply w-full h-full;
 }
 
-a {
-  @apply text-indigo-700 underline;
+body {
+  @apply w-full h-full bg-mono-400;
 }
 
 button {
-  @apply px-2 py-0.5 bg-gray-50 border border-gray-500 rounded hover:bg-white shadow;
+  @apply px-2 py-0.5 bg-white border border-gray-500 rounded hover:bg-mono-100 shadow;
 }
 
 input,
@@ -15,10 +15,17 @@ textarea {
   @apply border border-gray-300;
 }
 
-li {
-  @apply mt-4 first:mt-0;
+button:focus,
+input:focus,
+textarea:focus {
+  @apply outline-none ring;
+}
 
-  a {
-    @apply mr-2;
-  }
+a:focus {
+  @apply outline-none ring ring-inset;
+}
+
+.SiteContainer {
+  min-height: 100%;
+  grid-template-rows: auto 1fr auto;
 }

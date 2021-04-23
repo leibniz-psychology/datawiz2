@@ -1,20 +1,24 @@
 {% extends "Layouts/base.html.twig" %}
 
 {% block body %}
-    {{ include('Components/_navigationHeader.html.twig') }}
-    {{ include('Components/_userProfileReference.html.twig') }}
-    <a href="{{ path('Study-overview') }}">
-        <div>Back to overview</div>
-    </a>
-    <section id="dw-side-navigation">
-            {{ include('Components/_navigationSidebar.html.twig') }}
-    </section>
-    <section id="dw-main-content">
-        {% block content %}
-            Something went wrong. Please return to the <a href="{{ path('Study-overview') }}">Study overview</a>
-        {% endblock %}
-    </section>
-    <aside id="dw-context-help">
-        Help is under construction. Please come back later.
-    </aside>
+    <div class="col-span-3">
+        <div class="border-2 shadow-lg bg-mono-200 border-mono-500">
+            {{ include("Components/_navigationSidebar.html.twig") }}
+        </div>
+    </div>
+
+    <div class="col-span-5">
+        <section class="p-2 border-2 shadow-lg bg-mono-200 border-mono-500">
+            {% block content %}
+                Something went wrong. Please return to the
+                <a href="{{ path("Study-overview") }}">Study overview</a>
+            {% endblock %}
+        </section>
+    </div>
+
+    <div class="col-span-4">
+        <aside class="p-2 border-2 shadow-lg bg-mono-200 border-mono-500">
+            Help is under construction. Please come back later.
+        </aside>
+    </div>
 {% endblock %}

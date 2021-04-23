@@ -1,3 +1,5 @@
+const colors = require("tailwindcss/colors");
+
 module.exports = {
   purge: {
     mode: "layers",
@@ -5,7 +7,14 @@ module.exports = {
     content: ["./source/View/Templates/**/*.html.twig"],
   },
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        mono: colors.warmGray,
+      },
+      screens: {
+        xl: "1440px",
+      },
+    },
   },
   variants: {
     extend: {

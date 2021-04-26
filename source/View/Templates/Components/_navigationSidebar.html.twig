@@ -11,12 +11,7 @@
             {# prettier-ignore #}
             <a href="{{ path('Study-documentation', {uuid: experiment.id}) }}"
                 class="StudyNav-NavItem
-                {{- app.request.pathinfo == path('Study-documentation', {uuid: experiment.id}) or
-                    app.request.pathinfo == path('Study-theory', {uuid: experiment.id}) or
-                    app.request.pathinfo == path('Study-method', {uuid: experiment.id}) or
-                    app.request.pathinfo == path('Study-measure', {uuid: experiment.id}) or
-                    app.request.pathinfo == path('Study-sample', {uuid: experiment.id}) ?' StudyNav-NavItem_active StudyNav-NavItem_active_isParent'
-                -}}">
+                {{- isStudyDescriptionSubItem|default(false) ?' StudyNav-NavItem_active StudyNav-NavItem_active_isParent' -}}">
                 1. Describe your study
             </a>
             <ul class="ml-4">

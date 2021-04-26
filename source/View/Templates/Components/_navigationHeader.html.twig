@@ -14,8 +14,7 @@
         {# prettier-ignore #}
         <a href="{{ path("Study-overview") }}"
             class="px-1 pt-1 pb-1 ml-8 text-base border-b-4 hover:border-mono-600 border-transparent
-            {{- app.request.pathinfo == path("Study-overview") or 
-                app.request.pathinfo matches "{^\/pages\/studies\/.*$}"? ' border-mono-600' -}}">
+            {{- isPartOfStudyDocumentation|default(false) ? ' border-mono-600' -}}">
             <div>
                 Study Documentation
             </div>

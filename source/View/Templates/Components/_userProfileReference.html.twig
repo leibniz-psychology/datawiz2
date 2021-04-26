@@ -1,27 +1,27 @@
-{% if app.user %}
-    {% set referenceName = "User Profile" %}
-    <a href="{{ path("Administration-profile") }}" class="underline">
-        <span class="w-4 h-4 mr-0.5 inline iconify-inline"
-            data-icon="gg:profile">
-
-        </span>
-        {{- referenceName -}}
-    </a>
-{% endif %}
 {% if app.environment != "test" %}
-    {% if app.user %}
-        <a href="{{ path("Security-logout") }}" class="underline">
-            <span class="w-4 h-4 mr-0.5 inline iconify-inline"
-                data-icon="ic-baseline-log-out">
+    <div class="flex items-center justify-end col-start-11 col-end-13">
+        {% if app.user %}
+            {% set referenceName = "User Profile" %}
+            <a href="{{ path("Administration-profile") }}" class="underline">
+                <span class="w-4 h-4 mr-0.5 inline iconify-inline"
+                    data-icon="gg:profile">
 
-            </span>Logout
-        </a>
-    {% else %}
-        <a href="{{ path("Security-login") }}" class="underline">
-            <span class="w-4 h-4 mr-0.5 inline iconify-inline"
-                data-icon="ic-baseline-log-in">
+                </span>
+                {{- referenceName -}}
+            </a>
+            <a href="{{ path("Security-logout") }}" class="ml-2 mr-2 underline">
+                <span class="w-4 h-4 mr-0.5 inline iconify-inline"
+                    data-icon="ic-baseline-log-out">
 
-            </span>Login
-        </a>
-    {% endif %}
+                </span>Logout
+            </a>
+        {% else %}
+            <a href="{{ path("Security-login") }}" class="mr-2 underline">
+                <span class="w-4 h-4 mr-0.5 inline iconify-inline"
+                    data-icon="ic-baseline-log-in">
+
+                </span>Login
+            </a>
+        {% endif %}
+    </div>
 {% endif %}

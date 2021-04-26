@@ -71,7 +71,7 @@ Encore
     options.postcssOptions = {
       plugins: [
         require("tailwindcss")("./.tools/config/tailwind.config.js"),
-        require("postcss-preset-env")(),
+        require("postcss-svg")(),
       ],
     };
     // options.sourceMap = true;

@@ -8,9 +8,36 @@
 {% endblock %}
 
 {% block content %}
-    <div class="inline-block p-4 m-8 text-2xl border-2 border-gray-800 rounded-lg shadow-lg">
-        Theory
+    <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
+        Data collection
+    </h2>
+
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    <div>
+        {{ form_label(form.objective) }}
+        {{ form_help(form.objective) }}
+        {{ form_errors(form.objective) }}
+        <div class="px-6 pt-1">
+            {{ form_widget(form.objective) }}
+        </div>
     </div>
 
-    {{ form(form) }}
+    <div class="mt-8">
+        {{ form_label(form.hypothesis) }}
+        {{ form_help(form.hypothesis) }}
+        {{ form_errors(form.hypothesis) }}
+        <div class="px-6 pt-1">
+            {{ form_widget(form.hypothesis) }}
+        </div>
+    </div>
+
+    {# prettier-ignore-start #}
+    {{ form_widget(form.submit, {'attr': {
+        'class': 'mx-6 mt-4 mb-4',}
+    }) }}
+    {# prettier-ignore-end #}
+
+    {{ form_end(form) }}
 {% endblock %}

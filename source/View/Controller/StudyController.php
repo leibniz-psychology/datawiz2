@@ -68,8 +68,6 @@ class StudyController extends DataWizController
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {
             $this->crud->update($entityAtChange);
-
-            return $this->redirectToOverview();
         }
 
         return $this->render('Pages/Study/settings.html.twig', [
@@ -89,8 +87,6 @@ class StudyController extends DataWizController
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {
             $this->crud->update($entityAtChange);
-
-            return $this->redirectToOverview();
         }
 
         return $this->render('Pages/Study/documentation.html.twig', [
@@ -110,8 +106,6 @@ class StudyController extends DataWizController
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {
             $this->crud->update($entityAtChange);
-
-            return $this->redirectToOverview();
         }
 
         return $this->render('Pages/Study/theory.html.twig', [
@@ -131,8 +125,6 @@ class StudyController extends DataWizController
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {
             $this->crud->update($entityAtChange);
-
-            return $this->redirectToOverview();
         }
 
         return $this->render('Pages/Study/sample.html.twig', [
@@ -152,8 +144,6 @@ class StudyController extends DataWizController
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {
             $this->crud->update($entityAtChange);
-
-            return $this->redirectToOverview();
         }
 
         return $this->render('Pages/Study/measure.html.twig', [
@@ -173,8 +163,6 @@ class StudyController extends DataWizController
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {
             $this->crud->update($entityAtChange);
-
-            return $this->redirectToOverview();
         }
 
         return $this->render('Pages/Study/method.html.twig', [

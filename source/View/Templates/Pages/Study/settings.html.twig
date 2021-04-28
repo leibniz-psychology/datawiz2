@@ -7,9 +7,31 @@
 {% endblock %}
 
 {% block content %}
-    <div class="inline-block p-4 m-8 text-2xl border-2 border-gray-800 rounded-lg shadow-lg">
-        Settings
+    <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
+        Study settings
+    </h2>
+
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {# prettier-ignore-start #}
+    <div>
+        {{ form_label(form.short_name, null, {
+            'label_attr': {'class': 'MetaData-Title'}
+        }) }}
+        {{ form_help(form.short_name, {
+            'help_attr': {'class': 'px-6 pt-1'}
+        }) }}
+        {{ form_errors(form.short_name) }}
+        <div class="px-6 pt-1">
+            {{ form_widget(form.short_name) }}
+        </div>
     </div>
 
-    {{ form(form) }}
+    {{ form_widget(form.submit, {'attr': {
+        'class': 'mx-6 mt-4 mb-4',}
+        }) }}
+    {# prettier-ignore-end #}
+
+    {{ form_end(form) }}
 {% endblock %}

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This class represent a metadata questionaire within DataWiz
  * means one entire form page within the application.
@@ -18,8 +19,15 @@ class SettingsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add(MetaDataDictionary::SHORTNAME, TextType::class)
-        ;
+            ->add(MetaDataDictionary::SHORTNAME, TextType::class, [
+                'label' => 'Study name',
+                'help' => 'Provide a short name for your study',
+                // 'label_attr' => ['class' => 'MetaData-Title'],
+                // 'help_attr' => ['class' => 'px-6 pt-1'],
+                'attr' => [
+                    'class' => 'p-1',
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

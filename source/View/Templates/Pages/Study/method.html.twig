@@ -8,9 +8,67 @@
 {% endblock %}
 
 {% block content %}
-    <div class="inline-block p-4 m-8 text-2xl border-2 border-gray-800 rounded-lg shadow-lg">
-        Method
+    <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
+        Study method
+    </h2>
+
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    <div>
+        {{ form_label(form.setting) }}
+        {{ form_help(form.setting) }}
+        {{ form_errors(form.setting) }}
+        <div class="px-6 pt-1">
+            {{ form_widget(form.setting) }}
+        </div>
+    </div>
+    <div class="mt-8">
+        {{ form_label(form.research_design) }}
+        {{ form_help(form.research_design) }}
+        {{ form_errors(form.research_design) }}
+        <div class="px-6 pt-1">
+            {{ form_widget(form.research_design) }}
+        </div>
+    </div>
+    <div class="mt-8">
+        {{ form_label(form.manipulations) }}
+        {{ form_help(form.manipulations) }}
+        {{ form_errors(form.manipulations) }}
+        <div class="px-6 pt-1">
+            {{ form_widget(form.manipulations) }}
+        </div>
+    </div>
+    <div class="mt-8">
+        {{ form_label(form.assignment) }}
+        {{ form_help(form.assignment) }}
+        {{ form_errors(form.assignment) }}
+        <div class="px-6 pt-1">
+            {{ form_widget(form.assignment) }}
+        </div>
+    </div>
+    <div class="mt-8">
+        {{ form_label(form.experimental_design) }}
+        {{ form_help(form.experimental_design) }}
+        {{ form_errors(form.experimental_design) }}
+        <div class="px-6 pt-1">
+            {{ form_widget(form.experimental_design) }}
+        </div>
+    </div>
+    <div class="mt-8">
+        {{ form_label(form.control_operations) }}
+        {{ form_help(form.control_operations) }}
+        {{ form_errors(form.control_operations) }}
+        <div class="px-6 pt-1">
+            {{ form_widget(form.control_operations) }}
+        </div>
     </div>
 
-    {{ form(form) }}
+    {# prettier-ignore-start #}
+    {{ form_widget(form.submit, {'attr': {
+            'class': 'mx-6 mt-4 mb-4',}
+        }) }}
+
+    {{ form_end(form) }}
+    {# prettier-ignore-end #}
 {% endblock %}

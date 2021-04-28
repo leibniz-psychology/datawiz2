@@ -8,9 +8,53 @@
 {% endblock %}
 
 {% block content %}
-    <div class="inline-block p-4 m-8 text-2xl border-2 border-gray-800 rounded-lg shadow-lg">
-        Basic Information
+    <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
+        Basic information
+    </h2>
+
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    <div>
+        {{ form_label(form.creator) }}
+        {{ form_help(form.creator) }}
+        {{ form_errors(form.creator) }}
+        {{ form_widget(form.creator) }}
+    </div>
+    <div class="mt-8">
+        {{ form_label(form.contact) }}
+        {{ form_help(form.contact) }}
+        {{ form_errors(form.contact) }}
+        {{ form_widget(form.contact) }}
+    </div>
+    <div class="mt-8">
+        {{ form_label(form.title) }}
+        {{ form_help(form.title) }}
+        {{ form_errors(form.title) }}
+        <div class="px-6 pt-1">
+            {{ form_widget(form.title) }}
+        </div>
+    </div>
+    <div class="mt-8">
+        {{ form_label(form.description) }}
+        {{ form_help(form.description) }}
+        {{ form_errors(form.description) }}
+        <div class="px-6 pt-1">
+            {{ form_widget(form.description) }}
+        </div>
+    </div>
+    <div class="mt-8">
+        {{ form_label(form.related_publications) }}
+        {{ form_help(form.related_publications) }}
+        {{ form_errors(form.related_publications) }}
+        {{ form_widget(form.related_publications) }}
     </div>
 
-    {{ form(form) }}
+    {# prettier-ignore-start #}
+    {{ form_widget(form.submit, {'attr': {
+        'class': 'mx-6 mt-4 mb-4',}
+    }) }}
+    {# prettier-ignore-end #}
+
+    {{ form_end(form) }}
 {% endblock %}

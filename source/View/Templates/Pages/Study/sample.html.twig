@@ -8,9 +8,67 @@
 {% endblock %}
 
 {% block content %}
-    <div class="inline-block p-4 m-8 text-2xl border-2 border-gray-800 rounded-lg shadow-lg">
-        Sample
+    <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
+        Study method
+    </h2>
+
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    <div>
+        {{ form_label(form.inclusion_criteria) }}
+        {{ form_help(form.inclusion_criteria) }}
+        {{ form_errors(form.inclusion_criteria) }}
+        <div class="px-6 pt-1">
+            {{ form_widget(form.inclusion_criteria) }}
+        </div>
+    </div>
+    <div class="mt-8">
+        {{ form_label(form.exclusion_criteria) }}
+        {{ form_help(form.exclusion_criteria) }}
+        {{ form_errors(form.exclusion_criteria) }}
+        <div class="px-6 pt-1">
+            {{ form_widget(form.exclusion_criteria) }}
+        </div>
+    </div>
+    <div class="mt-8">
+        {{ form_label(form.population) }}
+        {{ form_help(form.population) }}
+        {{ form_errors(form.population) }}
+        <div class="px-6 pt-1">
+            {{ form_widget(form.population) }}
+        </div>
+    </div>
+    <div class="mt-8">
+        {{ form_label(form.sampling_method) }}
+        {{ form_help(form.sampling_method) }}
+        {{ form_errors(form.sampling_method) }}
+        <div class="px-6 pt-1">
+            {{ form_widget(form.sampling_method) }}
+        </div>
+    </div>
+    <div class="mt-8">
+        {{ form_label(form.sample_size) }}
+        {{ form_help(form.sample_size) }}
+        {{ form_errors(form.sample_size) }}
+        <div class="px-6 pt-1">
+            {{ form_widget(form.sample_size) }}
+        </div>
+    </div>
+    <div class="mt-8">
+        {{ form_label(form.power_analysis) }}
+        {{ form_help(form.power_analysis) }}
+        {{ form_errors(form.power_analysis) }}
+        <div class="px-6 pt-1">
+            {{ form_widget(form.power_analysis) }}
+        </div>
     </div>
 
-    {{ form(form) }}
+    {# prettier-ignore-start #}
+    {{ form_widget(form.submit, {'attr': {
+        'class': 'mx-6 mt-4 mb-4',}
+    }) }}
+    {# prettier-ignore-end #}
+
+    {{ form_end(form) }}
 {% endblock %}

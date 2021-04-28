@@ -17,12 +17,21 @@ class TheoryType extends AbstractType
             ->add(MetaDataDictionary::OBJECTIVE, TextareaType::class, [
                 'label' => 'Objective',
                 'help' => 'Outline the specific steps that you took to achieve your research aim.',
+                'label_attr' => ['class' => 'MetaData-Title'],
+                'help_attr' => ['class' => 'px-6 pt-1'],
+                'attr' => [
+                    'class' => 'p-1',
+                ],
             ])
             ->add(MetaDataDictionary::HYPOTHESIS, TextareaType::class, [
                 'label' => 'Hypotheses',
                 'help' => 'State the hypotheses examined, indicating which were prespecified.',
-            ])
-        ;
+                'label_attr' => ['class' => 'MetaData-Title'],
+                'help_attr' => ['class' => 'px-6 pt-1'],
+                'attr' => [
+                    'class' => 'p-1',
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

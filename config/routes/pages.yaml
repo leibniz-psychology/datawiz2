@@ -45,6 +45,10 @@ Study-materials:
   path: /studies/{uuid}/materials
   controller: App\View\Controller\StudyController::materialsAction
 
+Study-introduction:
+  path: /studies/{uuid}/introduction
+  controller: App\View\Controller\StudyController::introductionAction
+
 Administration-profile:
   path: /administration/profile
   controller: App\View\Controller\AdministrationController::profileAction

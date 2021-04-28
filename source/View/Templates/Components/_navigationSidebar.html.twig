@@ -6,7 +6,10 @@
 
 <nav>
     <ul>
-        <li><a href="#" class="StudyNav-NavItem">Getting started</a></li>
+        <li>
+            {# prettier-ignore #}
+            <a href="{{ path('Study-introduction', {uuid: experiment.id}) }}" class="StudyNav-NavItem">Getting started</a>
+        </li>
         <li>
             {# prettier-ignore #}
             <a href="{{ path('Study-documentation', {uuid: experiment.id}) }}"

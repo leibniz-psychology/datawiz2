@@ -48,7 +48,10 @@ class StudyController extends DataWizController
         if ($this->questionnaire->isSubmittedAndValid($form)) {
             $this->crud->update($newExperiment);
 
-            return $this->redirectToOverview();
+            return new RedirectResponse($this->urlGenerator
+                ->generate('Study-introduction',
+                    [ 'uuid' => $newExperiment->getId() ])
+            );
         }
 
         return $this->render('Pages/Study/new.html.twig', [
@@ -185,13 +188,17 @@ class StudyController extends DataWizController
         ]);
     }
 
+    public function introductionAction(string $uuid, Request $request): Response
+    {
+        $entityAtChange = $this->getExperimentForUuid($uuid);
+
+        return $this->render('Pages/Study/introduction.html.twig', [
+            'experiment' => $entityAtChange,
+        ]);
+    }
+
     private function getExperimentForUuid(string $uuid): Experiment
     {
         return $this->crud->readById(Experiment::class, $uuid);
-    }
-
-    private function redirectToOverview(): RedirectResponse
-    {
-        return new RedirectResponse($this->urlGenerator->generate('Study-overview'));
     }
 }

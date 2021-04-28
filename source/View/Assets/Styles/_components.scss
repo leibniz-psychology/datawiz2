@@ -20,3 +20,8 @@
 .StudyNav-SubNavItem_active {
   @apply pl-3 font-bold no-underline border-l-4 border-black;
 }
+
+.MetaData-Title {
+  @apply flex justify-between w-full px-6 pt-3 pb-3 text-xl font-semibold bg-mono-300;
+  @apply bg-gradient-to-b from-mono-300 to-mono-200;
+}

@@ -25,7 +25,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev-server": "encore dev-server --config ./.tools/config/webpack.config.js",
+    "dev-server": "cross-env NODE_ENV=development encore dev-server --config ./.tools/config/webpack.config.js",
     "dev": "encore dev --config ./.tools/config/webpack.config.js",
     "watch": "encore dev --watch --config ./.tools/config/webpack.config.js",
     "build": "cross-env NODE_ENV=production encore production --progress --config ./.tools/config/webpack.config.js"

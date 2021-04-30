@@ -22,7 +22,8 @@ class TestCaseFixtures extends Fixture
         $manager->persist($testUser);
 
         $testStudy = Experiment::createNewExperiment($testUser);
-        $testStudy->getSettingsMetaDataGroup()->setShortName('Dummy Study');
+        $testStudy->getSettingsMetaDataGroup()->setShortName("Dummy Study");
+        $testStudy->getBasicInformationMetaDataGroup()->setTitle("Awesome research of tiny habits");
         $manager->persist($testStudy);
         $manager->flush();
     }

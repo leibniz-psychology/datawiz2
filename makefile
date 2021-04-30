@@ -105,7 +105,7 @@ assets: ./public/build ## Process static assets
 # This creates the sqlite database for development
 # and applies the schema according to current entity mapping
 # and loads the fixtures
-var/data.db: $(ENTITY_DIR)/*/*.php $(DEFINITION_DIR)/*/*.php
+var/data.db: $(ENTITY_DIR)/*/*.php $(DEFINITION_DIR)/*/*.php $(FIXTURES_DIR)/*.php
 	@echo "Removing old database... \c"
 	@rm -f $@
 	@echo "Done"

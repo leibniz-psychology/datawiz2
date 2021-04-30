@@ -3,6 +3,7 @@
 namespace App\Tests\Functional;
 
 use App\Domain\Access\Administration\DataWizUserRepository;
+use App\Domain\Access\Study\ExperimentRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -12,13 +13,17 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class StudyFeatureTest extends WebTestCase
 {
     private $client;
+    private $tesStudyUuuid;
 
     public function setUp(): void
     {
         $this->client = static::createClient(); // get mock client for mock requests
         $userRepository = static::$container->get(DataWizUserRepository::class); // get repo to load user
-        $testuser = $userRepository->findOneByEmail('mc@leibniz-psychology.org'); // read the user for testing
+        $testuser = $userRepository->findOneByEmail('testcases@leibniz-psychology.org'); // read the user for testing
         $this->client->loginUser($testuser); // authenticate the testuser for the testing
+        $experimentRepository = static::$container->get(ExperimentRepository::class);
+        $testStudy = $experimentRepository->findOneBy(array('owner' => $testuser));
+        $this->tesStudyUuuid = $testStudy->getId();
     }
 
     /**
@@ -44,29 +49,63 @@ class StudyFeatureTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
-    /*
-        public function testDocumentationAction()
-        {
+    public function testSettingsAction()
+    {
+        $this->client->request('GET', '/pages/studies/' . $this->tesStudyUuuid . '/settings');
+        $this->assertResponseIsSuccessful();
+    }
 
-            $this->client->request('GET', '/pages/studies/22b7a92f-9338-4f25-9fb6-eec52e64b43d/documentation');
-            $this->assertResponseIsSuccessful();
-        }
+    public function testDocumentationAction()
+    {
+        $this->client->request('GET', '/pages/studies/' . $this->tesStudyUuuid . '/documentation');
+        $this->assertResponseIsSuccessful();
+    }
 
-        public function testDesignAction()
-        {
-            $this->client->request('GET', '/pages/studies/design');
-            $this->assertResponseIsSuccessful();
-        }
+    public function testTheoryAction()
+    {
+        $this->client->request('GET', '/pages/studies/' . $this->tesStudyUuuid . '/theory');
+        $this->assertResponseIsSuccessful();
+    }
 
-        public function testTheoryAction()
-        {
-            $this->client->request('GET', '/pages/studies/theory');
-            $this->assertResponseIsSuccessful();
-        }
+    public function testSampleAction()
+    {
+        $this->client->request('GET', '/pages/studies/' . $this->tesStudyUuuid . '/sample');
+        $this->assertResponseIsSuccessful();
+    }
 
-        public function testSampleAction()
-        {
-            $this->client->request('GET', '/pages/studies/sample');
-            $this->assertResponseIsSuccessful();
-        }*/
+    public function testMeasureAction()
+    {
+        $this->client->request('GET', '/pages/studies/' . $this->tesStudyUuuid . '/measure');
+        $this->assertResponseIsSuccessful();
+    }
+
+    public function testMethodAction()
+    {
+        $this->client->request('GET', '/pages/studies/' . $this->tesStudyUuuid . '/method');
+        $this->assertResponseIsSuccessful();
+    }
+
+    public function testIntroductionAction()
+    {
+        $this->client->request('GET', '/pages/studies/' . $this->tesStudyUuuid . '/introduction');
+        $this->assertResponseIsSuccessful();
+    }
+
+    public function testProfileAction()
+    {
+        $this->client->request('GET', '/pages/administration/profile');
+        $this->assertResponseIsSuccessful();
+    }
+
+    public function testLandingAction()
+    {
+        $this->client->request('GET', '/pages/administration/landing');
+        $this->assertResponseIsSuccessful();
+    }
+
+    public function testDashboardAction()
+    {
+        $this->client->request('GET', '/pages/administration/dashboard');
+        $this->assertResponseIsSuccessful();
+    }
 }

@@ -137,7 +137,7 @@ $(NPMROOT)/pnpm:
 # Run npm install without noise
 ./node_modules: $(NPMROOT)/pnpm package.json
 	@echo "Running pnpm... \c"
-	@pnpm install > /dev/null 2>&1
+	@pnpm install --frozen-lockfile > /dev/null 2>&1
 	@echo "Done"
 
 # Link from .tools to .git to enable hooks

@@ -1,4 +1,7 @@
 {% extends "Layouts/threeColumn.html.twig" %}
+{% from "Components/_macros.html.twig" import helpButton %}
+{% from "Components/_macros.html.twig" import sectionHelp %}
+{% from "Components/_macros.html.twig" import formHelp %}
 
 {% set isPartOfStudyDocumentation = true %}
 {% set isStudyDescriptionSubItem = true %}
@@ -9,35 +12,54 @@
 
 {% block content %}
     <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
-        Data collection
+        Objectives &amp; hypotheses
     </h2>
 
     {{ form_start(form) }}
     {{ form_errors(form) }}
 
-    <div>
+    <fieldset>
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                Objectives
+            </legend>
+            {{ helpButton("objective") }}
+        </div>
         {{ form_label(form.objective) }}
-        {{ form_help(form.objective) }}
         {{ form_errors(form.objective) }}
-        <div class="px-6 pt-1">
+        <div class="MetaData-Widget">
             {{ form_widget(form.objective) }}
         </div>
-    </div>
+    </fieldset>
 
-    <div class="mt-8">
+    <fieldset class="mt-8">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                Hypotheses
+            </legend>
+            {{ helpButton("hypothesis") }}
+        </div>
         {{ form_label(form.hypothesis) }}
-        {{ form_help(form.hypothesis) }}
         {{ form_errors(form.hypothesis) }}
-        <div class="px-6 pt-1">
+        <div class="MetaData-Widget">
             {{ form_widget(form.hypothesis) }}
         </div>
-    </div>
+    </fieldset>
 
     {# prettier-ignore-start #}
     {{ form_widget(form.submit, {'attr': {
-        'class': 'mx-6 mt-4 mb-4',}
+        'class': 'MetaData-SubmitButton',}
     }) }}
     {# prettier-ignore-end #}
 
     {{ form_end(form) }}
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("theory") }}
+{% endblock %}
+
+{% block help_for_metadata %}
+    {{ formHelp("theory", "objective") }}
+    {{ formHelp("theory", "hypothesis") }}
 {% endblock %}

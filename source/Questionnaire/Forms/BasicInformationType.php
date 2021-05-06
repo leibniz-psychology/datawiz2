@@ -22,15 +22,13 @@ class BasicInformationType extends AbstractType
                 'allow_add' => true,
                 'prototype' => true,
                 'allow_delete' => true,
-                'label' => 'Creators',
-                'label_attr' => ['class' => 'MetaData-Title'],
-                'help' => 'The persons responsible for the research data',
-                'help_attr' => ['class' => 'px-6 pt-1'],
+                'label' => 'The persons responsible for the research data',
+                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'px-6 pt-1',
+                    'class' => 'MetaData-Widget',
                     'data-entry-add-label' => 'another creator +',
-                    'data-entry-add-class' => 'bg-transparent border-0 shadow-none hover:bg-transparent underline mx-auto block mt-1',
-                    'data-entry-remove-class' => ''
+                    'data-entry-add-class' => 'MetaData-AddButton',
+                    'data-entry-remove-class' => 'MetaData-RemoveButton'
                 ]
             ])
             ->add(MetaDataDictionary::CONTACT, CollectionType::class, [
@@ -39,31 +37,25 @@ class BasicInformationType extends AbstractType
                 'allow_add' => true,
                 'prototype' => true,
                 'allow_delete' => true,
-                'label' => 'Contact',
-                'label_attr' => ['class' => 'MetaData-Title'],
-                'help' => 'The contact of the persons responsible',
-                'help_attr' => ['class' => 'px-6 pt-1'],
+                'label' => 'The contact of the persons responsible',
+                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'px-6 pt-1',
+                    'class' => 'MetaData-Widget',
                     'data-entry-add-label' => 'another contact +',
-                    'data-entry-add-class' => 'bg-transparent border-0 shadow-none hover:bg-transparent underline mx-auto block mt-1',
-                    'data-entry-remove-class' => ''
+                    'data-entry-add-class' => 'MetaData-AddButton',
+                    'data-entry-remove-class' => 'MetaData-RemoveButton'
                 ]
             ])
             ->add(MetaDataDictionary::TITLE, TextareaType::class, [
-                'label' => 'Title',
-                'label_attr' => ['class' => 'MetaData-Title'],
-                'help' => 'The title by which you want your research data to be cited',
-                'help_attr' => ['class' => 'px-6 pt-1'],
+                'label' => 'The title by which you want your research data to be cited',
+                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
                     'class' => 'p-1',
                 ]
             ])
             ->add(MetaDataDictionary::DESCRIPTION, TextareaType::class, [
-                'label' => 'Description',
-                'label_attr' => ['class' => 'MetaData-Title'],
-                'help' => 'A description of your study which the research data belong to',
-                'help_attr' => ['class' => 'px-6 pt-1'],
+                'label' => 'A description of your study which the research data belong to',
+                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
                     'class' => 'p-1',
                 ]
@@ -74,15 +66,13 @@ class BasicInformationType extends AbstractType
                 'allow_add' => true,
                 'prototype' => true,
                 'allow_delete' => true,
-                'label' => 'Related publications',
-                'help' => 'The bibliographic citation for related publication(s)',
-                'label_attr' => ['class' => 'MetaData-Title'],
-                'help_attr' => ['class' => 'px-6 pt-1'],
+                'label' => 'The bibliographic citation for related publication(s)',
+                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'px-6 pt-1',
+                    'class' => 'MetaData-Widget',
                     'data-entry-add-label' => 'another related publication +',
-                    'data-entry-add-class' => 'bg-transparent border-0 shadow-none hover:bg-transparent underline mx-auto block mt-1',
-                    'data-entry-remove-class' => ''
+                    'data-entry-add-class' => 'MetaData-AddButton',
+                    'data-entry-remove-class' => 'MetaData-RemoveButton'
                 ]
             ]);
     }

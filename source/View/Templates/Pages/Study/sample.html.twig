@@ -1,4 +1,7 @@
 {% extends "Layouts/threeColumn.html.twig" %}
+{% from "Components/_macros.html.twig" import helpButton %}
+{% from "Components/_macros.html.twig" import sectionHelp %}
+{% from "Components/_macros.html.twig" import formHelp %}
 
 {% set isPartOfStudyDocumentation = true %}
 {% set isStudyDescriptionSubItem = true %}
@@ -9,60 +12,163 @@
 
 {% block content %}
     <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
-        Study method
+        Sampling
     </h2>
 
     {{ form_start(form) }}
     {{ form_errors(form) }}
 
-    <div>
+    <fieldset>
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                Participants
+            </legend>
+            {{ helpButton("participants") }}
+        </div>
+        {# {{ form_label(form.participants) }} #}
+        <label class="MetaData-Label">Participants form goes here</label>
+        {# {{ form_errors(form.participants) }}
+        <div class="MetaData-Widget">
+            {{ form_widget(form.participants) }}
+        </div> #}
+    </fieldset>
+
+    <fieldset class="mt-8">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                Inclusion criteria
+            </legend>
+            {{ helpButton("inclusion_criteria") }}
+        </div>
+        {{ form_label(form.inclusion_criteria) }}
+        {{ form_errors(form.inclusion_criteria) }}
+        <div class="MetaData-Widget">
+            {{ form_widget(form.inclusion_criteria) }}
+        </div>
+    </fieldset>
+
+    {# <div>
         {{ form_label(form.inclusion_criteria) }}
         {{ form_help(form.inclusion_criteria) }}
         {{ form_errors(form.inclusion_criteria) }}
         <div class="px-6 pt-1">
             {{ form_widget(form.inclusion_criteria) }}
         </div>
-    </div>
-    <div class="mt-8">
+    </div> #}
+
+    {# <div class="mt-8">
         {{ form_label(form.exclusion_criteria) }}
         {{ form_help(form.exclusion_criteria) }}
         {{ form_errors(form.exclusion_criteria) }}
         <div class="px-6 pt-1">
             {{ form_widget(form.exclusion_criteria) }}
         </div>
-    </div>
-    <div class="mt-8">
+    </div> #}
+
+    <fieldset class="mt-8">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                Exclusion criteria
+            </legend>
+            {{ helpButton("exclusion_criteria") }}
+        </div>
+        {{ form_label(form.exclusion_criteria) }}
+        {{ form_errors(form.exclusion_criteria) }}
+        <div class="MetaData-Widget">
+            {{ form_widget(form.exclusion_criteria) }}
+        </div>
+    </fieldset>
+
+    <fieldset class="mt-8">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                Population
+            </legend>
+            {{ helpButton("population") }}
+        </div>
+        {{ form_label(form.population) }}
+        {{ form_errors(form.population) }}
+        <div class="MetaData-Widget">
+            {{ form_widget(form.population) }}
+        </div>
+    </fieldset>
+
+    {# <div class="mt-8">
         {{ form_label(form.population) }}
         {{ form_help(form.population) }}
         {{ form_errors(form.population) }}
         <div class="px-6 pt-1">
             {{ form_widget(form.population) }}
         </div>
-    </div>
-    <div class="mt-8">
+    </div> #}
+    {# <div class="mt-8">
         {{ form_label(form.sampling_method) }}
         {{ form_help(form.sampling_method) }}
         {{ form_errors(form.sampling_method) }}
         <div class="px-6 pt-1">
             {{ form_widget(form.sampling_method) }}
         </div>
-    </div>
-    <div class="mt-8">
+    </div> #}
+
+    <fieldset class="mt-8">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                Sampling method
+            </legend>
+            {{ helpButton("sampling_method") }}
+        </div>
+        {{ form_label(form.sampling_method) }}
+        {{ form_errors(form.sampling_method) }}
+        <div class="MetaData-Widget">
+            {{ form_widget(form.sampling_method) }}
+        </div>
+    </fieldset>
+
+    {# <div class="mt-8">
         {{ form_label(form.sample_size) }}
         {{ form_help(form.sample_size) }}
         {{ form_errors(form.sample_size) }}
         <div class="px-6 pt-1">
             {{ form_widget(form.sample_size) }}
         </div>
-    </div>
-    <div class="mt-8">
+    </div> #}
+
+    <fieldset class="mt-8">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                Sample size
+            </legend>
+            {{ helpButton("sample_size") }}
+        </div>
+        {{ form_label(form.sample_size) }}
+        {{ form_errors(form.sample_size) }}
+        <div class="MetaData-Widget">
+            {{ form_widget(form.sample_size) }}
+        </div>
+    </fieldset>
+
+    {# <div class="mt-8">
         {{ form_label(form.power_analysis) }}
         {{ form_help(form.power_analysis) }}
         {{ form_errors(form.power_analysis) }}
         <div class="px-6 pt-1">
             {{ form_widget(form.power_analysis) }}
         </div>
-    </div>
+    </div> #}
+
+    <fieldset class="mt-8">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                Power analysis (statistical)
+            </legend>
+            {{ helpButton("power_analysis") }}
+        </div>
+        {{ form_label(form.power_analysis) }}
+        {{ form_errors(form.power_analysis) }}
+        <div class="MetaData-Widget">
+            {{ form_widget(form.power_analysis) }}
+        </div>
+    </fieldset>
 
     {# prettier-ignore-start #}
     {{ form_widget(form.submit, {'attr': {
@@ -71,4 +177,18 @@
     {# prettier-ignore-end #}
 
     {{ form_end(form) }}
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("sampling") }}
+{% endblock %}
+
+{% block help_for_metadata %}
+    {{ formHelp("sampling", "participants") }}
+    {{ formHelp("sampling", "inclusion_criteria") }}
+    {{ formHelp("sampling", "exclusion_criteria") }}
+    {{ formHelp("sampling", "population") }}
+    {{ formHelp("sampling", "sampling_method") }}
+    {{ formHelp("sampling", "sample_size") }}
+    {{ formHelp("sampling", "power_analysis") }}
 {% endblock %}

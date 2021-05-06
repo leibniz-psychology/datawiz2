@@ -1,7 +1,9 @@
 {
   "devDependencies": {
     "@a2lix/symfony-collection": "^0.4.0",
+    "@ryangjchandler/spruce": "^2.7.0",
     "@symfony/webpack-encore": "^1.1.2",
+    "alpinejs": "^2.8.2",
     "autoprefixer": "^10.2.5",
     "core-js": "^3.11.1",
     "cross-env": "^7.0.3",
@@ -48,7 +50,8 @@
             "responsive",
             "screen",
             "tailwind",
-            "variants"
+            "variants",
+            "layer"
           ]
         }
       ],

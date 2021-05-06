@@ -2,7 +2,9 @@ lockfileVersion: 5.3
 
 specifiers:
   '@a2lix/symfony-collection': ^0.4.0
+  '@ryangjchandler/spruce': ^2.7.0
   '@symfony/webpack-encore': ^1.1.2
+  alpinejs: ^2.8.2
   autoprefixer: ^10.2.5
   core-js: ^3.11.1
   cross-env: ^7.0.3
@@ -25,7 +27,9 @@ specifiers:
 
 devDependencies:
   '@a2lix/symfony-collection': 0.4.0
+  '@ryangjchandler/spruce': 2.7.0
   '@symfony/webpack-encore': 1.1.2
+  alpinejs: 2.8.2
   autoprefixer: 10.2.5_postcss@8.2.13
   core-js: 3.11.1
   cross-env: 7.0.3
@@ -1150,6 +1154,12 @@ packages:
       rimraf: 3.0.2
     dev: true
 
+  /@ryangjchandler/spruce/2.7.0:
+    resolution: {integrity: sha512-AmZFWYoK68VXYuSOqyiP3ylIfmqA1/Gp9VzS+G8t0SlmNowEy7/bJWrq0E/BhDaTKA1G2IB4l6E24nTWgKL+2g==}
+    dependencies:
+      alpinejs: 2.8.2
+    dev: true
+
   /@stylelint/postcss-css-in-js/0.37.2_4fe96148bf77e6cee792ae366c9083f9:
     resolution: {integrity: sha512-nEhsFoJurt8oUmieT8qy4nk81WRHmJynmVwn/Vts08PL9fhgIsMhk1GId5yAN643OzqEEb5S/6At2TZW7pqPDA==}
     peerDependencies:
@@ -1549,6 +1559,10 @@ packages:
 
   /alphanum-sort/1.0.2:
     resolution: {integrity: sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=}
+    dev: true
+
+  /alpinejs/2.8.2:
+    resolution: {integrity: sha512-5yOUtckn4CBp0qsHpo2qgjZyZit84uXvHbB7NJ27sn4FA6UlFl2i9PGUAdTXkcbFvvxDJBM+zpOD8RuNYFvQAw==}
     dev: true
 
   /ansi-colors/4.1.1:

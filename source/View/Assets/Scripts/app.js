@@ -12,8 +12,10 @@ import "../Styles/tailwind-components.scss";
 import "../Styles/app-components.scss";
 import "../Styles/tailwind-utilities.scss";
 
-import a2lix_lib from '@a2lix/symfony-collection/src/a2lix_sf_collection';
+import a2lix_lib from "@a2lix/symfony-collection/src/a2lix_sf_collection";
 
-a2lix_lib.sfCollection.init()
+a2lix_lib.sfCollection.init();
+
+import "./alpine";
 
 // console.log("Hello Webpack Encore! Edit me in Assets/Scripts/app.js");

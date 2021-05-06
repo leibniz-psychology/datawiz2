@@ -1,0 +1,26 @@
+{% macro helpButton(formIdentifier) %}
+    {# prettier-ignore #}
+    <button class="MetaData-HelpButton"
+        type="button"
+        x-on:click="$store.app.helpSelected = $store.app.helpSelected === '{{ formIdentifier }}' ? null : '{{ formIdentifier }}'" x-data="{}">
+        ?
+    </button>
+{% endmacro %}
+
+{% macro sectionHelp(sectionIdentifier) %}
+    <div class="Help-Text Help-Text_section">
+        {{ source("Help/#{sectionIdentifier}/_section.md")|markdown_to_html }}
+    </div>
+{% endmacro %}
+
+{% macro formHelp(sectionIdentifier, formIdentifier) %}
+    <div class="relative Help-MetaData" x-data="{}">
+        <button class="absolute px-1 py-1 border-none rounded-full shadow-none top-2 right-2 bg-mono-100 hover:bg-mono-300" x-on:click="$store.app.helpSelected = null" x-show="$store.app.helpSelected === '{{ formIdentifier }}' ">
+            <span class="w-6 h-6 iconify" data-icon="mdi:close" data-inline="false"></span>
+        </button>
+        <div class="Help-Text Help-Text_metaData"
+            x-show="$store.app.helpSelected === '{{ formIdentifier }}' ">
+            {{ source("Help/#{sectionIdentifier}/#{formIdentifier}.md")|markdown_to_html }}
+        </div>
+    </div>
+{% endmacro %}

@@ -11,6 +11,7 @@ import "../Styles/app-base.scss";
 import "../Styles/tailwind-components.scss";
 import "../Styles/app-components.scss";
 import "../Styles/tailwind-utilities.scss";
+import "../Styles/app-utilities.scss";
 
 import a2lix_lib from "@a2lix/symfony-collection/src/a2lix_sf_collection";
 

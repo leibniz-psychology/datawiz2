@@ -1,4 +1,7 @@
 {% extends "Layouts/threeColumn.html.twig" %}
+{% from "Components/_macros.html.twig" import helpButton %}
+{% from "Components/_macros.html.twig" import sectionHelp %}
+{% from "Components/_macros.html.twig" import formHelp %}
 
 {% set isPartOfStudyDocumentation = true %}
 {% set isStudyDescriptionSubItem = true %}
@@ -15,19 +18,29 @@
     {{ form_start(form) }}
     {{ form_errors(form) }}
 
-    <div>
+    <fieldset>
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                Tests and measures
+            </legend>
+            {{ helpButton("measure") }}
+        </div>
         {{ form_label(form.measures) }}
-        {{ form_help(form.measures) }}
         {{ form_errors(form.measures) }}
         {{ form_widget(form.measures) }}
-    </div>
+    </fieldset>
 
-    <div class="mt-8">
+    <fieldset class="mt-8">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                Apparatus (Instruments, Equipment)
+            </legend>
+            {{ helpButton("apparatus") }}
+        </div>
         {{ form_label(form.apparatus) }}
-        {{ form_help(form.apparatus) }}
         {{ form_errors(form.apparatus) }}
         {{ form_widget(form.apparatus) }}
-    </div>
+    </fieldset>
 
     {# prettier-ignore-start #}
     {{ form_widget(form.submit, {'attr': {
@@ -36,4 +49,13 @@
     {# prettier-ignore-end #}
 
     {{ form_end(form) }}
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("data_collection") }}
+{% endblock %}
+
+{% block help_for_metadata %}
+    {{ formHelp("data_collection", "measure") }}
+    {{ formHelp("data_collection", "apparatus") }}
 {% endblock %}

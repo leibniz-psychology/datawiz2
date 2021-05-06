@@ -16,55 +16,43 @@ class SampleType extends AbstractType
     {
         $builder
             ->add(MetaDataDictionary::INCLUSION_CRITERIA, TextareaType::class, [
-                'label' => 'Inclusion criteria',
-                'help' => 'State inclusion criteria for participants',
-                'label_attr' => ['class' => 'MetaData-Title'],
-                'help_attr' => ['class' => 'px-6 pt-1'],
+                'label' => 'State inclusion criteria for participants',
+                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
                     'class' => 'p-1',
                 ]
             ])
             ->add(MetaDataDictionary::EXCLUSION_CRITERIA, TextareaType::class, [
-                'label' => 'Exclusion criteria',
-                'help' => 'State exclusion criteria for participants',
-                'label_attr' => ['class' => 'MetaData-Title'],
-                'help_attr' => ['class' => 'px-6 pt-1'],
+                'label' => 'State exclusion criteria for participants',
+                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
                     'class' => 'p-1',
                 ]
             ])
             ->add(MetaDataDictionary::POPULATION, TextareaType::class, [
-                'label' => 'Population',
-                'help' => 'Provide information on the group of individuals to which your results can be generalized',
-                'label_attr' => ['class' => 'MetaData-Title'],
-                'help_attr' => ['class' => 'px-6 pt-1'],
+                'label' => 'Provide information on the group of individuals to which your results can be generalized',
+                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
                     'class' => 'p-1',
                 ]
             ])
             ->add(MetaDataDictionary::SAMPLING_METHOD, TextareaType::class, [
-                'label' => 'Sampling method',
-                'help' => '',
-                'label_attr' => ['class' => 'MetaData-Title'],
-                'help_attr' => ['class' => 'px-6 pt-1'],
+                'label' => '',
+                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
                     'class' => 'p-1',
                 ]
             ])
             ->add(MetaDataDictionary::SAMPLE_SIZE, TextType::class, [
-                'label' => 'Sample size',
-                'help' => 'Provide the achieved sample size as total number of cases N or as number of cases in subsamples n',
-                'label_attr' => ['class' => 'MetaData-Title'],
-                'help_attr' => ['class' => 'px-6 pt-1'],
+                'label' => 'Provide the achieved sample size as total number of cases N or as number of cases in subsamples n',
+                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
                     'class' => 'p-1',
                 ]
             ])
             ->add(MetaDataDictionary::POWER_ANALYSIS, TextareaType::class, [
-                'label' => 'Power analysis (statistical)',
-                'help' => 'Provide details of the power analysis used to calculate your sample size ',
-                'label_attr' => ['class' => 'MetaData-Title'],
-                'help_attr' => ['class' => 'px-6 pt-1'],
+                'label' => 'Provide details of the power analysis used to calculate your sample size ',
+                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
                     'class' => 'p-1',
                 ]

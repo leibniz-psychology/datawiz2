@@ -1,10 +1,14 @@
 {% extends "Layouts/threeColumn.html.twig" %}
+{% from "Components/_macros.html.twig" import helpButton %}
+{% from "Components/_macros.html.twig" import sectionHelp %}
+{% from "Components/_macros.html.twig" import formHelp %}
 
 {% set isPartOfStudyDocumentation = true %}
 {% set isStudyDescriptionSubItem = true %}
 
 {% block title %}
-    General Information: {{ experiment.settingsMetaDataGroup.shortName }}
+    General Information:
+    {{ experiment.settingsMetaDataGroup.shortName }}
 {% endblock %}
 
 {% block content %}
@@ -15,46 +19,92 @@
     {{ form_start(form) }}
     {{ form_errors(form) }}
 
-    <div>
+    {# <pre>
+        {{ dump(experiment) }}
+    </pre> #}
+
+    <fieldset>
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                Creators
+            </legend>
+            {{ helpButton("creator") }}
+        </div>
         {{ form_label(form.creator) }}
-        {{ form_help(form.creator) }}
         {{ form_errors(form.creator) }}
         {{ form_widget(form.creator) }}
-    </div>
-    <div class="mt-8">
+    </fieldset>
+
+    <fieldset class="mt-8">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                Contact
+            </legend>
+            {{ helpButton("contact") }}
+        </div>
         {{ form_label(form.contact) }}
-        {{ form_help(form.contact) }}
         {{ form_errors(form.contact) }}
         {{ form_widget(form.contact) }}
-    </div>
-    <div class="mt-8">
+    </fieldset>
+
+    <fieldset class="mt-8">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                Title
+            </legend>
+            {{ helpButton("title") }}
+        </div>
         {{ form_label(form.title) }}
-        {{ form_help(form.title) }}
         {{ form_errors(form.title) }}
-        <div class="px-6 pt-1">
+        <div class="MetaData-Widget">
             {{ form_widget(form.title) }}
         </div>
-    </div>
-    <div class="mt-8">
+    </fieldset>
+
+    <fieldset class="mt-8">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                Description
+            </legend>
+            {{ helpButton("description") }}
+        </div>
         {{ form_label(form.description) }}
-        {{ form_help(form.description) }}
         {{ form_errors(form.description) }}
-        <div class="px-6 pt-1">
+        <div class="MetaData-Widget">
             {{ form_widget(form.description) }}
         </div>
-    </div>
-    <div class="mt-8">
+    </fieldset>
+
+    <fieldset class="mt-8">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                Related publications
+            </legend>
+            {{ helpButton("related_publications") }}
+        </div>
         {{ form_label(form.related_publications) }}
-        {{ form_help(form.related_publications) }}
         {{ form_errors(form.related_publications) }}
         {{ form_widget(form.related_publications) }}
-    </div>
+    </fieldset>
 
-    {# prettier-ignore-start #}
-    {{ form_widget(form.submit, {'attr': {
-        'class': 'mx-6 mt-4 mb-4',}
+    {# prettier-ignore #}
+    {{ form_widget(form.submit, {
+        'attr': {
+            'class': 'MetaData-SubmitButton',
+        }
     }) }}
-    {# prettier-ignore-end #}
 
     {{ form_end(form) }}
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("basic") }}
+{% endblock %}
+
+{% block help_for_metadata %}
+    {{ formHelp("basic", "creator") }}
+    {{ formHelp("basic", "contact") }}
+    {{ formHelp("basic", "title") }}
+    {{ formHelp("basic", "description") }}
+    {{ formHelp("basic", "related_publications") }}
 {% endblock %}

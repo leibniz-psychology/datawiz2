@@ -22,15 +22,13 @@ class MeasureType extends AbstractType
                 'allow_add' => true,
                 'prototype' => true,
                 'allow_delete' => true,
-                'label' => 'Tests and measures',
-                'label_attr' => ['class' => 'MetaData-Title'],
-                'help' => 'Provide definitions of all measures you collected on participants. Provide the proper name of standardized measures (tests).',
-                'help_attr' => ['class' => 'px-6 pt-1'],
+                'label' => 'Provide definitions of all measures you collected on participants. Provide the proper name of standardized measures (tests).',
+                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'px-6 pt-1',
+                    'class' => 'MetaData-Widget',
                     'data-entry-add-label' => 'another measure +',
-                    'data-entry-add-class' => 'bg-transparent border-0 shadow-none hover:bg-transparent underline mx-auto block mt-1',
-                    'data-entry-remove-class' => ''
+                    'data-entry-add-class' => 'MetaData-AddButton',
+                    'data-entry-remove-class' => 'MetaData-RemoveButton'
                 ]
             ])
             ->add(MetaDataDictionary::APPARATUS, CollectionType::class, [
@@ -39,15 +37,13 @@ class MeasureType extends AbstractType
                 'allow_add' => true,
                 'prototype' => true,
                 'allow_delete' => true,
-                'label' => 'Apparatus (Instruments, Equipment)',
-                'help' => 'Which instruments (apparatus, equipment) did you use in your study?',
-                'label_attr' => ['class' => 'MetaData-Title'],
-                'help_attr' => ['class' => 'px-6 pt-1'],
+                'label' => 'Which instruments (apparatus, equipment) did you use in your study?',
+                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'px-6 pt-1',
+                    'class' => 'MetaData-Widget',
                     'data-entry-add-label' => 'another apparatus +',
-                    'data-entry-add-class' => 'bg-transparent border-0 shadow-none hover:bg-transparent underline mx-auto block mt-1',
-                    'data-entry-remove-class' => ''
+                    'data-entry-add-class' => 'MetaData-AddButton',
+                    'data-entry-remove-class' => 'MetaData-RemoveButton'
                 ]
             ]);
     }

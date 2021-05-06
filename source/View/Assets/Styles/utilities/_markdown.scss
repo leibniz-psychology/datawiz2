@@ -1,0 +1,74 @@
+.markdown {
+  a {
+    @apply underline;
+  }
+
+  h1 {
+    @apply text-3xl font-semibold;
+  }
+
+  h2 {
+    @apply text-2xl font-semibold;
+  }
+
+  h3 {
+    @apply mt-2 text-xl font-semibold first:mt-0;
+  }
+
+  h4 {
+    @apply mt-4 text-lg font-semibold leading-tight first:mt-0;
+  }
+
+  h5 {
+    @apply mt-2 first:mt-0;
+
+    font-variant: small-caps;
+  }
+
+  h6 {
+    font-variant: small-caps;
+  }
+
+  p {
+    @apply mt-2 leading-snug;
+  }
+
+  ul,
+  ol {
+    @apply mt-4 leading-snug;
+  }
+
+  ul {
+    @apply mt-4 leading-snug list-disc;
+  }
+
+  ol {
+    @apply mt-4 leading-snug list-decimal;
+  }
+
+  li {
+    @apply mt-2 ml-4;
+  }
+
+  dl {
+    @apply mt-4;
+  }
+
+  dt {
+    @apply mt-2 font-bold first:mt-0;
+  }
+
+  dd {
+    @apply ml-1;
+  }
+
+  blockquote {
+    @apply p-2 mt-2 font-mono bg-mono-200;
+    p {
+      @apply first:mt-0;
+
+      word-break: break-word;
+      word-wrap: break-word;
+    }
+  }
+}

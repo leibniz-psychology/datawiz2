@@ -22,6 +22,54 @@
 }
 
 .MetaData-Title {
-  @apply flex justify-between w-full px-6 pt-3 pb-3 text-xl font-semibold bg-mono-300;
-  @apply bg-gradient-to-b from-mono-300 to-mono-200;
+  @apply flex justify-between w-full px-6 pt-3 pb-3 text-xl font-semibold bg-mono-300 bg-gradient-to-b from-mono-300 to-mono-200;
+
+  scroll-margin-top: 6rem;
+}
+
+.MetaData-Label {
+  @apply block px-6 mt-1 leading-snug;
+}
+
+.MetaData-Widget {
+  @apply px-6 pt-1;
+}
+
+.MetaData-AddButton {
+  @apply block mx-auto mt-1 underline bg-transparent border-0 shadow-none hover:bg-transparent;
+}
+
+.MetaData-RemoveButton {
+  @apply px-2 py-0.5 ml-1 border border-mono-500 bg-white hover:bg-mono-100 rounded-xl;
+}
+
+.MetaData-HelpButton {
+  @apply relative w-8 h-8 px-2 ml-2 font-semibold text-gray-800 border rounded-full shadow bg-mono-100 border-mono-400 focus:outline-none focus:ring;
+  &:hover {
+    @apply bg-white;
+  }
+}
+
+.MetaData-SubmitButton {
+  @apply mx-6 mt-4 mb-4;
+}
+
+.Help-Section {
+  @apply flex bg-mono-200;
+}
+
+.Help-MetaData {
+  @apply flex bg-white;
+}
+
+.Help-Text {
+  @apply mx-4;
+}
+
+.Help-Text_section {
+  @apply mt-3 mb-4;
+}
+
+.Help-Text_metaData {
+  @apply mt-4 mb-6;
 }

@@ -29,3 +29,7 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    # use custom markdown parser that can be extended with markdown extra features
+    twig.markdown.default:
+        class: 'App\View\Templates\Twig\CommonMarkdownExtended'

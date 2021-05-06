@@ -17,15 +17,25 @@
     </div>
 
     <div class="col-span-4">
-        <aside class="border-2 shadow-lg bg-mono-200 border-mono-500">
-            <div class="mx-4 mt-3 mb-4">
-                <h2 class="text-2xl font-semibold">
-                    Help
-                </h2>
-                <p class="mt-2">
-                    Help is under construction. Please come back later.
-                </p>
+        <aside class="border-2 shadow-lg bg-mono-200 border-mono-500 markdown">
+            <div class="Help-Section">
+                {% block help_for_section %}
+                    <div class="Help-Text Help-Text_section">
+                        <h2 class="text-2xl font-semibold">
+                            Help
+                        </h2>
+                    </div>
+                {% endblock %}
             </div>
+            {% block help_for_metadata %}
+                <div class="relative Help-MetaData">
+                    <div class="Help-Text Help-Text_metaData">
+                        <p class="mt-2">
+                            Help is under construction. Please come back later.
+                        </p>
+                    </div>
+                </div>
+            {% endblock %}
         </aside>
     </div>
 {% endblock %}

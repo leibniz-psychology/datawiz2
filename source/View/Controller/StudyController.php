@@ -176,15 +176,19 @@ class StudyController extends DataWizController
 
     public function materialsAction(string $uuid): Response
     {
-        return $this->render('Pages/Study/materials.html.twig', [
+        $entityAtChange = $this->getExperimentForUuid($uuid);
 
+        return $this->render('Pages/Study/materials.html.twig', [
+            'experiment' => $entityAtChange,
         ]);
     }
 
     public function datasetsAction(string $uuid): Response
     {
-        return $this->render('Pages/Study/datasets.html.twig', [
+        $entityAtChange = $this->getExperimentForUuid($uuid);
 
+        return $this->render('Pages/Study/datasets.html.twig', [
+            'experiment' => $entityAtChange,
         ]);
     }
 

@@ -10,4 +10,8 @@
     <div class="inline-block p-4 m-8 text-2xl border-2 border-gray-800 rounded-lg shadow-lg">
         Materials for the Study
     </div>
+
+    <form action="{{ oneup_uploader_endpoint("materials") }}"
+        class="dropzone"
+        style="width:200px; height:200px; border:4px dashed black"></form>
 {% endblock %}

@@ -135,6 +135,12 @@
     "league/commonmark": {
         "version": "1.6.0"
     },
+    "league/flysystem": {
+        "version": "2.0.5"
+    },
+    "league/mime-type-detection": {
+        "version": "1.7.0"
+    },
     "league/oauth2-client": {
         "version": "2.2.1"
     },
@@ -143,6 +149,31 @@
     },
     "ocramius/proxy-manager": {
         "version": "2.8.0"
+    },
+    "oneup/flysystem-bundle": {
+        "version": "4.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "4.0",
+            "ref": "3ae1b83985e89138f5443bbc2d9b8c074b497d49"
+        },
+        "files": [
+            "config/packages/oneup_flysystem.yaml"
+        ]
+    },
+    "oneup/uploader-bundle": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "2.0",
+            "ref": "b19678d1535b9fe7cdf4647fd3483455e4fca458"
+        },
+        "files": [
+            "config/packages/oneup_uploader.yaml",
+            "config/routes/oneup_uploader.yaml"
+        ]
     },
     "php": {
         "version": "7.4"
@@ -446,8 +477,24 @@
     "symfony/string": {
         "version": "v5.2.3"
     },
+    "symfony/templating": {
+        "version": "v5.2.4"
+    },
     "symfony/test-pack": {
         "version": "v1.0.6"
+    },
+    "symfony/translation": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "2ad9d2545bce8ca1a863e50e92141f0b9d87ffcd"
+        },
+        "files": [
+            "config/packages/translation.yaml",
+            "translations/.gitignore"
+        ]
     },
     "symfony/translation-contracts": {
         "version": "v2.1.3"

@@ -22,6 +22,7 @@ a2lix_lib.sfCollection.init();
 import "./alpine";
 
 Dropzone.options.datawizDropzone = {
+    createImageThumbnails: false,
     init: function() {
         this.on("sending", function(file, xhr, formData){
             formData.append("originalFilename", file.name);

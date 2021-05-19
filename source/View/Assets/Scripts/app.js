@@ -21,4 +21,12 @@ a2lix_lib.sfCollection.init();
 
 import "./alpine";
 
+Dropzone.options.datawizDropzone = {
+    init: function() {
+        this.on("sending", function(file, xhr, formData){
+            formData.append("originalFilename", file.name);
+        });
+    }
+}
+
 // console.log("Hello Webpack Encore! Edit me in Assets/Scripts/app.js");

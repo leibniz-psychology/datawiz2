@@ -1,22 +1,15 @@
 # Read the documentation: https://github.com/1up-lab/OneupUploaderBundle/blob/master/Resources/doc/index.md
 oneup_uploader:
     mappings:
-        # This is a mapping example, remove it and create your own mappings.
-        materials:
-            frontend: dropzone # or any uploader you use in the frontend
+        materials: # this endpoint is only for additional materials
+            frontend: dropzone
             storage:
                 type: flysystem
-                filesystem: oneup_flysystem.assets_filesystem
-#            allowed_mimetypes:
-#                - application/json
-#                - application/msword
-##                'application/pdf',
-##                'application/postscript',
-##                'image/jpeg',
-##                'image/png',
-##                'image/svg+xml',
-##                'image/tiff',
-##                'text/plain',
-##                'text/xml',
-##                'text/rtf',
-##                'text/richtext',
+                filesystem: oneup_flysystem.assets_filesystem # see flysystem.yaml
+        datasets: # this endpoint will handle the datasets (spss, csv, tsv)
+            frontend: dropzone
+            storage:
+                type: flysystem
+                filesystem: oneup_flysystem.assets_filesystem #see flysytem.yaml
+            allowed_mimetypes:
+                text/plain: ['csv', 'tsv'] # how the type here is described is important (text/csv: [...] will not work)

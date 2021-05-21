@@ -16,11 +16,6 @@ class MaterialUploadSubscriber implements EventSubscriberInterface
 {
     private $crud;
 
-    /**
-     * @var AdditionalMaterial
-     */
-    private $currentUpload;
-
     public function __construct(Crudable $crud)
     {
         $this->crud = $crud;
@@ -33,7 +28,11 @@ class MaterialUploadSubscriber implements EventSubscriberInterface
         ];
     }
 
-    // now the renaming is done - attention to use the SAME file again
+    /**
+     * @param PostUploadEvent $event
+     *
+     * Every time a file is uploaded we want to save the metadata about this file
+     */
     public function onMaterialPostUpload(PostUploadEvent $event) {
         $this->crud->update(
             AdditionalMaterial::createMaterial(

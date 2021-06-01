@@ -17,6 +17,7 @@ class BasicInformationType extends AbstractType
     {
         $builder
             ->add(MetaDataDictionary::CREATOR, CollectionType::class, [
+                'required' => false,
                 'entry_type' => TextType::class,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
@@ -32,6 +33,7 @@ class BasicInformationType extends AbstractType
                 ]
             ])
             ->add(MetaDataDictionary::CONTACT, CollectionType::class, [
+                'required' => false,
                 'entry_type' => TextType::class,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
@@ -47,6 +49,7 @@ class BasicInformationType extends AbstractType
                 ]
             ])
             ->add(MetaDataDictionary::TITLE, TextareaType::class, [
+                'required' => false,
                 'label' => 'The title by which you want your research data to be cited',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
@@ -54,6 +57,7 @@ class BasicInformationType extends AbstractType
                 ]
             ])
             ->add(MetaDataDictionary::DESCRIPTION, TextareaType::class, [
+                'required' => false,
                 'label' => 'A description of your study which the research data belong to',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
@@ -61,6 +65,7 @@ class BasicInformationType extends AbstractType
                 ]
             ])
             ->add(MetaDataDictionary::RELATED_PUBS, CollectionType::class, [
+                'required' => false,
                 'entry_type' => TextareaType::class,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,

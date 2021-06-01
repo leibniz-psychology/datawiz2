@@ -17,6 +17,7 @@ class MeasureType extends AbstractType
     {
         $builder
             ->add(MetaDataDictionary::MEASURES,  CollectionType::class, [
+                'required' => false,
                 'entry_type' => TextType::class,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
@@ -32,6 +33,7 @@ class MeasureType extends AbstractType
                 ]
             ])
             ->add(MetaDataDictionary::APPARATUS, CollectionType::class, [
+                'required' => false,
                 'entry_type' => TextType::class,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,

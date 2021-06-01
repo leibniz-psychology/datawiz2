@@ -16,6 +16,7 @@ class MethodType extends AbstractType
     {
         $builder
             ->add(MetaDataDictionary::SETTING, ChoiceType::class, [
+                'required' => false,
                 'choices' => [
                     'Artificial setting' => 'Artificial setting',
                     'Real-life setting' => 'Real-life setting',
@@ -32,6 +33,7 @@ class MethodType extends AbstractType
             ])
             // TODO: Location Textfield was not mapped yet
             ->add(MetaDataDictionary::RESEARCH_DESIGN, ChoiceType::class, [
+                'required' => false,
                 'choices' => [
                     'Independent measures / between-subjects design' => 'Independent measures / between-subjects design',
                     'Repeated measures / within-subjects design' => 'Repeated measures / within-subjects design',
@@ -47,6 +49,7 @@ class MethodType extends AbstractType
                 ]
             ])
             ->add(MetaDataDictionary::MANIPULATIONS, TextareaType::class, [
+                'required' => false,
                 'label' => 'Experimental manipulation(s), treatments, or interventions',
                 'help' => 'Provide details of your experimental manipulation(s) including a summary of the instructions. Clearly define your variables (treatments).',
                 'label_attr' => ['class' => 'MetaData-Title'],
@@ -56,6 +59,7 @@ class MethodType extends AbstractType
                 ]
             ])
             ->add(MetaDataDictionary::ASSIGNMENT, TextareaType::class, [
+                'required' => false,
                 'label' => 'Assignment of participants to condition(s)/manipulation(s)',
                 'help' => 'How did you place participants in conditions? Select random or non-random',
                 'label_attr' => ['class' => 'MetaData-Title'],
@@ -65,6 +69,7 @@ class MethodType extends AbstractType
                 ]
             ])
             ->add(MetaDataDictionary::EXPERIMENTAL_DESIGN, TextareaType::class, [
+                'required' => false,
                 'label' => 'Experimenttal?',
                 'help' => '',
                 'label_attr' => ['class' => 'MetaData-Title'],
@@ -74,6 +79,7 @@ class MethodType extends AbstractType
                 ]
             ])
             ->add(MetaDataDictionary::CONTROL_OPERATIONS, ChoiceType::class, [
+                'required' => false,
                 'choices' => [
                     'Block randomization' => 'Block randomization',
                     'Complete counterbalancing (all possible orders)' => 'Complete counterbalancing (all possible orders)',

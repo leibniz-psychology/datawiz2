@@ -26,6 +26,8 @@ Dropzone.options.datawizDropzone = {
     init: function() {
         this.on("sending", function(file, xhr, formData){
             formData.append("originalFilename", file.name);
+            // require Templates/Components/_infoBridge.html.twig -> experiment.id as value
+            formData.append("studyId", document.getElementById("infobridge").innerHTML.trim())
         });
     }
 }

@@ -1,0 +1,11 @@
+<div>
+    {% if elemenid is not defined %}
+        {% set elementid = "infobridge" %}
+    {% endif %}
+    <div class="hidden" id={{ elementid }}>
+        {% if value is not defined %}
+            {% set value = "please override in your include" %}
+        {% endif %}
+        {{ value }}
+    </div>
+</div>

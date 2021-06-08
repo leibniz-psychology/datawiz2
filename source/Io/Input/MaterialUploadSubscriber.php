@@ -6,6 +6,7 @@ namespace App\Io\Input;
 
 use App\Crud\Crudable;
 use App\Domain\Model\Filemanagement\AdditionalMaterial;
+use App\Domain\Model\Study\Experiment;
 use Oneup\UploaderBundle\Event\PostPersistEvent;
 use Oneup\UploaderBundle\Event\PostUploadEvent;
 use Oneup\UploaderBundle\Event\PreUploadEvent;
@@ -34,10 +35,13 @@ class MaterialUploadSubscriber implements EventSubscriberInterface
      * Every time a file is uploaded we want to save the metadata about this file
      */
     public function onMaterialPostUpload(PostUploadEvent $event) {
+        $experiment = $this->crud->readById(Experiment::class, $event->getRequest()->get('studyId'));
+
         $this->crud->update(
             AdditionalMaterial::createMaterial(
                 $event->getRequest()->get('originalFilename'),
-                $event->getFile()->getBasename()
+                $event->getFile()->getBasename(),
+                $experiment
             )
         );
     }

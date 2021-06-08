@@ -5,6 +5,7 @@ namespace App\Domain\Model\Study;
 use App\Domain\Access\Study\ExperimentRepository;
 use App\Domain\Model\Administration\UuidEntity;
 use App\Security\Authorization\Ownable;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -13,6 +14,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class Experiment extends UuidEntity implements Ownable
 {
+
+    public function __construct()
+    {
+        $this->additionalMaterials = new ArrayCollection();
+    }
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Domain\Model\Administration\DataWizUser")
      */
@@ -59,6 +66,11 @@ class Experiment extends UuidEntity implements Ownable
      * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\MethodMetaDataGroup", mappedBy="experiment", cascade={"persist"})
      */
     private $methodMetaDataGroup;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Domain\Model\Filemanagement\AdditionalMaterial", mappedBy="experiment", cascade={"persist"})
+     */
+    private $additionalMaterials;
 
     /**
      * @return mixed
@@ -173,6 +185,21 @@ class Experiment extends UuidEntity implements Ownable
     {
         $this->methodMetaDataGroup = $methodMetaDataGroup;
         $methodMetaDataGroup->setExperiment($this);
+    }
+
+    public function getAdditionalMaterials()
+    {
+        return $this->additionalMaterials;
+    }
+
+    public function addAdditionalMaterials($additionalMaterials): void
+    {
+        $this->additionalMaterials->add($additionalMaterials);
+    }
+
+    public function removeAdditionalMaterials($materials): void
+    {
+        $this->additionalMaterials->removeElement($materials);
     }
 
     public static function createNewExperiment(UserInterface $owner): Experiment

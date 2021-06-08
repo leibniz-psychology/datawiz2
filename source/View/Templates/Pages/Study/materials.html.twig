@@ -10,9 +10,19 @@
     <div class="inline-block p-4 m-8 text-2xl border-2 border-gray-800 rounded-lg shadow-lg">
         Materials for the Study
     </div>
-
+    <!-- prettier-ignore -->
+    {{ include("Components/_infoBridge.html.twig",{value: experiment.id}) }}
     <form action="{{ oneup_uploader_endpoint("materials") }}"
         class="dropzone"
         id="datawiz-dropzone"
         style="width:200px; height:200px; border:4px dashed black"></form>
+
+    <h3>
+        Already uploaded
+    </h3>
+    <ul>
+        {% for material in experiment.additionalMaterials %}
+            <li>{{ material.atUploadNameable }}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}

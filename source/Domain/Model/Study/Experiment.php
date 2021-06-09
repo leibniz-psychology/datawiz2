@@ -18,6 +18,7 @@ class Experiment extends UuidEntity implements Ownable
     public function __construct()
     {
         $this->additionalMaterials = new ArrayCollection();
+        $this->originalDatasets = new ArrayCollection();
     }
 
     /**
@@ -71,6 +72,11 @@ class Experiment extends UuidEntity implements Ownable
      * @ORM\OneToMany(targetEntity="App\Domain\Model\Filemanagement\AdditionalMaterial", mappedBy="experiment", cascade={"persist"})
      */
     private $additionalMaterials;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Domain\Model\Filemanagement\AdditionalMaterial", mappedBy="experiment", cascade={"persist"})
+     */
+    private $originalDatasets;
 
     /**
      * @return mixed
@@ -200,6 +206,21 @@ class Experiment extends UuidEntity implements Ownable
     public function removeAdditionalMaterials($materials): void
     {
         $this->additionalMaterials->removeElement($materials);
+    }
+
+    public function getOriginalDatasets()
+    {
+        return $this->originalDatasets;
+    }
+
+    public function addOriginalDatasets($originalDatasets): void
+    {
+        $this->originalDatasets->add($originalDatasets);
+    }
+
+    public function removeOriginalDatasets($originalDatasets): void
+    {
+        $this->originalDatasets->removeElement($originalDatasets);
     }
 
     public static function createNewExperiment(UserInterface $owner): Experiment

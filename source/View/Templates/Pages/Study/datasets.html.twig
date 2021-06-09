@@ -11,8 +11,19 @@
         DataSets for the study
     </div>
 
+    <!-- prettier-ignore -->
+    {{ include("Components/_infoBridge.html.twig",{value: experiment.id}) }}
     <form action="{{ oneup_uploader_endpoint("datasets") }}"
         class="dropzone"
         id="datawiz-dropzone"
         style="width:200px; height:200px; border:4px dashed black"></form>
+
+    <h3>
+        Already uploaded
+    </h3>
+    <ul>
+        {% for dataset in experiment.originalDatasets %}
+            <li>{{ dataset.atUploadNameable }}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}

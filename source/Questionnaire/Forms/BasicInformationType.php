@@ -26,7 +26,7 @@ class BasicInformationType extends AbstractType
                 'label' => 'The persons responsible for the research data',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'MetaData-Widget',
+                    'class' => 'MetaData-Widget MetaData-Widget_collection',
                     'data-entry-add-label' => 'another creator +',
                     'data-entry-add-class' => 'MetaData-AddButton',
                     'data-entry-remove-class' => 'MetaData-RemoveButton'
@@ -42,7 +42,7 @@ class BasicInformationType extends AbstractType
                 'label' => 'The contact of the persons responsible',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'MetaData-Widget',
+                    'class' => 'MetaData-Widget MetaData-Widget_collection',
                     'data-entry-add-label' => 'another contact +',
                     'data-entry-add-class' => 'MetaData-AddButton',
                     'data-entry-remove-class' => 'MetaData-RemoveButton'
@@ -53,7 +53,7 @@ class BasicInformationType extends AbstractType
                 'label' => 'The title by which you want your research data to be cited',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'p-1',
+                    'class' => 'MetaData-TextInput',
                 ]
             ])
             ->add(MetaDataDictionary::DESCRIPTION, TextareaType::class, [
@@ -61,7 +61,7 @@ class BasicInformationType extends AbstractType
                 'label' => 'A description of your study which the research data belong to',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'p-1',
+                    'class' => 'MetaData-TextInput',
                 ]
             ])
             ->add(MetaDataDictionary::RELATED_PUBS, CollectionType::class, [
@@ -74,7 +74,7 @@ class BasicInformationType extends AbstractType
                 'label' => 'The bibliographic citation for related publication(s)',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'MetaData-Widget',
+                    'class' => 'MetaData-Widget MetaData-Widget_collection',
                     'data-entry-add-label' => 'another related publication +',
                     'data-entry-add-class' => 'MetaData-AddButton',
                     'data-entry-remove-class' => 'MetaData-RemoveButton'

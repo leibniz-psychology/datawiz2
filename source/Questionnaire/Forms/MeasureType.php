@@ -26,7 +26,7 @@ class MeasureType extends AbstractType
                 'label' => 'Provide definitions of all measures you collected on participants. Provide the proper name of standardized measures (tests).',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'MetaData-Widget',
+                    'class' => 'MetaData-Widget MetaData-Widget_collection',
                     'data-entry-add-label' => 'another measure +',
                     'data-entry-add-class' => 'MetaData-AddButton',
                     'data-entry-remove-class' => 'MetaData-RemoveButton'
@@ -42,7 +42,7 @@ class MeasureType extends AbstractType
                 'label' => 'Which instruments (apparatus, equipment) did you use in your study?',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'MetaData-Widget',
+                    'class' => 'MetaData-Widget MetaData-Widget_collection',
                     'data-entry-add-label' => 'another apparatus +',
                     'data-entry-add-class' => 'MetaData-AddButton',
                     'data-entry-remove-class' => 'MetaData-RemoveButton'

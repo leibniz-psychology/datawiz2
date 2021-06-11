@@ -20,7 +20,7 @@ class SampleType extends AbstractType
                 'label' => 'State inclusion criteria for participants',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'p-1',
+                    'class' => 'MetaData-TextInput',
                 ]
             ])
             ->add(MetaDataDictionary::EXCLUSION_CRITERIA, TextareaType::class, [
@@ -28,7 +28,7 @@ class SampleType extends AbstractType
                 'label' => 'State exclusion criteria for participants',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'p-1',
+                    'class' => 'MetaData-TextInput',
                 ]
             ])
             ->add(MetaDataDictionary::POPULATION, TextareaType::class, [
@@ -36,7 +36,7 @@ class SampleType extends AbstractType
                 'label' => 'Provide information on the group of individuals to which your results can be generalized',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'p-1',
+                    'class' => 'MetaData-TextInput',
                 ]
             ])
             ->add(MetaDataDictionary::SAMPLING_METHOD, TextareaType::class, [
@@ -44,7 +44,7 @@ class SampleType extends AbstractType
                 'label' => '',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'p-1',
+                    'class' => 'MetaData-TextInput',
                 ]
             ])
             ->add(MetaDataDictionary::SAMPLE_SIZE, TextType::class, [
@@ -52,7 +52,7 @@ class SampleType extends AbstractType
                 'label' => 'Provide the achieved sample size as total number of cases N or as number of cases in subsamples n',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'p-1',
+                    'class' => 'MetaData-TextInput',
                 ]
             ])
             ->add(MetaDataDictionary::POWER_ANALYSIS, TextareaType::class, [
@@ -60,7 +60,7 @@ class SampleType extends AbstractType
                 'label' => 'Provide details of the power analysis used to calculate your sample size ',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'p-1',
+                    'class' => 'MetaData-TextInput',
                 ]
             ]);
     }

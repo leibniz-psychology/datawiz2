@@ -20,7 +20,7 @@ class TheoryType extends AbstractType
                 'label' => 'Outline the specific steps that you took to achieve your research aim.',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'p-1',
+                    'class' => 'MetaData-TextInput',
                 ],
             ])
             ->add(MetaDataDictionary::HYPOTHESIS, TextareaType::class, [
@@ -29,7 +29,7 @@ class TheoryType extends AbstractType
                 'label' => 'State the hypotheses examined, indicating which were prespecified.',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'p-1',
+                    'class' => 'MetaData-TextInput',
                 ],
             ]);
     }

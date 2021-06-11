@@ -35,6 +35,16 @@
   @apply px-6 pt-1;
 }
 
+.MetaData-Widget_collection > div {
+  @apply flex mt-0.5 items-baseline;
+}
+
+.MetaData-TextInput,
+.MetaData-Widget_collection > div input,
+.MetaData-Widget_collection > div textarea {
+  @apply w-full;
+}
+
 .MetaData-AddButton {
   @apply block mx-auto mt-1 underline bg-transparent border-0 shadow-none hover:bg-transparent;
 }

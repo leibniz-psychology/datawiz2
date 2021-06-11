@@ -31,7 +31,6 @@ class MethodMetaDataGroup extends UuidEntity implements MetaDataValuable, Questi
     use Settable;
     use ResearchDesignable;
     use Manipulatable;
-    use Assignable;
     use ExperimentalDesignable;
     use ControlOperationable;
 
@@ -41,7 +40,6 @@ class MethodMetaDataGroup extends UuidEntity implements MetaDataValuable, Questi
             MetaDataDictionary::SETTING,
             MetaDataDictionary::RESEARCH_DESIGN,
             MetaDataDictionary::MANIPULATIONS,
-            MetaDataDictionary::ASSIGNMENT,
             MetaDataDictionary::EXPERIMENTAL_DESIGN,
             MetaDataDictionary::CONTROL_OPERATIONS,
         ];

@@ -58,16 +58,6 @@ class MethodType extends AbstractType
                     'class' => 'p-1',
                 ]
             ])
-            ->add(MetaDataDictionary::ASSIGNMENT, TextareaType::class, [
-                'required' => false,
-                'label' => 'Assignment of participants to condition(s)/manipulation(s)',
-                'help' => 'How did you place participants in conditions? Select random or non-random',
-                'label_attr' => ['class' => 'MetaData-Title'],
-                'help_attr' => ['class' => 'px-6 pt-1'],
-                'attr' => [
-                    'class' => 'p-1',
-                ]
-            ])
             ->add(MetaDataDictionary::EXPERIMENTAL_DESIGN, TextareaType::class, [
                 'required' => false,
                 'label' => 'Experimenttal?',

@@ -1,0 +1,65 @@
+.CheckBox-Input,
+.RadioButton-Input {
+  @apply absolute w-px h-px p-0 -m-px overflow-hidden border-0 opacity-0;
+}
+
+.CheckBox-Label,
+.RadioButton-Label {
+  @apply flex leading-tight;
+
+  &::before {
+    @apply relative flex-shrink-0 inline-block w-4 h-4 mt-0.5 mr-1.5 bg-white border-2 border-black border-solid;
+
+    content: "";
+  }
+}
+
+.CheckBox-Label {
+  &::before {
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
+  }
+}
+
+.RadioButton-Label {
+  &::before {
+    border-bottom-left-radius: 1rem 1rem;
+    border-bottom-right-radius: 1rem 1rem;
+    border-top-left-radius: 1rem 1rem;
+    border-top-right-radius: 1rem 1rem;
+  }
+}
+
+.CheckBox-Input:checked ~ .CheckBox-Label::before {
+  /* prettier-ignore */
+  background:
+    url("../Images/checkmark.svg"
+    param(--color blue)
+    param(--strokeWidth 20))
+    left center no-repeat;
+
+  @apply bg-white;
+}
+
+.RadioButton-Input:checked + .RadioButton-Label::before {
+  /* prettier-ignore */
+  background:
+    url("../Images/radiobutton.svg"
+    param(--color theme("colors.blue.500")))
+    left center no-repeat;
+
+  @apply bg-white;
+}
+
+/* On mouse-over, add a grey background color */
+.RadioButton-Input:not(:checked):hover + .RadioButton-Label::before {
+  /* prettier-ignore */
+  background:
+    url("../Images/radiobutton.svg"
+    param(--color theme("colors.blue.100")))
+    left center no-repeat;
+
+  @apply bg-white;
+}

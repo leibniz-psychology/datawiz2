@@ -1,4 +1,7 @@
 {% extends "Layouts/threeColumn.html.twig" %}
+{% from "Components/_macros.html.twig" import helpButton %}
+{% from "Components/_macros.html.twig" import sectionHelp %}
+{% from "Components/_macros.html.twig" import formHelp %}
 
 {% set isPartOfStudyDocumentation = true %}
 {% set isStudyDescriptionSubItem = true %}
@@ -16,14 +19,6 @@
     {{ form_errors(form) }}
 
     <div>
-        {{ form_label(form.setting) }}
-        {{ form_help(form.setting) }}
-        {{ form_errors(form.setting) }}
-        <div class="px-6 pt-1">
-            {{ form_widget(form.setting) }}
-        </div>
-    </div>
-    <div class="mt-8">
         {{ form_label(form.research_design) }}
         {{ form_help(form.research_design) }}
         {{ form_errors(form.research_design) }}
@@ -31,30 +26,83 @@
             {{ form_widget(form.research_design) }}
         </div>
     </div>
-    <div class="mt-8">
+
+    <fieldset class="mt-8">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                Setting
+            </legend>
+            {{ helpButton("setting") }}
+        </div>
+        {{ form_label(form.setting) }}
+        <div class="MetaData-Widget">
+            {{ form_errors(form.setting) }}
+            {%- for choice in form.setting %}
+                {{ form_widget(choice) }}
+                {# prettier-ignore-start #}
+                {{ form_label(choice, null, {
+                    label_attr: {class: 'RadioButton-Label'}
+                }) }}
+                {# prettier-ignore-end #}
+            {% endfor -%}
+        </div>
+    </fieldset>
+
+    <fieldset class="mt-8">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                Experimental manipulation(s), treatments, or interventions
+            </legend>
+            {{ helpButton("manipulations") }}
+        </div>
         {{ form_label(form.manipulations) }}
-        {{ form_help(form.manipulations) }}
-        {{ form_errors(form.manipulations) }}
-        <div class="px-6 pt-1">
+        <div class="MetaData-Widget">
+            {{ form_errors(form.manipulations) }}
             {{ form_widget(form.manipulations) }}
         </div>
-    </div>
-    <div class="mt-8">
+    </fieldset>
+
+    <fieldset class="mt-8">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                Design
+            </legend>
+            {{ helpButton("experimental_design") }}
+        </div>
         {{ form_label(form.experimental_design) }}
-        {{ form_help(form.experimental_design) }}
-        {{ form_errors(form.experimental_design) }}
-        <div class="px-6 pt-1">
-            {{ form_widget(form.experimental_design) }}
+        <div class="MetaData-Widget">
+            {{ form_errors(form.experimental_design) }}
+            {%- for choice in form.experimental_design %}
+                {{ form_widget(choice) }}
+                {# prettier-ignore-start #}
+                {{ form_label(choice, null, {
+                    label_attr: {class: 'RadioButton-Label'}
+                }) }}
+                {# prettier-ignore-end #}
+            {% endfor -%}
         </div>
-    </div>
-    <div class="mt-8">
+    </fieldset>
+
+    <fieldset class="mt-8">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                Control Operations
+            </legend>
+            {{ helpButton("control_operations") }}
+        </div>
         {{ form_label(form.control_operations) }}
-        {{ form_help(form.control_operations) }}
-        {{ form_errors(form.control_operations) }}
-        <div class="px-6 pt-1">
-            {{ form_widget(form.control_operations) }}
+        <div class="MetaData-Widget">
+            {{ form_errors(form.control_operations) }}
+            {%- for choice in form.control_operations %}
+                {{ form_widget(choice) }}
+                {# prettier-ignore-start #}
+                {{ form_label(choice, null, {
+                    label_attr: {class: 'RadioButton-Label'}
+                }) }}
+                {# prettier-ignore-end #}
+            {% endfor -%}
         </div>
-    </div>
+    </fieldset>
 
     {# prettier-ignore-start #}
     {{ form_widget(form.submit, {'attr': {
@@ -63,4 +111,16 @@
 
     {{ form_end(form) }}
     {# prettier-ignore-end #}
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("method") }}
+{% endblock %}
+
+{% block help_for_metadata %}
+    {{ formHelp("method", "research_design") }}
+    {{ formHelp("method", "setting") }}
+    {{ formHelp("method", "manipulations") }}
+    {{ formHelp("method", "experimental_design") }}
+    {{ formHelp("method", "control_operations") }}
 {% endblock %}

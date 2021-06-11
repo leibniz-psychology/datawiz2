@@ -49,6 +49,10 @@ Study-introduction:
   path: /studies/{uuid}/introduction
   controller: App\View\Controller\StudyController::introductionAction
 
+Study-review:
+  path: /studies/{uuid}/review
+  controller: App\View\Controller\StudyController::reviewAction
+
 Administration-profile:
   path: /administration/profile
   controller: App\View\Controller\AdministrationController::profileAction

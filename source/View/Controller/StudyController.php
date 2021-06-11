@@ -201,6 +201,15 @@ class StudyController extends DataWizController
         ]);
     }
 
+    public function reviewAction(string $uuid, Request $request): Response
+    {
+        $entityAtChange = $this->getExperimentForUuid($uuid);
+
+        return $this->render('Pages/Study/review.html.twig', [
+            'experiment' => $entityAtChange,
+        ]);
+    }
+
     private function getExperimentForUuid(string $uuid): Experiment
     {
         return $this->crud->readById(Experiment::class, $uuid);

@@ -1,0 +1,20 @@
+{% extends "Layouts/threeColumn.html.twig" %}
+{% from "Components/_macros.html.twig" import helpButton %}
+{% from "Components/_macros.html.twig" import sectionHelp %}
+{% from "Components/_macros.html.twig" import formHelp %}
+
+{% set isPartOfStudyDocumentation = true %}
+{% set isStudyDescriptionSubItem = false %}
+
+{% block title %}
+    Data Overview
+{% endblock %}
+
+{% block content %}
+    <div class="inline-block p-4 m-8 text-2xl border-2 border-gray-800 rounded-lg shadow-lg">
+        Review for {{ experiment.settingsMetaDataGroup.shortName }}
+    </div>
+    <p>
+        Please check your given information for completion and correctness.
+    </p>
+{% endblock %}

@@ -1,1 +1,10 @@
-### About
+## About design
+
+Between-subjects design
+: A study in which individuals are assigned to only one treatment or experimental condition and each person provides only one score for data analysis. For example, in a between-subjects design investigating the efficacy of three different drugs for treating depression, one group of depressed individuals would receive one of the drugs, a different group would receive another one of the drugs, and yet another group would receive the remaining drug. Thus, the researcher is comparing the effect each medication has on a different set of people. Also called between-groups design; independent-groups design. (APA Dictionary, 2014)
+
+Within-subjects design
+: An experimental design in which the effects of treatments are seen through the comparison of scores of the same participant observed under all the treatment conditions. For example, teachers may want to give a pre- and postcourse survey of skills and attitudes to gauge how much both changed as a result of the course. Such a design could be analyzed with a dependent-samples t test, a within-subjects analysis of variance, or an analysis of covariance. Also called related-measures design; repeated measures design; within-groups design. (APA Dictionary, 2014)
+
+Matched-pairs design
+: A study involving two groups of participants in which each member of one group is paired with a similar person in the other group, that is, someone who matches them on one or more variables that are not the main focus of the study but nonetheless could influence its outcome. For example, a researcher evaluating the effectiveness of a new drug in treating Alzheimer's disease might identify pairs of individuals of the same age and intelligence and then randomly assign one person from each pair to the treatment condition that will receive the drug and the other to the control condition that will not. A matched-groups design (matched-samples design; matched-subjects design) is a similar approach but broader in that it allows for the inclusion of more than two groups of participants. (APA Dictionary, 2014)

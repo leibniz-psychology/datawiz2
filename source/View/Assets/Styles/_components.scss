@@ -61,7 +61,19 @@
 }
 
 .MetaData-SubmitButton {
-  @apply mx-6 mt-4 mb-4;
+  @apply flex self-center px-6 py-1 mt-2 bg-white border rounded-md justify-self-center border-mono-400 hover:bg-mono-200;
+
+  &::before {
+    @apply w-[1.125rem] h-[1.125rem] mr-1;
+
+    align-self: center;
+    /* prettier-ignore */
+    background:
+      url("../Images/cil:save.svg"
+      param(--color theme("colors.mono.700")))
+      left center no-repeat;
+    content: "";
+  }
 }
 
 .Help-Section {

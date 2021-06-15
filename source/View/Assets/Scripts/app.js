@@ -15,20 +15,22 @@ import "../Styles/tailwind-base.scss";
 import "../Styles/tailwind-components.scss";
 import "../Styles/tailwind-utilities.scss";
 import "./alpine";
+import "./detectStickyElements";
 
 a2lix_lib.sfCollection.init();
 
-import "./alpine";
-
 Dropzone.options.datawizDropzone = {
-    createImageThumbnails: false,
-    init: function() {
-        this.on("sending", function(file, xhr, formData){
-            formData.append("originalFilename", file.name);
-            // require Templates/Components/_infoBridge.html.twig -> experiment.id as value
-            formData.append("studyId", document.getElementById("infobridge").innerHTML.trim())
-        });
-    }
-}
+  createImageThumbnails: false,
+  init: function () {
+    this.on("sending", function (file, xhr, formData) {
+      formData.append("originalFilename", file.name);
+      // require Templates/Components/_infoBridge.html.twig -> experiment.id as value
+      formData.append(
+        "studyId",
+        document.getElementById("infobridge").innerHTML.trim()
+      );
+    });
+  },
+};
 
 // console.log("Hello Webpack Encore! Edit me in Assets/Scripts/app.js");

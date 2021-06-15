@@ -2,6 +2,7 @@
 {% from "Components/_macros.html.twig" import helpButton %}
 {% from "Components/_macros.html.twig" import sectionHelp %}
 {% from "Components/_macros.html.twig" import formHelp %}
+{% from "Components/_macros.html.twig" import wizNav %}
 
 {% set isPartOfStudyDocumentation = true %}
 {% set isStudyDescriptionSubItem = true %}
@@ -43,9 +44,12 @@
     </fieldset>
 
     {# prettier-ignore-start #}
-    {{ form_widget(form.submit, {'attr': {
-        'class': 'mx-6 mt-4 mb-4',}
-    }) }}
+    {{ wizNav({
+        'prevUrl': path('Study-method', {uuid: experiment.id}),
+        'prevTitle': 'Study method',
+        'nextUrl': path('Study-sample', {uuid: experiment.id}),
+        'nextTitle': 'Sampling'
+    }, form) }}
     {# prettier-ignore-end #}
 
     {{ form_end(form) }}

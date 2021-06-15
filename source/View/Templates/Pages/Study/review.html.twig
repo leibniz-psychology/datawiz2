@@ -2,6 +2,7 @@
 {% from "Components/_macros.html.twig" import helpButton %}
 {% from "Components/_macros.html.twig" import sectionHelp %}
 {% from "Components/_macros.html.twig" import formHelp %}
+{% from "Components/_macros.html.twig" import wizNav %}
 
 {% set isPartOfStudyDocumentation = true %}
 {% set isStudyDescriptionSubItem = false %}
@@ -17,4 +18,13 @@
     <p>
         Please check your given information for completion and correctness.
     </p>
+
+    {# prettier-ignore-start #}
+    {{ wizNav({
+        'prevUrl': path('Study-materials', {uuid: experiment.id}),
+        'prevTitle': 'Upload materials',
+        'nextUrl': '#',
+        'nextTitle': 'Export study'
+    }) }}
+    {# prettier-ignore-end #}
 {% endblock %}

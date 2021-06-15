@@ -2,6 +2,7 @@
 {% from "Components/_macros.html.twig" import helpButton %}
 {% from "Components/_macros.html.twig" import sectionHelp %}
 {% from "Components/_macros.html.twig" import formHelp %}
+{% from "Components/_macros.html.twig" import wizNav %}
 
 {% set isPartOfStudyDocumentation = true %}
 {% set isStudyDescriptionSubItem = true %}
@@ -47,9 +48,12 @@
     </fieldset>
 
     {# prettier-ignore-start #}
-    {{ form_widget(form.submit, {'attr': {
-        'class': 'MetaData-SubmitButton',}
-    }) }}
+    {{ wizNav({
+        'prevUrl': path('Study-documentation', {uuid: experiment.id}),
+        'prevTitle': 'Basic information',
+        'nextUrl': path('Study-method', {uuid: experiment.id}),
+        'nextTitle': 'Study method'
+    }, form) }}
     {# prettier-ignore-end #}
 
     {{ form_end(form) }}

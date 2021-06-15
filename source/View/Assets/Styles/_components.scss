@@ -83,3 +83,18 @@
 .Help-Text_metaData {
   @apply mt-4 mb-6;
 }
+
+.WizNavBar {
+  @apply sticky z-10 grid grid-flow-col px-2 mt-4 border-t auto-cols-fr -bottom-px border-mono-500 bg-mono-100;
+
+  /* Fix for sticky */
+  padding-bottom: calc(0.25rem + 1px);
+  transition: 0.05s;
+}
+
+/* styles for when the header is in sticky mode */
+.WizNavBar_isSticky {
+  @apply text-black border-t border-b-2 border-mono-500 bg-opacity-90;
+
+  box-shadow: 0 -5px 30px -10px #555;
+}

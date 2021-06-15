@@ -91,6 +91,25 @@ class StudyFeatureTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
+    public function testMaterialsAction()
+    {
+        $this->client->request('GET', '/pages/studies/' . $this->tesStudyUuuid . '/materials');
+        $this->assertResponseIsSuccessful();
+    }
+
+    public function testDatasetsAction()
+    {
+        $this->client->request('GET', '/pages/studies/' . $this->tesStudyUuuid . '/datasets');
+        $this->assertResponseIsSuccessful();
+    }
+
+    public function testReviewAction()
+    {
+        $this->client->request('GET', '/pages/studies/' . $this->tesStudyUuuid . '/review');
+        $this->assertResponseIsSuccessful();
+    }
+
+    // Not part of the study feature TODO: move to on test suit
     public function testProfileAction()
     {
         $this->client->request('GET', '/pages/administration/profile');

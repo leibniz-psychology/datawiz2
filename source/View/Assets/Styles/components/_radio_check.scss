@@ -3,17 +3,6 @@
   @apply absolute w-px h-px p-0 -m-px overflow-hidden border-0 opacity-0;
 }
 
-.CheckBox-Label,
-.RadioButton-Label {
-  @apply flex leading-tight;
-
-  &::before {
-    @apply relative flex-shrink-0 inline-block w-4 h-4 mt-0.5 mr-1.5 bg-white border-2 border-black border-solid;
-
-    content: "";
-  }
-}
-
 .CheckBox-Label {
   &::before {
     border-bottom-left-radius: 15px 255px;
@@ -29,6 +18,31 @@
     border-bottom-right-radius: 1rem 1rem;
     border-top-left-radius: 1rem 1rem;
     border-top-right-radius: 1rem 1rem;
+  }
+}
+
+.CheckBox-Label,
+.RadioButton-Label {
+  @apply flex flex-wrap mt-2 leading-tight;
+
+  &::before {
+    @apply relative flex-shrink-0 inline-block w-4 h-4 mt-0.5 mr-1.5 bg-white border-2 border-black border-solid;
+
+    content: "";
+  }
+
+  &:first-of-type {
+    @apply mt-0;
+  }
+
+  span {
+    @apply w-full ml-[1.375rem] block text-sm;
+
+    &:first-child {
+      @apply w-[calc(100%-1.375rem)] ml-0 text-base;
+
+      margin-top: -0.125rem;
+    }
   }
 }
 

@@ -32,4 +32,4 @@ services:
 
     # use custom markdown parser that can be extended with markdown extra features
     twig.markdown.default:
-        class: 'App\View\Templates\Twig\CommonMarkdownExtended'
+        class: 'App\View\Templates\Twig\ErusevMarkdown'

@@ -9,19 +9,31 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Parsedown;
 
 class MethodType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $Parsedown = new Parsedown();
+
         $builder
             ->add(MetaDataDictionary::SETTING, ChoiceType::class, [
                 'required' => false,
                 'placeholder' => false,
                 'choices' => [
-                    'Artificial setting' => 'Artificial setting',
-                    'Real-life setting' => 'Real-life setting',
-                    'Natural setting' => 'Natural setting'
+                    $Parsedown->line(
+                        '<span>Artificial setting</span>
+                        <span>Artificial setting (e.g. laboratory experiment) {.hidden}</span> '
+                    ) => 'Artificial setting',
+                    $Parsedown->line(
+                        '<span>Real-life setting</span>
+                        <span>Real-life setting (e.g., field experiment)</span>'
+                    ) => 'Real-life setting',
+                    $Parsedown->line(
+                        '<span>Natural setting</span>
+                        <span>Natural setting (e.g., natural observations)</span>'
+                    ) => 'Natural setting',
                 ],
                 'expanded' => true,
                 'label' => 'Choose your setting',

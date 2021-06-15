@@ -41,7 +41,8 @@
                 {{ form_widget(choice) }}
                 {# prettier-ignore-start #}
                 {{ form_label(choice, null, {
-                    label_attr: {class: 'RadioButton-Label'}
+                    label_attr: {class: 'RadioButton-Label'},
+                    'label_html': true,
                 }) }}
                 {# prettier-ignore-end #}
             {% endfor -%}

@@ -96,6 +96,12 @@
     "doctrine/sql-formatter": {
         "version": "1.1.0"
     },
+    "erusev/parsedown": {
+        "version": "1.7.4"
+    },
+    "erusev/parsedown-extra": {
+        "version": "0.8.1"
+    },
     "firebase/php-jwt": {
         "version": "v4.0.0"
     },
@@ -131,9 +137,6 @@
     },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.0.4"
-    },
-    "league/commonmark": {
-        "version": "1.6.0"
     },
     "league/flysystem": {
         "version": "2.0.5"

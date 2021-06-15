@@ -1,4 +1,5 @@
 {% extends "Layouts/threeColumn.html.twig" %}
+{% from "Components/_macros.html.twig" import wizNav %}
 
 {% set isPartOfStudyDocumentation = true %}
 
@@ -25,4 +26,13 @@
             <li>{{ material.atUploadNameable }}</li>
         {% endfor %}
     </ul>
+
+    {# prettier-ignore-start #}
+    {{ wizNav({
+        'prevUrl': path('Study-datasets', {uuid: experiment.id}),
+        'prevTitle': 'Manage datasets',
+        'nextUrl': path('Study-review', {uuid: experiment.id}),
+        'nextTitle': 'Review input',
+    }) }}
+    {# prettier-ignore-end #}
 {% endblock %}

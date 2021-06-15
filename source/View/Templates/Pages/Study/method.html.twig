@@ -2,6 +2,7 @@
 {% from "Components/_macros.html.twig" import helpButton %}
 {% from "Components/_macros.html.twig" import sectionHelp %}
 {% from "Components/_macros.html.twig" import formHelp %}
+{% from "Components/_macros.html.twig" import wizNav %}
 
 {% set isPartOfStudyDocumentation = true %}
 {% set isStudyDescriptionSubItem = true %}
@@ -41,7 +42,8 @@
                 {{ form_widget(choice) }}
                 {# prettier-ignore-start #}
                 {{ form_label(choice, null, {
-                    label_attr: {class: 'RadioButton-Label'}
+                    label_attr: {class: 'RadioButton-Label'},
+                    'label_html': true,
                 }) }}
                 {# prettier-ignore-end #}
             {% endfor -%}
@@ -105,12 +107,15 @@
     </fieldset>
 
     {# prettier-ignore-start #}
-    {{ form_widget(form.submit, {'attr': {
-            'class': 'mx-6 mt-4 mb-4',}
-        }) }}
+    {{ wizNav({
+        'prevUrl': path('Study-theory', {uuid: experiment.id}),
+        'prevTitle': 'Objectives & Hypotheses',
+        'nextUrl': path('Study-measure', {uuid: experiment.id}),
+        'nextTitle': 'Data collection'
+    }, form) }}
+    {# prettier-ignore-end #}
 
     {{ form_end(form) }}
-    {# prettier-ignore-end #}
 {% endblock %}
 
 {% block help_for_section %}

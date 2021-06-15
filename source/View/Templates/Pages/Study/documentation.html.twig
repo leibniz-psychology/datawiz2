@@ -2,6 +2,7 @@
 {% from "Components/_macros.html.twig" import helpButton %}
 {% from "Components/_macros.html.twig" import sectionHelp %}
 {% from "Components/_macros.html.twig" import formHelp %}
+{% from "Components/_macros.html.twig" import wizNav %}
 
 {% set isPartOfStudyDocumentation = true %}
 {% set isStudyDescriptionSubItem = true %}
@@ -87,12 +88,14 @@
         {{ form_widget(form.related_publications) }}
     </fieldset>
 
-    {# prettier-ignore #}
-    {{ form_widget(form.submit, {
-        'attr': {
-            'class': 'MetaData-SubmitButton',
-        }
-    }) }}
+    {# prettier-ignore-start #}
+    {{ wizNav({
+        'prevUrl': path('Study-introduction', {uuid: experiment.id}),
+        'prevTitle': 'Getting started',
+        'nextUrl': path('Study-theory', {uuid: experiment.id}),
+        'nextTitle': 'Objectives & Hypotheses'
+    }, form) }}
+    {# prettier-ignore-end #}
 
     {{ form_end(form) }}
 {% endblock %}

@@ -12,12 +12,14 @@ use App\Domain\Definition\Filemanagement\StorageNameable;
 use App\Domain\Definition\Filemanagement\UploadDateable;
 use App\Domain\Model\Administration\UuidEntity;
 use App\Domain\Model\Study\Experiment;
+use App\Questionnaire\Forms\FileDescriptionType;
+use App\Questionnaire\Questionable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
  */
-class AdditionalMaterial extends UuidEntity
+class AdditionalMaterial extends UuidEntity implements Questionable
 {
     private function __construct(){ }
 
@@ -51,5 +53,11 @@ class AdditionalMaterial extends UuidEntity
     {
         $this->experiment = $experiment;
         $experiment->addAdditionalMaterials($this);
+    }
+
+
+    public function getFormTypeForEntity(): string
+    {
+        return FileDescriptionType::class;
     }
 }

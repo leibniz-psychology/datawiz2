@@ -23,7 +23,7 @@
     </h3>
     <ul>
         {% for material in experiment.additionalMaterials %}
-            <li>{{ material.atUploadNameable }} - <a href="{{ path('File-deletion', { 'uuid': material.id }) }}">delete</a> </li>
+            <li>{{ material.atUploadNameable }} - {{ material.fileDescription}} - <a href="{{ path('File-details', { 'uuid': material.id }) }}">Details</a> </li>
         {% endfor %}
     </ul>
 

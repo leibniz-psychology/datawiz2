@@ -37,4 +37,7 @@ final class MetaDataDictionary
     const ASSIGNMENT = 'assignment';
     const EXPERIMENTAL_DESIGN = 'experimental_design';
     const CONTROL_OPERATIONS = 'control_operations';
+
+    // Filemanagement
+    const FILE_DESCRIPTION = 'file_description';
 }

@@ -1,0 +1,18 @@
+{% extends "Layouts/threeColumn.html.twig" %}
+
+{% set isPartOfStudyDocumentation = true %}
+
+{% block title %}
+    Details of {{ file.atUploadNameable }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
+        Details of {{ file.atUploadNameable }}
+    </h2>
+
+    {{ form(form) }}
+
+    <a href="{{ path('Study-materials', { 'uuid': experiment.id }) }}">Back</a>
+    <a href="{{ path('File-deletion', { 'uuid': file.id }) }}">Delete</a>
+{% endblock %}

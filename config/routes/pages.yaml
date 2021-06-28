@@ -57,6 +57,10 @@ File-details:
   path: /files/{uuid}/details
   controller: App\View\Controller\FileManagementController::materialDetailsAction
 
+Codebook-index:
+  path: /codebook/{uuid}/index
+  controller: App\View\Controller\CodebookController::codebookIndexAction
+
 Administration-profile:
   path: /administration/profile
   controller: App\View\Controller\AdministrationController::profileAction

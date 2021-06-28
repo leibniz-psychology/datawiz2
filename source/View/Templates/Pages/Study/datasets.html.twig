@@ -24,7 +24,7 @@
     </h3>
     <ul>
         {% for dataset in experiment.originalDatasets %}
-            <li>{{ dataset.atUploadNameable }}</li>
+            <li>{{ dataset.atUploadNameable }} - <a href="{{ path('Codebook-index', {uuid: dataset.id}) }}">create codebook</a></li>
         {% endfor %}
     </ul>
 

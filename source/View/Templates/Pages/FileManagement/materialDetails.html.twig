@@ -11,8 +11,16 @@
         Details of {{ file.atUploadNameable }}
     </h2>
 
-    {{ form(form) }}
+    <div class="mx-6">
+        {{ form(form) }}
+    </div>
 
-    <a href="{{ path('Study-materials', { 'uuid': experiment.id }) }}">Back</a>
-    <a href="{{ path('File-deletion', { 'uuid': file.id }) }}">Delete</a>
+    <div class="mx-6">
+        <!-- prettier-ignore-start -->
+        <a href="{{ path('Study-materials', { 'uuid': experiment.id }) }}" class="underline">Back to study materials</a>
+        <a href="{{ path('File-deletion', { 'uuid': file.id }) }}" class="ml-2 mr-2 underline">
+            <span class="w-4 h-4 mr-0.5 inline iconify-inline" data-icon="radix-icons:cross-2"></span>Remove
+        </a>
+        <!-- prettier-ignore-end -->
+    </div>
 {% endblock %}

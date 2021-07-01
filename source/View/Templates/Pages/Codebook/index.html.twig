@@ -1,5 +1,17 @@
+{% extends "Layouts/base.html.twig" %}
+
+{% block body %}
 <h1>I am bad at UX stuff</h1>
 <p>Greeting, your developer</p>
 
 <p>This is given to the page:</p>
 <p> {{ codebook.id }}</p>
+
+<button x-data="{ url: '{{ absolute_url(path('Codebook-dataupdate')) }}' }"
+     @click="$fetch({ url: url, method: 'post', data: {header: [1,2,3]} })
+     .then(({ data }) => console.log(data))
+     .catch(({data }) => console.log(data))">
+    Post to api
+</button>
+
+{% endblock %}

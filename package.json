@@ -75,6 +75,7 @@
     "twigSingleQuote": false
   },
   "dependencies": {
+    "alpine-magic-helpers": "^1.2.2",
     "dropzone": "^5.9.2"
   }
 }

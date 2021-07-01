@@ -1,3 +1,7 @@
 File-deletion:
   path: /filemanagement/delete/{uuid}/material
   controller: App\View\Controller\FileManagementController::deleteMaterialCall
+
+Codebook-dataupdate:
+  path: /codebook/data
+  controller: App\View\Controller\CodebookController::dataUpdateCall

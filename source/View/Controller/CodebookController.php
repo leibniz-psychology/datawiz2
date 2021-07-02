@@ -7,11 +7,8 @@ namespace App\View\Controller;
 
 use App\Crud\Crudable;
 use App\Domain\Model\Codebook\DatasetMetaData;
-use PHPUnit\Util\Json;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Test\Constraint\ResponseIsSuccessful;
 
 class CodebookController extends DataWizController
 {
@@ -22,15 +19,17 @@ class CodebookController extends DataWizController
         $this->crud = $crud;
     }
 
-    public function dataUpdateCall(Request $request)
+    public function dataUpdateCall(string $uuid, Request $request)
     {
-        $postedData = $request->getContent();
-        // get codebook entity or create one
-        // extract json from posted request
-        // update json
-        // return convention to show success
+        $postedData = \GuzzleHttp\json_decode($request->getContent(), true);
+        // test the update with just one entity before wiring the uuid's correctly
+        /** @var DatasetMetaData $entityAtChange */
+        $entityAtChange = $this->crud->readForAll(DatasetMetaData::class)[0];
+        $entityAtChange->setMetadata($postedData);
+        $this->crud->update($entityAtChange);
+
         return new JsonResponse(
-            \GuzzleHttp\json_decode($postedData, true)
+            $entityAtChange->getMetadata()
         );
     }
 

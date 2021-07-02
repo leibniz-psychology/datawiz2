@@ -7,11 +7,15 @@
 <p>This is given to the page:</p>
 <p> {{ codebook.id }}</p>
 
-<button x-data="{ url: '{{ absolute_url(path('Codebook-dataupdate')) }}' }"
-     @click="$fetch({ url: url, method: 'post', data: {header: [1,2,3]} })
+<button x-data="{ url: '{{ absolute_url(path('Codebook-dataupdate', {uuid: codebook.id})) }}' }"
+     @click="$fetch({
+     url: url,
+     method: 'post',
+     data: {header: [4,5,6,7], anotherKey: '{{ codebook.id }}' }
+     })
      .then(({ data }) => console.log(data))
      .catch(({data }) => console.log(data))">
-    Post to api
+    Save changes
 </button>
 
 {% endblock %}

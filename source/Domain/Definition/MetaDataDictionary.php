@@ -5,7 +5,7 @@ namespace App\Domain\Definition;
 final class MetaDataDictionary
 {
     // SettingsMetaData
-    const SHORTNAME = 'short_name';
+    const SHORTNAME = 'shortName';
 
     // BasicInformationMetaData
     const TITLE = 'title';

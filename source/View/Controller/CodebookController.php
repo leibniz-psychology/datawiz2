@@ -21,16 +21,33 @@ class CodebookController extends DataWizController
 
     public function dataUpdateCall(string $uuid, Request $request)
     {
-        $postedData = \GuzzleHttp\json_decode($request->getContent(), true);
-        // test the update with just one entity before wiring the uuid's correctly
-        /** @var DatasetMetaData $entityAtChange */
-        $entityAtChange = $this->crud->readForAll(DatasetMetaData::class)[0];
-        $entityAtChange->setMetadata($postedData);
-        $this->crud->update($entityAtChange);
+        if ($request->isMethod("POST")) {
+            $postedData = $this->convertCodebookFrom($request);
+
+            // test the update with just one entity before wiring the uuid's correctly
+            /** @var DatasetMetaData $entityAtChange */
+            $entityAtChange = $this->crud->readForAll(DatasetMetaData::class)[0];
+            $this->updateDatasetMetaData($entityAtChange, $postedData);
+        } else {
+            // test the update with just one entity before wiring the uuid's correctly
+            /** @var DatasetMetaData $entityAtChange */
+            $entityAtChange = $this->crud->readForAll(DatasetMetaData::class)[0];
+        }
 
         return new JsonResponse(
             $entityAtChange->getMetadata()
         );
+    }
+
+    private function updateDatasetMetaData(DatasetMetaData $entityAtChange, array $metadataAsArray)
+    {
+        $entityAtChange->setMetadata($metadataAsArray);
+        $this->crud->update($entityAtChange);
+    }
+
+    private function convertCodebookFrom(Request $request)
+    {
+        return \GuzzleHttp\json_decode($request->getContent(), true);
     }
 
     public function codebookIndexAction(string $uuid, Request $request)

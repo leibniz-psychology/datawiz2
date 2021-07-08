@@ -14,7 +14,6 @@
                     My studies
                 </h2>
                 <span class="self-center">
-                    {# prettier-ignore #}
                     <button class="px-2 ml-2 bg-white border rounded-md border-mono-500 hover:bg-mono-100" onclick="window.location.href='{{ path("Study-new") }}'">
                         Create new study
                     </button>
@@ -24,11 +23,9 @@
                 {% for experiment in all_experiments %}
                     <li>
                         <div class="mt-4 bg-mono-50">
-                            {# prettier-ignore #}
                             <a class="text-xl underline" href="{{ path('Study-documentation', {uuid: experiment.id}) }}">
                                 {{ experiment.settingsMetaDataGroup.shortName }}
                             </a>
-                            {# prettier-ignore #}
                             <div>
                                 <span class="font-semibold">Title:</span>
                                 {{ experiment.basicInformationMetaDataGroup.title }}

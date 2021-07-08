@@ -47,14 +47,12 @@
         </div>
     </fieldset>
 
-    {# prettier-ignore-start #}
     {{ wizNav({
         'prevUrl': path('Study-documentation', {uuid: experiment.id}),
         'prevTitle': 'Basic information',
         'nextUrl': path('Study-method', {uuid: experiment.id}),
         'nextTitle': 'Study method'
     }, form) }}
-    {# prettier-ignore-end #}
 
     {{ form_end(form) }}
 {% endblock %}

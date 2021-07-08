@@ -171,14 +171,12 @@
         </div>
     </fieldset>
 
-    {# prettier-ignore-start #}
     {{ wizNav({
         'prevUrl': path('Study-measure', {uuid: experiment.id}),
         'prevTitle': 'Data collection',
         'nextUrl': path('Study-datasets', {uuid: experiment.id}),
         'nextTitle': 'Manage datasets'
     }, form) }}
-    {# prettier-ignore-end #}
 
     {{ form_end(form) }}
 {% endblock %}

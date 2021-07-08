@@ -1,5 +1,4 @@
 {% macro helpButton(formIdentifier) %}
-    {# prettier-ignore #}
     <button class="MetaData-HelpButton"
         type="button"
         x-on:click="$store.app.helpSelected = $store.app.helpSelected === '{{ formIdentifier }}' ? null : '{{ formIdentifier }}'" x-data="{}">
@@ -40,7 +39,6 @@
     {% set options = defaults | merge(options) %}
     
     <div class="WizNavBar">
-        {# prettier-ignore-start #}
         {# {% if options.prevUrl != '' %}
             <button class="flex items-center self-center px-2 py-1 mt-2 bg-white border rounded-md justify-self-start border-mono-400 hover:bg-mono-200" onclick="location.href='{{ options.prevUrl }}';" role="link" type="button">
                 <svg  <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" class="arrow-left w-4 h-4 mr-1.5">
@@ -85,6 +83,5 @@
             {# empty span hack is needed so grid layout works #}
             <span></span>
         {% endif %}
-        {# prettier-ignore-end #}
     </div>
 {% endmacro %}

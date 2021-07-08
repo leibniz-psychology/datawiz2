@@ -12,7 +12,6 @@
         Materials for the Study
     </h2>
 
-    <!-- prettier-ignore -->
     {{ include("Components/_infoBridge.html.twig",{value: experiment.id}) }}
     <form action="{{ oneup_uploader_endpoint("materials") }}"
         class="mx-6 border-2 border-dashed border-mono-500 dropzone"
@@ -25,7 +24,6 @@
         <ul class="mx-6 mt-6">
             {% for material in experiment.additionalMaterials %}
                 <li class="p-1 mt-2 bg-mono-100">
-                    <!-- prettier-ignore -->
                     <a href="{{ path('File-details', { 'uuid': material.id }) }}" class="underline">{{ material.atUploadNameable }}</a>
 
                     {% if material.fileDescription != "" %}
@@ -35,25 +33,21 @@
                     {% endif %}
 
                     <div class="mt-2 text-right" x-data="">
-                        <!-- prettier-ignore-start -->
                         <button class="ml-2 hover:text-red-500">
                             <span class="inline w-4 h-4 iconify-inline" data-icon="radix-icons:cross-2"></span>Remove
                         </button>
 
                         <button type="button" class="px-8 " @click="window.location.href='{{ path("File-details", { "uuid": material.id }) }}'">Edit</button>
-                        <!-- prettier-ignore-end -->
                     </div>
                 </li>
             {% endfor %}
         </ul>
     {% endif %}
 
-    {# prettier-ignore-start #}
     {{ wizNav({
         'prevUrl': path('Study-datasets', {uuid: experiment.id}),
         'prevTitle': 'Manage datasets',
         'nextUrl': path('Study-review', {uuid: experiment.id}),
         'nextTitle': 'Review input',
     }) }}
-    {# prettier-ignore-end #}
 {% endblock %}

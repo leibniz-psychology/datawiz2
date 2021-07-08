@@ -1,6 +1,5 @@
 {% if app.user %}
     <div class="flex items-center col-start-3 col-end-11">
-        {# prettier-ignore #}
         <a href="{{ path("Administration-dashboard") }}"
             class="flex px-1 pt-1 pb-1 text-base border-b-4 border-transparent hover:border-mono-600
             {{- app.request.pathinfo == path("Administration-dashboard") ? ' border-mono-600' -}}">
@@ -11,7 +10,6 @@
             Dashboard
         </a>
 
-        {# prettier-ignore #}
         <a href="{{ path("Study-overview") }}"
             class="px-1 pt-1 pb-1 ml-8 text-base border-b-4 hover:border-mono-600 border-transparent
             {{- isPartOfStudyDocumentation|default(false) ? ' border-mono-600' -}}">

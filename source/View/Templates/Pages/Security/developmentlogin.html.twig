@@ -9,12 +9,10 @@
         <main class="mt-12">
             <form method="post">
                 {% if error %}
-                    {# prettier-ignore #}
                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}
 
                 {% if app.user %}
-                    {# prettier-ignore #}
                     <div class="mb-3">
                         You are logged in as {{ app.user.username }}, <a href="{{ path('Study-overview') }}">Overview</a>
                     </div>
@@ -24,7 +22,6 @@
                     Please sign in
                 </h2>
                 <label for="inputEmail" class="block mt-4">Email address</label>
-                {# prettier-ignore #}
                 <input type="text" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="" required autofocus>
                 <label for="inputPassword" class="block">Password</label>
                 <input type="password"

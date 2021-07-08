@@ -12,7 +12,6 @@
     "postcss-loader": "^5.2.0",
     "postcss-svg": "^3.0.0",
     "prettier": "^2.2.1",
-    "prettier-plugin-twig-melody": "^0.4.6",
     "regenerator-runtime": "^0.13.7",
     "sass": "^1.34.1",
     "sass-loader": "^11.0.1",
@@ -57,22 +56,6 @@
       ],
       "comment-empty-line-before": null
     }
-  },
-  "prettier": {
-    "plugins": [
-      "./node_modules/prettier-plugin-twig-melody"
-    ],
-    "overrides": [
-      {
-        "files": [
-          "*.html.twig"
-        ],
-        "options": {
-          "tabWidth": 4
-        }
-      }
-    ],
-    "twigSingleQuote": false
   },
   "dependencies": {
     "alpine-magic-helpers": "^1.2.2",

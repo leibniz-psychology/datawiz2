@@ -14,7 +14,6 @@
     {{ form_start(form) }}
     {{ form_errors(form) }}
 
-    {# prettier-ignore-start #}
     <div>
         {{ form_label(form.shortName, null, {
             'label_attr': {'class': 'MetaData-Title'}
@@ -31,7 +30,6 @@
     {{ form_widget(form.submit, {'attr': {
         'class': 'mx-6 mt-4 mb-4',}
         }) }}
-    {# prettier-ignore-end #}
 
     {{ form_end(form) }}
 {% endblock %}

@@ -12,7 +12,6 @@
         DataSets for the study
     </div>
 
-    <!-- prettier-ignore -->
     {{ include("Components/_infoBridge.html.twig",{value: experiment.id}) }}
     <form action="{{ oneup_uploader_endpoint("datasets") }}"
         class="dropzone"
@@ -28,12 +27,10 @@
         {% endfor %}
     </ul>
 
-    {# prettier-ignore-start #}
     {{ wizNav({
         'prevUrl': path('Study-sample', {uuid: experiment.id}),
         'prevTitle': 'Sampling',
         'nextUrl': path('Study-materials', {uuid: experiment.id}),
         'nextTitle': 'Upload materials',
     }) }}
-    {# prettier-ignore-end #}
 {% endblock %}

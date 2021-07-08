@@ -99,12 +99,10 @@
         </section>
     </article>
 
-    {# prettier-ignore-start #}
     {{ wizNav({
         'prevUrl': path('Study-materials', {uuid: experiment.id}),
         'prevTitle': 'Upload materials',
         'nextUrl': '#',
         'nextTitle': 'Export study'
     }) }}
-    {# prettier-ignore-end #}
 {% endblock %}

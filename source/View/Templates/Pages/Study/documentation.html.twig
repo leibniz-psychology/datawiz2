@@ -20,10 +20,6 @@
     {{ form_start(form) }}
     {{ form_errors(form) }}
 
-    {# <pre>
-        {{ dump(experiment) }}
-    </pre> #}
-
     <fieldset>
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
@@ -88,14 +84,12 @@
         {{ form_widget(form.related_publications) }}
     </fieldset>
 
-    {# prettier-ignore-start #}
     {{ wizNav({
         'prevUrl': path('Study-introduction', {uuid: experiment.id}),
         'prevTitle': 'Getting started',
         'nextUrl': path('Study-theory', {uuid: experiment.id}),
         'nextTitle': 'Objectives & Hypotheses'
     }, form) }}
-    {# prettier-ignore-end #}
 
     {{ form_end(form) }}
 {% endblock %}

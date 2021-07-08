@@ -40,12 +40,10 @@
             {{ form_errors(form.setting) }}
             {%- for choice in form.setting %}
                 {{ form_widget(choice) }}
-                {# prettier-ignore-start #}
                 {{ form_label(choice, null, {
                     label_attr: {class: 'RadioButton-Label'},
                     'label_html': true,
                 }) }}
-                {# prettier-ignore-end #}
             {% endfor -%}
         </div>
     </fieldset>
@@ -76,11 +74,9 @@
             {{ form_errors(form.experimental_design) }}
             {%- for choice in form.experimental_design %}
                 {{ form_widget(choice) }}
-                {# prettier-ignore-start #}
                 {{ form_label(choice, null, {
                     label_attr: {class: 'RadioButton-Label'}
                 }) }}
-                {# prettier-ignore-end #}
             {% endfor -%}
         </div>
     </fieldset>
@@ -97,23 +93,19 @@
             {{ form_errors(form.control_operations) }}
             {%- for choice in form.control_operations %}
                 {{ form_widget(choice) }}
-                {# prettier-ignore-start #}
                 {{ form_label(choice, null, {
                     label_attr: {class: 'RadioButton-Label'}
                 }) }}
-                {# prettier-ignore-end #}
             {% endfor -%}
         </div>
     </fieldset>
 
-    {# prettier-ignore-start #}
     {{ wizNav({
         'prevUrl': path('Study-theory', {uuid: experiment.id}),
         'prevTitle': 'Objectives & Hypotheses',
         'nextUrl': path('Study-measure', {uuid: experiment.id}),
         'nextTitle': 'Data collection'
     }, form) }}
-    {# prettier-ignore-end #}
 
     {{ form_end(form) }}
 {% endblock %}

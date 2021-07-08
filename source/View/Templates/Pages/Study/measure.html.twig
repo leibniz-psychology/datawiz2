@@ -43,14 +43,12 @@
         {{ form_widget(form.apparatus) }}
     </fieldset>
 
-    {# prettier-ignore-start #}
     {{ wizNav({
         'prevUrl': path('Study-method', {uuid: experiment.id}),
         'prevTitle': 'Study method',
         'nextUrl': path('Study-sample', {uuid: experiment.id}),
         'nextTitle': 'Sampling'
     }, form) }}
-    {# prettier-ignore-end #}
 
     {{ form_end(form) }}
 {% endblock %}

@@ -7,6 +7,10 @@ namespace App\View\Controller;
 
 use App\Crud\Crudable;
 use App\Domain\Model\Codebook\DatasetMetaData;
+use App\Domain\Model\Codebook\MetaDataExchangeModell;
+use App\Domain\Model\Codebook\ValuePairModell;
+use App\Domain\Model\Codebook\VariableModell;
+use App\Domain\Model\Study\Experiment;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -28,8 +32,15 @@ class CodebookController extends DataWizController
             $entityAtChange = $this->crud->readForAll(DatasetMetaData::class)[0];
         }
 
+        $returnDummy = \GuzzleHttp\json_encode(MetaDataExchangeModell::createFrom(
+            [VariableModell::createFrom(
+                "1", "sex", "geschlecht", "",
+                [ ValuePairModell::createFrom("test","1") ],
+                [], ""
+            )]));
+
         return new JsonResponse(
-            $entityAtChange->getMetadata()
+            $returnDummy
         );
     }
 

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\Domain\Model\Codebook;
+namespace App\Codebook;
 
 
-class ValuePairModell implements \JsonSerializable
+class ValuePairModell extends AbstractJsonSerializeModell
 {
     private $name;
     private $value;
@@ -46,12 +46,14 @@ class ValuePairModell implements \JsonSerializable
         return new ValuePairModell();
     }
 
-    // public static function createFromJson(string $json) ?
-
-    public function jsonSerialize()
+    public function getJsonString(): string
     {
-        return get_object_vars($this);
+        // TODO: Implement getJsonString() method.
+        return 'unimplemented';
     }
 
-
+    public static function createFromJson(string $jsonString)
+    {
+        // TODO: Implement createFromJson() method.
+    }
 }

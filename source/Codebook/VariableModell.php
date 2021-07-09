@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\Domain\Model\Codebook;
+namespace App\Codebook;
 
 
-class VariableModell implements \JsonSerializable
+class VariableModell extends AbstractJsonSerializeModell
 {
     private $id;
     private $name;
@@ -141,9 +141,14 @@ class VariableModell implements \JsonSerializable
         return new VariableModell();
     }
 
-    public function jsonSerialize()
+    public function getJsonString(): string
     {
-        return get_object_vars($this);
+        // TODO: Implement getJsonString() method.
+        return 'unimplemented';
     }
 
+    public static function createFromJson(string $jsonString)
+    {
+        // TODO: Implement createFromJson() method.
+    }
 }

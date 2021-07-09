@@ -7,9 +7,9 @@ namespace App\View\Controller;
 
 use App\Crud\Crudable;
 use App\Domain\Model\Codebook\DatasetMetaData;
-use App\Domain\Model\Codebook\MetaDataExchangeModell;
-use App\Domain\Model\Codebook\ValuePairModell;
-use App\Domain\Model\Codebook\VariableModell;
+use App\Codebook\MetaDataExchangeModell;
+use App\Codebook\ValuePairModell;
+use App\Codebook\VariableModell;
 use App\Domain\Model\Study\Experiment;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

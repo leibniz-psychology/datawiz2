@@ -1,12 +1,11 @@
 <?php
 
 
-namespace App\Domain\Model\Codebook;
+namespace App\Codebook;
 
 
-use Symfony\Component\DependencyInjection\Variable;
 
-class MetaDataExchangeModell implements \JsonSerializable
+class MetaDataExchangeModell extends AbstractJsonSerializeModell
 {
     private $variables;
 
@@ -48,9 +47,14 @@ class MetaDataExchangeModell implements \JsonSerializable
         return new MetaDataExchangeModell();
     }
 
-
-    public function jsonSerialize()
+    public function getJsonString(): string
     {
-        return get_object_vars($this);
+        // TODO: Implement getJsonString() method.
+        return 'unimplemented';
+    }
+
+    public static function createFromJson(string $jsonString)
+    {
+        // TODO: Implement createFromJson() method.
     }
 }

@@ -16,17 +16,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class FileManagementController extends AbstractController
+class FileManagementController extends DataWizController
 {
-    private $crud;
-    private $urlGenerator;
     private $filesystem;
     private $questionnaire;
 
-    public function __construct(Crudable $crud, UrlGeneratorInterface $urlGenerator, Filesystem $filesystem, Questionnairable $questionnaire)
+    public function __construct(Crudable $crud, UrlGeneratorInterface $urlGenerator,
+                                Filesystem $filesystem, Questionnairable $questionnaire)
     {
-        $this->crud = $crud;
-        $this->urlGenerator = $urlGenerator;
+        parent::__construct($crud, $urlGenerator);
         $this->filesystem = $filesystem;
         $this->questionnaire = $questionnaire;
     }
@@ -44,7 +42,7 @@ class FileManagementController extends AbstractController
     public function deleteMaterialCall(string $uuid, Request $request)
     {
         /** @var AdditionalMaterial $entityForDeletion */
-        $entityForDeletion = $this->crud->readById(AdditionalMaterial::class, $uuid);
+        $entityForDeletion = $this->getEntityAtChange($uuid, AdditionalMaterial::class);
         $experimentId = $entityForDeletion->getExperiment()->getId();
         $success = $this->deleteUpload($entityForDeletion->getStorageName(), $entityForDeletion);
         if($success) {
@@ -57,7 +55,7 @@ class FileManagementController extends AbstractController
 
     public function materialDetailsAction(string $uuid, Request $request)
     {
-        $entityAtChange = $this->crud->readById(AdditionalMaterial::class, $uuid);
+        $entityAtChange = $this->getEntityAtChange($uuid, AdditionalMaterial::class);
         $experimentOfTheFile = $entityAtChange->getExperiment();
 
         $form = $this->questionnaire->askAndHandle(
@@ -74,5 +72,10 @@ class FileManagementController extends AbstractController
             'file' => $entityAtChange,
             'experiment' => $experimentOfTheFile
         ]);
+    }
+
+    protected function getEntityAtChange(string $uuid, string $className)
+    {
+        return $this->crud->readById($className, $uuid);
     }
 }

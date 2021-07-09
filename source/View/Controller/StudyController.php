@@ -5,6 +5,7 @@ namespace App\View\Controller;
 use App\Crud\Crudable;
 use App\Domain\Model\Study\Experiment;
 use App\Questionnaire\Questionnairable;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,21 +16,18 @@ class StudyController extends DataWizController
 {
     private $currentUser;
     private $questionnaire;
-    private $crud;
-    private $urlGenerator;
 
     public function __construct(Security $security, Questionnairable $questionnaire,
                                 Crudable $crud, UrlGeneratorInterface $urlGenerator)
     {
+        parent::__construct($crud, $urlGenerator);
         $this->currentUser = $security->getUser();
-        $this->crud = $crud;
         $this->questionnaire = $questionnaire;
-        $this->urlGenerator = $urlGenerator;
     }
 
-    public function overviewAction(Crudable $crud): Response
+    public function overviewAction(): Response
     {
-        $all_experiments = $crud->readForAll(Experiment::class);
+        $all_experiments = $this->crud->readForAll(Experiment::class);
 
         return $this->render('Pages/Study/overview.html.twig', [
             'all_experiments' => $all_experiments,
@@ -62,7 +60,7 @@ class StudyController extends DataWizController
 
     public function settingsAction(string $uuid, Request $request): Response
     {
-        $entityAtChange = $this->getExperimentForUuid($uuid);
+        $entityAtChange = $this->getEntityAtChange($uuid);
 
         $form = $this->questionnaire->askAndHandle(
             $entityAtChange->getSettingsMetaDataGroup(),
@@ -81,7 +79,7 @@ class StudyController extends DataWizController
 
     public function documentationAction(string $uuid, Request $request): Response
     {
-        $entityAtChange = $this->getExperimentForUuid($uuid);
+        $entityAtChange = $this->getEntityAtChange($uuid);
 
         $form = $this->questionnaire->askAndHandle(
             $entityAtChange->getBasicInformationMetaDataGroup(),
@@ -100,7 +98,7 @@ class StudyController extends DataWizController
 
     public function theoryAction(string $uuid, Request $request): Response
     {
-        $entityAtChange = $this->getExperimentForUuid($uuid);
+        $entityAtChange = $this->getEntityAtChange($uuid);
 
         $form = $this->questionnaire->askAndHandle(
             $entityAtChange->getTheoryMetaDataGroup(),
@@ -119,7 +117,7 @@ class StudyController extends DataWizController
 
     public function sampleAction(string $uuid, Request $request): Response
     {
-        $entityAtChange = $this->getExperimentForUuid($uuid);
+        $entityAtChange = $this->getEntityAtChange($uuid);
 
         $form = $this->questionnaire->askAndHandle(
             $entityAtChange->getSampleMetaDataGroup(),
@@ -138,7 +136,7 @@ class StudyController extends DataWizController
 
     public function measureAction(string $uuid, Request $request): Response
     {
-        $entityAtChange = $this->getExperimentForUuid($uuid);
+        $entityAtChange = $this->getEntityAtChange($uuid);
 
         $form = $this->questionnaire->askAndHandle(
             $entityAtChange->getMeasureMetaDataGroup(),
@@ -157,7 +155,7 @@ class StudyController extends DataWizController
 
     public function methodAction(string $uuid, Request $request): Response
     {
-        $entityAtChange = $this->getExperimentForUuid($uuid);
+        $entityAtChange = $this->getEntityAtChange($uuid);
 
         $form = $this->questionnaire->askAndHandle(
             $entityAtChange->getMethodMetaDataGroup(),
@@ -176,7 +174,7 @@ class StudyController extends DataWizController
 
     public function materialsAction(string $uuid): Response
     {
-        $entityAtChange = $this->getExperimentForUuid($uuid);
+        $entityAtChange = $this->getEntityAtChange($uuid);
 
         return $this->render('Pages/Study/materials.html.twig', [
             'experiment' => $entityAtChange,
@@ -185,7 +183,7 @@ class StudyController extends DataWizController
 
     public function datasetsAction(string $uuid): Response
     {
-        $entityAtChange = $this->getExperimentForUuid($uuid);
+        $entityAtChange = $this->getEntityAtChange($uuid);
 
         return $this->render('Pages/Study/datasets.html.twig', [
             'experiment' => $entityAtChange,
@@ -194,7 +192,7 @@ class StudyController extends DataWizController
 
     public function introductionAction(string $uuid, Request $request): Response
     {
-        $entityAtChange = $this->getExperimentForUuid($uuid);
+        $entityAtChange = $this->getEntityAtChange($uuid);
 
         return $this->render('Pages/Study/introduction.html.twig', [
             'experiment' => $entityAtChange,
@@ -203,15 +201,15 @@ class StudyController extends DataWizController
 
     public function reviewAction(string $uuid, Request $request): Response
     {
-        $entityAtChange = $this->getExperimentForUuid($uuid);
+        $entityAtChange = $this->getEntityAtChange($uuid);
 
         return $this->render('Pages/Study/review.html.twig', [
             'experiment' => $entityAtChange,
         ]);
     }
 
-    private function getExperimentForUuid(string $uuid): Experiment
+    protected function getEntityAtChange(string $uuid, string $className = Experiment::class)
     {
-        return $this->crud->readById(Experiment::class, $uuid);
+        return $this->crud->readById($className, $uuid);
     }
 }

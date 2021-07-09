@@ -2,10 +2,11 @@
 
 namespace App\View\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
 
-class AdministrationController extends DataWizController
+class AdministrationController extends AbstractController
 {
     public function profileAction(Security $security): Response
     {

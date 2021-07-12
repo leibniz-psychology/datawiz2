@@ -141,6 +141,12 @@ class VariableModell extends AbstractJsonSerializeModell
         return new VariableModell();
     }
 
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
+
+
     public function getJsonString(): string
     {
         // TODO: Implement getJsonString() method.

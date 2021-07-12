@@ -32,16 +32,14 @@ class CodebookController extends DataWizController
             $entityAtChange = $this->crud->readForAll(DatasetMetaData::class)[0];
         }
 
-        $returnDummy = \GuzzleHttp\json_encode(MetaDataExchangeModell::createFrom(
+        $returnDummy = MetaDataExchangeModell::createFrom(
             [VariableModell::createFrom(
                 "1", "sex", "geschlecht", "",
                 [ ValuePairModell::createFrom("test","1") ],
                 [], ""
-            )]));
+            )])->getJsonString();
 
-        return new JsonResponse(
-            $returnDummy
-        );
+        return JsonResponse::fromJsonString($returnDummy);
     }
 
     private function updateDatasetMetaData(DatasetMetaData $entityAtChange, array $metadataAsArray)
@@ -52,15 +50,23 @@ class CodebookController extends DataWizController
 
     private function convertCodebookFrom(Request $request)
     {
-        return \GuzzleHttp\json_decode($request->getContent(), true);
+        return json_decode($request->getContent(), true);
     }
 
     public function codebookIndexAction(string $uuid, Request $request)
     {
+        $returnDummy = MetaDataExchangeModell::createFrom(
+            [VariableModell::createFrom(
+                "1", "sex", "geschlecht", "",
+                [ ValuePairModell::createFrom("test","1") ],
+                [], ""
+            )])->getJsonString();
+
         $entityAtDisplay = $this->getEntityAtChange($uuid);
 
         return $this->render('Pages/Codebook/index.html.twig', [
         'codebook' => $entityAtDisplay,
+            'dummy' => $returnDummy
     ]);
 
     }

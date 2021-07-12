@@ -7,6 +7,8 @@
 <p>This is given to the page:</p>
 <p> {{ codebook.id }}</p>
 
+    <p>{{ dummy }}</p>
+
 <button x-data="{ url: '{{ absolute_url(path('Codebook-dataupdate', {uuid: codebook.id})) }}' }"
      @click="$fetch({
      url: url,

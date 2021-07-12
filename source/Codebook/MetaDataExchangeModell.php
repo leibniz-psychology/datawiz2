@@ -47,10 +47,15 @@ class MetaDataExchangeModell extends AbstractJsonSerializeModell
         return new MetaDataExchangeModell();
     }
 
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
+
     public function getJsonString(): string
     {
         // TODO: Implement getJsonString() method.
-        return 'unimplemented';
+        return json_encode($this);
     }
 
     public static function createFromJson(string $jsonString)

@@ -349,9 +349,6 @@
     "symfony/inflector": {
         "version": "v4.4.11"
     },
-    "symfony/intl": {
-        "version": "v4.4.19"
-    },
     "symfony/mime": {
         "version": "v4.4.10"
     },
@@ -378,6 +375,9 @@
     },
     "symfony/orm-pack": {
         "version": "v2.0.0"
+    },
+    "symfony/password-hasher": {
+        "version": "v5.3.3"
     },
     "symfony/phpunit-bridge": {
         "version": "4.3",

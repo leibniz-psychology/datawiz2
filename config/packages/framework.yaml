@@ -12,6 +12,9 @@ framework:
         cookie_secure: auto
         cookie_samesite: lax
 
+    uid:
+        default_uuid_version: 4
+
     #esi: true
     #fragments: true
     php_errors:

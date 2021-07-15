@@ -2,41 +2,86 @@
 
 namespace App\Security\Authentication;
 
+use App\Crud\Crudable;
+use App\Domain\Model\Administration\DataWizUser;
+use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 class OauthAuthenticator extends SocialAuthenticator
 {
+    use TargetPathTrait;
+
+    private $clientRegistry;
+    private $crud;
+    private $urlGenerator;
+
+    public function __construct(ClientRegistry $clientRegistry, Crudable $crud,
+                                UrlGeneratorInterface $urlGenerator)
+    {
+        $this->clientRegistry = $clientRegistry;
+        $this->crud = $crud;
+        $this->urlGenerator = $urlGenerator;
+    }
+
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        // TODO: Implement start() method.
+        return new RedirectResponse('/', Response::HTTP_TEMPORARY_REDIRECT);
     }
 
     public function supports(Request $request)
     {
-        // TODO: Implement supports() method.
+        return $request->attributes->get('_route') === 'Security-check';
     }
 
     public function getCredentials(Request $request)
     {
-        // TODO: Implement getCredentials() method.
+        return $this->fetchAccessToken(
+            $this->clientRegistry
+                ->getClient('keycloak')
+        );
     }
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        // TODO: Implement getUser() method.
+        /**
+         * @var $keycloakUser \League\OAuth2\Client\Provider\ResourceOwnerInterface
+         */
+        $keycloakUser = $this->clientRegistry
+            ->getClient('keycloak')
+            ->fetchUserFromToken($credentials);
+
+        $userAtSignIn = $userProvider->loadUserByIdentifier($keycloakUser->getId());
+        // TODO: This is logic for an custom UserProvider - should be part of the loadUserByIdentifier method
+        if (!$userAtSignIn && array_key_exists('email', $keycloakUser->toArray())) {
+            $dwUser = new DataWizUser($keycloakUser->toArray()['email']);
+            $dwUser->setKeycloakUuid($keycloakUser->getId());
+            $this->crud->update($userAtSignIn);
+        }
+
+        return $userAtSignIn;
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        // TODO: Implement onAuthenticationFailure() method.
+        $message = strtr($exception->getMessageKey(), $exception->getMessageData());
+        return new Response($message, Response::HTTP_FORBIDDEN);
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        // TODO: Implement onAuthenticationSuccess() method.
+        // Redirect to previous selected route
+        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+            return new RedirectResponse($targetPath);
+        }
+
+        return new RedirectResponse($this->urlGenerator->generate('Administration-dashboard'));
     }
 }

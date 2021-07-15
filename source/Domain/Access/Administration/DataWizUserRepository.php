@@ -20,11 +20,10 @@ class DataWizUserRepository extends ServiceEntityRepository implements UserLoade
         parent::__construct($registry, DataWizUser::class);
     }
 
-    public function loadUserByUsername(string $uuidOrEmail): ?DataWizUser
+    public function loadUserByIdentifier(string $uuidOrEmail): ?DataWizUser
     {
         $entityManager = $this->getEntityManager();
 
-        // TODO: Double check if the uid component supports this type of query
         return $entityManager->createQuery(
             'SELECT u
                 FROM App\Domain\Model\Administration\DataWizUser u
@@ -33,5 +32,10 @@ class DataWizUserRepository extends ServiceEntityRepository implements UserLoade
         )
             ->setParameter('query', $uuidOrEmail)
             ->getOneOrNullResult();
+    }
+
+    public function loadUserByUsername(string $username)
+    {
+        return $this->loadUserByIdentifier($username);
     }
 }

@@ -14,7 +14,7 @@ security:
             lazy: true
             guard:
                 authenticators:
-                    - App\Security\Authentication\DevelopmentAuthenticator
+                    - App\Security\Authentication\OauthAuthenticator
             logout:
                 path: Security-logout
 

@@ -12,7 +12,7 @@ class VariableModell extends AbstractJsonSerializeModell
     private $itemText;
     private $values;
     private $missings;
-    private $measures;
+    private $measure;
 
     private function __construct()
     {
@@ -60,14 +60,14 @@ class VariableModell extends AbstractJsonSerializeModell
         $this->itemText = $itemText;
     }
 
-    public function getMeasures()
+    public function getMeasure()
     {
-        return $this->measures;
+        return $this->measure;
     }
 
-    public function setMeasures($measures): void
+    public function setMeasure($measure): void
     {
-        $this->measures = $measures;
+        $this->measure = $measure;
     }
 
     public function getValues(): array
@@ -130,7 +130,7 @@ class VariableModell extends AbstractJsonSerializeModell
             $variableModell->addMissing($missing);
         }
 
-        $variableModell->setMeasures($measures);
+        $variableModell->setMeasure($measures);
 
         return $variableModell;
 

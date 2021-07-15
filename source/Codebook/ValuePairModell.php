@@ -7,7 +7,7 @@ namespace App\Codebook;
 class ValuePairModell extends AbstractJsonSerializeModell
 {
     private $name;
-    private $value;
+    private $label;
 
     private function __construct()
     {
@@ -23,21 +23,21 @@ class ValuePairModell extends AbstractJsonSerializeModell
         $this->name = $name;
     }
 
-    public function getValue()
+    public function getLabel()
     {
-        return $this->value;
+        return $this->label;
     }
 
-    public function setValue($value): void
+    public function setLabel($label): void
     {
-        $this->value = $value;
+        $this->label = $label;
     }
 
     public static function createFrom(string $name, string $value): ValuePairModell
     {
         $valuePair = new ValuePairModell();
         $valuePair->setName($name);
-        $valuePair->setValue($value);
+        $valuePair->setLabel($value);
         return $valuePair;
     }
 

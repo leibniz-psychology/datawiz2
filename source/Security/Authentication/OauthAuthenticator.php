@@ -58,11 +58,12 @@ class OauthAuthenticator extends SocialAuthenticator
             ->getClient('keycloak')
             ->fetchUserFromToken($credentials);
 
-        $userAtSignIn = $userProvider->loadUserByIdentifier($keycloakUser->getId());
+
+        $userAtSignIn = $this->crud->readById(DataWizUser::class, $keycloakUser->getId());
         // TODO: This is logic for an custom UserProvider - should be part of the loadUserByIdentifier method
-        if (!$userAtSignIn && array_key_exists('email', $keycloakUser->toArray())) {
-            $dwUser = new DataWizUser($keycloakUser->toArray()['email']);
-            $dwUser->setKeycloakUuid($keycloakUser->getId());
+        if ($userAtSignIn === null && array_key_exists('email', $keycloakUser->toArray())) {
+            $userAtSignIn = new DataWizUser($keycloakUser->toArray()['email']);
+            $userAtSignIn->setKeycloakUuid($keycloakUser->getId());
             $this->crud->update($userAtSignIn);
         }
 

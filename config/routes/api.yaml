@@ -5,3 +5,7 @@ File-deletion:
 Codebook-dataupdate:
   path: /codebook/{uuid}/data
   controller: App\View\Controller\CodebookController::dataUpdateCall
+
+Codebook-measures:
+  path: /codebook/{uuid}/measures
+  controller: App\View\Controller\CodebookController::measuresCall

@@ -5,6 +5,7 @@ namespace App\View\Controller;
 
 
 
+use App\Codebook\MeasureOptionsModell;
 use App\Crud\Crudable;
 use App\Domain\Model\Codebook\DatasetMetaData;
 use App\Codebook\MetaDataExchangeModell;
@@ -40,6 +41,19 @@ class CodebookController extends DataWizController
             )])->getJsonString();
 
         return JsonResponse::fromJsonString($returnDummy);
+    }
+
+    public function measuresCall(string $uuid) {
+        // search for the codebook entity
+        // get experiment id
+        // get measures from there
+        // create actual MeasureOptionsModell from the data
+
+        $dummyMeasures = MeasureOptionsModell::createFrom(
+            array("measurement A", "measurement B", "measurement C"))
+            ->getJsonString();
+
+        return JsonResponse::fromJsonString($dummyMeasures);
     }
 
     private function updateDatasetMetaData(DatasetMetaData $entityAtChange, array $metadataAsArray)

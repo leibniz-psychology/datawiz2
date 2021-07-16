@@ -26,7 +26,7 @@ class MetaDataExchangeModell extends AbstractJsonSerializeModell
 
     public function removeVariable($removedVariable)
     {
-        return array_diff($this->variables, [$removedVariable]);
+        $this->variables = array_diff($this->variables, [$removedVariable]);
     }
 
     public static function createFrom(array $variables ): MetaDataExchangeModell

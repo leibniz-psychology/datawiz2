@@ -13,6 +13,10 @@ class OwnershipFilter extends SQLFilter
             return '';
         }
 
+        if ($this->getParameter('currentUserId') === null) {
+            return '';
+        }
+        
         return sprintf('%s.owner_id = %s', $targetTableAlias, $this->getParameter('currentUserId'));
     }
 }

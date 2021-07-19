@@ -13,3 +13,4 @@ oneup_uploader:
                 filesystem: oneup_flysystem.assets_filesystem #see flysytem.yaml
             allowed_mimetypes:
                 text/plain: ['csv', 'tsv'] # how the type here is described is important (text/csv: [...] will not work)
+                application/octet-stream: ['sav']

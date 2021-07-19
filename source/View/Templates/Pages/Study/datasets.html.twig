@@ -11,11 +11,13 @@
     <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
         Datasets for the Study
     </h2>
-
     {{ include("Components/_infoBridge.html.twig",{value: experiment.id}) }}
     <form action="{{ oneup_uploader_endpoint("datasets") }}"
+          class="dropzone"
+          id="datawiz-dropzone"
+          style="width:200px; height:200px; border:4px dashed black"></form>
+    <form action="{{ oneup_uploader_endpoint("datasets") }}" data-experiment-id="{{ experiment.id }}"
           class="mx-6 border-2 border-dashed border-mono-500 dropzone" id="datawiz-dropzone"></form>
-
     <h3 class="mx-6 mt-6 text-xl">
         Already uploaded
     </h3>
@@ -25,6 +27,62 @@
                                                     class="underline">Edit codebook</a></li>
         {% endfor %}
     </ul>
+    <!-- Modal -->
+    <div class="hidden overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center"
+         id="modal-dataset-import">
+        <div class="relative w-auto my-6 mx-auto max-w-6xl">
+            <!--content-->
+            <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                <!--header-->
+                <div class="flex items-start justify-between p-5 border-b border-solid border-gray-200 rounded-t">
+                    <h3 class="text-3xl font-semibold">
+                        Import Datafile
+                    </h3>
+                </div>
+                <!--body-->
+                <div class="relative p-6 flex-auto">
+                    <form id="dataset-import-form" data-url="{{ path("File-import-dataset",{"fileId": " "}) }}">
+                        <input type="hidden" id="dataset-file-id" name="dataset-file-id" value="">
+                        <div>
+                            <label for="dataset-import-delimiter">Delimiter</label>
+                            <select id="dataset-import-delimiter" name="dataset-import-delimiter">
+                                <option value="," selected>,</option>
+                                <option value=";" selected>;</option>
+                                <option value="t" selected>Tabulator</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="dataset-import-escape">Escape</label>
+                            <select id="dataset-import-escape" name="dataset-import-escape">
+                                <option value="double" selected>"</option>
+                                <option value="single" selected>'</option>
+                                <option value="none" selected>none</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="dataset-import-header-rows">Amount of Header rows</label>
+                            <input type="number" id="dataset-import-header-rows" name="dataset-import-header-rows" min="0" value="0">
+                        </div>
+                    </form>
+                </div>
+                <!--footer-->
+                <div class="flex items-center justify-end p-6 border-t border-solid border-gray-200 rounded-b">
+                    <button
+                            class="text-purple-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            type="button">
+                        Discard Import
+                    </button>
+                    <button
+                            class="bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            type="button"
+                            id="dataset-import-submit">
+                        Save Import
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hidden opacity-25 fixed inset-0 z-40 bg-black" id="modal-dataset-import-backdrop"></div>
 
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,

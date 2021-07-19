@@ -6,12 +6,11 @@ namespace App\View\Controller;
 
 use App\Crud\Crudable;
 use App\Domain\Model\Filemanagement\AdditionalMaterial;
-use App\Questionnaire\Questionable;
+use App\Io\Formats\Csv\CsvImportable;
 use App\Questionnaire\Questionnairable;
 use League\Flysystem\Filesystem;
-use Oneup\UploaderBundle\Uploader\Storage\FlysystemStorage;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,13 +28,19 @@ class FileManagementController extends DataWizController
 {
     private $filesystem;
     private $questionnaire;
+    private CsvImportable $csvImportable;
 
-    public function __construct(Crudable $crud, UrlGeneratorInterface $urlGenerator,
-                                Filesystem $filesystem, Questionnairable $questionnaire)
-    {
+    public function __construct(
+        Crudable $crud,
+        UrlGeneratorInterface $urlGenerator,
+        Filesystem $filesystem,
+        Questionnairable $questionnaire,
+        CsvImportable $csvImportable
+    ) {
         parent::__construct($crud, $urlGenerator);
         $this->filesystem = $filesystem;
         $this->questionnaire = $questionnaire;
+        $this->csvImportable = $csvImportable;
     }
 
     private function deleteUpload($pathOfFile, $entityOfFile): bool
@@ -45,7 +50,7 @@ class FileManagementController extends DataWizController
         }
         $this->crud->delete($entityOfFile);
 
-        return ! $this->filesystem->has($pathOfFile);
+        return !$this->filesystem->has($pathOfFile);
     }
 
     /**
@@ -61,10 +66,9 @@ class FileManagementController extends DataWizController
         $entityForDeletion = $this->getEntityAtChange($uuid, AdditionalMaterial::class);
         $experimentId = $entityForDeletion->getExperiment()->getId();
         $success = $this->deleteUpload($entityForDeletion->getStorageName(), $entityForDeletion);
-        if($success) {
+        if ($success) {
             return new RedirectResponse($this->urlGenerator->generate('Study-materials', ['uuid' => $experimentId]));
-        }
-        else {
+        } else {
             return new Response('This was not planned', 500);
         }
     }
@@ -84,21 +88,44 @@ class FileManagementController extends DataWizController
         $form = $this->questionnaire->askAndHandle(
             $entityAtChange,
             'save',
-            $request);
+            $request
+        );
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {
             $this->crud->update($entityAtChange);
         }
 
-        return $this->render('Pages/FileManagement/materialDetails.html.twig', [
-            'form' => $form->createView(),
-            'file' => $entityAtChange,
-            'experiment' => $experimentOfTheFile
-        ]);
+        return $this->render(
+            'Pages/FileManagement/materialDetails.html.twig',
+            [
+                'form' => $form->createView(),
+                'file' => $entityAtChange,
+                'experiment' => $experimentOfTheFile,
+            ]
+        );
+    }
+
+    /**
+     * @Route("/import/dataset/{fileId}", name="import-dataset")
+     *
+     * @param string $fileId
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function importDatasetAction(string $fileId, Request $request): JsonResponse
+    {
+        $delimiter = $request->get('dataset-import-delimiter') ?? ",";
+        $escape = $request->get('dataset-import-escape') ?? "double";
+        $headerRows = filter_var($request->get('dataset-import-header-rows'), FILTER_VALIDATE_INT) ?? 0;
+        $data = $this->csvImportable->csvToArray($fileId, $delimiter, $escape, $headerRows);
+
+        return new JsonResponse($data, $data ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     protected function getEntityAtChange(string $uuid, string $className)
     {
         return $this->crud->readById($className, $uuid);
     }
+
+
 }

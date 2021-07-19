@@ -4,8 +4,8 @@
 namespace App\Io\Input;
 
 
+use App\Api\Spss\SpssApiClient;
 use App\Crud\Crudable;
-use App\Domain\Model\Filemanagement\AdditionalMaterial;
 use App\Domain\Model\Filemanagement\OriginalDataset;
 use App\Domain\Model\Study\Experiment;
 use Oneup\UploaderBundle\Event\PostUploadEvent;
@@ -14,30 +14,49 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class DatasetUploadSubscriber implements EventSubscriberInterface
 {
-    private $crud;
+    private Crudable $crud;
+    private SpssApiClient $spssApiClient;
 
-    public function __construct(Crudable $crud)
+    /**
+     * DatasetUploadSubscriber constructor.
+     * @param Crudable $crud
+     * @param SpssApiClient $spssApiClient
+     */
+    public function __construct(Crudable $crud, SpssApiClient $spssApiClient)
     {
         $this->crud = $crud;
+        $this->spssApiClient = $spssApiClient;
     }
+
 
     public static function getSubscribedEvents()
     {
         return [
-            UploadEvents::postUpload('datasets') => ['onDatasetUpload']
+            UploadEvents::postUpload('datasets') => ['onDatasetUpload'],
         ];
     }
 
-    public function onDatasetUpload(PostUploadEvent $event) {
+    public function onDatasetUpload(PostUploadEvent $event)
+    {
         $experiment = $this->crud->readById(Experiment::class, $event->getRequest()->get('studyId'));
+        if (null !== $event->getFile()) {
+            switch ($event->getFile()->getExtension()) {
+                case 'sav':
+                    $data = $this->spssApiClient->savToArray($event);
+                    break;
+                case 'csv':
+                case 'tsv':
 
-        $this->crud->update(
-            OriginalDataset::createDataset(
+                    break;
+            }
+            $dataset = OriginalDataset::createDataset(
                 $event->getRequest()->get('originalFilename'),
                 $event->getFile()->getBasename(),
                 $experiment
-            )
-        );
+            );
+            $this->crud->update($dataset);
+            $response = $event->getResponse();
+            $response->addToOffset(['fileId' => $event->getFile()->getBasename()], ["flySystem"]);
+        }
     }
-
 }

@@ -33,3 +33,8 @@ services:
     # use custom markdown parser that can be extended with markdown extra features
     twig.markdown.default:
         class: 'App\View\Templates\Twig\ErusevMarkdown'
+
+    app.api.spss:
+        class: App\Api\Spss\SpssApiClient
+        arguments:
+            - '@oneup_flysystem.assets_filesystem'

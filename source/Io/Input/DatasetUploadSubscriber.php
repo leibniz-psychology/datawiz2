@@ -8,7 +8,6 @@ use App\Api\Spss\SpssApiClient;
 use App\Crud\Crudable;
 use App\Domain\Model\Filemanagement\OriginalDataset;
 use App\Domain\Model\Study\Experiment;
-use League\Flysystem\FilesystemInterface;
 use Oneup\UploaderBundle\Event\PostUploadEvent;
 use Oneup\UploaderBundle\UploadEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -17,18 +16,16 @@ class DatasetUploadSubscriber implements EventSubscriberInterface
 {
     private Crudable $crud;
     private SpssApiClient $spssApiClient;
-    private FilesystemInterface $filesystem;
 
     /**
      * DatasetUploadSubscriber constructor.
      * @param Crudable $crud
      * @param SpssApiClient $spssApiClient
      */
-    public function __construct(FilesystemInterface $assetsFilesystem, Crudable $crud, SpssApiClient $spssApiClient)
+    public function __construct(Crudable $crud, SpssApiClient $spssApiClient)
     {
         $this->crud = $crud;
         $this->spssApiClient = $spssApiClient;
-        $this->filesystem = $assetsFilesystem;
     }
 
 

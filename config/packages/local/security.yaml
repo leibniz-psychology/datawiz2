@@ -16,7 +16,7 @@ security:
                 authenticators:
                     - App\Security\Authentication\DevelopmentAuthenticator
             logout:
-                path: Security-logout
+                path: Security-logout-dev
 
 
             # activate different ways to authenticate

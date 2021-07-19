@@ -14,8 +14,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+/**
+ * @Route("/filemanagement", name="File-")
+ *
+ * Class FileManagementController
+ * @package App\View\Controller
+ */
 class FileManagementController extends DataWizController
 {
     private $filesystem;
@@ -39,6 +46,13 @@ class FileManagementController extends DataWizController
         return ! $this->filesystem->has($pathOfFile);
     }
 
+    /**
+     * @Route("/delete/{uuid}/material", name="deletion")
+     *
+     * @param string $uuid
+     * @param Request $request
+     * @return RedirectResponse|Response
+     */
     public function deleteMaterialCall(string $uuid, Request $request)
     {
         /** @var AdditionalMaterial $entityForDeletion */
@@ -53,6 +67,13 @@ class FileManagementController extends DataWizController
         }
     }
 
+    /**
+     * @Route("/{uuid}/details", name="details")
+     *
+     * @param string $uuid
+     * @param Request $request
+     * @return Response
+     */
     public function materialDetailsAction(string $uuid, Request $request)
     {
         $entityAtChange = $this->getEntityAtChange($uuid, AdditionalMaterial::class);

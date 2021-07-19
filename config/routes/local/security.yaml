@@ -1,7 +1,0 @@
-Security-login:
-  path: /security/login
-  controller: App\View\Controller\DevelopmentLoginController::loginAction
-
-Security-logout:
-  path: /security/logout
-  controller: App\View\Controller\DevelopmentLoginController::logoutAction

@@ -26,7 +26,7 @@ class DevelopmentAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
 
-    private const LOGIN_ROUTE = 'Security-login';
+    private const LOGIN_ROUTE = 'Security-login-dev';
     private const HOMEPAGE_ROUTE = 'Administration-dashboard';
 
     private $urlGenerator;

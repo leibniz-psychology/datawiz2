@@ -8,12 +8,10 @@ use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Http\Event\LogoutEvent;
 
 class OauthLogoutSubscriber implements EventSubscriberInterface
 {
-
     private $clientRegistry;
     private $urlGenerator;
 
@@ -22,7 +20,6 @@ class OauthLogoutSubscriber implements EventSubscriberInterface
         $this->clientRegistry = $clientRegistry;
         $this->urlGenerator = $urlGenerator;
     }
-
 
     /**
      * This function returns an array containing the subscribed events and the function that is called when the subscribed event is called.
@@ -44,9 +41,15 @@ class OauthLogoutSubscriber implements EventSubscriberInterface
      */
     public function onLogoutEvent(LogoutEvent $event)
     {
-        $provider = $this->clientRegistry->getClient('keycloak');
-        $targetUrl = $this->urlGenerator->generate('Administration-dashboard', [], UrlGeneratorInterface::ABSOLUTE_URL);
-        $logout = $provider->getOAuth2Provider()->getLogoutUrl(["redirect_uri" => $targetUrl]);
-        $event->setResponse(new RedirectResponse($logout));
+        if ($this->isRunningOnOauth()) {
+            $provider = $this->clientRegistry->getClient('keycloak');
+            $targetUrl = $this->urlGenerator->generate('Administration-landing', [], UrlGeneratorInterface::ABSOLUTE_URL);
+            $logout = $provider->getOAuth2Provider()->getLogoutUrl(["redirect_uri" => $targetUrl]);
+            $event->setResponse(new RedirectResponse($logout));
+        }
+    }
+
+    private function isRunningOnOauth(): bool {
+        return !getenv('APP_ENV') === 'local';
     }
 }

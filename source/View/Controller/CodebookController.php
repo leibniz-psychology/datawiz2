@@ -12,6 +12,7 @@ use App\Codebook\MetaDataExchangeModell;
 use App\Codebook\ValuePairModell;
 use App\Codebook\VariableModell;
 use App\Domain\Model\Study\Experiment;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,6 +20,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @Route("/codebook", name="Codebook-")
+ * @IsGranted("ROLE_USER")
  *
  * Class CodebookController
  * @package App\View\Controller

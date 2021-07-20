@@ -6,6 +6,7 @@ use App\Crud\Crudable;
 use App\Domain\Model\Study\Experiment;
 use App\Questionnaire\Questionnairable;
 use Doctrine\Persistence\ObjectManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,7 @@ use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route("/studies", name="Study-")
+ * @IsGranted("ROLE_USER")
  *
  * Class StudyController
  * @package App\View\Controller

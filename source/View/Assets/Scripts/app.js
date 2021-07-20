@@ -34,6 +34,9 @@ Dropzone.options.datawizDropzone = {
         document.getElementById("infobridge").innerHTML.trim()
       );
     });
+    this.on("success", function (file, response) {
+        window.location.reload(true)
+    })
   },
 };
 

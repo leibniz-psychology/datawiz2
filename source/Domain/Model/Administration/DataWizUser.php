@@ -5,6 +5,7 @@ namespace App\Domain\Model\Administration;
 use App\Domain\Access\Administration\DataWizUserRepository;
 use App\Security\Authorization\Authorizable;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -80,6 +81,16 @@ class DataWizUser extends UuidEntity implements UserInterface
     public function setKeycloakUuid($keycloakUuid): void
     {
         $this->keycloakUuid = $keycloakUuid;
+    }
+
+    public function getUserIdentifier() {
+        // use dummy email as identifier in local
+        if(getenv('APP_ENV') === 'local') {
+            return $this->getEmail();
+        } else {
+            // use keycloak uuid for production
+            return $this->getKeycloakUuid();
+        }
     }
 
     public function getDatawizSettings()

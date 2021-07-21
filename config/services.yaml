@@ -38,3 +38,8 @@ services:
         class: App\Api\Spss\SpssApiClient
         arguments:
             - '@oneup_flysystem.assets_filesystem'
+
+    io.format.csv.import:
+        class: App\Io\Formats\Csv\CsvImportable
+        arguments:
+            - '@oneup_flysystem.assets_filesystem'

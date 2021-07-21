@@ -34,16 +34,16 @@ class SpssApiClient
     }
 
 
-    public function savToJson(PostUploadEvent $event)
+    public function savToArray(PostUploadEvent $event)
     {
-        $jsonResponse = null;
+        $result = null;
         if (null !== $event && null !== $event->getFile()) {
             try {
-                $file = $this->filesystem->read($event->getFile()->getBasename());
-                $jsonResponse = $this->clientService->POST(
+                $fileContent = $this->filesystem->read($event->getFile()->getBasename());
+                $result = $this->clientService->POST(
                     self::SPSS_API_URI,
                     [
-                        'file' => new DataPart($file, $event->getFile()->getBasename(), $event->getFile()->getMimeType()),
+                        'file' => new DataPart($fileContent, $event->getFile()->getBasename(), $event->getFile()->getMimeType()),
                     ]
                 );
             } catch (FileNotFoundException $e) {
@@ -51,7 +51,7 @@ class SpssApiClient
             }
         }
 
-        return $jsonResponse;
+        return $result;
     }
 
 

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="shortcut icon" href="./favicon.ico"/>
+    <link rel="icon" type="image/vnd.microsoft.icon" href="./favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="./favicon.ico"/>
+    <link rel="icon" href="./favicon.ico"/>
+    <title>
+        {% block title %}
+            Welcome!
+        {% endblock %}
+    </title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags("app") }}
+        {{ encore_entry_link_tags("codebook") }}
+    {% endblock %}
+    <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
+</head>
+<body>
+<div class="grid grid-cols-12 px-2 mx-auto bg-white gap-x-4 gap-y-1 SiteContainer"
+     x-data="{...codebook(), url: '{{ absolute_url(path('Codebook-dataupdate', {uuid: codebook.id})) }}', id: '{{ codebook.id }}', codebookDump: {{ dummy }}, measuresURL: '{{ absolute_url(path('Codebook-measures', {uuid: codebook.id})) }}' }">
+    {% block header %}
+        <header class="flex justify-between w-full border-2 h-14 border-mono-500 bg-mono-300 col-span-full">
+
+            <a class="flex items-center h-full px-2 pr-6 mr-1 font-serif text-3xl text-white bg-gradient-to-r from-indigo-500 to-yellow-500 hover:to-indigo-500 hover:from-yellow-500"
+               href="/">
+                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="1em" height="1em"
+                     style="-ms-transform:rotate(360deg);-webkit-transform:rotate(360deg)" viewbox="0 0 16 16"
+                     transform="rotate(360)">
+                    <path fill="currentColor"
+                          d="M0 5h3v1H0V5zM5 0h1v3H5V0zM6 11H5V8.5l1 1zM11 6H9.5l-1-1H11zM3.131 7.161l.707.707-2.97 2.97-.707-.707 2.97-2.97zM10.131.161l.707.707-2.97 2.97-.707-.707 2.97-2.97zM.836.199l3.465 3.465-.707.707L.129.906.836.199zM6.1 4.1L4 6.1l9.8 9.9 2.2-2.1-9.9-9.8zm0 1.4L8.5 8l-.6.6-2.5-2.5.7-.6z"/>
+                </svg>
+                <span class="ml-1 font-bold">
+                            Data
+                        </span>Wiz<span class="ml-1 text-sm italic place-self-end">next</span>
+            </a>
+
+            <div class="flex items-center justify-center p-1">
+                <label for="filter" class="mr-3">Search:</label>
+                <input x-data="{tooltip: 'Search by variable name, label or instruction'}" type="text" name=""
+                       id="filter" placeholder="Enter search term" x-model="$store.codebook.filterText"
+                       class="px-3 py-1 border rounded-full border-mono-500"
+                       @keyup.escape="$store.codebook.filterText = ''" x-tooltip.on.focus="tooltip">
+                <button aria-label="Clear search" class="top-0 bottom-0 right-0 w-6 my-1 mr-1"
+                        @click="$store.codebook.filterText = ''" :class="$store.codebook.filterText !== '' || 'hidden'">
+                    <svg class="inline-flex mx-auto text-gray-800 fill-current" focusable="false"
+                         xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" width="12" height="12">
+                        <title>Clear</title>
+                        <path d="M8.114 10L.944 2.83 0 1.885 1.886 0l.943.943L10 8.113l7.17-7.17.944-.943L20 1.886l-.943.943-7.17 7.17 7.17 7.17.943.944L18.114 20l-.43-.943-7.17-7.17-7.17 7.17-.944.943L0 18.114l.943-.943L8.113 10z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="flex items-center justify-center r-3">
+                {{ codebook.id }}
+                <button class="ml-2" @click="save()">
+                    Save changes
+                </button>
+                {# <button class="ml-2" @click="$store.codebookSettings.showHelp.sideBar = !$store.codebookSettings.showHelp.sideBar" x-text="$store.codebookSettings.showHelp.sideBar ? 'Hide Help' : 'Show Help'"> #}
+                <button class="ml-2"
+                        @click="$store.codebookSettings.showHelp.sideBar = !$store.codebookSettings.showHelp.sideBar">
+                    Help
+                </button>
+            </div>
+            {# {{ include("Components/_navigationHeader.html.twig") }}
+                    {{ include("Components/_userProfileReference.html.twig") }} #}
+        </header>
+    {% endblock %}
+    {% block body %}{% endblock %}
+    {# {{ include("Components/_footer.html.twig") }} #}
+</div>
+{% block javascripts %}
+    {{ encore_entry_script_tags("codebook") }}
+{% endblock %}
+
+</body>
+</html>

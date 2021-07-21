@@ -3,7 +3,6 @@ index:
     controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
     defaults:
       route: Administration-landing
-      permanent: true
 
 root:
   path: /
@@ -12,12 +11,9 @@ root:
     route: index
     permanent: true
 
-# Add /pages/ before all routes that render a template
-pages:
-  resource: './routes/pages.yaml'
-  prefix: pages
-
-# Add /api/ before all routes that are purely for api purpose
-api:
-  resource: './routes/api.yaml'
-  prefix: api
+Study-root:
+  path: /studies
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+  defaults:
+    route: Study-overview
+    permanent: true

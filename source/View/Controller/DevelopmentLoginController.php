@@ -6,8 +6,18 @@ use App\Crud\Crudable;
 use App\Domain\Model\Administration\DataWizUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+/**
+ * @Route("/security",
+ *     name="Security-",
+ *     condition="'%kernel.environment%' in ['local', 'test']")
+ *
+ * Class DevelopmentLoginController
+ * @package App\View\Controller
+ */
 class DevelopmentLoginController extends AbstractController
 {
     private $authenticationUtils;
@@ -19,6 +29,9 @@ class DevelopmentLoginController extends AbstractController
         $this->crud = $crud;
     }
 
+    /**
+     * @Route("/login", name="login-dev")
+     */
     public function loginAction(): Response
     {
         // get the login error if there is one
@@ -36,6 +49,9 @@ class DevelopmentLoginController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/logout", name="logout-dev")
+     */
     public function logoutAction(): Response
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');

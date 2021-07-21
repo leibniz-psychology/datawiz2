@@ -59,7 +59,7 @@ status: ## Check if a local development server is running
 	@symfony server:status
 
 logs: ## Check the symfony cli logs
-	@symfony server:log
+	@symfony server:log --file=./var/log/$(ENV).log
 
 # This should dynamically run tasks
 clean: ## Remove all temporary files

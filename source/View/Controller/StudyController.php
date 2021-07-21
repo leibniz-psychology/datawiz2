@@ -9,9 +9,16 @@ use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Security;
 
+/**
+ * @Route("/studies", name="Study-")
+ *
+ * Class StudyController
+ * @package App\View\Controller
+ */
 class StudyController extends DataWizController
 {
     private $currentUser;
@@ -25,6 +32,11 @@ class StudyController extends DataWizController
         $this->questionnaire = $questionnaire;
     }
 
+    /**
+     * @Route("/overview", name="overview")
+     *
+     * @return Response
+     */
     public function overviewAction(): Response
     {
         $all_experiments = $this->crud->readForAll(Experiment::class);
@@ -34,6 +46,14 @@ class StudyController extends DataWizController
         ]);
     }
 
+    /**
+     * @Route("/new", name="new")
+     *
+     * @param Questionnairable $questionnaire
+     * @param Crudable $crud
+     * @param Request $request
+     * @return Response
+     */
     public function newAction(Questionnairable $questionnaire, Crudable $crud, Request $request): Response
     {
         $newExperiment = Experiment::createNewExperiment($this->currentUser);
@@ -58,6 +78,13 @@ class StudyController extends DataWizController
         ]);
     }
 
+    /**
+     * @Route("/{uuid}/settings", name="settings")
+     *
+     * @param string $uuid
+     * @param Request $request
+     * @return Response
+     */
     public function settingsAction(string $uuid, Request $request): Response
     {
         $entityAtChange = $this->getEntityAtChange($uuid);
@@ -77,6 +104,13 @@ class StudyController extends DataWizController
         ]);
     }
 
+    /**
+     * @Route("/{uuid}/documentation", name="documentation")
+     *
+     * @param string $uuid
+     * @param Request $request
+     * @return Response
+     */
     public function documentationAction(string $uuid, Request $request): Response
     {
         $entityAtChange = $this->getEntityAtChange($uuid);
@@ -96,6 +130,13 @@ class StudyController extends DataWizController
         ]);
     }
 
+    /**
+     * @Route("/{uuid}/theory", name="theory")
+     *
+     * @param string $uuid
+     * @param Request $request
+     * @return Response
+     */
     public function theoryAction(string $uuid, Request $request): Response
     {
         $entityAtChange = $this->getEntityAtChange($uuid);
@@ -115,6 +156,13 @@ class StudyController extends DataWizController
         ]);
     }
 
+    /**
+     * @Route("/{uuid}/sample", name="sample")
+     *
+     * @param string $uuid
+     * @param Request $request
+     * @return Response
+     */
     public function sampleAction(string $uuid, Request $request): Response
     {
         $entityAtChange = $this->getEntityAtChange($uuid);
@@ -134,6 +182,13 @@ class StudyController extends DataWizController
         ]);
     }
 
+    /**
+     * @Route("/{uuid}/measure", name="measure")
+     *
+     * @param string $uuid
+     * @param Request $request
+     * @return Response
+     */
     public function measureAction(string $uuid, Request $request): Response
     {
         $entityAtChange = $this->getEntityAtChange($uuid);
@@ -153,6 +208,13 @@ class StudyController extends DataWizController
         ]);
     }
 
+    /**
+     * @Route("/{uuid}/method", name="method")
+     *
+     * @param string $uuid
+     * @param Request $request
+     * @return Response
+     */
     public function methodAction(string $uuid, Request $request): Response
     {
         $entityAtChange = $this->getEntityAtChange($uuid);
@@ -172,6 +234,12 @@ class StudyController extends DataWizController
         ]);
     }
 
+    /**
+     * @Route("/{uuid}/materials", name="materials")
+     *
+     * @param string $uuid
+     * @return Response
+     */
     public function materialsAction(string $uuid): Response
     {
         $entityAtChange = $this->getEntityAtChange($uuid);
@@ -181,6 +249,12 @@ class StudyController extends DataWizController
         ]);
     }
 
+    /**
+     * @Route("/{uuid}/datasets", name="datasets")
+     *
+     * @param string $uuid
+     * @return Response
+     */
     public function datasetsAction(string $uuid): Response
     {
         $entityAtChange = $this->getEntityAtChange($uuid);
@@ -190,6 +264,13 @@ class StudyController extends DataWizController
         ]);
     }
 
+    /**
+     * @Route("/{uuid}/introduction", name="introduction")
+     *
+     * @param string $uuid
+     * @param Request $request
+     * @return Response
+     */
     public function introductionAction(string $uuid, Request $request): Response
     {
         $entityAtChange = $this->getEntityAtChange($uuid);
@@ -199,6 +280,13 @@ class StudyController extends DataWizController
         ]);
     }
 
+    /**
+     * @Route("/{uuid}/review", name="review")
+     *
+     * @param string $uuid
+     * @param Request $request
+     * @return Response
+     */
     public function reviewAction(string $uuid, Request $request): Response
     {
         $entityAtChange = $this->getEntityAtChange($uuid);

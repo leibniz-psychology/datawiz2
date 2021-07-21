@@ -1,11 +1,1 @@
-Security-login:
-  path: /security/login
-  controller: App\View\Controller\OauthController::loginAction
 
-Security-logout:
-  path: /security/logout
-  controller: App\View\Controller\OauthController::logoutAction
-
-Security-check:
-  path: /security/login/check
-  controller: App\View\Controller\OauthController::loginCheckAction

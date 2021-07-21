@@ -84,13 +84,11 @@ class DataWizUser extends UuidEntity implements UserInterface
     }
 
     public function getUserIdentifier() {
-        // use dummy email as identifier in local
-        if(getenv('APP_ENV') === 'local') {
-            return $this->getEmail();
-        } else {
-            // use keycloak uuid for production
+        if (!getenv('APP_ENV') === 'local') {
             return $this->getKeycloakUuid();
         }
+
+        return $this->getEmail();
     }
 
     public function getDatawizSettings()

@@ -1,0 +1,7 @@
+.CodeBookHead-Cell {
+  @apply px-1 py-3 font-medium text-left text-gray-700 border-b bg-mono-200 border-mono-500;
+
+  .tippy-content {
+    @apply font-normal;
+  }
+}

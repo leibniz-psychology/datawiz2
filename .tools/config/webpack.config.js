@@ -25,6 +25,7 @@ Encore
    * and one CSS file (e.g. app.Style) if your JavaScript imports CSS.
    */
   .addEntry("app", "./source/View/Assets/Scripts/app.js")
+  .addEntry("codebook", "./source/View/Assets/Scripts/app-codebook.js")
   //.addEntry('page1', './source/View/Assets/Scripts/page1.Scripts')
   //.addEntry('page2', './source/View/Assets/Scripts/page2.Scripts')
 

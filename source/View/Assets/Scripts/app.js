@@ -17,7 +17,6 @@ import "dropzone/dist/dropzone.css";
 import a2lix_lib from "@a2lix/symfony-collection/src/a2lix_sf_collection";
 import dropzone from "dropzone";
 
-import "alpine-magic-helpers/dist/fetch";
 import "./alpine";
 import "./detectStickyElements";
 
@@ -35,8 +34,8 @@ Dropzone.options.datawizDropzone = {
       );
     });
     this.on("success", function (file, response) {
-        window.location.reload(true)
-    })
+      window.location.reload(true);
+    });
   },
 };
 

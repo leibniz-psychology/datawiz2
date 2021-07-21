@@ -1,4 +1,10 @@
-import Spruce from "@ryangjchandler/spruce";
-import "alpinejs";
+import Alpine from "alpinejs";
+import codebook from "./codebook";
 
-Spruce.store("app", { helpSelected: "" });
+window.Alpine = Alpine;
+
+Alpine.data("codebook", codebook);
+
+Alpine.store("app", { helpSelected: "" });
+
+Alpine.start();

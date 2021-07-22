@@ -10,7 +10,8 @@ button {
   @apply px-2 py-0.5 bg-white border border-gray-500 rounded hover:bg-mono-100 shadow;
 }
 
-input,
+input[type="password"],
+input[type="text"],
 textarea {
   @apply w-4/5 p-2 bg-white border placeholder-mono-500 border-mono-500;
 }

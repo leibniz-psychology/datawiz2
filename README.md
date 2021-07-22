@@ -26,7 +26,7 @@ you are still welcome to contribute and maintain those changes.
 
 ## Development requirements
 
-To start developing you will need a local installation of `php`, `composer`, `nodejs (and npm)`, `make`, `core utils`, `awk`, and the `symfony cli`.
+To start developing you will need a local installation of `php`, `composer`, `nodejs (and yarn)`, `make`, `core utils`, `awk`, and the `symfony cli`.
 Please consider our recommended versions, 
 if you encouter any problems running a development instance of DataWiz.
 With those in your `$PATH` you can run the following commands to see a running application:

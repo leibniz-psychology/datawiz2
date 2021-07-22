@@ -8,7 +8,7 @@ root:
   path: /
   controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
   defaults:
-    route: index
+    route: Administration-landing
     permanent: true
 
 Study-root:
@@ -16,4 +16,12 @@ Study-root:
   controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
   defaults:
     route: Study-overview
+    permanent: true
+
+# This shouldn't be necessary, but it solves a bug
+index-bug:
+  path: /pages/administration/landing
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+  defaults:
+    route: Administration-landing
     permanent: true

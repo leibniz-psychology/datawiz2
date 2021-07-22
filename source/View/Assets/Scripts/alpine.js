@@ -1,4 +1,7 @@
-import Spruce from "@ryangjchandler/spruce";
-import "alpinejs";
+import Alpine from "alpinejs";
 
-Spruce.store("app", { helpSelected: "" });
+window.Alpine = Alpine;
+
+Alpine.store("app", { helpSelected: "" });
+
+Alpine.start();

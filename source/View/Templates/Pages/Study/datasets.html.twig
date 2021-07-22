@@ -8,22 +8,21 @@
 {% endblock %}
 
 {% block content %}
-    <div class="inline-block p-4 m-8 text-2xl border-2 border-gray-800 rounded-lg shadow-lg">
-        DataSets for the study
-    </div>
+    <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
+        Datasets for the Study
+    </h2>
 
     {{ include("Components/_infoBridge.html.twig",{value: experiment.id}) }}
     <form action="{{ oneup_uploader_endpoint("datasets") }}"
-          class="dropzone"
-          id="datawiz-dropzone"
-          style="width:200px; height:200px; border:4px dashed black"></form>
+          class="mx-6 border-2 border-dashed border-mono-500 dropzone" id="datawiz-dropzone"></form>
 
-    <h3>
+    <h3 class="mx-6 mt-6 text-xl">
         Already uploaded
     </h3>
-    <ul>
+    <ul class="mx-6 mt-6">
         {% for dataset in experiment.originalDatasets %}
-            <li>{{ dataset.atUploadNameable }} - <a href="{{ path('Codebook-index', {uuid: dataset.id}) }}">create codebook</a></li>
+            <li>{{ dataset.atUploadNameable }} - <a href="{{ path('Codebook-index', {uuid: dataset.id}) }}"
+                                                    class="underline">Edit codebook</a></li>
         {% endfor %}
     </ul>
     <!-- Modal -->

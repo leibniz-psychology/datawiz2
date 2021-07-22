@@ -6,9 +6,12 @@ namespace App\View\Controller;
 
 use App\Crud\Crudable;
 use App\Domain\Model\Filemanagement\AdditionalMaterial;
-use App\Io\Formats\Csv\CsvImportable;
+use App\Questionnaire\Questionable;
 use App\Questionnaire\Questionnairable;
 use League\Flysystem\Filesystem;
+use Oneup\UploaderBundle\Uploader\Storage\FlysystemStorage;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +21,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @Route("/filemanagement", name="File-")
+ * @IsGranted("ROLE_USER")
  *
  * Class FileManagementController
  * @package App\View\Controller

@@ -1,7 +1,7 @@
 {% macro helpButton(formIdentifier) %}
-    <button class="MetaData-HelpButton"
-        type="button"
-        x-on:click="$store.app.helpSelected = $store.app.helpSelected === '{{ formIdentifier }}' ? null : '{{ formIdentifier }}'" x-data="{}">
+    <button class="MetaData-HelpButton" type="button"
+            x-on:click="$store.app.helpSelected = $store.app.helpSelected === '{{ formIdentifier }}' ? null : '{{ formIdentifier }}'"
+            x-data="{}">
         ?
     </button>
 {% endmacro %}
@@ -14,21 +14,35 @@
 
 {% macro formHelp(sectionIdentifier, formIdentifier) %}
     <div class="relative Help-MetaData" x-data="{}">
-        <button class="absolute px-1 py-1 border-none rounded-full shadow-none top-2 right-2 bg-mono-100 hover:bg-mono-300" x-on:click="$store.app.helpSelected = null" x-show="$store.app.helpSelected === '{{ formIdentifier }}' ">
+        <button class="absolute px-1 py-1 border-none rounded-full shadow-none top-2 right-2 bg-mono-100 hover:bg-mono-300"
+                x-on:click="$store.app.helpSelected = null"
+                x-show="$store.app.helpSelected === '{{ formIdentifier }}' ">
             <span class="w-6 h-6 iconify" data-icon="mdi:close" data-inline="false"></span>
         </button>
-        <div class="Help-Text Help-Text_metaData"
-            x-show="$store.app.helpSelected === '{{ formIdentifier }}' ">
+        <div class="Help-Text Help-Text_metaData" x-show="$store.app.helpSelected === '{{ formIdentifier }}' ">
             {{ source("Help/#{sectionIdentifier}/#{formIdentifier}.md")|markdown_to_html }}
         </div>
     </div>
 {% endmacro %}
 
-{# 
-    Render wizard navigation bar with links that navigate to the previous/next form
-    group. Provide the form variable if you want a save button rendered that submits
-    the form.
- #}
+{% macro codebookHelp(helpID, title) %}
+    <div class="markdown">
+        <h3>
+            <a role="button" tabindex="0"
+               @click="$store.codebookSettings.showHelp.{{ helpID }} = !$store.codebookSettings.showHelp.{{ helpID }}"
+               class="underline">{{ title }}</a>
+        </h3>
+        <div x-show="$store.codebookSettings.showHelp.{{ helpID }}">
+            {{ source("Help/codebook/#{helpID}.md")|markdown_to_html }}
+        </div>
+    </div>
+{% endmacro %}
+
+{#
+Render wizard navigation bar with links that navigate to the previous/next form
+group. Provide the form variable if you want a save button rendered that submits
+the form.
+#}
 {% macro wizNav(options = {}, form) %}
     {% set defaults = {
         'prevUrl': '',
@@ -37,25 +51,21 @@
         'nextTitle': 'Next'
     } %}
     {% set options = defaults | merge(options) %}
-    
+
     <div class="WizNavBar">
-        {# {% if options.prevUrl != '' %}
-            <button class="flex items-center self-center px-2 py-1 mt-2 bg-white border rounded-md justify-self-start border-mono-400 hover:bg-mono-200" onclick="location.href='{{ options.prevUrl }}';" role="link" type="button">
-                <svg  <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" class="arrow-left w-4 h-4 mr-1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                </svg>{{ options.prevTitle }}
-            </button> #}
         {% if options.prevUrl != '' %}
-            <a class="flex items-center self-center px-2 py-1 mt-2 underline justify-self-start" href="{{ options.prevUrl }}">
-                <svg  <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" class="arrow-left w-4 h-4 mr-1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            <a class="flex items-center self-center px-2 py-1 mt-2 underline justify-self-start"
+               href="{{ options.prevUrl }}">
+                <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" class="arrow-left w-4 h-4 mr-1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                 </svg>{{ options.prevTitle }}
             </a>
         {% else %}
             {# empty span hack is needed so grid layout works #}
             <span></span>
         {% endif %}
-        
+
         {% if form %}
             {{ form_widget(form.submit, {
                 'label': 'Save',
@@ -64,7 +74,7 @@
                 }
             }) }}
         {% endif %}
-        
+
         {# {% if options.nextUrl != '' %}
             <button class="flex items-center self-center px-2 py-1 mt-2 bg-white border rounded-md justify-self-end border-mono-400 hover:bg-mono-200" onclick="location.href='{{ options.nextUrl }}';" role="link" type="button">
                 {{ options.nextTitle }}
@@ -73,15 +83,55 @@
                 </svg>
             </button> #}
         {% if options.nextUrl != '' %}
-            <a class="flex items-center self-center px-2 py-1 mt-2 underline justify-self-end " href="{{ options.nextUrl }}">
+            <a class="flex items-center self-center px-2 py-1 mt-2 underline justify-self-end "
+               href="{{ options.nextUrl }}">
                 {{ options.nextTitle }}
                 <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" class="arrow-right w-4 h-4 ml-1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                 </svg>
             </a>
         {% else %}
             {# empty span hack is needed so grid layout works #}
             <span></span>
         {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro inputLabels(labels, addText = 'Add another +', placeHolder = 'Item Name') %}
+    <div class="mt-1 mb-2">
+        <template x-for="(item, index) in {{ labels }}" :key="index">
+            <div class="mt-0.5" x-ref="inputContainer">
+                <div class="inline-flex items-center">
+                    <input class="w-[50%] p-2 bg-white border placeholder-mono-500 border-mono-500" rows="1"
+                           autocomplete="off" x-on:keydown.enter.prevent="if (index === {{ labels }}.length - 1) {
+                            {{ labels }}.push({name: '', label: ''});
+                            }" x-model="item.name">
+                    <span class="mx-1">=</span>
+                    <input class="w-full p-2 bg-white border placeholder-mono-500 border-mono-500" rows="1"
+                           autocomplete="off" placeholder="{{ placeHolder }}"
+                           x-on:keydown.enter.prevent="if (index === {{ labels }}.length - 1) {
+                            {{ labels }}.push({name: '', label: ''});
+                        }" x-model="item.label">
+                    <button class="h-full ml-1 hover:text-mono-500"
+                            @click="if ({{ labels }}.length > 1) {{ labels }}.splice(index, 1); else if ({{ labels }}.length === 1) { {{ labels }}[index] = {name: '', label: ''} };">
+                        {# <span class="iconify" data-icon="clarity:remove-solid" data-inline="false"></span> #}
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
+                             xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em"
+                             height="1em"
+                             style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);"
+                             preserveaspectratio="xMidYMid meet" viewbox="0 0 36 36">
+                            <title>Remove</title>
+                            <path class="clr-i-solid clr-i-solid-path-1"
+                                  d="M18 2a16 16 0 1 0 16 16A16 16 0 0 0 18 2zm8 22.1a1.4 1.4 0 0 1-2 2l-6-6l-6 6.02a1.4 1.4 0 1 1-2-2l6-6.04l-6.17-6.22a1.4 1.4 0 1 1 2-2L18 16.1l6.17-6.17a1.4 1.4 0 1 1 2 2L20 18.08z"
+                                  fill="currentColor"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </template>
+        <div class="flex mt-1">
+            <button class="underline" @click="{{ labels }}.push({name: '', label: ''});">{{ addText }}</button>
+        </div>
     </div>
 {% endmacro %}

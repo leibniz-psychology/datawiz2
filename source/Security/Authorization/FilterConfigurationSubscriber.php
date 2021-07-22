@@ -35,8 +35,10 @@ class FilterConfigurationSubscriber implements EventSubscriberInterface
             ->getFilters()
             ->enable('ownership');
 
-        if (null != $currentUser) {
+        if (null !== $currentUser) {
             $filter->setParameter('currentUserId', $currentUser->getId(), 'uuid');
+        } else {
+            $filter->setParameter('currentUserId', null, 'uuid');
         }
     }
 }

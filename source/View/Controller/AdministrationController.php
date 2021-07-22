@@ -3,6 +3,7 @@
 namespace App\View\Controller;
 
 use Psr\Log\LoggerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,6 +19,7 @@ class AdministrationController extends AbstractController
 {
     /**
      * @Route("/profile", name="profile")
+     * @IsGranted("ROLE_USER")
      *
      * @param Security $security
      * @return Response
@@ -41,6 +43,7 @@ class AdministrationController extends AbstractController
 
     /**
      * @Route("/dashboard", name="dashboard")
+     * @IsGranted("ROLE_USER")
      *
      * @return Response
      */

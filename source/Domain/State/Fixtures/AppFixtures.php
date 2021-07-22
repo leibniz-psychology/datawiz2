@@ -5,6 +5,8 @@ namespace App\Domain\State\Fixtures;
 use App\Domain\Model\Administration\DataWizUser;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Uid\UuidV4;
 
 class AppFixtures extends Fixture
 {
@@ -13,14 +15,9 @@ class AppFixtures extends Fixture
     public function __construct()
     {
         $this->testUserNames = [
-            'mc@leibniz-psychology.org',
-            'fg@leibniz-psychology.org',
-            'user1@datawiz.org',
-            'user2@datawiz.org',
-            'user3@datawiz.org',
-            'user4@datawiz.org',
-            'user5@datawiz.org',
-            'user6@datawiz.org',
+            'user@leibniz-psychology.org',
+            'foo@leibniz-psychology.org',
+            'bar@leibniz-psychology.org',
         ];
     }
 
@@ -33,7 +30,9 @@ class AppFixtures extends Fixture
     public function createTestUser(ObjectManager $manager)
     {
         foreach ($this->testUserNames as $userName) {
-            $manager->persist(new DataWizUser($userName));
+            $user = new DataWizUser($userName);
+            $user->setKeycloakUuid(UuidV4::v4());
+            $manager->persist($user);
         }
     }
 }

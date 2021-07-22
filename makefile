@@ -4,7 +4,6 @@
 ENV ?= local
 # Paths - should not be changed without reconfiguration
 # Code paths - used to detect changes or to place generated files
-NPMROOT = $(shell npm bin -g)
 TOOLS_DIR = ./.tools
 TOOL_CONFIG_DIR = $(TOOLS_DIR)/config
 SOURCE_DIR = ./source
@@ -129,15 +128,10 @@ var/data.db: $(ENTITY_DIR)/*/*.php $(DEFINITION_DIR)/*/*.php $(FIXTURES_DIR)/*.p
 	@composer install -q
 	@echo "Done"
 
-$(NPMROOT)/pnpm:
-	@echo "Pnpm not found. Installing now... \c"
-	@npm install -g pnpm >/dev/null 2>&1
-	@echo "Done"
-
 # Run npm install without noise
-./node_modules: $(NPMROOT)/pnpm package.json
-	@echo "Running pnpm... \c"
-	@pnpm install --frozen-lockfile > /dev/null 2>&1
+./node_modules: package.json
+	@echo "Running yarn... \c"
+	@yarn install --frozen-lockfile > /dev/null 2>&1
 	@echo "Done"
 
 # Link from .tools to .git to enable hooks

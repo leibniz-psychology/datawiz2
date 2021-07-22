@@ -17,7 +17,6 @@ import "dropzone/dist/dropzone.css";
 import a2lix_lib from "@a2lix/symfony-collection/src/a2lix_sf_collection";
 import Dropzone from "dropzone";
 
-import "alpine-magic-helpers/dist/fetch";
 import "./alpine";
 import "./detectStickyElements";
 
@@ -28,11 +27,8 @@ Dropzone.options.datawizDropzone = {
 	init: function () {
 		this.on("sending", function (file, xhr, formData) {
 			formData.append("originalFilename", file.name);
-			// require Templates/Components/_infoBridge.html.twig -> experiment.id as value
-			formData.append(
-				"studyId",
-				document.getElementById("infobridge").innerHTML.trim()
-			);
+			let exId = document.querySelector("#datawiz-dropzone").getAttribute('data-experiment-id');
+			formData.append("studyId", exId);
 		});
 		this.on("success", function (file, responseText) {
 			let modal = document.querySelector("#modal-dataset-import");

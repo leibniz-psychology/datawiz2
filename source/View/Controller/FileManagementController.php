@@ -6,12 +6,10 @@ namespace App\View\Controller;
 
 use App\Crud\Crudable;
 use App\Domain\Model\Filemanagement\AdditionalMaterial;
-use App\Questionnaire\Questionable;
+use App\Io\Formats\Csv\CsvImportable;
 use App\Questionnaire\Questionnairable;
 use League\Flysystem\Filesystem;
-use Oneup\UploaderBundle\Uploader\Storage\FlysystemStorage;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -119,9 +117,9 @@ class FileManagementController extends DataWizController
         $delimiter = $request->get('dataset-import-delimiter') ?? ",";
         $escape = $request->get('dataset-import-escape') ?? "double";
         $headerRows = filter_var($request->get('dataset-import-header-rows'), FILTER_VALIDATE_INT) ?? 0;
-        $header = $this->csvImportable->csvToArray($fileId, $delimiter, $escape, $headerRows);
+        $data = $this->csvImportable->csvToArray($fileId, $delimiter, $escape, $headerRows);
 
-        return new JsonResponse($header);
+        return new JsonResponse($data, $data ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     protected function getEntityAtChange(string $uuid, string $className)

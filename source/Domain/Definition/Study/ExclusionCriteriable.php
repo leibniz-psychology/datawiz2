@@ -7,12 +7,15 @@ use Doctrine\ORM\Mapping as ORM;
 trait ExclusionCriteriable
 {
     /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
+     * @ORM\Column(type="array", length=1500, nullable=true)
      */
     private $exclusion_criteria;
 
     public function getExclusionCriteria()
     {
+        if ($this->exclusion_criteria === null) {
+            $this->exclusion_criteria = array('');
+        }
         return $this->exclusion_criteria;
     }
 

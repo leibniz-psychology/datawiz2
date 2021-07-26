@@ -11,6 +11,11 @@ trait Settable
      */
     private $setting;
 
+    /**
+     * @ORM\Column(type="text", length=1500, nullable=true)
+     */
+    private $setting_location;
+
     public function getSetting()
     {
         return $this->setting;
@@ -19,5 +24,16 @@ trait Settable
     public function setSetting($setting): void
     {
         $this->setting = $setting;
+    }
+
+    public function getSettingLocation()
+    {
+        return $this->setting_location;
+    }
+
+    public function setSettingLocation($otherSetting): void
+    {
+        $this->setting_location = $otherSetting;
+
     }
 }

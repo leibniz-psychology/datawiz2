@@ -46,6 +46,11 @@
                 }) }}
             {% endfor -%}
         </div>
+        {{ form_label(form.settingLocation) }}
+        <div class="MetaData-Widget">
+            {{ form_errors(form.settingLocation) }}
+            {{ form_widget(form.settingLocation) }}
+        </div>
     </fieldset>
 
     <fieldset class="mt-8">

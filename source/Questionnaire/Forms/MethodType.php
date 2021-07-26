@@ -45,7 +45,14 @@ class MethodType extends AbstractType
                     return ['class' => 'RadioButton-Input'];
                 }
             ])
-            // TODO: Location Textfield was not mapped yet
+            ->add("settingLocation", TextareaType::class, [
+                'required' => false,
+                'label' => 'Enter the location where your study took place',
+                'label_attr' => ['class' => 'MetaData-Label'],
+                'attr' => [
+                    'class' => 'MetaData-TextInput',
+                ]
+            ])
             ->add(MetaDataDictionary::RESEARCH_DESIGN, ChoiceType::class, [
                 'required' => false,
                 'choices' => [

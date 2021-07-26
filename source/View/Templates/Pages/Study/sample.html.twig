@@ -26,12 +26,11 @@
             </legend>
             {{ helpButton("participants") }}
         </div>
-        {# {{ form_label(form.participants) }} #}
-        <label class="MetaData-Label">Participants form goes here</label>
-        {# {{ form_errors(form.participants) }}
+        {{ form_label(form.participants) }}
+        {{ form_errors(form.participants) }}
         <div class="MetaData-Widget">
             {{ form_widget(form.participants) }}
-        </div> #}
+        </div>
     </fieldset>
 
     <fieldset class="mt-8">

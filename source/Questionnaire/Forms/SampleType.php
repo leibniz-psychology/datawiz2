@@ -15,6 +15,14 @@ class SampleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add("participants", TextareaType::class, [
+                'required' => false,
+                'label' => 'Describe participants, specifying their pertinent characteristics for this study',
+                'label_attr' => ['class' => 'MetaData-Label'],
+                'attr' => [
+                    'class' => 'MetaData-TextInput',
+                ]
+            ])
             ->add(MetaDataDictionary::INCLUSION_CRITERIA, TextareaType::class, [
                 'required' => false,
                 'label' => 'State inclusion criteria for participants',

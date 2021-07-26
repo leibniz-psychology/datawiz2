@@ -6,6 +6,7 @@ use App\Domain\Definition\MetaDataDictionary;
 use App\Domain\Definition\MetaDataValuable;
 use App\Domain\Definition\Study\ExclusionCriteriable;
 use App\Domain\Definition\Study\InclusionCriteriable;
+use App\Domain\Definition\Study\Participanable;
 use App\Domain\Definition\Study\Populatable;
 use App\Domain\Definition\Study\PowerAnalysiable;
 use App\Domain\Definition\Study\SampleMethodable;
@@ -29,6 +30,7 @@ class SampleMetaDataGroup extends UuidEntity implements MetaDataValuable, Questi
 
     use ExperimentRelatable;
 
+    use Participanable;
     use InclusionCriteriable;
     use ExclusionCriteriable;
     use Populatable;

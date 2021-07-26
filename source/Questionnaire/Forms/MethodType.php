@@ -158,8 +158,17 @@ class MethodType extends AbstractType
                 'choice_attr' => function () {
                     return ['class' => 'RadioButton-Input'];
                 }
-            ]);
-        // TODO: Others free Textfield is not mapped yet and missing
+            ])
+            ->add("otherControlOperations", TextareaType::class, [
+                'required' => false,
+                'label' => 'Other Control Operations',
+                'label_attr' => ['class' => 'MetaData-Label'],
+                'attr' => [
+                    'class' => 'MetaData-TextInput',
+                ]
+            ])
+        ;
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void

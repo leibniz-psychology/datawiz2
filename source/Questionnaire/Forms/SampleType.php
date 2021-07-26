@@ -5,6 +5,7 @@ namespace App\Questionnaire\Forms;
 use App\Domain\Definition\MetaDataDictionary;
 use App\Domain\Model\Study\SampleMetaDataGroup;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -72,9 +73,25 @@ class SampleType extends AbstractType
                     'data-entry-remove-class' => 'MetaData-RemoveButton'
                 ]
             ])
-            ->add(MetaDataDictionary::SAMPLING_METHOD, TextareaType::class, [
+            ->add(MetaDataDictionary::SAMPLING_METHOD, ChoiceType::class, [
                 'required' => false,
+                'expanded' => true,
                 'label' => '',
+                'choices' => [
+                    'Convenience sampling (accidental sampling, opportunity sampling)' => 'Convenience sampling (accidental sampling, opportunity sampling)',
+                    'Random sampling (probability sampling)' => 'Random sampling (probability sampling)',
+                    'Systematic sampling (quasirandom sampling)' => 'Systematic sampling (quasirandom sampling)',
+                    'Stratified sampling' => 'Stratified sampling',
+                    'Quota sampling' => 'Quota sampling',
+                    'Other' => 'Other',
+                    ],
+                'label_attr' => ['class' => 'MetaData-Label'],
+                'attr' => [
+                    'class' => 'MetaData-TextInput',
+                ]
+            ])
+            ->add("otherSamplingMethod", TextareaType::class, [
+                'required' => false,
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
                     'class' => 'MetaData-TextInput',

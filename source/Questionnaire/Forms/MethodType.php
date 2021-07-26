@@ -56,13 +56,55 @@ class MethodType extends AbstractType
             ->add(MetaDataDictionary::RESEARCH_DESIGN, ChoiceType::class, [
                 'required' => false,
                 'choices' => [
-                    'Independent measures / between-subjects design' => 'Independent measures / between-subjects design',
-                    'Repeated measures / within-subjects design' => 'Repeated measures / within-subjects design',
-                    'Matched pairs design' => 'Matched pairs design'
+                    'Experimental' => 'Experimental',
+                    'Non-Experimental' => 'Non-Experimental',
                 ],
                 'expanded' => true,
                 'label' => 'Research design',
                 'help' => '',
+                'label_attr' => ['class' => 'MetaData-Title'],
+                'help_attr' => ['class' => 'px-6 pt-1'],
+                'attr' => [
+                    'class' => 'p-1',
+                ]
+            ])
+            ->add("experimentalDetails", ChoiceType::class, [
+                'required' => false,
+                'choices' => [
+                    'Random assignment' => 'Random assignment',
+                    'Non-random assignment' => 'Non-random assignment',
+                    'Clinical trial' => 'Clinical trial',
+                ],
+                'expanded' => true,
+                'label_attr' => ['class' => 'MetaData-Title'],
+                'help_attr' => ['class' => 'px-6 pt-1'],
+                'attr' => [
+                    'class' => 'p-1',
+                ]
+            ])
+            ->add("nonExperimentalDetails", ChoiceType::class, [
+                'required' => false,
+                'choices' => [
+                    'Observational Study' => 'Observational Study',
+                    'Survey research' => 'Survey research',
+                    'Correlational research' => 'Correlational research',
+                    'Causal-comparative research' => 'Causal-comparative research',
+                    'Single case' => 'Single case',
+                ],
+                'expanded' => true,
+                'label_attr' => ['class' => 'MetaData-Title'],
+                'help_attr' => ['class' => 'px-6 pt-1'],
+                'attr' => [
+                    'class' => 'p-1',
+                ]
+            ])
+            ->add("observationalType", ChoiceType::class, [
+                'required' => false,
+                'choices' => [
+                    'Cohort Study' => 'Cohort Study',
+                    'Case-control Study' => 'Case-control Study',
+                    'Cross-sectional Study' => 'Cross-sectional Study',
+                ],
                 'label_attr' => ['class' => 'MetaData-Title'],
                 'help_attr' => ['class' => 'px-6 pt-1'],
                 'attr' => [

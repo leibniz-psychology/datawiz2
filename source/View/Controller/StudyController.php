@@ -128,7 +128,6 @@ class StudyController extends DataWizController
 
         return $this->render('Pages/Study/documentation.html.twig', [
             'form' => $form->createView(),
-            'experiment' => $entityAtChange,
         ]);
     }
 

@@ -83,12 +83,15 @@
         {{ form_widget(form.related_publications) }}
     </fieldset>
 
-    {{ wizNav({
-        'prevUrl': path('Study-introduction', {uuid: experiment.id}),
-        'prevTitle': 'Getting started',
-        'nextUrl': path('Study-theory', {uuid: experiment.id}),
-        'nextTitle': 'Objectives & Hypotheses'
-    }, form) }}
+
+    {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
+        request: app.request,
+        prevUrl: 'Study-introduction',
+        prevTitle: 'Introduction',
+        nextUrl: 'Study-theory',
+        nextTitle: 'Objectives & hypotheses',
+        form: form
+    })) }}
 
     {{ form_end(form) }}
 {% endblock %}

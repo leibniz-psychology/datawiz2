@@ -103,11 +103,11 @@ class StudyFeatureTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
-    public function testReviewAction()
-    {
-        $this->client->request('GET', '/studies/' . $this->tesStudyUuuid . '/review');
-        $this->assertResponseIsSuccessful();
-    }
+//    public function testReviewAction()
+//    {
+//        $this->client->request('GET', '/studies/' . $this->tesStudyUuuid . '/review');
+//        $this->assertResponseIsSuccessful();
+//    }
 
     // Not part of the study feature TODO: move to on test suit
     public function testProfileAction()

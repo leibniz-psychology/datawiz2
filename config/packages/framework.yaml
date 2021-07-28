@@ -12,6 +12,8 @@ framework:
         cookie_secure: auto
         cookie_samesite: lax
 
+    fragments: { path: /_fragment }
+
     uid:
         default_uuid_version: 6
 

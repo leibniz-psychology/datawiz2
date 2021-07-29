@@ -26,7 +26,7 @@ class NavigationController extends DataWizController
     public function savebarNavigationAction(Request $request,
                                             string $prevUrl, string $prevTitle,
                                             string $nextUrl, string $nextTitle,
-                                            FormView $form): Response
+                                            ?FormView $form): Response
     {
         $uuid = $request->get('uuid'); // still a magic strings
 

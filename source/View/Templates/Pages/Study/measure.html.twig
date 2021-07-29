@@ -43,12 +43,15 @@
         {{ form_widget(form.apparatus) }}
     </fieldset>
 
-    {{ wizNav({
-        'prevUrl': path('Study-method', {uuid: experiment.id}),
-        'prevTitle': 'Study method',
-        'nextUrl': path('Study-sample', {uuid: experiment.id}),
-        'nextTitle': 'Sampling'
-    }, form) }}
+
+    {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
+        request: app.request,
+        prevUrl: 'Study-method',
+        prevTitle: 'Study method',
+        nextUrl: 'Study-sample',
+        nextTitle: 'Sampling',
+        form: form
+    })) }}
 
     {{ form_end(form) }}
 {% endblock %}

@@ -20,7 +20,7 @@
         <span></span>
     {% endif %}
 
-    {% if form is defined %}
+    {% if form is defined and form is not null%}
         {{ form_widget(form.submit, {
             'label': 'Save',
             'attr': {

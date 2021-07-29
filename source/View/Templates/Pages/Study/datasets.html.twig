@@ -26,10 +26,13 @@
         {% endfor %}
     </ul>
 
-    {{ wizNav({
-        'prevUrl': path('Study-sample', {uuid: experiment.id}),
-        'prevTitle': 'Sampling',
-        'nextUrl': path('Study-materials', {uuid: experiment.id}),
-        'nextTitle': 'Upload materials',
-    }) }}
+    {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
+        request: app.request,
+        prevUrl: 'Study-sample',
+        prevTitle: 'Sampling',
+        nextUrl: 'Study-materials',
+        nextTitle: 'Upload materials',
+        form: null
+    })) }}
+
 {% endblock %}

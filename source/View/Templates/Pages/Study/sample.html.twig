@@ -170,12 +170,14 @@
         </div>
     </fieldset>
 
-    {{ wizNav({
-        'prevUrl': path('Study-measure', {uuid: experiment.id}),
-        'prevTitle': 'Data collection',
-        'nextUrl': path('Study-datasets', {uuid: experiment.id}),
-        'nextTitle': 'Manage datasets'
-    }, form) }}
+    {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
+        request: app.request,
+        prevUrl: 'Study-measure',
+        prevTitle: 'Data collection',
+        nextUrl: 'Study-datasets',
+        nextTitle: 'Manage datasets',
+        form: form
+    })) }}
 
     {{ form_end(form) }}
 {% endblock %}

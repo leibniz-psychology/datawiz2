@@ -103,10 +103,12 @@
         </section>
     </article>
 
-    {{ wizNav({
-        'prevUrl': path('Study-materials', {uuid: experiment.id}),
-        'prevTitle': 'Upload materials',
-        'nextUrl': '#',
-        'nextTitle': 'Export study'
-    }) }}
+    {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
+        request: app.request,
+        prevUrl: 'Study-materials',
+        prevTitle: 'Upload materials',
+        nextUrl: '#',
+        nextTitle: 'Export study',
+        form: form
+    })) }}
 {% endblock %}

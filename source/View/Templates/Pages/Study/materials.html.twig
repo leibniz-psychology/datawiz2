@@ -44,10 +44,13 @@
         </ul>
     {% endif %}
 
-    {{ wizNav({
-        'prevUrl': path('Study-datasets', {uuid: experiment.id}),
-        'prevTitle': 'Manage datasets',
-        'nextUrl': path('Study-review', {uuid: experiment.id}),
-        'nextTitle': 'Review input',
-    }) }}
+    {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
+        request: app.request,
+        prevUrl: 'Study-datasets',
+        prevTitle: 'Manage datasets',
+        nextUrl: 'Study-review',
+        nextTitle: 'Review input',
+        form: null
+    })) }}
+
 {% endblock %}

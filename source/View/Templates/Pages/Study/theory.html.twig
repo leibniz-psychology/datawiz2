@@ -47,12 +47,14 @@
         </div>
     </fieldset>
 
-    {{ wizNav({
-        'prevUrl': path('Study-documentation', {uuid: experiment.id}),
-        'prevTitle': 'Basic information',
-        'nextUrl': path('Study-method', {uuid: experiment.id}),
-        'nextTitle': 'Study method'
-    }, form) }}
+    {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
+        request: app.request,
+        prevUrl: 'Study-documentation',
+        prevTitle: 'Basic information',
+        nextUrl: 'Study-method',
+        nextTitle: 'Study method',
+        form: form
+    })) }}
 
     {{ form_end(form) }}
 {% endblock %}

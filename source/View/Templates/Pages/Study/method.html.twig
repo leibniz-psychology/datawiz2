@@ -105,12 +105,14 @@
         </div>
     </fieldset>
 
-    {{ wizNav({
-        'prevUrl': path('Study-theory', {uuid: experiment.id}),
-        'prevTitle': 'Objectives & Hypotheses',
-        'nextUrl': path('Study-measure', {uuid: experiment.id}),
-        'nextTitle': 'Data collection'
-    }, form) }}
+    {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
+        request: app.request,
+        prevUrl: 'Study-theory',
+        prevTitle: 'Objectives & Hypotheses',
+        nextUrl: 'Study-measure',
+        nextTitle: 'Data collection',
+        form: form
+    })) }}
 
     {{ form_end(form) }}
 {% endblock %}

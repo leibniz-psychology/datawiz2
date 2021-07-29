@@ -41,7 +41,7 @@ help: ## Print this help text
 	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/';
 
 ##--------Developer Interface----
-install: ./node_modules ./vendor .git/hooks/commit-msg .git/hooks/pre-commit assets## Install all dependencies
+install: ./node_modules ./vendor assets## Install all dependencies
 
 run: install var/data.db assets ## Start the local development server
 ifneq ($(SERVER_RUNNING), 1)
@@ -132,15 +132,4 @@ var/data.db: $(ENTITY_DIR)/*/*.php $(DEFINITION_DIR)/*/*.php $(FIXTURES_DIR)/*.p
 ./node_modules: package.json
 	@echo "Running yarn... \c"
 	@yarn install --frozen-lockfile > /dev/null 2>&1
-	@echo "Done"
-
-# Link from .tools to .git to enable hooks
-./.git/hooks/commit-msg: ./.tools/hooks/commit-msg
-	@echo "Linking $@ hook... \c"
-	@ln -f $< $@
-	@echo "Done"
-
-./.git/hooks/pre-commit: ./.tools/hooks/pre-commit
-	@echo "Linking $@ hook... \c"
-	@ln -f $< $@
 	@echo "Done"

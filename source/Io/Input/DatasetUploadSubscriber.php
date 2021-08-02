@@ -6,6 +6,7 @@ namespace App\Io\Input;
 
 use App\Api\Spss\SpssApiClient;
 use App\Crud\Crudable;
+use App\Domain\Model\Codebook\DatasetMetaData;
 use App\Domain\Model\Filemanagement\OriginalDataset;
 use App\Domain\Model\Study\Experiment;
 use Oneup\UploaderBundle\Event\PostUploadEvent;
@@ -52,6 +53,7 @@ class DatasetUploadSubscriber implements EventSubscriberInterface
             $dataset = OriginalDataset::createDataset(
                 $event->getRequest()->get('originalFilename'),
                 $event->getFile()->getBasename(),
+                DatasetMetaData::createEmptyCode(),
                 $experiment
             );
             $this->crud->update($dataset);

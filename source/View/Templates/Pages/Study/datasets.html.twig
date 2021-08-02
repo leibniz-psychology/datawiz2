@@ -12,10 +12,10 @@
         Datasets for the Study
     </h2>
     {{ include("Components/_infoBridge.html.twig",{value: experiment.id}) }}
-    <form action="{{ oneup_uploader_endpoint("datasets") }}"
+    {#  <form action="{{ oneup_uploader_endpoint("datasets") }}"
           class="dropzone"
           id="datawiz-dropzone"
-          style="width:200px; height:200px; border:4px dashed black"></form>
+          style="width:200px; height:200px; border:4px dashed black"></form>#}
     <form action="{{ oneup_uploader_endpoint("datasets") }}" data-experiment-id="{{ experiment.id }}"
           class="mx-6 border-2 border-dashed border-mono-500 dropzone" id="datawiz-dropzone"></form>
     <h3 class="mx-6 mt-6 text-xl">

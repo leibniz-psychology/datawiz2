@@ -19,14 +19,78 @@
     {{ form_start(form) }}
     {{ form_errors(form) }}
 
-    <div>
-        {{ form_label(form.research_design) }}
-        {{ form_help(form.research_design) }}
-        {{ form_errors(form.research_design) }}
-        <div class="px-6 pt-1">
-            {{ form_widget(form.research_design) }}
+    <fieldset>
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                Research design
+            </legend>
+            {{ helpButton("setting") }}
         </div>
-    </div>
+        {{ form_label(form.research_design) }}
+        <div class="MetaData-Widget" x-data=""
+             x-init="$store.app.researchDesign = '{{ form.research_design.vars.value }}'">
+            {{ form_errors(form.research_design) }}
+            {%- for choice in form.research_design %}
+                {{ form_widget(choice) }}
+                {{ form_label(choice, null, {
+                    'label_attr': {
+                        'class': 'RadioButton-Label items-center w-full px-2 py-2 border border-gray-500 rounded-lg',
+                        '@click': '$store.app.researchDesign = "' ~ choice.vars.value ~ '"'
+                    },
+                    'label_html': true,
+                }) }}
+            {% endfor -%}
+            <div x-show="$store.app.researchDesign === '{{ form.research_design.vars.choices[0].value }}'"
+                 x-cloak="x-cloak" class="mt-2 ml-4" x-transition:enter="transition duration-300"
+                 x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                 x-transition:leave="transition duration-[0ms]" x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0">
+                {{ form_label(form.experimentalDetails) }}
+                {{ form_errors(form.experimentalDetails) }}
+                {%- for choice in form.experimentalDetails %}
+                    {{ form_widget(choice) }}
+                    {{ form_label(choice, null, {
+                        'label_attr': {'class': 'RadioButton-Label'},
+                        'label_html': true,
+                    }) }}
+                {% endfor -%}
+            </div>
+            <div x-show="$store.app.researchDesign === '{{ form.research_design.vars.choices[1].value }}'"
+                 x-cloak="x-cloak" class="mt-2 ml-4"
+                 x-init="$store.app.nonExperimentalType = '{{ form.nonExperimentalDetails.vars.value }}'"
+                 x-transition:enter="transition duration-300" x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100" x-transition:leave="transition duration-[0ms]"
+                 x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+
+                {{ form_label(form.nonExperimentalDetails) }}
+                {{ form_errors(form.nonExperimentalDetails) }}
+                {%- for choice in form.nonExperimentalDetails %}
+                    {{ form_widget(choice) }}
+
+                    {% if choice.vars.value == 'Observational study' %}
+                        {{ form_label(choice, null, {
+                            "label_attr":           {
+                                'class': 'RadioButton-Label',
+                                'x-data': '{ ...observationalTypeForm(), defaultLabel: "' ~ choice.vars.label ~ '", labelValue: "' ~ choice.vars.value ~ '" }',
+                                '@click': '$store.app.nonExperimentalType = "' ~ choice.vars.value ~ '"',
+                                'x-html': 'addFormToLabel()'
+                            },
+                            'label_html': true,
+                        }) }}
+
+                    {% else %}
+                        {{ form_label(choice, null, {
+                            "label_attr":           {
+                                'class': 'RadioButton-Label',
+                                '@click': '$store.app.nonExperimentalType = "' ~ choice.vars.value ~ '"',
+                            },
+                            'label_html': true,
+                        }) }}
+                    {% endif %}
+                {% endfor -%}
+            </div>
+        </div>
+    </fieldset>
 
     <fieldset class="mt-8">
         <div class="MetaData-Title">
@@ -36,12 +100,15 @@
             {{ helpButton("setting") }}
         </div>
         {{ form_label(form.setting) }}
-        <div class="MetaData-Widget">
+        <div x-data="" class="MetaData-Widget" x-init="$store.app.settingType = '{{ form.setting.vars.value }}'">
             {{ form_errors(form.setting) }}
             {%- for choice in form.setting %}
                 {{ form_widget(choice) }}
                 {{ form_label(choice, null, {
-                    label_attr: {class: 'RadioButton-Label'},
+                    'label_attr': {
+                        'class': 'RadioButton-Label',
+                        '@click': '$store.app.settingType = "' ~ choice.vars.value ~ '"'
+                    },
                     'label_html': true,
                 }) }}
             {% endfor -%}
@@ -53,7 +120,9 @@
         </div>
     </fieldset>
 
-    <fieldset class="mt-8">
+    <fieldset class="mt-8" x-data=""
+              x-show="$store.app.researchDesign === '{{ form.research_design.vars.choices[0].value }}'"
+              x-cloak="x-cloak">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
                 Experimental manipulation(s), treatments, or interventions
@@ -67,26 +136,36 @@
         </div>
     </fieldset>
 
-    <fieldset class="mt-8">
+    <fieldset class="mt-8" x-data=""
+              x-show="$store.app.researchDesign === '{{ form.research_design.vars.choices[0].value }}'"
+              x-cloak="x-cloak">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
                 Design
             </legend>
             {{ helpButton("experimental_design") }}
         </div>
-        {{ form_label(form.experimental_design) }}
+        {{ form_label(form.experimental_design, null, {
+            'label_attr': {'class': 'MetaData-Label'},
+        }) }}
         <div class="MetaData-Widget">
             {{ form_errors(form.experimental_design) }}
             {%- for choice in form.experimental_design %}
-                {{ form_widget(choice) }}
+                {{ form_widget(choice, {
+                    'attr': {'class': 'RadioButton-Input'}
+                }) }}
                 {{ form_label(choice, null, {
-                    label_attr: {class: 'RadioButton-Label'}
+                    'label_attr': {'class': 'RadioButton-Label'},
+                    'label_html': true,
+                    'class': 'RadioButton-Input'
                 }) }}
             {% endfor -%}
         </div>
     </fieldset>
 
-    <fieldset class="mt-8">
+    <fieldset class="mt-8" x-data="" x-init="$store.app.controlOperations = '{{ form.control_operations.vars.value }}'"
+              x-show="$store.app.researchDesign === '{{ form.research_design.vars.choices[0].value }}'"
+              x-cloak="x-cloak">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
                 Control Operations
@@ -99,9 +178,26 @@
             {%- for choice in form.control_operations %}
                 {{ form_widget(choice) }}
                 {{ form_label(choice, null, {
-                    label_attr: {class: 'RadioButton-Label'}
+                    'label_attr': {
+                        'class': 'RadioButton-Label',
+                        '@click': '$store.app.controlOperations = "' ~ choice.vars.value ~ '"'
+                    }
                 }) }}
             {% endfor -%}
+        </div>
+        {{ form_label(form.otherControlOperations, null, {
+            'label_attr': {
+                'class': 'MetaData-Label ml-[1.375rem]',
+            }
+        }) }}
+        <div class="MetaData-Widget">
+            {{ form_errors(form.otherControlOperations) }}
+            {{ form_widget(form.otherControlOperations, {
+                'attr': {
+                    'class': 'MetaData-TextInput disabled:opacity-50 ml-[1.375rem]',
+                    'x-bind:disabled': '$store.app.controlOperations !== `Other`'
+                }
+            }) }}
         </div>
     </fieldset>
 
@@ -113,6 +209,28 @@
         nextTitle: 'Data collection',
         form: form
     })) }}
+
+    <script>
+        function observationalTypeForm() {
+            return {
+                addFormToLabel() {
+                    return this.defaultLabel + `{{- form_label(form.observationalType, null, {
+                        'label_attr': {
+                            'class': 'ml-[1.375rem] w-full mt-1',
+                        }
+                    }) -}}
+                    {{- form_errors(form.observationalType) -}}
+                    {{- form_widget(form.observationalType, {
+                        'attr': {
+                            'class': 'ml-[1.375rem] disabled:opacity-50 p-1 mt-1',
+                            'x-data': '',
+                            'x-bind:disabled': '$store.app.nonExperimentalType !== "${this.labelValue}"'
+                        }
+                    }) -}}`
+                }
+            }
+        }
+    </script>
 
     {{ form_end(form) }}
 {% endblock %}

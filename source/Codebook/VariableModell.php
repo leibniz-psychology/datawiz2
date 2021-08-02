@@ -136,9 +136,16 @@ class VariableModell extends AbstractJsonSerializeModell
 
     }
 
-    public static function createEmpty(): VariableModell
+    public static function createEmpty(string $id): VariableModell
     {
-        return new VariableModell();
+        $result = new VariableModell();
+        $result->setId($id);
+        $result->setName("");
+        $result->setItemText(" ");
+        $result->setLabel(" ");
+        $result->addMissing(ValuePairModell::createEmpty());
+        $result->addValue(ValuePairModell::createEmpty());
+        return $result;
     }
 
     public function jsonSerialize()

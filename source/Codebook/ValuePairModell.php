@@ -43,7 +43,10 @@ class ValuePairModell extends AbstractJsonSerializeModell
 
     public static function createEmpty(): ValuePairModell
     {
-        return new ValuePairModell();
+        $result = new ValuePairModell();
+        $result->setLabel(" ");
+        $result->setName(" ");
+        return $result;
     }
 
     public function jsonSerialize()

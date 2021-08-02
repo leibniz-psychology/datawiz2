@@ -17,7 +17,7 @@ class DatasetMetaData extends UuidEntity
     /**
      * One Codebook has One OriginalDataset
      *
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Filemanagement\OriginalDataset", inversedBy="codebook", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="App\Domain\Model\Filemanagement\OriginalDataset", inversedBy="codebook")
      */
     private $originalDataset;
 

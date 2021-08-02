@@ -44,7 +44,11 @@ class MetaDataExchangeModell extends AbstractJsonSerializeModell
 
     public static function createEmpty(): MetaDataExchangeModell
     {
-        return new MetaDataExchangeModell();
+        $modell = new MetaDataExchangeModell();
+        $modell->addVariable(VariableModell::createEmpty("1"));
+        $modell->addVariable(VariableModell::createEmpty("2"));
+        $modell->addVariable(VariableModell::createEmpty("3"));
+        return $modell;
     }
 
     public function jsonSerialize()

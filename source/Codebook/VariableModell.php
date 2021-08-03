@@ -110,10 +110,15 @@ class VariableModell extends AbstractJsonSerializeModell
         return array_diff($this->missings, [$removedMissing]);
     }
 
-    public static function createFrom(string $id, string $name,
-                                      string $label, string $itemText,
-                                      array $values,  array $missings,
-                                      string $measures): VariableModell
+    public static function createFrom(
+        string $id,
+        string $name,
+        string $label,
+        string $itemText,
+        array  $values,
+        array  $missings,
+        string $measure
+    ): VariableModell
     {
         $variableModell = new VariableModell();
 
@@ -130,10 +135,9 @@ class VariableModell extends AbstractJsonSerializeModell
             $variableModell->addMissing($missing);
         }
 
-        $variableModell->setMeasure($measures);
+        $variableModell->setMeasure($measure);
 
         return $variableModell;
-
     }
 
     public static function createEmpty(string $id): VariableModell
@@ -141,10 +145,11 @@ class VariableModell extends AbstractJsonSerializeModell
         $result = new VariableModell();
         $result->setId($id);
         $result->setName("");
-        $result->setItemText(" ");
-        $result->setLabel(" ");
+        $result->setItemText("");
+        $result->setLabel("");
         $result->addMissing(ValuePairModell::createEmpty());
         $result->addValue(ValuePairModell::createEmpty());
+        $result->setMeasure("");
         return $result;
     }
 

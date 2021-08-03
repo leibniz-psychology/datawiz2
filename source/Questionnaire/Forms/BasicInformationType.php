@@ -10,47 +10,50 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Parsedown;
 
 class BasicInformationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $Parsedown = new Parsedown();
+
         $builder
-            ->add(MetaDataDictionary::CREATOR, CollectionType::class, [
-                'required' => false,
-                'entry_type' => TextType::class,
-                'entry_options' => ['label' => false],
-                'allow_add' => true,
-                'prototype' => true,
-                'allow_delete' => true,
-                'label' => 'The persons responsible for the research data',
-                'label_attr' => ['class' => 'MetaData-Label'],
-                'attr' => [
-                    'class' => 'MetaData-Widget MetaData-Widget_collection',
-                    'data-entry-add-label' => 'another creator +',
-                    'data-entry-add-class' => 'MetaData-AddButton',
-                    'data-entry-remove-class' => 'MetaData-RemoveButton'
-                ]
-            ])
-            ->add(MetaDataDictionary::CONTACT, CollectionType::class, [
-                'required' => false,
-                'entry_type' => TextType::class,
-                'entry_options' => ['label' => false],
-                'allow_add' => true,
-                'prototype' => true,
-                'allow_delete' => true,
-                'label' => 'The contact of the persons responsible',
-                'label_attr' => ['class' => 'MetaData-Label'],
-                'attr' => [
-                    'class' => 'MetaData-Widget MetaData-Widget_collection',
-                    'data-entry-add-label' => 'another contact +',
-                    'data-entry-add-class' => 'MetaData-AddButton',
-                    'data-entry-remove-class' => 'MetaData-RemoveButton'
-                ]
-            ])
+            // ->add(MetaDataDictionary::CREATOR, CollectionType::class, [
+            //     'required' => false,
+            //     'entry_type' => TextType::class,
+            //     'entry_options' => ['label' => false],
+            //     'allow_add' => true,
+            //     'prototype' => true,
+            //     'allow_delete' => true,
+            //     'label' => 'The persons responsible for the research data',
+            //     'label_attr' => ['class' => 'MetaData-Label'],
+            //     'attr' => [
+            //         'class' => 'MetaData-Widget MetaData-Widget_collection',
+            //         'data-entry-add-label' => 'another creator +',
+            //         'data-entry-add-class' => 'MetaData-AddButton',
+            //         'data-entry-remove-class' => 'MetaData-RemoveButton'
+            //     ]
+            // ])
+            // ->add(MetaDataDictionary::CONTACT, CollectionType::class, [
+            //     'required' => false,
+            //     'entry_type' => TextType::class,
+            //     'entry_options' => ['label' => false],
+            //     'allow_add' => true,
+            //     'prototype' => true,
+            //     'allow_delete' => true,
+            //     'label' => 'The contact of the persons responsible',
+            //     'label_attr' => ['class' => 'MetaData-Label'],
+            //     'attr' => [
+            //         'class' => 'MetaData-Widget MetaData-Widget_collection',
+            //         'data-entry-add-label' => 'another contact +',
+            //         'data-entry-add-class' => 'MetaData-AddButton',
+            //         'data-entry-remove-class' => 'MetaData-RemoveButton'
+            //     ]
+            // ])
             ->add(MetaDataDictionary::TITLE, TextareaType::class, [
                 'required' => false,
-                'label' => 'The title by which you want your research data to be cited',
+                'label' => 'Provide a title for your dataset',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
                     'class' => 'MetaData-TextInput',
@@ -58,7 +61,7 @@ class BasicInformationType extends AbstractType
             ])
             ->add(MetaDataDictionary::DESCRIPTION, TextareaType::class, [
                 'required' => false,
-                'label' => 'A description of your study which the research data belong to',
+                'label' => 'Briefly describe the study in which you collected the research data',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
                     'class' => 'MetaData-TextInput',
@@ -71,8 +74,11 @@ class BasicInformationType extends AbstractType
                 'allow_add' => true,
                 'prototype' => true,
                 'allow_delete' => true,
-                'label' => 'The bibliographic citation for related publication(s)',
+                'label' => $Parsedown->line(
+                    '<span class="block">Cite publications that use the data from this dataset.</span><span class="flex items-center mt-3 text-sm"><span class="w-4 h-4 ml-1 mr-1 iconify bg-mono-50" data-icon="mdi:information-variant" data-inline="false"></span>Enter one publication per field. Leave empty if not applicable.</span>'
+                ),
                 'label_attr' => ['class' => 'MetaData-Label'],
+                'label_html' => true,
                 'attr' => [
                     'class' => 'MetaData-Widget MetaData-Widget_collection',
                     'data-entry-add-label' => 'another related publication +',

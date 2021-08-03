@@ -19,7 +19,7 @@
     {{ form_start(form) }}
     {{ form_errors(form) }}
 
-    <fieldset>
+    {# <fieldset>
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
                 Creators
@@ -41,9 +41,9 @@
         {{ form_label(form.contact) }}
         {{ form_errors(form.contact) }}
         {{ form_widget(form.contact) }}
-    </fieldset>
+    </fieldset> #}
 
-    <fieldset class="mt-8">
+    <fieldset>
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
                 Title
@@ -83,7 +83,6 @@
         {{ form_widget(form.related_publications) }}
     </fieldset>
 
-
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
         prevUrl: 'Study-introduction',
@@ -101,8 +100,8 @@
 {% endblock %}
 
 {% block help_for_metadata %}
-    {{ formHelp("basic", "creator") }}
-    {{ formHelp("basic", "contact") }}
+    {# {{ formHelp("basic", "creator") }}
+    {{ formHelp("basic", "contact") }} #}
     {{ formHelp("basic", "title") }}
     {{ formHelp("basic", "description") }}
     {{ formHelp("basic", "related_publications") }}

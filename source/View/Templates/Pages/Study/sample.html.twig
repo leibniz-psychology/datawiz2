@@ -42,28 +42,8 @@
         </div>
         {{ form_label(form.inclusion_criteria) }}
         {{ form_errors(form.inclusion_criteria) }}
-        <div class="MetaData-Widget">
-            {{ form_widget(form.inclusion_criteria) }}
-        </div>
+        {{ form_widget(form.inclusion_criteria) }}
     </fieldset>
-
-    {# <div>
-        {{ form_label(form.inclusion_criteria) }}
-        {{ form_help(form.inclusion_criteria) }}
-        {{ form_errors(form.inclusion_criteria) }}
-        <div class="px-6 pt-1">
-            {{ form_widget(form.inclusion_criteria) }}
-        </div>
-    </div> #}
-
-    {# <div class="mt-8">
-        {{ form_label(form.exclusion_criteria) }}
-        {{ form_help(form.exclusion_criteria) }}
-        {{ form_errors(form.exclusion_criteria) }}
-        <div class="px-6 pt-1">
-            {{ form_widget(form.exclusion_criteria) }}
-        </div>
-    </div> #}
 
     <fieldset class="mt-8">
         <div class="MetaData-Title">
@@ -74,9 +54,7 @@
         </div>
         {{ form_label(form.exclusion_criteria) }}
         {{ form_errors(form.exclusion_criteria) }}
-        <div class="MetaData-Widget">
-            {{ form_widget(form.exclusion_criteria) }}
-        </div>
+        {{ form_widget(form.exclusion_criteria) }}
     </fieldset>
 
     <fieldset class="mt-8">
@@ -88,29 +66,10 @@
         </div>
         {{ form_label(form.population) }}
         {{ form_errors(form.population) }}
-        <div class="MetaData-Widget">
-            {{ form_widget(form.population) }}
-        </div>
+        {{ form_widget(form.population) }}
     </fieldset>
 
-    {# <div class="mt-8">
-        {{ form_label(form.population) }}
-        {{ form_help(form.population) }}
-        {{ form_errors(form.population) }}
-        <div class="px-6 pt-1">
-            {{ form_widget(form.population) }}
-        </div>
-    </div> #}
-    {# <div class="mt-8">
-        {{ form_label(form.sampling_method) }}
-        {{ form_help(form.sampling_method) }}
-        {{ form_errors(form.sampling_method) }}
-        <div class="px-6 pt-1">
-            {{ form_widget(form.sampling_method) }}
-        </div>
-    </div> #}
-
-    <fieldset class="mt-8">
+    <fieldset class="mt-8" x-data="" x-init="$store.app.samplingMethod = '{{ form.sampling_method.vars.value }}'">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
                 Sampling method
@@ -118,20 +77,33 @@
             {{ helpButton("sampling_method") }}
         </div>
         {{ form_label(form.sampling_method) }}
-        {{ form_errors(form.sampling_method) }}
         <div class="MetaData-Widget">
-            {{ form_widget(form.sampling_method) }}
+            {{ form_errors(form.sampling_method) }}
+            {%- for choice in form.sampling_method %}
+                {{ form_widget(choice) }}
+                {{ form_label(choice, null, {
+                    'label_attr': {
+                        'class': 'RadioButton-Label',
+                        '@click': '$store.app.samplingMethod = "' ~ choice.vars.value ~ '"'
+                    }
+                }) }}
+            {% endfor -%}
+        </div>
+        {{ form_label(form.otherSamplingMethod, null, {
+            'label_attr': {
+                'class': 'MetaData-Label ml-[1.375rem]',
+            }
+        }) }}
+        <div class="flex MetaData-Widget">
+            {{ form_errors(form.otherSamplingMethod) }}
+            {{ form_widget(form.otherSamplingMethod, {
+                'attr': {
+                    'class': 'MetaData-TextInput disabled:opacity-50 ml-[1.375rem]',
+                    'x-bind:disabled': '$store.app.samplingMethod !== `Other`'
+                }
+            }) }}
         </div>
     </fieldset>
-
-    {# <div class="mt-8">
-        {{ form_label(form.sample_size) }}
-        {{ form_help(form.sample_size) }}
-        {{ form_errors(form.sample_size) }}
-        <div class="px-6 pt-1">
-            {{ form_widget(form.sample_size) }}
-        </div>
-    </div> #}
 
     <fieldset class="mt-8">
         <div class="MetaData-Title">
@@ -146,15 +118,6 @@
             {{ form_widget(form.sample_size) }}
         </div>
     </fieldset>
-
-    {# <div class="mt-8">
-        {{ form_label(form.power_analysis) }}
-        {{ form_help(form.power_analysis) }}
-        {{ form_errors(form.power_analysis) }}
-        <div class="px-6 pt-1">
-            {{ form_widget(form.power_analysis) }}
-        </div>
-    </div> #}
 
     <fieldset class="mt-8">
         <div class="MetaData-Title">

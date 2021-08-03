@@ -16,10 +16,10 @@
     <div class="relative Help-MetaData" x-data="{}">
         <button class="absolute px-1 py-1 border-none rounded-full shadow-none top-2 right-2 bg-mono-100 hover:bg-mono-300"
                 x-on:click="$store.app.helpSelected = null"
-                x-show="$store.app.helpSelected === '{{ formIdentifier }}' ">
+                x-show="$store.app.helpSelected === '{{ formIdentifier }}'" x-cloak>
             <span class="w-6 h-6 iconify" data-icon="mdi:close" data-inline="false"></span>
         </button>
-        <div class="Help-Text Help-Text_metaData" x-show="$store.app.helpSelected === '{{ formIdentifier }}' ">
+        <div class="Help-Text Help-Text_metaData" x-show="$store.app.helpSelected === '{{ formIdentifier }}'" x-cloak>
             {{ source("Help/#{sectionIdentifier}/#{formIdentifier}.md")|markdown_to_html }}
         </div>
     </div>

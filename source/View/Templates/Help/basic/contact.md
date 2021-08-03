@@ -1,8 +1,8 @@
-### About contact
+## About contact
 
 Provide contact information which is as sustainable as possible (e.g., institutional affiliation, e-mail, and postal address)
 
-### Examples
+### Contact examples
 
 > A. Paulus, Chair of Psychology, Technical University of Munich, Germany; andrea.paulus@wi.tum.de ; ORCID?
 

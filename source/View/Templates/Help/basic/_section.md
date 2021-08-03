@@ -1,3 +1,3 @@
-## Basic information help
+# Basic information help
 
-The basic information on your study enables other researchers to find and cite your data. It makes it visible to search engines and retrieval systems. It identifies you as the creator and ensures that you get appropriate credit for your work.
+The resource description describes and identifies your data and enables other researchers to find and cite it. It makes it visible to search engines and retrieval systems. It identifies you as the creator and ensures that you get appropriate credit for your work.

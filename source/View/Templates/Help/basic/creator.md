@@ -1,3 +1,9 @@
-### About creators
+## About creators
 
-The person(s) responsible for creating the dataset. Usually these are the principle investigators of a study.
+The persons responsible for creating the dataset. Usually these are the principal investigators of a study.
+
+### Creators examples
+
+> Oberauer, Klaus
+
+> Kliegl, Reinhold

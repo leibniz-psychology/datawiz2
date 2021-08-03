@@ -16,8 +16,7 @@ class TheoryType extends AbstractType
         $builder
             ->add(MetaDataDictionary::OBJECTIVE, TextareaType::class, [
                 'required' => false,
-                // 'label' => 'Objective',
-                'label' => 'Outline the specific steps that you took to achieve your research aim.',
+                'label' => 'The action(s) you will take in order to achieve your research aim(s)/ goal(s).',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
                     'class' => 'MetaData-TextInput',
@@ -25,7 +24,6 @@ class TheoryType extends AbstractType
             ])
             ->add(MetaDataDictionary::HYPOTHESIS, TextareaType::class, [
                 'required' => false,
-                // 'label' => 'Hypotheses',
                 'label' => 'State the hypotheses examined, indicating which were prespecified.',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [

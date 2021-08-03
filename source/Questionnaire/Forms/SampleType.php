@@ -86,7 +86,7 @@ class SampleType extends AbstractType
                         '<span>Convenience sampling (accidental sampling, opportunity sampling)</span><span>Your individuals (observations, cases) were chosen non-randomly because they were easily available</span>'
                     ) => 'Convenience sampling (accidental sampling, opportunity sampling)',
                     $Parsedown->line(
-                        '<span>Random sampling (probability sampling)</span><span>Your individuals (observations, cases) were chosen randomly and entirely by chance</span>'
+                        '<span>Random sampling</span><span>Your individuals (observations, cases) were chosen randomly and entirely by chance</span>'
                     ) => 'Random sampling (probability sampling)',
                     $Parsedown->line(
                         '<span>Systematic sampling (quasirandom sampling)</span><span>Your individuals (observations, cases) were chosen randomly with a system</span>'
@@ -112,7 +112,7 @@ class SampleType extends AbstractType
                 'required' => false,
                 'label' => 'If other, please describe your sampling method (see help for a list of methods)',
             ])
-            ->add(MetaDataDictionary::SAMPLE_SIZE, TextType::class, [
+            ->add(MetaDataDictionary::SAMPLE_SIZE, TextareaType::class, [
                 'required' => false,
                 'label' => 'Provide the achieved sample size as total number of cases N or as number of cases in subsamples n',
                 'label_attr' => ['class' => 'MetaData-Label'],

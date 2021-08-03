@@ -36,6 +36,18 @@
     <fieldset class="mt-8">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
+                Population
+            </legend>
+            {{ helpButton("population") }}
+        </div>
+        {{ form_label(form.population) }}
+        {{ form_errors(form.population) }}
+        {{ form_widget(form.population) }}
+    </fieldset>
+
+    <fieldset class="mt-8">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
                 Inclusion criteria
             </legend>
             {{ helpButton("inclusion_criteria") }}
@@ -55,18 +67,6 @@
         {{ form_label(form.exclusion_criteria) }}
         {{ form_errors(form.exclusion_criteria) }}
         {{ form_widget(form.exclusion_criteria) }}
-    </fieldset>
-
-    <fieldset class="mt-8">
-        <div class="MetaData-Title">
-            <legend class="MetaData-Legend">
-                Population
-            </legend>
-            {{ helpButton("population") }}
-        </div>
-        {{ form_label(form.population) }}
-        {{ form_errors(form.population) }}
-        {{ form_widget(form.population) }}
     </fieldset>
 
     <fieldset class="mt-8" x-data="" x-init="$store.app.samplingMethod = '{{ form.sampling_method.vars.value }}'">

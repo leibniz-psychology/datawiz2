@@ -11,11 +11,14 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Parsedown;
 
 class SampleType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $Parsedown = new Parsedown();
+
         $builder
             ->add("participants", TextareaType::class, [
                 'required' => false,
@@ -76,26 +79,38 @@ class SampleType extends AbstractType
             ->add(MetaDataDictionary::SAMPLING_METHOD, ChoiceType::class, [
                 'required' => false,
                 'expanded' => true,
-                'label' => '',
+                'placeholder' => false,
+                'label' => 'Choose your sampling method',
                 'choices' => [
-                    'Convenience sampling (accidental sampling, opportunity sampling)' => 'Convenience sampling (accidental sampling, opportunity sampling)',
-                    'Random sampling (probability sampling)' => 'Random sampling (probability sampling)',
-                    'Systematic sampling (quasirandom sampling)' => 'Systematic sampling (quasirandom sampling)',
-                    'Stratified sampling' => 'Stratified sampling',
-                    'Quota sampling' => 'Quota sampling',
+                    $Parsedown->line(
+                        '<span>Convenience sampling (accidental sampling, opportunity sampling)</span><span>Your individuals (observations, cases) were chosen non-randomly because they were easily available</span>'
+                    ) => 'Convenience sampling (accidental sampling, opportunity sampling)',
+                    $Parsedown->line(
+                        '<span>Random sampling (probability sampling)</span><span>Your individuals (observations, cases) were chosen randomly and entirely by chance</span>'
+                    ) => 'Random sampling (probability sampling)',
+                    $Parsedown->line(
+                        '<span>Systematic sampling (quasirandom sampling)</span><span>Your individuals (observations, cases) were chosen randomly with a system</span>'
+                    ) => 'Systematic sampling (quasirandom sampling)',
+                    $Parsedown->line(
+                        '<span>Stratified sampling</span><span>Your individuals (observations, cases) were chosen randomly from subgroups (strata)</span>'
+                    ) => 'Stratified sampling',
+                    $Parsedown->line(
+                        '<span>Quota sampling</span><span>Your individuals (observations, cases) were chosen non-randomly on the basis of a specific plan</span>'
+                    ) => 'Quota sampling',
                     'Other' => 'Other',
-                    ],
+                ],
                 'label_attr' => ['class' => 'MetaData-Label'],
+                'label_html' => true,
                 'attr' => [
-                    'class' => 'MetaData-TextInput',
-                ]
+                    'class' => 'p-1',
+                ],
+                'choice_attr' => function () {
+                    return ['class' => 'RadioButton-Input'];
+                }
             ])
             ->add("otherSamplingMethod", TextareaType::class, [
                 'required' => false,
-                'label_attr' => ['class' => 'MetaData-Label'],
-                'attr' => [
-                    'class' => 'MetaData-TextInput',
-                ]
+                'label' => 'If other, please describe your sampling method (see help for a list of methods)',
             ])
             ->add(MetaDataDictionary::SAMPLE_SIZE, TextType::class, [
                 'required' => false,

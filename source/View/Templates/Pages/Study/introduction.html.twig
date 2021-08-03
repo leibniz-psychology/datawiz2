@@ -1,4 +1,7 @@
 {% extends "Layouts/threeColumn.html.twig" %}
+{% from "Components/_macros.html.twig" import helpButton %}
+{% from "Components/_macros.html.twig" import sectionHelp %}
+{% from "Components/_macros.html.twig" import formHelp %}
 
 {% set isPartOfStudyDocumentation = true %}
 
@@ -7,7 +10,44 @@
 {% endblock %}
 
 {% block content %}
-    <div class="inline-block p-4 m-8 text-2xl border-2 border-gray-800 rounded-lg shadow-lg">
+    <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
         Getting Started
-    </div>Helpful information to start your documentation...
+    </h2>
+
+    <div class="MetaData-Title">
+        <h3 class="MetaData-Legend">
+            Step-by-step
+        </h3>
+    </div>
+    <div class="MetaData-Widget markdown">
+        {{ source("Help/study_introduction/step_by_step.md")|markdown_to_html }}
+    </div>
+
+    <div class="mt-8 MetaData-Title">
+        <h3 class="MetaData-Legend">
+            Get help
+        </h3>
+        {{ helpButton("help_intro") }}
+    </div>
+    <div class="mb-6 MetaData-Widget">
+        Hit the help button{{ helpButton("help_intro") }} next to a topic if something's unclear. A help text will appear on the right side of the screen. There you'll find practical examples and online resources that help clear things up.
+    </div>
+
+    {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
+        request: app.request,
+        prevUrl: 'Study-documentation',
+        prevTitle: 'Basic information',
+        nextUrl: 'Study-documentation',
+        nextTitle: 'Basic information',
+        form: null
+    })) }}
+
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("study_introduction") }}
+{% endblock %}
+
+{% block help_for_metadata %}
+    {{ formHelp("study_introduction", "help_intro") }}
 {% endblock %}

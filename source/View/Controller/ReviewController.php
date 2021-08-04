@@ -23,12 +23,13 @@ class ReviewController extends DataWizController
     {
         $entityAtChange = $this->getEntityAtChange($uuid);
 
-        $collectable = ReviewDataCollectable::createFrom('Short Name',
-            ['1234', 'another value'], function () { return true; }, 'none');
-
         return $this->render('Pages/Review/index.html.twig', [
             'experimentName' => $entityAtChange->getSettingsMetaDataGroup()->getShortName(),
-            'collectable' => $collectable,
+            'basicInfoReview' => $entityAtChange->getBasicInformationMetaDataGroup()->getReviewCollection(),
+            'theoryReview' => $entityAtChange->getTheoryMetaDataGroup()->getReviewCollection(),
+            'methodReview' => $entityAtChange->getMethodMetaDataGroup()->getReviewCollection(),
+            'measureReview' => $entityAtChange->getMeasureMetaDataGroup()->getReviewCollection(),
+            'sampleReview' => $entityAtChange->getSampleMetaDataGroup()->getReviewCollection(),
         ]);
     }
 

@@ -24,11 +24,47 @@
     </p>
 
     <article>
-        {% for i in range(0, 30) %}
-        {{ render(controller('App\\View\\Controller\\ReviewController::displayValue', {
-            dataCollectable: collectable
-        })) }}
-        {% endfor %}
+        <section>
+            <h2>Basic Information</h2>
+            {% for reviewItem in basicInfoReview %}
+            {{ render(controller('App\\View\\Controller\\ReviewController::displayValue', {
+                dataCollectable: reviewItem
+            })) }}
+            {% endfor %}
+        </section>
+        <section>
+            <h2>Objectives & hypotheses</h2>
+            {% for reviewItem in theoryReview %}
+                {{ render(controller('App\\View\\Controller\\ReviewController::displayValue', {
+                    dataCollectable: reviewItem
+                })) }}
+            {% endfor %}
+        </section>
+        <section>
+            <h2>Study Method</h2>
+            {% for reviewItem in methodReview %}
+                {{ render(controller('App\\View\\Controller\\ReviewController::displayValue', {
+                    dataCollectable: reviewItem
+                })) }}
+            {% endfor %}
+        </section>
+        <section>
+            <h2>Data Collection</h2>
+            {% for reviewItem in measureReview %}
+                {{ render(controller('App\\View\\Controller\\ReviewController::displayValue', {
+                    dataCollectable: reviewItem
+                })) }}
+            {% endfor %}
+        </section>
+        <section>
+            <h2>Sampling</h2>
+            {% for reviewItem in sampleReview %}
+                {{ render(controller('App\\View\\Controller\\ReviewController::displayValue', {
+                    dataCollectable: reviewItem
+                })) }}
+            {% endfor %}
+        </section>
+
     </article>
 
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {

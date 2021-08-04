@@ -14,12 +14,14 @@ use App\Domain\Definition\Study\SampleSizeable;
 use App\Domain\Model\Administration\UuidEntity;
 use App\Questionnaire\Forms\SampleType;
 use App\Questionnaire\Questionable;
+use App\Review\Reviewable;
+use App\Review\ReviewDataCollectable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
  */
-class SampleMetaDataGroup extends UuidEntity implements MetaDataValuable, Questionable
+class SampleMetaDataGroup extends UuidEntity implements MetaDataValuable, Questionable, Reviewable
 {
     /**
      * One Sample section has One Experiment.
@@ -47,6 +49,19 @@ class SampleMetaDataGroup extends UuidEntity implements MetaDataValuable, Questi
             MetaDataDictionary::SAMPLING_METHOD,
             MetaDataDictionary::SAMPLE_SIZE,
             MetaDataDictionary::POWER_ANALYSIS,
+        ];
+    }
+
+    public function getReviewCollection()
+    {
+        return [
+            ReviewDataCollectable::createFrom('Participants', $this->getParticipants(), function () {return true;}),
+            ReviewDataCollectable::createFrom('Popluation', $this->getPopulation(), function () {return true;}),
+            ReviewDataCollectable::createFrom('Inclusion criteria', $this->getInclusionCriteria(), function () {return true;}),
+            ReviewDataCollectable::createFrom('Exclusion criteria', $this->getExclusionCriteria(), function () {return true;}),
+            ReviewDataCollectable::createFrom('Sampling Method', $this->getSamplingMethod(), function () {return true;}),
+            ReviewDataCollectable::createFrom('Sample Size', $this->getSampleSize(), function () {return true;}),
+            ReviewDataCollectable::createFrom('Power analysis', $this->getPowerAnalysis(), function () {return true;}),
         ];
     }
 

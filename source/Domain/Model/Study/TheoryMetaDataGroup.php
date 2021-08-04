@@ -9,12 +9,14 @@ use App\Domain\Definition\Study\Objectivable;
 use App\Domain\Model\Administration\UuidEntity;
 use App\Questionnaire\Forms\TheoryType;
 use App\Questionnaire\Questionable;
+use App\Review\Reviewable;
+use App\Review\ReviewDataCollectable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
  */
-class TheoryMetaDataGroup extends UuidEntity implements MetaDataValuable, Questionable
+class TheoryMetaDataGroup extends UuidEntity implements MetaDataValuable, Questionable, Reviewable
 {
     /**
      * One Theory section has One Experiment.
@@ -33,6 +35,14 @@ class TheoryMetaDataGroup extends UuidEntity implements MetaDataValuable, Questi
         return [
             MetaDataDictionary::OBJECTIVE,
             MetaDataDictionary::HYPOTHESIS,
+        ];
+    }
+
+    public function getReviewCollection()
+    {
+        return [
+            ReviewDataCollectable::createFrom('Objectives', $this->getObjective(), function () {return true;}),
+            ReviewDataCollectable::createFrom('Hypotheses', $this->getObjective(), function () {return true;}),
         ];
     }
 

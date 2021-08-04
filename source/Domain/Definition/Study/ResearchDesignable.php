@@ -34,10 +34,10 @@ trait ResearchDesignable
 
     public function getDesignDetails()
     {
-        if ($this->research_design === "experimental") {
+        if ($this->research_design === "Experimental") {
             return $this->experimental_details;
         }
-        elseif ($this->research_design === "non-experimental") {
+        elseif ($this->research_design === "Non-Experimental") {
             return $this->non_experimental_details;
         } else {
             return null;

@@ -12,12 +12,14 @@ use App\Domain\Definition\Study\Titleable;
 use App\Domain\Model\Administration\UuidEntity;
 use App\Questionnaire\Forms\BasicInformationType;
 use App\Questionnaire\Questionable;
+use App\Review\Reviewable;
+use App\Review\ReviewDataCollectable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
  */
-class BasicInformationMetaDataGroup extends UuidEntity implements MetaDataValuable, Questionable
+class BasicInformationMetaDataGroup extends UuidEntity implements MetaDataValuable, Questionable, Reviewable
 {
     /**
      * One basic Information section has One Experiment.
@@ -42,6 +44,15 @@ class BasicInformationMetaDataGroup extends UuidEntity implements MetaDataValuab
            MetaDataDictionary::DESCRIPTION,
            MetaDataDictionary::RELATED_PUBS,
        ];
+    }
+
+    public function getReviewCollection()
+    {
+        return [
+            ReviewDataCollectable::createFrom('Title', $this->getTitle(), function () {return true;}),
+            ReviewDataCollectable::createFrom('Description', $this->getDescription(), function () {return true;}),
+            ReviewDataCollectable::createFrom('Related Publications', $this->getRelatedPublications(), function () {return true;})
+        ];
     }
 
     public function getFormTypeForEntity(): string

@@ -2,7 +2,6 @@
 
 namespace App\Domain\Model\Administration;
 
-use App\Review\Displayable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Component\Uid\Uuid;
@@ -16,8 +15,6 @@ abstract class UuidEntity
      * @ORM\CustomIdGenerator(class=UuidGenerator::class)
      */
     protected $id;
-
-    use Displayable;
 
     public function getId()
     {

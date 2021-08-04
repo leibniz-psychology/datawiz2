@@ -13,12 +13,14 @@ use App\Domain\Definition\Study\Settable;
 use App\Domain\Model\Administration\UuidEntity;
 use App\Questionnaire\Forms\MethodType;
 use App\Questionnaire\Questionable;
+use App\Review\Reviewable;
+use App\Review\ReviewDataCollectable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
  */
-class MethodMetaDataGroup extends UuidEntity implements MetaDataValuable, Questionable
+class MethodMetaDataGroup extends UuidEntity implements MetaDataValuable, Questionable, Reviewable
 {
     /**
      * One basic Information section has One Experiment.
@@ -42,6 +44,18 @@ class MethodMetaDataGroup extends UuidEntity implements MetaDataValuable, Questi
             MetaDataDictionary::MANIPULATIONS,
             MetaDataDictionary::EXPERIMENTAL_DESIGN,
             MetaDataDictionary::CONTROL_OPERATIONS,
+        ];
+    }
+
+
+    public function getReviewCollection()
+    {
+        return [
+            ReviewDataCollectable::createFrom('Research Design', $this->getDesignDetails(), function () {return true;}),
+            ReviewDataCollectable::createFrom('Setting', $this->getSetting(), function () {return true;}),
+            ReviewDataCollectable::createFrom('Manipulations', $this->getManipulations(), function () {return true;}), // TODO: conditional entry
+            ReviewDataCollectable::createFrom('Design', $this->getExperimentalDesign(), function () {return true;}), // TODO: conditional entry
+            ReviewDataCollectable::createFrom('Control operations', $this->getControlOperations(), function () {return true;}),// TODO: conditional entry
         ];
     }
 

@@ -19,7 +19,13 @@ class MeasureType extends AbstractType
             ->add(MetaDataDictionary::MEASURES,  CollectionType::class, [
                 'required' => false,
                 'entry_type' => TextType::class,
-                'entry_options' => ['label' => false],
+                'entry_options' => [
+                    'label' => false,
+                    'attr' => [
+                        'x-data' => '',
+                        'x-on:keydown.enter.prevent' => '',
+                    ]
+                ],
                 'allow_add' => true,
                 'prototype' => true,
                 'allow_delete' => true,
@@ -35,7 +41,13 @@ class MeasureType extends AbstractType
             ->add(MetaDataDictionary::APPARATUS, CollectionType::class, [
                 'required' => false,
                 'entry_type' => TextType::class,
-                'entry_options' => ['label' => false],
+                'entry_options' => [
+                    'label' => false,
+                    'attr' => [
+                        'x-data' => '',
+                        'x-on:keydown.enter.prevent' => '',
+                    ]
+                ],
                 'allow_add' => true,
                 'prototype' => true,
                 'allow_delete' => true,

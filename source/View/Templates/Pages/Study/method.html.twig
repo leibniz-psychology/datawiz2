@@ -67,25 +67,28 @@
                 {%- for choice in form.nonExperimentalDetails %}
                     {{ form_widget(choice) }}
 
+                    {{ form_label(choice, null, {
+                        "label_attr":           {
+                            'class': 'RadioButton-Label',
+                            '@click': '$store.app.nonExperimentalType = "' ~ choice.vars.value ~ '"',
+                        },
+                        'label_html': true,
+                    }) }}
+                    
                     {% if choice.vars.value == 'Observational study' %}
-                        {{ form_label(choice, null, {
-                            "label_attr":           {
-                                'class': 'RadioButton-Label',
-                                'x-data': '{ ...observationalTypeForm(), defaultLabel: "' ~ choice.vars.label ~ '", labelValue: "' ~ choice.vars.value ~ '" }',
-                                '@click': '$store.app.nonExperimentalType = "' ~ choice.vars.value ~ '"',
-                                'x-html': 'addFormToLabel()'
-                            },
-                            'label_html': true,
-                        }) }}
-
-                    {% else %}
-                        {{ form_label(choice, null, {
-                            "label_attr":           {
-                                'class': 'RadioButton-Label',
-                                '@click': '$store.app.nonExperimentalType = "' ~ choice.vars.value ~ '"',
-                            },
-                            'label_html': true,
-                        }) }}
+                        {{- form_label(form.observationalType, null, {
+                            'label_attr': {
+                                'class': 'ml-[1.375rem] mt-1 block',
+                            }
+                        }) -}}
+                        {{- form_errors(form.observationalType) -}}
+                        {{- form_widget(form.observationalType, {
+                            'attr': {
+                                'class': 'ml-[1.375rem] disabled:opacity-50 p-1 mt-1 block',
+                                'x-data': '',
+                                'x-bind:disabled': '$store.app.nonExperimentalType !== "' ~ choice.vars.value ~ '"'
+                            }
+                        }) -}}
                     {% endif %}
                 {% endfor -%}
             </div>
@@ -209,28 +212,6 @@
         nextTitle: 'Data collection',
         form: form
     })) }}
-
-    <script>
-        function observationalTypeForm() {
-            return {
-                addFormToLabel() {
-                    return this.defaultLabel + `{{- form_label(form.observationalType, null, {
-                        'label_attr': {
-                            'class': 'ml-[1.375rem] w-full mt-1',
-                        }
-                    }) -}}
-                    {{- form_errors(form.observationalType) -}}
-                    {{- form_widget(form.observationalType, {
-                        'attr': {
-                            'class': 'ml-[1.375rem] disabled:opacity-50 p-1 mt-1',
-                            'x-data': '',
-                            'x-bind:disabled': '$store.app.nonExperimentalType !== "${this.labelValue}"'
-                        }
-                    }) -}}`
-                }
-            }
-        }
-    </script>
 
     {{ form_end(form) }}
 {% endblock %}

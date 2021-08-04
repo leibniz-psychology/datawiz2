@@ -1,0 +1,42 @@
+{% extends "Layouts/threeColumn.html.twig" %}
+{% from "Components/_macros.html.twig" import helpButton %}
+{% from "Components/_macros.html.twig" import sectionHelp %}
+{% from "Components/_macros.html.twig" import formHelp %}
+{% from "Components/_macros.html.twig" import wizNav %}
+
+{% set isPartOfStudyDocumentation = true %}
+{% set isStudyDescriptionSubItem = false %}
+
+{% block title %}
+    Data Overview
+{% endblock %}
+
+{% block content %}
+    {# TODO: This site should be completely independent from changes at the trait level #}
+    {# Could be archieve with an Reviewable interface which asks for data-structure
+       processed by the template and configured by the entity which implements the method
+    #}
+    <div class="inline-block p-4 m-8 text-2xl border-2 border-gray-800 rounded-lg shadow-lg">
+        Review for {{ experimentName }}
+    </div>
+    <p>
+        Please check your given information for completion and correctness.
+    </p>
+
+    <article>
+        {% for i in range(0, 30) %}
+        {{ render(controller('App\\View\\Controller\\ReviewController::displayValue', {
+            dataCollectable: collectable
+        })) }}
+        {% endfor %}
+    </article>
+
+    {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
+        request: app.request,
+        prevUrl: 'Study-materials',
+        prevTitle: 'Upload materials',
+        nextUrl: 'Study-review',
+        nextTitle: 'Export study',
+        form: null
+    })) }}
+{% endblock %}

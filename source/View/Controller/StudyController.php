@@ -281,21 +281,7 @@ class StudyController extends DataWizController
         ]);
     }
 
-    /**
-     * @Route("/{uuid}/review", name="review")
-     *
-     * @param string $uuid
-     * @param Request $request
-     * @return Response
-     */
-    public function reviewAction(string $uuid, Request $request): Response
-    {
-        $entityAtChange = $this->getEntityAtChange($uuid);
 
-        return $this->render('Pages/Study/review.html.twig', [
-            'experiment' => $entityAtChange,
-        ]);
-    }
 
     protected function getEntityAtChange(string $uuid, string $className = Experiment::class)
     {

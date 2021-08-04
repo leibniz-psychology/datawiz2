@@ -1,8 +1,12 @@
-{% if arrayRendered is defined %}
-<ul>
-    {% for element in arrayRendered %}
-    <li> {{ element }}</li>
-    {% endfor %}
-</ul>
+{% if condition %}
+    <p>
+        <span>{{ name }}</span>:
+        <br>
+        <ul>
+            {% for entry in data %}
+                <li>{{ entry }}</li>
+            {% endfor %}
+        </ul>
+    </p>
 {% endif %}
 

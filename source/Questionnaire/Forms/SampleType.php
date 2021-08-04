@@ -31,7 +31,13 @@ class SampleType extends AbstractType
             ->add(MetaDataDictionary::INCLUSION_CRITERIA, CollectionType::class, [
                 'required' => false,
                 'entry_type' => TextType::class,
-                'entry_options' => ['label' => false],
+                'entry_options' => [
+                    'label' => false,
+                    'attr' => [
+                        'x-data' => '',
+                        'x-on:keydown.enter.prevent' => '',
+                    ]
+                ],
                 'allow_add' => true,
                 'prototype' => true,
                 'allow_delete' => true,
@@ -47,7 +53,13 @@ class SampleType extends AbstractType
             ->add(MetaDataDictionary::EXCLUSION_CRITERIA, CollectionType::class, [
                 'required' => false,
                 'entry_type' => TextType::class,
-                'entry_options' => ['label' => false],
+                'entry_options' => [
+                    'label' => false,
+                    'attr' => [
+                        'x-data' => '',
+                        'x-on:keydown.enter.prevent' => '',
+                    ]
+                ],
                 'allow_add' => true,
                 'prototype' => true,
                 'allow_delete' => true,
@@ -63,7 +75,13 @@ class SampleType extends AbstractType
             ->add(MetaDataDictionary::POPULATION, CollectionType::class, [
                 'required' => false,
                 'entry_type' => TextType::class,
-                'entry_options' => ['label' => false],
+                'entry_options' => [
+                    'label' => false,
+                    'attr' => [
+                        'x-data' => '',
+                        'x-on:keydown.enter.prevent' => '',
+                    ]
+                ],
                 'allow_add' => true,
                 'prototype' => true,
                 'allow_delete' => true,

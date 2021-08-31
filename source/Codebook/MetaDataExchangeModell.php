@@ -4,7 +4,6 @@
 namespace App\Codebook;
 
 
-
 class MetaDataExchangeModell extends AbstractJsonSerializeModell
 {
     private $variables;
@@ -29,7 +28,7 @@ class MetaDataExchangeModell extends AbstractJsonSerializeModell
         $this->variables = array_diff($this->variables, [$removedVariable]);
     }
 
-    public static function createFrom(array $variables ): MetaDataExchangeModell
+    public static function createFrom(array $variables): MetaDataExchangeModell
     {
         $exchangeModell = new MetaDataExchangeModell();
 
@@ -45,9 +44,14 @@ class MetaDataExchangeModell extends AbstractJsonSerializeModell
     public static function createEmpty(): MetaDataExchangeModell
     {
         $modell = new MetaDataExchangeModell();
-        $modell->addVariable(VariableModell::createEmpty("1"));
-        $modell->addVariable(VariableModell::createEmpty("2"));
-        $modell->addVariable(VariableModell::createEmpty("3"));
+
+        // $modell->addVariable(VariableModell::createEmpty("1"));
+        // $modell->addVariable(VariableModell::createEmpty("2"));
+        // $modell->addVariable(VariableModell::createEmpty("3"));
+
+        for ($i = 1; $i <= 30; $i++) {
+            $modell->addVariable(VariableModell::createEmpty("$i"));
+        }
         return $modell;
     }
 

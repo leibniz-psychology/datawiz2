@@ -7,18 +7,19 @@
         <div class="flex flex-col">
             <div class="">
                 <div class="inline-block min-w-full align-middle">
+                    {# <div class="border-b border-gray-400 overflow-y-auto max-h-[calc(100vh-3.5rem)]"> #}
                     <div class="border-b border-gray-400">
                         <table class="min-w-full border-separate table-fixed" style="border-spacing: 0">
-                            <thead>
+                            <thead class="sticky top-[3.5rem] z-10">
                             <tr>
                                 <th scope="col"
                                     class="pl-3 pr-1 text-sm text-left text-gray-700 border-b border-mono-500 bg-mono-200">
                                     <input type="checkbox" name="" id="">
                                 </th>
                                 <th scope="col" class="CodeBookHead-Cell">
-                                    <span class="sr-only">No.</span>
+                                    <span class="sr-only">ID</span>
                                 </th>
-                                <th scope="col" class="CodeBookHead-Cell">
+                                <th scope="col" class="CodeBookHead-Cell w-[15%]">
                                     Variable name
                                     <button class="inline-flex items-center justify-center w-6 h-6 ml-0 MetaData-HelpButton"
                                             @click="$store.codebookSettings.showHelp.sideBar = true; $store.codebookSettings.showHelp.variableName = true">
@@ -26,35 +27,35 @@
                                     </button>
                                     </span>
                                 </th>
-                                <th scope="col" class="CodeBookHead-Cell">
+                                <th scope="col" class="CodeBookHead-Cell w-[20%]">
                                     Label
                                     <button class="inline-flex items-center justify-center w-6 h-6 ml-0 MetaData-HelpButton"
                                             @click="$store.codebookSettings.showHelp.sideBar = true; $store.codebookSettings.showHelp.variableLabel = true">
                                         ?
                                     </button>
                                 </th>
-                                <th scope="col" class="CodeBookHead-Cell">
-                                    Instruction
+                                <th scope="col" class="CodeBookHead-Cell w-[20%]">
+                                    Item text
                                     <button class="inline-flex items-center justify-center w-6 h-6 ml-0 MetaData-HelpButton"
                                             @click="$store.codebookSettings.showHelp.sideBar = true; $store.codebookSettings.showHelp.itemText = true">
                                         ?
                                     </button>
                                 </th>
-                                <th scope="col" class="CodeBookHead-Cell">
+                                <th scope="col" class="CodeBookHead-Cell w-[15%]">
                                     Value labels
                                     <button class="inline-flex items-center justify-center w-6 h-6 ml-0 MetaData-HelpButton"
                                             @click="$store.codebookSettings.showHelp.sideBar = true; $store.codebookSettings.showHelp.valueLabels = true">
                                         ?
                                     </button>
                                 </th>
-                                <th scope="col" class="CodeBookHead-Cell">
+                                <th scope="col" class="CodeBookHead-Cell w-[15%]">
                                     Missings
                                     <button class="inline-flex items-center justify-center w-6 h-6 ml-0 MetaData-HelpButton"
                                             @click="$store.codebookSettings.showHelp.sideBar = true; $store.codebookSettings.showHelp.missings = true">
                                         ?
                                     </button>
                                 </th>
-                                <th scope="col" class="CodeBookHead-Cell">
+                                <th scope="col" class="CodeBookHead-Cell w-[15%]">
                                     Measure
                                     <button class="inline-flex items-center justify-center w-6 h-6 ml-0 MetaData-HelpButton"
                                             @click="$store.codebookSettings.showHelp.sideBar = true; $store.codebookSettings.showHelp.measure = true">
@@ -67,13 +68,16 @@
                             <template x-for="(item, index) in filteredVariables" :key="index">
                                 <tr class="even:bg-mono-100 odd:bg-mono-50 TableRow"
                                     @mousedown="$store.codebook.currentVariableID = item.id; $store.codebookSettings.showHelp.sideBar = false"
-                                    :class="item.id === $store.codebook.currentVariableID ? '!bg-blue-100' : ''">
+                                    :class="item.id === $store.codebook.currentVariableID ? '!bg-sky-100' : ''">
                                     <td class="pl-3 pr-1 text-sm text-gray-700">
-                                        <input type="checkbox" name="" id="">
+                                        <input type="checkbox" name="" id=""
+                                               @focus="$store.codebook.currentVariableID = item.id">
                                     </td>
-                                    <td class="items-center px-1 text-sm text-gray-700">
-                                        <a href="#" class="inline-flex border-b-[1px] border-mono-900">
-                                            <div x-text="item.id"></div>
+                                    <td class="items-center px-1 text-sm text-right text-gray-700">
+                                        <a href="#" class="inline-flex border-b-[1px] border-mono-900 items-center"
+                                           @focus="$store.codebook.currentVariableID = item.id">
+                                            <span x-text="item.id" :id="`variable_${item.id}`"
+                                                  class="scroll-mt-28"></span>
                                             {# <span class="mt-0.5 iconify" data-icon="line-md:rotate-180" data-inline="false"></span> #}
                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                  xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
@@ -95,56 +99,69 @@
                                         </a>
                                     </td>
                                     {# Variable name #}
-                                    <td class="w-[10%] text-sm">
+                                    <td class="w-[15%] text-sm">
                                         <input class="w-full p-1 text-gray-700 border"
-                                               x-model="$store.codebook.getOriginalVariable(item.id).name">
+                                               x-model="$store.codebook.getOriginalVariable(item.id).name"
+                                               @focus="$store.codebook.currentVariableID = item.id">
                                     </td>
                                     {# Label #}
                                     <td class="w-[20%] py-1 text-sm">
                                         <input class="w-full p-1 text-gray-700 border"
-                                               x-model="$store.codebook.getOriginalVariable(item.id).label">
+                                               x-model="$store.codebook.getOriginalVariable(item.id).label"
+                                               @focus="$store.codebook.currentVariableID = item.id">
                                     </td>
                                     {# Instruction #}
                                     <td class="w-[20%] text-sm">
                                         <input class="w-full p-1 text-gray-700 border"
-                                               x-model="$store.codebook.getOriginalVariable(item.id).itemText">
+                                               x-model="$store.codebook.getOriginalVariable(item.id).itemText"
+                                               @focus="$store.codebook.currentVariableID = item.id">
                                     </td>
                                     {# Value labels #}
                                     <td class="w-[15%] text-sm text-gray-700 max-w-0">
                                         <template
                                                 x-if="$store.codebook.getOriginalVariable(item.id).values.length === 0 || $store.codebook.getOriginalVariable(item.id).values[0].name === ''">
-                                            <button class="">Add
+                                            <button class=""
+                                                    @click="$store.codebook.currentVariableID = item.id; document.querySelector(`.CodeInput_values_${ $store.codebook.getOriginalVariable(item.id).values.length - 1}`).focus()"
+                                                    @focus="$store.codebook.currentVariableID = item.id">
+                                                Add
                                             </button>
                                         </template>
                                         <template
                                                 x-if="$store.codebook.getOriginalVariable(item.id).values.length > 0 && $store.codebook.getOriginalVariable(item.id).values[0].name !== ''">
-                                            <a class="block p-1 underline truncate" href="#"
-                                               x-tooltip.html.theme.light-border="`<ul> ${$store.codebook.getOriginalVariable(item.id).values.map(item => {return '<li>' + item.name + ' = ' + item.label + '<li>'}).join('')}</ul>`"
-                                               x-text="$store.codebook.getOriginalVariable(item.id).values.map(item => {return item.name + ' = ' + item.label}).join()"></a>
+                                            <a class="block p-1 underline truncate PopupLink" role="button" tabindex="0"
+                                               x-data="popup(item, 'values')" x-bind="labels"
+                                               @focus="$store.codebook.currentVariableID = item.id"></a>
                                         </template>
                                     </td>
                                     {# Missings #}
                                     <td class="w-[15%] text-sm text-gray-700 max-w-0">
                                         <template
                                                 x-if="$store.codebook.getOriginalVariable(item.id).missings.length === 0 || $store.codebook.getOriginalVariable(item.id).missings[0].name === ''">
-                                            <button class="">Add
+                                            <button class=""
+                                                    @click="$store.codebook.currentVariableID = item.id; document.querySelector(`.CodeInput_missings_${ $store.codebook.getOriginalVariable(item.id).missings.length - 1}`).focus()"
+                                                    @focus="$store.codebook.currentVariableID = item.id">
+                                                Add
                                             </button>
                                         </template>
                                         <template
                                                 x-if="$store.codebook.getOriginalVariable(item.id).missings.length > 0 && $store.codebook.getOriginalVariable(item.id).missings[0].name !== ''">
-                                            <a class="block p-1 underline truncate" role="button" tabindex="0"
-                                               x-tooltip.html.theme.light-border="`<ul> ${$store.codebook.getOriginalVariable(item.id).missings.map(item => {return '<li>' + item.name + ' = ' + item.label + '<li>'}).join('')}</ul>`"
-                                               x-text="$store.codebook.getOriginalVariable(item.id).missings.map(item => {return item.name + ' = ' + item.label}).join(', ')"></a>
+                                            <a class="block p-1 underline truncate PopupLink" role="button" tabindex="0"
+                                               x-data="popup(item, 'missings')" x-bind="labels"
+                                               @focus="$store.codebook.currentVariableID = item.id"></a>
                                         </template>
                                     </td>
                                     {# Measure #}
-                                    <td class="w-[15%] text-sm text-gray-700 ">
+                                    <td class="w-[10%] text-sm text-gray-700 max-w-0">
                                         <template x-if="$store.codebook.getOriginalVariable(item.id).measure === ''">
-                                            <button>Add</a>
+                                            <button @click="document.querySelector('#measureInput').focus();"
+                                                    @focus="$store.codebook.currentVariableID = item.id">Select</a>
                                         </template>
                                         <template x-if="$store.codebook.getOriginalVariable(item.id).measure !== ''">
                                             <a role="button" tabindex="0" class="block p-1 underline truncate"
-                                               x-text="$store.codebook.getOriginalVariable(item.id).measure.substring(0,30)"></a>
+                                               x-text="$store.codebook.getOriginalVariable(item.id).measure"
+                                               x-tooltip.html.theme.light-border="$store.codebook.getOriginalVariable(item.id).measure"
+                                               @click="$store.codebook.currentVariableID = item.id; document.querySelector('#measureInput').focus();"
+                                               @focus="$store.codebook.currentVariableID = item.id"></a>
                                         </template>
                                     </td>
                                 </tr>
@@ -157,14 +174,33 @@
         </div>
     </main>
 
-    <aside class="ml-1 content col-span-full md:col-start-10 md:col-end-13">
+    <aside class="col-span-full md:col-start-10 md:col-end-13"
+           :class="$store.codebookSettings.showHelp.sideBar === false ? '!bg-sky-100' : ''">
 
-        <div class="w-full border-b border-gray-400 shadow sidePanel__codebook"
-             x-show="!$store.codebookSettings.showHelp.sideBar" x-transition:enter.duration.250ms>
+        <div class="sticky w-full top-14 overflow-y-auto max-h-[calc(100vh-3.5rem)]"
+             x-show="!$store.codebookSettings.showHelp.sideBar" x-cloak>
 
-            <h2 class="px-4 py-3 font-medium tracking-wider text-left text-gray-700 border-b border-mono-500 bg-mono-200">
-                Description of variable
-                <span x-text="$store.codebook.getCurrentVariable().id ? $store.codebook.getCurrentVariable().id : ''"></span>
+            <h2 class="flex items-center justify-between px-4 py-[calc(0.5rem+1px)] font-medium text-gray-700 border-t bg-sky-100 border-mono-300 text-lg">
+                <span>Description of variable
+                <span class="px-2 shadow bg-mono-100"
+                      x-text="`${$store.codebook.getCurrentVariable().id ? $store.codebook.getCurrentVariable().id : ''}`"></span>
+                </span>
+                <span class="flex items-center">
+                    <button title="Previous variable" class="ring-inset"
+                            @click="$store.codebook.currentVariableID = $store.codebook.getPreviousVariableID(); $scroll(`#variable_${$store.codebook.currentVariableID}`, {behavior: 'smooth', offset: 160})">
+                    {# Icon: carbon:caret-left #}
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                         aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet"
+                         viewBox="0 0 32 32"><path d="M20 24l-10-8l10-8z" fill="currentColor"/></svg>
+                    </button>
+                    <button title="Next variable" class="ring-inset"
+                            @click="$store.codebook.currentVariableID = $store.codebook.getNextVariableID(); $scroll(`#variable_${$store.codebook.currentVariableID}`, {behavior: 'smooth', offset: 160})">
+                    {# Icon: carbon:caret-right #}
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                         aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet"
+                         viewBox="0 0 32 32"><path d="M12 8l10 8l-10 8z" fill="currentColor"/></svg>
+                    </button>
+                </span>
             </h2>
             <div class="px-4 mt-2 text-sm text-gray-700">
                 <span class="inline-block w-24 font-semibold text-right">Variable name:</span>
@@ -177,7 +213,7 @@
                       x-text="$store.codebook.getCurrentVariable().label ? $store.codebook.getCurrentVariable().label : ''"></span>
             </div>
             <div class="px-4 text-sm text-gray-700">
-                <span class="inline-block w-24 font-semibold text-right">Instruction:</span>
+                <span class="inline-block w-24 font-semibold text-right">Item text:</span>
                 <span class="ml-2"
                       x-text="$store.codebook.getCurrentVariable().itemText ? $store.codebook.getCurrentVariable().itemText : ''"></span>
             </div>
@@ -201,7 +237,7 @@
             <div class="px-4 py-2 text-sm text-gray-700">
                 <span class="block font-semibold">Value labels:</span>
                 <template x-if="$store.codebook.getCurrentVariable().values">
-                    {{ inputLabels('$store.codebook.getCurrentVariable().values', '+ Add another value label', '') }}
+                    {{ inputLabels('$store.codebook.getCurrentVariable().values', 'Add another value label') }}
                 </template>
                 <template x-if="!$store.codebook.getCurrentVariable().values">
                     <div>loading...</div>
@@ -210,7 +246,7 @@
             <div class="px-4 py-2 text-sm text-gray-700">
                 <span class="block font-semibold">Missings:</span>
                 <template x-if="$store.codebook.getCurrentVariable().missings">
-                    {{ inputLabels('$store.codebook.getCurrentVariable().missings', '+ Add another missing', 'label (optional)') }}
+                    {{ inputLabels('$store.codebook.getCurrentVariable().missings', 'Add another missing', 'Label (optional)', 1) }}
                 </template>
                 <template x-if="!$store.codebook.getCurrentVariable().missings">
                     <div>loading...</div>
@@ -218,13 +254,12 @@
             </div>
         </div>
 
-        <div class="w-full border-b border-gray-400 shadow sidePanel__codebook"
+        <div class="sticky w-full top-14 overflow-y-auto max-h-[calc(100vh-3.5rem)]"
              x-show="$store.codebookSettings.showHelp.sideBar" x-transition:enter.duration.250ms>
             <div class="relative">
-                <h2 class="px-4 py-3 font-medium text-gray-700 border-b border-mono-500 bg-mono-200">Codebook editor
+                <h2 class="py-3 pl-4 pr-2 text-2xl font-medium text-gray-700">Codebook editor
                     help</h2>
-                <div class="absolute top-2 right-2">
-
+                <div class="absolute top-3 right-2">
                     <button class="flex items-center justify-center px-2 py-1 border-none rounded-full shadow-none bg-mono-100 hover:bg-mono-300"
                             x-on:click="$store.codebookSettings.showHelp.sideBar = false">
                         Close Help<span class="w-6 h-6 iconify" data-icon="mdi:close" data-inline="false"></span>
@@ -232,13 +267,13 @@
                 </div>
             </div>
 
-            <div class="markdown">
+            <div class="ml-4 mr-2 markdown">
                 {{ source("Help/codebook/_section.md")|markdown_to_html }}
             </div>
 
             {{ codebookHelp("variableName", "Variable names") }}
             {{ codebookHelp("variableLabel", "Variable labels") }}
-            {{ codebookHelp("itemText", "Instruction / item text") }}
+            {{ codebookHelp("itemText", "Item text / Instruction") }}
             {{ codebookHelp("valueLabels", "Value labels") }}
             {{ codebookHelp("missings", "Missings") }}
             {{ codebookHelp("measure", "Measure") }}

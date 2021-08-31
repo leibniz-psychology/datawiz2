@@ -1,5 +1,5 @@
 .StudyNav-NavItem {
-  @apply block py-2 pl-3 pr-3 mt-1 underline bg-mono-300;
+  @apply block py-2 pl-3 pr-3 mt-1 underline bg-mono-300 ring-inset;
 }
 
 .StudyNav-NavItem_active {
@@ -14,7 +14,7 @@
 }
 
 .StudyNav-SubNavItem {
-  @apply block py-1 pl-4 pr-3 leading-tight underline bg-mono-200;
+  @apply block py-1 pl-4 pr-3 leading-tight underline bg-mono-200 ring-inset;
 }
 
 .StudyNav-SubNavItem_active {
@@ -54,7 +54,7 @@
 }
 
 .MetaData-HelpButton {
-  @apply relative w-8 h-8 px-2 ml-2 font-semibold text-gray-800 border rounded-full shadow bg-mono-100 border-mono-400 focus:outline-none focus:ring;
+  @apply relative w-8 h-8 px-2 ml-2 font-semibold text-gray-800 border rounded-full shadow bg-mono-100 border-mono-400;
   &:hover {
     @apply bg-white;
   }

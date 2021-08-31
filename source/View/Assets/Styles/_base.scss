@@ -16,14 +16,8 @@ textarea {
   @apply w-4/5 p-2 bg-white border placeholder-mono-500 border-mono-500;
 }
 
-button:focus,
-input:focus,
-textarea:focus {
-  @apply outline-none ring;
-}
-
-a:focus {
-  @apply outline-none ring ring-inset;
+*:focus {
+  @apply shadow-sm outline-none ring-2 ring-blue-600;
 }
 
 .SiteContainer {

@@ -34,7 +34,7 @@
                 {{ form_widget(choice) }}
                 {{ form_label(choice, null, {
                     'label_attr': {
-                        'class': 'RadioButton-Label items-center w-full px-2 py-2 border border-gray-500 rounded-lg',
+                        'class': 'RadioButton-Label RadioButton-Label_card items-center w-full px-2 py-2 border border-gray-500 rounded-lg',
                         '@click': '$store.app.researchDesign = "' ~ choice.vars.value ~ '"'
                     },
                     'label_html': true,

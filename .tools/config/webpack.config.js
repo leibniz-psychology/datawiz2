@@ -78,6 +78,7 @@ Encore
       plugins: [
         require("tailwindcss")("./.tools/config/tailwind.config.js"),
         require("postcss-svg")(),
+        require("autoprefixer")(),
       ],
     };
     // options.sourceMap = true;

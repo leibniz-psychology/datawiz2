@@ -6,6 +6,7 @@ body {
   @apply w-full h-full bg-mono-400;
 }
 
+// TODO remove generic button styling and create BEMable button class
 button {
   @apply px-2 py-0.5 bg-white border border-gray-500 rounded hover:bg-mono-100 shadow;
 }
@@ -13,17 +14,11 @@ button {
 input[type="password"],
 input[type="text"],
 textarea {
-  @apply w-4/5 p-2 bg-white border placeholder-mono-500 border-mono-500;
+  @apply p-2 bg-white border placeholder-mono-500 border-mono-500;
 }
 
-button:focus,
-input:focus,
-textarea:focus {
-  @apply outline-none ring;
-}
-
-a:focus {
-  @apply outline-none ring ring-inset;
+*:focus {
+  @apply shadow-sm outline-none ring-2 ring-blue-600;
 }
 
 .SiteContainer {

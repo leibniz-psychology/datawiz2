@@ -26,13 +26,13 @@
 {% endmacro %}
 
 {% macro codebookHelp(helpID, title) %}
-    <div class="markdown">
+    <div class="ml-4 mr-2 markdown">
         <h3>
             <a role="button" tabindex="0"
                @click="$store.codebookSettings.showHelp.{{ helpID }} = !$store.codebookSettings.showHelp.{{ helpID }}"
                class="underline">{{ title }}</a>
         </h3>
-        <div x-show="$store.codebookSettings.showHelp.{{ helpID }}">
+        <div x-show="$store.codebookSettings.showHelp.{{ helpID }}" x-cloak>
             {{ source("Help/codebook/#{helpID}.md")|markdown_to_html }}
         </div>
     </div>
@@ -98,22 +98,30 @@ the form.
     </div>
 {% endmacro %}
 
-{% macro inputLabels(labels, addText = 'Add another +', placeHolder = 'Item Name') %}
-    <div class="mt-1 mb-2">
+{% macro inputLabels(labels, addText = 'Add another +', placeHolder, isOfTypeMissing = 0) %}
+    <div class="mt-1 mb-2" x-data="{ type: 'values' }" x-init="if ({{ isOfTypeMissing }}) { type = 'missings'; }">
         <template x-for="(item, index) in {{ labels }}" :key="index">
             <div class="mt-0.5" x-ref="inputContainer">
-                <div class="inline-flex items-center">
-                    <input class="w-[50%] p-2 bg-white border placeholder-mono-500 border-mono-500" rows="1"
-                           autocomplete="off" x-on:keydown.enter.prevent="if (index === {{ labels }}.length - 1) {
-                            {{ labels }}.push({name: '', label: ''});
-                            }" x-model="item.name">
+                <div class="inline-flex items-center w-full">
+                    <input class="w-[50%] p-1 bg-white border placeholder-mono-500" rows="1"
+                           :class="`CodeInput_${type}_${index}`"
+                           autocomplete="off" x-on:keydown.enter.prevent="
+                            if (index === {{ labels }}.length - 1 && (type === 'missings' || document.querySelector(`.ValueInput_${type}_${index}`).value !== '') && $el.value !== '') {
+                                {{ labels }}.push({name: '', label: ''});
+                                $nextTick(() => {document.querySelector(`.CodeInput_${type}_${ {{ labels }}.length - 1}`).focus()});
+                            }"
+                            x-model="item.name">
                     <span class="mx-1">=</span>
-                    <input class="w-full p-2 bg-white border placeholder-mono-500 border-mono-500" rows="1"
+                    <input class="w-full p-1 bg-white border placeholder-mono-500" rows="1"
+                           :class="`ValueInput_${type}_${index}`"
                            autocomplete="off" placeholder="{{ placeHolder }}"
-                           x-on:keydown.enter.prevent="if (index === {{ labels }}.length - 1) {
-                            {{ labels }}.push({name: '', label: ''});
-                        }" x-model="item.label">
-                    <button class="h-full ml-1 hover:text-mono-500"
+                           x-on:keydown.enter.prevent="
+                            if (index === {{ labels }}.length - 1 && document.querySelector(`.CodeInput_${type}_${index}`).value !== '' && $el.value !== '') {
+                                {{ labels }}.push({name: '', label: ''});
+                                $nextTick(() => {document.querySelector(`.CodeInput_${type}_${ {{ labels }}.length - 1}`).focus()});
+                            }"
+                        x-model="item.label">
+                    <button title="Remove" class="h-full ml-1 hover:text-mono-500"
                             @click="if ({{ labels }}.length > 1) {{ labels }}.splice(index, 1); else if ({{ labels }}.length === 1) { {{ labels }}[index] = {name: '', label: ''} };">
                         {# <span class="iconify" data-icon="clarity:remove-solid" data-inline="false"></span> #}
                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
@@ -121,7 +129,6 @@ the form.
                              height="1em"
                              style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);"
                              preserveaspectratio="xMidYMid meet" viewbox="0 0 36 36">
-                            <title>Remove</title>
                             <path class="clr-i-solid clr-i-solid-path-1"
                                   d="M18 2a16 16 0 1 0 16 16A16 16 0 0 0 18 2zm8 22.1a1.4 1.4 0 0 1-2 2l-6-6l-6 6.02a1.4 1.4 0 1 1-2-2l6-6.04l-6.17-6.22a1.4 1.4 0 1 1 2-2L18 16.1l6.17-6.17a1.4 1.4 0 1 1 2 2L20 18.08z"
                                   fill="currentColor"/>
@@ -130,8 +137,11 @@ the form.
                 </div>
             </div>
         </template>
-        <div class="flex mt-1">
-            <button class="underline" @click="{{ labels }}.push({name: '', label: ''});">{{ addText }}</button>
+        <div class="mt-2">
+            <button class="flex items-center" @click="{{ labels }}.push({name: '', label: ''}); $nextTick(() => {document.querySelector(`.CodeInput_${type}_${ {{ labels }}.length - 1}`).focus()})">
+            {# Icon: fluent:add-20-regular #}
+            <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 20"><g fill="none"><path d="M10 2.5a.5.5 0 0 0-1 0V9H2.5a.5.5 0 0 0 0 1H9v6.5a.5.5 0 0 0 1 0V10h6.5a.5.5 0 0 0 0-1H10V2.5z" fill="currentColor"/></g></svg>
+            {{ addText }}</button>
         </div>
     </div>
 {% endmacro %}

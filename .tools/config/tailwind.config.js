@@ -14,6 +14,7 @@ module.exports = {
     extend: {
       colors: {
         mono: colors.warmGray,
+        sky: colors.sky,
       },
       screens: {
         xl: "1440px",

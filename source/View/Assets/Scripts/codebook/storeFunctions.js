@@ -31,4 +31,21 @@ export default {
       )[0];
     return currVar;
   },
+  getPreviousVariableID() {
+    const currentVariableIndex = this.variables.findIndex(
+      (variable) => variable.id === this.currentVariableID
+    );
+    const previousVariableIndex =
+      (currentVariableIndex + this.variables.length - 1) %
+      this.variables.length;
+    return this.variables[previousVariableIndex].id;
+  },
+  getNextVariableID() {
+    const currentVariableIndex = this.variables.findIndex(
+      (variable) => variable.id === this.currentVariableID
+    );
+    const nextVariableIndex =
+      (currentVariableIndex + 1) % this.variables.length;
+    return this.variables[nextVariableIndex].id;
+  },
 };

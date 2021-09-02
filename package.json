@@ -1,10 +1,11 @@
 {
   "devDependencies": {
     "@a2lix/symfony-collection": "^0.4.0",
-    "@ryangjchandler/alpine-tooltip": "^0.1.2",
+    "@alpine-collective/toolkit-scroll": "^1.0.0",
+    "@ryangjchandler/alpine-tooltip": "^0.2.0",
     "@symfony/webpack-encore": "^1.5.0",
-    "alpinejs": "^3.2.2",
-    "autoprefixer": "^10.3.1",
+    "alpinejs": "^3.2.4",
+    "autoprefixer": "^10.3.3",
     "axios": "^0.21.1",
     "core-js": "^3.15.2",
     "cross-env": "^7.0.3",
@@ -21,7 +22,7 @@
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^22.0.0",
     "stylelint-scss": "^3.20.1",
-    "tailwindcss": "2.2.4",
+    "tailwindcss": "2.2.9",
     "tippy.js": "^6.3.1",
     "webpack-notifier": "^1.13.0"
   },

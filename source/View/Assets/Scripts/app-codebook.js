@@ -5,12 +5,15 @@ import "../Styles/codebook.scss";
 
 import Alpine from "alpinejs";
 import Tooltip from "@ryangjchandler/alpine-tooltip";
+import Scroll from "@alpine-collective/toolkit-scroll";
+
 // import Fern from "@ryangjchandler/fern";
 import storeFunctions from "./codebook/storeFunctions.js";
 
 import axios from "axios";
 
 Alpine.plugin(Tooltip);
+Alpine.plugin(Scroll);
 // Alpine.plugin(Fern);
 Alpine.store("codebook", {
   filterText: "",
@@ -21,7 +24,7 @@ Alpine.store("codebook", {
 
 Alpine.store("codebookSettings", {
   showHelp: {
-    sideBar: true,
+    sideBar: false,
   },
 });
 
@@ -32,7 +35,7 @@ Alpine.data("codebook", () => ({
   measures: [],
 
   init() {
-    /*    axios
+    axios
       .get(this.url)
       .then(({ data }) => {
         // console.log("Data from axios.get");
@@ -50,8 +53,8 @@ Alpine.data("codebook", () => ({
       .catch((error) => {
         console.log(error);
       });
-  */
-    console.log(`Measures-URL: ${this.measuresURL}`);
+
+    // console.log(`Measures-URL: ${this.measuresURL}`);
     axios
       .get(this.measuresURL)
       .then(({ data }) => {
@@ -67,8 +70,8 @@ Alpine.data("codebook", () => ({
 
     // console.log("Data from codebook php dump");
     // console.log(this.codebookDump.variables);
-    Alpine.store("codebook").variables = this.codebookDump.variables;
-    this.filteredVariables = Alpine.store("codebook").cloneVariables();
+    /* Alpine.store("codebook").variables = this.codebookDump.variables;
+    this.filteredVariables = Alpine.store("codebook").cloneVariables(); */
     this.$watch(
       'Alpine.store("codebook").filterText',
       () =>
@@ -98,6 +101,42 @@ Alpine.data("codebook", () => ({
       .catch((error) => {
         console.log(error.toJSON());
       });
+  },
+}));
+
+Alpine.data("popup", (item, kind) => ({
+  labels: {
+    /*
+     *
+     */
+    ["x-tooltip.html.theme.light-border.placement.left-start"]() {
+      return `
+        <ul>
+          ${this.$store.codebook
+            .getOriginalVariable(item.id)
+            [kind].map((item) => {
+              return "<li>" + item.name + " = " + item.label + "<li>";
+            })
+            .join("")}
+        </ul>`;
+    },
+    ["@click"]() {
+      document
+        .querySelector(
+          `.CodeInput_${kind}_${
+            this.$store.codebook.getOriginalVariable(item.id)[kind].length - 1
+          }`
+        )
+        .focus();
+    },
+    ["x-text"]() {
+      return this.$store.codebook
+        .getOriginalVariable(item.id)
+        [kind].map((item) => {
+          return item.name + " = " + item.label;
+        })
+        .join(", ");
+    },
   },
 }));
 

@@ -1,5 +1,5 @@
 .StudyNav-NavItem {
-  @apply block py-2 pl-3 pr-3 mt-1 underline bg-mono-300;
+  @apply block py-2 pl-3 pr-3 mt-1 underline bg-mono-300 ring-inset;
 }
 
 .StudyNav-NavItem_active {
@@ -14,7 +14,7 @@
 }
 
 .StudyNav-SubNavItem {
-  @apply block py-1 pl-4 pr-3 leading-tight underline bg-mono-200;
+  @apply block py-1 pl-4 pr-3 leading-tight underline bg-mono-200 ring-inset;
 }
 
 .StudyNav-SubNavItem_active {
@@ -54,22 +54,23 @@
 }
 
 .MetaData-HelpButton {
-  @apply relative w-8 h-8 px-2 ml-2 font-semibold text-gray-800 border rounded-full shadow bg-mono-100 border-mono-400 focus:outline-none focus:ring;
+  @apply relative w-8 h-8 px-2 ml-2 font-semibold text-gray-800 border rounded-full shadow bg-mono-100 border-mono-400;
   &:hover {
     @apply bg-white;
   }
 }
 
 .MetaData-SubmitButton {
-  @apply flex self-center px-6 py-1 mt-2 bg-white border rounded-md justify-self-center border-mono-400 hover:bg-mono-200;
+  @apply flex self-center px-6 py-1 mt-2 bg-white border rounded-md justify-self-center border-mono-400 hover:bg-mono-50;
 
   &::before {
     @apply w-[1.125rem] h-[1.125rem] mr-1;
 
     align-self: center;
+    // TODO edit svg to accept parameters
     /* prettier-ignore */
     background:
-      url("../Images/cil:save.svg"
+      url("../Images/ri:save-3-fill.svg"
       param(--color theme("colors.mono.700")))
       left center no-repeat;
     content: "";
@@ -110,3 +111,27 @@
 
   box-shadow: 0 -5px 30px -10px #555;
 }
+
+// .StudyMaterial-Delete {
+//   @apply inline-flex px-6 py-1 mt-2 bg-white border rounded-md border-mono-400 hover:bg-mono-200;
+
+//   &::before {
+//     @apply w-8 h-8 mr-1;
+
+//     align-self: center;
+//     /* prettier-ignore */
+//     background:
+//       url("../Images/radix-icons:cross-2.svg"
+//       param(--color theme("colors.mono.700")))
+//       left center no-repeat;
+//     content: "";
+//   }
+
+//   &:hover::before {
+//     /* prettier-ignore */
+//     background:
+//       url("../Images/radix-icons:cross-2.svg"
+//       param(--color theme("colors.red.500")))
+//       left center no-repeat;
+//   }
+// }

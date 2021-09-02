@@ -17,15 +17,18 @@
         {{ encore_entry_link_tags("app") }}
         {{ encore_entry_link_tags("codebook") }}
     {% endblock %}
-    <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
+    {% block javascripts %}
+        {{ encore_entry_script_tags("codebook") }}
+    {% endblock %}
+    <script src="https://code.iconify.design/2/2.0.3/iconify.min.js" defer></script>
 </head>
 <body>
-<div class="grid grid-cols-12 px-2 mx-auto bg-white gap-x-4 gap-y-1 SiteContainer"
-     x-data="{...codebook(), url: '{{ absolute_url(path('Codebook-dataupdate', {uuid: codebook.id})) }}', id: '{{ codebook.id }}', codebookDump: {{ dummy }}, measuresURL: '{{ absolute_url(path('Codebook-measures', {uuid: codebook.id})) }}' }">
+<div class="grid grid-cols-12 mx-auto bg-white SiteContainer"
+     x-data="{...codebook(), url: '{{ absolute_url(path('Codebook-dataupdate', {uuid: codebook.id})) }}', id: '{{ codebook.id }}', measuresURL: '{{ absolute_url(path('Codebook-measures', {uuid: codebook.id})) }}' }">
     {% block header %}
-        <header class="flex justify-between w-full border-2 h-14 border-mono-500 bg-mono-300 col-span-full">
+        <header class="sticky top-0 z-10 flex items-center w-full border-2 h-14 border-mono-500 bg-mono-300 col-span-full">
 
-            <a class="flex items-center h-full px-2 pr-6 mr-1 font-serif text-3xl text-white bg-gradient-to-r from-indigo-500 to-yellow-500 hover:to-indigo-500 hover:from-yellow-500"
+            <a class="flex items-center h-full px-2 pr-6 font-serif text-3xl text-white bg-gradient-to-r from-indigo-500 to-yellow-500 hover:to-indigo-500 hover:from-yellow-500"
                href="/">
                 <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="1em" height="1em"
                      style="-ms-transform:rotate(360deg);-webkit-transform:rotate(360deg)" viewbox="0 0 16 16"
@@ -38,14 +41,17 @@
                         </span>Wiz<span class="ml-1 text-sm italic place-self-end">next</span>
             </a>
 
-            <div class="flex items-center justify-center p-1">
-                <label for="filter" class="mr-3">Search:</label>
-                <input x-data="{tooltip: 'Search by variable name, label or instruction'}" type="text" name=""
+            <div class="relative ml-2">
+                <label for="filter" class="mr-1">Search:</label>
+                <input x-data="{tooltip: 'Search by variable name, label or item text'}" type="text" name=""
                        id="filter" placeholder="Enter search term" x-model="$store.codebook.filterText"
-                       class="px-3 py-1 border rounded-full border-mono-500"
-                       @keyup.escape="$store.codebook.filterText = ''" x-tooltip.on.focus="tooltip">
-                <button aria-label="Clear search" class="top-0 bottom-0 right-0 w-6 my-1 mr-1"
-                        @click="$store.codebook.filterText = ''" :class="$store.codebook.filterText !== '' || 'hidden'">
+                       class="!pl-4 !pr-7 !py-[0.1875rem] border rounded-full border-mono-500"
+                       @keyup.escape="$store.codebook.filterText = ''"
+                       x-tooltip.on.focus.placement.right.theme.light-border="tooltip">
+                {# TODO remove styling (padding, bg, rounded, shadow) from generic buttons and style buttons individually #}
+                <button aria-label="Clear search"
+                        class="absolute top-0 bottom-0 right-0 w-6 p-0 my-1 mr-2 bg-transparent border-none rounded-none shadow-none hover:bg-transparent"
+                        @click="$store.codebook.filterText = ''" x-show="$store.codebook.filterText !== ''" x-cloak>
                     <svg class="inline-flex mx-auto text-gray-800 fill-current" focusable="false"
                          xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" width="12" height="12">
                         <title>Clear</title>
@@ -54,7 +60,7 @@
                 </button>
             </div>
 
-            <div class="flex items-center justify-center r-3">
+            <div class="flex items-center justify-center ml-auto mr-3">
                 {{ codebook.id }}
                 <button class="ml-2" @click="save()">
                     Save changes
@@ -72,9 +78,5 @@
     {% block body %}{% endblock %}
     {# {{ include("Components/_footer.html.twig") }} #}
 </div>
-{% block javascripts %}
-    {{ encore_entry_script_tags("codebook") }}
-{% endblock %}
-
 </body>
 </html>

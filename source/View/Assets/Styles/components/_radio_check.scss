@@ -46,12 +46,21 @@
   }
 }
 
-.CheckBox-Input:checked ~ .CheckBox-Label::before {
+.CheckBox-Input:focus + .CheckBox-Label,
+.RadioButton-Input:focus + .RadioButton-Label {
+  &::before {
+    @apply ring;
+
+    border: 2px solid #0071de;
+  }
+}
+
+.CheckBox-Input:checked + .CheckBox-Label::before {
   /* prettier-ignore */
   background:
     url("../Images/checkmark.svg"
-    param(--color blue)
-    param(--strokeWidth 20))
+    param(--color theme("colors.blue.600"))
+    param(--strokeWidth 10))
     left center no-repeat;
 
   @apply bg-white;
@@ -61,10 +70,14 @@
   /* prettier-ignore */
   background:
     url("../Images/radiobutton.svg"
-    param(--color theme("colors.blue.500")))
+    param(--color theme("colors.blue.600")))
     left center no-repeat;
 
   @apply bg-white;
+}
+
+.RadioButton-Input:checked + .RadioButton-Label_card {
+  @apply border-gray-700 bg-mono-300;
 }
 
 /* On mouse-over, add a grey background color */
@@ -72,7 +85,7 @@
   /* prettier-ignore */
   background:
     url("../Images/radiobutton.svg"
-    param(--color theme("colors.blue.100")))
+    param(--color theme("colors.blue.200")))
     left center no-repeat;
 
   @apply bg-white;

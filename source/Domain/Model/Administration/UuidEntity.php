@@ -14,9 +14,9 @@ abstract class UuidEntity
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class=UuidGenerator::class)
      */
-    protected $id;
+    protected Uuid $id;
 
-    public function getId()
+    public function getId(): Uuid
     {
         return $this->id;
     }

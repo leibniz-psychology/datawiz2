@@ -14,6 +14,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use Symfony\Component\Uid\Uuid;
 
 class OauthAuthenticator extends SocialAuthenticator
 {
@@ -23,9 +24,11 @@ class OauthAuthenticator extends SocialAuthenticator
     private $crud;
     private $urlGenerator;
 
-    public function __construct(ClientRegistry $clientRegistry, Crudable $crud,
-                                UrlGeneratorInterface $urlGenerator)
-    {
+    public function __construct(
+        ClientRegistry $clientRegistry,
+        Crudable $crud,
+        UrlGeneratorInterface $urlGenerator
+    ) {
         $this->clientRegistry = $clientRegistry;
         $this->crud = $crud;
         $this->urlGenerator = $urlGenerator;
@@ -51,19 +54,15 @@ class OauthAuthenticator extends SocialAuthenticator
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        /**
-         * @var $keycloakUser \League\OAuth2\Client\Provider\ResourceOwnerInterface
-         */
         $keycloakUser = $this->clientRegistry
             ->getClient('keycloak')
             ->fetchUserFromToken($credentials);
-
 
         $userAtSignIn = $this->crud->readById(DataWizUser::class, $keycloakUser->getId());
         // TODO: This is logic for an custom UserProvider - should be part of the loadUserByIdentifier method
         if ($userAtSignIn === null && array_key_exists('email', $keycloakUser->toArray())) {
             $userAtSignIn = new DataWizUser($keycloakUser->toArray()['email']);
-            $userAtSignIn->setKeycloakUuid($keycloakUser->getId());
+            $userAtSignIn->setId(new Uuid($keycloakUser->getId()));
             $this->crud->update($userAtSignIn);
         }
 
@@ -73,6 +72,7 @@ class OauthAuthenticator extends SocialAuthenticator
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
         $message = strtr($exception->getMessageKey(), $exception->getMessageData());
+
         return new Response($message, Response::HTTP_FORBIDDEN);
     }
 

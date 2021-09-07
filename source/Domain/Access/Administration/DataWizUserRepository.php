@@ -20,17 +20,17 @@ class DataWizUserRepository extends ServiceEntityRepository implements UserLoade
         parent::__construct($registry, DataWizUser::class);
     }
 
-    public function loadUserByIdentifier(string $uuidOrEmail): ?DataWizUser
+    public function loadUserByIdentifier(string $identifier): ?DataWizUser
     {
         $entityManager = $this->getEntityManager();
 
         return $entityManager->createQuery(
             'SELECT u
                 FROM App\Domain\Model\Administration\DataWizUser u
-                WHERE u.keycloakUuid = :query
+                WHERE u.id = :query
                 OR u.email = :query'
         )
-            ->setParameter('query', $uuidOrEmail)
+            ->setParameter('query', $identifier)
             ->getOneOrNullResult();
     }
 

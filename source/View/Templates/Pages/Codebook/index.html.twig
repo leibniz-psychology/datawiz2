@@ -236,7 +236,12 @@
             <div class="px-4 py-2 text-sm text-gray-700">
                 <span class="block font-semibold">Value labels:</span>
                 <template x-if="$store.codebook.getCurrentVariable().values">
-                    {{ inputLabels('$store.codebook.getCurrentVariable().values', 'Add another value label') }}
+                    {{ inputLabels({
+                        'labels': '$store.codebook.getCurrentVariable().values',
+                        'addText': 'Add another value label',
+                        'placeHolder': '',
+                        'type': 'values'
+                    }) }}
                 </template>
                 <template x-if="!$store.codebook.getCurrentVariable().values">
                     <div>loading...</div>
@@ -245,7 +250,12 @@
             <div class="px-4 py-2 text-sm text-gray-700">
                 <span class="block font-semibold">Missings:</span>
                 <template x-if="$store.codebook.getCurrentVariable().missings">
-                    {{ inputLabels('$store.codebook.getCurrentVariable().missings', 'Add another missing', 'Label (optional)', 1) }}
+                    {{ inputLabels({
+                        'labels': '$store.codebook.getCurrentVariable().missings',
+                        'addText': 'Add another missing',
+                        'placeHolder': 'Label (optional)',
+                        'type': 'missings'
+                    }) }}
                 </template>
                 <template x-if="!$store.codebook.getCurrentVariable().missings">
                     <div>loading...</div>

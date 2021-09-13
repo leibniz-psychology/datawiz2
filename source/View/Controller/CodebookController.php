@@ -4,21 +4,13 @@
 namespace App\View\Controller;
 
 
-
 use App\Codebook\MeasureOptionsModell;
-use App\Crud\Crudable;
 use App\Domain\Model\Codebook\DatasetMetaData;
-use App\Codebook\MetaDataExchangeModell;
-use App\Codebook\ValuePairModell;
-use App\Codebook\VariableModell;
 use App\Domain\Model\Filemanagement\OriginalDataset;
-use App\Domain\Model\Study\Experiment;
-use phpDocumentor\Reflection\Types\This;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @Route("/codebook", name="codebook_")
@@ -41,7 +33,6 @@ class CodebookController extends DataWizController
         // test the update with just one entity before wiring the uuid's correctly
         /** @var DatasetMetaData $entityAtChange */
         $entityAtChange = $this->getEntityAtChange($uuid);
-
         if ($request->isMethod("POST")) {
             $postedData = $this->convertCodebookFrom($request);
             $this->updateDatasetMetaData($entityAtChange, $postedData);
@@ -77,7 +68,8 @@ class CodebookController extends DataWizController
         $this->crud->update($entityAtChange);
     }
 
-    private function JsonFor(DatasetMetaData $codebook) {
+    private function JsonFor(DatasetMetaData $codebook)
+    {
         return json_encode($codebook->getMetadata());
     }
 
@@ -95,12 +87,11 @@ class CodebookController extends DataWizController
      */
     public function codebookIndexAction(string $uuid, Request $request)
     {
-
         $entityAtDisplay = $this->getEntityAtChange($uuid);
 
         return $this->render('Pages/Codebook/index.html.twig', [
             'codebook' => $entityAtDisplay,
-            'dummy' => $this->JsonFor($entityAtDisplay)
+            'dummy' => $this->JsonFor($entityAtDisplay),
         ]);
     }
 

@@ -42,7 +42,7 @@ Dropzone.options.datawizDropzone = {
       backdrop.classList.toggle("flex");
       submitBtn.addEventListener("click", function (event) {
         let form = document.querySelector("#dataset-import-form");
-        let url = form.getAttribute('data-url').trim().replace('%20', '') + responseText['flySystem'][0]['fileId'];
+        let url = form.getAttribute('data-url').trim().replace('%20', '') + encodeURI(responseText['flySystem'][0]['fileId']);
         fetch(url, {
           method: 'POST',
           body: new FormData(form)

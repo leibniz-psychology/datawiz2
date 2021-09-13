@@ -6,6 +6,7 @@ namespace App\View\Controller;
 
 use App\Crud\Crudable;
 use App\Domain\Model\Filemanagement\AdditionalMaterial;
+use App\Domain\Model\Filemanagement\OriginalDataset;
 use App\Io\Formats\Csv\CsvImportable;
 use App\Questionnaire\Questionnairable;
 use League\Flysystem\Filesystem;
@@ -117,7 +118,11 @@ class FileManagementController extends DataWizController
         $delimiter = $request->get('dataset-import-delimiter') ?? ",";
         $escape = $request->get('dataset-import-escape') ?? "double";
         $headerRows = filter_var($request->get('dataset-import-header-rows'), FILTER_VALIDATE_INT) ?? 0;
-        $data = $this->csvImportable->csvToArray($fileId, $delimiter, $escape, $headerRows);
+        $file = $this->crud->readById(OriginalDataset::class, $fileId);
+        $data = null;
+        if ($file) {
+            $data = $this->csvImportable->csvToArray($file->getStorageName(), $delimiter, $escape, $headerRows);
+        }
 
         return new JsonResponse($data, $data ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
     }

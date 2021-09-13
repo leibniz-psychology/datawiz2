@@ -58,7 +58,7 @@ class DatasetUploadSubscriber implements EventSubscriberInterface
             );
             $this->crud->update($dataset);
             $response = $event->getResponse();
-            $response->addToOffset(['fileId' => $event->getFile()->getBasename()], ["flySystem"]);
+            $response->addToOffset(['fileId' => $dataset->getId()], ["flySystem"]);
         }
     }
 }

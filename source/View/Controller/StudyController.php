@@ -35,7 +35,7 @@ class StudyController extends DataWizController
     }
 
     /**
-     * @Route("/overview", name="overview")
+     * @Route("/", name="overview")
      *
      * @return Response
      */

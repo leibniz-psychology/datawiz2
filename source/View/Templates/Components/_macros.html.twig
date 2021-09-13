@@ -160,3 +160,46 @@ the form.
         </div>
     </div>
 {% endmacro %}
+
+{% macro copyToVariables(propsToCopy) %}
+    <div class="relative ml-1" x-data="copyValues()">
+        <button @click="showCopyTo = !showCopyTo"
+                class="flex items-center justify-center px-1 ml-1 bg-white border rounded-md hover:bg-mono-100">Copy to
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
+                 focusable="false" width="1em" height="1em"
+                 style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);"
+                 preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                <path d="M5 8l7 8l7-8z" fill="#626262" fill-rule="evenodd"/>
+            </svg>
+        </button>
+        <div class="absolute right-0 z-10 p-1 border shadow-xl bg-mono-300 w-36" x-show="showCopyTo" x-cloak
+             @click.outside="clearCopyTo()">
+            <div>
+                Select variables
+            </div>
+            <template x-for="(variable, variableIndex ) in $store.codebook.getVariables()" :key="variableIndex">
+                <button
+                        x-text="variable.id"
+                        {% if propsToCopy == 'values' or propsToCopy == 'missings' %}
+                            x-tooltip.html.theme.light-border="`
+                    <span class='font-semibold'>${$store.codebook.getOriginalVariable(variable.id).name}</span>
+                    <ul>${$store.codebook.getOriginalVariable(variable.id).{{ propsToCopy }}.map(item => {
+                    if (item.name !== '') return '<li>' + item.name + ' = ' + item.label + '<li>'}).join('')
+                    }
+                    </ul>
+                `"
+                        {% elseif propsToCopy == 'measure' %}
+                            x-tooltip.html.theme.light-border="`<span class='font-semibold'>${$store.codebook.getOriginalVariable(variable.id).name}</span>`"
+                        {% endif %}
+                        @click="markForCopy(variable);" class="w-1/5 hover:bg-mono-200"
+                        :class="copyTo.some(item => item === variable.id) && 'bg-green-300'"></button>
+            </template>
+            <div class="flex justify-end">
+                <button class="underline" @click="clearCopyTo()">Cancel</button>
+                <button class="px-2 ml-2 border rounded bg-mono-50 hover:bg-mono-100"
+                        @click="doCopyTo('{{ propsToCopy }}'); clearCopyTo()">Copy
+                </button>
+            </div>
+        </div>
+    </div>
+{% endmacro %}

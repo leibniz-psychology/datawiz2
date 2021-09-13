@@ -140,4 +140,48 @@ Alpine.data("popup", (item, kind) => ({
   },
 }));
 
+Alpine.data("copyValues", () => ({
+  showCopyFrom: false,
+  showCopyTo: false,
+  copyTo: [],
+  clearCopyTo() {
+    this.showCopyTo = false;
+    this.copyTo = [];
+  },
+  markForCopy(variable) {
+    if (this.copyTo.some((item) => item === variable.id)) {
+      this.copyTo = this.copyTo.filter((item) => item !== variable.id);
+    } else {
+      this.copyTo.push(variable.id);
+    }
+  },
+  doCopyTo(propertyToCopy) {
+    if (propertyToCopy === "measure")
+      this.copyTo.map(
+        (item) =>
+          (this.$store.codebook.getOriginalVariable(item).measure = JSON.parse(
+            JSON.stringify(this.$store.codebook.getCurrentVariable().measure)
+          ))
+      );
+    else if (propertyToCopy === "values")
+      this.copyTo.map(
+        (item) =>
+          (this.$store.codebook.getOriginalVariable(item).values = JSON.parse(
+            JSON.stringify(this.$store.codebook.getCurrentVariable().values)
+          ))
+      );
+    else if (propertyToCopy === "missings")
+      this.copyTo.map(
+        (item) =>
+          (this.$store.codebook.getOriginalVariable(item).missings = JSON.parse(
+            JSON.stringify(this.$store.codebook.getCurrentVariable().missings)
+          ))
+      );
+    else {
+      console.log("No property defined to copy to: ");
+      console.log(propertyToCopy);
+    }
+  },
+}));
+
 Alpine.start();

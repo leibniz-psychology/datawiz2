@@ -24,7 +24,7 @@
 </head>
 <body>
 <div class="grid grid-cols-12 mx-auto bg-white SiteContainer"
-     x-data="{...codebook(), url: '{{ path('Codebook-dataupdate', {uuid: codebook.id}) }}', id: '{{ codebook.id }}', measuresURL: '{{ path('Codebook-measures', {uuid: codebook.id}) }}' }">
+     x-data="{...codebook(), url: '{{ path('codebook_dataupdate', {uuid: codebook.id}) }}', id: '{{ codebook.id }}', measuresURL: '{{ path('codebook_measures', {uuid: codebook.id}) }}' }">
     {% block header %}
         <header class="sticky top-0 z-10 flex items-center w-full border-2 h-14 border-mono-500 bg-mono-300 col-span-full">
 

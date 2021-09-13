@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
- * @Route("/codebook", name="Codebook-")
+ * @Route("/codebook", name="codebook_")
  * @IsGranted("ROLE_USER")
  *
  * Class CodebookController

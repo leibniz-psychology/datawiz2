@@ -83,6 +83,6 @@ class OauthAuthenticator extends SocialAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('Administration-dashboard'));
+        return new RedirectResponse($this->urlGenerator->generate('dashboard'));
     }
 }

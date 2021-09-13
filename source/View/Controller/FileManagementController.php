@@ -106,7 +106,7 @@ class FileManagementController extends DataWizController
     }
 
     /**
-     * @Route("/import/dataset/{fileId}", name="import-dataset")
+     * @Route("/preview/dataset/{fileId}", name="preview-dataset")
      *
      * @param string $fileId
      * @param Request $request

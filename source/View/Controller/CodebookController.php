@@ -5,7 +5,6 @@ namespace App\View\Controller;
 
 
 use App\Codebook\MeasureOptionsModell;
-use App\Domain\Model\Codebook\DatasetMetaData;
 use App\Domain\Model\Filemanagement\Dataset;
 use Doctrine\Common\Collections\Collection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -49,12 +48,12 @@ class CodebookController extends DataWizController
     {
         $dataset = $this->crud->readById(Dataset::class, $uuid);
 
-        if ($request->isMethod("POST")) {
+        if ($dataset && $request->isMethod("POST")) {
             $postedData = $this->convertCodebookFrom($request);
             //$this->updateDatasetMetaData($entityAtChange, $postedData);
         }
 
-        return JsonResponse::fromJsonString($this->parseCodebookToJsonArray($dataset->getCodebook2()));
+        return JsonResponse::fromJsonString($this->parseCodebookToJsonArray($dataset->getCodebook()));
     }
 
     /**
@@ -72,10 +71,10 @@ class CodebookController extends DataWizController
         return JsonResponse::fromJsonString($dummyMeasures);
     }
 
-    private function updateDatasetMetaData(DatasetMetaData $entityAtChange, array $metadataAsArray)
+    private function updateDatasetMetaData(Collection $codebook, array $metadataAsArray)
     {
-        $entityAtChange->setMetadata($metadataAsArray);
-        $this->crud->update($entityAtChange);
+        /*$entityAtChange->setMetadata($metadataAsArray);
+        $this->crud->update($entityAtChange);*/
     }
 
     private function parseCodebookToJsonArray(Collection $codebook)

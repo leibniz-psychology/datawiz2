@@ -4,8 +4,6 @@
 namespace App\Codebook;
 
 
-use phpDocumentor\Reflection\Types\String_;
-
 class MeasureOptionsModell extends AbstractJsonSerializeModell
 {
     private function __construct() { }

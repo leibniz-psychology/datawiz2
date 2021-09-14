@@ -10,6 +10,7 @@ use Symfony\Component\Uid\Uuid;
 
 /**
  * @ORM\Entity(repositoryClass=DataWizUserRepository::class)
+ * @ORM\Table(name="user")
  */
 class DataWizUser implements UserInterface
 {

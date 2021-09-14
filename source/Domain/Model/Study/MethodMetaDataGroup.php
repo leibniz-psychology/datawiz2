@@ -19,6 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
+ * @ORM\Table(name="experiment_method")
  */
 class MethodMetaDataGroup extends UuidEntity implements MetaDataValuable, Questionable, Reviewable
 {

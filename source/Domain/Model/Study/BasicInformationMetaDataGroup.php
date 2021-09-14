@@ -17,7 +17,8 @@ use App\Review\ReviewDataCollectable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity
+ * @ORM\Table(name="experiment_basic")
  */
 class BasicInformationMetaDataGroup extends UuidEntity implements MetaDataValuable, Questionable, Reviewable
 {

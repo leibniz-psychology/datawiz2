@@ -5,7 +5,6 @@ namespace App\Domain\Model\Filemanagement;
 
 
 use App\Domain\Model\Administration\UuidEntity;
-use App\Domain\Model\Codebook\DatasetMetaData;
 use App\Domain\Model\Study\Experiment;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -19,7 +18,7 @@ class Dataset extends UuidEntity
 
     public function __construct()
     {
-        $this->codebook2 = new ArrayCollection();
+        $this->codebook = new ArrayCollection();
     }
 
     /**
@@ -38,18 +37,12 @@ class Dataset extends UuidEntity
     private string $storageName;
 
     /**
-     * One Dataset has one Codebook (Owning side)
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Codebook\DatasetMetaData", mappedBy="dataset", cascade={"persist"})
-     */
-    private DatasetMetaData $codebook;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Domain\Model\Codebook\DatasetVariables", mappedBy="dataset")
      */
-    private Collection $codebook2;
+    private Collection $codebook;
 
 
-    static public function createDataset(string $atUploadName, string $renamedFilename, DatasetMetaData $codebook, Experiment $experiment): Dataset
+    static public function createDataset(string $atUploadName, string $renamedFilename, Collection $codebook, Experiment $experiment): Dataset
     {
         $file = new Dataset();
         $file->setAtUploadNameable($atUploadName);
@@ -103,37 +96,21 @@ class Dataset extends UuidEntity
         $this->storageName = $storageName;
     }
 
+
     /**
-     * @return DatasetMetaData
+     * @return Collection
      */
-    public function getCodebook(): DatasetMetaData
+    public function getCodebook(): Collection
     {
         return $this->codebook;
     }
 
     /**
-     * @param $codebook
+     * @param Collection $codebook
      */
-    public function setCodebook($codebook): void
+    public function setCodebook(Collection $codebook): void
     {
         $this->codebook = $codebook;
-        $this->codebook->setDataset($this);
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getCodebook2(): Collection
-    {
-        return $this->codebook2;
-    }
-
-    /**
-     * @param Collection $codebook2
-     */
-    public function setCodebook2(Collection $codebook2): void
-    {
-        $this->codebook2 = $codebook2;
     }
 
 

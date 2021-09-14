@@ -9,7 +9,10 @@ use App\Domain\Model\Codebook\DatasetVariables;
 use App\Domain\Model\Filemanagement\Dataset;
 use App\Domain\Model\Study\MeasureMetaDataGroup;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,20 +25,32 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class CodebookController
  * @package App\View\Controller
  */
-class CodebookController extends DataWizController
+class CodebookController extends AbstractController
 {
+    protected EntityManagerInterface $em;
+    protected LoggerInterface $logger;
+
+    /**
+     * @param EntityManagerInterface $em
+     * @param LoggerInterface $logger
+     */
+    public function __construct(EntityManagerInterface $em, LoggerInterface $logger)
+    {
+        $this->em = $em;
+        $this->logger = $logger;
+    }
+
 
     /**
      * @Route("/{uuid}", name="index")
      *
      * @param string $uuid
-     * @param Request $request
      * @return Response
      */
-    public function codebookIndexAction(string $uuid, Request $request): Response
+    public function codebookIndexAction(string $uuid): Response
     {
         return $this->render('Pages/Codebook/index.html.twig', [
-            'codebook' => $this->crud->readById(Dataset::class, $uuid),
+            'codebook' => $this->em->getRepository(Dataset::class)->find($uuid),
         ]);
     }
 
@@ -49,7 +64,7 @@ class CodebookController extends DataWizController
     public function performUpdateAction(string $uuid, Request $request): JsonResponse
     {
         $this->logger->debug("Enter CodebookController::performUpdateAction with [UUID: $uuid]");
-        $dataset = $this->crud->readById(Dataset::class, $uuid);
+        $dataset = $this->em->getRepository(Dataset::class)->find($uuid);
         if ($dataset && $request->isMethod("POST")) {
             $postedData = json_decode($request->getContent(), true);
             $this->saveCodebookVariables($postedData);

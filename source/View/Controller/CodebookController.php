@@ -76,7 +76,7 @@ class CodebookController extends DataWizController
             }
         }
 
-        return JsonResponse::fromJsonString($viewMeasures);
+        return JsonResponse::fromJsonString($viewMeasures, $viewMeasures != null ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);
     }
 
     private function updateDatasetMetaData(Collection $codebook, array $metadataAsArray)

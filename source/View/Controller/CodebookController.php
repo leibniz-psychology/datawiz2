@@ -86,8 +86,18 @@ class CodebookController extends DataWizController
                 "name" => $var->getName() ?? "",
                 "label" => $var->getLabel() ?? "",
                 "itemText" => $var->getItemText() ?? "",
-                "values" => $var->getValues() ?? [],
-                "missings" => $var->getMissings() ?? [],
+                "values" => $var->getValues() ?? [
+                        [
+                            "name" => "",
+                            "label" => "",
+                        ],
+                    ],
+                "missings" => $var->getMissings() ?? [
+                        [
+                            "name" => "",
+                            "label" => "",
+                        ],
+                    ],
                 "measure" => $var->getMeasure() ?? "",
                 "var_db_id" => $var->getId(),
             ];

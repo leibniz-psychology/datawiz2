@@ -5,6 +5,7 @@ namespace App\View\Controller;
 
 
 use App\Codebook\MeasureOptionsModell;
+use App\Domain\Model\Codebook\DatasetVariables;
 use App\Domain\Model\Filemanagement\Dataset;
 use App\Domain\Model\Study\MeasureMetaDataGroup;
 use Doctrine\Common\Collections\Collection;
@@ -45,16 +46,16 @@ class CodebookController extends DataWizController
      * @param Request $request
      * @return JsonResponse
      */
-    public function dataUpdateCall(string $uuid, Request $request): JsonResponse
+    public function performUpdateAction(string $uuid, Request $request): JsonResponse
     {
+        $this->logger->debug("Enter CodebookController::performUpdateAction with [UUID: $uuid]");
         $dataset = $this->crud->readById(Dataset::class, $uuid);
-
         if ($dataset && $request->isMethod("POST")) {
-            $postedData = $this->convertCodebookFrom($request);
-            //$this->updateDatasetMetaData($entityAtChange, $postedData);
+            $postedData = json_decode($request->getContent(), true);
+            $this->saveCodebookVariables($postedData);
         }
 
-        return JsonResponse::fromJsonString($this->parseCodebookToJsonArray($dataset->getCodebook()));
+        return JsonResponse::fromJsonString($this->codebookCollectionToJsonArray($dataset->getCodebook()));
     }
 
     /**
@@ -65,6 +66,7 @@ class CodebookController extends DataWizController
      */
     public function createViewMeasuresAction(string $uuid): JsonResponse
     {
+        $this->logger->debug("Enter CodebookController::createViewMeasuresAction with [UUID: $uuid]");
         $viewMeasures = null;
         $dataset = $this->em->getRepository(Dataset::class)->find($uuid);
         if ($dataset) {
@@ -79,13 +81,8 @@ class CodebookController extends DataWizController
         return JsonResponse::fromJsonString($viewMeasures, $viewMeasures != null ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);
     }
 
-    private function updateDatasetMetaData(Collection $codebook, array $metadataAsArray)
-    {
-        /*$entityAtChange->setMetadata($metadataAsArray);
-        $this->crud->update($entityAtChange);*/
-    }
 
-    private function parseCodebookToJsonArray(Collection $codebook)
+    private function codebookCollectionToJsonArray(Collection $codebook)
     {
         $jsonCodebook = [];
         foreach ($codebook as $var) {
@@ -114,11 +111,24 @@ class CodebookController extends DataWizController
         return json_encode($jsonCodebook);
     }
 
-    private function convertCodebookFrom(Request $request)
+    private function saveCodebookVariables(array $arr)
     {
-        return json_decode($request->getContent(), true);
+        if ($arr && is_iterable($arr) && key_exists('variables', $arr) && !empty($arr['variables']) && is_iterable($arr['variables'])) {
+            foreach ($arr['variables'] as $variable) {
+                if (key_exists("var_db_id", $variable)) {
+                    $var = $this->em->getRepository(DatasetVariables::class)->find($variable["var_db_id"]);
+                    $var->setName($variable["name"] ?? $var->getName());
+                    $var->setLabel($variable["label"]);
+                    $var->setItemText($variable["itemText"]);
+                    $var->setValues($variable["values"]);
+                    $var->setMissings($variable["missings"]);
+                    $var->setMeasure($variable["measure"]);
+                    $this->em->persist($var);
+                    $this->em->flush();
+                }
+            }
+        }
     }
-
 
     protected function getEntityAtChange(string $uuid, string $className = Dataset::class)
     {

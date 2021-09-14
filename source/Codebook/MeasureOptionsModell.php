@@ -6,7 +6,9 @@ namespace App\Codebook;
 
 class MeasureOptionsModell extends AbstractJsonSerializeModell
 {
-    private function __construct() { }
+    private function __construct()
+    {
+    }
 
     private $measures;
 
@@ -20,11 +22,13 @@ class MeasureOptionsModell extends AbstractJsonSerializeModell
         $this->measures = $measures;
     }
 
-    public function addMeasure(string $addedMeasure) {
+    public function addMeasure(string $addedMeasure)
+    {
         $this->measures[] = $addedMeasure;
     }
 
-    public function removeMeasure(string $removedMeasure) {
+    public function removeMeasure(string $removedMeasure)
+    {
         $this->measures = array_diff($this->measures, [$removedMeasure]);
     }
 
@@ -46,8 +50,11 @@ class MeasureOptionsModell extends AbstractJsonSerializeModell
     {
         $result = new MeasureOptionsModell();
         foreach ($measures as $entry) {
+            if (isset($entry)) {
                 $result->addMeasure($entry);
+            }
         }
+
         return $result;
     }
 

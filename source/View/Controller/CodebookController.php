@@ -6,6 +6,7 @@ namespace App\View\Controller;
 
 use App\Codebook\MeasureOptionsModell;
 use App\Domain\Model\Filemanagement\Dataset;
+use App\Domain\Model\Study\MeasureMetaDataGroup;
 use Doctrine\Common\Collections\Collection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -62,13 +63,20 @@ class CodebookController extends DataWizController
      * @param string $uuid
      * @return JsonResponse
      */
-    public function measuresCall(string $uuid)
+    public function createViewMeasuresAction(string $uuid): JsonResponse
     {
-        $dummyMeasures = MeasureOptionsModell::createFrom(
-            array("Accuracy of memory (percentage of correct answers)", "Reaction times for keying in the first results (ms)")
-        )->getJsonString();
+        $viewMeasures = null;
+        $dataset = $this->em->getRepository(Dataset::class)->find($uuid);
+        if ($dataset) {
+            $measures = $this->em->getRepository(MeasureMetaDataGroup::class)->findOneBy(['experiment' => $dataset->getExperiment()]);
+            if ($measures) {
+                $viewMeasures = MeasureOptionsModell::createFrom(
+                    $measures->getMeasures()
+                )->getJsonString();
+            }
+        }
 
-        return JsonResponse::fromJsonString($dummyMeasures);
+        return JsonResponse::fromJsonString($viewMeasures);
     }
 
     private function updateDatasetMetaData(Collection $codebook, array $metadataAsArray)

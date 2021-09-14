@@ -54,8 +54,9 @@ class CodebookController extends DataWizController
             $postedData = json_decode($request->getContent(), true);
             $this->saveCodebookVariables($postedData);
         }
+        $jsonCodebook = $this->codebookCollectionToJsonArray($dataset->getCodebook());
 
-        return JsonResponse::fromJsonString($this->codebookCollectionToJsonArray($dataset->getCodebook()));
+        return JsonResponse::fromJsonString($jsonCodebook, $jsonCodebook != null ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -82,33 +83,37 @@ class CodebookController extends DataWizController
     }
 
 
-    private function codebookCollectionToJsonArray(Collection $codebook)
+    private function codebookCollectionToJsonArray(?Collection $codebook)
     {
         $jsonCodebook = [];
-        foreach ($codebook as $var) {
-            $jsonCodebook['variables'][] = [
-                "id" => $var->getVarId(),
-                "name" => $var->getName() ?? "",
-                "label" => $var->getLabel() ?? "",
-                "itemText" => $var->getItemText() ?? "",
-                "values" => $var->getValues() ?? [
-                        [
-                            "name" => "",
-                            "label" => "",
+        $json = null;
+        if ($codebook && is_iterable($codebook)) {
+            foreach ($codebook as $var) {
+                $jsonCodebook['variables'][] = [
+                    "id" => $var->getVarId(),
+                    "name" => $var->getName() ?? "",
+                    "label" => $var->getLabel() ?? "",
+                    "itemText" => $var->getItemText() ?? "",
+                    "values" => $var->getValues() ?? [
+                            [
+                                "name" => "",
+                                "label" => "",
+                            ],
                         ],
-                    ],
-                "missings" => $var->getMissings() ?? [
-                        [
-                            "name" => "",
-                            "label" => "",
+                    "missings" => $var->getMissings() ?? [
+                            [
+                                "name" => "",
+                                "label" => "",
+                            ],
                         ],
-                    ],
-                "measure" => $var->getMeasure() ?? "",
-                "var_db_id" => $var->getId(),
-            ];
+                    "measure" => $var->getMeasure() ?? "",
+                    "var_db_id" => $var->getId(),
+                ];
+            }
+            $json = json_encode($jsonCodebook);
         }
 
-        return json_encode($jsonCodebook);
+        return $json;
     }
 
     private function saveCodebookVariables(array $arr)

@@ -49,7 +49,7 @@ class DatasetVariables extends UuidEntity
     private ?string $measure = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Domain\Model\Filemanagement\Dataset", inversedBy="codebook2")
+     * @ORM\ManyToOne(targetEntity="App\Domain\Model\Filemanagement\Dataset", inversedBy="codebook")
      * @ORM\JoinColumn(name="dataset_id", referencedColumnName="id")
      */
     private Dataset $dataset;

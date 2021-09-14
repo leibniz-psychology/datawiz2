@@ -12,10 +12,10 @@
         Datasets for the Study
     </h2>
     {{ include("Components/_infoBridge.html.twig",{value: experiment.id}) }}
-    {#  <form action="{{ oneup_uploader_endpoint("datasets") }}"
+    {# <form action="{{ oneup_uploader_endpoint("datasets") }}"
           class="dropzone"
           id="datawiz-dropzone"
-          style="width:200px; height:200px; border:4px dashed black"></form>#}
+          style="width:200px; height:200px; border:4px dashed black"></form> #}
     <form action="{{ oneup_uploader_endpoint("datasets") }}" data-experiment-id="{{ experiment.id }}"
           class="mx-6 border-2 border-dashed border-mono-500 dropzone" id="datawiz-dropzone"></form>
     <h3 class="mx-6 mt-6 text-xl">
@@ -41,7 +41,9 @@
                 </div>
                 <!--body-->
                 <div class="relative p-6 flex-auto">
-                    <form id="dataset-import-form" data-url="{{ path("File-preview-dataset",{"fileId": " "}) }}">
+                    <form id="dataset-import-form"
+                          data-preview-url="{{ path("File-preview-dataset",{"fileId": " "}) }}"
+                          data-submit-url="{{ path("File-submit-dataset",{"fileId": " "}) }}">
                         <input type="hidden" id="dataset-file-id" name="dataset-file-id" value="">
                         <div>
                             <label for="dataset-import-delimiter">Delimiter</label>
@@ -64,6 +66,7 @@
                             <input type="number" id="dataset-import-header-rows" name="dataset-import-header-rows" min="0" value="0">
                         </div>
                     </form>
+                    <div id="dataset-import-result"></div>
                 </div>
                 <!--footer-->
                 <div class="flex items-center justify-end p-6 border-t border-solid border-gray-200 rounded-b">

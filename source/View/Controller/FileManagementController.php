@@ -5,8 +5,9 @@ namespace App\View\Controller;
 
 
 use App\Crud\Crudable;
+use App\Domain\Model\Codebook\DatasetVariables;
 use App\Domain\Model\Filemanagement\AdditionalMaterial;
-use App\Domain\Model\Filemanagement\OriginalDataset;
+use App\Domain\Model\Filemanagement\Dataset;
 use App\Io\Formats\Csv\CsvImportable;
 use App\Questionnaire\Questionnairable;
 use League\Flysystem\Filesystem;
@@ -27,8 +28,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class FileManagementController extends DataWizController
 {
-    private $filesystem;
-    private $questionnaire;
+    private Filesystem $filesystem;
+    private Questionnairable $questionnaire;
     private CsvImportable $csvImportable;
 
     public function __construct(
@@ -107,21 +108,52 @@ class FileManagementController extends DataWizController
     }
 
     /**
-     * @Route("/preview/dataset/{fileId}", name="preview-dataset")
+     * @Route("/preview/csv/{fileId}", name="preview-dataset")
      *
      * @param string $fileId
      * @param Request $request
      * @return JsonResponse
      */
-    public function importDatasetAction(string $fileId, Request $request): JsonResponse
+    public function previewCSVAction(string $fileId, Request $request): JsonResponse
     {
         $delimiter = $request->get('dataset-import-delimiter') ?? ",";
         $escape = $request->get('dataset-import-escape') ?? "double";
         $headerRows = filter_var($request->get('dataset-import-header-rows'), FILTER_VALIDATE_INT) ?? 0;
-        $file = $this->crud->readById(OriginalDataset::class, $fileId);
+        $file = $this->crud->readById(Dataset::class, $fileId);
         $data = null;
         if ($file) {
             $data = $this->csvImportable->csvToArray($file->getStorageName(), $delimiter, $escape, $headerRows);
+        }
+
+        return new JsonResponse($data, $data ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /**
+     * @Route("/submit/csv/{fileId}", name="submit-dataset")
+     *
+     * @param string $fileId
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function submitCSVAction(string $fileId, Request $request): JsonResponse
+    {
+        $delimiter = $request->get('dataset-import-delimiter') ?? ",";
+        $escape = $request->get('dataset-import-escape') ?? "double";
+        $headerRows = filter_var($request->get('dataset-import-header-rows'), FILTER_VALIDATE_INT) ?? 0;
+        $dataset = $this->crud->readById(Dataset::class, $fileId);
+        $data = null;
+        if ($dataset) {
+            $data = $this->csvImportable->csvToArray($dataset->getStorageName(), $delimiter, $escape, $headerRows);
+            if ($data && key_exists('header', $data) && is_iterable($data['header'])) {
+                $varId = 1;
+                foreach ($data['header'] as $var) {
+                    $dv = new DatasetVariables();
+                    $dv->setName($var);
+                    $dv->setVarId($varId++);
+                    $dv->setDataset($dataset);
+                    $this->crud->update($dv);
+                }
+            }
         }
 
         return new JsonResponse($data, $data ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);

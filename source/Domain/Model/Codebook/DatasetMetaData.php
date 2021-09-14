@@ -5,7 +5,6 @@ namespace App\Domain\Model\Codebook;
 
 
 use App\Codebook\MetaDataExchangeModell;
-use App\Domain\Definition\Codebook\MetaDatable;
 use App\Domain\Model\Administration\UuidEntity;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -15,32 +14,54 @@ use Doctrine\ORM\Mapping as ORM;
 class DatasetMetaData extends UuidEntity
 {
     /**
-     * One Codebook has One OriginalDataset
+     * One Codebook has One Dataset
      *
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Filemanagement\OriginalDataset", inversedBy="codebook")
+     * @ORM\OneToOne(targetEntity="App\Domain\Model\Filemanagement\Dataset", inversedBy="codebook")
      */
-    private $originalDataset;
+    private $dataset;
 
-    use MetaDatable;
+    /**
+     * @var array
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $metadata;
 
     private function __construct()
     {
     }
 
-    public function getOriginalDataset()
+    public function getMetadata()
     {
-        return $this->originalDataset;
+        return $this->metadata;
     }
 
-    public function setOriginalDataset($originalDataset): void
+    public function setMetadata($metadata): void
     {
-        $this->originalDataset = $originalDataset;
+        $this->metadata = $metadata;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDataset()
+    {
+        return $this->dataset;
+    }
+
+    /**
+     * @param mixed $dataset
+     */
+    public function setDataset($dataset): void
+    {
+        $this->dataset = $dataset;
+    }
+
 
     public static function createEmptyCode(): DatasetMetaData
     {
         $codebook = new DatasetMetaData();
         $codebook->setMetadata(MetaDataExchangeModell::createEmpty());
+
         return $codebook;
     }
 }

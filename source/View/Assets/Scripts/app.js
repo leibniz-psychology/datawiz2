@@ -20,45 +20,60 @@ import "./detectStickyElements";
 a2lix_lib.sfCollection.init();
 
 Dropzone.options.datawizDropzone = {
-  createImageThumbnails: false,
-  init: function () {
-    this.on("sending", function (file, xhr, formData) {
-      formData.append("originalFilename", file.name);
-      // require Templates/Components/_infoBridge.html.twig -> experiment.id as value
-      formData.append(
-          "studyId",
-          document.getElementById("infobridge").innerHTML.trim()
-      );
-    });
-    this.on("success", function (file, responseText) {
-      let modal = document.querySelector("#modal-dataset-import");
-      let backdrop = document.querySelector("#modal-dataset-import-backdrop");
-      let submitBtn = document.querySelector("#dataset-import-submit");
-      // TODO error handling if fileID is not set and implement it in a more elegant way :-D
-      document.querySelector("#dataset-file-id").value = responseText['flySystem'][0]['fileId'];
-      modal.classList.toggle("hidden");
-      backdrop.classList.toggle("hidden");
-      modal.classList.toggle("flex");
-      backdrop.classList.toggle("flex");
-      submitBtn.addEventListener("click", function (event) {
-        let form = document.querySelector("#dataset-import-form");
-        let url = form.getAttribute('data-url').trim().replace('%20', '') + encodeURI(responseText['flySystem'][0]['fileId']);
-        fetch(url, {
-          method: 'POST',
-          body: new FormData(form)
-        }).then(function (response) {
-          if (response.ok)
-            return response.json();
-          else
-            throw new Error('Hell no! What happened?');
-        }).then((data) => {
-          console.log(data)
-        }).catch(error => {
-          console.log(error)
-        });
-      });
-    });
-  },
+	createImageThumbnails: false,
+	init: function () {
+		this.on("sending", function (file, xhr, formData) {
+			formData.append("originalFilename", file.name);
+			// require Templates/Components/_infoBridge.html.twig -> experiment.id as value
+			formData.append(
+				"studyId",
+				document.getElementById("infobridge").innerHTML.trim()
+			);
+		});
+		this.on("success", function (file, responseText) {
+			let modal = document.querySelector("#modal-dataset-import");
+			let backdrop = document.querySelector("#modal-dataset-import-backdrop");
+			let submitBtn = document.querySelector("#dataset-import-submit");
+			let form = document.querySelector("#dataset-import-form");
+			if (form !== undefined) {
+				let previewUrl = form.getAttribute('data-preview-url').trim().replace('%20', '') + encodeURI(responseText['flySystem'][0]['fileId']);
+				let submitUrl = form.getAttribute('data-submit-url').trim().replace('%20', '') + encodeURI(responseText['flySystem'][0]['fileId']);
+				document.querySelector("#dataset-file-id").value = responseText['flySystem'][0]['fileId'];
+				modal.classList.toggle("hidden");
+				backdrop.classList.toggle("hidden");
+				modal.classList.toggle("flex");
+				backdrop.classList.toggle("flex");
+				submitBtn.addEventListener("click", function () {
+					POST(submitUrl, form);
+				});
+				let input = form.querySelectorAll('select, input:not([type="hidden"])');
+				input.forEach(e => {
+					e.addEventListener('change', function () {
+						POST(previewUrl, form, "#dataset-import-result");
+					})
+				})
+			}
+		});
+	},
 };
+
+function POST(url, form, resultDiv = null) {
+	fetch(url, {
+		method: 'POST',
+		body: new FormData(form)
+	}).then(function (response) {
+		if (response.ok)
+			return response.json();
+		else
+			throw new Error('Hell no! What happened?');
+	}).then((data) => {
+		if(resultDiv!= null){
+			document.querySelector(resultDiv).innerHTML = JSON.stringify(data);
+		}
+		console.log(data)
+	}).catch(error => {
+		console.log(error)
+	});
+}
 
 // console.log("Hello Webpack Encore! Edit me in Assets/Scripts/app.js"

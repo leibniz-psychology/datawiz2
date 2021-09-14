@@ -6,10 +6,12 @@ namespace App\View\Controller;
 
 use App\Codebook\MeasureOptionsModell;
 use App\Domain\Model\Codebook\DatasetMetaData;
-use App\Domain\Model\Filemanagement\OriginalDataset;
+use App\Domain\Model\Filemanagement\Dataset;
+use Doctrine\Common\Collections\Collection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -21,6 +23,21 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CodebookController extends DataWizController
 {
+
+    /**
+     * @Route("/{uuid}", name="index")
+     *
+     * @param string $uuid
+     * @param Request $request
+     * @return Response
+     */
+    public function codebookIndexAction(string $uuid, Request $request): Response
+    {
+        return $this->render('Pages/Codebook/index.html.twig', [
+            'codebook' => $this->crud->readById(Dataset::class, $uuid),
+        ]);
+    }
+
     /**
      * @Route("/{uuid}/data", name="dataupdate")
      *
@@ -28,17 +45,16 @@ class CodebookController extends DataWizController
      * @param Request $request
      * @return JsonResponse
      */
-    public function dataUpdateCall(string $uuid, Request $request)
+    public function dataUpdateCall(string $uuid, Request $request): JsonResponse
     {
-        // test the update with just one entity before wiring the uuid's correctly
-        /** @var DatasetMetaData $entityAtChange */
-        $entityAtChange = $this->getEntityAtChange($uuid);
+        $dataset = $this->crud->readById(Dataset::class, $uuid);
+
         if ($request->isMethod("POST")) {
             $postedData = $this->convertCodebookFrom($request);
-            $this->updateDatasetMetaData($entityAtChange, $postedData);
+            //$this->updateDatasetMetaData($entityAtChange, $postedData);
         }
 
-        return JsonResponse::fromJsonString($this->JsonFor($entityAtChange));
+        return JsonResponse::fromJsonString($this->parseCodebookToJsonArray($dataset->getCodebook2()));
     }
 
     /**
@@ -49,15 +65,9 @@ class CodebookController extends DataWizController
      */
     public function measuresCall(string $uuid)
     {
-        // search for the codebook entity
-        // get experiment id
-        // get measures from there
-        // create actual MeasureOptionsModell from the data
-
         $dummyMeasures = MeasureOptionsModell::createFrom(
             array("Accuracy of memory (percentage of correct answers)", "Reaction times for keying in the first results (ms)")
-        )
-            ->getJsonString();
+        )->getJsonString();
 
         return JsonResponse::fromJsonString($dummyMeasures);
     }
@@ -68,9 +78,23 @@ class CodebookController extends DataWizController
         $this->crud->update($entityAtChange);
     }
 
-    private function JsonFor(DatasetMetaData $codebook)
+    private function parseCodebookToJsonArray(Collection $codebook)
     {
-        return json_encode($codebook->getMetadata());
+        $jsonCodebook = [];
+        foreach ($codebook as $var) {
+            $jsonCodebook['variables'][] = [
+                "id" => $var->getVarId(),
+                "name" => $var->getName() ?? "",
+                "label" => $var->getLabel() ?? "",
+                "itemText" => $var->getItemText() ?? "",
+                "values" => $var->getValues() ?? [],
+                "missings" => $var->getMissings() ?? [],
+                "measure" => $var->getMeasure() ?? "",
+                "var_db_id" => $var->getId(),
+            ];
+        }
+
+        return json_encode($jsonCodebook);
     }
 
     private function convertCodebookFrom(Request $request)
@@ -78,35 +102,8 @@ class CodebookController extends DataWizController
         return json_decode($request->getContent(), true);
     }
 
-    /**
-     * @Route("/{uuid}/index", name="index")
-     *
-     * @param string $uuid
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function codebookIndexAction(string $uuid, Request $request)
+
+    protected function getEntityAtChange(string $uuid, string $className = Dataset::class)
     {
-        $entityAtDisplay = $this->getEntityAtChange($uuid);
-
-        return $this->render('Pages/Codebook/index.html.twig', [
-            'codebook' => $entityAtDisplay,
-            'dummy' => $this->JsonFor($entityAtDisplay),
-        ]);
-    }
-
-    protected function getEntityAtChange(string $uuid, string $className = OriginalDataset::class): DatasetMetaData
-    {
-        /**
-         * @var $dataset OriginalDataset
-         */
-        $dataset = $this->crud->readById($className, $uuid);
-        if ($dataset === null) {
-            $result = $this->crud->readById(DatasetMetaData::class, $uuid);
-        } else {
-            $result = $dataset->getCodebook();
-        }
-
-        return $result;
     }
 }

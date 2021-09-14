@@ -4,7 +4,6 @@
 namespace App\View\Controller;
 
 
-use App\Codebook\MeasureOptionsModell;
 use App\Domain\Model\Codebook\DatasetVariables;
 use App\Domain\Model\Filemanagement\Dataset;
 use App\Domain\Model\Study\MeasureMetaDataGroup;
@@ -83,21 +82,27 @@ class CodebookController extends AbstractController
     public function createViewMeasuresAction(string $uuid): JsonResponse
     {
         $this->logger->debug("Enter CodebookController::createViewMeasuresAction with [UUID: $uuid]");
-        $viewMeasures = null;
         $dataset = $this->em->getRepository(Dataset::class)->find($uuid);
+        $viewMeasures = [];
         if ($dataset) {
             $measures = $this->em->getRepository(MeasureMetaDataGroup::class)->findOneBy(['experiment' => $dataset->getExperiment()]);
-            if ($measures) {
-                $viewMeasures = MeasureOptionsModell::createFrom(
-                    $measures->getMeasures()
-                )->getJsonString();
+            if ($measures && $measures->getMeasures() && sizeof($measures->getMeasures()) > 0) {
+                $viewMeasures = [];
+                foreach ($measures->getMeasures() as $measure) {
+                    if ($measure && "" != $measure) {
+                        $viewMeasures['measures'][] = $measure;
+                    }
+                }
             }
         }
 
-        return JsonResponse::fromJsonString($viewMeasures, $viewMeasures != null ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);
+        return new JsonResponse($viewMeasures, key_exists('measures', $viewMeasures) ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);
     }
 
-
+    /**
+     * @param Collection|null $codebook
+     * @return false|string|null
+     */
     private function codebookCollectionToJsonArray(?Collection $codebook)
     {
         $jsonCodebook = [];
@@ -131,6 +136,9 @@ class CodebookController extends AbstractController
         return $json;
     }
 
+    /**
+     * @param array $arr
+     */
     private function saveCodebookVariables(array $arr)
     {
         if ($arr && is_iterable($arr) && key_exists('variables', $arr) && !empty($arr['variables']) && is_iterable($arr['variables'])) {
@@ -150,7 +158,4 @@ class CodebookController extends AbstractController
         }
     }
 
-    protected function getEntityAtChange(string $uuid, string $className = Dataset::class)
-    {
-    }
 }

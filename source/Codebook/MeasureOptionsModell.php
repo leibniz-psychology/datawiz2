@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Codebook;
-
 
 class MeasureOptionsModell extends AbstractJsonSerializeModell
 {
@@ -10,7 +8,7 @@ class MeasureOptionsModell extends AbstractJsonSerializeModell
     {
     }
 
-    private $measures;
+    private array $measures;
 
     public function getMeasures(): array
     {
@@ -50,7 +48,7 @@ class MeasureOptionsModell extends AbstractJsonSerializeModell
     {
         $result = new MeasureOptionsModell();
         foreach ($measures as $entry) {
-            if (isset($entry)) {
+            if ($entry && "" != $entry) {
                 $result->addMeasure($entry);
             }
         }

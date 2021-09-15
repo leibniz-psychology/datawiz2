@@ -97,6 +97,7 @@ class FileManagementController extends AbstractController
             $this->em->persist($entityAtChange);
             $this->em->flush();
         }
+
         return $this->render(
             'Pages/FileManagement/materialDetails.html.twig',
             [
@@ -171,7 +172,7 @@ class FileManagementController extends AbstractController
                 $error = "error.import.csv.codebook.empty";
             }
             if (null == $error && $data && key_exists('records', $data) && is_iterable($data['records']) && sizeof($data['records']) > 0) {
-                $this->saveMatrix($data['records'], $dataset->getId());
+                $this->_saveMatrix($data['records'], $dataset->getId());
             } else {
                 $error = "error.import.csv.matrix.empty";
             }
@@ -179,7 +180,7 @@ class FileManagementController extends AbstractController
             $error = "error.import.csv.dataset.empty";
         }
         if (null != $error) {
-            $this->deleteDataset($dataset);
+            $this->_deleteDataset($dataset);
         }
 
         return new JsonResponse(
@@ -189,10 +190,26 @@ class FileManagementController extends AbstractController
     }
 
     /**
+     * @Route("/{uuid}/delete", name="delete_dataset")
+     *
+     * @param string $uuid
+     * @return RedirectResponse|Response
+     */
+    public function deleteDatasetAction(string $uuid)
+    {
+        $this->logger->debug("Enter FileManagementController::deleteMaterialCall with [UUID: $uuid]");
+        $dataset = $this->em->find(Dataset::class, $uuid);
+        $experimentId = $dataset->getExperiment()->getId();
+        $this->_deleteDataset($dataset);
+
+        return $this->redirectToRoute('Study-datasets', ['uuid' => $experimentId]);
+    }
+
+    /**
      * @param array $matrix
      * @param string $datasetId
      */
-    private function saveMatrix(array $matrix, string $datasetId)
+    private function _saveMatrix(array $matrix, string $datasetId)
     {
         try {
             $this->filesystem->write("matrix/$datasetId.json", json_encode($matrix));
@@ -203,7 +220,7 @@ class FileManagementController extends AbstractController
     /**
      * @param Dataset $dataset
      */
-    private function deleteDataset(Dataset $dataset): void
+    private function _deleteDataset(Dataset $dataset): void
     {
         try {
             if ($this->filesystem->has($dataset->getStorageName())) {

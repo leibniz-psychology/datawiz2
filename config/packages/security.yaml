@@ -1,0 +1,14 @@
+security:
+    enable_authenticator_manager: true
+    providers:
+        users:
+            entity:
+                class: 'App\Domain\Model\Administration\DataWizUser'
+    firewalls:
+        main:
+            lazy: true
+            guard:
+                authenticators:
+                    - App\Security\Authentication\OauthAuthenticator
+            logout:
+                path: Security-logout

@@ -20,9 +20,9 @@ class OauthAuthenticator extends SocialAuthenticator
 {
     use TargetPathTrait;
 
-    private $clientRegistry;
-    private $crud;
-    private $urlGenerator;
+    private ClientRegistry $clientRegistry;
+    private Crudable $crud;
+    private UrlGeneratorInterface $urlGenerator;
 
     public function __construct(
         ClientRegistry $clientRegistry,
@@ -34,22 +34,19 @@ class OauthAuthenticator extends SocialAuthenticator
         $this->urlGenerator = $urlGenerator;
     }
 
-    public function start(Request $request, AuthenticationException $authException = null)
+    public function start(Request $request, AuthenticationException $authException = null): RedirectResponse
     {
         return new RedirectResponse('/', Response::HTTP_TEMPORARY_REDIRECT);
     }
 
-    public function supports(Request $request)
+    public function supports(Request $request): bool
     {
         return $request->attributes->get('_route') === 'Security-check';
     }
 
     public function getCredentials(Request $request)
     {
-        return $this->fetchAccessToken(
-            $this->clientRegistry
-                ->getClient('keycloak')
-        );
+        return $this->fetchAccessToken($this->clientRegistry->getClient('keycloak'));
     }
 
     public function getUser($credentials, UserProviderInterface $userProvider)
@@ -69,14 +66,14 @@ class OauthAuthenticator extends SocialAuthenticator
         return $userAtSignIn;
     }
 
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
         $message = strtr($exception->getMessageKey(), $exception->getMessageData());
 
         return new Response($message, Response::HTTP_FORBIDDEN);
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): RedirectResponse
     {
         // Redirect to previous selected route
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {

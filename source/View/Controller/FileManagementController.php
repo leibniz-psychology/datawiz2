@@ -144,11 +144,20 @@ class FileManagementController extends DataWizController
         $data = null;
         if ($dataset) {
             $data = $this->csvImportable->csvToArray($dataset->getStorageName(), $delimiter, $escape, $headerRows);
-            if ($data && key_exists('header', $data) && is_iterable($data['header'])) {
+            if ($data && key_exists('header', $data) && is_iterable($data['header']) && sizeof($data['header']) > 0) {
                 $varId = 1;
                 foreach ($data['header'] as $var) {
                     $dv = new DatasetVariables();
                     $dv->setName($var);
+                    $dv->setVarId($varId++);
+                    $dv->setDataset($dataset);
+                    $this->crud->update($dv);
+                }
+            } elseif ($data && key_exists('records', $data) && is_iterable($data['records']) && sizeof($data['records']) > 0) {
+                $varId = 1;
+                foreach ($data['records'][0] as $row) {
+                    $dv = new DatasetVariables();
+                    $dv->setName("var_$varId");
                     $dv->setVarId($varId++);
                     $dv->setDataset($dataset);
                     $this->crud->update($dv);

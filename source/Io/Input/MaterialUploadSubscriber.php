@@ -7,9 +7,7 @@ namespace App\Io\Input;
 use App\Crud\Crudable;
 use App\Domain\Model\Filemanagement\AdditionalMaterial;
 use App\Domain\Model\Study\Experiment;
-use Oneup\UploaderBundle\Event\PostPersistEvent;
 use Oneup\UploaderBundle\Event\PostUploadEvent;
-use Oneup\UploaderBundle\Event\PreUploadEvent;
 use Oneup\UploaderBundle\UploadEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -25,7 +23,7 @@ class MaterialUploadSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            UploadEvents::postUpload('materials') => ['onMaterialPostUpload']
+            UploadEvents::postUpload('materials') => ['onMaterialPostUpload'],
         ];
     }
 
@@ -34,15 +32,15 @@ class MaterialUploadSubscriber implements EventSubscriberInterface
      *
      * Every time a file is uploaded we want to save the metadata about this file
      */
-    public function onMaterialPostUpload(PostUploadEvent $event) {
+    public function onMaterialPostUpload(PostUploadEvent $event)
+    {
         $experiment = $this->crud->readById(Experiment::class, $event->getRequest()->get('studyId'));
 
-        $this->crud->update(
-            AdditionalMaterial::createMaterial(
-                $event->getRequest()->get('originalFilename'),
-                $event->getFile()->getBasename(),
-                $experiment
-            )
+        $entity = AdditionalMaterial::createMaterial(
+            $event->getRequest()->get('originalFilename'),
+            $event->getFile()->getBasename(),
+            $experiment
         );
+        $this->crud->update($entity);
     }
 }

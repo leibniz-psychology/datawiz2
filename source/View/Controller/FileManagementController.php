@@ -58,56 +58,6 @@ class FileManagementController extends AbstractController
         $this->logger = $logger;
     }
 
-
-    /**
-     * @Route("/delete/{uuid}/material", name="deletion")
-     *
-     * @param string $uuid
-     * @param Request $request
-     * @return RedirectResponse|Response
-     */
-    public function deleteMaterialCall(string $uuid, Request $request)
-    {
-        $this->logger->debug("Enter FileManagementController::deleteMaterialCall with [UUID: $uuid]");
-        $entityForDeletion = $this->em->find(AdditionalMaterial::class, $uuid);
-        $experimentId = $entityForDeletion->getExperiment()->getId();
-
-        //$success = $this->deleteUpload($entityForDeletion);
-        return $this->redirectToRoute('Study-materials', ['uuid' => $experimentId]);
-    }
-
-    /**
-     * @Route("/{uuid}/details", name="details")
-     *
-     * @param string $uuid
-     * @param Request $request
-     * @return Response
-     */
-    public function materialDetailsAction(string $uuid, Request $request): Response
-    {
-        $this->logger->debug("Enter FileManagementController::materialDetailsAction with [UUID: $uuid]");
-        $entityAtChange = $this->em->find(AdditionalMaterial::class, $uuid);
-        $experimentOfTheFile = $entityAtChange->getExperiment();
-        $form = $this->questionnaire->askAndHandle(
-            $entityAtChange,
-            'save',
-            $request
-        );
-        if ($this->questionnaire->isSubmittedAndValid($form)) {
-            $this->em->persist($entityAtChange);
-            $this->em->flush();
-        }
-
-        return $this->render(
-            'Pages/FileManagement/materialDetails.html.twig',
-            [
-                'form' => $form->createView(),
-                'file' => $entityAtChange,
-                'experiment' => $experimentOfTheFile,
-            ]
-        );
-    }
-
     /**
      * @Route("/preview/csv/{fileId}", name="preview-dataset")
      *
@@ -204,6 +154,61 @@ class FileManagementController extends AbstractController
 
         return $this->redirectToRoute('Study-datasets', ['uuid' => $experimentId]);
     }
+
+
+
+    /**
+     * @Route("/delete/{uuid}/material", name="deletion")
+     *
+     * @param string $uuid
+     * @param Request $request
+     * @return RedirectResponse|Response
+     */
+    public function deleteMaterialAction(string $uuid, Request $request)
+    {
+        $this->logger->debug("Enter FileManagementController::deleteMaterialCall with [UUID: $uuid]");
+        $entityForDeletion = $this->em->find(AdditionalMaterial::class, $uuid);
+        $experimentId = $entityForDeletion->getExperiment()->getId();
+
+        //$success = $this->deleteUpload($entityForDeletion);
+        return $this->redirectToRoute('Study-materials', ['uuid' => $experimentId]);
+    }
+
+    /**
+     * @Route("/{uuid}/details", name="details")
+     *
+     * @param string $uuid
+     * @param Request $request
+     * @return Response
+     */
+    public function materialDetailsAction(string $uuid, Request $request): Response
+    {
+        $this->logger->debug("Enter FileManagementController::materialDetailsAction with [UUID: $uuid]");
+        $entityAtChange = $this->em->find(AdditionalMaterial::class, $uuid);
+        $experimentOfTheFile = $entityAtChange->getExperiment();
+        $form = $this->questionnaire->askAndHandle(
+            $entityAtChange,
+            'save',
+            $request
+        );
+        if ($this->questionnaire->isSubmittedAndValid($form)) {
+            $this->em->persist($entityAtChange);
+            $this->em->flush();
+        }
+
+        return $this->render(
+            'Pages/FileManagement/materialDetails.html.twig',
+            [
+                'form' => $form->createView(),
+                'file' => $entityAtChange,
+                'experiment' => $experimentOfTheFile,
+            ]
+        );
+    }
+
+
+
+
 
     /**
      * @param array $matrix

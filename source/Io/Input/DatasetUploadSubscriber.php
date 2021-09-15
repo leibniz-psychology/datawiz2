@@ -53,7 +53,7 @@ class DatasetUploadSubscriber implements EventSubscriberInterface
             $dataset = Dataset::createDataset(
                 $event->getRequest()->get('originalFilename'),
                 $event->getFile()->getBasename(),
-                new ArrayCollection(),
+                $event->getFile()->getSize(),
                 $experiment
             );
             $this->crud->update($dataset);

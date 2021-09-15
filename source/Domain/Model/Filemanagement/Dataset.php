@@ -6,6 +6,7 @@ namespace App\Domain\Model\Filemanagement;
 
 use App\Domain\Model\Administration\UuidEntity;
 use App\Domain\Model\Study\Experiment;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -27,9 +28,20 @@ class Dataset extends UuidEntity
     private Experiment $experiment;
 
     /**
-     * @ORM\Column() (type="string", length=256)
+     * @ORM\Column(type="string", length=256)
      */
-    private string $atUploadNameable;
+    private string $originalName;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private ?DateTime $dateUploaded = null;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private int $originalSize = 0;
+
 
     /**
      * @ORM\Column(type="string", length=256)
@@ -42,13 +54,14 @@ class Dataset extends UuidEntity
     private Collection $codebook;
 
 
-    static public function createDataset(string $atUploadName, string $renamedFilename, Collection $codebook, Experiment $experiment): Dataset
+    static public function createDataset(string $atUploadName, string $renamedFilename, int $fileSize, Experiment $experiment): Dataset
     {
         $file = new Dataset();
-        $file->setAtUploadNameable($atUploadName);
+        $file->setOriginalName($atUploadName);
         $file->setStorageName($renamedFilename);
+        $file->setOriginalSize($fileSize);
         $file->setExperiment($experiment);
-        $file->setCodebook($codebook);
+        $file->setDateUploaded(new DateTime());
 
         return $file;
     }
@@ -67,17 +80,49 @@ class Dataset extends UuidEntity
     /**
      * @return mixed
      */
-    public function getAtUploadNameable()
+    public function getOriginalName()
     {
-        return $this->atUploadNameable;
+        return $this->originalName;
     }
 
     /**
-     * @param mixed $atUploadNameable
+     * @param mixed $originalName
      */
-    public function setAtUploadNameable($atUploadNameable): void
+    public function setOriginalName($originalName): void
     {
-        $this->atUploadNameable = $atUploadNameable;
+        $this->originalName = $originalName;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getDateUploaded(): ?DateTime
+    {
+        return $this->dateUploaded;
+    }
+
+    /**
+     * @param DateTime|null $dateUploaded
+     */
+    public function setDateUploaded(?DateTime $dateUploaded): void
+    {
+        $this->dateUploaded = $dateUploaded;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOriginalSize(): int
+    {
+        return $this->originalSize;
+    }
+
+    /**
+     * @param int $originalSize
+     */
+    public function setOriginalSize(int $originalSize): void
+    {
+        $this->originalSize = $originalSize;
     }
 
     /**

@@ -4,21 +4,23 @@
 namespace App\View\Controller;
 
 
-use App\Crud\Crudable;
 use App\Domain\Model\Codebook\DatasetVariables;
 use App\Domain\Model\Filemanagement\AdditionalMaterial;
 use App\Domain\Model\Filemanagement\Dataset;
 use App\Io\Formats\Csv\CsvImportable;
 use App\Questionnaire\Questionnairable;
+use Doctrine\ORM\EntityManagerInterface;
+use League\Flysystem\FileExistsException;
 use League\Flysystem\FileNotFoundException;
 use League\Flysystem\Filesystem;
+use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @Route("/filemanagement", name="File-")
@@ -27,23 +29,33 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  * Class FileManagementController
  * @package App\View\Controller
  */
-class FileManagementController extends DataWizController
+class FileManagementController extends AbstractController
 {
     private Filesystem $filesystem;
     private Questionnairable $questionnaire;
     private CsvImportable $csvImportable;
+    private EntityManagerInterface $em;
+    private LoggerInterface $logger;
 
+    /**
+     * @param Filesystem $filesystem
+     * @param Questionnairable $questionnaire
+     * @param CsvImportable $csvImportable
+     * @param EntityManagerInterface $em
+     * @param LoggerInterface $logger
+     */
     public function __construct(
-        Crudable $crud,
-        UrlGeneratorInterface $urlGenerator,
         Filesystem $filesystem,
         Questionnairable $questionnaire,
-        CsvImportable $csvImportable
+        CsvImportable $csvImportable,
+        EntityManagerInterface $em,
+        LoggerInterface $logger
     ) {
-        parent::__construct($crud, $urlGenerator);
         $this->filesystem = $filesystem;
         $this->questionnaire = $questionnaire;
         $this->csvImportable = $csvImportable;
+        $this->em = $em;
+        $this->logger = $logger;
     }
 
 
@@ -56,12 +68,12 @@ class FileManagementController extends DataWizController
      */
     public function deleteMaterialCall(string $uuid, Request $request)
     {
-        /** @var AdditionalMaterial $entityForDeletion */
-        $entityForDeletion = $this->getEntityAtChange($uuid, AdditionalMaterial::class);
+        $this->logger->debug("Enter FileManagementController::deleteMaterialCall with [UUID: $uuid]");
+        $entityForDeletion = $this->em->find(AdditionalMaterial::class, $uuid);
         $experimentId = $entityForDeletion->getExperiment()->getId();
-        $success = $this->deleteUpload($entityForDeletion);
 
-        return new RedirectResponse($this->urlGenerator->generate('Study-materials', ['uuid' => $experimentId]));
+        //$success = $this->deleteUpload($entityForDeletion);
+        return $this->redirectToRoute('Study-materials', ['uuid' => $experimentId]);
     }
 
     /**
@@ -71,21 +83,20 @@ class FileManagementController extends DataWizController
      * @param Request $request
      * @return Response
      */
-    public function materialDetailsAction(string $uuid, Request $request)
+    public function materialDetailsAction(string $uuid, Request $request): Response
     {
-        $entityAtChange = $this->getEntityAtChange($uuid, AdditionalMaterial::class);
+        $this->logger->debug("Enter FileManagementController::materialDetailsAction with [UUID: $uuid]");
+        $entityAtChange = $this->em->find(AdditionalMaterial::class, $uuid);
         $experimentOfTheFile = $entityAtChange->getExperiment();
-
         $form = $this->questionnaire->askAndHandle(
             $entityAtChange,
             'save',
             $request
         );
-
         if ($this->questionnaire->isSubmittedAndValid($form)) {
-            $this->crud->update($entityAtChange);
+            $this->em->persist($entityAtChange);
+            $this->em->flush();
         }
-
         return $this->render(
             'Pages/FileManagement/materialDetails.html.twig',
             [
@@ -105,10 +116,11 @@ class FileManagementController extends DataWizController
      */
     public function previewCSVAction(string $fileId, Request $request): JsonResponse
     {
+        $this->logger->debug("Enter FileManagementController::previewCSVAction with [FileId: $fileId]");
         $delimiter = $request->get('dataset-import-delimiter') ?? ",";
         $escape = $request->get('dataset-import-escape') ?? "double";
         $headerRows = filter_var($request->get('dataset-import-header-rows'), FILTER_VALIDATE_INT) ?? 0;
-        $file = $this->crud->readById(Dataset::class, $fileId);
+        $file = $this->em->find(Dataset::class, $fileId);
         $data = null;
         if ($file) {
             $data = $this->csvImportable->csvToArray($file->getStorageName(), $delimiter, $escape, $headerRows);
@@ -126,10 +138,11 @@ class FileManagementController extends DataWizController
      */
     public function submitCSVAction(string $fileId, Request $request): JsonResponse
     {
+        $this->logger->debug("Enter FileManagementController::submitCSVAction with [FileId: $fileId]");
         $delimiter = $request->get('dataset-import-delimiter') ?? ",";
         $escape = $request->get('dataset-import-escape') ?? "double";
         $headerRows = filter_var($request->get('dataset-import-header-rows'), FILTER_VALIDATE_INT) ?? 0;
-        $dataset = $this->crud->readById(Dataset::class, $fileId);
+        $dataset = $this->em->find(Dataset::class, $fileId);
         $data = null;
         $error = null;
         if ($dataset) {
@@ -141,8 +154,9 @@ class FileManagementController extends DataWizController
                     $dv->setName($var);
                     $dv->setVarId($varId++);
                     $dv->setDataset($dataset);
-                    $this->crud->update($dv);
+                    $this->em->persist($dv);
                 }
+                $this->em->flush();
             } elseif ($data && key_exists('records', $data) && is_iterable($data['records']) && sizeof($data['records']) > 0) {
                 $varId = 1;
                 foreach ($data['records'][0] as $ignored) {
@@ -150,21 +164,22 @@ class FileManagementController extends DataWizController
                     $dv->setName("var_$varId");
                     $dv->setVarId($varId++);
                     $dv->setDataset($dataset);
-                    $this->crud->update($dv);
+                    $this->em->persist($dv);
                 }
+                $this->em->flush();
             } else {
                 $error = "error.import.csv.codebook.empty";
             }
             if (null == $error && $data && key_exists('records', $data) && is_iterable($data['records']) && sizeof($data['records']) > 0) {
-                //TODO IMPORT MATRIX
+                $this->saveMatrix($data['records'], $dataset->getId());
             } else {
                 $error = "error.import.csv.matrix.empty";
             }
         } else {
             $error = "error.import.csv.dataset.empty";
         }
-        if(null != $error){
-            $this->deleteUpload($dataset);
+        if (null != $error) {
+            $this->deleteDataset($dataset);
         }
 
         return new JsonResponse(
@@ -173,25 +188,38 @@ class FileManagementController extends DataWizController
         );
     }
 
-    private function deleteUpload($dataset): bool
+    /**
+     * @param array $matrix
+     * @param string $datasetId
+     */
+    private function saveMatrix(array $matrix, string $datasetId)
     {
-        $deleted = false;
+        try {
+            $this->filesystem->write("matrix/$datasetId.json", json_encode($matrix));
+        } catch (FileExistsException $e) {
+        }
+    }
+
+    /**
+     * @param Dataset $dataset
+     */
+    private function deleteDataset(Dataset $dataset): void
+    {
         try {
             if ($this->filesystem->has($dataset->getStorageName())) {
                 $this->filesystem->delete($dataset->getStorageName());
-                $this->crud->delete($dataset);
-                $deleted = true;
             }
+            if ($this->filesystem->has("matrix/".$dataset->getId().".json")) {
+                $this->filesystem->delete("matrix/".$dataset->getId().".json");
+            }
+            if ($dataset->getCodebook() != null) {
+                foreach ($dataset->getCodebook() as $var) {
+                    $this->em->remove($var);
+                }
+            }
+            $this->em->remove($dataset);
+            $this->em->flush();
         } catch (FileNotFoundException $e) {
-            $deleted = false;
         }
-        return $deleted;
     }
-
-    protected function getEntityAtChange(string $uuid, string $className)
-    {
-        return $this->crud->readById($className, $uuid);
-    }
-
-
 }

@@ -9,6 +9,8 @@ use App\Domain\Model\Filemanagement\Dataset;
 use App\Domain\Model\Study\MeasureMetaDataGroup;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
+use League\Flysystem\FileNotFoundException;
+use League\Flysystem\Filesystem;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,15 +30,18 @@ class CodebookController extends AbstractController
 {
     protected EntityManagerInterface $em;
     protected LoggerInterface $logger;
+    private Filesystem $filesystem;
 
     /**
      * @param EntityManagerInterface $em
      * @param LoggerInterface $logger
+     * @param Filesystem $filesystem
      */
-    public function __construct(EntityManagerInterface $em, LoggerInterface $logger)
+    public function __construct(EntityManagerInterface $em, LoggerInterface $logger, Filesystem $filesystem)
     {
         $this->em = $em;
         $this->logger = $logger;
+        $this->filesystem = $filesystem;
     }
 
 
@@ -97,6 +102,27 @@ class CodebookController extends AbstractController
         }
 
         return new JsonResponse($viewMeasures, key_exists('measures', $viewMeasures) ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @Route("/{uuid}/matrix", name="matrix")
+     *
+     * @param string $uuid
+     * @return JsonResponse
+     */
+    public function datasetMatrixAction(string $uuid): JsonResponse
+    {
+        $this->logger->debug("Enter CodebookController::createViewMeasuresAction with [UUID: $uuid]");
+        $file = null;
+        if ($this->filesystem->has("matrix/".$uuid.".json")) {
+            try {
+                $file = $this->filesystem->read("matrix/".$uuid.".json");
+            } catch (FileNotFoundException $e) {
+                $this->logger->critical("Exception in CodebookController::createViewMeasuresAction [UUID: $uuid] Exception: ".$e->getMessage());
+            }
+        }
+
+        return new JsonResponse($file ? json_decode($file, true) : "", $file ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);
     }
 
     /**

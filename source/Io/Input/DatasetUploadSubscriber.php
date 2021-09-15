@@ -8,7 +8,6 @@ use App\Api\Spss\SpssApiClient;
 use App\Crud\Crudable;
 use App\Domain\Model\Filemanagement\Dataset;
 use App\Domain\Model\Study\Experiment;
-use Doctrine\Common\Collections\ArrayCollection;
 use Oneup\UploaderBundle\Event\PostUploadEvent;
 use Oneup\UploaderBundle\UploadEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -58,7 +57,7 @@ class DatasetUploadSubscriber implements EventSubscriberInterface
             );
             $this->crud->update($dataset);
             $response = $event->getResponse();
-            $response->addToOffset(['fileId' => $dataset->getId()], ["flySystem"]);
+            $response->addToOffset(['fileId' => $dataset->getId(), 'fileType' => $event->getFile()->getExtension()], ["flySystem"]);
         }
     }
 }

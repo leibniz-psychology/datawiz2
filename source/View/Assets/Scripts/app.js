@@ -31,28 +31,30 @@ Dropzone.options.datawizDropzone = {
 			);
 		});
 		this.on("success", function (file, responseText) {
-			const modal = document.querySelector("#modal-dataset-import");
-			const backdrop = document.querySelector("#modal-dataset-import-backdrop");
-			const submitBtn = document.querySelector("#dataset-import-submit");
-			const form = document.querySelector("#dataset-import-form");
-			if (form !== undefined) {
-				const previewUrl = form.getAttribute('data-preview-url').trim().replace('%20', '') + encodeURI(responseText['flySystem'][0]['fileId']);
-				const submitUrl = form.getAttribute('data-submit-url').trim().replace('%20', '') + encodeURI(responseText['flySystem'][0]['fileId']);
-				document.querySelector("#dataset-file-id").value = responseText['flySystem'][0]['fileId'];
-				modal.classList.toggle("hidden");
-				backdrop.classList.toggle("hidden");
-				modal.classList.toggle("flex");
-				backdrop.classList.toggle("flex");
-				submitBtn.addEventListener("click", function () {
-          POST(submitUrl, form);
-          location.reload();
-				});
-				const input = form.querySelectorAll('select, input:not([type="hidden"])');
-				input.forEach(e => {
-					e.addEventListener('change', function () {
-						POST(previewUrl, form, "#dataset-import-result");
+			if (responseText['flySystem']['fileType'] === 'csv') {
+				const modal = document.querySelector("#modal-dataset-import");
+				const backdrop = document.querySelector("#modal-dataset-import-backdrop");
+				const submitBtn = document.querySelector("#dataset-import-submit");
+				const form = document.querySelector("#dataset-import-form");
+				if (form !== undefined) {
+					const previewUrl = form.getAttribute('data-preview-url').trim().replace('%20', '') + encodeURI(responseText['flySystem'][0]['fileId']);
+					const submitUrl = form.getAttribute('data-submit-url').trim().replace('%20', '') + encodeURI(responseText['flySystem'][0]['fileId']);
+					document.querySelector("#dataset-file-id").value = responseText['flySystem'][0]['fileId'];
+					modal.classList.toggle("hidden");
+					backdrop.classList.toggle("hidden");
+					modal.classList.toggle("flex");
+					backdrop.classList.toggle("flex");
+					submitBtn.addEventListener("click", function () {
+						POST(submitUrl, form);
+						location.reload();
+					});
+					const input = form.querySelectorAll('select, input:not([type="hidden"])');
+					input.forEach(e => {
+						e.addEventListener('change', function () {
+							POST(previewUrl, form, "#dataset-import-result");
+						})
 					})
-				})
+				}
 			}
 		});
 	},
@@ -68,7 +70,7 @@ function POST(url, form, resultDiv = null) {
 		else
 			throw new Error('Hell no! What happened?');
 	}).then((data) => {
-		if(resultDiv!= null){
+		if (resultDiv != null) {
 			document.querySelector(resultDiv).innerHTML = JSON.stringify(data);
 		}
 		console.log(data)

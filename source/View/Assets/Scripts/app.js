@@ -31,22 +31,23 @@ Dropzone.options.datawizDropzone = {
 			);
 		});
 		this.on("success", function (file, responseText) {
-			let modal = document.querySelector("#modal-dataset-import");
-			let backdrop = document.querySelector("#modal-dataset-import-backdrop");
-			let submitBtn = document.querySelector("#dataset-import-submit");
-			let form = document.querySelector("#dataset-import-form");
+			const modal = document.querySelector("#modal-dataset-import");
+			const backdrop = document.querySelector("#modal-dataset-import-backdrop");
+			const submitBtn = document.querySelector("#dataset-import-submit");
+			const form = document.querySelector("#dataset-import-form");
 			if (form !== undefined) {
-				let previewUrl = form.getAttribute('data-preview-url').trim().replace('%20', '') + encodeURI(responseText['flySystem'][0]['fileId']);
-				let submitUrl = form.getAttribute('data-submit-url').trim().replace('%20', '') + encodeURI(responseText['flySystem'][0]['fileId']);
+				const previewUrl = form.getAttribute('data-preview-url').trim().replace('%20', '') + encodeURI(responseText['flySystem'][0]['fileId']);
+				const submitUrl = form.getAttribute('data-submit-url').trim().replace('%20', '') + encodeURI(responseText['flySystem'][0]['fileId']);
 				document.querySelector("#dataset-file-id").value = responseText['flySystem'][0]['fileId'];
 				modal.classList.toggle("hidden");
 				backdrop.classList.toggle("hidden");
 				modal.classList.toggle("flex");
 				backdrop.classList.toggle("flex");
 				submitBtn.addEventListener("click", function () {
-					POST(submitUrl, form);
+          POST(submitUrl, form);
+          location.reload();
 				});
-				let input = form.querySelectorAll('select, input:not([type="hidden"])');
+				const input = form.querySelectorAll('select, input:not([type="hidden"])');
 				input.forEach(e => {
 					e.addEventListener('change', function () {
 						POST(previewUrl, form, "#dataset-import-result");

@@ -70,7 +70,7 @@ class CodebookController extends AbstractController
         }
         $jsonCodebook = $this->codebookCollectionToJsonArray($dataset->getCodebook());
 
-        return JsonResponse::fromJsonString($jsonCodebook, $jsonCodebook != null ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);
+        return new JsonResponse($jsonCodebook, $jsonCodebook != null && sizeof($jsonCodebook) > 0 ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -101,13 +101,13 @@ class CodebookController extends AbstractController
 
     /**
      * @param Collection|null $codebook
-     * @return false|string|null
+     * @return null|array
      */
-    private function codebookCollectionToJsonArray(?Collection $codebook)
+    private function codebookCollectionToJsonArray(?Collection $codebook): ?array
     {
-        $jsonCodebook = [];
-        $json = null;
+        $jsonCodebook = null;
         if ($codebook && is_iterable($codebook)) {
+            $jsonCodebook = [];
             foreach ($codebook as $var) {
                 $jsonCodebook['variables'][] = [
                     "id" => $var->getVarId(),
@@ -130,10 +130,9 @@ class CodebookController extends AbstractController
                     "var_db_id" => $var->getId(),
                 ];
             }
-            $json = json_encode($jsonCodebook);
         }
 
-        return $json;
+        return $jsonCodebook;
     }
 
     /**

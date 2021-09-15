@@ -42,11 +42,15 @@ class Dataset extends UuidEntity
      */
     private int $originalSize = 0;
 
-
     /**
      * @ORM\Column(type="string", length=256)
      */
     private string $storageName;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private ?string $description = null;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Domain\Model\Codebook\DatasetVariables", mappedBy="dataset")
@@ -139,6 +143,22 @@ class Dataset extends UuidEntity
     public function setStorageName($storageName): void
     {
         $this->storageName = $storageName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string|null $description
+     */
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
     }
 
 

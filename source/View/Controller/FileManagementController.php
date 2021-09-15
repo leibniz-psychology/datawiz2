@@ -10,6 +10,7 @@ use App\Domain\Model\Filemanagement\AdditionalMaterial;
 use App\Domain\Model\Filemanagement\Dataset;
 use App\Io\Formats\Csv\CsvImportable;
 use App\Questionnaire\Questionnairable;
+use League\Flysystem\FileNotFoundException;
 use League\Flysystem\Filesystem;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -45,15 +46,6 @@ class FileManagementController extends DataWizController
         $this->csvImportable = $csvImportable;
     }
 
-    private function deleteUpload($pathOfFile, $entityOfFile): bool
-    {
-        if ($this->filesystem->has($pathOfFile)) {
-            $this->filesystem->delete($pathOfFile);
-        }
-        $this->crud->delete($entityOfFile);
-
-        return !$this->filesystem->has($pathOfFile);
-    }
 
     /**
      * @Route("/delete/{uuid}/material", name="deletion")
@@ -67,12 +59,9 @@ class FileManagementController extends DataWizController
         /** @var AdditionalMaterial $entityForDeletion */
         $entityForDeletion = $this->getEntityAtChange($uuid, AdditionalMaterial::class);
         $experimentId = $entityForDeletion->getExperiment()->getId();
-        $success = $this->deleteUpload($entityForDeletion->getStorageName(), $entityForDeletion);
-        if ($success) {
-            return new RedirectResponse($this->urlGenerator->generate('Study-materials', ['uuid' => $experimentId]));
-        } else {
-            return new Response('This was not planned', 500);
-        }
+        $success = $this->deleteUpload($entityForDeletion);
+
+        return new RedirectResponse($this->urlGenerator->generate('Study-materials', ['uuid' => $experimentId]));
     }
 
     /**
@@ -142,6 +131,7 @@ class FileManagementController extends DataWizController
         $headerRows = filter_var($request->get('dataset-import-header-rows'), FILTER_VALIDATE_INT) ?? 0;
         $dataset = $this->crud->readById(Dataset::class, $fileId);
         $data = null;
+        $error = null;
         if ($dataset) {
             $data = $this->csvImportable->csvToArray($dataset->getStorageName(), $delimiter, $escape, $headerRows);
             if ($data && key_exists('header', $data) && is_iterable($data['header']) && sizeof($data['header']) > 0) {
@@ -155,17 +145,47 @@ class FileManagementController extends DataWizController
                 }
             } elseif ($data && key_exists('records', $data) && is_iterable($data['records']) && sizeof($data['records']) > 0) {
                 $varId = 1;
-                foreach ($data['records'][0] as $row) {
+                foreach ($data['records'][0] as $ignored) {
                     $dv = new DatasetVariables();
                     $dv->setName("var_$varId");
                     $dv->setVarId($varId++);
                     $dv->setDataset($dataset);
                     $this->crud->update($dv);
                 }
+            } else {
+                $error = "error.import.csv.codebook.empty";
             }
+            if (null == $error && $data && key_exists('records', $data) && is_iterable($data['records']) && sizeof($data['records']) > 0) {
+                //TODO IMPORT MATRIX
+            } else {
+                $error = "error.import.csv.matrix.empty";
+            }
+        } else {
+            $error = "error.import.csv.dataset.empty";
+        }
+        if(null != $error){
+            $this->deleteUpload($dataset);
         }
 
-        return new JsonResponse($data, $data ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
+        return new JsonResponse(
+            null != $error ? $error : $data,
+            null != $error ? Response::HTTP_UNPROCESSABLE_ENTITY : Response::HTTP_OK
+        );
+    }
+
+    private function deleteUpload($dataset): bool
+    {
+        $deleted = false;
+        try {
+            if ($this->filesystem->has($dataset->getStorageName())) {
+                $this->filesystem->delete($dataset->getStorageName());
+                $this->crud->delete($dataset);
+                $deleted = true;
+            }
+        } catch (FileNotFoundException $e) {
+            $deleted = false;
+        }
+        return $deleted;
     }
 
     protected function getEntityAtChange(string $uuid, string $className)

@@ -17,14 +17,21 @@
           id="datawiz-dropzone"
           style="width:200px; height:200px; border:4px dashed black"></form> #}
     <form action="{{ oneup_uploader_endpoint("datasets") }}" data-experiment-id="{{ experiment.id }}"
-          class="mx-6 border-2 border-dashed border-mono-500 dropzone" id="datawiz-dropzone"></form>
+          class="mx-6 border-2 border-dashed border-mono-500 dropzone" id="datawiz-dropzone"
+          data-preview-csv="{{ path("File-preview-csv",{"fileId": " "}) }}"
+          data-submit-csv="{{ path("File-submit-csv",{"fileId": " "}) }}"
+          data-preview-sav="{{ path("File-preview-sav",{"fileId": " "}) }}"
+          data-submit-sav="{{ path("File-submit-sav",{"fileId": " "}) }}"
+    >
+        <input type="hidden" id="dataset-import-data" name="dataset-import-data" value=""/>
+    </form>
     <h3 class="mx-6 mt-6 text-xl">
         Already uploaded
     </h3>
     <ul class="mx-6 mt-6">
         {% for dataset in experiment.originalDatasets %}
             <li>{{ dataset.originalName }} - <a href="{{ path('codebook_index', {uuid: dataset.id}) }}"
-                                                    class="underline">Edit codebook</a></li>
+                                                class="underline">Edit codebook</a></li>
         {% endfor %}
     </ul>
     <!-- Modal -->

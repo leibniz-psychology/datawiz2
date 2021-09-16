@@ -37,8 +37,8 @@ Dropzone.options.datawizDropzone = {
 				const submitBtn = document.querySelector("#dataset-import-submit");
 				const form = document.querySelector("#dataset-import-form");
 				if (form !== undefined) {
-					const previewUrl = form.getAttribute('data-preview-url').trim().replace('%20', '') + encodeURI(responseText['flySystem'][0]['fileId']);
-					const submitUrl = form.getAttribute('data-submit-url').trim().replace('%20', '') + encodeURI(responseText['flySystem'][0]['fileId']);
+					const previewUrl = this.element.getAttribute('data-preview-csv').trim().replace('%20', '') + encodeURI(responseText['flySystem'][0]['fileId']);
+					const submitUrl = this.element.getAttribute('data-submit-csv').trim().replace('%20', '') + encodeURI(responseText['flySystem'][0]['fileId']);
 					document.querySelector("#dataset-file-id").value = responseText['flySystem'][0]['fileId'];
 					modal.classList.toggle("hidden");
 					backdrop.classList.toggle("hidden");
@@ -56,7 +56,9 @@ Dropzone.options.datawizDropzone = {
 					})
 				}
 			} else if (responseText['flySystem'][0]['fileType'] === 'sav') {
-				GET("https://127.0.0.1:8000/filemanagement/preview/sav/" + encodeURI(responseText['flySystem'][0]['fileId']));
+				const previewSavUrl = this.element.getAttribute('data-preview-sav').trim().replace('%20', '') + encodeURI(responseText['flySystem'][0]['fileId']);
+				const submitSavUrl = this.element.getAttribute('data-submit-sav').trim().replace('%20', '') + encodeURI(responseText['flySystem'][0]['fileId']);
+				GET(previewSavUrl, this.element, submitSavUrl);
 			}
 		});
 	},
@@ -81,7 +83,7 @@ function POST(url, form, resultDiv = null) {
 	});
 }
 
-function GET(url, resultDiv = null) {
+function GET(url, form, submitUrl) {
 	fetch(url, {
 		method: 'GET',
 	}).then(function (response) {
@@ -90,10 +92,10 @@ function GET(url, resultDiv = null) {
 		else
 			throw new Error('Hell no! What happened?');
 	}).then((data) => {
-		if (resultDiv != null) {
-			document.querySelector(resultDiv).innerHTML = JSON.stringify(data);
-		}
-		console.log(data)
+		console.log(data);
+		form.querySelector('#dataset-import-data').value = JSON.stringify(data);
+		POST(submitUrl, form);
+
 	}).catch(error => {
 		console.log(error)
 	});

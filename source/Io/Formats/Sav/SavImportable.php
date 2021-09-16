@@ -33,7 +33,8 @@ class SavImportable
                 $cv['id'] = $count++;
                 $cv['name'] = key_exists('name', $var) ? $var['name'] : "";
                 $cv['label'] = key_exists('label', $var) ? $var['label'] : "";
-                $cv['itemText'] = "";
+                $cv['itemText'] = null;
+                $cv['values'] = null;
                 if (key_exists('values', $var) && is_iterable($var['values'])) {
                     foreach ($var['values'] as $val) {
                         if (is_iterable($val)) {
@@ -47,9 +48,8 @@ class SavImportable
             $data['codebook'] = $codebook ?? null;
         }
         if ($sav && key_exists('dataMatrix', $sav)) {
-            $data['matrix'] = $sav['dataMatrix'];
+            $data['records'] = $sav['dataMatrix'];
         }
-
 
         return $data;
     }

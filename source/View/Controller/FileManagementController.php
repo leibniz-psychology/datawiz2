@@ -82,6 +82,45 @@ class FileManagementController extends AbstractController
     }
 
     /**
+     * @Route("/submit/sav/{fileId}", name="submit-sav")
+     *
+     * @param string $fileId
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function submitSavAction(string $fileId, Request $request): JsonResponse
+    {
+        $this->logger->debug("Enter FileManagementController::previewSavAction with [FileId: $fileId]");
+        $dataset = $this->em->find(Dataset::class, $fileId);
+        $data = $request->get('dataset-import-data') ?? null;
+        if (isset($dataset) && isset($data) && !empty($data)) {
+            $data = json_decode($data, true);
+            if($data && is_iterable($data) && key_exists('codebook', $data)){
+                foreach ($data['codebook'] as $var){
+                    $this->em->persist(
+                        DatasetVariables::createNew(
+                            $dataset,
+                            $var['id'],
+                            $var['name'],
+                            $var['label'],
+                            $var['itemText'],
+                            $var['values'],
+                            $var['missings'],
+                        )
+                    );
+                }
+                $this->em->flush();
+                if(key_exists('records', $data)) {
+                    $this->_saveMatrix($data['records'], $dataset->getId());
+                }
+            }
+            //$data = $this->savImportable->savToArray($dataset);
+        }
+
+        return new JsonResponse($data ?? [], null != $data ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /**
      * @Route("/preview/csv/{fileId}", name="preview-csv")
      *
      * @param string $fileId

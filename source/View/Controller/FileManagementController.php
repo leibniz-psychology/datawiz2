@@ -3,11 +3,11 @@
 
 namespace App\View\Controller;
 
-
 use App\Domain\Model\Codebook\DatasetVariables;
 use App\Domain\Model\Filemanagement\AdditionalMaterial;
 use App\Domain\Model\Filemanagement\Dataset;
 use App\Io\Formats\Csv\CsvImportable;
+use App\Io\Formats\Sav\SavImportable;
 use App\Questionnaire\Questionnairable;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FileExistsException;
@@ -34,6 +34,7 @@ class FileManagementController extends AbstractController
     private Filesystem $filesystem;
     private Questionnairable $questionnaire;
     private CsvImportable $csvImportable;
+    private SavImportable $savImportable;
     private EntityManagerInterface $em;
     private LoggerInterface $logger;
 
@@ -41,6 +42,7 @@ class FileManagementController extends AbstractController
      * @param Filesystem $filesystem
      * @param Questionnairable $questionnaire
      * @param CsvImportable $csvImportable
+     * @param SavImportable $savImportable
      * @param EntityManagerInterface $em
      * @param LoggerInterface $logger
      */
@@ -48,24 +50,45 @@ class FileManagementController extends AbstractController
         Filesystem $filesystem,
         Questionnairable $questionnaire,
         CsvImportable $csvImportable,
+        SavImportable $savImportable,
         EntityManagerInterface $em,
         LoggerInterface $logger
     ) {
         $this->filesystem = $filesystem;
         $this->questionnaire = $questionnaire;
         $this->csvImportable = $csvImportable;
+        $this->savImportable = $savImportable;
         $this->em = $em;
         $this->logger = $logger;
     }
 
+
     /**
-     * @Route("/preview/csv/{fileId}", name="preview-dataset")
+     * @Route("/preview/sav/{fileId}", name="preview-sav")
+     *
+     * @param string $fileId
+     * @return JsonResponse
+     */
+    public function previewSavAction(string $fileId): JsonResponse
+    {
+        $this->logger->debug("Enter FileManagementController::previewSavAction with [FileId: $fileId]");
+        $dataset = $this->em->find(Dataset::class, $fileId);
+        $data = null;
+        if ($dataset) {
+            $data = $this->savImportable->savToArray($dataset);
+        }
+
+        return new JsonResponse($data ?? [], null != $data ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /**
+     * @Route("/preview/csv/{fileId}", name="preview-csv")
      *
      * @param string $fileId
      * @param Request $request
      * @return JsonResponse
      */
-    public function previewCSVAction(string $fileId, Request $request): JsonResponse
+    public function previewCsvAction(string $fileId, Request $request): JsonResponse
     {
         $this->logger->debug("Enter FileManagementController::previewCSVAction with [FileId: $fileId]");
         $delimiter = $request->get('dataset-import-delimiter') ?? ",";
@@ -81,7 +104,7 @@ class FileManagementController extends AbstractController
     }
 
     /**
-     * @Route("/submit/csv/{fileId}", name="submit-dataset")
+     * @Route("/submit/csv/{fileId}", name="submit-csv")
      *
      * @param string $fileId
      * @param Request $request
@@ -101,21 +124,14 @@ class FileManagementController extends AbstractController
             if ($data && key_exists('header', $data) && is_iterable($data['header']) && sizeof($data['header']) > 0) {
                 $varId = 1;
                 foreach ($data['header'] as $var) {
-                    $dv = new DatasetVariables();
-                    $dv->setName($var);
-                    $dv->setVarId($varId++);
-                    $dv->setDataset($dataset);
-                    $this->em->persist($dv);
+                    $this->em->persist(DatasetVariables::createNew($dataset, $varId++, $var));
                 }
                 $this->em->flush();
             } elseif ($data && key_exists('records', $data) && is_iterable($data['records']) && sizeof($data['records']) > 0) {
                 $varId = 1;
                 foreach ($data['records'][0] as $ignored) {
-                    $dv = new DatasetVariables();
-                    $dv->setName("var_$varId");
-                    $dv->setVarId($varId++);
-                    $dv->setDataset($dataset);
-                    $this->em->persist($dv);
+                    $this->em->persist(DatasetVariables::createNew($dataset, $varId, "var_$varId"));
+                    $varId++;
                 }
                 $this->em->flush();
             } else {
@@ -154,7 +170,6 @@ class FileManagementController extends AbstractController
 
         return $this->redirectToRoute('Study-datasets', ['uuid' => $experimentId]);
     }
-
 
 
     /**
@@ -205,9 +220,6 @@ class FileManagementController extends AbstractController
             ]
         );
     }
-
-
-
 
 
     /**

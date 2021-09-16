@@ -13,6 +13,44 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class DatasetVariables extends UuidEntity
 {
+
+    /**
+     * @param Dataset $dataset
+     * @param int $varId
+     * @param string $name
+     * @param string|null $label
+     * @param string|null $itemText
+     * @param array|null $values
+     * @param array|null $missings
+     * @param string|null $measure
+     * @return DatasetVariables
+     */
+    public static function createNew(
+        Dataset $dataset,
+        int $varId,
+        string $name,
+        ?string $label = null,
+        ?string $itemText = null,
+        ?array $values = null,
+        ?array $missings = null,
+        ?string $measure = null
+
+    ): DatasetVariables {
+        $dv = new DatasetVariables();
+        $dv->setDataset($dataset);
+        $dv->setVarId($varId);
+        $dv->setName($name);
+        $dv->setLabel($label);
+        $dv->setItemText($itemText);
+        $dv->setValues($values);
+        $dv->setMissings($missings);
+        $dv->setValues($values);
+        $dv->setMeasure($measure);
+
+        return $dv;
+    }
+
+
     /**
      * @ORM\Column(type="integer")
      */
@@ -53,6 +91,7 @@ class DatasetVariables extends UuidEntity
      * @ORM\JoinColumn(name="dataset_id", referencedColumnName="id")
      */
     private Dataset $dataset;
+
 
     /**
      * @return Dataset

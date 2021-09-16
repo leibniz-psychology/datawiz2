@@ -31,7 +31,7 @@ Dropzone.options.datawizDropzone = {
 			);
 		});
 		this.on("success", function (file, responseText) {
-			if (responseText['flySystem']['fileType'] === 'csv') {
+			if (responseText['flySystem'][0]['fileType'] === 'csv') {
 				const modal = document.querySelector("#modal-dataset-import");
 				const backdrop = document.querySelector("#modal-dataset-import-backdrop");
 				const submitBtn = document.querySelector("#dataset-import-submit");
@@ -55,6 +55,8 @@ Dropzone.options.datawizDropzone = {
 						})
 					})
 				}
+			} else if (responseText['flySystem'][0]['fileType'] === 'sav') {
+				GET("https://127.0.0.1:8000/filemanagement/preview/sav/" + encodeURI(responseText['flySystem'][0]['fileId']));
 			}
 		});
 	},
@@ -64,6 +66,24 @@ function POST(url, form, resultDiv = null) {
 	fetch(url, {
 		method: 'POST',
 		body: new FormData(form)
+	}).then(function (response) {
+		if (response.ok)
+			return response.json();
+		else
+			throw new Error('Hell no! What happened?');
+	}).then((data) => {
+		if (resultDiv != null) {
+			document.querySelector(resultDiv).innerHTML = JSON.stringify(data);
+		}
+		console.log(data)
+	}).catch(error => {
+		console.log(error)
+	});
+}
+
+function GET(url, resultDiv = null) {
+	fetch(url, {
+		method: 'GET',
 	}).then(function (response) {
 		if (response.ok)
 			return response.json();

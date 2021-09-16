@@ -29,7 +29,7 @@ class DatasetUploadSubscriber implements EventSubscriberInterface
     }
 
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             UploadEvents::postUpload('datasets') => ['onDatasetUpload'],
@@ -40,19 +40,11 @@ class DatasetUploadSubscriber implements EventSubscriberInterface
     {
         $experiment = $this->crud->readById(Experiment::class, $event->getRequest()->get('studyId'));
         if (null !== $event->getFile()) {
-            switch ($event->getFile()->getExtension()) {
-                case 'sav':
-                    $data = $this->spssApiClient->savToArray($event);
-                    break;
-                case 'csv':
-                case 'tsv':
-
-                    break;
-            }
             $dataset = Dataset::createDataset(
                 $event->getRequest()->get('originalFilename'),
                 $event->getFile()->getBasename(),
                 $event->getFile()->getSize(),
+                $event->getFile()->getMimeType(),
                 $experiment
             );
             $this->crud->update($dataset);

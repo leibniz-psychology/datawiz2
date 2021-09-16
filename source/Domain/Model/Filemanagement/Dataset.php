@@ -33,6 +33,11 @@ class Dataset extends UuidEntity
     private string $originalName;
 
     /**
+     * @ORM\Column(type="string", length=256)
+     */
+    private string $originalMimetype;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private ?DateTime $dateUploaded = null;
@@ -58,7 +63,7 @@ class Dataset extends UuidEntity
     private Collection $codebook;
 
 
-    static public function createDataset(string $atUploadName, string $renamedFilename, int $fileSize, Experiment $experiment): Dataset
+    static public function createDataset(string $atUploadName, string $renamedFilename, int $fileSize, string $mimetype, Experiment $experiment): Dataset
     {
         $file = new Dataset();
         $file->setOriginalName($atUploadName);
@@ -66,6 +71,7 @@ class Dataset extends UuidEntity
         $file->setOriginalSize($fileSize);
         $file->setExperiment($experiment);
         $file->setDateUploaded(new DateTime());
+        $file->setOriginalMimetype($mimetype);
 
         return $file;
     }
@@ -96,6 +102,23 @@ class Dataset extends UuidEntity
     {
         $this->originalName = $originalName;
     }
+
+    /**
+     * @return string
+     */
+    public function getOriginalMimetype(): string
+    {
+        return $this->originalMimetype;
+    }
+
+    /**
+     * @param string $originalMimetype
+     */
+    public function setOriginalMimetype(string $originalMimetype): void
+    {
+        $this->originalMimetype = $originalMimetype;
+    }
+
 
     /**
      * @return DateTime|null

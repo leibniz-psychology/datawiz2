@@ -5,9 +5,9 @@ namespace App\Api\Spss;
 
 
 use App\Api\ApiClientService;
+use App\Domain\Model\Filemanagement\Dataset;
 use League\Flysystem\FileNotFoundException;
 use League\Flysystem\FilesystemInterface;
-use Oneup\UploaderBundle\Event\PostUploadEvent;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Mime\Part\DataPart;
 
@@ -34,16 +34,16 @@ class SpssApiClient
     }
 
 
-    public function savToArray(PostUploadEvent $event)
+    public function savToArray(?Dataset $dataset)
     {
         $result = null;
-        if (null !== $event && null !== $event->getFile()) {
+        if (null != $dataset) {
             try {
-                $fileContent = $this->filesystem->read($event->getFile()->getBasename());
+                $fileContent = $this->filesystem->read($dataset->getStorageName());
                 $result = $this->clientService->POST(
                     self::SPSS_API_URI,
                     [
-                        'file' => new DataPart($fileContent, $event->getFile()->getBasename(), $event->getFile()->getMimeType()),
+                        'file' => new DataPart($fileContent, $dataset->getStorageName(), $dataset->getOriginalMimetype()),
                     ]
                 );
             } catch (FileNotFoundException $e) {

@@ -62,6 +62,7 @@
   },
   "dependencies": {
     "cypress": "^8.4.0",
+    "cypress-wait-until": "^1.7.1",
     "dropzone": "^5.9.2"
   }
 }

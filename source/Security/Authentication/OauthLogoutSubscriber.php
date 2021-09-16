@@ -43,7 +43,7 @@ class OauthLogoutSubscriber implements EventSubscriberInterface
     {
         if ($this->isRunningOnOauth()) {
             $provider = $this->clientRegistry->getClient('keycloak');
-            $targetUrl = $this->urlGenerator->generate('Administration-landing', [], UrlGeneratorInterface::ABSOLUTE_URL);
+            $targetUrl = $this->urlGenerator->generate('dashboard_landing', [], UrlGeneratorInterface::ABSOLUTE_URL);
             $logout = $provider->getOAuth2Provider()->getLogoutUrl(["redirect_uri" => $targetUrl]);
             $event->setResponse(new RedirectResponse($logout));
         }

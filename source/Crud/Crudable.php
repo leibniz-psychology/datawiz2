@@ -12,7 +12,7 @@ interface Crudable
                                    ?array $orderBy = null, $limit = null,
                                    $offset = null);
 
-    public function update($entity): void;
+    public function update(&$entity): void;
 
     public function delete($entity): void;
 

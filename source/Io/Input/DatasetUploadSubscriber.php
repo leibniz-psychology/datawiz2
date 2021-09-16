@@ -6,8 +6,7 @@ namespace App\Io\Input;
 
 use App\Api\Spss\SpssApiClient;
 use App\Crud\Crudable;
-use App\Domain\Model\Codebook\DatasetMetaData;
-use App\Domain\Model\Filemanagement\OriginalDataset;
+use App\Domain\Model\Filemanagement\Dataset;
 use App\Domain\Model\Study\Experiment;
 use Oneup\UploaderBundle\Event\PostUploadEvent;
 use Oneup\UploaderBundle\UploadEvents;
@@ -30,7 +29,7 @@ class DatasetUploadSubscriber implements EventSubscriberInterface
     }
 
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             UploadEvents::postUpload('datasets') => ['onDatasetUpload'],
@@ -41,24 +40,16 @@ class DatasetUploadSubscriber implements EventSubscriberInterface
     {
         $experiment = $this->crud->readById(Experiment::class, $event->getRequest()->get('studyId'));
         if (null !== $event->getFile()) {
-            switch ($event->getFile()->getExtension()) {
-                case 'sav':
-                    $data = $this->spssApiClient->savToArray($event);
-                    break;
-                case 'csv':
-                case 'tsv':
-
-                    break;
-            }
-            $dataset = OriginalDataset::createDataset(
+            $dataset = Dataset::createDataset(
                 $event->getRequest()->get('originalFilename'),
                 $event->getFile()->getBasename(),
-                DatasetMetaData::createEmptyCode(),
+                $event->getFile()->getSize(),
+                $event->getFile()->getMimeType(),
                 $experiment
             );
             $this->crud->update($dataset);
             $response = $event->getResponse();
-            $response->addToOffset(['fileId' => $event->getFile()->getBasename()], ["flySystem"]);
+            $response->addToOffset(['fileId' => $dataset->getId(), 'fileType' => $event->getFile()->getExtension()], ["flySystem"]);
         }
     }
 }

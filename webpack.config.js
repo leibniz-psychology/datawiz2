@@ -71,7 +71,7 @@ Encore
   .enablePostCssLoader((options) => {
     options.postcssOptions = {
       plugins: [
-        require("tailwindcss")("./.tools/config/tailwind.config.js"),
+        require("tailwindcss")(),
         require("postcss-svg")(),
         require("autoprefixer")(),
       ],

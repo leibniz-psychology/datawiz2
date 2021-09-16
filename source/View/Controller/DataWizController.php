@@ -8,8 +8,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 abstract class DataWizController extends AbstractController
 {
-    protected $crud;
-    protected $urlGenerator;
+    protected Crudable $crud;
+    protected UrlGeneratorInterface $urlGenerator;
 
     public function __construct(Crudable $crud, UrlGeneratorInterface $urlGenerator)
     {

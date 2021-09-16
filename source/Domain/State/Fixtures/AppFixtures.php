@@ -29,10 +29,10 @@ class AppFixtures extends Fixture
 
     public function createTestUser(ObjectManager $manager)
     {
-        foreach ($this->testUserNames as $userName) {
+        /*foreach ($this->testUserNames as $userName) {
             $user = new DataWizUser($userName);
-            $user->setKeycloakUuid(UuidV4::v4());
+            $user->setId(UuidV4::v4());
             $manager->persist($user);
-        }
+        }*/
     }
 }

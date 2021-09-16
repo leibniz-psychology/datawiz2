@@ -5,35 +5,37 @@ namespace App\Domain\Model\Administration;
 use App\Domain\Access\Administration\DataWizUserRepository;
 use App\Security\Authorization\Authorizable;
 use Doctrine\ORM\Mapping as ORM;
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @ORM\Entity(repositoryClass=DataWizUserRepository::class)
+ * @ORM\Table(name="user")
  */
-class DataWizUser extends UuidEntity implements UserInterface
+class DataWizUser implements UserInterface
 {
     use Authorizable;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Id()
+     * @ORM\Column(type="uuid")
      */
-    private $roles;
+    private UUid $id;
+
+    /**
+     * @ORM\Column(type="simple_array")
+     */
+    private array $roles;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private $email;
-
-    /**
-     * @ORM\Column(type="uuid", nullable=true)
-     */
-    private $keycloakUuid;
+    private string $email;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Domain\Model\Administration\DataWizSettings", mappedBy="owner", cascade={"persist"})
      */
-    private $datawizSettings;
+    private DataWizSettings $datawizSettings;
 
     public function __construct(string $displayName, bool $admin = false)
     {
@@ -42,6 +44,23 @@ class DataWizUser extends UuidEntity implements UserInterface
         // use the trait logic to create a valid role array
         $this->initializeRoles($admin);
     }
+
+    /**
+     * @return Uuid
+     */
+    public function getId(): Uuid
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param Uuid $id
+     */
+    public function setId(Uuid $id): void
+    {
+        $this->id = $id;
+    }
+
 
     public function getPassword()
     {
@@ -73,25 +92,12 @@ class DataWizUser extends UuidEntity implements UserInterface
         $this->email = $email;
     }
 
-    public function getKeycloakUuid()
+    public function getUserIdentifier(): string
     {
-        return $this->keycloakUuid;
+        return $this->getId();
     }
 
-    public function setKeycloakUuid($keycloakUuid): void
-    {
-        $this->keycloakUuid = $keycloakUuid;
-    }
-
-    public function getUserIdentifier() {
-        if (!getenv('APP_ENV') === 'local') {
-            return $this->getKeycloakUuid();
-        }
-
-        return $this->getEmail();
-    }
-
-    public function getDatawizSettings()
+    public function getDatawizSettings(): DataWizSettings
     {
         return $this->datawizSettings;
     }

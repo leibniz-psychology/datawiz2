@@ -8,6 +8,9 @@ export default {
   cloneVariables() {
     return JSON.parse(JSON.stringify(this.variables));
   },
+  getVariables() {
+    return this.variables;
+  },
   getFilteredVariables() {
     return this.cloneVariables().filter((variable) => {
       return (

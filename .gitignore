@@ -265,16 +265,14 @@ $RECYCLE.BIN/
 
 # Config will be found in .tools/config
 # symlinks are temporary
-webpack.config.js
 psalm.xml
 php_cs.dist
 phpunit.xml.dist
-tailwind.config.js
 
 ###
 
 ###> symfony/framework-bundle ###
-/.env.local
+/.env.dev.local
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php

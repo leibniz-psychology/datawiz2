@@ -15,6 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
+ * @ORM\Table(name="experiment_settings")
  */
 class SettingsMetaDataGroup extends UuidEntity implements MetaDataValuable, Questionable
 {

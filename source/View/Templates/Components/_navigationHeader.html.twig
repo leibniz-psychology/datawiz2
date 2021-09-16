@@ -1,8 +1,8 @@
 {% if app.user %}
     <div class="flex items-center col-start-3 col-end-11">
-        <a href="{{ path("Administration-dashboard") }}"
+        <a href="{{ path("dashboard") }}"
             class="flex px-1 pt-1 pb-1 text-base border-b-4 border-transparent hover:border-mono-600
-            {{- app.request.pathinfo == path("Administration-dashboard") ? ' border-mono-600' -}}">
+            {{- app.request.pathinfo == path("dashboard") ? ' border-mono-600' -}}">
             <span class="iconify iconify--mdi mr-0.5 h-4 w-4 self-center"
                 data-icon="mdi:view-grid">
 

@@ -7,13 +7,13 @@ trait Authorizable
     /**
      * @var string[]
      */
-    private $roles;
+    private array $roles;
 
     /**
      * @var string[]
      *               Define all possible roles
      */
-    public static $rolesDefinition = [
+    public static array $rolesDefinition = [
         'user' => 'ROLE_USER',
         'admin' => 'ROLE_ADMIN',
     ];

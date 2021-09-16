@@ -48,7 +48,7 @@ class CrudService implements Crudable
     /**
      * Wrapper to persist and flush an entity in one call.
      */
-    public function update($entity): void
+    public function update(&$entity): void
     {
         $this->entityManager->persist($entity);
         $this->entityManager->flush();

@@ -17,7 +17,7 @@ Alpine.plugin(Scroll);
 // Alpine.plugin(Fern);
 Alpine.store("codebook", {
   filterText: "",
-  currentVariableID: "1",
+  currentVariableID: 1,
   variables: [],
   ...storeFunctions,
 });
@@ -37,9 +37,8 @@ Alpine.data("codebook", () => ({
   init() {
     axios
       .get(this.url)
-      .then(({ data }) => {
-        // console.log("Data from axios.get");
-        // console.log(data.variables);
+      .then(({ data, status, statusText }) => {
+        console.log(`GET ${this.url} ${status} ${statusText}`);
         Alpine.store("codebook").variables = data.variables;
         this.filteredVariables = Alpine.store("codebook").cloneVariables();
         this.$watch(
@@ -54,24 +53,16 @@ Alpine.data("codebook", () => ({
         console.log(error);
       });
 
-    // console.log(`Measures-URL: ${this.measuresURL}`);
     axios
       .get(this.measuresURL)
-      .then(({ data }) => {
-        // console.log("Data from axios.get measuresURL");
-        // console.log(data.measures);
+      .then(({ data, status, statusText }) => {
         this.measures = data.measures;
-        // console.log("Measures");
-        // console.log(this.measures);
+        console.log(`GET ${this.measuresURL} ${status} ${statusText}`);
       })
       .catch((error) => {
         console.log(error);
       });
 
-    // console.log("Data from codebook php dump");
-    // console.log(this.codebookDump.variables);
-    /* Alpine.store("codebook").variables = this.codebookDump.variables;
-    this.filteredVariables = Alpine.store("codebook").cloneVariables(); */
     this.$watch(
       'Alpine.store("codebook").filterText',
       () =>
@@ -80,13 +71,6 @@ Alpine.data("codebook", () => ({
     );
   },
   save() {
-    // console.log(
-    //   `Variables to send: ${JSON.stringify(
-    //     Alpine.store("codebook").variables,
-    //     null,
-    //     2
-    //   )}`
-    // );
     axios({
       method: "post",
       url: this.url,
@@ -95,7 +79,8 @@ Alpine.data("codebook", () => ({
         id: this.id,
       },
     })
-      .then(({ data }) => {
+      .then(({ data, status, statusText }) => {
+        console.log(`POST ${this.url} ${status} ${statusText}`);
         Alpine.store("codebook").variables = data.variables;
       })
       .catch((error) => {
@@ -106,9 +91,6 @@ Alpine.data("codebook", () => ({
 
 Alpine.data("popup", (item, kind) => ({
   labels: {
-    /*
-     *
-     */
     ["x-tooltip.html.theme.light-border.placement.left-start"]() {
       return `
         <ul>
@@ -137,6 +119,50 @@ Alpine.data("popup", (item, kind) => ({
         })
         .join(", ");
     },
+  },
+}));
+
+Alpine.data("copyValues", () => ({
+  showCopyFrom: false,
+  showCopyTo: false,
+  copyTo: [],
+  clearCopyTo() {
+    this.showCopyTo = false;
+    this.copyTo = [];
+  },
+  markForCopy(variable) {
+    if (this.copyTo.some((item) => item === variable.id)) {
+      this.copyTo = this.copyTo.filter((item) => item !== variable.id);
+    } else {
+      this.copyTo.push(variable.id);
+    }
+  },
+  doCopyTo(propertyToCopy) {
+    if (propertyToCopy === "measure")
+      this.copyTo.map(
+        (item) =>
+          (this.$store.codebook.getOriginalVariable(item).measure = JSON.parse(
+            JSON.stringify(this.$store.codebook.getCurrentVariable().measure)
+          ))
+      );
+    else if (propertyToCopy === "values")
+      this.copyTo.map(
+        (item) =>
+          (this.$store.codebook.getOriginalVariable(item).values = JSON.parse(
+            JSON.stringify(this.$store.codebook.getCurrentVariable().values)
+          ))
+      );
+    else if (propertyToCopy === "missings")
+      this.copyTo.map(
+        (item) =>
+          (this.$store.codebook.getOriginalVariable(item).missings = JSON.parse(
+            JSON.stringify(this.$store.codebook.getCurrentVariable().missings)
+          ))
+      );
+    else {
+      console.log("No property defined to copy to: ");
+      console.log(propertyToCopy);
+    }
   },
 }));
 

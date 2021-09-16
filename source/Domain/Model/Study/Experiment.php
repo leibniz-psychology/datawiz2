@@ -74,7 +74,7 @@ class Experiment extends UuidEntity implements Ownable
     private $additionalMaterials;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Domain\Model\Filemanagement\OriginalDataset", mappedBy="experiment", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Domain\Model\Filemanagement\Dataset", mappedBy="experiment", cascade={"persist"})
      */
     private $originalDatasets;
 

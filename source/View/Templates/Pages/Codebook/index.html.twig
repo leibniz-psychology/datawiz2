@@ -1,5 +1,6 @@
 {% extends "Layouts/codebook.html.twig" %}
 {% from "Components/_macros.html.twig" import inputLabels %}
+{% from "Components/_macros.html.twig" import copyToVariables %}
 {% from "Components/_macros.html.twig" import codebookHelp %}
 
 {% block body %}
@@ -176,7 +177,7 @@
     <aside class="col-span-full md:col-start-10 md:col-end-13"
            :class="$store.codebookSettings.showHelp.sideBar === false ? '!bg-sky-100' : ''">
 
-        <div class="sticky w-full top-14 overflow-y-auto max-h-[calc(100vh-3.5rem)]"
+        <div class="sticky w-full top-14 overflow-y-auto h-[calc(100vh-3.5rem)]"
              x-show="!$store.codebookSettings.showHelp.sideBar" x-cloak>
 
             <h2 class="flex items-center justify-between px-4 py-[calc(0.5rem+1px)] font-medium text-gray-700 border-t bg-sky-100 border-mono-300 text-lg">
@@ -216,36 +217,52 @@
                 <span class="ml-2"
                       x-text="$store.codebook.getCurrentVariable().itemText ? $store.codebook.getCurrentVariable().itemText : ''"></span>
             </div>
-            <div class="px-4 text-sm text-gray-700">
-                <span class="inline-block w-24 font-semibold text-right">Measure:</span>
-
-                <span class="ml-2">
-                <select name="measure" id="measureInput" x-ref="measureInput"
-                        x-model="$store.codebook.getCurrentVariable().measure"
-                        class="inline-block px-1 py-1 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none">
-                    <option value="">Select measure</option>
-                    <template x-for="(measure, measureIndex) in measures" :key="measureIndex">
-                        <option :value="measure" x-text="measure.substring(0,30)"
-                                :selected="measure === $store.codebook.getCurrentVariable().measure"></option>
-                    </template>
-                </select>
-            </span>
-
+            <div class="px-4 mt-4 text-sm text-gray-700">
+                <div class="flex items-center font-semibold">Measure
+                    {{ copyToVariables('measure') }}
+                </div>
+                <span>
+                    <select name="measure" id="measureInput" x-ref="measureInput"
+                            x-model="$store.codebook.getCurrentVariable().measure"
+                            class="inline-block px-1 py-1 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none">
+                        <option value="">Select measure</option>
+                        <template x-for="(measure, measureIndex) in measures" :key="measureIndex">
+                            <option :value="measure" x-text="measure.substring(0,30)"
+                                    :selected="measure === $store.codebook.getCurrentVariable().measure"></option>
+                        </template>
+                    </select>
+                </span>
                 <a href="/study/documentation/measures/#measures" class="ml-1 underline">Edit Measures</a>
             </div>
-            <div class="px-4 py-2 text-sm text-gray-700">
-                <span class="block font-semibold">Value labels:</span>
+
+            <div class="px-4 mt-4 text-sm text-gray-700">
+                <div class="flex items-center font-semibold">Value labels
+                    {{ copyToVariables('values') }}
+                </div>
                 <template x-if="$store.codebook.getCurrentVariable().values">
-                    {{ inputLabels('$store.codebook.getCurrentVariable().values', 'Add another value label') }}
+                    {{ inputLabels({
+                        'labels': '$store.codebook.getCurrentVariable().values',
+                        'addText': 'Add another value label',
+                        'placeHolder': '',
+                        'type': 'values'
+                    }) }}
                 </template>
                 <template x-if="!$store.codebook.getCurrentVariable().values">
                     <div>loading...</div>
                 </template>
             </div>
-            <div class="px-4 py-2 text-sm text-gray-700">
-                <span class="block font-semibold">Missings:</span>
+
+            <div class="px-4 mt-4 text-sm text-gray-700">
+                <div class="flex items-center font-semibold">Missings
+                    {{ copyToVariables('missings') }}
+                </div>
                 <template x-if="$store.codebook.getCurrentVariable().missings">
-                    {{ inputLabels('$store.codebook.getCurrentVariable().missings', 'Add another missing', 'Label (optional)', 1) }}
+                    {{ inputLabels({
+                        'labels': '$store.codebook.getCurrentVariable().missings',
+                        'addText': 'Add another missing',
+                        'placeHolder': 'Label (optional)',
+                        'type': 'missings'
+                    }) }}
                 </template>
                 <template x-if="!$store.codebook.getCurrentVariable().missings">
                     <div>loading...</div>

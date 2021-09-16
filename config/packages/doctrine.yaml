@@ -1,16 +1,6 @@
 doctrine:
     dbal:
-        default_connection: dev
-        connections:
-            sqlite:
-                # sqlite, but overwritten by DATA_URL
-                url: '%env(resolve:DATABASE_URL)%'
-            mysql:
-                # mysql, but overwritten by DATA_URL
-                url: '%env(resolve:DATABASE_URL)%'
-                driver: 'pdo_mysql'
-                server_version: '8.0'
-                charset: utf8mb4
+        url: '%env(resolve:DATABASE_URL)%'
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware

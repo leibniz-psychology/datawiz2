@@ -20,6 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
+ * @ORM\Table(name="experiment_sample")
  */
 class SampleMetaDataGroup extends UuidEntity implements MetaDataValuable, Questionable, Reviewable
 {

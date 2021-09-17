@@ -1,5 +1,7 @@
 {
     "type": "project",
+    "name": "zpid/datawiz",
+    "description": "lorem ipsum",
     "license": "MIT",
     "require": {
         "php": "^7.4",

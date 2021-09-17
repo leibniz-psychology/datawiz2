@@ -1,4 +1,4 @@
-name: Full CI process for Symfony 5
+name: DataWiz 2 Build
 on:
     push:
         branches:

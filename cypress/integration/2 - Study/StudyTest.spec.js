@@ -1,4 +1,4 @@
-describe('Login Test', () => {
+describe('Study Test', () => {
 
 	let studyName = "Cypress Study";
 

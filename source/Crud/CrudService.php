@@ -155,7 +155,7 @@ class CrudService implements Crudable
         }
         if ($material = $experiment->getAdditionalMaterials()) {
             foreach ($material as $mat) {
-                if (!$this->deleteDataset($mat)) {
+                if (!$this->deleteMaterial($mat)) {
                     $success = false;
                     break;
                 }

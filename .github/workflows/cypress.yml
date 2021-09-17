@@ -13,7 +13,7 @@ env:
     OAUTH_KEYCLOAK_REALM: ${{ secrets.OAUTH_KEYCLOAK_REALM }}
     CYPRESS_BASE_URL: https://127.0.0.1:8000
     CYPRESS_kcRoot: ${{ secrets.OAUTH_KEYCLOAK_AUTH_SERVER_URL }}
-    CYPRESS_kcRealm: ${{ secrets.OAUTH_KEYCLOAK_REALM }}
+    CYPRESS_kcRealm: ${{ secrets.CYPRESS_KEYCLOAK_REALM }}
     CYPRESS_kcClient: ${{ secrets.OAUTH_KEYCLOAK_CLIENT_ID }}
     CYPRESS_username: ${{ secrets.CYPRESS_username }}
     CYPRESS_password: ${{ secrets.CYPRESS_password }}

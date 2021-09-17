@@ -3,6 +3,7 @@
 
 namespace App\View\Controller;
 
+use App\Crud\CrudService;
 use App\Domain\Model\Codebook\DatasetVariables;
 use App\Domain\Model\Filemanagement\AdditionalMaterial;
 use App\Domain\Model\Filemanagement\Dataset;
@@ -10,9 +11,6 @@ use App\Io\Formats\Csv\CsvImportable;
 use App\Io\Formats\Sav\SavImportable;
 use App\Questionnaire\Questionnairable;
 use Doctrine\ORM\EntityManagerInterface;
-use League\Flysystem\FileExistsException;
-use League\Flysystem\FileNotFoundException;
-use League\Flysystem\Filesystem;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,7 +29,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class FileManagementController extends AbstractController
 {
-    private Filesystem $filesystem;
+    private CrudService $crudService;
     private Questionnairable $questionnaire;
     private CsvImportable $csvImportable;
     private SavImportable $savImportable;
@@ -39,7 +37,7 @@ class FileManagementController extends AbstractController
     private LoggerInterface $logger;
 
     /**
-     * @param Filesystem $filesystem
+     * @param CrudService $crudService
      * @param Questionnairable $questionnaire
      * @param CsvImportable $csvImportable
      * @param SavImportable $savImportable
@@ -47,14 +45,14 @@ class FileManagementController extends AbstractController
      * @param LoggerInterface $logger
      */
     public function __construct(
-        Filesystem $filesystem,
+        CrudService $crudService,
         Questionnairable $questionnaire,
         CsvImportable $csvImportable,
         SavImportable $savImportable,
         EntityManagerInterface $em,
         LoggerInterface $logger
     ) {
-        $this->filesystem = $filesystem;
+        $this->crudService = $crudService;
         $this->questionnaire = $questionnaire;
         $this->csvImportable = $csvImportable;
         $this->savImportable = $savImportable;
@@ -95,8 +93,8 @@ class FileManagementController extends AbstractController
         $data = $request->get('dataset-import-data') ?? null;
         if (isset($dataset) && isset($data) && !empty($data)) {
             $data = json_decode($data, true);
-            if($data && is_iterable($data) && key_exists('codebook', $data)){
-                foreach ($data['codebook'] as $var){
+            if ($data && is_iterable($data) && key_exists('codebook', $data)) {
+                foreach ($data['codebook'] as $var) {
                     $this->em->persist(
                         DatasetVariables::createNew(
                             $dataset,
@@ -110,11 +108,10 @@ class FileManagementController extends AbstractController
                     );
                 }
                 $this->em->flush();
-                if(key_exists('records', $data)) {
-                    $this->_saveMatrix($data['records'], $dataset->getId());
+                if (key_exists('records', $data)) {
+                    $this->crudService->saveDatasetMatrix($data['records'], $dataset->getId());
                 }
             }
-            //$data = $this->savImportable->savToArray($dataset);
         }
 
         return new JsonResponse($data ?? [], null != $data ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -177,7 +174,7 @@ class FileManagementController extends AbstractController
                 $error = "error.import.csv.codebook.empty";
             }
             if (null == $error && $data && key_exists('records', $data) && is_iterable($data['records']) && sizeof($data['records']) > 0) {
-                $this->_saveMatrix($data['records'], $dataset->getId());
+                $this->crudService->saveDatasetMatrix($data['records'], $dataset->getId());
             } else {
                 $error = "error.import.csv.matrix.empty";
             }
@@ -185,7 +182,7 @@ class FileManagementController extends AbstractController
             $error = "error.import.csv.dataset.empty";
         }
         if (null != $error) {
-            $this->_deleteDataset($dataset);
+            $this->crudService->deleteDataset($dataset);
         }
 
         return new JsonResponse(
@@ -205,7 +202,7 @@ class FileManagementController extends AbstractController
         $this->logger->debug("Enter FileManagementController::deleteMaterialCall with [UUID: $uuid]");
         $dataset = $this->em->find(Dataset::class, $uuid);
         $experimentId = $dataset->getExperiment()->getId();
-        $this->_deleteDataset($dataset);
+        $this->crudService->deleteDataset($dataset);
 
         return $this->redirectToRoute('Study-datasets', ['uuid' => $experimentId]);
     }
@@ -258,41 +255,5 @@ class FileManagementController extends AbstractController
                 'experiment' => $experimentOfTheFile,
             ]
         );
-    }
-
-
-    /**
-     * @param array $matrix
-     * @param string $datasetId
-     */
-    private function _saveMatrix(array $matrix, string $datasetId)
-    {
-        try {
-            $this->filesystem->write("matrix/$datasetId.json", json_encode($matrix));
-        } catch (FileExistsException $e) {
-        }
-    }
-
-    /**
-     * @param Dataset $dataset
-     */
-    private function _deleteDataset(Dataset $dataset): void
-    {
-        try {
-            if ($this->filesystem->has($dataset->getStorageName())) {
-                $this->filesystem->delete($dataset->getStorageName());
-            }
-            if ($this->filesystem->has("matrix/".$dataset->getId().".json")) {
-                $this->filesystem->delete("matrix/".$dataset->getId().".json");
-            }
-            if ($dataset->getCodebook() != null) {
-                foreach ($dataset->getCodebook() as $var) {
-                    $this->em->remove($var);
-                }
-            }
-            $this->em->remove($dataset);
-            $this->em->flush();
-        } catch (FileNotFoundException $e) {
-        }
     }
 }

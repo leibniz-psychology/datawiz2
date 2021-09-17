@@ -2,7 +2,7 @@ name: Full CI process for Symfony 5
 on:
     push:
         branches:
-            - feature_cypress
+            - master
 env:
     DATABASE_URL: mysql://root:root@127.0.0.1:3306/dashboard?serverVersion=8.0
     APP_ENV: dev

@@ -1,5 +1,7 @@
 {
     "type": "project",
+    "name": "Datawiz 2",
+    "description": "lorem ipsum",
     "license": "MIT",
     "require": {
         "php": "^7.4",

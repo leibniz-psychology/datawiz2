@@ -18,8 +18,8 @@ env:
     CYPRESS_kcClient: ${{ secrets.OAUTH_KEYCLOAK_CLIENT_ID }}
     CYPRESS_username: ${{ secrets.CYPRESS_username }}
     CYPRESS_password: ${{ secrets.CYPRESS_password }}
-    CYPRESS_loginPath: /sso/login
-    CYPRESS_logoutPath: /sso/logout
+    CYPRESS_loginPath: /security/login
+    CYPRESS_logoutPath: /security/logout
 
 jobs:
     symfony:

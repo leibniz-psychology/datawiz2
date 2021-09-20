@@ -12,8 +12,8 @@ use Symfony\Component\Security\Http\Event\LogoutEvent;
 
 class OauthLogoutSubscriber implements EventSubscriberInterface
 {
-    private $clientRegistry;
-    private $urlGenerator;
+    private ClientRegistry $clientRegistry;
+    private UrlGeneratorInterface $urlGenerator;
 
     public function __construct(ClientRegistry $clientRegistry, UrlGeneratorInterface $urlGenerator)
     {
@@ -27,7 +27,7 @@ class OauthLogoutSubscriber implements EventSubscriberInterface
      *
      * @return array|string[]
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             LogoutEvent::class => 'onLogoutEvent',
@@ -41,15 +41,11 @@ class OauthLogoutSubscriber implements EventSubscriberInterface
      */
     public function onLogoutEvent(LogoutEvent $event)
     {
-        if ($this->isRunningOnOauth()) {
-            $provider = $this->clientRegistry->getClient('keycloak');
-            $targetUrl = $this->urlGenerator->generate('dashboard_landing', [], UrlGeneratorInterface::ABSOLUTE_URL);
-            $logout = $provider->getOAuth2Provider()->getLogoutUrl(["redirect_uri" => $targetUrl]);
-            $event->setResponse(new RedirectResponse($logout));
-        }
+        $provider = $this->clientRegistry->getClient('keycloak');
+        $targetUrl = $this->urlGenerator->generate('dashboard', [], UrlGeneratorInterface::ABSOLUTE_URL);
+        $logout = $provider->getOAuth2Provider()->getLogoutUrl(["redirect_uri" => $targetUrl]);
+        $event->setResponse(new RedirectResponse($logout));
     }
 
-    private function isRunningOnOauth(): bool {
-        return !getenv('APP_ENV') === 'local';
-    }
+
 }

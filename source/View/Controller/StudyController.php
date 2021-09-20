@@ -28,16 +28,16 @@ class StudyController extends AbstractController
     private Questionnairable $questionnaire;
     private EntityManagerInterface $em;
     private LoggerInterface $logger;
-    private CrudService $crud;
+    private Crudable $crud;
 
     /**
      * @param Security $security
      * @param Questionnairable $questionnaire
      * @param EntityManagerInterface $em
      * @param LoggerInterface $logger
-     * @param CrudService $crud
+     * @param Crudable $crud
      */
-    public function __construct(Security $security, Questionnairable $questionnaire, EntityManagerInterface $em, LoggerInterface $logger, CrudService $crud)
+    public function __construct(Security $security, Questionnairable $questionnaire, EntityManagerInterface $em, LoggerInterface $logger, Crudable $crud)
     {
         $this->security = $security;
         $this->questionnaire = $questionnaire;

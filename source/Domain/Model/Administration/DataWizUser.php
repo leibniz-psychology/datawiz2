@@ -32,16 +32,14 @@ class DataWizUser implements UserInterface
      */
     private string $email;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Administration\DataWizSettings", mappedBy="owner", cascade={"persist"})
-     */
-    private DataWizSettings $datawizSettings;
+    private string $firstname;
+
+    private string $lastname;
+
 
     public function __construct(string $displayName, bool $admin = false)
     {
         $this->email = $displayName;
-        $this->datawizSettings = new DataWizSettings();
-        // use the trait logic to create a valid role array
         $this->initializeRoles($admin);
     }
 
@@ -92,18 +90,41 @@ class DataWizUser implements UserInterface
         $this->email = $email;
     }
 
+    /**
+     * @return string
+     */
+    public function getFirstname(): string
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * @param string $firstname
+     */
+    public function setFirstname(string $firstname): void
+    {
+        $this->firstname = $firstname;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastname(): string
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * @param string $lastname
+     */
+    public function setLastname(string $lastname): void
+    {
+        $this->lastname = $lastname;
+    }
+
+
     public function getUserIdentifier(): string
     {
         return $this->getId();
-    }
-
-    public function getDatawizSettings(): DataWizSettings
-    {
-        return $this->datawizSettings;
-    }
-
-    public function setDatawizSettings($datawizSettings): void
-    {
-        $this->datawizSettings = $datawizSettings;
     }
 }

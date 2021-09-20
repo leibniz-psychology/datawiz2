@@ -1,0 +1,16 @@
+title:
+    page:
+        material: 'Materials for your Study'
+    material:
+        h2: 'Materials for the Study'
+        h3: 'Uploaded materials'
+
+generic:
+    description: "Description"
+    remove: "Remove"
+    edit: 'Edit'
+
+saveNav:
+    material:
+        prev: 'Manage datasets'
+        next: 'Review input'

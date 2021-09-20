@@ -4,20 +4,23 @@
 namespace App\Io\Input;
 
 
-use App\Crud\Crudable;
 use App\Domain\Model\Filemanagement\AdditionalMaterial;
 use App\Domain\Model\Study\Experiment;
+use Doctrine\ORM\EntityManagerInterface;
 use Oneup\UploaderBundle\Event\PostUploadEvent;
 use Oneup\UploaderBundle\UploadEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class MaterialUploadSubscriber implements EventSubscriberInterface
 {
-    private $crud;
+    private EntityManagerInterface $em;
 
-    public function __construct(Crudable $crud)
+    /**
+     * @param EntityManagerInterface $em
+     */
+    public function __construct(EntityManagerInterface $em)
     {
-        $this->crud = $crud;
+        $this->em = $em;
     }
 
     public static function getSubscribedEvents()
@@ -34,13 +37,15 @@ class MaterialUploadSubscriber implements EventSubscriberInterface
      */
     public function onMaterialPostUpload(PostUploadEvent $event)
     {
-        $experiment = $this->crud->readById(Experiment::class, $event->getRequest()->get('studyId'));
-
+        $experiment = $this->em->getRepository(Experiment::class)->find($event->getRequest()->get('studyId'));
         $entity = AdditionalMaterial::createMaterial(
             $event->getRequest()->get('originalFilename'),
             $event->getFile()->getBasename(),
+            $event->getFile()->getSize(),
+            $event->getFile()->getMimeType(),
             $experiment
         );
-        $this->crud->update($entity);
+        $this->em->persist($entity);
+        $this->em->flush();
     }
 }

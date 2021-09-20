@@ -4,40 +4,35 @@
 {% set isPartOfStudyDocumentation = true %}
 
 {% block title %}
-    Materials for your Study
+    {{ "title.page.material"|trans }}
 {% endblock %}
 
 {% block content %}
     <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
-        Materials for the Study
+        {{ "title.material.h2"|trans }}
     </h2>
-
     {{ include("Components/_infoBridge.html.twig",{value: experiment.id}) }}
     <form action="{{ oneup_uploader_endpoint("materials") }}"
-        class="mx-6 border-2 border-dashed border-mono-500 dropzone"
-        id="datawiz-dropzone"></form>
-
+          class="mx-6 border-2 border-dashed border-mono-500 dropzone"
+          id="datawiz-dropzone"></form>
     {% if (experiment.additionalMaterials|length) > 0 %}
         <h3 class="mx-6 mt-6 text-xl">
-            Uploaded materials
+            {{ "title.material.h3"|trans }}
         </h3>
         <ul class="mx-6 mt-6">
             {% for material in experiment.additionalMaterials %}
                 <li class="p-1 mt-2 bg-mono-100">
-                    <a href="{{ path('File-details', { 'uuid': material.id }) }}" class="underline">{{ material.atUploadNameable }}</a>
-
-                    {% if material.fileDescription != "" %}
-                        <div>
-                            Description: {{ material.fileDescription }}
-                        </div>
-                    {% endif %}
-
+                    {{ material.originalName }}
+                    <div>
+                        <label for="material-desc-{{ loop.index }}">{{ "generic.description"|trans }}:</label>
+                        <textarea id="material-desc-{{ loop.index }}" name="material-desc-{{ loop.index }}" class="material-desc-textarea"
+                                  data-material-uri="{{ path('File-update_description', { "uuid": material.id }) }}">{{ material.description }}</textarea>
+                    </div>
                     <div class="mt-2 text-right" x-data="">
-                        <button class="ml-2 hover:text-red-500">
-                            <span class="inline w-4 h-4 iconify-inline" data-icon="radix-icons:cross-2"></span>Remove
+                        <button class="ml-2 hover:text-red-500" @click="window.location.href='{{ path('File-delete_material', { "uuid": material.id }) }}'">
+                            <span class="inline w-4 h-4 iconify-inline" data-icon="radix-icons:cross-2"></span>
+                            {{ "generic.remove"|trans }}
                         </button>
-
-                        <button type="button" class="px-8 " @click="window.location.href='{{ path("File-details", { "uuid": material.id }) }}'">Edit</button>
                     </div>
                 </li>
             {% endfor %}
@@ -47,9 +42,9 @@
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
         prevUrl: 'Study-datasets',
-        prevTitle: 'Manage datasets',
+        prevTitle: 'saveNav.material.prev'|trans,
         nextUrl: 'Study-review',
-        nextTitle: 'Review input',
+        nextTitle: 'saveNav.material.next'|trans,
         form: null
     })) }}
 

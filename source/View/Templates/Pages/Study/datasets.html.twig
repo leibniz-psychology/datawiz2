@@ -4,12 +4,12 @@
 {% set isPartOfStudyDocumentation = true %}
 
 {% block title %}
-    Datasets for your Study
+    {{ "title.page.dataset"|trans }}
 {% endblock %}
 
 {% block content %}
     <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
-        Datasets for the Study
+        {{ "title.dataset.h2"|trans }}
     </h2>
     {{ include("Components/_infoBridge.html.twig",{value: experiment.id}) }}
     {# <form action="{{ oneup_uploader_endpoint("datasets") }}"
@@ -26,12 +26,12 @@
         <input type="hidden" id="dataset-import-data" name="dataset-import-data" value=""/>
     </form>
     <h3 class="mx-6 mt-6 text-xl">
-        Already uploaded
+        {{ "title.dataset.h3"|trans }}
     </h3>
     <ul class="mx-6 mt-6">
         {% for dataset in experiment.originalDatasets %}
             <li>{{ dataset.originalName }} - <a href="{{ path('codebook_index', {uuid: dataset.id}) }}"
-                                                class="underline">Edit codebook</a></li>
+                                                class="underline">{{ "link.edit.codebook"|trans }}</a></li>
         {% endfor %}
     </ul>
     <!-- Modal -->
@@ -97,9 +97,9 @@
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
         prevUrl: 'Study-sample',
-        prevTitle: 'Sampling',
+        prevTitle: 'saveNav.dataset.prev'|trans,
         nextUrl: 'Study-materials',
-        nextTitle: 'Upload materials',
+        nextTitle: 'saveNav.dataset.next'|trans,
         form: null
     })) }}
 

@@ -1,26 +1,23 @@
 {% if app.environment != "test" %}
     <div class="flex items-center justify-end col-start-11 col-end-13">
         {% if app.user %}
-            {% set referenceName = "User Profile" %}
+            {% set referenceName = "link.user.profile"|trans %}
             <a href="{{ path("profile") }}" class="underline">
                 <span class="w-4 h-4 mr-0.5 inline iconify-inline"
-                    data-icon="gg:profile">
-
+                      data-icon="gg:profile">
                 </span>
                 {{- referenceName -}}
             </a>
             <a href="{{ path("Security-logout") }}" class="ml-2 mr-2 underline">
                 <span class="w-4 h-4 mr-0.5 inline iconify-inline"
-                    data-icon="ic-baseline-log-out">
-
-                </span>Logout
+                      data-icon="ic-baseline-log-out">
+                </span>{{ "link.user.logout"|trans }}
             </a>
         {% else %}
             <a href="{{ path("Security-login") }}" class="mr-2 underline">
                 <span class="w-4 h-4 mr-0.5 inline iconify-inline"
-                    data-icon="ic-baseline-log-in">
-
-                </span>Login
+                      data-icon="ic-baseline-log-in">
+                </span>{{ "link.user.login"|trans }}
             </a>
         {% endif %}
     </div>

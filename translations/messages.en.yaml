@@ -1,16 +1,35 @@
 title:
     page:
         material: 'Materials for your Study'
+        dataset: 'Datasets for your Study'
     material:
         h2: 'Materials for the Study'
         h3: 'Uploaded materials'
+    dataset:
+        h2: 'Datasets for the Study'
+        h3: 'Already uploaded'
 
 generic:
     description: "Description"
     remove: "Remove"
     edit: 'Edit'
+    save: 'Save'
+    previous: 'Previous'
+    next: 'Next'
+    add: 'Add another'
 
 saveNav:
     material:
         prev: 'Manage datasets'
         next: 'Review input'
+    dataset:
+        prev: 'Sampling'
+        next: 'Upload materials'
+
+link:
+    user:
+        logout: "Logout"
+        login: "Login"
+        profile: "User Profile"
+    edit:
+        codebook: 'Edit codebook'

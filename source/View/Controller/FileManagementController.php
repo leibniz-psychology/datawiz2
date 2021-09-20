@@ -192,7 +192,7 @@ class FileManagementController extends AbstractController
     }
 
     /**
-     * @Route("/{uuid}/delete", name="delete_dataset")
+     * @Route("/{uuid}/delete/dataset", name="delete_dataset")
      *
      * @param string $uuid
      * @return RedirectResponse|Response
@@ -209,13 +209,13 @@ class FileManagementController extends AbstractController
 
 
     /**
-     * @Route("/delete/{uuid}/material", name="delete_material")
+     * @Route("/{uuid}/delete/material", name="delete_material")
      *
      * @param string $uuid
      * @param Request $request
-     * @return RedirectResponse|Response
+     * @return RedirectResponse
      */
-    public function deleteMaterialAction(string $uuid, Request $request)
+    public function deleteMaterialAction(string $uuid, Request $request): RedirectResponse
     {
         $this->logger->debug("Enter FileManagementController::deleteMaterialAction with [UUID: $uuid]");
         $material = $this->em->find(AdditionalMaterial::class, $uuid);
@@ -224,6 +224,33 @@ class FileManagementController extends AbstractController
 
         return $this->redirectToRoute('Study-materials', ['uuid' => $experimentId]);
     }
+
+    /**
+     * @Route("/{uuid}/update/description", name="update_description", methods={"POST"})
+     *
+     * @param string $uuid
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function updateDescriptionAction(string $uuid, Request $request): JsonResponse
+    {
+        $this->logger->debug("Enter FileManagementController::updateDescriptionAction with [UUID: $uuid]");
+        $entity = $this->em->find(AdditionalMaterial::class, $uuid);
+        $success = false;
+        if ($entity == null) {
+            $entity = $this->em->find(Dataset::class, $uuid);
+        }
+        if ($entity) {
+            $description = $request->getContent();
+            $entity->setDescription($description);
+            $this->em->persist($entity);
+            $this->em->flush();
+            $success = true;
+        }
+
+        return new JsonResponse(['success' => $success], $success ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
 
     /**
      * @Route("/{uuid}/details", name="details")

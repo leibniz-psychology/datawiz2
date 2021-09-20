@@ -22,21 +22,16 @@
         <ul class="mx-6 mt-6">
             {% for material in experiment.additionalMaterials %}
                 <li class="p-1 mt-2 bg-mono-100">
-                    <a href="{{ path('File-details', { 'uuid': material.id }) }}" class="underline">{{ material.originalName }}</a>
-                    {% if material.description != "" %}
-                        <div>
-                            {{ "generic.description"|trans }}&nbsp;{{ material.description }}
-                        </div>
-                    {% endif %}
+                    {{ material.originalName }}
+                    <div>
+                        <label for="material-desc-{{ loop.index }}">{{ "generic.description"|trans }}:</label>
+                        <textarea id="material-desc-{{ loop.index }}" name="material-desc-{{ loop.index }}" class="material-desc-textarea"
+                                  data-material-uri="{{ path('File-update_description', { "uuid": material.id }) }}">{{ material.description }}</textarea>
+                    </div>
                     <div class="mt-2 text-right" x-data="">
-                        <button class="ml-2 hover:text-red-500">
-                            <a href="{{ path('File-delete_material', { "uuid": material.id }) }}">
-                                <span class="inline w-4 h-4 iconify-inline" data-icon="radix-icons:cross-2"></span>
-                                {{ "generic.remove"|trans }}
-                            </a>
-                        </button>
-                        <button type="button" class="px-8 " @click="window.location.href='{{ path("File-details", { "uuid": material.id }) }}'">
-                            {{ "generic.edit"|trans }}
+                        <button class="ml-2 hover:text-red-500" @click="window.location.href='{{ path('File-delete_material', { "uuid": material.id }) }}'">
+                            <span class="inline w-4 h-4 iconify-inline" data-icon="radix-icons:cross-2"></span>
+                            {{ "generic.remove"|trans }}
                         </button>
                     </div>
                 </li>

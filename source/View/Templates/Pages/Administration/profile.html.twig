@@ -17,7 +17,8 @@
                 </li>
                 <li>
                     <span class="font-bold">User-email:</span>
-                    {{ app.user.email }}
+                    {{ dump(app.user) }}
+                    {#{{ app.user.email }}#}
                 </li>
             </ul>
         </main>

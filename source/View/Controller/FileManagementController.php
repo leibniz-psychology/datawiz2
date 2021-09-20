@@ -236,7 +236,7 @@ class FileManagementController extends AbstractController
     {
         $this->logger->debug("Enter FileManagementController::materialDetailsAction with [UUID: $uuid]");
         $entityAtChange = $this->em->find(AdditionalMaterial::class, $uuid);
-        $experimentOfTheFile = $entityAtChange->getExperiment();
+        $experiment = $entityAtChange->getExperiment();
         $form = $this->questionnaire->askAndHandle(
             $entityAtChange,
             'save',
@@ -246,13 +246,12 @@ class FileManagementController extends AbstractController
             $this->em->persist($entityAtChange);
             $this->em->flush();
         }
-
         return $this->render(
             'Pages/FileManagement/materialDetails.html.twig',
             [
                 'form' => $form->createView(),
                 'file' => $entityAtChange,
-                'experiment' => $experimentOfTheFile,
+                'experiment' => $experiment,
             ]
         );
     }

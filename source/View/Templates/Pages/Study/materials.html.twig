@@ -24,11 +24,11 @@
         <ul class="mx-6 mt-6">
             {% for material in experiment.additionalMaterials %}
                 <li class="p-1 mt-2 bg-mono-100">
-                    <a href="{{ path('File-details', { 'uuid': material.id }) }}" class="underline">{{ material.atUploadNameable }}</a>
+                    <a href="{{ path('File-details', { 'uuid': material.id }) }}" class="underline">{{ material.originalName }}</a>
 
-                    {% if material.fileDescription != "" %}
+                    {% if material.description != "" %}
                         <div>
-                            Description: {{ material.fileDescription }}
+                            Description: {{ material.description }}
                         </div>
                     {% endif %}
 

@@ -3,7 +3,6 @@
 namespace App\View\Controller;
 
 use App\Crud\Crudable;
-use App\Crud\CrudService;
 use App\Domain\Model\Study\Experiment;
 use App\Questionnaire\Questionnairable;
 use Doctrine\ORM\EntityManagerInterface;
@@ -128,6 +127,8 @@ class StudyController extends AbstractController
         if ($this->questionnaire->isSubmittedAndValid($form)) {
             $this->em->persist($entityAtChange);
             $this->em->flush();
+
+            return $this->redirectToRoute('Study-documentation', ['uuid' => $entityAtChange->getId()]);
         }
 
         return $this->render('Pages/Study/documentation.html.twig', [

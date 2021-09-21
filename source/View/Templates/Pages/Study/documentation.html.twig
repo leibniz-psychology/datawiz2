@@ -8,12 +8,12 @@
 {% set isStudyDescriptionSubItem = true %}
 
 {% block title %}
-    General Information
+    {{ "title.page.basic"|trans }}
 {% endblock %}
 
 {% block content %}
     <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
-        Basic information
+        {{ "title.basic.h2"|trans }}
     </h2>
 
     {{ form_start(form) }}
@@ -46,7 +46,7 @@
     <fieldset>
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Title
+                {{ "input.title.legend"|trans }}
             </legend>
             {{ helpButton("title") }}
         </div>
@@ -60,7 +60,7 @@
     <fieldset class="mt-8">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Description
+                {{ "input.description.legend"|trans }}
             </legend>
             {{ helpButton("description") }}
         </div>
@@ -74,21 +74,25 @@
     <fieldset class="mt-8">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Related publications
+                {{ "input.relatedPubs.legend"|trans }}
             </legend>
             {{ helpButton("related_publications") }}
         </div>
-        {{ form_label(form.related_publications) }}
-        {{ form_errors(form.related_publications) }}
-        {{ form_widget(form.related_publications) }}
+        {% include "Components/_collectionWidget.html.twig" with
+            {
+                collection: form.related_publications,
+                id: 'related-publications-fields-list',
+                addTxt: 'input.relatedPubs.add',
+                removeTxt: 'remove',
+            } %}
     </fieldset>
 
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
         prevUrl: 'Study-introduction',
-        prevTitle: 'Introduction',
+        prevTitle: 'saveNav.basic.prev'|trans,
         nextUrl: 'Study-theory',
-        nextTitle: 'Objectives & hypotheses',
+        nextTitle: 'saveNav.basic.next'|trans,
         form: form
     })) }}
 

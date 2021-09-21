@@ -1,35 +1,55 @@
 title:
-    page:
-        material: 'Materials for your Study'
-        dataset: 'Datasets for your Study'
-    material:
-        h2: 'Materials for the Study'
-        h3: 'Uploaded materials'
-    dataset:
-        h2: 'Datasets for the Study'
-        h3: 'Already uploaded'
+  page:
+    basic: 'General Information'
+    dataset: 'Datasets for your Study'
+    material: 'Materials for your Study'
+  basic:
+    h2: 'Basic information'
+  material:
+    h2: 'Materials for the Study'
+    h3: 'Uploaded materials'
+  dataset:
+    h2: 'Datasets for the Study'
+    h3: 'Already uploaded'
 
 generic:
-    description: "Description"
-    remove: "Remove"
-    edit: 'Edit'
-    save: 'Save'
-    previous: 'Previous'
-    next: 'Next'
-    add: 'Add another'
+  description: "Description"
+  remove: "Remove"
+  edit: 'Edit'
+  save: 'Save'
+  previous: 'Previous'
+  next: 'Next'
+  add: 'Add another'
+
+input:
+  title:
+    legend: 'Title'
+    label: 'Provide a title for your dataset'
+  description:
+    legend: 'Description'
+    label: 'Briefly describe the study in which you collected the research data'
+  relatedPubs:
+    legend: 'Related publications'
+    label: '<span class="block">Cite publications that use the data from this dataset.</span><span class="flex items-center mt-3 text-sm"><span class="w-4 h-4 ml-1 mr-1 iconify bg-mono-50" data-icon="mdi:information-variant" data-inline="false"></span>Enter one publication per field. Leave empty if not applicable.</span>'
+    add: 'Add another related publication +'
+
 
 saveNav:
-    material:
-        prev: 'Manage datasets'
-        next: 'Review input'
-    dataset:
-        prev: 'Sampling'
-        next: 'Upload materials'
+  basic:
+    prev: 'Introduction'
+    next: 'Objectives & hypotheses'
+  dataset:
+    prev: 'Sampling'
+    next: 'Upload materials'
+  material:
+    prev: 'Manage datasets'
+    next: 'Review input'
+
 
 link:
-    user:
-        logout: "Logout"
-        login: "Login"
-        profile: "User Profile"
-    edit:
-        codebook: 'Edit codebook'
+  user:
+    logout: "Logout"
+    login: "Login"
+    profile: "User Profile"
+  edit:
+    codebook: 'Edit codebook'

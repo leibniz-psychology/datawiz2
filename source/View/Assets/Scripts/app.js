@@ -16,8 +16,14 @@ import Dropzone from "dropzone";
 
 import "./alpine";
 import "./detectStickyElements";
+import "./collection-widget"
 
-a2lix_lib.sfCollection.init();
+/*a2lix_lib.sfCollection.init({
+	lang: {
+		add: '',
+		remove: 'Remove'
+	}
+});*/
 
 Dropzone.options.datawizDropzone = {
 	createImageThumbnails: false,

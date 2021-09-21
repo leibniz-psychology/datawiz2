@@ -30,16 +30,21 @@ class DataWizUser implements UserInterface
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private string $email;
+    private ?string $email = null;
 
-    private string $firstname;
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private ?string $firstname = null;
 
-    private string $lastname;
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private ?string $lastname = null;
 
 
-    public function __construct(string $displayName, bool $admin = false)
+    public function __construct(bool $admin = false)
     {
-        $this->email = $displayName;
         $this->initializeRoles($admin);
     }
 
@@ -80,50 +85,56 @@ class DataWizUser implements UserInterface
         return null;
     }
 
-    public function getEmail(): string
+    /**
+     * @return string|null
+     */
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    public function setEmail(string $email): void
+    /**
+     * @param string|null $email
+     */
+    public function setEmail(?string $email): void
     {
         $this->email = $email;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getFirstname(): string
+    public function getFirstname(): ?string
     {
         return $this->firstname;
     }
 
     /**
-     * @param string $firstname
+     * @param string|null $firstname
      */
-    public function setFirstname(string $firstname): void
+    public function setFirstname(?string $firstname): void
     {
         $this->firstname = $firstname;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getLastname(): string
+    public function getLastname(): ?string
     {
         return $this->lastname;
     }
 
     /**
-     * @param string $lastname
+     * @param string|null $lastname
      */
-    public function setLastname(string $lastname): void
+    public function setLastname(?string $lastname): void
     {
         $this->lastname = $lastname;
     }
 
 
-    public function getUserIdentifier(): string
+    public function getUserIdentifier(): ?string
     {
         return $this->getId();
     }

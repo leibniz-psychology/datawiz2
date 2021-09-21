@@ -51,19 +51,31 @@ class OauthAuthenticator extends SocialAuthenticator
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        $keycloakUser = $this->clientRegistry
-            ->getClient('keycloak')
-            ->fetchUserFromToken($credentials);
-
-        $userAtSignIn = $this->crud->readById(DataWizUser::class, $keycloakUser->getId());
-        // TODO: This is logic for an custom UserProvider - should be part of the loadUserByIdentifier method
-        if ($userAtSignIn === null && array_key_exists('email', $keycloakUser->toArray())) {
-            $userAtSignIn = new DataWizUser($keycloakUser->toArray()['email']);
-            $userAtSignIn->setId(new Uuid($keycloakUser->getId()));
-            $this->crud->update($userAtSignIn);
+        $keycloakUser = $this->clientRegistry->getClient('keycloak')->fetchUserFromToken($credentials);
+        $user = null;
+        $kcArray = null;
+        if ($keycloakUser) {
+            $user = $this->crud->readById(DataWizUser::class, $keycloakUser->getId());
+            $kcArray = $keycloakUser->toArray();
+        }
+        if (is_iterable($kcArray)) {
+            if ($user === null) {
+                $user = new DataWizUser();
+                $user->setId(new Uuid($keycloakUser->getId()));
+            }
+            if (key_exists('email', $kcArray)) {
+                $user->setEmail($kcArray['email']);
+            }
+            if (key_exists('given_name', $kcArray)) {
+                $user->setFirstname($kcArray['given_name']);
+            }
+            if (key_exists('family_name', $kcArray)) {
+                $user->setLastname($kcArray['family_name']);
+            }
+            $this->crud->update($user);
         }
 
-        return $userAtSignIn;
+        return $user;
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response

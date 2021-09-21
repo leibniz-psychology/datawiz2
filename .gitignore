@@ -294,3 +294,4 @@ yarn-error.log
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 /cypress.env.json
+/cypress/videos/

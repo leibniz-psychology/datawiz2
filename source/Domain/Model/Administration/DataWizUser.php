@@ -30,18 +30,21 @@ class DataWizUser implements UserInterface
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private string $email;
+    private ?string $email = null;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Administration\DataWizSettings", mappedBy="owner", cascade={"persist"})
+     * @ORM\Column(type="string", nullable=true)
      */
-    private DataWizSettings $datawizSettings;
+    private ?string $firstname = null;
 
-    public function __construct(string $displayName, bool $admin = false)
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private ?string $lastname = null;
+
+
+    public function __construct(bool $admin = false)
     {
-        $this->email = $displayName;
-        $this->datawizSettings = new DataWizSettings();
-        // use the trait logic to create a valid role array
         $this->initializeRoles($admin);
     }
 
@@ -82,28 +85,57 @@ class DataWizUser implements UserInterface
         return null;
     }
 
-    public function getEmail(): string
+    /**
+     * @return string|null
+     */
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    public function setEmail(string $email): void
+    /**
+     * @param string|null $email
+     */
+    public function setEmail(?string $email): void
     {
         $this->email = $email;
     }
 
-    public function getUserIdentifier(): string
+    /**
+     * @return string|null
+     */
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * @param string|null $firstname
+     */
+    public function setFirstname(?string $firstname): void
+    {
+        $this->firstname = $firstname;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * @param string|null $lastname
+     */
+    public function setLastname(?string $lastname): void
+    {
+        $this->lastname = $lastname;
+    }
+
+
+    public function getUserIdentifier(): ?string
     {
         return $this->getId();
-    }
-
-    public function getDatawizSettings(): DataWizSettings
-    {
-        return $this->datawizSettings;
-    }
-
-    public function setDatawizSettings($datawizSettings): void
-    {
-        $this->datawizSettings = $datawizSettings;
     }
 }

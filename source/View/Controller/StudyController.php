@@ -4,6 +4,9 @@ namespace App\View\Controller;
 
 use App\Crud\Crudable;
 use App\Domain\Model\Study\Experiment;
+use App\Questionnaire\Forms\BasicInformationType;
+use App\Questionnaire\Forms\MeasureType;
+use App\Questionnaire\Forms\SampleType;
 use App\Questionnaire\Questionnairable;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -123,12 +126,12 @@ class StudyController extends AbstractController
         $this->logger->debug("Enter StudyController::documentationAction with [UUID: $uuid]");
         $entityAtChange = $this->getEntityAtChange($uuid);
         $form = $this->questionnaire->askAndHandle($entityAtChange->getBasicInformationMetaDataGroup(), 'save', $request);
-
         if ($this->questionnaire->isSubmittedAndValid($form)) {
             $this->em->persist($entityAtChange);
             $this->em->flush();
-
-            return $this->redirectToRoute('Study-documentation', ['uuid' => $entityAtChange->getId()]);
+            $formData = $form->getData();
+            $formData->setRelatedPublications(array_values($formData->getRelatedPublications()));
+            $form = $this->questionnaire->formFromClass(BasicInformationType::class, $formData, 'save');
         }
 
         return $this->render('Pages/Study/documentation.html.twig', [
@@ -177,6 +180,11 @@ class StudyController extends AbstractController
         if ($this->questionnaire->isSubmittedAndValid($form)) {
             $this->em->persist($entityAtChange);
             $this->em->flush();
+            $formData = $form->getData();
+            $formData->setPopulation(array_values($formData->getPopulation()));
+            $formData->setInclusionCriteria(array_values($formData->getInclusionCriteria()));
+            $formData->setExclusionCriteria(array_values($formData->getExclusionCriteria()));
+            $form = $this->questionnaire->formFromClass(SampleType::class, $formData, 'save');
         }
 
         return $this->render('Pages/Study/sample.html.twig', [
@@ -201,6 +209,10 @@ class StudyController extends AbstractController
         if ($this->questionnaire->isSubmittedAndValid($form)) {
             $this->em->persist($entityAtChange);
             $this->em->flush();
+            $formData = $form->getData();
+            $formData->setApparatus(array_values($formData->getApparatus()));
+            $formData->setMeasures(array_values($formData->getMeasures()));
+            $form = $this->questionnaire->formFromClass(MeasureType::class, $formData, 'save');
         }
 
         return $this->render('Pages/Study/measure.html.twig', [

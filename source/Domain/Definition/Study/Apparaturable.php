@@ -8,20 +8,21 @@ trait Apparaturable
 {
     /**
      * @ORM\Column(type="array", length=1500, nullable=true)
-     * @var $apparatus array
+     * @var $apparatus array|null
      */
-    private $apparatus;
+    private ?array $apparatus = null;
 
-    public function getApparatus()
+    public function getApparatus(): ?array
     {
         if ($this->apparatus === null) {
             $this->apparatus = array('');
         }
+
         return $this->apparatus;
     }
 
-    public function setApparatus($apparatus): void
+    public function setApparatus(?array $apparatus): void
     {
-        $this->apparatus = $apparatus;
+        $this->apparatus = array_values($apparatus);
     }
 }

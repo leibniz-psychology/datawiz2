@@ -40,9 +40,13 @@
             </legend>
             {{ helpButton("population") }}
         </div>
-        {{ form_label(form.population) }}
-        {{ form_errors(form.population) }}
-        {{ form_widget(form.population) }}
+        {% include "Components/_collectionWidget.html.twig" with
+            {
+                collection: form.population,
+                id: 'population-fields-list',
+                addTxt: 'input.population.add',
+                removeTxt: 'generic.remove',
+            } %}
     </fieldset>
 
     <fieldset class="mt-8">
@@ -52,9 +56,13 @@
             </legend>
             {{ helpButton("inclusion_criteria") }}
         </div>
-        {{ form_label(form.inclusion_criteria) }}
-        {{ form_errors(form.inclusion_criteria) }}
-        {{ form_widget(form.inclusion_criteria) }}
+        {% include "Components/_collectionWidget.html.twig" with
+            {
+                collection: form.inclusion_criteria,
+                id: 'inclusion-fields-list',
+                addTxt: 'input.inclusion.add',
+                removeTxt: 'generic.remove',
+            } %}
     </fieldset>
 
     <fieldset class="mt-8">
@@ -64,9 +72,13 @@
             </legend>
             {{ helpButton("exclusion_criteria") }}
         </div>
-        {{ form_label(form.exclusion_criteria) }}
-        {{ form_errors(form.exclusion_criteria) }}
-        {{ form_widget(form.exclusion_criteria) }}
+        {% include "Components/_collectionWidget.html.twig" with
+            {
+                collection: form.exclusion_criteria,
+                id: 'exclusion-fields-list',
+                addTxt: 'input.exclusion.add',
+                removeTxt: 'generic.remove',
+            } %}
     </fieldset>
 
     <fieldset class="mt-8" x-data="" x-init="$store.app.samplingMethod = '{{ form.sampling_method.vars.value }}'">

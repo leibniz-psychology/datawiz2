@@ -9,18 +9,19 @@ trait ExclusionCriteriable
     /**
      * @ORM\Column(type="array", length=1500, nullable=true)
      */
-    private $exclusion_criteria;
+    private ?array $exclusion_criteria = null;
 
-    public function getExclusionCriteria()
+    public function getExclusionCriteria(): ?array
     {
         if ($this->exclusion_criteria === null) {
             $this->exclusion_criteria = array('');
         }
+
         return $this->exclusion_criteria;
     }
 
-    public function setExclusionCriteria($exclusion_criteria): void
+    public function setExclusionCriteria(?array $exclusion_criteria): void
     {
-        $this->exclusion_criteria = $exclusion_criteria;
+        $this->exclusion_criteria = array_values($exclusion_criteria);
     }
 }

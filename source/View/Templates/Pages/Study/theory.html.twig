@@ -8,12 +8,12 @@
 {% set isStudyDescriptionSubItem = true %}
 
 {% block title %}
-    Theories for your Study
+    {{ "title.theroies.title"|trans }}
 {% endblock %}
 
 {% block content %}
     <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
-        Objectives &amp; hypotheses
+        {{ "title.theroies.h2"|trans }}
     </h2>
 
     {{ form_start(form) }}
@@ -22,7 +22,7 @@
     <fieldset>
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Objectives
+                {{ "input.objective.legend"|trans }}
             </legend>
             {{ helpButton("objective") }}
         </div>
@@ -36,7 +36,7 @@
     <fieldset class="mt-8">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Hypotheses
+                {{ "input.hypothesis.legend"|trans }}
             </legend>
             {{ helpButton("hypothesis") }}
         </div>
@@ -50,9 +50,9 @@
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
         prevUrl: 'Study-documentation',
-        prevTitle: 'Basic information',
+        prevTitle: 'saveNav.theroies.prev'|trans,
         nextUrl: 'Study-method',
-        nextTitle: 'Study method',
+        nextTitle: 'saveNav.theroies.next'|trans,
         form: form
     })) }}
 

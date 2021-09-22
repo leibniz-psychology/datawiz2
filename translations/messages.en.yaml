@@ -1,16 +1,19 @@
 title:
-  page:
-    basic: 'General Information'
-    dataset: 'Datasets for your Study'
-    material: 'Materials for your Study'
   basic:
+    title: 'General Information'
     h2: 'Basic information'
+  theroies:
+    title: 'Theories for your Study'
+    h2: 'Objectives & hypotheses'
   material:
+    title: 'Materials for your Study'
     h2: 'Materials for the Study'
     h3: 'Uploaded materials'
   dataset:
+    title: 'Datasets for your Study'
     h2: 'Datasets for the Study'
     h3: 'Already uploaded'
+
 
 generic:
   description: "Description"
@@ -32,12 +35,22 @@ input:
     legend: 'Related publications'
     label: '<span class="block">Cite publications that use the data from this dataset.</span><span class="flex items-center mt-3 text-sm"><span class="w-4 h-4 ml-1 mr-1 iconify bg-mono-50" data-icon="mdi:information-variant" data-inline="false"></span>Enter one publication per field. Leave empty if not applicable.</span>'
     add: 'Add another related publication +'
+  objective:
+    legend: 'Objectives'
+    label: 'The action(s) you will take in order to achieve your research aim(s)/ goal(s).'
+  hypothesis:
+    legend: 'Hypotheses'
+    label: 'State the hypotheses examined, indicating which were prespecified.'
+
 
 
 saveNav:
   basic:
     prev: 'Introduction'
     next: 'Objectives & hypotheses'
+  theroies:
+    prev: 'Basic information'
+    next: 'Study method'
   dataset:
     prev: 'Sampling'
     next: 'Upload materials'

@@ -5,6 +5,9 @@ title:
   theroies:
     title: 'Theories for your Study'
     h2: 'Objectives & hypotheses'
+  method:
+    title: 'Methods of your Study'
+    h2: 'Study method'
   material:
     title: 'Materials for your Study'
     h2: 'Materials for the Study'
@@ -13,7 +16,6 @@ title:
     title: 'Datasets for your Study'
     h2: 'Datasets for the Study'
     h3: 'Already uploaded'
-
 
 generic:
   description: "Description"
@@ -41,8 +43,67 @@ input:
   hypothesis:
     legend: 'Hypotheses'
     label: 'State the hypotheses examined, indicating which were prespecified.'
-
-
+  design:
+    legend: 'Research design'
+    label: 'Choose your type of research design'
+    choices:
+      experimental: '<span class="block">Experimental</span><span class="block text-sm">Your study involved an experimental manipulation</span>'
+      non-experimental: '<span class="block">Non-experimental</span><span class="block text-sm">Your study did not involve an experimental manipulation</span>'
+    details:
+      experimental:
+        label: 'Further describe the <span class="font-semibold">experimental design</span> of your study'
+        choices:
+          random-assignment: '<span>Random assignment</span><span>Your study used random assignment to place participants in conditions</span>'
+          non-random-assignment: '<span>Non-random assignment</span><span>Your study did not use random assignment to place participants in conditions</span>'
+          clinical-trial: '<span>Clinical trial</span><span>Your study qualifies as a clinical trial (randomized trial, randomized controlled trial)</span>'
+      non-experimental:
+        label: 'Further describe the <span class="font-semibold">non-experimental design</span> of your study'
+        choices:
+          observational-study: "<span>Observational study</span><span>You observed people's behavior without experimental manipulation</span>"
+          survey-research: '<span>Survey research</span><span>You collected information from a sample of individuals through their responses to questions</span>'
+          correlational-research: '<span>Correlational research</span><span>You measured two variables and assessed the statistical relationship between them</span>'
+          causal-comparative-research: '<span>Causal-comparative research</span><span>You selected samples from two already-existing populations and investigated cause and effect relationship</span>'
+          single-case: '<span>Single case</span><span>Your study was conducted on a single individual (also known as case study or experience report)</span>'
+      observationalType:
+        label: 'Optionally define the observational type of your study'
+        placeholder: 'Choose an observational type'
+        choices:
+          cohort-study: 'Cohort study'
+          case-control-study: 'Case-control study'
+          cross-sectional-study: 'Cross-sectional study'
+  manipulations:
+    legend: 'Experimental manipulation(s), treatments, or interventions'
+    label: 'Provide details of your experimental manipulation(s) including a summary of the instructions. Clearly define your variables (treatments).'
+  experimental-design:
+    legend: 'Design'
+    label: 'How were participants allocated to the different conditions?'
+    choices:
+      independent: '<span>Independent measures / between-subjects design</span><span>Different participants were used in each condition of the independent variable</span>'
+      repeated: '<span>Repeated measures / within-subjects design</span><span>The same participants took part in each condition of the independent variable</span>'
+      matched: '<span>Matched pairs design</span><span>Each condition used different participants, but they were matched in terms of important characteristics</span>'
+  control-operations:
+    legend: 'Control Operations'
+    label: ''
+    choices:
+      none: 'None'
+      block: 'Block randomization'
+      complete: 'Complete counterbalancing (all possible orders)'
+      incomplete: 'Incomplete counterbalancing (partial counterbalancing)'
+      latin-square: 'Latin Square'
+      rng-latin-square: 'Latin Square using a random starting order with rotation (rotate order)'
+      reverse: 'Reverse counterbalancing (ABBA-counterbalancing)'
+      other: 'Other'
+    other:
+      label: 'If other, please specify'
+  setting:
+    legend: 'Setting'
+    label: 'Choose your setting'
+    choices:
+      artificial: '<span>Artificial setting</span><span>Artificial setting (e.g. laboratory experiment)</span>'
+      rl: '<span>Real-life setting</span><span>Real-life setting (e.g., field experiment)</span>'
+      natural: '<span>Natural setting</span><span>Natural setting (e.g., natural observations)</span>'
+    location:
+      label: 'For real-life and natural settings enter the location where your study took place'
 
 saveNav:
   basic:
@@ -51,6 +112,9 @@ saveNav:
   theroies:
     prev: 'Basic information'
     next: 'Study method'
+  method:
+    prev: 'Objectives & Hypotheses'
+    next: 'Data collection'
   dataset:
     prev: 'Sampling'
     next: 'Upload materials'

@@ -9,18 +9,19 @@ trait InclusionCriteriable
     /**
      * @ORM\Column(type="array", length=1500, nullable=true)
      */
-    private $inclusion_criteria;
+    private ?array $inclusion_criteria = null;
 
-    public function getInclusionCriteria()
+    public function getInclusionCriteria(): ?array
     {
         if ($this->inclusion_criteria === null) {
             $this->inclusion_criteria = array('');
         }
+
         return $this->inclusion_criteria;
     }
 
-    public function setInclusionCriteria($inclusion_criteria): void
+    public function setInclusionCriteria(?array $inclusion_criteria): void
     {
-        $this->inclusion_criteria = $inclusion_criteria;
+        $this->inclusion_criteria = array_values($inclusion_criteria);
     }
 }

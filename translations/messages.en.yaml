@@ -2,6 +2,12 @@ title:
   new:
     title: 'Create new Study'
     h2: 'New Study'
+  introduction:
+    title: 'Datasets for your Study'
+    h2: 'Getting Started'
+    h3_1: 'Step-by-step'
+    h3_2: 'Get help'
+    help: "Hit the help button #helpBtn# next to a topic if something's unclear. A help text will appear on the right side of the screen. There you'll find practical examples and online resources that help clear things up."
   basic:
     title: 'General Information'
     h2: 'Basic information'
@@ -109,6 +115,9 @@ input:
       label: 'For real-life and natural settings enter the location where your study took place'
 
 saveNav:
+  introduction:
+    prev: 'Basic information'
+    next: 'Basic information'
   basic:
     prev: 'Introduction'
     next: 'Objectives & hypotheses'

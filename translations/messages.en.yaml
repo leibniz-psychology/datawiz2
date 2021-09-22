@@ -17,6 +17,9 @@ title:
   method:
     title: 'Methods of your Study'
     h2: 'Study method'
+  measures:
+    title: 'Measurements for your Study'
+    h2: 'Data collection'
   material:
     title: 'Materials for your Study'
     h2: 'Materials for the Study'
@@ -113,6 +116,14 @@ input:
       natural: '<span>Natural setting</span><span>Natural setting (e.g., natural observations)</span>'
     location:
       label: 'For real-life and natural settings enter the location where your study took place'
+  measures:
+    legend: 'Tests and measures'
+    label: 'Provide definitions of all measures you collected on participants. Provide the proper name of standardized measures (tests).'
+    add: 'Add another measure +'
+  apparatus:
+    legend: 'Apparatus (Instruments, Equipment)'
+    label: 'Which instruments (apparatus, equipment) did you use in your study?'
+    add: 'Add another apparatus +'
 
 saveNav:
   introduction:
@@ -127,6 +138,9 @@ saveNav:
   method:
     prev: 'Objectives & Hypotheses'
     next: 'Data collection'
+  measures:
+    prev: 'Study method'
+    next: 'Sampling'
   dataset:
     prev: 'Sampling'
     next: 'Upload materials'

@@ -16,7 +16,7 @@ class TheoryType extends AbstractType
         $builder
             ->add(MetaDataDictionary::OBJECTIVE, TextareaType::class, [
                 'required' => false,
-                'label' => 'The action(s) you will take in order to achieve your research aim(s)/ goal(s).',
+                'label' => 'input.objective.label',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
                     'class' => 'MetaData-TextInput',
@@ -24,7 +24,7 @@ class TheoryType extends AbstractType
             ])
             ->add(MetaDataDictionary::HYPOTHESIS, TextareaType::class, [
                 'required' => false,
-                'label' => 'State the hypotheses examined, indicating which were prespecified.',
+                'label' => 'input.hypothesis.label',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
                     'class' => 'MetaData-TextInput',
@@ -34,8 +34,6 @@ class TheoryType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'data_class' => TheoryMetaDataGroup::class,
-        ]);
+        $resolver->setDefaults(['data_class' => TheoryMetaDataGroup::class,]);
     }
 }

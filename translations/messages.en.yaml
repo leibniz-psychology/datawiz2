@@ -1,16 +1,36 @@
 title:
-  page:
-    basic: 'General Information'
-    dataset: 'Datasets for your Study'
-    material: 'Materials for your Study'
+  new:
+    title: 'Create new Study'
+    h2: 'New Study'
+  introduction:
+    title: 'Datasets for your Study'
+    h2: 'Getting Started'
+    h3_1: 'Step-by-step'
+    h3_2: 'Get help'
+    help: "Hit the help button #helpBtn# next to a topic if something's unclear. A help text will appear on the right side of the screen. There you'll find practical examples and online resources that help clear things up."
   basic:
+    title: 'General Information'
     h2: 'Basic information'
-  material:
-    h2: 'Materials for the Study'
-    h3: 'Uploaded materials'
+  theroies:
+    title: 'Theories for your Study'
+    h2: 'Objectives & hypotheses'
+  method:
+    title: 'Methods of your Study'
+    h2: 'Study method'
+  measures:
+    title: 'Measurements for your Study'
+    h2: 'Data collection'
+  samples:
+    title: 'Samples for your Study'
+    h2: 'Sampling'
   dataset:
+    title: 'Datasets for your Study'
     h2: 'Datasets for the Study'
     h3: 'Already uploaded'
+  material:
+    title: 'Materials for your Study'
+    h2: 'Materials for the Study'
+    h3: 'Uploaded materials'
 
 generic:
   description: "Description"
@@ -32,19 +52,140 @@ input:
     legend: 'Related publications'
     label: '<span class="block">Cite publications that use the data from this dataset.</span><span class="flex items-center mt-3 text-sm"><span class="w-4 h-4 ml-1 mr-1 iconify bg-mono-50" data-icon="mdi:information-variant" data-inline="false"></span>Enter one publication per field. Leave empty if not applicable.</span>'
     add: 'Add another related publication +'
-
+  objective:
+    legend: 'Objectives'
+    label: 'The action(s) you will take in order to achieve your research aim(s)/ goal(s).'
+  hypothesis:
+    legend: 'Hypotheses'
+    label: 'State the hypotheses examined, indicating which were prespecified.'
+  design:
+    legend: 'Research design'
+    label: 'Choose your type of research design'
+    choices:
+      experimental: '<span class="block">Experimental</span><span class="block text-sm">Your study involved an experimental manipulation</span>'
+      non-experimental: '<span class="block">Non-experimental</span><span class="block text-sm">Your study did not involve an experimental manipulation</span>'
+    details:
+      experimental:
+        label: 'Further describe the <span class="font-semibold">experimental design</span> of your study'
+        choices:
+          random-assignment: '<span>Random assignment</span><span>Your study used random assignment to place participants in conditions</span>'
+          non-random-assignment: '<span>Non-random assignment</span><span>Your study did not use random assignment to place participants in conditions</span>'
+          clinical-trial: '<span>Clinical trial</span><span>Your study qualifies as a clinical trial (randomized trial, randomized controlled trial)</span>'
+      non-experimental:
+        label: 'Further describe the <span class="font-semibold">non-experimental design</span> of your study'
+        choices:
+          observational-study: "<span>Observational study</span><span>You observed people's behavior without experimental manipulation</span>"
+          survey-research: '<span>Survey research</span><span>You collected information from a sample of individuals through their responses to questions</span>'
+          correlational-research: '<span>Correlational research</span><span>You measured two variables and assessed the statistical relationship between them</span>'
+          causal-comparative-research: '<span>Causal-comparative research</span><span>You selected samples from two already-existing populations and investigated cause and effect relationship</span>'
+          single-case: '<span>Single case</span><span>Your study was conducted on a single individual (also known as case study or experience report)</span>'
+      observationalType:
+        label: 'Optionally define the observational type of your study'
+        placeholder: 'Choose an observational type'
+        choices:
+          cohort-study: 'Cohort study'
+          case-control-study: 'Case-control study'
+          cross-sectional-study: 'Cross-sectional study'
+  manipulations:
+    legend: 'Experimental manipulation(s), treatments, or interventions'
+    label: 'Provide details of your experimental manipulation(s) including a summary of the instructions. Clearly define your variables (treatments).'
+  experimental-design:
+    legend: 'Design'
+    label: 'How were participants allocated to the different conditions?'
+    choices:
+      independent: '<span>Independent measures / between-subjects design</span><span>Different participants were used in each condition of the independent variable</span>'
+      repeated: '<span>Repeated measures / within-subjects design</span><span>The same participants took part in each condition of the independent variable</span>'
+      matched: '<span>Matched pairs design</span><span>Each condition used different participants, but they were matched in terms of important characteristics</span>'
+  control-operations:
+    legend: 'Control Operations'
+    label: ''
+    choices:
+      none: 'None'
+      block: 'Block randomization'
+      complete: 'Complete counterbalancing (all possible orders)'
+      incomplete: 'Incomplete counterbalancing (partial counterbalancing)'
+      latin-square: 'Latin Square'
+      rng-latin-square: 'Latin Square using a random starting order with rotation (rotate order)'
+      reverse: 'Reverse counterbalancing (ABBA-counterbalancing)'
+      other: 'Other'
+    other:
+      label: 'If other, please specify'
+  setting:
+    legend: 'Setting'
+    label: 'Choose your setting'
+    choices:
+      artificial: '<span>Artificial setting</span><span>Artificial setting (e.g. laboratory experiment)</span>'
+      rl: '<span>Real-life setting</span><span>Real-life setting (e.g., field experiment)</span>'
+      natural: '<span>Natural setting</span><span>Natural setting (e.g., natural observations)</span>'
+    location:
+      label: 'For real-life and natural settings enter the location where your study took place'
+  measures:
+    legend: 'Tests and measures'
+    label: 'Provide definitions of all measures you collected on participants. Provide the proper name of standardized measures (tests).'
+    add: 'Add another measure +'
+  apparatus:
+    legend: 'Apparatus (Instruments, Equipment)'
+    label: 'Which instruments (apparatus, equipment) did you use in your study?'
+    add: 'Add another apparatus +'
+  participants:
+    legend: 'Participants'
+    label: 'Describe participants, specifying their pertinent characteristics for this study'
+  population:
+    legend: 'Population'
+    label: 'Provide information on the group of individuals to which your results can be generalized'
+    add: 'Add another population +'
+  inclusion:
+    legend: 'Inclusion criteria'
+    label: 'State inclusion criteria for participants'
+    add: 'Add another inclusion criteria +'
+  exclusion:
+    legend: 'Exclusion criteria'
+    label: 'State exclusion criteria for participants'
+    add: 'Add another exclusion criteria +'
+  sampling:
+    legend: 'Sampling method'
+    label: 'Choose your sampling method'
+    choices:
+      convenience: '<span>Convenience sampling (accidental sampling, opportunity sampling)</span><span>Your individuals (observations, cases) were chosen non-randomly because they were easily available</span>'
+      random: '<span>Random sampling</span><span>Your individuals (observations, cases) were chosen randomly and entirely by chance</span>'
+      systematic: '<span>Systematic sampling (quasirandom sampling)</span><span>Your individuals (observations, cases) were chosen randomly with a system</span>'
+      stratified: '<span>Stratified sampling</span><span>Your individuals (observations, cases) were chosen randomly from subgroups (strata)</span>'
+      quota: '<span>Quota sampling</span><span>Your individuals (observations, cases) were chosen non-randomly on the basis of a specific plan</span>'
+      other: 'Other'
+    other:
+      label: 'If other, please describe your sampling method (see help for a list of methods)'
+  sample-size:
+    legend: 'Sample size'
+    label: 'Provide the achieved sample size as total number of cases N or as number of cases in subsamples n'
+  power-analysis:
+    legend: 'Power analysis (statistical)'
+    label: 'Provide details of the power analysis used to calculate your sample size'
 
 saveNav:
+  introduction:
+    prev: 'Basic information'
+    next: 'Basic information'
   basic:
     prev: 'Introduction'
     next: 'Objectives & hypotheses'
+  theroies:
+    prev: 'Basic information'
+    next: 'Study method'
+  method:
+    prev: 'Objectives & Hypotheses'
+    next: 'Data collection'
+  measures:
+    prev: 'Study method'
+    next: 'Sampling'
+  samples:
+    prev: 'Data collection'
+    next: 'Manage datasets'
   dataset:
     prev: 'Sampling'
     next: 'Upload materials'
   material:
     prev: 'Manage datasets'
     next: 'Review input'
-
 
 link:
   user:

@@ -8,21 +8,19 @@
 {% set isStudyDescriptionSubItem = true %}
 
 {% block title %}
-    Measurements for your Study
+    {{ "title.measures.title"|trans }}
 {% endblock %}
 
 {% block content %}
     <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
-        Data collection
+        {{ "title.measures.h2"|trans }}
     </h2>
-
     {{ form_start(form) }}
     {{ form_errors(form) }}
-
     <fieldset>
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Tests and measures
+                {{ "input.measures.legend"|trans }}
             </legend>
             {{ helpButton("measure") }}
         </div>
@@ -34,11 +32,10 @@
                 removeTxt: 'generic.remove',
             } %}
     </fieldset>
-
     <fieldset class="mt-8">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Apparatus (Instruments, Equipment)
+                {{ "input.apparatus.legend"|trans }}
             </legend>
             {{ helpButton("apparatus") }}
         </div>
@@ -50,17 +47,14 @@
                 removeTxt: 'generic.remove',
             } %}
     </fieldset>
-
-
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
         prevUrl: 'Study-method',
-        prevTitle: 'Study method',
+        prevTitle: 'saveNav.measures.prev'|trans,
         nextUrl: 'Study-sample',
-        nextTitle: 'Sampling',
+        nextTitle: 'saveNav.measures.next'|trans,
         form: form
     })) }}
-
     {{ form_end(form) }}
 {% endblock %}
 

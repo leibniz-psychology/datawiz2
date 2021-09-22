@@ -1,4 +1,7 @@
 title:
+  new:
+    title: 'Create new Study'
+    h2: 'New Study'
   basic:
     title: 'General Information'
     h2: 'Basic information'

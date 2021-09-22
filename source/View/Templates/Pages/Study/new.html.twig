@@ -3,16 +3,15 @@
 {% set isPartOfStudyDocumentation = true %}
 
 {% block title %}
-    Create new Study
+    {{ "title.new.title"|trans }}
 {% endblock %}
 
 {% block body %}
     <div class="col-span-full xl:col-start-3 xl:col-end-11">
         <main>
             <h2 class="mt-6 text-2xl font-semibold">
-                New Study
+                {{ "title.new.h2"|trans }}
             </h2>
-
             <div class="mt-6">
                 {{ form(form) }}
             </div>

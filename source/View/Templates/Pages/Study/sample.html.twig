@@ -8,12 +8,12 @@
 {% set isStudyDescriptionSubItem = true %}
 
 {% block title %}
-    Samples for your Study
+    {{ "title.samples.title"|trans }}
 {% endblock %}
 
 {% block content %}
     <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
-        Sampling
+        {{ "title.samples.h2"|trans }}
     </h2>
 
     {{ form_start(form) }}
@@ -22,7 +22,7 @@
     <fieldset>
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Participants
+                {{ "input.participants.legend"|trans }}
             </legend>
             {{ helpButton("participants") }}
         </div>
@@ -36,7 +36,7 @@
     <fieldset class="mt-8">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Population
+                {{ "input.population.legend"|trans }}
             </legend>
             {{ helpButton("population") }}
         </div>
@@ -52,7 +52,7 @@
     <fieldset class="mt-8">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Inclusion criteria
+                {{ "input.inclusion.legend"|trans }}
             </legend>
             {{ helpButton("inclusion_criteria") }}
         </div>
@@ -68,7 +68,7 @@
     <fieldset class="mt-8">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Exclusion criteria
+                {{ "input.exclusion.legend"|trans }}
             </legend>
             {{ helpButton("exclusion_criteria") }}
         </div>
@@ -84,7 +84,7 @@
     <fieldset class="mt-8" x-data="" x-init="$store.app.samplingMethod = '{{ form.sampling_method.vars.value }}'">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Sampling method
+                {{ "input.sampling.legend"|trans }}
             </legend>
             {{ helpButton("sampling_method") }}
         </div>
@@ -120,7 +120,7 @@
     <fieldset class="mt-8">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Sample size
+                {{ "input.sample-size.legend"|trans }}
             </legend>
             {{ helpButton("sample_size") }}
         </div>
@@ -134,7 +134,7 @@
     <fieldset class="mt-8">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Power analysis (statistical)
+                {{ "input.power-analysis.legend"|trans }}
             </legend>
             {{ helpButton("power_analysis") }}
         </div>
@@ -148,9 +148,9 @@
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
         prevUrl: 'Study-measure',
-        prevTitle: 'Data collection',
+        prevTitle: 'saveNav.samples.prev'|trans,
         nextUrl: 'Study-datasets',
-        nextTitle: 'Manage datasets',
+        nextTitle: 'saveNav.samples.next'|trans,
         form: form
     })) }}
 

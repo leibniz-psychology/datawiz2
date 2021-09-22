@@ -20,14 +20,17 @@ title:
   measures:
     title: 'Measurements for your Study'
     h2: 'Data collection'
-  material:
-    title: 'Materials for your Study'
-    h2: 'Materials for the Study'
-    h3: 'Uploaded materials'
+  samples:
+    title: 'Samples for your Study'
+    h2: 'Sampling'
   dataset:
     title: 'Datasets for your Study'
     h2: 'Datasets for the Study'
     h3: 'Already uploaded'
+  material:
+    title: 'Materials for your Study'
+    h2: 'Materials for the Study'
+    h3: 'Uploaded materials'
 
 generic:
   description: "Description"
@@ -124,6 +127,39 @@ input:
     legend: 'Apparatus (Instruments, Equipment)'
     label: 'Which instruments (apparatus, equipment) did you use in your study?'
     add: 'Add another apparatus +'
+  participants:
+    legend: 'Participants'
+    label: 'Describe participants, specifying their pertinent characteristics for this study'
+  population:
+    legend: 'Population'
+    label: 'Provide information on the group of individuals to which your results can be generalized'
+    add: 'Add another population +'
+  inclusion:
+    legend: 'Inclusion criteria'
+    label: 'State inclusion criteria for participants'
+    add: 'Add another inclusion criteria +'
+  exclusion:
+    legend: 'Exclusion criteria'
+    label: 'State exclusion criteria for participants'
+    add: 'Add another exclusion criteria +'
+  sampling:
+    legend: 'Sampling method'
+    label: 'Choose your sampling method'
+    choices:
+      convenience: '<span>Convenience sampling (accidental sampling, opportunity sampling)</span><span>Your individuals (observations, cases) were chosen non-randomly because they were easily available</span>'
+      random: '<span>Random sampling</span><span>Your individuals (observations, cases) were chosen randomly and entirely by chance</span>'
+      systematic: '<span>Systematic sampling (quasirandom sampling)</span><span>Your individuals (observations, cases) were chosen randomly with a system</span>'
+      stratified: '<span>Stratified sampling</span><span>Your individuals (observations, cases) were chosen randomly from subgroups (strata)</span>'
+      quota: '<span>Quota sampling</span><span>Your individuals (observations, cases) were chosen non-randomly on the basis of a specific plan</span>'
+      other: 'Other'
+    other:
+      label: 'If other, please describe your sampling method (see help for a list of methods)'
+  sample-size:
+    legend: 'Sample size'
+    label: 'Provide the achieved sample size as total number of cases N or as number of cases in subsamples n'
+  power-analysis:
+    legend: 'Power analysis (statistical)'
+    label: 'Provide details of the power analysis used to calculate your sample size'
 
 saveNav:
   introduction:
@@ -141,13 +177,15 @@ saveNav:
   measures:
     prev: 'Study method'
     next: 'Sampling'
+  samples:
+    prev: 'Data collection'
+    next: 'Manage datasets'
   dataset:
     prev: 'Sampling'
     next: 'Upload materials'
   material:
     prev: 'Manage datasets'
     next: 'Review input'
-
 
 link:
   user:

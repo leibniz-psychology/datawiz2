@@ -3,7 +3,6 @@
 namespace App\Domain\Model\Administration;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Component\Uid\Uuid;
 
 abstract class UuidEntity
@@ -12,22 +11,23 @@ abstract class UuidEntity
      * @ORM\Id()
      * @ORM\Column(type="uuid")
      * @ORM\GeneratedValue(strategy="CUSTOM")
-     * @ORM\CustomIdGenerator(class=UuidGenerator::class)
+     * @ORM\CustomIdGenerator("doctrine.uuid_generator")
      */
     protected Uuid $id;
 
+    /**
+     * @return Uuid
+     */
     public function getId(): Uuid
     {
         return $this->id;
     }
 
-    public function uuidEquals(Uuid $uuid): bool
+    /**
+     * @param Uuid $id
+     */
+    public function setId(Uuid $id): void
     {
-        return $uuid->equals($this->id);
-    }
-
-    public function uuidEqualsString(string $uuid): bool
-    {
-        return Uuid::fromString($uuid)->equals($this->id);
+        $this->id = $id;
     }
 }

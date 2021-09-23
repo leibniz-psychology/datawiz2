@@ -19,18 +19,9 @@
     {{ form_start(form) }}
     {{ form_errors(form) }}
 
-    {# <fieldset>
-        <div class="MetaData-Title">
-            <legend class="MetaData-Legend">
-                Creators
-            </legend>
-            {{ helpButton("creator") }}
-        </div>
-        {{ form_label(form.creator) }}
-        {{ form_errors(form.creator) }}
-        {{ form_widget(form.creator) }}
-    </fieldset>
 
+
+    {#
     <fieldset class="mt-8">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
@@ -83,6 +74,22 @@
                 collection: form.related_publications,
                 id: 'related-publications-fields-list',
                 addTxt: 'input.relatedPubs.add',
+                removeTxt: 'generic.remove',
+            } %}
+    </fieldset>
+
+    <fieldset>
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                Creators
+            </legend>
+            {{ helpButton("creator") }}
+        </div>
+        {% include "Components/_creatorsWidget.html.twig" with
+            {
+                collection: form.creators,
+                id: 'creators-fields-list',
+                addTxt: 'input.creator.add',
                 removeTxt: 'generic.remove',
             } %}
     </fieldset>

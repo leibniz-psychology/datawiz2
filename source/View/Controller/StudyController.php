@@ -3,8 +3,8 @@
 namespace App\View\Controller;
 
 use App\Crud\Crudable;
+use App\Domain\Model\Study\CreatorMetaDataGroup;
 use App\Domain\Model\Study\Experiment;
-use App\Questionnaire\Forms\BasicInformationType;
 use App\Questionnaire\Forms\MeasureType;
 use App\Questionnaire\Forms\SampleType;
 use App\Questionnaire\Questionnairable;
@@ -125,13 +125,28 @@ class StudyController extends AbstractController
     {
         $this->logger->debug("Enter StudyController::documentationAction with [UUID: $uuid]");
         $entityAtChange = $this->getEntityAtChange($uuid);
-        $form = $this->questionnaire->askAndHandle($entityAtChange->getBasicInformationMetaDataGroup(), 'save', $request);
+        $basicInformation = $entityAtChange->getBasicInformationMetaDataGroup();
+        if(sizeof($basicInformation->getCreators()) == 0){
+            $basicInformation->getCreators()->add(new CreatorMetaDataGroup());
+        }
+        $form = $this->questionnaire->askAndHandle($basicInformation, 'save', $request);
         if ($this->questionnaire->isSubmittedAndValid($form)) {
+            $currentCreators = $this->em->getRepository(CreatorMetaDataGroup::class)->findBy(['basicInformation' => $basicInformation]);
+            if (is_iterable($currentCreators)) {
+                foreach ($currentCreators as $currentCreator) {
+                    $this->em->remove($currentCreator);
+                }
+            }
+            if ($form->getData()->getCreators() !== null && is_iterable($form->getData()->getCreators())) {
+                foreach ($form->getData()->getCreators() as $creator) {
+                    $creator->setBasicInformation($basicInformation);
+                    $this->em->persist($creator);
+                }
+            }
             $this->em->persist($entityAtChange);
             $this->em->flush();
-            $formData = $form->getData();
-            $formData->setRelatedPublications(array_values($formData->getRelatedPublications()));
-            $form = $this->questionnaire->formFromClass(BasicInformationType::class, $formData, 'save');
+
+            return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
         }
 
         return $this->render('Pages/Study/documentation.html.twig', [

@@ -13,16 +13,16 @@ use League\Flysystem\Filesystem;
 class CrudService implements Crudable
 {
     private Filesystem $filesystem;
-    private EntityManagerInterface $entityManager;
+    private EntityManagerInterface $em;
 
     /**
      * @param Filesystem $filesystem
-     * @param EntityManagerInterface $entityManager
+     * @param EntityManagerInterface $em
      */
-    public function __construct(Filesystem $filesystem, EntityManagerInterface $entityManager)
+    public function __construct(Filesystem $filesystem, EntityManagerInterface $em)
     {
         $this->filesystem = $filesystem;
-        $this->entityManager = $entityManager;
+        $this->em = $em;
     }
 
 
@@ -31,7 +31,7 @@ class CrudService implements Crudable
      */
     public function readById(string $type, $id)
     {
-        return $this->entityManager
+        return $this->em
             ->getRepository($type)
             ->find($id);
     }
@@ -41,7 +41,7 @@ class CrudService implements Crudable
      */
     public function readForAll(string $type): array
     {
-        return $this->entityManager
+        return $this->em
             ->getRepository($type)
             ->findAll();
     }
@@ -51,7 +51,7 @@ class CrudService implements Crudable
      */
     public function readByCriteria(string $type, array $criteria, ?array $orderBy = null, $limit = null, $offset = null): array
     {
-        return $this->entityManager
+        return $this->em
             ->getRepository($type)
             ->findBy($criteria, $orderBy, $limit, $offset);
     }
@@ -61,8 +61,8 @@ class CrudService implements Crudable
      */
     public function update(&$entity): void
     {
-        $this->entityManager->persist($entity);
-        $this->entityManager->flush();
+        $this->em->persist($entity);
+        $this->em->flush();
     }
 
     /**
@@ -70,8 +70,8 @@ class CrudService implements Crudable
      */
     public function delete($entity): void
     {
-        $this->entityManager->remove($entity);
-        $this->entityManager->flush();
+        $this->em->remove($entity);
+        $this->em->flush();
     }
 
     /**
@@ -80,9 +80,9 @@ class CrudService implements Crudable
      */
     public function doTransaction(callable $callback)
     {
-        $this->entityManager->beginTransaction();
-        $callback($this->entityManager);
-        $this->entityManager->flush();
+        $this->em->beginTransaction();
+        $callback($this->em);
+        $this->em->flush();
     }
 
     public function deleteMaterial(AdditionalMaterial $material): bool
@@ -91,8 +91,8 @@ class CrudService implements Crudable
             if ($this->filesystem->has($material->getStorageName())) {
                 $this->filesystem->delete($material->getStorageName());
             }
-            $this->entityManager->remove($material);
-            $this->entityManager->flush();
+            $this->em->remove($material);
+            $this->em->flush();
             $success = true;
         } catch (FileNotFoundException $e) {
             $success = false;
@@ -113,11 +113,11 @@ class CrudService implements Crudable
             }
             if ($dataset->getCodebook() != null) {
                 foreach ($dataset->getCodebook() as $var) {
-                    $this->entityManager->remove($var);
+                    $this->em->remove($var);
                 }
             }
-            $this->entityManager->remove($dataset);
-            $this->entityManager->flush();
+            $this->em->remove($dataset);
+            $this->em->flush();
             $success = true;
         } catch (FileNotFoundException $e) {
             $success = false;
@@ -161,9 +161,14 @@ class CrudService implements Crudable
                 }
             }
         }
+        if ($creators = $experiment->getBasicInformationMetaDataGroup()->getCreators()) {
+            foreach ($creators as $creator) {
+                $this->em->remove($creator);
+            }
+        }
         if ($success) {
-            $this->entityManager->remove($experiment);
-            $this->entityManager->flush();
+            $this->em->remove($experiment);
+            $this->em->flush();
         }
 
         return $success;

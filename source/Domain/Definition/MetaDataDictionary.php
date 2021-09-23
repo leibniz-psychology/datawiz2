@@ -9,7 +9,7 @@ final class MetaDataDictionary
 
     // BasicInformationMetaData
     const TITLE = 'title';
-    const CREATOR = 'creator';
+    const CREATORS = 'creators';
     const CONTACT = 'contact';
     const DESCRIPTION = 'description';
     const RELATED_PUBS = 'related_publications';

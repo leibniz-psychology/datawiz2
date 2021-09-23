@@ -38,6 +38,14 @@ class CreatorType extends AbstractType
                     'class' => 'MetaData-TextInput',
                 ],
             ])
+            ->add('orcid', TextType::class, [
+                'required' => false,
+                'label' => 'input.creator.orcid',
+                'label_attr' => ['class' => 'MetaData-Label'],
+                'attr' => [
+                    'class' => 'MetaData-TextInput',
+                ],
+            ])
             ->add('affiliation', TextType::class, [
                 'required' => false,
                 'label' => 'input.creator.affiliation',

@@ -39,6 +39,11 @@ class CreatorMetaDataGroup implements Questionable, Reviewable
     private string $email;
 
     /**
+     * @ORM\Column(type="text", length=250, nullable=true)
+     */
+    private string $orcid;
+
+    /**
      * @ORM\Column(type="text", length=1500, nullable=true)
      */
     private string $affiliation;
@@ -120,6 +125,22 @@ class CreatorMetaDataGroup implements Questionable, Reviewable
     public function getAffiliation(): string
     {
         return $this->affiliation;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrcid(): string
+    {
+        return $this->orcid;
+    }
+
+    /**
+     * @param string $orcid
+     */
+    public function setOrcid(string $orcid): void
+    {
+        $this->orcid = $orcid;
     }
 
     /**

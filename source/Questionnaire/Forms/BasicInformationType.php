@@ -31,7 +31,7 @@ class BasicInformationType extends AbstractType
                  'allow_add' => true,
                  'prototype' => true,
                  'allow_delete' => true,
-                 'label' => 'The persons responsible for the research data',
+                 'label' => 'input.creator.label',
                  'label_attr' => ['class' => 'MetaData-Label'],
                  'attr' => [
                      'class' => 'MetaData-Widget MetaData-Widget_collection',

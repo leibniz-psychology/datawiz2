@@ -53,10 +53,13 @@ input:
     label: '<span class="block">Cite publications that use the data from this dataset.</span><span class="flex items-center mt-3 text-sm"><span class="w-4 h-4 ml-1 mr-1 iconify bg-mono-50" data-icon="mdi:information-variant" data-inline="false"></span>Enter one publication per field. Leave empty if not applicable.</span>'
     add: 'Add another related publication +'
   creator:
+    legend: 'Creator(s)'
+    label: 'The persons responsible for the research data'
     name:
       given: 'Given name'
       family: 'Family name'
     email: 'Email'
+    orcid: 'ORCID'
     affiliation: 'Affiliation'
     add: 'Add another creator +'
   objective:

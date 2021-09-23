@@ -34,7 +34,9 @@ function removeItemFromCollection(elem) {
   if (list.children.length > 1) {
     parentLi.remove();
   } else {
-    let input = parentLi.querySelectorAll("input[type=\"text\"], textarea");
+    let input = parentLi.querySelectorAll(
+      'input[type="text"], input[type="email"], textarea'
+    );
     if (input !== undefined && input !== null) {
       input.forEach((i) => {
         i.value = "";

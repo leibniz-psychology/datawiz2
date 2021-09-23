@@ -16,7 +16,7 @@ import Dropzone from "dropzone";
 
 import "./alpine";
 import "./detectStickyElements";
-import "./collection-widget"
+import "./collection-widget";
 
 /*a2lix_lib.sfCollection.init({
 	lang: {
@@ -26,107 +26,133 @@ import "./collection-widget"
 });*/
 
 Dropzone.options.datawizDropzone = {
-	createImageThumbnails: false,
-	init: function () {
-		this.on("sending", function (file, xhr, formData) {
-			formData.append("originalFilename", file.name);
-			// require Templates/Components/_infoBridge.html.twig -> experiment.id as value
-			formData.append(
-				"studyId",
-				document.getElementById("infobridge").innerHTML.trim()
-			);
-		});
-		this.on("success", function (file, responseText) {
-			if (responseText['flySystem'][0]['fileType'] === 'csv') {
-				const modal = document.querySelector("#modal-dataset-import");
-				const backdrop = document.querySelector("#modal-dataset-import-backdrop");
-				const submitBtn = document.querySelector("#dataset-import-submit");
-				const form = document.querySelector("#dataset-import-form");
-				if (form !== undefined) {
-					const previewUrl = this.element.getAttribute('data-preview-csv').trim().replace('%20', '') + encodeURI(responseText['flySystem'][0]['fileId']);
-					const submitUrl = this.element.getAttribute('data-submit-csv').trim().replace('%20', '') + encodeURI(responseText['flySystem'][0]['fileId']);
-					document.querySelector("#dataset-file-id").value = responseText['flySystem'][0]['fileId'];
-					modal.classList.toggle("hidden");
-					backdrop.classList.toggle("hidden");
-					modal.classList.toggle("flex");
-					backdrop.classList.toggle("flex");
-					submitBtn.addEventListener("click", function () {
-						POST(submitUrl, form);
-						location.reload();
-					});
-					const input = form.querySelectorAll('select, input:not([type="hidden"])');
-					input.forEach(e => {
-						e.addEventListener('change', function () {
-							POST(previewUrl, form, "#dataset-import-result");
-						})
-					})
-				}
-			} else if (responseText['flySystem'][0]['fileType'] === 'sav') {
-				const previewSavUrl = this.element.getAttribute('data-preview-sav').trim().replace('%20', '') + encodeURI(responseText['flySystem'][0]['fileId']);
-				const submitSavUrl = this.element.getAttribute('data-submit-sav').trim().replace('%20', '') + encodeURI(responseText['flySystem'][0]['fileId']);
-				GET(previewSavUrl, this.element, submitSavUrl);
-			}
-		});
-	},
+  createImageThumbnails: false,
+  init: function () {
+    this.on("sending", function (file, xhr, formData) {
+      formData.append("originalFilename", file.name);
+      // require Templates/Components/_infoBridge.html.twig -> experiment.id as value
+      formData.append(
+        "studyId",
+        document.getElementById("infobridge").innerHTML.trim()
+      );
+    });
+    this.on("success", function (file, responseText) {
+      if (responseText["flySystem"][0]["fileType"] === "csv") {
+        const modal = document.querySelector("#modal-dataset-import");
+        const backdrop = document.querySelector(
+          "#modal-dataset-import-backdrop"
+        );
+        const submitBtn = document.querySelector("#dataset-import-submit");
+        const form = document.querySelector("#dataset-import-form");
+        if (form !== undefined) {
+          const previewUrl =
+            this.element
+              .getAttribute("data-preview-csv")
+              .trim()
+              .replace("%20", "") +
+            encodeURI(responseText["flySystem"][0]["fileId"]);
+          const submitUrl =
+            this.element
+              .getAttribute("data-submit-csv")
+              .trim()
+              .replace("%20", "") +
+            encodeURI(responseText["flySystem"][0]["fileId"]);
+          document.querySelector("#dataset-file-id").value =
+            responseText["flySystem"][0]["fileId"];
+          modal.classList.toggle("hidden");
+          backdrop.classList.toggle("hidden");
+          modal.classList.toggle("flex");
+          backdrop.classList.toggle("flex");
+          submitBtn.addEventListener("click", function () {
+            POST(submitUrl, form);
+            location.reload();
+          });
+          const input = form.querySelectorAll(
+            'select, input:not([type="hidden"])'
+          );
+          input.forEach((e) => {
+            e.addEventListener("change", function () {
+              POST(previewUrl, form, "#dataset-import-result");
+            });
+          });
+        }
+      } else if (responseText["flySystem"][0]["fileType"] === "sav") {
+        const previewSavUrl =
+          this.element
+            .getAttribute("data-preview-sav")
+            .trim()
+            .replace("%20", "") +
+          encodeURI(responseText["flySystem"][0]["fileId"]);
+        const submitSavUrl =
+          this.element
+            .getAttribute("data-submit-sav")
+            .trim()
+            .replace("%20", "") +
+          encodeURI(responseText["flySystem"][0]["fileId"]);
+        GET(previewSavUrl, this.element, submitSavUrl);
+      }
+    });
+  },
 };
 
-const descriptions = document.querySelectorAll('.material-desc-textarea');
+const descriptions = document.querySelectorAll(".material-desc-textarea");
 if (descriptions) {
-	descriptions.forEach(description => {
-		description.addEventListener('keyup', (evt) => {
-			fetch(evt.currentTarget.getAttribute('data-material-uri'), {
-				method: 'POST',
-				body: evt.currentTarget.value
-			}).then(function (response) {
-				if (response.ok)
-					return response.json();
-				else
-					throw new Error('Hell no! What happened?');
-			}).then((data) => {
-				console.log(data)
-			}).catch(error => {
-				console.log(error)
-			});
-		})
-	})
+  descriptions.forEach((description) => {
+    description.addEventListener("keyup", (evt) => {
+      fetch(evt.currentTarget.getAttribute("data-material-uri"), {
+        method: "POST",
+        body: evt.currentTarget.value,
+      })
+        .then(function (response) {
+          if (response.ok) return response.json();
+          else throw new Error("Hell no! What happened?");
+        })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
+  });
 }
 
-
 function POST(url, form, resultDiv = null) {
-	fetch(url, {
-		method: 'POST',
-		body: new FormData(form)
-	}).then(function (response) {
-		if (response.ok)
-			return response.json();
-		else
-			throw new Error('Hell no! What happened?');
-	}).then((data) => {
-		if (resultDiv != null) {
-			document.querySelector(resultDiv).innerHTML = JSON.stringify(data);
-		}
-		console.log(data)
-	}).catch(error => {
-		console.log(error)
-	});
+  fetch(url, {
+    method: "POST",
+    body: new FormData(form),
+  })
+    .then(function (response) {
+      if (response.ok) return response.json();
+      else throw new Error("Hell no! What happened?");
+    })
+    .then((data) => {
+      if (resultDiv != null) {
+        document.querySelector(resultDiv).innerHTML = JSON.stringify(data);
+      }
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 function GET(url, form, submitUrl) {
-	fetch(url, {
-		method: 'GET',
-	}).then(function (response) {
-		if (response.ok)
-			return response.json();
-		else
-			throw new Error('Hell no! What happened?');
-	}).then((data) => {
-		console.log(data);
-		form.querySelector('#dataset-import-data').value = JSON.stringify(data);
-		POST(submitUrl, form);
-
-	}).catch(error => {
-		console.log(error)
-	});
+  fetch(url, {
+    method: "GET",
+  })
+    .then(function (response) {
+      if (response.ok) return response.json();
+      else throw new Error("Hell no! What happened?");
+    })
+    .then((data) => {
+      console.log(data);
+      form.querySelector("#dataset-import-data").value = JSON.stringify(data);
+      POST(submitUrl, form);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 // console.log("Hello Webpack Encore! Edit me in Assets/Scripts/app.js"

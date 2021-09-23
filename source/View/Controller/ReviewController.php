@@ -26,6 +26,7 @@ class ReviewController extends DataWizController
         return $this->render('Pages/Review/index.html.twig', [
             'experimentName' => $entityAtChange->getSettingsMetaDataGroup()->getShortName(),
             'basicInfoReview' => $entityAtChange->getBasicInformationMetaDataGroup()->getReviewCollection(),
+            'basicCreatorInfoReview' => $entityAtChange->getBasicInformationMetaDataGroup()->getCreators(),
             'theoryReview' => $entityAtChange->getTheoryMetaDataGroup()->getReviewCollection(),
             'methodReview' => $entityAtChange->getMethodMetaDataGroup()->getReviewCollection(),
             'measureReview' => $entityAtChange->getMeasureMetaDataGroup()->getReviewCollection(),

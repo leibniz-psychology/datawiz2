@@ -52,6 +52,13 @@ input:
     legend: 'Related publications'
     label: '<span class="block">Cite publications that use the data from this dataset.</span><span class="flex items-center mt-3 text-sm"><span class="w-4 h-4 ml-1 mr-1 iconify bg-mono-50" data-icon="mdi:information-variant" data-inline="false"></span>Enter one publication per field. Leave empty if not applicable.</span>'
     add: 'Add another related publication +'
+  creator:
+    name:
+      given: 'Given name'
+      family: 'Family name'
+    email: 'Email'
+    affiliation: 'Affiliation'
+    add: 'Add another creator +'
   objective:
     legend: 'Objectives'
     label: 'The action(s) you will take in order to achieve your research aim(s)/ goal(s).'

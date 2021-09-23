@@ -27,10 +27,22 @@
         <section>
             <h2>Basic Information</h2>
             {% for reviewItem in basicInfoReview %}
-            {{ render(controller('App\\View\\Controller\\ReviewController::displayValue', {
-                dataCollectable: reviewItem
-            })) }}
+                {{ render(controller('App\\View\\Controller\\ReviewController::displayValue', {
+                    dataCollectable: reviewItem
+                })) }}
             {% endfor %}
+            <div class="">
+                <h3>Creators:</h3>
+                {% for reviewCreator in basicCreatorInfoReview %}
+                    <div class="">
+                        {% for reviewItem in reviewCreator.reviewCollection %}
+                            {{ render(controller('App\\View\\Controller\\ReviewController::displayValue', {
+                                dataCollectable: reviewItem
+                            })) }}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
         </section>
         <section>
             <h2>Objectives & hypotheses</h2>

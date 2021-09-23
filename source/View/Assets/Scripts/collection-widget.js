@@ -34,14 +34,11 @@ function removeItemFromCollection(elem) {
   if (list.children.length > 1) {
     parentLi.remove();
   } else {
-    let input = parentLi.querySelector("input");
+    let input = parentLi.querySelectorAll("input[type=\"text\"], textarea");
     if (input !== undefined && input !== null) {
-      input.value = "";
-    } else {
-      input = parentLi.querySelector("textarea");
-      if (input !== undefined && input !== null) {
-        input.value = "";
-      }
+      input.forEach((i) => {
+        i.value = "";
+      });
     }
   }
 }

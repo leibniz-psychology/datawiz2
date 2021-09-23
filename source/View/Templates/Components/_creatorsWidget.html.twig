@@ -1,0 +1,19 @@
+{{ form_label(collection) }}
+{{ form_errors(collection) }}
+<div class="MetaData-Widget">
+    <ul id="{{ id }}"
+        data-prototype="{{ form_widget(collection.vars.prototype)|e }}"
+        data-widget-tags="{{ "<li></li>"|e }}"
+        data-widget-counter="{{ collection|length + 1 }}"
+        data-delete-prototype='<button type="button" class="remove-another-collection-widget" data-list-selector="#{{ id }}">{{ removeTxt|trans }}</button>'>
+        {% for item in collection %}
+            <li>
+                {{ form_widget(item) }}
+                <button type="button" class="remove-another-collection-widget" data-list-selector="#{{ id }}">{{ removeTxt|trans }}</button>
+            </li>
+        {% endfor %}
+    </ul>
+    <button type="button" class="add-another-collection-widget" data-list-selector="#{{ id }}">
+        {{ addTxt|trans }}
+    </button>
+</div>

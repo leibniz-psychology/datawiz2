@@ -27,19 +27,30 @@ title:
     title: 'Datasets for your Study'
     h2: 'Datasets for the Study'
     h3: 'Already uploaded'
+    description:
+      title: 'Description'
+      add: 'Add description'
+      edit: 'Edit description'
+    details:
+      date: 'Upload date'
+      size: 'File size'
+
   material:
     title: 'Materials for your Study'
     h2: 'Materials for the Study'
     h3: 'Uploaded materials'
 
 generic:
-  description: "Description"
-  remove: "Remove"
+  description: 'Description'
+  remove: 'Remove'
   edit: 'Edit'
   save: 'Save'
+  save-changes: 'Save changes'
   previous: 'Previous'
   next: 'Next'
   add: 'Add another'
+  delete: 'Delete'
+  cancel: 'Cancel'
 
 input:
   title:
@@ -79,8 +90,8 @@ input:
         supervision: 'Supervision'
         validation: 'Validation'
         visualization: 'Visualization'
-        writingOriginalDraft: 'Writing – original draft'
-        WritingReviewEditing: 'Writing – review & editing'
+        writingOriginalDraft: 'Writing - original draft'
+        WritingReviewEditing: 'Writing - review & editing'
   objective:
     legend: 'Objectives'
     label: 'The action(s) you will take in order to achieve your research aim(s)/ goal(s).'
@@ -218,8 +229,10 @@ saveNav:
 
 link:
   user:
-    logout: "Logout"
-    login: "Login"
-    profile: "User Profile"
+    logout: 'Logout'
+    login: 'Login'
+    profile: 'User Profile'
   edit:
     codebook: 'Edit codebook'
+  view:
+    dataset: 'View dataset'

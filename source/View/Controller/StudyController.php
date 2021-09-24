@@ -126,7 +126,7 @@ class StudyController extends AbstractController
         $this->logger->debug("Enter StudyController::documentationAction with [UUID: $uuid]");
         $entityAtChange = $this->getEntityAtChange($uuid);
         $basicInformation = $entityAtChange->getBasicInformationMetaDataGroup();
-        if(sizeof($basicInformation->getCreators()) == 0){
+        if (sizeof($basicInformation->getCreators()) == 0) {
             $basicInformation->getCreators()->add(new CreatorMetaDataGroup());
         }
         $form = $this->questionnaire->askAndHandle($basicInformation, 'save', $request);
@@ -139,6 +139,7 @@ class StudyController extends AbstractController
             }
             if ($form->getData()->getCreators() !== null && is_iterable($form->getData()->getCreators())) {
                 foreach ($form->getData()->getCreators() as $creator) {
+                    $creator->setCreditRoles(array_values(array_unique($creator->getCreditRoles())));
                     $creator->setBasicInformation($basicInformation);
                     $this->em->persist($creator);
                 }

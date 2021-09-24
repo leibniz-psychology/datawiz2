@@ -19,46 +19,6 @@ class BasicInformationType extends AbstractType
         $parseDown = new Parsedown();
 
         $builder
-             ->add(MetaDataDictionary::CREATORS, CollectionType::class, [
-                 'entry_type' => CreatorType::class,
-                 'entry_options' => [
-                     'label' => false,
-                     'attr' => [
-                         'x-data' => '',
-                         'x-on:keydown.enter.prevent' => '',
-                     ]
-                 ],
-                 'allow_add' => true,
-                 'prototype' => true,
-                 'allow_delete' => true,
-                 'label' => 'input.creator.label',
-                 'label_attr' => ['class' => 'MetaData-Label'],
-                 'attr' => [
-                     'class' => 'MetaData-Widget MetaData-Widget_collection',
-                 ]
-             ])
-             /*->add(MetaDataDictionary::CONTACT, CollectionType::class, [
-                 'required' => false,
-                 'entry_type' => TextType::class,
-                 'entry_options' => [
-                     'label' => false,
-                     'attr' => [
-                         'x-data' => '',
-                         'x-on:keydown.enter.prevent' => '',
-                     ]
-                 ],
-                 'allow_add' => true,
-                 'prototype' => true,
-                 'allow_delete' => true,
-                 'label' => 'The contact of the persons responsible',
-                 'label_attr' => ['class' => 'MetaData-Label'],
-                 'attr' => [
-                     'class' => 'MetaData-Widget MetaData-Widget_collection',
-                     'data-entry-add-label' => 'another contact +',
-                     'data-entry-add-class' => 'MetaData-AddButton',
-                     'data-entry-remove-class' => 'MetaData-RemoveButton'
-                 ]
-             ])*/
             ->add(MetaDataDictionary::TITLE, TextareaType::class, [
                 'required' => false,
                 'label' => 'input.title.label',
@@ -87,6 +47,24 @@ class BasicInformationType extends AbstractType
                 ),
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'label_html' => true,
+                'attr' => [
+                    'class' => 'MetaData-Widget MetaData-Widget_collection',
+                ]
+            ])
+            ->add(MetaDataDictionary::CREATORS, CollectionType::class, [
+                'entry_type' => CreatorType::class,
+                'entry_options' => [
+                    'label' => false,
+                    'attr' => [
+                        'x-data' => '',
+                        'x-on:keydown.enter.prevent' => '',
+                    ]
+                ],
+                'allow_add' => true,
+                'prototype' => true,
+                'allow_delete' => true,
+                'label' => 'input.creator.label',
+                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
                     'class' => 'MetaData-Widget MetaData-Widget_collection',
                 ]

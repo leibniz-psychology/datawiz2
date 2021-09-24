@@ -15,6 +15,11 @@ use Symfony\Component\Uid\Uuid;
 class CreatorMetaDataGroup implements Questionable, Reviewable
 {
 
+    public function __construct()
+    {
+        $this->creditRoles = array();
+    }
+
     /**
      * @ORM\Id
      * @ORM\Column(type="uuid", unique=true)
@@ -49,10 +54,16 @@ class CreatorMetaDataGroup implements Questionable, Reviewable
     private string $affiliation;
 
     /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private array $creditRoles;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Domain\Model\Study\BasicInformationMetaDataGroup", inversedBy="creators")
      * @ORM\JoinColumn(name="basic_id", referencedColumnName="id")
      */
     protected BasicInformationMetaDataGroup $basicInformation;
+
 
     /**
      * @return Uuid
@@ -152,6 +163,26 @@ class CreatorMetaDataGroup implements Questionable, Reviewable
     }
 
     /**
+     * @return array
+     */
+    public function getCreditRoles(): array
+    {
+        if (sizeof($this->creditRoles) == 0) {
+            $this->creditRoles[] = '';
+        }
+
+        return $this->creditRoles;
+    }
+
+    /**
+     * @param array $creditRoles
+     */
+    public function setCreditRoles(array $creditRoles): void
+    {
+        $this->creditRoles = $creditRoles;
+    }
+
+    /**
      * @return BasicInformationMetaDataGroup
      */
     public function getBasicInformation(): BasicInformationMetaDataGroup
@@ -172,7 +203,7 @@ class CreatorMetaDataGroup implements Questionable, Reviewable
         return CreatorMetaDataGroup::class;
     }
 
-    public function getReviewCollection()
+    public function getReviewCollection(): array
     {
         return [
             ReviewDataCollectable::createFrom('input.creator.name.given', $this->getGivenName(), function () {

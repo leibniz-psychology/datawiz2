@@ -33,6 +33,9 @@
                             <div>
                                 <span class="font-semibold">Datasets:</span>
                             </div>
+                            <div>
+                                <a href="{{ path('Study-delete', {uuid: experiment.id}) }}">Delete</a>
+                            </div>
                         </div>
                     </li>
                 {% endfor %}

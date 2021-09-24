@@ -1,0 +1,19 @@
+{
+	"name": "Beispielprojekt",
+	"title": "Beispielprojekt: Längsschnittstudie zur Entwicklung individueller Kompetenzen",
+	"description": "[Dieses Projekt ist in seinem Aufbau und Inhalt angelehnt an die LOGIK Studie, der Münchner Längsschnittstudie zur Entwicklung individueller Kompetenzen  (Weinert , 1984). Inhalte wurden angepasst um diesem Rahmen zu entsprechen, Inhalte wurden gekürzt und vereinfacht, Informationen zum Datenmanagement sind weitestgehend frei erfunden.]\n\nZiel der Längsschnittstudie ist es, die Stabilität individueller Unterschiede, sowie mögliche Entwicklungsmuster zu untersuchen. Insgesamt sollen verschiedene Entwicklungsbereiche untersucht werden, darunter Intelligenz, Psychomotorik, wissenschaftliches Denken, Gedächtnis, moralische Motivation, soziale Kompetenz, Selbstkonzept und Selbstvertrauen, Lese- und Rechtschreibfertigkeiten und mathematische Kompetenzen. Desweiteren sollen komplexe Wechselwirkungen zwischen diesen einzelnen Entwicklungsverläufen erforscht werden. Dabei soll auch die Bedeutung des schulischen Unterrichts bezogen auf Entwicklungsunterschiede eine wichtige Forschungsfrage darstellen. Die Studie beinhaltet insgesamt vier Erhebungswellen. \n",
+	"relPub": {
+		"0": "WHO Regional Office For Europe. (2020). COVID-19 Snapshot MOnitoring (COSMO Standard): Monitoring knowledge, risk perceptions, preventive behaviours, and public trust in the current coronavirus outbreak - WHO standard protocol. PsychArchives. https://doi.org/10.23668/PSYCHARCHIVES.2782",
+		"1": "Gollwitzer, M. (2020). DFG Priority Program SPP 2317 Proposal: A meta-scientific program to analyze and optimize replicability in the behavioral, social, and cognitive sciences (META-REP). PsychArchives. https://doi.org/10.23668/PSYCHARCHIVES.3010"
+	},
+	"creator": {
+		"givenName": "Max",
+		"familyName": "Mustermann",
+		"email" : "max.mustermann@mustermail.de",
+		"orcid" : "https://sandbox.orcid.org/0000-0002-8184-5122",
+		"affiliation": "Leibniz-Institut für Psychologie (ZPID)",
+		"roles": {
+			"0": ""
+		}
+	}
+}

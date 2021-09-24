@@ -37,7 +37,10 @@ Dropzone.options.datawizDropzone = {
       );
     });
     this.on("success", function (file, responseText) {
-      if (responseText["flySystem"][0]["fileType"] === "csv") {
+      if (
+        responseText["flySystem"] &&
+        responseText["flySystem"][0]["fileType"] === "csv"
+      ) {
         const modal = document.querySelector("#modal-dataset-import");
         const backdrop = document.querySelector(
           "#modal-dataset-import-backdrop"
@@ -76,7 +79,10 @@ Dropzone.options.datawizDropzone = {
             });
           });
         }
-      } else if (responseText["flySystem"][0]["fileType"] === "sav") {
+      } else if (
+        responseText["flySystem"] &&
+        responseText["flySystem"][0]["fileType"] === "sav"
+      ) {
         const previewSavUrl =
           this.element
             .getAttribute("data-preview-sav")
@@ -90,6 +96,9 @@ Dropzone.options.datawizDropzone = {
             .replace("%20", "") +
           encodeURI(responseText["flySystem"][0]["fileId"]);
         GET(previewSavUrl, this.element, submitSavUrl);
+        location.reload();
+      } else {
+        location.reload();
       }
     });
   },

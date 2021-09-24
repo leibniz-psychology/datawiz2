@@ -9,11 +9,13 @@
 	"creator": {
 		"givenName": "Max",
 		"familyName": "Mustermann",
-		"email" : "max.mustermann@mustermail.de",
-		"orcid" : "https://sandbox.orcid.org/0000-0002-8184-5122",
+		"email": "max.mustermann@mustermail.de",
+		"orcid": "https://sandbox.orcid.org/0000-0002-8184-5122",
 		"affiliation": "Leibniz-Institut für Psychologie (ZPID)",
 		"roles": {
 			"0": ""
 		}
-	}
+	},
+	"theory_objective": "[Dieses Projekt ist in seinem Aufbau und Inhalt angelehnt an die LOGIK Studie, der Münchner Längsschnittstudie zur Entwicklung individueller Kompetenzen (Weinert , 1984). Inhalte wurden angepasst um diesem Rahmen zu entsprechen, Inhalte wurden gekürzt und vereinfacht, Informationen zum Datenmanagement sind weitestgehend frei erfunden.] Ziel der Längsschnittstudie ist es, die Stabilität individueller Unterschiede, sowie mögliche Entwicklungsmuster zu untersuchen. Insgesamt sollen verschiedene Entwicklungsbereiche untersucht werden, darunter Intelligenz, Psychomotorik, wissenschaftliches Denken, Gedächtnis, moralische Motivation, soziale Kompetenz, Selbstkonzept und Selbstvertrauen, Lese- und Rechtschreibfertigkeiten und mathematische Kompetenzen. Desweiteren sollen komplexe Wechselwirkungen zwischen diesen einzelnen Entwicklungsverläufen erforscht werden. Dabei soll auch die Bedeutung des schulischen Unterrichts bezogen auf Entwicklungsunterschiede eine wichtige Forschungsfrage darstellen. Die Studie beinhaltet insgesamt vier Erhebungswellen.",
+	"theory_hypothesis": "Der hier verfasste Datenmanagementplan wird vom finanziellen Förderer des Projekts gefordert. Außerdem soll dieser der Planung und Abstimmung mit dem Projektpartner dienen. \nVor allem aber soll die frühzeitige Planung des Datenmanagements dazu führen, dass potentielle Probleme des Datenmanagements schon frühzeitig entdeckt und schließlich gelöst werden können. Das Datenmanagement soll dokumentiert und festgehalten werden, damit das Vorgehen für alle betreffenden Projektmitarbeiter und Forschenden an einem Ort zugänglich ist. "
 }

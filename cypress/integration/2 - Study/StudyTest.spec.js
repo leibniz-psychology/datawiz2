@@ -31,7 +31,7 @@ describe('Study Test', () => {
 		cy.get('#basic_information_description').clear().type(study.description);
 		cy.get('#basic_information_related_publications_0').clear().type(study.relPub["0"]);
 		cy.get('button').contains("Add another related publication +").click();
-		cy.get('#basic_information_related_publications_3').clear().type(study.relPub["1"]);
+		cy.get('#basic_information_related_publications_2').clear().type(study.relPub["1"]);
 		cy.get('#basic_information_creators_0_givenName').clear().type(study.creator.givenName);
 		cy.get('#basic_information_creators_0_familyName').clear().type(study.creator.familyName);
 		cy.get('#basic_information_creators_0_email').clear().type(study.creator.email);
@@ -39,6 +39,15 @@ describe('Study Test', () => {
 		cy.get('#basic_information_creators_0_affiliation').clear().type(study.creator.affiliation);
 		/* TODO CREDIT ROLES TEST */
 		cy.get('#basic_information_submit').click();
+	})
+
+	it('Edit Study objectives information', () => {
+		cy.visit('/studies');
+		cy.get('a').contains(study.name).click();
+		cy.get('a').contains('Objectives & hypotheses').click();
+		cy.get('#theory_objective').clear().type(study.theory_objective);
+		cy.get('#theory_hypothesis').clear().type(study.theory_hypothesis);
+		cy.get('#theory_submit').click();
 	})
 
 })

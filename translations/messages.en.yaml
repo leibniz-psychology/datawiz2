@@ -34,11 +34,12 @@ title:
     details:
       date: 'Upload date'
       size: 'File size'
-
   material:
     title: 'Materials for your Study'
     h2: 'Materials for the Study'
     h3: 'Uploaded materials'
+  settings:
+    title: 'Study settings'
 
 generic:
   description: 'Description'
@@ -200,6 +201,9 @@ input:
   power-analysis:
     legend: 'Power analysis (statistical)'
     label: 'Provide details of the power analysis used to calculate your sample size'
+  study-name:
+    legend: 'Study name'
+    label: 'Provide a short name for your study'
 
 saveNav:
   introduction:

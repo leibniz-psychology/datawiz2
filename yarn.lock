@@ -12,6 +12,13 @@
   resolved "https://registry.yarnpkg.com/@alpine-collective/toolkit-scroll/-/toolkit-scroll-1.0.0.tgz#cb8645375cb5ee2c1dd3c0571e84cd4a6fdb5518"
   integrity sha512-Wa5hs5Q/G4Yjyv7pn5Aur/EFLIAu1OVGMniLSoz1uiRlDwIWRLC7YFkRwlgqWfw/97cHdHKOSsL0YyyfHUGUBQ==
 
+"@alpinejs/trap@^3.4.1":
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/@alpinejs/trap/-/trap-3.4.1.tgz#370fab4bb92bc43b3ec2a6c9c8ae405780c06f62"
+  integrity sha512-8OYHb+b0HVHwK24kKCtcG1kFxyOWoBwcnTCAVwottf0rS5tJDE72ebg8sZ2eZyj8fkAUNMArGFUyab+EJO/xQA==
+  dependencies:
+    focus-trap "^6.6.1"
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.14.5":
   version "7.14.5"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.14.5.tgz#23b08d740e83f49c5e59945fbf1b43e80bbf4edb"
@@ -3163,6 +3170,13 @@ flatten@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.3.tgz#c1283ac9f27b368abc1e36d1ff7b04501a30356b"
   integrity sha512-dVsPA/UwQ8+2uoFe5GHtiBMu48dWLTdsuEd7CKGlZlD78r1TTWBvDuFaFGKCo/ZfEr95Uk56vZoX86OsHkUeIg==
+
+focus-trap@^6.6.1:
+  version "6.7.1"
+  resolved "https://registry.yarnpkg.com/focus-trap/-/focus-trap-6.7.1.tgz#d474f86dbaf3c7fbf0d53cf0b12295f4f4068d10"
+  integrity sha512-a6czHbT9twVpy2RpkWQA9vIgwQgB9Nx1PIxNNUxQT4nugG/3QibwxO+tWTh9i+zSY2SFiX4pnYhTaFaQF/6ZAg==
+  dependencies:
+    tabbable "^5.2.1"
 
 follow-redirects@^1.0.0, follow-redirects@^1.14.0:
   version "1.14.3"
@@ -6396,6 +6410,11 @@ svgo@^2.3.0:
     css-tree "^1.1.3"
     csso "^4.2.0"
     stable "^0.1.8"
+
+tabbable@^5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-5.2.1.tgz#e3fda7367ddbb172dcda9f871c0fdb36d1c4cd9c"
+  integrity sha512-40pEZ2mhjaZzK0BnI+QGNjJO8UYx9pP5v7BGe17SORTO0OEuuaAwQTkAp8whcZvqon44wKFOikD+Al11K3JICQ==
 
 table@^6.6.0:
   version "6.7.1"

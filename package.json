@@ -2,6 +2,7 @@
   "devDependencies": {
     "@a2lix/symfony-collection": "^0.4.0",
     "@alpine-collective/toolkit-scroll": "^1.0.0",
+    "@alpinejs/trap": "^3.4.1",
     "@ryangjchandler/alpine-tooltip": "^0.2.0",
     "@symfony/webpack-encore": "^1.6.1",
     "alpinejs": "^3.3.1",

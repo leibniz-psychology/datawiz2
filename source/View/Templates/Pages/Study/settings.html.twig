@@ -3,33 +3,109 @@
 {% set isPartOfStudyDocumentation = true %}
 
 {% block title %}
-    Setting of {{ experiment.settingsMetaDataGroup.shortName }}
+    {{ "title.settings.title"|trans }}
 {% endblock %}
 
 {% block content %}
     <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
-        Study settings
+        {{ "title.settings.title"|trans }}
     </h2>
 
     {{ form_start(form) }}
     {{ form_errors(form) }}
 
-    <div>
-        {{ form_label(form.shortName, null, {
-            'label_attr': {'class': 'MetaData-Title'}
-        }) }}
-        {{ form_help(form.shortName, {
-            'help_attr': {'class': 'px-6 pt-1'}
-        }) }}
+    <fieldset>
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                {{ "input.study-name.legend"|trans }}
+            </legend>
+
+        </div>
+        {{ form_label(form.shortName) }}
         {{ form_errors(form.shortName) }}
-        <div class="px-6 pt-1">
+        <div class="w-1/2 MetaData-Widget">
             {{ form_widget(form.shortName) }}
         </div>
-    </div>
+    </fieldset>
 
-    {{ form_widget(form.submit, {'attr': {
-        'class': 'mx-6 mt-4 mb-4',}
-        }) }}
+    {{ form_widget(form.submit, {
+        'attr': {
+            'class': 'mx-6 mt-4',
+        },
+        'label': "generic.save"
+    }) }}
+
+    {# TODO translate strings #}
+    <fieldset class="mt-8 mb-8" x-data="{ showDeleteModal: false }">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                Danger zone
+            </legend>
+            {# {{ helpButton("title") }} #}
+        </div>
+        <div class="MetaData-Label">
+            Irreversible and destructive actions
+        </div>
+        <div class="!p-4 mx-6 border border-red-500 rounded MetaData-Widget mt-2">
+            <h4 class="text-lg font-semibold">Delete study</h4>
+            <div class="">
+                <div class="mt-2">
+                    Deleting a study permanenetly deletes all its data.
+                </div>
+                <button class="inline-flex items-center self-start px-2 mt-4 border rounded hover:text-red-700 hover:bg-red-50 border-mono-300 hover:border-red-700"
+                        @click="showDeleteModal = true" type="button">
+                    <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                         width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                        <g fill="none">
+                            <path d="M7 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2h4a1 1 0 1 1 0 2h-1.069l-.867 12.142A2 2 0 0 1 17.069 22H6.93a2 2 0 0 1-1.995-1.858L4.07 8H3a1 1 0 0 1 0-2h4V4zm2 2h6V4H9v2zM6.074 8l.857 12H17.07l.857-12H6.074zM10 10a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1zm4 0a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1z"
+                                  fill="currentColor"/>
+                        </g>
+                    </svg>
+                    Delete this study
+                </button>
+            </div>
+        </div>
+        {# TODO prevent outside scrolling #}
+        <!-- Modal -->
+        <div class="fixed inset-0 z-50 flex my-20 overflow-x-hidden overflow-y-auto" x-trap="showDeleteModal"
+             x-show="showDeleteModal" x-cloak @keydown.window.escape="showDeleteModal = false">
+            <div class="relative w-auto max-w-lg mx-auto my-6">
+                <!--content-->
+                <div class="relative flex flex-col w-full bg-white border-0 rounded-lg shadow-lg"
+                     @click.outside="showDeleteModal = false">
+                    <!--header-->
+                    <div class="flex items-start justify-between p-5 border-b border-gray-200 border-solid rounded-t">
+                        <div class="text-xl font-semibold">
+                            Are you absolutely sure?
+                        </div>
+                        <button class="w-auto p-0 m-0 border-0 rounded-none shadow-none hover:bg-transparent"
+                                @click="showDeleteModal = false" tabindex="3" type="button">
+                            <span class="w-6 h-6 iconify" data-icon="mdi:close" data-inline="false"></span>
+                        </button>
+                    </div>
+                    <!--body-->
+                    <div class="relative flex-auto p-6">
+                        This action cannot be undone. This will permanently delete the <span
+                                class="font-semibold">{{ experiment.settingsMetaDataGroup.shortName }}</span> study
+                        including its documentation, datasets, codebooks and materials.
+                    </div>
+                    <!--footer-->
+                    <div class="flex items-center p-6 border-t border-gray-200 border-solid rounded-b">
+                        <button class="px-3 text-white !bg-red-600 hover:!bg-red-500" type="button"
+                                @click="window.location.href='{{ path('Study-delete', { "uuid": experiment.id }) }}'"
+                                tabindex="2">
+                            I understand, delete this study
+                        </button>
+                        <button class="ml-2" type="button" @click="showDeleteModal = false" tabindex="1">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fixed inset-0 z-40 flex bg-black opacity-50" x-show="showDeleteModal" x-cloak></div>
+    </fieldset>
 
     {{ form_end(form) }}
 {% endblock %}

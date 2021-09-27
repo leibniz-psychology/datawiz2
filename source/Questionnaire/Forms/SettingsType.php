@@ -20,12 +20,11 @@ class SettingsType extends AbstractType
     {
         $builder
             ->add(MetaDataDictionary::SHORTNAME, TextType::class, [
-                'label' => 'Study name',
-                'help' => 'Provide a short name for your study',
-                // 'label_attr' => ['class' => 'MetaData-Title'],
-                // 'help_attr' => ['class' => 'px-6 pt-1'],
+                'required' => true,
+                'label' => 'input.study-name.label',
+                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'p-1',
+                    'class' => 'MetaData-TextInput',
                 ]
             ]);
     }

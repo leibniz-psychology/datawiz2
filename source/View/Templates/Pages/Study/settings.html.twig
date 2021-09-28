@@ -36,7 +36,7 @@
     }) }}
 
     {# TODO translate strings #}
-    <fieldset class="mt-8 mb-8" x-data="{ showDeleteModal: false }">
+    <fieldset class="mt-8 mb-8" x-data="modal()" @keydown.window.escape="hide()">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
                 Danger zone
@@ -53,7 +53,7 @@
                     Deleting a study permanenetly deletes all its data.
                 </div>
                 <button class="inline-flex items-center self-start px-2 mt-4 border rounded hover:text-red-700 hover:bg-red-50 border-mono-300 hover:border-red-700"
-                        @click="showDeleteModal = true" type="button">
+                        @click="show()" type="button">
                     <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
                          xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
                          width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
@@ -66,45 +66,38 @@
                 </button>
             </div>
         </div>
-        {# TODO prevent outside scrolling #}
-        <!-- Modal -->
-        <div class="fixed inset-0 z-50 flex my-20 overflow-x-hidden overflow-y-auto" x-trap="showDeleteModal"
-             x-show="showDeleteModal" x-cloak @keydown.window.escape="showDeleteModal = false">
-            <div class="relative w-auto max-w-lg mx-auto my-6">
-                <!--content-->
-                <div class="relative flex flex-col w-full bg-white border-0 rounded-lg shadow-lg"
-                     @click.outside="showDeleteModal = false">
-                    <!--header-->
-                    <div class="flex items-start justify-between p-5 border-b border-gray-200 border-solid rounded-t">
-                        <div class="text-xl font-semibold">
-                            Are you absolutely sure?
-                        </div>
-                        <button class="w-auto p-0 m-0 border-0 rounded-none shadow-none hover:bg-transparent"
-                                @click="showDeleteModal = false" tabindex="3" type="button">
-                            <span class="w-6 h-6 iconify" data-icon="mdi:close" data-inline="false"></span>
-                        </button>
+
+        <!-- Modal confirming delete action -->
+        <div class="Modal-Overlay" x-bind="overlay" x-cloak>
+            <div class="Modal-Dialog" @click.outside="hide()">
+
+                <div class="Modal-Header">
+                    <div class="Modal-Title">
+                        Are you absolutely sure?
                     </div>
-                    <!--body-->
-                    <div class="relative flex-auto p-6">
-                        This action cannot be undone. This will permanently delete the <span
-                                class="font-semibold">{{ experiment.settingsMetaDataGroup.shortName }}</span> study
-                        including its documentation, datasets, codebooks and materials.
-                    </div>
-                    <!--footer-->
-                    <div class="flex items-center p-6 border-t border-gray-200 border-solid rounded-b">
-                        <button class="px-3 text-white !bg-red-600 hover:!bg-red-500" type="button"
-                                @click="window.location.href='{{ path('Study-delete', { "uuid": experiment.id }) }}'"
-                                tabindex="2">
-                            I understand, delete this study
-                        </button>
-                        <button class="ml-2" type="button" @click="showDeleteModal = false" tabindex="1">
-                            Cancel
-                        </button>
-                    </div>
+                    <button class="Modal-Button_close" @click="hide()" type="button">
+                        <span class="w-6 h-6 iconify" data-icon="mdi:close" data-inline="false"></span>
+                    </button>
+                </div>
+
+                <div class="Modal-Body">
+                    This action cannot be undone. This will permanently delete the <span
+                            class="font-semibold">{{ experiment.settingsMetaDataGroup.shortName }}</span> study
+                    including its documentation, datasets, codebooks and materials.
+                </div>
+
+                <div class="Modal-Footer">
+                    <button class="Modal-Button_warning" type="button"
+                            @click="window.location.href='{{ path('Study-delete', { "uuid": experiment.id }) }}'"
+                    >
+                        I understand, delete this study
+                    </button>
+                    <button class="Modal-Button_cancel" type="button" x-ref="focusFirst" @click="hide()">
+                        Cancel
+                    </button>
                 </div>
             </div>
         </div>
-        <div class="fixed inset-0 z-40 flex bg-black opacity-50" x-show="showDeleteModal" x-cloak></div>
     </fieldset>
 
     {{ form_end(form) }}

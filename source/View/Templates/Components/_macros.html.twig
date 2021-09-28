@@ -226,8 +226,7 @@ the form.
     <div class="mx-4" x-data="{...fileManagement()}" x-init="descriptionText = '{{ file.description }}'">
         <label class="inline-block font-semibold" for="file-desc-{{ loopIndex }}"
                x-show="showInput || descriptionText !== ''">{{ "generic.description"|trans }}</label>
-        <button @click.prevent="showInput = true; $dispatch('notify'); focusInput('#file-desc-{{ loopIndex }}');"
-                role="link" class="underline"
+        <button @click="showInput = true; focusInput('#file-desc-{{ loopIndex }}');" type="button"
                 x-text="descriptionText === '' ? '{{ "title.dataset.description.add"|trans }}' : '{{ "title.dataset.description.edit"|trans }}'"
                 x-show="!showInput" x-cloak>
             {% if file.description %}

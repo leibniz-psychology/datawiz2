@@ -32,13 +32,13 @@
     <ul class="mx-6 mt-6">
         {% for dataset in experiment.originalDatasets %}
             <li class="pt-3 pb-4 mt-2 first:mt-0 bg-mono-100">
-                <div class="bg-mono-100">
+                <div class="bg-mono-100" x-data="modal()" @keydown.window.escape="hide()">
                     <h4 class="flex justify-between mx-4">
                         <span class="text-lg font-semibold font-">
                             {{ dataset.originalName }}
                         </span>
-                        <a class="flex items-center self-start px-2 ml-2 border rounded hover:text-red-700 hover:bg-red-50 border-mono-300 hover:border-red-700"
-                           href="{{ path('File-delete_dataset', { "uuid": dataset.id }) }}">
+                        <button class="flex items-center self-start px-2 ml-2 border rounded hover:text-red-700 hover:bg-red-50 border-mono-300 hover:border-red-700"
+                                @click="show()">
                             {# Icon: mi:delete - https://icon-sets.iconify.design/mi/delete/ #}
                             <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
                                  xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
@@ -49,8 +49,41 @@
                                 </g>
                             </svg>
                             {{ "generic.delete"|trans }}
-                        </a>
+                        </button>
                     </h4>
+
+                    <!-- Modal confirming delete action -->
+                    <div class="Modal-Overlay" x-bind="overlay" x-cloak>
+                        <div class="Modal-Dialog" @click.outside="hide()">
+
+                            <div class="Modal-Header">
+                                <div class="Modal-Title">
+                                    Are you absolutely sure?
+                                </div>
+                                <button class="Modal-Button_close" @click="hide()" type="button">
+                                    <span class="w-6 h-6 iconify" data-icon="mdi:close" data-inline="false"></span>
+                                </button>
+                            </div>
+
+                            <div class="Modal-Body">
+                                This action cannot be undone. This will permanently delete the <span
+                                        class="font-semibold">{{ dataset.originalName }}</span> dataset including its
+                                codebook.
+                            </div>
+
+                            <div class="Modal-Footer">
+                                <button class="Modal-Button_warning" type="button"
+                                        @click="window.location.href='{{ path('File-delete_dataset', { "uuid": dataset.id }) }}'"
+                                >
+                                    I understand, delete this dataset
+                                </button>
+                                <button class="Modal-Button_cancel" type="button" x-ref="focusFirst" @click="hide()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="mx-4 mt-1">
                         <span class="font-semibold">Upload date</span><span
                                 class="ml-1">{{ dataset.dateUploaded|date }}</span>

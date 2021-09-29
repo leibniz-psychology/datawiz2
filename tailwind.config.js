@@ -8,6 +8,7 @@ module.exports = {
     content: [
       "./source/View/Templates/**/*.html.twig",
       "./source/Questionnaire/Forms/**/*.php",
+      "./source/View/Assets/Scripts/**/*.js",
     ],
   },
   theme: {

@@ -2,28 +2,28 @@
   "devDependencies": {
     "@a2lix/symfony-collection": "^0.4.0",
     "@alpine-collective/toolkit-scroll": "^1.0.0",
-    "@alpinejs/trap": "^3.4.1",
+    "@alpinejs/trap": "^3.4.2",
     "@ryangjchandler/alpine-tooltip": "^0.2.0",
     "@symfony/webpack-encore": "^1.6.1",
-    "alpinejs": "^3.3.1",
-    "autoprefixer": "^10.3.4",
+    "alpinejs": "^3.4.2",
+    "autoprefixer": "^10.3.6",
     "axios": "^0.21.3",
-    "core-js": "^3.17.2",
+    "core-js": "^3.18.1",
     "cross-env": "^7.0.3",
     "fibers": "^5.0.0",
-    "postcss": "^8.3.5",
+    "postcss": "^8.3.8",
     "postcss-loader": "^6.1.1",
     "postcss-svg": "^3.0.0",
-    "prettier": "^2.3.2",
+    "prettier": "^2.4.1",
     "regenerator-runtime": "^0.13.9",
-    "sass": "^1.39.0",
+    "sass": "^1.42.1",
     "sass-loader": "^12.1.0",
     "stylelint": "^13.13.1",
     "stylelint-config-idiomatic-order": "^8.1.0",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^22.0.0",
-    "stylelint-scss": "^3.20.1",
-    "tailwindcss": "2.2.9",
+    "stylelint-scss": "^3.21.0",
+    "tailwindcss": "2.2.16",
     "tippy.js": "^6.3.1",
     "webpack-notifier": "^1.13.0"
   },
@@ -62,8 +62,8 @@
     }
   },
   "dependencies": {
-    "cypress": "^8.4.0",
+    "cypress": "^8.5.0",
     "cypress-wait-until": "^1.7.1",
-    "dropzone": "^5.9.2"
+    "dropzone": "^5.9.3"
   }
 }

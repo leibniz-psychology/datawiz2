@@ -4,8 +4,11 @@ namespace App\Domain\Model\Study;
 
 use App\Domain\Access\Study\ExperimentRepository;
 use App\Domain\Model\Administration\UuidEntity;
+use App\Domain\Model\Filemanagement\AdditionalMaterial;
+use App\Domain\Model\Filemanagement\Dataset;
 use App\Security\Authorization\Ownable;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -29,54 +32,54 @@ class Experiment extends UuidEntity implements Ownable
     /**
      * One Experiment has One Sample section.
      *
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\SampleMetaDataGroup", mappedBy="experiment", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\SampleMetaDataGroup", mappedBy="experiment", cascade={"persist", "remove"})
      */
     private $sampleMetaDataGroup;
 
     /**
      * One Experiment has One Settings section.
      *
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\SettingsMetaDataGroup", mappedBy="experiment", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\SettingsMetaDataGroup", mappedBy="experiment", cascade={"persist", "remove"})
      */
     private $settingsMetaDataGroup;
 
     /**
      * One Experiment has One basic Information section.
      *
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\BasicInformationMetaDataGroup", mappedBy="experiment", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\BasicInformationMetaDataGroup", mappedBy="experiment", cascade={"persist", "remove"})
      */
     private $basicInformationMetaDataGroup;
 
     /**
      * One Experiment has One Theory section.
      *
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\TheoryMetaDataGroup", mappedBy="experiment", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\TheoryMetaDataGroup", mappedBy="experiment", cascade={"persist", "remove"})
      */
     private $theoryMetaDataGroup;
 
     /**
      * One Experiment has One Theory section.
      *
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\MeasureMetaDataGroup", mappedBy="experiment", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\MeasureMetaDataGroup", mappedBy="experiment", cascade={"persist", "remove"})
      */
     private $measureMetaDataGroup;
 
     /**
      * One Experiment has One Theory section.
      *
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\MethodMetaDataGroup", mappedBy="experiment", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\MethodMetaDataGroup", mappedBy="experiment", cascade={"persist", "remove"})
      */
     private $methodMetaDataGroup;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Domain\Model\Filemanagement\AdditionalMaterial", mappedBy="experiment", cascade={"persist"})
      */
-    private $additionalMaterials;
+    private Collection $additionalMaterials;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Domain\Model\Filemanagement\Dataset", mappedBy="experiment", cascade={"persist"})
      */
-    private $originalDatasets;
+    private Collection $originalDatasets;
 
     /**
      * @return mixed
@@ -193,32 +196,32 @@ class Experiment extends UuidEntity implements Ownable
         $methodMetaDataGroup->setExperiment($this);
     }
 
-    public function getAdditionalMaterials()
+    public function getAdditionalMaterials(): Collection
     {
         return $this->additionalMaterials;
     }
 
-    public function addAdditionalMaterials($additionalMaterials): void
+    public function addAdditionalMaterials(AdditionalMaterial $additionalMaterials): void
     {
         $this->additionalMaterials->add($additionalMaterials);
     }
 
-    public function removeAdditionalMaterials($materials): void
+    public function removeAdditionalMaterials(AdditionalMaterial $materials): void
     {
         $this->additionalMaterials->removeElement($materials);
     }
 
-    public function getOriginalDatasets()
+    public function getOriginalDatasets(): Collection
     {
         return $this->originalDatasets;
     }
 
-    public function addOriginalDatasets($originalDatasets): void
+    public function addOriginalDatasets(Dataset $originalDatasets): void
     {
         $this->originalDatasets->add($originalDatasets);
     }
 
-    public function removeOriginalDatasets($originalDatasets): void
+    public function removeOriginalDatasets(Dataset $originalDatasets): void
     {
         $this->originalDatasets->removeElement($originalDatasets);
     }

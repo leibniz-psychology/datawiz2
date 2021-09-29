@@ -2,23 +2,36 @@
 
 namespace App\Crud;
 
+use App\Domain\Model\Filemanagement\AdditionalMaterial;
+use App\Domain\Model\Filemanagement\Dataset;
+use App\Domain\Model\Study\Experiment;
 use Doctrine\ORM\EntityManagerInterface;
+use League\Flysystem\FileExistsException;
+use League\Flysystem\FileNotFoundException;
+use League\Flysystem\Filesystem;
 
 class CrudService implements Crudable
 {
-    private $entityManager;
+    private Filesystem $filesystem;
+    private EntityManagerInterface $em;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    /**
+     * @param Filesystem $filesystem
+     * @param EntityManagerInterface $em
+     */
+    public function __construct(Filesystem $filesystem, EntityManagerInterface $em)
     {
-        $this->entityManager = $entityManager;
+        $this->filesystem = $filesystem;
+        $this->em = $em;
     }
+
 
     /**
      * Wrapper for find from EntityManager.
      */
     public function readById(string $type, $id)
     {
-        return $this->entityManager
+        return $this->em
             ->getRepository($type)
             ->find($id);
     }
@@ -28,7 +41,7 @@ class CrudService implements Crudable
      */
     public function readForAll(string $type): array
     {
-        return $this->entityManager
+        return $this->em
             ->getRepository($type)
             ->findAll();
     }
@@ -36,11 +49,9 @@ class CrudService implements Crudable
     /**
      * Wrapper to call findBy from the repository of the given type.
      */
-    public function readByCriteria(string $type, array $criteria,
-                                   ?array $orderBy = null, $limit = null,
-                                   $offset = null)
+    public function readByCriteria(string $type, array $criteria, ?array $orderBy = null, $limit = null, $offset = null): array
     {
-        return $this->entityManager
+        return $this->em
             ->getRepository($type)
             ->findBy($criteria, $orderBy, $limit, $offset);
     }
@@ -50,8 +61,8 @@ class CrudService implements Crudable
      */
     public function update(&$entity): void
     {
-        $this->entityManager->persist($entity);
-        $this->entityManager->flush();
+        $this->em->persist($entity);
+        $this->em->flush();
     }
 
     /**
@@ -59,8 +70,8 @@ class CrudService implements Crudable
      */
     public function delete($entity): void
     {
-        $this->entityManager->remove($entity);
-        $this->entityManager->flush();
+        $this->em->remove($entity);
+        $this->em->flush();
     }
 
     /**
@@ -69,8 +80,97 @@ class CrudService implements Crudable
      */
     public function doTransaction(callable $callback)
     {
-        $this->entityManager->beginTransaction();
-        $callback($this->entityManager);
-        $this->entityManager->flush();
+        $this->em->beginTransaction();
+        $callback($this->em);
+        $this->em->flush();
+    }
+
+    public function deleteMaterial(AdditionalMaterial $material): bool
+    {
+        try {
+            if ($this->filesystem->has($material->getStorageName())) {
+                $this->filesystem->delete($material->getStorageName());
+            }
+            $this->em->remove($material);
+            $this->em->flush();
+            $success = true;
+        } catch (FileNotFoundException $e) {
+            $success = false;
+        }
+
+        return $success;
+    }
+
+
+    public function deleteDataset(Dataset $dataset): bool
+    {
+        try {
+            if ($this->filesystem->has($dataset->getStorageName())) {
+                $this->filesystem->delete($dataset->getStorageName());
+            }
+            if ($this->filesystem->has("matrix/".$dataset->getId().".json")) {
+                $this->filesystem->delete("matrix/".$dataset->getId().".json");
+            }
+            if ($dataset->getCodebook() != null) {
+                foreach ($dataset->getCodebook() as $var) {
+                    $this->em->remove($var);
+                }
+            }
+            $this->em->remove($dataset);
+            $this->em->flush();
+            $success = true;
+        } catch (FileNotFoundException $e) {
+            $success = false;
+        }
+
+        return $success;
+    }
+
+    public function saveDatasetMatrix(array $matrix, string $datasetId): bool
+    {
+        try {
+            if ($this->filesystem->has("matrix/$datasetId.json")) {
+                $this->filesystem->update("matrix/$datasetId.json", json_encode($matrix));
+            } else {
+                $this->filesystem->write("matrix/$datasetId.json", json_encode($matrix));
+            }
+            $success = true;
+        } catch (FileExistsException | FileNotFoundException $e) {
+            $success = false;
+        }
+
+        return $success;
+    }
+
+    public function deleteStudy(Experiment $experiment): bool
+    {
+        $success = true;
+        if ($datasets = $experiment->getOriginalDatasets()) {
+            foreach ($datasets as $dataset) {
+                if (!$this->deleteDataset($dataset)) {
+                    $success = false;
+                    break;
+                }
+            }
+        }
+        if ($material = $experiment->getAdditionalMaterials()) {
+            foreach ($material as $mat) {
+                if (!$this->deleteMaterial($mat)) {
+                    $success = false;
+                    break;
+                }
+            }
+        }
+        if ($creators = $experiment->getBasicInformationMetaDataGroup()->getCreators()) {
+            foreach ($creators as $creator) {
+                $this->em->remove($creator);
+            }
+        }
+        if ($success) {
+            $this->em->remove($experiment);
+            $this->em->flush();
+        }
+
+        return $success;
     }
 }

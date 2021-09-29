@@ -24,6 +24,14 @@ class QuestionnaireService implements Questionnairable
         return $form->getForm();
     }
 
+    public function formFromClass(string $class, Questionable $entity, string $buttonLabel): ?FormInterface
+    {
+        $form = $this->formBuilder->createBuilder($class, $entity);
+        $form->add('submit', SubmitType::class, ['label' => $buttonLabel]);
+
+        return $form->getForm();
+    }
+
     public function askAndHandle(Questionable $entity, string $buttonLabel, Request $request): ?FormInterface
     {
         $form = $this->formFromEntity($entity, $buttonLabel);

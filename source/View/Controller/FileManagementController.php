@@ -3,6 +3,7 @@
 
 namespace App\View\Controller;
 
+use App\Crud\Crudable;
 use App\Domain\Model\Codebook\DatasetVariables;
 use App\Domain\Model\Filemanagement\AdditionalMaterial;
 use App\Domain\Model\Filemanagement\Dataset;
@@ -10,9 +11,6 @@ use App\Io\Formats\Csv\CsvImportable;
 use App\Io\Formats\Sav\SavImportable;
 use App\Questionnaire\Questionnairable;
 use Doctrine\ORM\EntityManagerInterface;
-use League\Flysystem\FileExistsException;
-use League\Flysystem\FileNotFoundException;
-use League\Flysystem\Filesystem;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,7 +29,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class FileManagementController extends AbstractController
 {
-    private Filesystem $filesystem;
+    private Crudable $crud;
     private Questionnairable $questionnaire;
     private CsvImportable $csvImportable;
     private SavImportable $savImportable;
@@ -39,7 +37,7 @@ class FileManagementController extends AbstractController
     private LoggerInterface $logger;
 
     /**
-     * @param Filesystem $filesystem
+     * @param Crudable $crud
      * @param Questionnairable $questionnaire
      * @param CsvImportable $csvImportable
      * @param SavImportable $savImportable
@@ -47,14 +45,14 @@ class FileManagementController extends AbstractController
      * @param LoggerInterface $logger
      */
     public function __construct(
-        Filesystem $filesystem,
+        Crudable $crud,
         Questionnairable $questionnaire,
         CsvImportable $csvImportable,
         SavImportable $savImportable,
         EntityManagerInterface $em,
         LoggerInterface $logger
     ) {
-        $this->filesystem = $filesystem;
+        $this->crud = $crud;
         $this->questionnaire = $questionnaire;
         $this->csvImportable = $csvImportable;
         $this->savImportable = $savImportable;
@@ -95,8 +93,8 @@ class FileManagementController extends AbstractController
         $data = $request->get('dataset-import-data') ?? null;
         if (isset($dataset) && isset($data) && !empty($data)) {
             $data = json_decode($data, true);
-            if($data && is_iterable($data) && key_exists('codebook', $data)){
-                foreach ($data['codebook'] as $var){
+            if ($data && is_iterable($data) && key_exists('codebook', $data)) {
+                foreach ($data['codebook'] as $var) {
                     $this->em->persist(
                         DatasetVariables::createNew(
                             $dataset,
@@ -110,11 +108,10 @@ class FileManagementController extends AbstractController
                     );
                 }
                 $this->em->flush();
-                if(key_exists('records', $data)) {
-                    $this->_saveMatrix($data['records'], $dataset->getId());
+                if (key_exists('records', $data)) {
+                    $this->crud->saveDatasetMatrix($data['records'], $dataset->getId());
                 }
             }
-            //$data = $this->savImportable->savToArray($dataset);
         }
 
         return new JsonResponse($data ?? [], null != $data ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -177,7 +174,7 @@ class FileManagementController extends AbstractController
                 $error = "error.import.csv.codebook.empty";
             }
             if (null == $error && $data && key_exists('records', $data) && is_iterable($data['records']) && sizeof($data['records']) > 0) {
-                $this->_saveMatrix($data['records'], $dataset->getId());
+                $this->crud->saveDatasetMatrix($data['records'], $dataset->getId());
             } else {
                 $error = "error.import.csv.matrix.empty";
             }
@@ -185,7 +182,7 @@ class FileManagementController extends AbstractController
             $error = "error.import.csv.dataset.empty";
         }
         if (null != $error) {
-            $this->_deleteDataset($dataset);
+            $this->crud->deleteDataset($dataset);
         }
 
         return new JsonResponse(
@@ -195,38 +192,65 @@ class FileManagementController extends AbstractController
     }
 
     /**
-     * @Route("/{uuid}/delete", name="delete_dataset")
+     * @Route("/{uuid}/delete/dataset", name="delete_dataset")
      *
      * @param string $uuid
      * @return RedirectResponse|Response
      */
     public function deleteDatasetAction(string $uuid)
     {
-        $this->logger->debug("Enter FileManagementController::deleteMaterialCall with [UUID: $uuid]");
+        $this->logger->debug("Enter FileManagementController::deleteMaterialAction with [UUID: $uuid]");
         $dataset = $this->em->find(Dataset::class, $uuid);
         $experimentId = $dataset->getExperiment()->getId();
-        $this->_deleteDataset($dataset);
+        $this->crud->deleteDataset($dataset);
 
         return $this->redirectToRoute('Study-datasets', ['uuid' => $experimentId]);
     }
 
 
     /**
-     * @Route("/delete/{uuid}/material", name="deletion")
+     * @Route("/{uuid}/delete/material", name="delete_material")
      *
      * @param string $uuid
      * @param Request $request
-     * @return RedirectResponse|Response
+     * @return RedirectResponse
      */
-    public function deleteMaterialAction(string $uuid, Request $request)
+    public function deleteMaterialAction(string $uuid, Request $request): RedirectResponse
     {
-        $this->logger->debug("Enter FileManagementController::deleteMaterialCall with [UUID: $uuid]");
-        $entityForDeletion = $this->em->find(AdditionalMaterial::class, $uuid);
-        $experimentId = $entityForDeletion->getExperiment()->getId();
+        $this->logger->debug("Enter FileManagementController::deleteMaterialAction with [UUID: $uuid]");
+        $material = $this->em->find(AdditionalMaterial::class, $uuid);
+        $experimentId = $material->getExperiment()->getId();
+        $this->crud->deleteMaterial($material);
 
-        //$success = $this->deleteUpload($entityForDeletion);
         return $this->redirectToRoute('Study-materials', ['uuid' => $experimentId]);
     }
+
+    /**
+     * @Route("/{uuid}/update/description", name="update_description", methods={"POST"})
+     *
+     * @param string $uuid
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function updateDescriptionAction(string $uuid, Request $request): JsonResponse
+    {
+        $this->logger->debug("Enter FileManagementController::updateDescriptionAction with [UUID: $uuid]");
+        $entity = $this->em->find(AdditionalMaterial::class, $uuid);
+        $success = false;
+        if ($entity == null) {
+            $entity = $this->em->find(Dataset::class, $uuid);
+        }
+        if ($entity) {
+            $description = $request->getContent();
+            $entity->setDescription($description);
+            $this->em->persist($entity);
+            $this->em->flush();
+            $success = true;
+        }
+
+        return new JsonResponse(['success' => $success], $success ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
 
     /**
      * @Route("/{uuid}/details", name="details")
@@ -239,7 +263,7 @@ class FileManagementController extends AbstractController
     {
         $this->logger->debug("Enter FileManagementController::materialDetailsAction with [UUID: $uuid]");
         $entityAtChange = $this->em->find(AdditionalMaterial::class, $uuid);
-        $experimentOfTheFile = $entityAtChange->getExperiment();
+        $experiment = $entityAtChange->getExperiment();
         $form = $this->questionnaire->askAndHandle(
             $entityAtChange,
             'save',
@@ -255,44 +279,8 @@ class FileManagementController extends AbstractController
             [
                 'form' => $form->createView(),
                 'file' => $entityAtChange,
-                'experiment' => $experimentOfTheFile,
+                'experiment' => $experiment,
             ]
         );
-    }
-
-
-    /**
-     * @param array $matrix
-     * @param string $datasetId
-     */
-    private function _saveMatrix(array $matrix, string $datasetId)
-    {
-        try {
-            $this->filesystem->write("matrix/$datasetId.json", json_encode($matrix));
-        } catch (FileExistsException $e) {
-        }
-    }
-
-    /**
-     * @param Dataset $dataset
-     */
-    private function _deleteDataset(Dataset $dataset): void
-    {
-        try {
-            if ($this->filesystem->has($dataset->getStorageName())) {
-                $this->filesystem->delete($dataset->getStorageName());
-            }
-            if ($this->filesystem->has("matrix/".$dataset->getId().".json")) {
-                $this->filesystem->delete("matrix/".$dataset->getId().".json");
-            }
-            if ($dataset->getCodebook() != null) {
-                foreach ($dataset->getCodebook() as $var) {
-                    $this->em->remove($var);
-                }
-            }
-            $this->em->remove($dataset);
-            $this->em->flush();
-        } catch (FileNotFoundException $e) {
-        }
     }
 }

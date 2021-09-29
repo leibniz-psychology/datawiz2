@@ -9,18 +9,19 @@ trait Populatable
     /**
      * @ORM\Column(type="array", length=1500, nullable=true)
      */
-    private $population;
+    private ?array $population = null;
 
-    public function getPopulation()
+    public function getPopulation(): ?array
     {
         if ($this->population === null) {
             $this->population = array('');
         }
+
         return $this->population;
     }
 
-    public function setPopulation($population): void
+    public function setPopulation(?array $population): void
     {
-        $this->population = $population;
+        $this->population = array_values($population);
     }
 }

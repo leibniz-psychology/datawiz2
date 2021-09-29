@@ -5,7 +5,6 @@ namespace App\Domain\Model\Study;
 use App\Domain\Definition\MetaDataDictionary;
 use App\Domain\Definition\MetaDataValuable;
 use App\Domain\Definition\Study\Contactable;
-use App\Domain\Definition\Study\Creatorable;
 use App\Domain\Definition\Study\Descriptable;
 use App\Domain\Definition\Study\RelatedPublicationable;
 use App\Domain\Definition\Study\Titleable;
@@ -14,6 +13,8 @@ use App\Questionnaire\Forms\BasicInformationType;
 use App\Questionnaire\Questionable;
 use App\Review\Reviewable;
 use App\Review\ReviewDataCollectable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,6 +23,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class BasicInformationMetaDataGroup extends UuidEntity implements MetaDataValuable, Questionable, Reviewable
 {
+
+
     /**
      * One basic Information section has One Experiment.
      *
@@ -30,29 +33,44 @@ class BasicInformationMetaDataGroup extends UuidEntity implements MetaDataValuab
     protected $experiment;
     use ExperimentRelatable;
 
-    use Creatorable;
     use Contactable;
     use Titleable;
     use Descriptable;
     use RelatedPublicationable;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Domain\Model\Study\CreatorMetaDataGroup", mappedBy="basicInformation")
+     */
+    private Collection $creators;
+
+    public function __construct()
+    {
+        $this->creators = new ArrayCollection();
+    }
+
     public static function getImplementedMetaData(): array
     {
         return [
-           MetaDataDictionary::CREATOR,
-           MetaDataDictionary::CONTACT,
-           MetaDataDictionary::TITLE,
-           MetaDataDictionary::DESCRIPTION,
-           MetaDataDictionary::RELATED_PUBS,
-       ];
+            MetaDataDictionary::TITLE,
+            MetaDataDictionary::DESCRIPTION,
+            MetaDataDictionary::RELATED_PUBS,
+            MetaDataDictionary::CREATORS,
+            MetaDataDictionary::CONTACT,
+        ];
     }
 
-    public function getReviewCollection()
+    public function getReviewCollection(): array
     {
         return [
-            ReviewDataCollectable::createFrom('Title', $this->getTitle(), function () {return true;}),
-            ReviewDataCollectable::createFrom('Description', $this->getDescription(), function () {return true;}),
-            ReviewDataCollectable::createFrom('Related Publications', $this->getRelatedPublications(), function () {return true;})
+            ReviewDataCollectable::createFrom('input.title.legend', $this->getTitle(), function () {
+                return true;
+            }),
+            ReviewDataCollectable::createFrom('input.description.legend', $this->getDescription(), function () {
+                return true;
+            }),
+            ReviewDataCollectable::createFrom('input.relatedPubs.legend', $this->getRelatedPublications(), function () {
+                return true;
+            }),
         ];
     }
 
@@ -60,4 +78,22 @@ class BasicInformationMetaDataGroup extends UuidEntity implements MetaDataValuab
     {
         return BasicInformationType::class;
     }
+
+    /**
+     * @return Collection
+     */
+    public function getCreators(): Collection
+    {
+        return $this->creators;
+    }
+
+    /**
+     * @param Collection $creators
+     */
+    public function setCreators(Collection $creators): void
+    {
+        $this->creators = $creators;
+    }
+
+
 }

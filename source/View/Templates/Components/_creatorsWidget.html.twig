@@ -1,0 +1,53 @@
+{{ form_label(collection) }}
+{{ form_errors(collection) }}
+<div class="MetaData-Widget MetaData-Widget_collection">
+    <ul id="{{ id }}"
+        data-prototype="{{ form_widget(collection.vars.prototype)|e }}"
+        data-widget-tags="{{ "<li></li>"|e }}"
+        data-widget-counter="{{ collection|length + 1 }}"
+        data-delete-prototype='<button type="button" class="remove-another-collection-widget" data-list-selector="#{{ id }}">{{ removeTxt|trans }}</button>'>
+        {% for item in collection %}
+            <li>
+                {#{{ form_widget(item) }}#}
+                <div class="widget-author">
+                    <div class="widget-author-given">
+                        {{ form_label(item.givenName) }}
+                        {{ form_errors(item.givenName) }}
+                        {{ form_widget(item.givenName) }}
+                    </div>
+                    <div class="widget-author-family">
+                        {{ form_label(item.familyName) }}
+                        {{ form_errors(item.familyName) }}
+                        {{ form_widget(item.familyName) }}
+                    </div>
+                    <div class="widget-author-email">
+                        {{ form_label(item.email) }}
+                        {{ form_errors(item.email) }}
+                        {{ form_widget(item.email) }}
+                    </div>
+                    <div class="widget-author-orcid">
+                        {{ form_label(item.orcid) }}
+                        {{ form_errors(item.orcid) }}
+                        {{ form_widget(item.orcid) }}
+                    </div>
+                    <div class="widget-author-affiliation">
+                        {{ form_label(item.affiliation) }}
+                        {{ form_errors(item.affiliation) }}
+                        {{ form_widget(item.affiliation) }}
+                    </div>
+                    {% include "Components/_collectionWidget.html.twig" with
+                        {
+                            collection: item.creditRoles,
+                            id: item.vars.id~'_creditRoles',
+                            addTxt: 'input.creator.credit.add',
+                            removeTxt: 'generic.remove',
+                        } %}
+                </div>
+                <button type="button" class="remove-another-collection-widget" data-list-selector="#{{ id }}">{{ removeTxt|trans }}</button>
+            </li>
+        {% endfor %}
+    </ul>
+    <button type="button" class="add-another-collection-widget" data-list-selector="#{{ id }}">
+        {{ addTxt|trans }}
+    </button>
+</div>

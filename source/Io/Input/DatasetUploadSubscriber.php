@@ -4,28 +4,23 @@
 namespace App\Io\Input;
 
 
-use App\Api\Spss\SpssApiClient;
-use App\Crud\Crudable;
 use App\Domain\Model\Filemanagement\Dataset;
 use App\Domain\Model\Study\Experiment;
+use Doctrine\ORM\EntityManagerInterface;
 use Oneup\UploaderBundle\Event\PostUploadEvent;
 use Oneup\UploaderBundle\UploadEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class DatasetUploadSubscriber implements EventSubscriberInterface
 {
-    private Crudable $crud;
-    private SpssApiClient $spssApiClient;
+    private EntityManagerInterface $em;
 
     /**
-     * DatasetUploadSubscriber constructor.
-     * @param Crudable $crud
-     * @param SpssApiClient $spssApiClient
+     * @param EntityManagerInterface $em
      */
-    public function __construct(Crudable $crud, SpssApiClient $spssApiClient)
+    public function __construct(EntityManagerInterface $em)
     {
-        $this->crud = $crud;
-        $this->spssApiClient = $spssApiClient;
+        $this->em = $em;
     }
 
 
@@ -38,7 +33,7 @@ class DatasetUploadSubscriber implements EventSubscriberInterface
 
     public function onDatasetUpload(PostUploadEvent $event)
     {
-        $experiment = $this->crud->readById(Experiment::class, $event->getRequest()->get('studyId'));
+        $experiment = $this->em->getRepository(Experiment::class)->find($event->getRequest()->get('studyId'));
         if (null !== $event->getFile()) {
             $dataset = Dataset::createDataset(
                 $event->getRequest()->get('originalFilename'),
@@ -47,7 +42,8 @@ class DatasetUploadSubscriber implements EventSubscriberInterface
                 $event->getFile()->getMimeType(),
                 $experiment
             );
-            $this->crud->update($dataset);
+            $this->em->persist($dataset);
+            $this->em->flush();
             $response = $event->getResponse();
             $response->addToOffset(['fileId' => $dataset->getId(), 'fileType' => $event->getFile()->getExtension()], ["flySystem"]);
         }

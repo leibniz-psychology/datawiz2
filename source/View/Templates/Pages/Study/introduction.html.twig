@@ -6,17 +6,17 @@
 {% set isPartOfStudyDocumentation = true %}
 
 {% block title %}
-    Datasets for your Study
+    {{ "title.introduction.title"|trans }}
 {% endblock %}
 
 {% block content %}
     <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
-        Getting Started
+        {{ "title.introduction.h2"|trans }}
     </h2>
 
     <div class="MetaData-Title">
         <h3 class="MetaData-Legend">
-            Step-by-step
+            {{ "title.introduction.h3_1"|trans }}
         </h3>
     </div>
     <div class="MetaData-Widget markdown">
@@ -25,20 +25,20 @@
 
     <div class="mt-8 MetaData-Title">
         <h3 class="MetaData-Legend">
-            Get help
+            {{ "title.introduction.h3_2"|trans }}
         </h3>
         {{ helpButton("help_intro") }}
     </div>
     <div class="mb-6 MetaData-Widget">
-        Hit the help button{{ helpButton("help_intro") }} next to a topic if something's unclear. A help text will appear on the right side of the screen. There you'll find practical examples and online resources that help clear things up.
+        {{ "title.introduction.help"|trans({'#helpBtn#':helpButton('help_intro')})|raw }}
     </div>
 
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
         prevUrl: 'Study-documentation',
-        prevTitle: 'Basic information',
+        prevTitle: 'saveNav.introduction.prev'|trans,
         nextUrl: 'Study-documentation',
-        nextTitle: 'Basic information',
+        nextTitle: 'saveNav.introduction.next'|trans,
         form: null
     })) }}
 

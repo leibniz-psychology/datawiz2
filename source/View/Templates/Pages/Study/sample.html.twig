@@ -8,12 +8,12 @@
 {% set isStudyDescriptionSubItem = true %}
 
 {% block title %}
-    Samples for your Study
+    {{ "title.samples.title"|trans }}
 {% endblock %}
 
 {% block content %}
     <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
-        Sampling
+        {{ "title.samples.h2"|trans }}
     </h2>
 
     {{ form_start(form) }}
@@ -22,7 +22,7 @@
     <fieldset>
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Participants
+                {{ "input.participants.legend"|trans }}
             </legend>
             {{ helpButton("participants") }}
         </div>
@@ -36,43 +36,55 @@
     <fieldset class="mt-8">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Population
+                {{ "input.population.legend"|trans }}
             </legend>
             {{ helpButton("population") }}
         </div>
-        {{ form_label(form.population) }}
-        {{ form_errors(form.population) }}
-        {{ form_widget(form.population) }}
+        {% include "Components/_collectionWidget.html.twig" with
+            {
+                collection: form.population,
+                id: 'population-fields-list',
+                addTxt: 'input.population.add',
+                removeTxt: 'generic.remove',
+            } %}
     </fieldset>
 
     <fieldset class="mt-8">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Inclusion criteria
+                {{ "input.inclusion.legend"|trans }}
             </legend>
             {{ helpButton("inclusion_criteria") }}
         </div>
-        {{ form_label(form.inclusion_criteria) }}
-        {{ form_errors(form.inclusion_criteria) }}
-        {{ form_widget(form.inclusion_criteria) }}
+        {% include "Components/_collectionWidget.html.twig" with
+            {
+                collection: form.inclusion_criteria,
+                id: 'inclusion-fields-list',
+                addTxt: 'input.inclusion.add',
+                removeTxt: 'generic.remove',
+            } %}
     </fieldset>
 
     <fieldset class="mt-8">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Exclusion criteria
+                {{ "input.exclusion.legend"|trans }}
             </legend>
             {{ helpButton("exclusion_criteria") }}
         </div>
-        {{ form_label(form.exclusion_criteria) }}
-        {{ form_errors(form.exclusion_criteria) }}
-        {{ form_widget(form.exclusion_criteria) }}
+        {% include "Components/_collectionWidget.html.twig" with
+            {
+                collection: form.exclusion_criteria,
+                id: 'exclusion-fields-list',
+                addTxt: 'input.exclusion.add',
+                removeTxt: 'generic.remove',
+            } %}
     </fieldset>
 
     <fieldset class="mt-8" x-data="" x-init="$store.app.samplingMethod = '{{ form.sampling_method.vars.value }}'">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Sampling method
+                {{ "input.sampling.legend"|trans }}
             </legend>
             {{ helpButton("sampling_method") }}
         </div>
@@ -108,7 +120,7 @@
     <fieldset class="mt-8">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Sample size
+                {{ "input.sample-size.legend"|trans }}
             </legend>
             {{ helpButton("sample_size") }}
         </div>
@@ -122,7 +134,7 @@
     <fieldset class="mt-8">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Power analysis (statistical)
+                {{ "input.power-analysis.legend"|trans }}
             </legend>
             {{ helpButton("power_analysis") }}
         </div>
@@ -136,9 +148,9 @@
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
         prevUrl: 'Study-measure',
-        prevTitle: 'Data collection',
+        prevTitle: 'saveNav.samples.prev'|trans,
         nextUrl: 'Study-datasets',
-        nextTitle: 'Manage datasets',
+        nextTitle: 'saveNav.samples.next'|trans,
         form: form
     })) }}
 

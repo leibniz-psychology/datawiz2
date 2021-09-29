@@ -8,12 +8,12 @@
 {% set isStudyDescriptionSubItem = true %}
 
 {% block title %}
-    Methods of your Study
+    {{ "title.method.title"|trans }}
 {% endblock %}
 
 {% block content %}
     <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
-        Study method
+        {{ "title.method.h2"|trans }}
     </h2>
 
     {{ form_start(form) }}
@@ -22,7 +22,7 @@
     <fieldset>
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Research design
+                {{ "input.design.legend"|trans }}
             </legend>
             {{ helpButton("research_design") }}
         </div>
@@ -74,7 +74,7 @@
                         },
                         'label_html': true,
                     }) }}
-                    
+
                     {% if choice.vars.value == 'Observational study' %}
                         {{- form_label(form.observationalType, null, {
                             'label_attr': {
@@ -98,7 +98,7 @@
     <fieldset class="mt-8">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Setting
+                {{ "input.setting.legend"|trans }}
             </legend>
             {{ helpButton("setting") }}
         </div>
@@ -128,7 +128,7 @@
               x-cloak="x-cloak">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Experimental manipulation(s), treatments, or interventions
+                {{ "input.manipulations.legend"|trans }}
             </legend>
             {{ helpButton("manipulations") }}
         </div>
@@ -144,7 +144,7 @@
               x-cloak="x-cloak">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Design
+                {{ "input.experimental-design.legend"|trans }}
             </legend>
             {{ helpButton("experimental_design") }}
         </div>
@@ -171,7 +171,7 @@
               x-cloak="x-cloak">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                Control Operations
+                {{ "input.control-operations.legend"|trans }}
             </legend>
             {{ helpButton("control_operations") }}
         </div>
@@ -207,9 +207,9 @@
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
         prevUrl: 'Study-theory',
-        prevTitle: 'Objectives & Hypotheses',
+        prevTitle: 'saveNav.method.prev'|trans,
         nextUrl: 'Study-measure',
-        nextTitle: 'Data collection',
+        nextTitle: 'saveNav.method.next'|trans,
         form: form
     })) }}
 

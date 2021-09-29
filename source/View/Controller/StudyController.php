@@ -3,15 +3,18 @@
 namespace App\View\Controller;
 
 use App\Crud\Crudable;
+use App\Domain\Model\Study\CreatorMetaDataGroup;
 use App\Domain\Model\Study\Experiment;
+use App\Questionnaire\Forms\MeasureType;
+use App\Questionnaire\Forms\SampleType;
 use App\Questionnaire\Questionnairable;
-use Doctrine\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Security;
 
 /**
@@ -21,18 +24,30 @@ use Symfony\Component\Security\Core\Security;
  * Class StudyController
  * @package App\View\Controller
  */
-class StudyController extends DataWizController
+class StudyController extends AbstractController
 {
-    private $currentUser;
-    private $questionnaire;
+    private Security $security;
+    private Questionnairable $questionnaire;
+    private EntityManagerInterface $em;
+    private LoggerInterface $logger;
+    private Crudable $crud;
 
-    public function __construct(Security $security, Questionnairable $questionnaire,
-                                Crudable $crud, UrlGeneratorInterface $urlGenerator)
+    /**
+     * @param Security $security
+     * @param Questionnairable $questionnaire
+     * @param EntityManagerInterface $em
+     * @param LoggerInterface $logger
+     * @param Crudable $crud
+     */
+    public function __construct(Security $security, Questionnairable $questionnaire, EntityManagerInterface $em, LoggerInterface $logger, Crudable $crud)
     {
-        parent::__construct($crud, $urlGenerator);
-        $this->currentUser = $security->getUser();
+        $this->security = $security;
         $this->questionnaire = $questionnaire;
+        $this->em = $em;
+        $this->logger = $logger;
+        $this->crud = $crud;
     }
+
 
     /**
      * @Route("/", name="overview")
@@ -41,10 +56,10 @@ class StudyController extends DataWizController
      */
     public function overviewAction(): Response
     {
-        $all_experiments = $this->crud->readForAll(Experiment::class);
+        $this->logger->debug("Enter StudyController::overviewAction");
 
         return $this->render('Pages/Study/overview.html.twig', [
-            'all_experiments' => $all_experiments,
+            'all_experiments' => $this->em->getRepository(Experiment::class)->findAll(),
         ]);
     }
 
@@ -58,20 +73,15 @@ class StudyController extends DataWizController
      */
     public function newAction(Questionnairable $questionnaire, Crudable $crud, Request $request): Response
     {
-        $newExperiment = Experiment::createNewExperiment($this->currentUser);
-
-        $form = $questionnaire->askAndHandle(
-            $newExperiment->getSettingsMetaDataGroup(),
-            'create',
-            $request);
+        $this->logger->debug("Enter StudyController::newAction");
+        $newExperiment = Experiment::createNewExperiment($this->security->getUser());
+        $form = $questionnaire->askAndHandle($newExperiment->getSettingsMetaDataGroup(), 'create', $request);
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {
-            $this->crud->update($newExperiment);
+            $this->em->persist($newExperiment);
+            $this->em->flush();
 
-            return new RedirectResponse($this->urlGenerator
-                ->generate('Study-introduction',
-                    [ 'uuid' => $newExperiment->getId() ])
-            );
+            return $this->redirectToRoute('Study-introduction', ['uuid' => $newExperiment->getId()]);
         }
 
         return $this->render('Pages/Study/new.html.twig', [
@@ -89,15 +99,13 @@ class StudyController extends DataWizController
      */
     public function settingsAction(string $uuid, Request $request): Response
     {
+        $this->logger->debug("Enter StudyController::settingsAction with [UUID: $uuid]");
         $entityAtChange = $this->getEntityAtChange($uuid);
-
-        $form = $this->questionnaire->askAndHandle(
-            $entityAtChange->getSettingsMetaDataGroup(),
-            'save',
-            $request);
+        $form = $this->questionnaire->askAndHandle($entityAtChange->getSettingsMetaDataGroup(), 'save', $request);
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {
-            $this->crud->update($entityAtChange);
+            $this->em->persist($entityAtChange);
+            $this->em->flush();
         }
 
         return $this->render('Pages/Study/settings.html.twig', [
@@ -115,19 +123,36 @@ class StudyController extends DataWizController
      */
     public function documentationAction(string $uuid, Request $request): Response
     {
+        $this->logger->debug("Enter StudyController::documentationAction with [UUID: $uuid]");
         $entityAtChange = $this->getEntityAtChange($uuid);
-
-        $form = $this->questionnaire->askAndHandle(
-            $entityAtChange->getBasicInformationMetaDataGroup(),
-            'save',
-            $request);
-
+        $basicInformation = $entityAtChange->getBasicInformationMetaDataGroup();
+        if (sizeof($basicInformation->getCreators()) == 0) {
+            $basicInformation->getCreators()->add(new CreatorMetaDataGroup());
+        }
+        $form = $this->questionnaire->askAndHandle($basicInformation, 'save', $request);
         if ($this->questionnaire->isSubmittedAndValid($form)) {
-            $this->crud->update($entityAtChange);
+            $currentCreators = $this->em->getRepository(CreatorMetaDataGroup::class)->findBy(['basicInformation' => $basicInformation]);
+            if (is_iterable($currentCreators)) {
+                foreach ($currentCreators as $currentCreator) {
+                    $this->em->remove($currentCreator);
+                }
+            }
+            if ($form->getData()->getCreators() !== null && is_iterable($form->getData()->getCreators())) {
+                foreach ($form->getData()->getCreators() as $creator) {
+                    $creator->setCreditRoles(array_values(array_unique($creator->getCreditRoles())));
+                    $creator->setBasicInformation($basicInformation);
+                    $this->em->persist($creator);
+                }
+            }
+            $this->em->persist($entityAtChange);
+            $this->em->flush();
+
+            return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
         }
 
         return $this->render('Pages/Study/documentation.html.twig', [
             'form' => $form->createView(),
+            'experiment' => $entityAtChange,
         ]);
     }
 
@@ -140,15 +165,13 @@ class StudyController extends DataWizController
      */
     public function theoryAction(string $uuid, Request $request): Response
     {
+        $this->logger->debug("Enter StudyController::theoryAction with [UUID: $uuid]");
         $entityAtChange = $this->getEntityAtChange($uuid);
-
-        $form = $this->questionnaire->askAndHandle(
-            $entityAtChange->getTheoryMetaDataGroup(),
-            'save',
-            $request);
+        $form = $this->questionnaire->askAndHandle($entityAtChange->getTheoryMetaDataGroup(), 'save', $request);
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {
-            $this->crud->update($entityAtChange);
+            $this->em->persist($entityAtChange);
+            $this->em->flush();
         }
 
         return $this->render('Pages/Study/theory.html.twig', [
@@ -166,15 +189,18 @@ class StudyController extends DataWizController
      */
     public function sampleAction(string $uuid, Request $request): Response
     {
+        $this->logger->debug("Enter StudyController::sampleAction with [UUID: $uuid]");
         $entityAtChange = $this->getEntityAtChange($uuid);
-
-        $form = $this->questionnaire->askAndHandle(
-            $entityAtChange->getSampleMetaDataGroup(),
-            'save',
-            $request);
+        $form = $this->questionnaire->askAndHandle($entityAtChange->getSampleMetaDataGroup(), 'save', $request);
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {
-            $this->crud->update($entityAtChange);
+            $this->em->persist($entityAtChange);
+            $this->em->flush();
+            $formData = $form->getData();
+            $formData->setPopulation(array_values($formData->getPopulation()));
+            $formData->setInclusionCriteria(array_values($formData->getInclusionCriteria()));
+            $formData->setExclusionCriteria(array_values($formData->getExclusionCriteria()));
+            $form = $this->questionnaire->formFromClass(SampleType::class, $formData, 'save');
         }
 
         return $this->render('Pages/Study/sample.html.twig', [
@@ -192,15 +218,17 @@ class StudyController extends DataWizController
      */
     public function measureAction(string $uuid, Request $request): Response
     {
+        $this->logger->debug("Enter StudyController::measureAction with [UUID: $uuid]");
         $entityAtChange = $this->getEntityAtChange($uuid);
-
-        $form = $this->questionnaire->askAndHandle(
-            $entityAtChange->getMeasureMetaDataGroup(),
-            'save',
-            $request);
+        $form = $this->questionnaire->askAndHandle($entityAtChange->getMeasureMetaDataGroup(), 'save', $request);
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {
-            $this->crud->update($entityAtChange);
+            $this->em->persist($entityAtChange);
+            $this->em->flush();
+            $formData = $form->getData();
+            $formData->setApparatus(array_values($formData->getApparatus()));
+            $formData->setMeasures(array_values($formData->getMeasures()));
+            $form = $this->questionnaire->formFromClass(MeasureType::class, $formData, 'save');
         }
 
         return $this->render('Pages/Study/measure.html.twig', [
@@ -218,15 +246,13 @@ class StudyController extends DataWizController
      */
     public function methodAction(string $uuid, Request $request): Response
     {
+        $this->logger->debug("Enter StudyController::methodAction with [UUID: $uuid]");
         $entityAtChange = $this->getEntityAtChange($uuid);
-
-        $form = $this->questionnaire->askAndHandle(
-            $entityAtChange->getMethodMetaDataGroup(),
-            'save',
-            $request);
+        $form = $this->questionnaire->askAndHandle($entityAtChange->getMethodMetaDataGroup(), 'save', $request);
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {
-            $this->crud->update($entityAtChange);
+            $this->em->persist($entityAtChange);
+            $this->em->flush();
         }
 
         return $this->render('Pages/Study/method.html.twig', [
@@ -243,6 +269,7 @@ class StudyController extends DataWizController
      */
     public function materialsAction(string $uuid): Response
     {
+        $this->logger->debug("Enter StudyController::materialsAction with [UUID: $uuid]");
         $entityAtChange = $this->getEntityAtChange($uuid);
 
         return $this->render('Pages/Study/materials.html.twig', [
@@ -258,6 +285,7 @@ class StudyController extends DataWizController
      */
     public function datasetsAction(string $uuid): Response
     {
+        $this->logger->debug("Enter StudyController::datasetsAction with [UUID: $uuid]");
         $entityAtChange = $this->getEntityAtChange($uuid);
 
         return $this->render('Pages/Study/datasets.html.twig', [
@@ -269,11 +297,11 @@ class StudyController extends DataWizController
      * @Route("/{uuid}/introduction", name="introduction")
      *
      * @param string $uuid
-     * @param Request $request
      * @return Response
      */
-    public function introductionAction(string $uuid, Request $request): Response
+    public function introductionAction(string $uuid): Response
     {
+        $this->logger->debug("Enter StudyController::introductionAction with [UUID: $uuid]");
         $entityAtChange = $this->getEntityAtChange($uuid);
 
         return $this->render('Pages/Study/introduction.html.twig', [
@@ -281,10 +309,24 @@ class StudyController extends DataWizController
         ]);
     }
 
+    /**
+     * @Route("/{uuid}/delete", name="delete")
+     *
+     * @param string $uuid
+     * @return Response
+     */
+    public function deleteAction(string $uuid): Response
+    {
+        $this->logger->debug("Enter StudyController::deleteAction with [UUID: $uuid]");
+        $entityAtChange = $this->getEntityAtChange($uuid);
+        $result = $this->crud->deleteStudy($entityAtChange);
+
+        return $this->redirectToRoute('Study-overview');
+    }
 
 
     protected function getEntityAtChange(string $uuid, string $className = Experiment::class)
     {
-        return $this->crud->readById($className, $uuid);
+        return $this->em->getRepository($className)->find($uuid);
     }
 }

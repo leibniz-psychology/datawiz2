@@ -203,3 +203,50 @@ the form.
         </div>
     </div>
 {% endmacro %}
+
+{% macro bytesToSize(bytes) %}
+    {%- set kilobyte = 1024 -%}
+    {%- set megabyte = kilobyte * 1024 -%}
+    {%- set gigabyte = megabyte * 1024 -%}
+    {%- set terabyte = gigabyte * 1024 -%}
+    {% if bytes < kilobyte %}
+        {{- bytes ~ ' B' -}}
+    {% elseif bytes < megabyte %}
+        {{- (bytes / kilobyte)|number_format(2, '.') ~ ' KiB' -}}
+    {% elseif bytes < gigabyte %}
+        {{- (bytes / megabyte)|number_format(2, '.') ~ ' MiB' -}}
+    {% elseif bytes < terabyte %}
+        {{- (bytes / gigabyte)|number_format(2, '.') ~ ' GiB' -}}
+    {% else %}
+        {{- (bytes / terabyte)|number_format(2, '.') ~ ' TiB' -}}
+    {% endif %}
+{% endmacro %}
+
+{% macro editDescription(file, loopIndex, updateURL) %}
+    <div class="mx-4" x-data="{...fileManagement()}" x-init="descriptionText = '{{ file.description }}'">
+        <label class="inline-block font-semibold" for="file-desc-{{ loopIndex }}"
+               x-show="showInput || descriptionText !== ''">{{ "generic.description"|trans }}</label>
+        <button @click="showInput = true; focusInput('#file-desc-{{ loopIndex }}');" type="button"
+                x-text="descriptionText === '' ? '{{ "title.dataset.description.add"|trans }}' : '{{ "title.dataset.description.edit"|trans }}'"
+                x-show="!showInput" x-cloak>
+            {% if file.description %}
+                {{ "title.dataset.description.edit"|trans }}
+            {% else %}
+                {{ "title.dataset.description.add"|trans }}
+            {% endif %}
+        </button>
+        <div x-show="!showInput && descriptionText !== ''" class="p-1 border rounded-sm bg-mono-200"
+             x-text="descriptionText" x-cloak>{{ file.description }}</div>
+
+        <div x-show="showInput" x-cloak>
+            <textarea x-ref="descriptionInput" rows="3" id="file-desc-{{ loopIndex }}" name="file-desc-{{ loopIndex }}"
+                      class="w-full file-desc-textarea">{{ file.description }}</textarea>
+            <div class="">
+                <button class="px-2 py-0.5 border rounded border-mono-300"
+                        @click="saveDescription(`{{ updateURL }}`, $refs.descriptionInput.value); descriptionText = $refs.descriptionInput.value; showInput = false">{{ "generic.save-changes"|trans }}</button>
+                <button class="px-2 py-0.5 border rounded border-mono-300"
+                        @click="showInput = false">{{ "generic.cancel"|trans }}</button>
+            </div>
+        </div>
+    </div>
+{% endmacro %}

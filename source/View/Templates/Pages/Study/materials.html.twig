@@ -1,43 +1,88 @@
 {% extends "Layouts/threeColumn.html.twig" %}
-{% from "Components/_macros.html.twig" import wizNav %}
+{% from "Components/_macros.html.twig" import bytesToSize %}
+{% from "Components/_macros.html.twig" import editDescription %}
 
 {% set isPartOfStudyDocumentation = true %}
 
 {% block title %}
-    Materials for your Study
+    {{ "title.material.title"|trans }}
 {% endblock %}
 
 {% block content %}
     <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
-        Materials for the Study
+        {{ "title.material.h2"|trans }}
     </h2>
-
     {{ include("Components/_infoBridge.html.twig",{value: experiment.id}) }}
     <form action="{{ oneup_uploader_endpoint("materials") }}"
-        class="mx-6 border-2 border-dashed border-mono-500 dropzone"
-        id="datawiz-dropzone"></form>
-
+          class="mx-6 border-2 border-dashed border-mono-500 dropzone"
+          id="datawiz-dropzone"></form>
     {% if (experiment.additionalMaterials|length) > 0 %}
         <h3 class="mx-6 mt-6 text-xl">
-            Uploaded materials
+            {{ "title.material.h3"|trans }}
         </h3>
         <ul class="mx-6 mt-6">
             {% for material in experiment.additionalMaterials %}
-                <li class="p-1 mt-2 bg-mono-100">
-                    <a href="{{ path('File-details', { 'uuid': material.id }) }}" class="underline">{{ material.atUploadNameable }}</a>
+                <li class="pt-3 pb-4 mt-2 first:mt-0 bg-mono-100">
+                    <div class="bg-mono-100" x-data="modal()" @keydown.window.escape="hide()">
+                        <h4 class="flex justify-between mx-4">
+                            <span class="text-lg font-semibold font-">
+                                {{ material.originalName }}
+                            </span>
+                            <button class="flex items-center self-start px-2 ml-2 border rounded hover:text-red-700 hover:bg-red-50 border-mono-300 hover:border-red-700"
+                                    @click="show()">
+                                {# Icon: mi:delete - https://icon-sets.iconify.design/mi/delete/ #}
+                                <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
+                                     xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                                     width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                    <g fill="none">
+                                        <path d="M7 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2h4a1 1 0 1 1 0 2h-1.069l-.867 12.142A2 2 0 0 1 17.069 22H6.93a2 2 0 0 1-1.995-1.858L4.07 8H3a1 1 0 0 1 0-2h4V4zm2 2h6V4H9v2zM6.074 8l.857 12H17.07l.857-12H6.074zM10 10a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1zm4 0a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1z"
+                                              fill="currentColor"/>
+                                    </g>
+                                </svg>
+                                {{ "generic.delete"|trans }}
+                            </button>
+                        </h4>
 
-                    {% if material.fileDescription != "" %}
-                        <div>
-                            Description: {{ material.fileDescription }}
+                        <!-- Modal confirming delete action -->
+                        <div class="Modal-Overlay" x-bind="overlay" x-cloak>
+                            <div class="Modal-Dialog" @click.outside="hide()">
+
+                                <div class="Modal-Header">
+                                    <div class="Modal-Title">
+                                        Are you absolutely sure?
+                                    </div>
+                                    <button class="Modal-Button_close" @click="hide()" type="button">
+                                        <span class="w-6 h-6 iconify" data-icon="mdi:close" data-inline="false"></span>
+                                    </button>
+                                </div>
+
+                                <div class="Modal-Body">
+                                    This action cannot be undone. This will permanently delete the <span
+                                            class="font-semibold">{{ material.originalName }}</span> material.
+                                </div>
+
+                                <div class="Modal-Footer">
+                                    <button class="Modal-Button_warning" type="button"
+                                            @click="window.location.href='{{ path('File-delete_material', { "uuid": material.id }) }}'"
+                                    >
+                                        I understand, delete this material
+                                    </button>
+                                    <button class="Modal-Button_cancel" type="button" x-ref="focusFirst"
+                                            @click="hide()">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                    {% endif %}
 
-                    <div class="mt-2 text-right" x-data="">
-                        <button class="ml-2 hover:text-red-500">
-                            <span class="inline w-4 h-4 iconify-inline" data-icon="radix-icons:cross-2"></span>Remove
-                        </button>
+                        <div class="mx-4 mt-1">
+                            <span class="font-semibold">{{ "title.dataset.details.date"|trans }}</span><span
+                                    class="ml-1">{{ material.dateUploaded|date }}</span>
+                            <span class="font-semibold">{{ "title.dataset.details.size"|trans }}</span><span
+                                    class="ml-1">{{ bytesToSize(material.originalSize) }}</span>
+                        </div>
 
-                        <button type="button" class="px-8 " @click="window.location.href='{{ path("File-details", { "uuid": material.id }) }}'">Edit</button>
+                        {{ editDescription(material, loop.index, path('File-update_description', { 'uuid': material.id })) }}
                     </div>
                 </li>
             {% endfor %}
@@ -47,9 +92,9 @@
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
         prevUrl: 'Study-datasets',
-        prevTitle: 'Manage datasets',
+        prevTitle: 'saveNav.material.prev'|trans,
         nextUrl: 'Study-review',
-        nextTitle: 'Review input',
+        nextTitle: 'saveNav.material.next'|trans,
         form: null
     })) }}
 

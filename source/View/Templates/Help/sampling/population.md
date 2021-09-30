@@ -1,6 +1,6 @@
 ## About population
 
-A theoretically defined, complete group of objects (people, animals, institutions) from which a sample is drawn to obtain empirical observations and to which results can be generalized. identify the population that you're intending to make conclusions about and make sure the selected sample represents that population. If the sample represents a smaller group within that population, then the conclusions have to be downsized in scope also.
+A theoretically defined, complete group of objects (people, animals, institutions) from which a sample is drawn to obtain empirical observations and to which results can be generalized. Identify the population that you're intending to make conclusions about and make sure the selected sample represents that population. If the sample represents a smaller group within that population, then the conclusions have to be downsized in scope also.
 
 ### Population example
 

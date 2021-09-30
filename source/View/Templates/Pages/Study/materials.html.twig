@@ -49,7 +49,7 @@
 
                                 <div class="Modal-Header">
                                     <div class="Modal-Title">
-                                        Are you absolutely sure?
+                                        {{ "title.dataset.deleteModal.title"|trans }}
                                     </div>
                                     <button class="Modal-Button_close" @click="hide()" type="button">
                                         <span class="w-6 h-6 iconify" data-icon="mdi:close" data-inline="false"></span>
@@ -57,19 +57,18 @@
                                 </div>
 
                                 <div class="Modal-Body">
-                                    This action cannot be undone. This will permanently delete the <span
-                                            class="font-semibold">{{ material.originalName }}</span> material.
+                                    {{ "title.material.deleteModal.body"|trans({'#materialName#':"<span class='font-semibold'>" ~ material.originalName ~ "</span>"})|raw }}
                                 </div>
 
                                 <div class="Modal-Footer">
                                     <button class="Modal-Button_warning" type="button"
                                             @click="window.location.href='{{ path('File-delete_material', { "uuid": material.id }) }}'"
                                     >
-                                        I understand, delete this material
+                                        {{ "title.material.deleteModal.confirm"|trans }}
                                     </button>
                                     <button class="Modal-Button_cancel" type="button" x-ref="focusFirst"
                                             @click="hide()">
-                                        Cancel
+                                        {{ "generic.cancel"|trans }}
                                     </button>
                                 </div>
                             </div>

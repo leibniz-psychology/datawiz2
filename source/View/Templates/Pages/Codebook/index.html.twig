@@ -18,10 +18,10 @@
                                     <input type="checkbox" name="" id="">
                                 </th>
                                 <th scope="col" class="CodeBookHead-Cell">
-                                    <span class="sr-only">ID</span>
+                                    <span class="sr-only">{{ "codebook.var-props.id"|trans }}</span>
                                 </th>
                                 <th scope="col" class="CodeBookHead-Cell w-[15%]">
-                                    Variable name
+                                    {{ "codebook.var-props.name"|trans }}
                                     <button class="inline-flex items-center justify-center w-6 h-6 ml-0 MetaData-HelpButton"
                                             @click="$store.codebookSettings.showHelp.sideBar = true; $store.codebookSettings.showHelp.variableName = true">
                                         ?
@@ -29,35 +29,35 @@
                                     </span>
                                 </th>
                                 <th scope="col" class="CodeBookHead-Cell w-[20%]">
-                                    Label
+                                    {{ "codebook.var-props.label"|trans }}
                                     <button class="inline-flex items-center justify-center w-6 h-6 ml-0 MetaData-HelpButton"
                                             @click="$store.codebookSettings.showHelp.sideBar = true; $store.codebookSettings.showHelp.variableLabel = true">
                                         ?
                                     </button>
                                 </th>
                                 <th scope="col" class="CodeBookHead-Cell w-[20%]">
-                                    Item text
+                                    {{ "codebook.var-props.item-text"|trans }}
                                     <button class="inline-flex items-center justify-center w-6 h-6 ml-0 MetaData-HelpButton"
                                             @click="$store.codebookSettings.showHelp.sideBar = true; $store.codebookSettings.showHelp.itemText = true">
                                         ?
                                     </button>
                                 </th>
                                 <th scope="col" class="CodeBookHead-Cell w-[15%]">
-                                    Value labels
+                                    {{ "codebook.var-props.values.title"|trans }}
                                     <button class="inline-flex items-center justify-center w-6 h-6 ml-0 MetaData-HelpButton"
                                             @click="$store.codebookSettings.showHelp.sideBar = true; $store.codebookSettings.showHelp.valueLabels = true">
                                         ?
                                     </button>
                                 </th>
                                 <th scope="col" class="CodeBookHead-Cell w-[15%]">
-                                    Missings
+                                    {{ "codebook.var-props.missings.title"|trans }}
                                     <button class="inline-flex items-center justify-center w-6 h-6 ml-0 MetaData-HelpButton"
                                             @click="$store.codebookSettings.showHelp.sideBar = true; $store.codebookSettings.showHelp.missings = true">
                                         ?
                                     </button>
                                 </th>
                                 <th scope="col" class="CodeBookHead-Cell w-[15%]">
-                                    Measure
+                                    {{ "codebook.var-props.measure.title"|trans }}
                                     <button class="inline-flex items-center justify-center w-6 h-6 ml-0 MetaData-HelpButton"
                                             @click="$store.codebookSettings.showHelp.sideBar = true; $store.codebookSettings.showHelp.measure = true">
                                         ?
@@ -123,7 +123,7 @@
                                             <button class=""
                                                     @click="$store.codebook.currentVariableID = item.id; document.querySelector(`.CodeInput_values_${ $store.codebook.getOriginalVariable(item.id).values.length - 1}`).focus()"
                                                     @focus="$store.codebook.currentVariableID = item.id">
-                                                Add
+                                                {{ "generic.add"|trans }}
                                             </button>
                                         </template>
                                         <template
@@ -140,7 +140,7 @@
                                             <button class=""
                                                     @click="$store.codebook.currentVariableID = item.id; document.querySelector(`.CodeInput_missings_${ $store.codebook.getOriginalVariable(item.id).missings.length - 1}`).focus()"
                                                     @focus="$store.codebook.currentVariableID = item.id">
-                                                Add
+                                                {{ "generic.add"|trans }}
                                             </button>
                                         </template>
                                         <template
@@ -154,7 +154,7 @@
                                     <td class="w-[10%] text-sm text-gray-700 max-w-0">
                                         <template x-if="$store.codebook.getOriginalVariable(item.id).measure === ''">
                                             <button @click="document.querySelector('#measureInput').focus();"
-                                                    @focus="$store.codebook.currentVariableID = item.id">Select</a>
+                                                    @focus="$store.codebook.currentVariableID = item.id">{{ "generic.select"|trans }}</a>
                                         </template>
                                         <template x-if="$store.codebook.getOriginalVariable(item.id).measure !== ''">
                                             <a role="button" tabindex="0" class="block p-1 underline truncate"
@@ -181,19 +181,19 @@
              x-show="!$store.codebookSettings.showHelp.sideBar" x-cloak>
 
             <h2 class="flex items-center justify-between px-4 py-[calc(0.5rem+1px)] font-medium text-gray-700 border-t bg-sky-100 border-mono-300 text-lg">
-                <span>Description of variable
+                <span>{{ "codebook.var-props.title"|trans }}
                 <span class="px-2 shadow bg-mono-100"
                       x-text="`${$store.codebook.getCurrentVariable().id ? $store.codebook.getCurrentVariable().id : ''}`"></span>
                 </span>
                 <span class="flex items-center">
-                    <button title="Previous variable" class="ring-inset"
+                    <button title="{{ 'codebook.var-props.previous'|trans }}" class="ring-inset"
                             @click="$store.codebook.currentVariableID = $store.codebook.getPreviousVariableID(); $scroll(`#variable_${$store.codebook.currentVariableID}`, {behavior: 'smooth', offset: 160})">
                     {# Icon: carbon:caret-left #}
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                          aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet"
                          viewBox="0 0 32 32"><path d="M20 24l-10-8l10-8z" fill="currentColor"/></svg>
                     </button>
-                    <button title="Next variable" class="ring-inset"
+                    <button title="{{ 'codebook.var-props.next'|trans }}" class="ring-inset"
                             @click="$store.codebook.currentVariableID = $store.codebook.getNextVariableID(); $scroll(`#variable_${$store.codebook.currentVariableID}`, {behavior: 'smooth', offset: 160})">
                     {# Icon: carbon:caret-right #}
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -203,69 +203,70 @@
                 </span>
             </h2>
             <div class="px-4 mt-2 text-sm text-gray-700">
-                <span class="inline-block w-24 font-semibold text-right">Variable name:</span>
+                <span class="inline-block w-24 font-semibold text-right">{{ "codebook.var-props.name"|trans }}:</span>
                 <span class="ml-2"
                       x-text="$store.codebook.getCurrentVariable().name ? $store.codebook.getCurrentVariable().name : ''"></span>
             </div>
             <div class="px-4 text-sm text-gray-700">
-                <span class="inline-block w-24 font-semibold text-right">Label:</span>
+                <span class="inline-block w-24 font-semibold text-right">{{ "codebook.var-props.label"|trans }}:</span>
                 <span class="ml-2"
                       x-text="$store.codebook.getCurrentVariable().label ? $store.codebook.getCurrentVariable().label : ''"></span>
             </div>
             <div class="px-4 text-sm text-gray-700">
-                <span class="inline-block w-24 font-semibold text-right">Item text:</span>
+                <span class="inline-block w-24 font-semibold text-right">{{ "codebook.var-props.item-text"|trans }}:</span>
                 <span class="ml-2"
                       x-text="$store.codebook.getCurrentVariable().itemText ? $store.codebook.getCurrentVariable().itemText : ''"></span>
             </div>
             <div class="px-4 mt-4 text-sm text-gray-700">
-                <div class="flex items-center font-semibold">Measure
+                <div class="flex items-center font-semibold">{{ "codebook.var-props.measure.title"|trans }}
                     {{ copyToVariables('measure') }}
                 </div>
                 <span>
                     <select name="measure" id="measureInput" x-ref="measureInput"
                             x-model="$store.codebook.getCurrentVariable().measure"
                             class="inline-block px-1 py-1 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none">
-                        <option value="">Select measure</option>
+                        <option value="">{{ "codebook.var-props.measure.select"|trans }}</option>
                         <template x-for="(measure, measureIndex) in measures" :key="measureIndex">
                             <option :value="measure" x-text="measure.substring(0,30)"
                                     :selected="measure === $store.codebook.getCurrentVariable().measure"></option>
                         </template>
                     </select>
                 </span>
-                <a href="/study/documentation/measures/#measures" class="ml-1 underline">Edit Measures</a>
+                <a href="/study/documentation/measures/#measures"
+                   class="ml-1 underline">{{ "codebook.var-props.measure.edit"|trans }}</a>
             </div>
 
             <div class="px-4 mt-4 text-sm text-gray-700">
-                <div class="flex items-center font-semibold">Value labels
+                <div class="flex items-center font-semibold">{{ "codebook.var-props.values.title"|trans }}
                     {{ copyToVariables('values') }}
                 </div>
                 <template x-if="$store.codebook.getCurrentVariable().values">
                     {{ inputLabels({
                         'labels': '$store.codebook.getCurrentVariable().values',
-                        'addText': 'Add another value label',
+                        'addText': "codebook.var-props.values.add"|trans,
                         'placeHolder': '',
                         'type': 'values'
                     }) }}
                 </template>
                 <template x-if="!$store.codebook.getCurrentVariable().values">
-                    <div>loading...</div>
+                    <div>{{ "generic.loading"|trans }}</div>
                 </template>
             </div>
 
             <div class="px-4 mt-4 text-sm text-gray-700">
-                <div class="flex items-center font-semibold">Missings
+                <div class="flex items-center font-semibold">{{ "codebook.var-props.missings.title"|trans }}
                     {{ copyToVariables('missings') }}
                 </div>
                 <template x-if="$store.codebook.getCurrentVariable().missings">
                     {{ inputLabels({
                         'labels': '$store.codebook.getCurrentVariable().missings',
-                        'addText': 'Add another missing',
-                        'placeHolder': 'Label (optional)',
+                        'addText': "codebook.var-props.missings.add"|trans,
+                        'placeHolder': "codebook.var-props.missings.placeholder.label"|trans,
                         'type': 'missings'
                     }) }}
                 </template>
                 <template x-if="!$store.codebook.getCurrentVariable().missings">
-                    <div>loading...</div>
+                    <div>{{ "generic.loading"|trans }}</div>
                 </template>
             </div>
         </div>
@@ -273,12 +274,12 @@
         <div class="sticky w-full top-14 overflow-y-auto max-h-[calc(100vh-3.5rem)]"
              x-show="$store.codebookSettings.showHelp.sideBar" x-transition:enter.duration.250ms>
             <div class="relative">
-                <h2 class="py-3 pl-4 pr-2 text-2xl font-medium text-gray-700">Codebook editor
-                    help</h2>
+                <h2 class="py-3 pl-4 pr-2 text-2xl font-medium text-gray-700">{{ "codebook.help.title"|trans }}</h2>
                 <div class="absolute top-3 right-2">
-                    <button class="flex items-center justify-center px-2 py-1 border-none rounded-full shadow-none bg-mono-100 hover:bg-mono-300"
-                            x-on:click="$store.codebookSettings.showHelp.sideBar = false">
-                        Close Help<span class="w-6 h-6 iconify" data-icon="mdi:close" data-inline="false"></span>
+                    <button class="flex items-center justify-center p-1 border-none rounded-full shadow-none bg-mono-100 hover:bg-mono-300"
+                            x-on:click="$store.codebookSettings.showHelp.sideBar = false"
+                            title="{{ 'codebook.help.close'|trans }}">
+                        <span class="w-6 h-6 iconify" data-icon="mdi:close" data-inline="false"></span>
                     </button>
                 </div>
             </div>

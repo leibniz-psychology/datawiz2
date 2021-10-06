@@ -62,6 +62,7 @@ generic:
   add: 'Add'
   delete: 'Delete'
   cancel: 'Cancel'
+  copy: 'Copy'
   search: 'Search'
   clear-search: 'Clear search'
   help: 'Help'

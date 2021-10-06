@@ -58,7 +58,7 @@
 
                             <div class="Modal-Header">
                                 <div class="Modal-Title">
-                                    Are you absolutely sure?
+                                    {{ "title.dataset.deleteModal.title"|trans }}
                                 </div>
                                 <button class="Modal-Button_close" @click="hide()" type="button">
                                     <span class="w-6 h-6 iconify" data-icon="mdi:close" data-inline="false"></span>
@@ -66,28 +66,26 @@
                             </div>
 
                             <div class="Modal-Body">
-                                This action cannot be undone. This will permanently delete the <span
-                                        class="font-semibold">{{ dataset.originalName }}</span> dataset including its
-                                codebook.
+                                {{ "title.dataset.deleteModal.body"|trans({'#datasetName#':"<span class='font-semibold'>" ~ dataset.originalName ~ "</span>"})|raw }}
                             </div>
 
                             <div class="Modal-Footer">
                                 <button class="Modal-Button_warning" type="button"
                                         @click="window.location.href='{{ path('File-delete_dataset', { "uuid": dataset.id }) }}'"
                                 >
-                                    I understand, delete this dataset
+                                    {{ "title.dataset.deleteModal.confirm"|trans }}
                                 </button>
                                 <button class="Modal-Button_cancel" type="button" x-ref="focusFirst" @click="hide()">
-                                    Cancel
+                                    {{ "generic.cancel"|trans }}
                                 </button>
                             </div>
                         </div>
                     </div>
 
                     <div class="mx-4 mt-1">
-                        <span class="font-semibold">Upload date</span><span
+                        <span class="font-semibold">{{ "title.dataset.details.date"|trans }}</span><span
                                 class="ml-1">{{ dataset.dateUploaded|date }}</span>
-                        <span class="font-semibold">File size</span><span
+                        <span class="font-semibold">{{ "title.dataset.details.date"|trans }}</span><span
                                 class="ml-1">{{ bytesToSize(dataset.originalSize) }}</span>
                     </div>
 
@@ -132,51 +130,105 @@
                 <!--header-->
                 <div class="flex items-start justify-between p-5 border-b border-gray-200 border-solid rounded-t">
                     <h3 class="text-3xl font-semibold">
-                        Import Datafile
+                        Import Dataset
                     </h3>
                 </div>
                 <!--body-->
                 <div class="relative flex-auto p-6">
+                    <h4 class="text-xl font-semibold">Settings</h4>
                     <form id="dataset-import-form"
                           data-preview-url="{{ path("File-preview-csv",{"fileId": " "}) }}"
                           data-submit-url="{{ path("File-submit-csv",{"fileId": " "}) }}">
                         <input type="hidden" id="dataset-file-id" name="dataset-file-id" value="">
                         <div>
-                            <label for="dataset-import-delimiter">Delimiter</label>
-                            <select id="dataset-import-delimiter" name="dataset-import-delimiter">
-                                <option value="," selected>,</option>
-                                <option value=";" selected>;</option>
-                                <option value="t" selected>Tabulator</option>
+                            <label for="dataset-import-delimiter">Columns are separated by</label>
+                            <select id="dataset-import-delimiter" name="dataset-import-delimiter"
+                                    class="px-2 py-1 border border-gray-500">
+                                <option value="," selected>Commas (CSV)</option>
+                                <option value="t">Tabs (TSV)</option>
+                                <option value=";">Semicolons</option>
                             </select>
                         </div>
                         <div>
-                            <label for="dataset-import-escape">Escape</label>
-                            <select id="dataset-import-escape" name="dataset-import-escape">
-                                <option value="double" selected>"</option>
-                                <option value="single" selected>'</option>
+                            <label for="dataset-import-escape">Escape character to enclose cells containing column
+                                separators</label>
+                            <select id="dataset-import-escape" name="dataset-import-escape"
+                                    class="px-2 py-1 border border-gray-500">
                                 <option value="none" selected>none</option>
+                                <option value="double">" (double quotes)</option>
+                                <option value="single">' (single quotes)</option>
                             </select>
                         </div>
-                        <div>
-                            <label for="dataset-import-header-rows">Amount of Header rows</label>
-                            <input type="number" id="dataset-import-header-rows" name="dataset-import-header-rows"
-                                   min="0" value="0">
+                        <div x-data="{ useHeader: true}">
+                            <input type="checkbox" id="dataset-import-header-rows" name="dataset-import-header-rows"
+                                   value="1" x-model="useHeader">
+                            <label for="dataset-import-header-rows">Parse first line as column header</label>
+                            <div x-show="!useHeader" x-transition.opacity.duration.100ms class="flex items-center"><span
+                                        class="mr-1 iconify-inline bg-mono-200"
+                                        data-icon="mdi:information-variant"></span>Generic variable names <span
+                                        class="italic font-semibold">var_0, var_1, ...</span> will be used.
+                            </div>
                         </div>
                     </form>
-                    <div id="dataset-import-result"></div>
+                    <h4 class="mt-4 text-xl font-semibold">Preview</h4>
+                    <div x-data="" class="mt-2 overflow-x-scroll max-h-[50vh]">
+                        <template x-if="$store.import.codebook">
+                            <table class="border-separate table-fixed" style="border-spacing: 0">
+                                <thead>
+                                <template x-if="$store.import.codebook.header">
+                                    <tr>
+                                        <template x-for="item in $store.import.codebook.header.slice(0,25)">
+                                            <th scope="col"
+                                                class="text-sm text-left text-gray-700 border-b border-mono-500 bg-mono-200"
+                                                x-text="item">
+
+                                            </th>
+                                        </template>
+                                    </tr>
+                                </template>
+                                <template
+                                        x-if="$store.import.codebook.header && $store.import.codebook.header.length === 0 && $store.import.codebook.records">
+                                    <tr>
+                                        <template
+                                                x-for="(record, index) in Object.values($store.import.codebook.records[0]).slice(0,25)">
+                                            <th scope="col"
+                                                class="text-sm italic text-left text-gray-700 border-b border-mono-500 bg-mono-200"
+                                                x-text="`var_${index}`">
+
+                                            </th>
+                                        </template>
+                                    </tr>
+                                </template>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-400">
+                                <template x-if="$store.import.codebook.records">
+                                    <template x-for="records in $store.import.codebook.records">
+                                        <tr class="even:bg-mono-100 odd:bg-mono-50 TableRow">
+                                            <template x-for="record in Object.values(records).slice(0,25)">
+                                                <td class="text-sm" x-text="record">
+
+                                                </td>
+                                            </template>
+                                        </tr>
+                                    </template>
+                                </template>
+                                </tbody>
+                            </table>
+                        </template>
+                    </div>
                 </div>
                 <!--footer-->
                 <div class="flex items-center justify-end p-6 border-t border-gray-200 border-solid rounded-b">
                     <button
                             class="px-6 py-2 mb-1 mr-1 text-sm font-bold text-purple-500 uppercase transition-all duration-150 ease-linear outline-none background-transparent focus:outline-none"
                             type="button">
-                        Discard Import
+                        Cancel
                     </button>
                     <button
                             class="px-4 py-2 mb-1 mr-1 text-xs font-bold text-white uppercase transition-all duration-150 ease-linear bg-purple-500 rounded shadow outline-none active:bg-purple-600 hover:shadow-md focus:outline-none"
                             type="button"
                             id="dataset-import-submit">
-                        Save Import
+                        Import dataset
                     </button>
                 </div>
             </div>

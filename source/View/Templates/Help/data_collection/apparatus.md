@@ -1,6 +1,6 @@
 ## About apparatus
 
-Provide a description of apparatus used, such as specialized equipment by model and supplier, and their function in the experiment. Definition Apparatus. Any instrument or equipment used in an experiment or other research.
+Provide a description of apparatus used, such as specialized equipment by model and supplier, and their function in the experiment. Definition apparatus: any instrument or equipment used in an experiment or other research.
 
 ### Apparatus examples
 

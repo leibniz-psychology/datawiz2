@@ -10,7 +10,7 @@ title:
     help: "Hit the help button #helpBtn# next to a topic if something's unclear. A help text will appear on the right side of the screen. There you'll find practical examples and online resources that help clear things up."
   basic:
     title: 'General Information'
-    h2: 'Basic information'
+    h2: 'General dataset description'
   theroies:
     title: 'Theories for your Study'
     h2: 'Objectives & hypotheses'
@@ -27,6 +27,10 @@ title:
     title: 'Datasets for your Study'
     h2: 'Datasets for the Study'
     h3: 'Already uploaded'
+    deleteModal:
+      title: 'Are you absolutely sure?'
+      body: 'This action cannot be undone. This will permanently delete the #datasetName# dataset including its codebook.'
+      confirm: 'I understand, delete this dataset'
     description:
       title: 'Description'
       add: 'Add description'
@@ -38,8 +42,14 @@ title:
     title: 'Materials for your Study'
     h2: 'Materials for the Study'
     h3: 'Uploaded materials'
+    deleteModal:
+      body: 'This action cannot be undone. This will permanently delete the #materialName# material.'
+      confirm: 'I understand, delete this material'
   settings:
     title: 'Study settings'
+    deleteModal:
+      body: 'This action cannot be undone. This will permanently delete the #studyName# study including its documentation, datasets, codebooks and materials.'
+      confirm: 'I understand, delete this study'
 
 generic:
   description: 'Description'
@@ -49,9 +59,15 @@ generic:
   save-changes: 'Save changes'
   previous: 'Previous'
   next: 'Next'
-  add: 'Add another'
+  add: 'Add'
   delete: 'Delete'
   cancel: 'Cancel'
+  copy: 'Copy'
+  search: 'Search'
+  clear-search: 'Clear search'
+  help: 'Help'
+  select: 'Select'
+  loading: 'Loading...'
 
 input:
   title:
@@ -204,6 +220,13 @@ input:
   study-name:
     legend: 'Study name'
     label: 'Provide a short name for your study'
+  danger-zone:
+    legend: 'Danger zone'
+    label: 'Irreversible and destructive actions'
+    delete:
+      title: 'Delete study'
+      description: 'Deleting a study permanenetly deletes all its data.'
+      action: 'Delete this study'
 
 saveNav:
   introduction:
@@ -240,3 +263,34 @@ link:
     codebook: 'Edit codebook'
   view:
     dataset: 'View dataset'
+
+codebook:
+  search:
+    placeholder: 'Enter search term'
+    tooltip: 'Search by variable name, label or item text'
+  var-props:
+    title: 'Description of variable'
+    id: 'ID'
+    name: 'Variable name'
+    label: 'Variable label'
+    next: 'Next variable'
+    previous: 'Previous variable'
+    item-text: 'Item text'
+    values:
+      title: 'Value labels'
+      add: 'Add another value label'
+    missings:
+      title: 'Missings'
+      placeholder:
+        label: 'Label (optional)'
+      add: 'Add another missing'
+    measure:
+      title: 'Measure'
+      select: 'Select measure'
+      edit: 'Edit measures'
+    copy:
+      to: 'Copy to'
+      select-vars: 'Select variables'
+  help:
+    title: 'Codebook editor help'
+    close: 'Close help'

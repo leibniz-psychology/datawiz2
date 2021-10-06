@@ -38,37 +38,50 @@
                 </svg>
                 <span class="ml-1 font-bold">
                             Data
-                        </span>Wiz<span class="ml-1 text-sm italic place-self-end">next</span>
+                        </span>Wiz<span class="ml-1 text-sm italic place-self-start">next</span>
             </a>
 
-            <div class="relative ml-2">
-                <label for="filter" class="mr-1">Search:</label>
-                <input x-data="{tooltip: 'Search by variable name, label or item text'}" type="text" name=""
-                       id="filter" placeholder="Enter search term" x-model="$store.codebook.filterText"
+            <div class="relative ml-2" @keyup.escape="$store.codebook.filterText = ''">
+                <label for="filter" class="mr-1">{{ "generic.search"|trans }}:</label>
+                <input x-data="{tooltip: '{{ 'codebook.search.tooltip'|trans }}'}" type="text" name=""
+                       id="filter" placeholder="{{ 'codebook.search.placeholder'|trans }}"
+                       x-model="$store.codebook.filterText"
                        class="!pl-4 !pr-7 !py-[0.1875rem] border rounded-full border-mono-500"
-                       @keyup.escape="$store.codebook.filterText = ''"
+
                        x-tooltip.on.focus.placement.right.theme.light-border="tooltip">
                 {# TODO remove styling (padding, bg, rounded, shadow) from generic buttons and style buttons individually #}
-                <button aria-label="Clear search"
-                        class="absolute top-0 bottom-0 right-0 w-6 p-0 my-1 mr-2 bg-transparent border-none rounded-none shadow-none hover:bg-transparent"
+                <button aria-label="{{ "generic.clear-search"|trans }}"
+                        class="absolute top-0 bottom-0 right-0 flex items-center w-6 p-0 my-1 mr-2 bg-transparent border-none rounded-none shadow-none hover:bg-transparent"
                         @click="$store.codebook.filterText = ''" x-show="$store.codebook.filterText !== ''" x-cloak>
-                    <svg class="inline-flex mx-auto text-gray-800 fill-current" focusable="false"
-                         xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" width="12" height="12">
-                        <title>Clear</title>
-                        <path d="M8.114 10L.944 2.83 0 1.885 1.886 0l.943.943L10 8.113l7.17-7.17.944-.943L20 1.886l-.943.943-7.17 7.17 7.17 7.17.943.944L18.114 20l-.43-.943-7.17-7.17-7.17 7.17-.944.943L0 18.114l.943-.943L8.113 10z"/>
+                    {# Icon: mdi:close #}
+                    <svg class="inline-flex w-5 h-5 mx-auto text-gray-800 fill-current"
+                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                         aria-hidden="true" role="img" style="vertical-align: -0.125em;" width="1em" height="1em"
+                         preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                        <title>{{ "generic.clear-search"|trans }}</title>
+                        <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z"
+                              fill="currentColor"/>
                     </svg>
                 </button>
             </div>
 
             <div class="flex items-center justify-center ml-auto mr-3">
                 {{ codebook.id }}
-                <button class="ml-2" @click="save()">
-                    Save changes
+                <button class="flex items-center flex-shrink-0 ml-2" @click="save()">
+                    {# Icon: ri:save-3-fill #}
+                    <svg class="w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                         style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet"
+                         viewBox="0 0 24 24">
+                        <path d="M4 3h14l2.707 2.707a1 1 0 0 1 .293.707V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm3 1v5h9V4H7zm-1 8v7h12v-7H6zm7-7h2v3h-2V5z"
+                              fill="currentColor"/>
+                    </svg>
+                    {{ "generic.save-changes"|trans }}
                 </button>
                 {# <button class="ml-2" @click="$store.codebookSettings.showHelp.sideBar = !$store.codebookSettings.showHelp.sideBar" x-text="$store.codebookSettings.showHelp.sideBar ? 'Hide Help' : 'Show Help'"> #}
                 <button class="ml-2"
                         @click="$store.codebookSettings.showHelp.sideBar = !$store.codebookSettings.showHelp.sideBar">
-                    Help
+                    {{ "generic.help"|trans }}
                 </button>
             </div>
             {# {{ include("Components/_navigationHeader.html.twig") }}

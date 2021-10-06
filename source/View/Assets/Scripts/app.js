@@ -11,19 +11,11 @@ import "../Styles/app.scss";
 
 import "dropzone/dist/dropzone.css";
 
-import a2lix_lib from "@a2lix/symfony-collection/src/a2lix_sf_collection";
 import Dropzone from "dropzone";
 
 import "./alpine";
 import "./detectStickyElements";
 import "./collection-widget";
-
-/*a2lix_lib.sfCollection.init({
-	lang: {
-		add: '',
-		remove: 'Remove'
-	}
-});*/
 
 Dropzone.options.datawizDropzone = {
   createImageThumbnails: false,
@@ -75,9 +67,10 @@ Dropzone.options.datawizDropzone = {
           );
           input.forEach((e) => {
             e.addEventListener("change", function () {
-              POST(previewUrl, form, "#dataset-import-result");
+              POST(previewUrl, form, true);
             });
           });
+          POST(previewUrl, form, true);
         }
       } else if (
         responseText["flySystem"] &&
@@ -104,7 +97,7 @@ Dropzone.options.datawizDropzone = {
   },
 };
 
-function POST(url, form, resultDiv = null) {
+function POST(url, form, importPreview = false) {
   fetch(url, {
     method: "POST",
     body: new FormData(form),
@@ -114,8 +107,8 @@ function POST(url, form, resultDiv = null) {
       else throw new Error("Hell no! What happened?");
     })
     .then((data) => {
-      if (resultDiv != null) {
-        document.querySelector(resultDiv).innerHTML = JSON.stringify(data);
+      if (importPreview === true) {
+        Alpine.store("import").codebook = data;
       }
       console.log(data);
     })

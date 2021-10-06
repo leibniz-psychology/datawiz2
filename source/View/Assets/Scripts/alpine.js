@@ -6,6 +6,9 @@ window.Alpine = Alpine;
 Alpine.plugin(trap);
 
 Alpine.store("app", { helpSelected: "" });
+Alpine.store("import", {
+  codebook: [],
+});
 
 Alpine.data("fileManagement", () => ({
   showInput: false,

@@ -35,7 +35,7 @@ class CsvImportable
             if (0 < $headerRows) {
                 $csv->setHeaderOffset($headerRows - 1);
             }
-            $csv->setDelimiter($delimiter);
+            $csv->setDelimiter($delimiter == 't' ? "\t" : $delimiter);
             switch ($escape) {
                 case "double":
                     $csv->setEscape("\"");
@@ -48,8 +48,9 @@ class CsvImportable
             $records = $csv->getRecords();
             $count = 0;
             foreach ($records as $record) {
-                if(10 <= $count)
+                if (10 <= $count) {
                     break;
+                }
                 $result['records'][] = $record;
                 $count++;
             }

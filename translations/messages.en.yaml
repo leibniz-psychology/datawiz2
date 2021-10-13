@@ -7,7 +7,9 @@ title:
     h2: 'Getting Started'
     h3_1: 'Step-by-step'
     h3_2: 'Get help'
-    help: "Hit the help button #helpBtn# next to a topic if something's unclear. A help text will appear on the right side of the screen. There you'll find practical examples and online resources that help clear things up."
+    help: "Hit the help button #helpBtn# next to a topic if something's unclear. A\
+      \ help text will appear on the right side of the screen. There you'll find practical\
+      \ examples and online resources that help clear things up."
   basic:
     title: 'General Information'
     h2: 'General dataset description'
@@ -29,7 +31,8 @@ title:
     h3: 'Already uploaded'
     deleteModal:
       title: 'Are you absolutely sure?'
-      body: 'This action cannot be undone. This will permanently delete the #datasetName# dataset including its codebook.'
+      body: 'This action cannot be undone. This will permanently delete the #datasetName#
+        dataset including its codebook.'
       confirm: 'I understand, delete this dataset'
     description:
       title: 'Description'
@@ -43,12 +46,14 @@ title:
     h2: 'Materials for the Study'
     h3: 'Uploaded materials'
     deleteModal:
-      body: 'This action cannot be undone. This will permanently delete the #materialName# material.'
+      body: 'This action cannot be undone. This will permanently delete the #materialName#
+        material.'
       confirm: 'I understand, delete this material'
   settings:
     title: 'Study settings'
     deleteModal:
-      body: 'This action cannot be undone. This will permanently delete the #studyName# study including its documentation, datasets, codebooks and materials.'
+      body: 'This action cannot be undone. This will permanently delete the #studyName#
+        study including its documentation, datasets, codebooks and materials.'
       confirm: 'I understand, delete this study'
 
 generic:
@@ -67,7 +72,7 @@ generic:
   clear-search: 'Clear search'
   help: 'Help'
   select: 'Select'
-  loading: 'Loading...'
+  loading: 'Loading…'
 
 input:
   title:
@@ -78,7 +83,10 @@ input:
     label: 'Briefly describe the study in which you collected the research data'
   relatedPubs:
     legend: 'Related publications'
-    label: '<span class="block">Cite publications that use the data from this dataset.</span><span class="flex items-center mt-3 text-sm"><span class="w-4 h-4 ml-1 mr-1 iconify bg-mono-50" data-icon="mdi:information-variant" data-inline="false"></span>Enter one publication per field. Leave empty if not applicable.</span>'
+    label: '<span class="block">Cite publications that use the data from this dataset.</span><span
+      class="flex items-center mt-3 text-sm"><span class="w-4 h-4 ml-1 mr-1 iconify
+      bg-mono-50" data-icon="mdi:information-variant" data-inline="false"></span>Enter
+      one publication per field. Leave empty if not applicable.</span>'
     add: 'Add another related publication +'
   creator:
     legend: 'Creator(s)'
@@ -91,7 +99,9 @@ input:
     affiliation: 'Affiliation'
     add: 'Add another creator +'
     credit:
-      label: '<span class="block">Lorem Ipsum</span><span class="flex items-center mt-3 text-sm"><span class="w-4 h-4 ml-1 mr-1 iconify bg-mono-50" data-icon="mdi:information-variant" data-inline="false"></span>Lorem ipsum</span>'
+      label: '<span class="block">Lorem Ipsum</span><span class="flex items-center
+        mt-3 text-sm"><span class="w-4 h-4 ml-1 mr-1 iconify bg-mono-50" data-icon="mdi:information-variant"
+        data-inline="false"></span>Lorem ipsum</span>'
       add: 'Add another role +'
       choices:
         placeholder: 'Please select a role'
@@ -111,7 +121,8 @@ input:
         WritingReviewEditing: 'Writing - review & editing'
   objective:
     legend: 'Objectives'
-    label: 'The action(s) you will take in order to achieve your research aim(s)/ goal(s).'
+    label: 'The action(s) you will take in order to achieve your research aim(s)/
+      goal(s).'
   hypothesis:
     legend: 'Hypotheses'
     label: 'State the hypotheses examined, indicating which were prespecified.'
@@ -119,23 +130,36 @@ input:
     legend: 'Research design'
     label: 'Choose your type of research design'
     choices:
-      experimental: '<span class="block">Experimental</span><span class="block text-sm">Your study involved an experimental manipulation</span>'
-      non-experimental: '<span class="block">Non-experimental</span><span class="block text-sm">Your study did not involve an experimental manipulation</span>'
+      experimental: '<span class="block">Experimental</span><span class="block text-sm">Your
+        study involved an experimental manipulation</span>'
+      non-experimental: '<span class="block">Non-experimental</span><span class="block
+        text-sm">Your study did not involve an experimental manipulation</span>'
     details:
       experimental:
-        label: 'Further describe the <span class="font-semibold">experimental design</span> of your study'
+        label: 'Further describe the <span class="font-semibold">experimental design</span>
+          of your study'
         choices:
-          random-assignment: '<span>Random assignment</span><span>Your study used random assignment to place participants in conditions</span>'
-          non-random-assignment: '<span>Non-random assignment</span><span>Your study did not use random assignment to place participants in conditions</span>'
-          clinical-trial: '<span>Clinical trial</span><span>Your study qualifies as a clinical trial (randomized trial, randomized controlled trial)</span>'
+          random-assignment: '<span>Random assignment</span><span>Your study used
+            random assignment to place participants in conditions</span>'
+          non-random-assignment: '<span>Non-random assignment</span><span>Your study
+            did not use random assignment to place participants in conditions</span>'
+          clinical-trial: '<span>Clinical trial</span><span>Your study qualifies as
+            a clinical trial (randomized trial, randomized controlled trial)</span>'
       non-experimental:
-        label: 'Further describe the <span class="font-semibold">non-experimental design</span> of your study'
+        label: 'Further describe the <span class="font-semibold">non-experimental
+          design</span> of your study'
         choices:
-          observational-study: "<span>Observational study</span><span>You observed people's behavior without experimental manipulation</span>"
-          survey-research: '<span>Survey research</span><span>You collected information from a sample of individuals through their responses to questions</span>'
-          correlational-research: '<span>Correlational research</span><span>You measured two variables and assessed the statistical relationship between them</span>'
-          causal-comparative-research: '<span>Causal-comparative research</span><span>You selected samples from two already-existing populations and investigated cause and effect relationship</span>'
-          single-case: '<span>Single case</span><span>Your study was conducted on a single individual (also known as case study or experience report)</span>'
+          observational-study: "<span>Observational study</span><span>You observed\
+            \ people's behavior without experimental manipulation</span>"
+          survey-research: '<span>Survey research</span><span>You collected information
+            from a sample of individuals through their responses to questions</span>'
+          correlational-research: '<span>Correlational research</span><span>You measured
+            two variables and assessed the statistical relationship between them</span>'
+          causal-comparative-research: '<span>Causal-comparative research</span><span>You
+            selected samples from two already-existing populations and investigated
+            cause and effect relationship</span>'
+          single-case: '<span>Single case</span><span>Your study was conducted on
+            a single individual (also known as case study or experience report)</span>'
       observationalType:
         label: 'Optionally define the observational type of your study'
         placeholder: 'Choose an observational type'
@@ -145,14 +169,18 @@ input:
           cross-sectional-study: 'Cross-sectional study'
   manipulations:
     legend: 'Experimental manipulation(s), treatments, or interventions'
-    label: 'Provide details of your experimental manipulation(s) including a summary of the instructions. Clearly define your variables (treatments).'
+    label: 'Provide details of your experimental manipulation(s) including a summary
+      of the instructions. Clearly define your variables (treatments).'
   experimental-design:
     legend: 'Design'
     label: 'How were participants allocated to the different conditions?'
     choices:
-      independent: '<span>Independent measures / between-subjects design</span><span>Different participants were used in each condition of the independent variable</span>'
-      repeated: '<span>Repeated measures / within-subjects design</span><span>The same participants took part in each condition of the independent variable</span>'
-      matched: '<span>Matched pairs design</span><span>Each condition used different participants, but they were matched in terms of important characteristics</span>'
+      independent: '<span>Independent measures / between-subjects design</span><span>Different
+        participants were used in each condition of the independent variable</span>'
+      repeated: '<span>Repeated measures / within-subjects design</span><span>The
+        same participants took part in each condition of the independent variable</span>'
+      matched: '<span>Matched pairs design</span><span>Each condition used different
+        participants, but they were matched in terms of important characteristics</span>'
   control-operations:
     legend: 'Control Operations'
     label: ''
@@ -162,7 +190,8 @@ input:
       complete: 'Complete counterbalancing (all possible orders)'
       incomplete: 'Incomplete counterbalancing (partial counterbalancing)'
       latin-square: 'Latin Square'
-      rng-latin-square: 'Latin Square using a random starting order with rotation (rotate order)'
+      rng-latin-square: 'Latin Square using a random starting order with rotation
+        (rotate order)'
       reverse: 'Reverse counterbalancing (ABBA-counterbalancing)'
       other: 'Other'
     other:
@@ -171,14 +200,17 @@ input:
     legend: 'Setting'
     label: 'Choose your setting'
     choices:
-      artificial: '<span>Artificial setting</span><span>Artificial setting (e.g. laboratory experiment)</span>'
+      artificial: '<span>Artificial setting</span><span>Artificial setting (e.g. laboratory
+        experiment)</span>'
       rl: '<span>Real-life setting</span><span>Real-life setting (e.g., field experiment)</span>'
       natural: '<span>Natural setting</span><span>Natural setting (e.g., natural observations)</span>'
     location:
-      label: 'For real-life and natural settings enter the location where your study took place'
+      label: 'For real-life and natural settings enter the location where your study
+        took place'
   measures:
     legend: 'Tests and measures'
-    label: 'Provide definitions of all measures you collected on participants. Provide the proper name of standardized measures (tests).'
+    label: 'Provide definitions of all measures you collected on participants. Provide
+      the proper name of standardized measures (tests).'
     add: 'Add another measure +'
   apparatus:
     legend: 'Apparatus (Instruments, Equipment)'
@@ -186,10 +218,12 @@ input:
     add: 'Add another apparatus +'
   participants:
     legend: 'Participants'
-    label: 'Describe participants, specifying their pertinent characteristics for this study'
+    label: 'Describe participants, specifying their pertinent characteristics for
+      this study'
   population:
     legend: 'Population'
-    label: 'Provide information on the group of individuals to which your results can be generalized'
+    label: 'Provide information on the group of individuals to which your results
+      can be generalized'
     add: 'Add another population +'
   inclusion:
     legend: 'Inclusion criteria'
@@ -203,17 +237,25 @@ input:
     legend: 'Sampling method'
     label: 'Choose your sampling method'
     choices:
-      convenience: '<span>Convenience sampling (accidental sampling, opportunity sampling)</span><span>Your individuals (observations, cases) were chosen non-randomly because they were easily available</span>'
-      random: '<span>Random sampling</span><span>Your individuals (observations, cases) were chosen randomly and entirely by chance</span>'
-      systematic: '<span>Systematic sampling (quasirandom sampling)</span><span>Your individuals (observations, cases) were chosen randomly with a system</span>'
-      stratified: '<span>Stratified sampling</span><span>Your individuals (observations, cases) were chosen randomly from subgroups (strata)</span>'
-      quota: '<span>Quota sampling</span><span>Your individuals (observations, cases) were chosen non-randomly on the basis of a specific plan</span>'
+      convenience: '<span>Convenience sampling (accidental sampling, opportunity sampling)</span><span>Your
+        individuals (observations, cases) were chosen non-randomly because they were
+        easily available</span>'
+      random: '<span>Random sampling</span><span>Your individuals (observations, cases)
+        were chosen randomly and entirely by chance</span>'
+      systematic: '<span>Systematic sampling (quasirandom sampling)</span><span>Your
+        individuals (observations, cases) were chosen randomly with a system</span>'
+      stratified: '<span>Stratified sampling</span><span>Your individuals (observations,
+        cases) were chosen randomly from subgroups (strata)</span>'
+      quota: '<span>Quota sampling</span><span>Your individuals (observations, cases)
+        were chosen non-randomly on the basis of a specific plan</span>'
       other: 'Other'
     other:
-      label: 'If other, please describe your sampling method (see help for a list of methods)'
+      label: 'If other, please describe your sampling method (see help for a list
+        of methods)'
   sample-size:
     legend: 'Sample size'
-    label: 'Provide the achieved sample size as total number of cases N or as number of cases in subsamples n'
+    label: 'Provide the achieved sample size as total number of cases N or as number
+      of cases in subsamples n'
   power-analysis:
     legend: 'Power analysis (statistical)'
     label: 'Provide details of the power analysis used to calculate your sample size'

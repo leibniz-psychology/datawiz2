@@ -5,6 +5,7 @@
 ![Nodejs Version](https://img.shields.io/badge/Nodejs-14_LTS-informational?logo=node.js&style=flat-square&logoColor=white)
 ![MySql Version](https://img.shields.io/badge/MySql-8.0-informational?logo=mysql&style=flat-square&logoColor=white)
 [![DataWiz 2 Build](https://github.com/leibniz-psychology/datawiz2/actions/workflows/cypress.yml/badge.svg?branch=master)](https://github.com/leibniz-psychology/datawiz2/actions/workflows/cypress.yml)
+[![Übersetzungsstatus](http://weblate.zpid.de/widgets/datawiz/-/datawiz-2/svg-badge.svg)](http://weblate.zpid.de/engage/datawiz/)
 
 DataWiz helps Psychologist with their research documentation. 
 As web based system DataWiz is free to use by anyone and contributions are welcome.

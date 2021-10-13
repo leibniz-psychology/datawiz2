@@ -5,6 +5,7 @@ on:
             - master
 env:
     DATABASE_URL: mysql://root:root@127.0.0.1:3306/dashboard?serverVersion=8.0
+    TRUSTED_PROXIES: ${{ secrets.TRUSTED_PROXIES }}
     APP_ENV: dev
     APP_SECRET: ${{ secrets.APP_SECRET }}
     OAUTH_KEYCLOAK_CLIENT_ID: ${{ secrets.OAUTH_KEYCLOAK_CLIENT_ID }}

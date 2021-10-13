@@ -51,7 +51,10 @@ describe('Study Test', () => {
 		cy.get('#theory_submit').click();
 	})
 
-	it('Edit Study method (experimental)', () => {
+	it('Edit Study method', () => {
+		/*
+		* experimental
+		*/
 		cy.visit('/studies');
 		cy.get('a').contains(study.name).click();
 		cy.get('a').contains('Study method').click();
@@ -82,13 +85,9 @@ describe('Study Test', () => {
 		cy.get('label[for="method_control_operations_7"]').click();//Other
 		cy.get('#method_otherControlOperations').clear().type(study.method_manipulations);
 		cy.get('#method_submit').click();
-
-	})
-
-	it('Edit Study method (non-experimental)', () => {
-		cy.visit('/studies');
-		cy.get('a').contains(study.name).click();
-		cy.get('a').contains('Study method').click();
+		/*
+		* non-experimental
+		*/
 		cy.get('label[for="method_research_design_1"]').click();
 		cy.get('#method_nonExperimentalDetails_1').click();
 		cy.get('#method_nonExperimentalDetails_2').click();
@@ -106,6 +105,7 @@ describe('Study Test', () => {
 		cy.get('#method_settingLocation').clear().type(study.method_settingLocation);
 		cy.get('#method_submit').click();
 	})
+
 
 	it('Edit Data collection', () => {
 		cy.visit('/studies');

@@ -1,0 +1,18 @@
+{% if item.displayCondition %}
+    <div class="table-row">
+        <div class="table-cell" style="min-width: 250px;font-weight: bold;">{{ item.dataName|trans }}:</div>
+        <div class="table-cell">
+            <ul>
+                {% for entry in item.dataValue %}
+                    <li style="margin-bottom: 10px">{{ entry }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% if item.errorMessage %}
+            <div class="table-cell" style="color: #B0413E">
+                {{ item.errorMessage }}
+            </div>
+        {% endif %}
+    </div>
+{% endif %}
+

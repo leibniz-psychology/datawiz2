@@ -89,6 +89,7 @@ input:
     email: 'Email'
     orcid: 'ORCID'
     affiliation: 'Affiliation'
+    roles: 'Roles'
     add: 'Add another creator +'
     credit:
       label: '<span class="block">Lorem Ipsum</span><span class="flex items-center mt-3 text-sm"><span class="w-4 h-4 ml-1 mr-1 iconify bg-mono-50" data-icon="mdi:information-variant" data-inline="false"></span>Lorem ipsum</span>'

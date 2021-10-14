@@ -24,56 +24,42 @@
     </p>
 
     <article>
-        <section>
-            <h2>Basic Information</h2>
+        <section style="margin-top: 20px">
+            <h2 class="text-2xl font-semibold">Basic Information</h2>
             {% for reviewItem in basicInfoReview %}
-                {{ render(controller('App\\View\\Controller\\ReviewController::displayValue', {
-                    dataCollectable: reviewItem
-                })) }}
+                {% include 'Components/_reviewValue.html.twig' with {item: reviewItem} %}
             {% endfor %}
-            <div class="">
-                <h3>Creators:</h3>
+            <div class="" style="margin-top: 20px">
+                <h2 class="text-2xl font-semibold">Creators:</h2>
                 {% for reviewCreator in basicCreatorInfoReview %}
-                    <div class="">
-                        {% for reviewItem in reviewCreator.reviewCollection %}
-                            {{ render(controller('App\\View\\Controller\\ReviewController::displayValue', {
-                                dataCollectable: reviewItem
-                            })) }}
-                        {% endfor %}
-                    </div>
+                    {% for reviewItem in reviewCreator.reviewCollection %}
+                        {% include 'Components/_reviewValue.html.twig' with {item: reviewItem} %}
+                    {% endfor %}
                 {% endfor %}
             </div>
         </section>
-        <section>
-            <h2>Objectives & hypotheses</h2>
+        <section style="margin-top: 20px">
+            <h2 class="text-2xl font-semibold">Objectives & hypotheses</h2>
             {% for reviewItem in theoryReview %}
-                {{ render(controller('App\\View\\Controller\\ReviewController::displayValue', {
-                    dataCollectable: reviewItem
-                })) }}
+                {% include 'Components/_reviewValue.html.twig' with {item: reviewItem} %}
             {% endfor %}
         </section>
-        <section>
-            <h2>Study Method</h2>
+        <section style="margin-top: 20px">
+            <h2 class="text-2xl font-semibold">Study Method</h2>
             {% for reviewItem in methodReview %}
-                {{ render(controller('App\\View\\Controller\\ReviewController::displayValue', {
-                    dataCollectable: reviewItem
-                })) }}
+                {% include 'Components/_reviewValue.html.twig' with {item: reviewItem} %}
             {% endfor %}
         </section>
-        <section>
-            <h2>Data Collection</h2>
+        <section style="margin-top: 20px">
+            <h2 class="text-2xl font-semibold">Data Collection</h2>
             {% for reviewItem in measureReview %}
-                {{ render(controller('App\\View\\Controller\\ReviewController::displayValue', {
-                    dataCollectable: reviewItem
-                })) }}
+                {% include 'Components/_reviewValue.html.twig' with {item: reviewItem} %}
             {% endfor %}
         </section>
-        <section>
-            <h2>Sampling</h2>
+        <section style="margin-top: 20px">
+            <h2 class="text-2xl font-semibold">Sampling</h2>
             {% for reviewItem in sampleReview %}
-                {{ render(controller('App\\View\\Controller\\ReviewController::displayValue', {
-                    dataCollectable: reviewItem
-                })) }}
+                {% include 'Components/_reviewValue.html.twig' with {item: reviewItem} %}
             {% endfor %}
         </section>
 

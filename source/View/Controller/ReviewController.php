@@ -34,21 +34,6 @@ class ReviewController extends DataWizController
         ]);
     }
 
-    public function displayValue(ReviewDataCollectable $dataCollectable): Response
-    {
-        if (is_array($dataCollectable->getDataValue())) {
-            $template = 'Components/_reviewArrayValue.html.twig';
-        } else {
-            $template = 'Components/_reviewSingleValue.html.twig';
-        }
-
-        return $this->render($template, [
-            'name' => $dataCollectable->getDataName(),
-            'data' => $dataCollectable->getDataValue(),
-            'condition' => $dataCollectable->isDisplayCondition(),
-        ]);
-    }
-
     protected function getEntityAtChange(string $uuid, string $className = Experiment::class): Experiment
     {
         return $this->crud->readById($className, $uuid);

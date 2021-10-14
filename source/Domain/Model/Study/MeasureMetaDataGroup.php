@@ -71,7 +71,7 @@ class MeasureMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
      */
     public function setMeasures(?array $measures): void
     {
-        $this->measures = null == $measures ?: array_values($measures);
+        $this->measures = null == $measures ? null : array_values($measures);
     }
 
     /**
@@ -91,7 +91,7 @@ class MeasureMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
      */
     public function setApparatus(?array $apparatus): void
     {
-        $this->apparatus = null == $apparatus ?: array_values($apparatus);
+        $this->apparatus = null == $apparatus ? null : array_values($apparatus);
     }
 
     /**

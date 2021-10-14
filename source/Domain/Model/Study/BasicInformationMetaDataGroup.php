@@ -125,7 +125,7 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, 
      */
     public function setRelatedPublications(?array $related_publications): void
     {
-        $this->related_publications = null == $related_publications ?: array_values($related_publications);
+        $this->related_publications = null == $related_publications ? null : array_values($related_publications);
     }
 
     /**

@@ -6,59 +6,88 @@ namespace App\Review;
 
 final class ReviewDataCollectable
 {
-    private $dataName;
-    private $dataValue;
-
-    /**
-     * @var $displayCondition \Closure
-     */
-    private $displayCondition;
+    private string $dataName;
+    private ?array $dataValue;
+    private bool $displayCondition;
+    private ?string $errorMessage;
 
     private function __construct()
     {
     }
 
-    public function getDataName()
+    /**
+     * @return string
+     */
+    public function getDataName(): string
     {
         return $this->dataName;
     }
 
-    public function setDataName($dataName): void
+    /**
+     * @param string $dataName
+     */
+    public function setDataName(string $dataName): void
     {
         $this->dataName = $dataName;
     }
 
-    public function getDataValue()
+    /**
+     * @return array|null
+     */
+    public function getDataValue(): ?array
     {
         return $this->dataValue;
     }
 
-    public function setDataValue($dataValue): void
+    /**
+     * @param array|null $dataValue
+     */
+    public function setDataValue(?array $dataValue): void
     {
         $this->dataValue = $dataValue;
     }
 
-    public function getDisplayCondition()
+    /**
+     * @return bool
+     */
+    public function isDisplayCondition(): bool
     {
-        return $this->displayCondition->call($this);
+        return $this->displayCondition;
     }
 
-    public function setDisplayCondition($displayCondition): void
+    /**
+     * @param bool $displayCondition
+     */
+    public function setDisplayCondition(bool $displayCondition): void
     {
         $this->displayCondition = $displayCondition;
     }
 
-    public static function createEmpty(): ReviewDataCollectable
+    /**
+     * @return string|null
+     */
+    public function getErrorMessage(): ?string
     {
-        return new ReviewDataCollectable();
+        return $this->errorMessage;
     }
 
-    public static function createFrom(string $dataName, $dataValue, \Closure $displayCondition): ReviewDataCollectable
+    /**
+     * @param string|null $errorMessage
+     */
+    public function setErrorMessage(?string $errorMessage): void
+    {
+        $this->errorMessage = $errorMessage;
+    }
+
+
+    public static function createFrom(string $dataName, ?array $dataValue, ?string $errorMessage = null, bool $displayCondition = true): ReviewDataCollectable
     {
         $review = new ReviewDataCollectable();
         $review->setDataName($dataName);
         $review->setDataValue($dataValue);
         $review->setDisplayCondition($displayCondition);
+        $review->setErrorMessage($errorMessage);
+
         return $review;
     }
 }

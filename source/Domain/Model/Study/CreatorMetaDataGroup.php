@@ -2,32 +2,18 @@
 
 namespace App\Domain\Model\Study;
 
+use App\Domain\Model\Administration\UuidEntity;
 use App\Questionnaire\Questionable;
 use App\Review\Reviewable;
 use App\Review\ReviewDataCollectable;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Uid\Uuid;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="experiment_basic_creators")
  */
-class CreatorMetaDataGroup implements Questionable, Reviewable
+class CreatorMetaDataGroup extends UuidEntity implements Questionable, Reviewable
 {
-
-    public function __construct()
-    {
-        $this->creditRoles = array();
-    }
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="uuid", unique=true)
-     * @ORM\GeneratedValue(strategy="CUSTOM")
-     * @ORM\CustomIdGenerator("doctrine.uuid_generator")
-     */
-    private Uuid $id;
-
     /**
      * @ORM\Column(type="text", length=100, nullable=true)
      */
@@ -64,23 +50,28 @@ class CreatorMetaDataGroup implements Questionable, Reviewable
      */
     protected BasicInformationMetaDataGroup $basicInformation;
 
-
     /**
-     * @return Uuid
+     * @return string
      */
-    public function getId(): Uuid
+    public function getFormTypeForEntity(): string
     {
-        return $this->id;
+        return CreatorMetaDataGroup::class;
     }
 
     /**
-     * @param Uuid $id
+     * @return array
      */
-    public function setId(Uuid $id): void
+    public function getReviewCollection(): array
     {
-        $this->id = $id;
+        return [
+            ReviewDataCollectable::createFrom('input.creator.name.given', [$this->getGivenName()]),
+            ReviewDataCollectable::createFrom('input.creator.name.family', [$this->getFamilyName()]),
+            ReviewDataCollectable::createFrom('input.creator.email', [$this->getEmail()]),
+            ReviewDataCollectable::createFrom('input.creator.orcid', [$this->getOrcid()]),
+            ReviewDataCollectable::createFrom('input.creator.affiliation', [$this->getAffiliation()]),
+            ReviewDataCollectable::createFrom('input.creator.creditRoles', $this->getCreditRoles()),
+        ];
     }
-
 
     /**
      * @return string
@@ -198,26 +189,5 @@ class CreatorMetaDataGroup implements Questionable, Reviewable
         $this->basicInformation = $basicInformation;
     }
 
-    public function getFormTypeForEntity(): string
-    {
-        return CreatorMetaDataGroup::class;
-    }
 
-    public function getReviewCollection(): array
-    {
-        return [
-            ReviewDataCollectable::createFrom('input.creator.name.given', $this->getGivenName(), function () {
-                return true;
-            }),
-            ReviewDataCollectable::createFrom('input.creator.name.family', $this->getFamilyName(), function () {
-                return true;
-            }),
-            ReviewDataCollectable::createFrom('input.creator.email', $this->getEmail(), function () {
-                return true;
-            }),
-            ReviewDataCollectable::createFrom('input.creator.affiliation', $this->getAffiliation(), function () {
-                return true;
-            }),
-        ];
-    }
 }

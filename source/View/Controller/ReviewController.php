@@ -34,7 +34,8 @@ class ReviewController extends DataWizController
         ]);
     }
 
-    public function displayValue(ReviewDataCollectable $dataCollectable) {
+    public function displayValue(ReviewDataCollectable $dataCollectable): Response
+    {
         if (is_array($dataCollectable->getDataValue())) {
             $template = 'Components/_reviewArrayValue.html.twig';
         } else {
@@ -44,7 +45,7 @@ class ReviewController extends DataWizController
         return $this->render($template, [
             'name' => $dataCollectable->getDataName(),
             'data' => $dataCollectable->getDataValue(),
-            'condition' => $dataCollectable->getDisplayCondition(),
+            'condition' => $dataCollectable->isDisplayCondition(),
         ]);
     }
 

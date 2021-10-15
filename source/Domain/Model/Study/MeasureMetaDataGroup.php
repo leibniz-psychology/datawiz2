@@ -2,11 +2,13 @@
 
 namespace App\Domain\Model\Study;
 
+use App\Domain\Definition\ReviewDataDictionary;
 use App\Domain\Model\Administration\UuidEntity;
 use App\Questionnaire\Forms\MeasureType;
 use App\Questionnaire\Questionable;
 use App\Review\Reviewable;
 use App\Review\ReviewDataCollectable;
+use App\Review\ReviewValidator;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,8 +43,16 @@ class MeasureMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
     public function getReviewCollection(): array
     {
         return [
-            ReviewDataCollectable::createFrom('Measures', $this->getMeasures()),
-            ReviewDataCollectable::createFrom('Apparatus', $this->getApparatus()),
+            ReviewDataCollectable::createFrom(
+                ReviewDataDictionary::MEASURES,
+                $this->getMeasures(),
+                null != ReviewDataDictionary::MEASURES['errorLevel'] && ReviewValidator::validateArrayValues($this->getMeasures())
+            ),
+            ReviewDataCollectable::createFrom(
+                ReviewDataDictionary::APPARATUS,
+                $this->getApparatus(),
+                null != ReviewDataDictionary::APPARATUS['errorLevel'] && ReviewValidator::validateArrayValues($this->getApparatus())
+            ),
         ];
     }
 

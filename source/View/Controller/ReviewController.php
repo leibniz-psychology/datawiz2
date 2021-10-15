@@ -5,11 +5,14 @@ namespace App\View\Controller;
 
 
 use App\Domain\Model\Study\Experiment;
-use App\Review\ReviewDataCollectable;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @IsGranted("ROLE_USER")
+ */
 class ReviewController extends DataWizController
 {
     /**

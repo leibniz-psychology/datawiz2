@@ -5,13 +5,13 @@ namespace App\Review;
 
 class ReviewValidator
 {
-    public static function validateSingleValue(?string $value, string $errorMessage): ?string
+    public static function validateSingleValue(?string $value): bool
     {
-        return (null != $value && !empty($value)) ? null : $errorMessage;
+        return null != $value && !empty($value);
     }
 
-    public static function validateArrayValues(?array $value, string $errorMessage): ?string
+    public static function validateArrayValues(?array $value): bool
     {
-        return (null != $value && null != array_values(array_filter($value))) ? null : $errorMessage;
+        return null != $value && null != array_values(array_filter($value));
     }
 }

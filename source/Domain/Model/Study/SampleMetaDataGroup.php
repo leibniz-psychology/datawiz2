@@ -2,11 +2,13 @@
 
 namespace App\Domain\Model\Study;
 
+use App\Domain\Definition\ReviewDataDictionary;
 use App\Domain\Model\Administration\UuidEntity;
 use App\Questionnaire\Forms\SampleType;
 use App\Questionnaire\Questionable;
 use App\Review\Reviewable;
 use App\Review\ReviewDataCollectable;
+use App\Review\ReviewValidator;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -69,13 +71,43 @@ class SampleMetaDataGroup extends UuidEntity implements Questionable, Reviewable
     public function getReviewCollection(): array
     {
         return [
-            ReviewDataCollectable::createFrom('Participants', [$this->getParticipants()]),
-            ReviewDataCollectable::createFrom('Popluation', $this->getPopulation()),
-            ReviewDataCollectable::createFrom('Inclusion criteria', $this->getInclusionCriteria()),
-            ReviewDataCollectable::createFrom('Exclusion criteria', $this->getExclusionCriteria()),
-            ReviewDataCollectable::createFrom('Sampling Method', [$this->getSamplingMethod()]),
-            ReviewDataCollectable::createFrom('Sample Size', [$this->getSampleSize()]),
-            ReviewDataCollectable::createFrom('Power analysis', [$this->getPowerAnalysis()]),
+            ReviewDataCollectable::createFrom(
+                ReviewDataDictionary::PARTICIPANTS,
+                [$this->getParticipants()],
+                null != ReviewDataDictionary::PARTICIPANTS['errorLevel'] && ReviewValidator::validateSingleValue($this->getParticipants())
+            ),
+            ReviewDataCollectable::createFrom(
+                ReviewDataDictionary::POPULATION,
+                $this->getPopulation(),
+                null != ReviewDataDictionary::POPULATION['errorLevel'] && ReviewValidator::validateArrayValues($this->getPopulation())
+            ),
+            ReviewDataCollectable::createFrom(
+                ReviewDataDictionary::INCLUSION,
+                $this->getInclusionCriteria(),
+                null != ReviewDataDictionary::INCLUSION['errorLevel'] && ReviewValidator::validateArrayValues($this->getInclusionCriteria())
+            ),
+            ReviewDataCollectable::createFrom(
+                ReviewDataDictionary::EXCLUSION,
+                $this->getExclusionCriteria(),
+                null != ReviewDataDictionary::EXCLUSION['errorLevel'] && ReviewValidator::validateArrayValues($this->getExclusionCriteria())
+            ),
+            ReviewDataCollectable::createFrom(
+                ReviewDataDictionary::SAMPLING,
+                ["Other" !== $this->getSamplingMethod() ? $this->getSamplingMethod() : $this->getOtherSamplingMethod()],
+                null != ReviewDataDictionary::SAMPLING['errorLevel'] &&
+                ("Other" !== $this->getSamplingMethod() && ReviewValidator::validateSingleValue($this->getSamplingMethod())) ||
+                ("Other" === $this->getSamplingMethod() && ReviewValidator::validateSingleValue($this->getOtherSamplingMethod()))
+            ),
+            ReviewDataCollectable::createFrom(
+                ReviewDataDictionary::SAMPLE_SIZE,
+                [$this->getSampleSize()],
+                null != ReviewDataDictionary::SAMPLE_SIZE['errorLevel'] && ReviewValidator::validateSingleValue($this->getSampleSize())
+            ),
+            ReviewDataCollectable::createFrom(
+                ReviewDataDictionary::POWER_ANALYSIS,
+                [$this->getPowerAnalysis()],
+                null != ReviewDataDictionary::POWER_ANALYSIS['errorLevel'] && ReviewValidator::validateSingleValue($this->getPowerAnalysis())
+            ),
         ];
     }
 
@@ -168,10 +200,6 @@ class SampleMetaDataGroup extends UuidEntity implements Questionable, Reviewable
      */
     public function getSamplingMethod(): ?string
     {
-        if ($this->sampling_method === "Others") {
-            return $this->other_sampling_method;
-        }
-
         return $this->sampling_method;
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Domain\Model\Study;
 
+use App\Domain\Definition\ReviewDataDictionary;
 use App\Domain\Model\Administration\UuidEntity;
 use App\Questionnaire\Questionable;
 use App\Review\Reviewable;
@@ -66,34 +67,34 @@ class CreatorMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
     {
         return [
             ReviewDataCollectable::createFrom(
-                'input.creator.name.given',
+                ReviewDataDictionary::CREATOR_GIVEN,
                 [$this->getGivenName()],
-                ReviewValidator::validateSingleValue($this->getGivenName(), 'input.creator.empty.given')
+                null != ReviewDataDictionary::CREATOR_GIVEN['errorLevel'] && ReviewValidator::validateSingleValue($this->getGivenName())
             ),
             ReviewDataCollectable::createFrom(
-                'input.creator.name.family',
+                ReviewDataDictionary::CREATOR_FAMILY,
                 [$this->getFamilyName()],
-                ReviewValidator::validateSingleValue($this->getFamilyName(), 'input.creator.empty.family')
+                null != ReviewDataDictionary::CREATOR_FAMILY['errorLevel'] && ReviewValidator::validateSingleValue($this->getFamilyName())
             ),
             ReviewDataCollectable::createFrom(
-                'input.creator.email',
+                ReviewDataDictionary::CREATOR_EMAIL,
                 [$this->getEmail()],
-                ReviewValidator::validateSingleValue($this->getEmail(), 'input.creator.empty.email')
+                null != ReviewDataDictionary::CREATOR_EMAIL['errorLevel'] && ReviewValidator::validateSingleValue($this->getEmail())
             ),
             ReviewDataCollectable::createFrom(
-                'input.creator.orcid',
+                ReviewDataDictionary::CREATOR_ORCID,
                 [$this->getOrcid()],
-                ReviewValidator::validateSingleValue($this->getOrcid(), 'input.creator.empty.orcid')
+                null != ReviewDataDictionary::CREATOR_ORCID['errorLevel'] && ReviewValidator::validateSingleValue($this->getOrcid())
             ),
             ReviewDataCollectable::createFrom(
-                'input.creator.affiliation',
+                ReviewDataDictionary::CREATOR_AFFILIATION,
                 [$this->getAffiliation()],
-                ReviewValidator::validateSingleValue($this->getAffiliation(), 'input.creator.empty.affiliation')
+                null != ReviewDataDictionary::CREATOR_AFFILIATION['errorLevel'] && ReviewValidator::validateSingleValue($this->getAffiliation())
             ),
             ReviewDataCollectable::createFrom(
-                'input.creator.roles',
+                ReviewDataDictionary::CREATOR_ROLES,
                 $this->getCreditRoles(),
-                ReviewValidator::validateArrayValues($this->getCreditRoles(), 'input.creator.empty.roles')
+                null != ReviewDataDictionary::CREATOR_ROLES['errorLevel'] && ReviewValidator::validateArrayValues($this->getCreditRoles())
             ),
         ];
     }

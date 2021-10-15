@@ -8,9 +8,9 @@
                 {% endfor %}
             </ul>
         </div>
-        {% if item.errorMessage %}
+        {% if item.errorMessage and item.errorType %}
             <div class="table-cell" style="color: #B0413E">
-                {{ item.errorMessage }}
+                {{ item.errorMessage }} ||  {{ item.errorType }}
             </div>
         {% endif %}
     </div>

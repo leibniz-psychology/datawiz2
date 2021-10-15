@@ -7,9 +7,10 @@ namespace App\Review;
 final class ReviewDataCollectable
 {
     private string $dataName;
-    private ?array $dataValue;
-    private bool $displayCondition;
-    private ?string $errorMessage;
+    private ?array $dataValue = null;
+    private ?bool $displayCondition = null;
+    private ?string $errorMessage = null;
+    private ?string $errorType = null;
 
     private function __construct()
     {
@@ -79,14 +80,33 @@ final class ReviewDataCollectable
         $this->errorMessage = $errorMessage;
     }
 
+    /**
+     * @return string|null
+     */
+    public function getErrorType(): ?string
+    {
+        return $this->errorType;
+    }
 
-    public static function createFrom(string $dataName, ?array $dataValue, ?string $errorMessage = null, bool $displayCondition = true): ReviewDataCollectable
+    /**
+     * @param string|null $errorType
+     */
+    public function setErrorType(?string $errorType): void
+    {
+        $this->errorType = $errorType;
+    }
+
+
+    public static function createFrom(array $reviewData, ?array $dataValue, bool $valid = false, bool $displayCondition = true): ReviewDataCollectable
     {
         $review = new ReviewDataCollectable();
-        $review->setDataName($dataName);
+        $review->setDataName($reviewData['legend']);
         $review->setDataValue($dataValue);
         $review->setDisplayCondition($displayCondition);
-        $review->setErrorMessage($errorMessage);
+        if (!$valid) {
+            $review->setErrorMessage($reviewData['errorMsg']);
+            $review->setErrorType($reviewData['errorLevel']);
+        }
 
         return $review;
     }

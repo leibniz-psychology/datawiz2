@@ -2,11 +2,13 @@
 
 namespace App\Domain\Model\Study;
 
+use App\Domain\Definition\ReviewDataDictionary;
 use App\Domain\Model\Administration\UuidEntity;
 use App\Questionnaire\Forms\TheoryType;
 use App\Questionnaire\Questionable;
 use App\Review\Reviewable;
 use App\Review\ReviewDataCollectable;
+use App\Review\ReviewValidator;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -34,11 +36,19 @@ class TheoryMetaDataGroup extends UuidEntity implements Questionable, Reviewable
     protected Experiment $experiment;
 
 
-    public function getReviewCollection()
+    public function getReviewCollection(): array
     {
         return [
-            ReviewDataCollectable::createFrom('Objectives', [$this->getObjective()]),
-            ReviewDataCollectable::createFrom('Hypotheses', [$this->getHypothesis()]),
+            ReviewDataCollectable::createFrom(
+                ReviewDataDictionary::OBJECTIVES,
+                [$this->getObjective()],
+                null != ReviewDataDictionary::OBJECTIVES['errorLevel'] && ReviewValidator::validateSingleValue($this->getObjective())
+            ),
+            ReviewDataCollectable::createFrom(
+                ReviewDataDictionary::HYPOTHESIS,
+                [$this->getHypothesis()],
+                null != ReviewDataDictionary::HYPOTHESIS['errorLevel'] && ReviewValidator::validateSingleValue($this->getHypothesis())
+            ),
         ];
     }
 

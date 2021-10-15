@@ -2,6 +2,7 @@
 
 namespace App\Domain\Model\Study;
 
+use App\Domain\Definition\ReviewDataDictionary;
 use App\Domain\Model\Administration\UuidEntity;
 use App\Questionnaire\Forms\BasicInformationType;
 use App\Questionnaire\Questionable;
@@ -60,18 +61,19 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, 
     {
         return [
             ReviewDataCollectable::createFrom(
-                'input.title.legend',
+                ReviewDataDictionary::TITLE,
                 [$this->getTitle()],
-                ReviewValidator::validateSingleValue($this->getTitle(), 'input.title.empty')
+                null != ReviewDataDictionary::TITLE['errorLevel'] && ReviewValidator::validateSingleValue($this->getTitle())
             ),
             ReviewDataCollectable::createFrom(
-                'input.description.legend',
+                ReviewDataDictionary::DESCRIPTION,
                 [$this->getDescription()],
-                ReviewValidator::validateSingleValue($this->getDescription(), 'input.description.empty')
+                null != ReviewDataDictionary::DESCRIPTION['errorLevel'] && ReviewValidator::validateSingleValue($this->getDescription())
             ),
             ReviewDataCollectable::createFrom(
-                'input.relatedPubs.legend',
+                ReviewDataDictionary::RELATED_PUBS,
                 $this->getRelatedPublications(),
+                null != ReviewDataDictionary::RELATED_PUBS['errorLevel'] && ReviewValidator::validateArrayValues($this->getRelatedPublications())
             ),
         ];
     }

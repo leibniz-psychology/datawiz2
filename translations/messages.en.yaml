@@ -89,6 +89,7 @@ input:
     email: 'Email'
     orcid: 'ORCID'
     affiliation: 'Affiliation'
+    roles: 'Roles'
     add: 'Add another creator +'
     credit:
       label: '<span class="block">Lorem Ipsum</span><span class="flex items-center mt-3 text-sm"><span class="w-4 h-4 ml-1 mr-1 iconify bg-mono-50" data-icon="mdi:information-variant" data-inline="false"></span>Lorem ipsum</span>'
@@ -122,6 +123,7 @@ input:
       experimental: '<span class="block">Experimental</span><span class="block text-sm">Your study involved an experimental manipulation</span>'
       non-experimental: '<span class="block">Non-experimental</span><span class="block text-sm">Your study did not involve an experimental manipulation</span>'
     details:
+      legend: 'Design Description'
       experimental:
         label: 'Further describe the <span class="font-semibold">experimental design</span> of your study'
         choices:
@@ -137,6 +139,7 @@ input:
           causal-comparative-research: '<span>Causal-comparative research</span><span>You selected samples from two already-existing populations and investigated cause and effect relationship</span>'
           single-case: '<span>Single case</span><span>Your study was conducted on a single individual (also known as case study or experience report)</span>'
       observationalType:
+        legend: 'Observational study'
         label: 'Optionally define the observational type of your study'
         placeholder: 'Choose an observational type'
         choices:
@@ -175,6 +178,7 @@ input:
       rl: '<span>Real-life setting</span><span>Real-life setting (e.g., field experiment)</span>'
       natural: '<span>Natural setting</span><span>Natural setting (e.g., natural observations)</span>'
     location:
+      legend: 'Location'
       label: 'For real-life and natural settings enter the location where your study took place'
   measures:
     legend: 'Tests and measures'

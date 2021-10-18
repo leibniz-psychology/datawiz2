@@ -10,6 +10,8 @@ use App\Review\Reviewable;
 use App\Review\ReviewDataCollectable;
 use App\Review\ReviewValidator;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * @ORM\Entity()
@@ -20,41 +22,57 @@ class SampleMetaDataGroup extends UuidEntity implements Questionable, Reviewable
 
     /**
      * @ORM\Column(type="text", length=1500, nullable=true)
+     * @SerializedName("participants")
+     * @Groups({"study"})
      */
     private ?string $participants = null;
 
     /**
      * @ORM\Column(type="array", length=1500, nullable=true)
+     * @SerializedName("inclusion_criteria")
+     * @Groups({"study"})
      */
     private ?array $inclusion_criteria = null;
 
     /**
      * @ORM\Column(type="array", length=1500, nullable=true)
+     * @SerializedName("exclusion_criteria")
+     * @Groups({"study"})
      */
     private ?array $exclusion_criteria = null;
 
     /**
      * @ORM\Column(type="array", length=1500, nullable=true)
+     * @SerializedName("population")
+     * @Groups({"study"})
      */
     private ?array $population = null;
 
     /**
      * @ORM\Column(type="text", length=1500, nullable=true)
+     * @SerializedName("sampling_method")
+     * @Groups({"study"})
      */
     private ?string $sampling_method = null;
 
     /**
      * @ORM\Column(type="text", length=1500, nullable=true)
+     * @SerializedName("other_sampling_method")
+     * @Groups({"study"})
      */
     private ?string $other_sampling_method = null;
 
     /**
      * @ORM\Column(type="text", length=1500, nullable=true)
+     * @SerializedName("sample_size")
+     * @Groups({"study"})
      */
     private ?string $sample_size = null;
 
     /**
      * @ORM\Column(type="text", length=1500, nullable=true)
+     * @SerializedName("power_analysis")
+     * @Groups({"study"})
      */
     private ?string $power_analysis = null;
 
@@ -152,7 +170,7 @@ class SampleMetaDataGroup extends UuidEntity implements Questionable, Reviewable
      */
     public function setInclusionCriteria(?array $inclusion_criteria): void
     {
-        $this->inclusion_criteria = null == $inclusion_criteria ? null : array_values($inclusion_criteria);
+        $this->inclusion_criteria = null == $inclusion_criteria ? null : array_values(array_filter($inclusion_criteria));
     }
 
     /**
@@ -172,7 +190,7 @@ class SampleMetaDataGroup extends UuidEntity implements Questionable, Reviewable
      */
     public function setExclusionCriteria(?array $exclusion_criteria): void
     {
-        $this->exclusion_criteria = null == $exclusion_criteria ? null : array_values($exclusion_criteria);
+        $this->exclusion_criteria = null == $exclusion_criteria ? null : array_values(array_filter($exclusion_criteria));
     }
 
     /**
@@ -192,7 +210,7 @@ class SampleMetaDataGroup extends UuidEntity implements Questionable, Reviewable
      */
     public function setPopulation(?array $population): void
     {
-        $this->population = null == $population ? null : array_values($population);
+        $this->population = null == $population ? null : array_values(array_filter($population));
     }
 
     /**

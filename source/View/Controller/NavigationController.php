@@ -33,15 +33,21 @@ class NavigationController extends AbstractController
         ]);
     }
 
-    public function savebarNavigationAction(Request $request, string $prevUrl, string $prevTitle, string $nextUrl, string $nextTitle, ?FormView $form): Response
-    {
+    public function savebarNavigationAction(
+        Request $request,
+        ?string $prevUrl,
+        ?string $prevTitle,
+        ?string $nextUrl,
+        ?string $nextTitle,
+        ?FormView $form
+    ): Response {
         $uuid = $request->get('uuid'); // still a magic strings
 
         return $this->render('Components/_navigationSavebar.html.twig', [
             'experiment' => $this->getEntityAtChange($uuid),
-            'prevUrl' => $this->generateUrl($prevUrl, ['uuid' => $uuid]),
+            'prevUrl' => $prevUrl ? $this->generateUrl($prevUrl, ['uuid' => $uuid]) : null,
             'prevTitle' => $prevTitle,
-            'nextUrl' => $this->generateUrl($nextUrl, ['uuid' => $uuid]),
+            'nextUrl' => $nextUrl ? $this->generateUrl($nextUrl, ['uuid' => $uuid]) : null,
             'nextTitle' => $nextTitle,
             'form' => $form,
         ]);

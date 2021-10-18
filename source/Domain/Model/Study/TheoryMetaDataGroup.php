@@ -10,6 +10,8 @@ use App\Review\Reviewable;
 use App\Review\ReviewDataCollectable;
 use App\Review\ReviewValidator;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * @ORM\Entity()
@@ -19,11 +21,15 @@ class TheoryMetaDataGroup extends UuidEntity implements Questionable, Reviewable
 {
     /**
      * @ORM\Column(type="text", length=1500, nullable=true)
+     * @SerializedName("objective")
+     * @Groups({"study"})
      */
     private ?string $objective = null;
 
     /**
      * @ORM\Column(type="text", length=1500, nullable=true)
+     * @SerializedName("hypothesis")
+     * @Groups({"study"})
      */
     private ?string $hypothesis = null;
 

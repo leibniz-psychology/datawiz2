@@ -1,0 +1,27 @@
+{% extends "Layouts/threeColumn.html.twig" %}
+{% from "Components/_macros.html.twig" import helpButton %}
+{% from "Components/_macros.html.twig" import sectionHelp %}
+{% from "Components/_macros.html.twig" import formHelp %}
+{% from "Components/_macros.html.twig" import wizNav %}
+
+{% set isPartOfStudyDocumentation = true %}
+{% set isStudyDescriptionSubItem = false %}
+
+{% block title %}
+    Export
+{% endblock %}
+{% block content %}
+
+    {{ dump(json) }}
+
+
+
+    {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
+        request: app.request,
+        prevUrl: 'Study-materials',
+        prevTitle: 'Upload materials',
+        nextUrl: null,
+        nextTitle: null,
+        form: null
+    })) }}
+{% endblock %}

@@ -12,6 +12,8 @@ use App\Review\ReviewValidator;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * @ORM\Entity
@@ -21,16 +23,22 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, 
 {
     /**
      * @ORM\Column(type="text", length=255, nullable=true)
+     * @SerializedName("title")
+     * @Groups({"study"})
      */
     private ?string $title = null;
 
     /**
      * @ORM\Column(type="text", length=1500, nullable=true)
+     * @SerializedName("description")
+     * @Groups({"study"})
      */
     private ?string $description = null;
 
     /**
      * @ORM\Column(type="array", length=1500, nullable=true)
+     * @SerializedName("related_publications")
+     * @Groups("study")
      */
     private ?array $related_publications = null;
 
@@ -42,6 +50,8 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, 
     private Experiment $experiment;
 
     /**
+     * @SerializedName("creators")
+     * @Groups("study")
      * @ORM\OneToMany(targetEntity="App\Domain\Model\Study\CreatorMetaDataGroup", mappedBy="basicInformation")
      */
     private Collection $creators;
@@ -115,10 +125,6 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, 
      */
     public function getRelatedPublications(): ?array
     {
-        if ($this->related_publications === null) {
-            $this->related_publications = array('');
-        }
-
         return $this->related_publications;
     }
 
@@ -127,7 +133,7 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, 
      */
     public function setRelatedPublications(?array $related_publications): void
     {
-        $this->related_publications = null == $related_publications ? null : array_values($related_publications);
+        $this->related_publications = null == $related_publications ? null : array_values(array_filter($related_publications));
     }
 
     /**

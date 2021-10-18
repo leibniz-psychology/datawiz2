@@ -10,6 +10,8 @@ use App\Review\Reviewable;
 use App\Review\ReviewDataCollectable;
 use App\Review\ReviewValidator;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * @ORM\Entity()
@@ -19,51 +21,71 @@ class MethodMetaDataGroup extends UuidEntity implements Questionable, Reviewable
 {
     /**
      * @ORM\Column(type="text", length=1500, nullable=true)
-     */
-    private ?string $setting = null;
-
-    /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
-     */
-    private ?string $setting_location = null;
-
-    /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
+     * @SerializedName("research_design")
+     * @Groups({"study"})
      */
     private ?string $research_design = null;
 
     /**
      * @ORM\Column(type="text", length=1500, nullable=true)
+     * @SerializedName("setting")
+     * @Groups({"study"})
+     */
+    private ?string $setting = null;
+
+    /**
+     * @ORM\Column(type="text", length=1500, nullable=true)
+     * @SerializedName("setting_location")
+     * @Groups({"study"})
+     */
+    private ?string $setting_location = null;
+
+    /**
+     * @ORM\Column(type="text", length=1500, nullable=true)
+     * @SerializedName("experimental_details")
+     * @Groups({"study"})
      */
     private ?string $experimental_details = null;
 
     /**
      * @ORM\Column(type="text", length=1500, nullable=true)
+     * @SerializedName("non_experimental_details")
+     * @Groups({"study"})
      */
     private ?string $non_experimental_details = null;
 
     /**
      * @ORM\Column(type="text", length=1500, nullable=true)
+     * @SerializedName("observational_type")
+     * @Groups({"study"})
      */
     private ?string $observational_type = null;
 
     /**
      * @ORM\Column(type="text", length=1500, nullable=true)
+     * @SerializedName("manipulations")
+     * @Groups({"study"})
      */
     private ?string $manipulations = null;
 
     /**
      * @ORM\Column(type="text", length=1500, nullable=true)
+     * @SerializedName("experimental_design")
+     * @Groups({"study"})
      */
     private ?string $experimental_design = null;
 
     /**
      * @ORM\Column(type="text", length=1500, nullable=true)
+     * @SerializedName("control_operations")
+     * @Groups({"study"})
      */
     private ?string $control_operations = null;
 
     /**
      * @ORM\Column(type="text", length=1500, nullable=true)
+     * @SerializedName("other_control_operations")
+     * @Groups({"study"})
      */
     private ?string $other_control_operations = null;
 

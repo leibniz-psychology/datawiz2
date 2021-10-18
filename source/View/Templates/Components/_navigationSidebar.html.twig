@@ -8,50 +8,51 @@
 <nav>
     <ul>
         <li>
-            <a href="{{ path('Study-introduction', {uuid: experiment.id}) }}" class="StudyNav-NavItem {{- route_name == 'Study-introduction' ? ' StudyNav-NavItem_active' -}}">Getting started</a>
+            <a href="{{ path('Study-introduction', {uuid: experiment.id}) }}"
+               class="StudyNav-NavItem {{- route_name == 'Study-introduction' ? ' StudyNav-NavItem_active' -}}">Getting started</a>
         </li>
         <li>
             <a href="{{ path('Study-documentation', {uuid: experiment.id}) }}"
-                class="StudyNav-NavItem
+               class="StudyNav-NavItem
                 {{- route_name == 'Study-documentation' or
-                    route_name == 'Study-theory' or
-                    route_name == 'Study-method' or
-                    route_name == 'Study-measure' or
-                    route_name == 'Study-sample' ?' StudyNav-NavItem_active StudyNav-NavItem_active_isParent' -}}">
+               route_name == 'Study-theory' or
+               route_name == 'Study-method' or
+               route_name == 'Study-measure' or
+               route_name == 'Study-sample' ?' StudyNav-NavItem_active StudyNav-NavItem_active_isParent' -}}">
                 1. Describe your study
             </a>
             <ul class="ml-4">
                 <li>
                     <a href="{{ path('Study-documentation', {uuid: experiment.id}) }}"
-                        class="StudyNav-SubNavItem 
+                       class="StudyNav-SubNavItem
                         {{- route_name == 'Study-documentation' ? ' StudyNav-SubNavItem_active' -}}">
                         Basic Information
                     </a>
                 </li>
                 <li>
                     <a href="{{ path('Study-theory', {uuid: experiment.id}) }}"
-                        class="StudyNav-SubNavItem 
+                       class="StudyNav-SubNavItem
                         {{- route_name == 'Study-theory' ? ' StudyNav-SubNavItem_active' -}}">
                         Objectives &amp; hypotheses
                     </a>
                 </li>
                 <li>
                     <a href="{{ path('Study-method', {uuid: experiment.id}) }}"
-                        class="StudyNav-SubNavItem 
+                       class="StudyNav-SubNavItem
                         {{- route_name == 'Study-method' ? ' StudyNav-SubNavItem_active' -}}">
                         Study method
                     </a>
                 </li>
                 <li>
                     <a href="{{ path('Study-measure', {uuid: experiment.id}) }}"
-                        class="StudyNav-SubNavItem 
+                       class="StudyNav-SubNavItem
                         {{- route_name == 'Study-measure' ? ' StudyNav-SubNavItem_active' -}}">
                         Data collection
                     </a>
                 </li>
                 <li>
                     <a href="{{ path('Study-sample', {uuid: experiment.id}) }}"
-                        class="StudyNav-SubNavItem 
+                       class="StudyNav-SubNavItem
                         {{- route_name == 'Study-sample' ? ' StudyNav-SubNavItem_active' -}}">
                         Sampling
                     </a>
@@ -60,29 +61,28 @@
         </li>
         <li>
             <a href="{{ path('Study-datasets', {uuid: experiment.id}) }}"
-                class="StudyNav-NavItem {{- route_name == 'Study-datasets' ? ' StudyNav-NavItem_active' -}}">
+               class="StudyNav-NavItem {{- route_name == 'Study-datasets' ? ' StudyNav-NavItem_active' -}}">
                 2. Manage datasets</a>
         </li>
         <li>
             <a href="{{ path('Study-materials', {uuid: experiment.id}) }}"
-                class="StudyNav-NavItem {{- route_name == 'Study-materials' ? ' StudyNav-NavItem_active' -}}">
+               class="StudyNav-NavItem {{- route_name == 'Study-materials' ? ' StudyNav-NavItem_active' -}}">
                 3. Upload materials</a>
         </li>
         <li>
             <a href="{{ path('Study-review', {uuid: experiment.id}) }}"
-                class="StudyNav-NavItem {{- route_name == 'Study-review' ? ' StudyNav-NavItem_active' -}}">
+               class="StudyNav-NavItem {{- route_name == 'Study-review' ? ' StudyNav-NavItem_active' -}}">
                 4. Review input</a>
         </li>
         <li>
-        {# TODO Add link to export page #}
-            <a href="#"
-                class="StudyNav-NavItem {{- route_name == 'Study-export' ? ' StudyNav-NavItem_active' -}}">
+            <a href="{{ path('export_index', {uuid: experiment.id}) }}"
+               class="StudyNav-NavItem {{- route_name == 'Study-export' ? ' StudyNav-NavItem_active' -}}">
                 5. Export study</a>
         </li>
-        <hr class="border border-mono-400" />
+        <hr class="border border-mono-400"/>
         <li>
             <a href="{{ path('Study-settings', {uuid: experiment.id}) }}"
-                class="StudyNav-NavItem StudyNav-NavItem_settings
+               class="StudyNav-NavItem StudyNav-NavItem_settings
                 {{- route_name == 'Study-settings' ? ' StudyNav-NavItem_active StudyNav-SubNavItem_active_settings' -}}">
                 <i class="iconify w-4 h-4 mt-px mr-0.5 text-mono-600" data-icon="ic-round-settings"></i>
                 Study settings</a>

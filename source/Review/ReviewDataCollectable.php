@@ -6,59 +6,108 @@ namespace App\Review;
 
 final class ReviewDataCollectable
 {
-    private $dataName;
-    private $dataValue;
-
-    /**
-     * @var $displayCondition \Closure
-     */
-    private $displayCondition;
+    private string $dataName;
+    private ?array $dataValue = null;
+    private ?bool $displayCondition = null;
+    private ?string $errorMessage = null;
+    private ?string $errorType = null;
 
     private function __construct()
     {
     }
 
-    public function getDataName()
+    /**
+     * @return string
+     */
+    public function getDataName(): string
     {
         return $this->dataName;
     }
 
-    public function setDataName($dataName): void
+    /**
+     * @param string $dataName
+     */
+    public function setDataName(string $dataName): void
     {
         $this->dataName = $dataName;
     }
 
-    public function getDataValue()
+    /**
+     * @return array|null
+     */
+    public function getDataValue(): ?array
     {
         return $this->dataValue;
     }
 
-    public function setDataValue($dataValue): void
+    /**
+     * @param array|null $dataValue
+     */
+    public function setDataValue(?array $dataValue): void
     {
         $this->dataValue = $dataValue;
     }
 
-    public function getDisplayCondition()
+    /**
+     * @return bool
+     */
+    public function isDisplayCondition(): bool
     {
-        return $this->displayCondition->call($this);
+        return $this->displayCondition;
     }
 
-    public function setDisplayCondition($displayCondition): void
+    /**
+     * @param bool $displayCondition
+     */
+    public function setDisplayCondition(bool $displayCondition): void
     {
         $this->displayCondition = $displayCondition;
     }
 
-    public static function createEmpty(): ReviewDataCollectable
+    /**
+     * @return string|null
+     */
+    public function getErrorMessage(): ?string
     {
-        return new ReviewDataCollectable();
+        return $this->errorMessage;
     }
 
-    public static function createFrom(string $dataName, $dataValue, \Closure $displayCondition): ReviewDataCollectable
+    /**
+     * @param string|null $errorMessage
+     */
+    public function setErrorMessage(?string $errorMessage): void
+    {
+        $this->errorMessage = $errorMessage;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getErrorType(): ?string
+    {
+        return $this->errorType;
+    }
+
+    /**
+     * @param string|null $errorType
+     */
+    public function setErrorType(?string $errorType): void
+    {
+        $this->errorType = $errorType;
+    }
+
+
+    public static function createFrom(array $reviewData, ?array $dataValue, bool $valid = false, bool $displayCondition = true): ReviewDataCollectable
     {
         $review = new ReviewDataCollectable();
-        $review->setDataName($dataName);
+        $review->setDataName($reviewData['legend']);
         $review->setDataValue($dataValue);
         $review->setDisplayCondition($displayCondition);
+        if (!$valid) {
+            $review->setErrorMessage($reviewData['errorMsg']);
+            $review->setErrorType($reviewData['errorLevel']);
+        }
+
         return $review;
     }
 }

@@ -5,11 +5,14 @@ namespace App\View\Controller;
 
 
 use App\Domain\Model\Study\Experiment;
-use App\Review\ReviewDataCollectable;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @IsGranted("ROLE_USER")
+ */
 class ReviewController extends DataWizController
 {
     /**
@@ -31,20 +34,6 @@ class ReviewController extends DataWizController
             'methodReview' => $entityAtChange->getMethodMetaDataGroup()->getReviewCollection(),
             'measureReview' => $entityAtChange->getMeasureMetaDataGroup()->getReviewCollection(),
             'sampleReview' => $entityAtChange->getSampleMetaDataGroup()->getReviewCollection(),
-        ]);
-    }
-
-    public function displayValue(ReviewDataCollectable $dataCollectable) {
-        if (is_array($dataCollectable->getDataValue())) {
-            $template = 'Components/_reviewArrayValue.html.twig';
-        } else {
-            $template = 'Components/_reviewSingleValue.html.twig';
-        }
-
-        return $this->render($template, [
-            'name' => $dataCollectable->getDataName(),
-            'data' => $dataCollectable->getDataValue(),
-            'condition' => $dataCollectable->getDisplayCondition(),
         ]);
     }
 

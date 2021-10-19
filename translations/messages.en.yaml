@@ -97,6 +97,7 @@ input:
     email: 'Email'
     orcid: 'ORCID'
     affiliation: 'Affiliation'
+    roles: 'Roles'
     add: 'Add another creator +'
     credit:
       label: '<span class="block">Lorem Ipsum</span><span class="flex items-center
@@ -135,6 +136,7 @@ input:
       non-experimental: '<span class="block">Non-experimental</span><span class="block
         text-sm">Your study did not involve an experimental manipulation</span>'
     details:
+      legend: 'Design Description'
       experimental:
         label: 'Further describe the <span class="font-semibold">experimental design</span>
           of your study'
@@ -161,6 +163,7 @@ input:
           single-case: '<span>Single case</span><span>Your study was conducted on
             a single individual (also known as case study or experience report)</span>'
       observationalType:
+        legend: 'Observational study'
         label: 'Optionally define the observational type of your study'
         placeholder: 'Choose an observational type'
         choices:
@@ -205,8 +208,8 @@ input:
       rl: '<span>Real-life setting</span><span>Real-life setting (e.g., field experiment)</span>'
       natural: '<span>Natural setting</span><span>Natural setting (e.g., natural observations)</span>'
     location:
-      label: 'For real-life and natural settings enter the location where your study
-        took place'
+      legend: 'Location'
+      label: 'For real-life and natural settings enter the location where your study took place'
   measures:
     legend: 'Tests and measures'
     label: 'Provide definitions of all measures you collected on participants. Provide

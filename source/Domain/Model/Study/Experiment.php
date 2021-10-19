@@ -84,7 +84,7 @@ class Experiment extends UuidEntity implements Ownable
     /**
      * @ORM\OneToMany(targetEntity="App\Domain\Model\Filemanagement\Dataset", mappedBy="experiment", cascade={"persist"})
      * @SerializedName("datasets")
-     * @Groups({"datasets"})
+     * @Groups({"dataset"})
      */
     private Collection $originalDatasets;
 

@@ -10,6 +10,8 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * @ORM\Entity()
@@ -29,21 +31,29 @@ class Dataset extends UuidEntity
 
     /**
      * @ORM\Column(type="string", length=256)
+     * @SerializedName("original_name")
+     * @Groups({"dataset"})
      */
     private string $originalName;
 
     /**
      * @ORM\Column(type="string", length=256)
+     * @SerializedName("original_mimetype")
+     * @Groups({"dataset"})
      */
     private string $originalMimetype;
 
     /**
      * @ORM\Column(type="datetime")
+     * @SerializedName("uploaded")
+     * @Groups({"dataset"})
      */
     private ?DateTime $dateUploaded = null;
 
     /**
      * @ORM\Column(type="integer")
+     * @SerializedName("original_size")
+     * @Groups({"dataset"})
      */
     private int $originalSize = 0;
 
@@ -54,11 +64,15 @@ class Dataset extends UuidEntity
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @SerializedName("description")
+     * @Groups({"dataset"})
      */
     private ?string $description = null;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Domain\Model\Codebook\DatasetVariables", mappedBy="dataset")
+     * @SerializedName("codebook")
+     * @Groups({"codebook"})
      */
     private Collection $codebook;
 

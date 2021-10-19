@@ -5,8 +5,6 @@ namespace App\View\Controller;
 use App\Crud\Crudable;
 use App\Domain\Model\Study\CreatorMetaDataGroup;
 use App\Domain\Model\Study\Experiment;
-use App\Questionnaire\Forms\MeasureType;
-use App\Questionnaire\Forms\SampleType;
 use App\Questionnaire\Questionnairable;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;

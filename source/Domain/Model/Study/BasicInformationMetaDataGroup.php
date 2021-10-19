@@ -9,7 +9,6 @@ use App\Questionnaire\Questionable;
 use App\Review\Reviewable;
 use App\Review\ReviewDataCollectable;
 use App\Review\ReviewValidator;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -133,7 +132,7 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, 
      */
     public function setRelatedPublications(?array $related_publications): void
     {
-        $this->related_publications = null == $related_publications ? null : array_values(array_filter($related_publications));
+        $this->related_publications = null == $related_publications ? null : array_values($related_publications);
     }
 
     /**
@@ -153,17 +152,17 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, 
     }
 
     /**
-     * @return ArrayCollection|Collection
+     * @return Collection|null
      */
-    public function getCreators()
+    public function getCreators(): ?Collection
     {
         return $this->creators;
     }
 
     /**
-     * @param ArrayCollection|Collection $creators
+     * @param Collection|null $creators
      */
-    public function setCreators($creators): void
+    public function setCreators(?Collection $creators): void
     {
         $this->creators = $creators;
     }

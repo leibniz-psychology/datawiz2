@@ -129,8 +129,10 @@ class StudyController extends AbstractController
         if (sizeof($basicInformation->getCreators()) == 0) {
             $basicInformation->getCreators()->add(new CreatorMetaDataGroup());
         }
+        $basicInformation->setRelatedPublications($this->prepareEmptyArray($basicInformation->getRelatedPublications()));
         $form = $this->questionnaire->askAndHandle($basicInformation, 'save', $request);
         if ($this->questionnaire->isSubmittedAndValid($form)) {
+            $formData = $form->getData();
             $currentCreators = $this->em->getRepository(CreatorMetaDataGroup::class)->findBy(['basicInformation' => $basicInformation]);
             if (is_iterable($currentCreators)) {
                 foreach ($currentCreators as $currentCreator) {
@@ -138,13 +140,18 @@ class StudyController extends AbstractController
                 }
             }
             if ($form->getData()->getCreators() !== null && is_iterable($form->getData()->getCreators())) {
-                foreach ($form->getData()->getCreators() as $creator) {
-                    $creator->setCreditRoles(array_values(array_unique($creator->getCreditRoles())));
-                    $creator->setBasicInformation($basicInformation);
-                    $this->em->persist($creator);
+                foreach ($formData->getCreators() as $creator) {
+                    if (!$creator->isEmpty()) {
+                        $creator->setCreditRoles(array_values(array_unique($creator->getCreditRoles())));
+                        $creator->setBasicInformation($basicInformation);
+                        $this->em->persist($creator);
+                    } else {
+                        $form->getData()->getCreators()->removeElement($creator);
+                    }
                 }
             }
-            $this->em->persist($entityAtChange);
+            $formData->setRelatedPublications(array_filter($formData->getRelatedPublications()));
+            $this->em->persist($formData);
             $this->em->flush();
 
             return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
@@ -191,16 +198,18 @@ class StudyController extends AbstractController
     {
         $this->logger->debug("Enter StudyController::sampleAction with [UUID: $uuid]");
         $entityAtChange = $this->getEntityAtChange($uuid);
+        $sampleGroup = $entityAtChange->getSampleMetaDataGroup();
+        $sampleGroup->setPopulation($this->prepareEmptyArray($sampleGroup->getPopulation()));
+        $sampleGroup->setInclusionCriteria($this->prepareEmptyArray($sampleGroup->getInclusionCriteria()));
+        $sampleGroup->setExclusionCriteria($this->prepareEmptyArray($sampleGroup->getExclusionCriteria()));
         $form = $this->questionnaire->askAndHandle($entityAtChange->getSampleMetaDataGroup(), 'save', $request);
-
         if ($this->questionnaire->isSubmittedAndValid($form)) {
-            $this->em->persist($entityAtChange);
-            $this->em->flush();
             $formData = $form->getData();
             $formData->setPopulation(array_values($formData->getPopulation()));
             $formData->setInclusionCriteria(array_values($formData->getInclusionCriteria()));
             $formData->setExclusionCriteria(array_values($formData->getExclusionCriteria()));
-            $form = $this->questionnaire->formFromClass(SampleType::class, $formData, 'save');
+            $this->em->persist($formData);
+            $this->em->flush();
         }
 
         return $this->render('Pages/Study/sample.html.twig', [
@@ -220,15 +229,15 @@ class StudyController extends AbstractController
     {
         $this->logger->debug("Enter StudyController::measureAction with [UUID: $uuid]");
         $entityAtChange = $this->getEntityAtChange($uuid);
+        $entityAtChange->getMeasureMetaDataGroup()->setMeasures($this->prepareEmptyArray($entityAtChange->getMeasureMetaDataGroup()->getMeasures()));
+        $entityAtChange->getMeasureMetaDataGroup()->setApparatus($this->prepareEmptyArray($entityAtChange->getMeasureMetaDataGroup()->getApparatus()));
         $form = $this->questionnaire->askAndHandle($entityAtChange->getMeasureMetaDataGroup(), 'save', $request);
-
         if ($this->questionnaire->isSubmittedAndValid($form)) {
-            $this->em->persist($entityAtChange);
-            $this->em->flush();
             $formData = $form->getData();
-            $formData->setApparatus(array_values($formData->getApparatus()));
-            $formData->setMeasures(array_values($formData->getMeasures()));
-            $form = $this->questionnaire->formFromClass(MeasureType::class, $formData, 'save');
+            $formData->setApparatus(array_filter($formData->getApparatus()));
+            $formData->setMeasures(array_filter($formData->getMeasures()));
+            $this->em->persist($formData);
+            $this->em->flush();
         }
 
         return $this->render('Pages/Study/measure.html.twig', [
@@ -328,5 +337,18 @@ class StudyController extends AbstractController
     protected function getEntityAtChange(string $uuid, string $className = Experiment::class)
     {
         return $this->em->getRepository($className)->find($uuid);
+    }
+
+    /**
+     * @param array|null $array
+     * @return array|string[]
+     */
+    private function prepareEmptyArray(?array $array): array
+    {
+        if (null === $array || 0 >= sizeof($array)) {
+            $array = array("");
+        }
+
+        return $array;
     }
 }

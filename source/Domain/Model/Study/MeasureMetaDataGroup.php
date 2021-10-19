@@ -73,10 +73,6 @@ class MeasureMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
      */
     public function getMeasures(): ?array
     {
-        if ($this->measures === null) {
-            $this->measures = array('');
-        }
-
         return $this->measures;
     }
 
@@ -85,7 +81,7 @@ class MeasureMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
      */
     public function setMeasures(?array $measures): void
     {
-        $this->measures = null == $measures ? null : array_values(array_filter($measures));
+        $this->measures = null == $measures ? null : array_values($measures);
     }
 
     /**
@@ -93,10 +89,6 @@ class MeasureMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
      */
     public function getApparatus(): ?array
     {
-        if ($this->apparatus === null) {
-            $this->apparatus = array('');
-        }
-
         return $this->apparatus;
     }
 
@@ -105,7 +97,7 @@ class MeasureMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
      */
     public function setApparatus(?array $apparatus): void
     {
-        $this->apparatus = null == $apparatus ? null : array_values(array_filter($apparatus));
+        $this->apparatus = null == $apparatus ? null : array_values($apparatus);
     }
 
     /**

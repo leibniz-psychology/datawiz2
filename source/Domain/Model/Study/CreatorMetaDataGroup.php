@@ -113,6 +113,11 @@ class CreatorMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
         ];
     }
 
+    public function isEmpty(): bool
+    {
+        return empty($this->getFamilyName()) && empty($this->getGivenName()) && empty($this->getEmail());
+    }
+
     /**
      * @return string|null
      */

@@ -158,10 +158,6 @@ class SampleMetaDataGroup extends UuidEntity implements Questionable, Reviewable
      */
     public function getInclusionCriteria(): ?array
     {
-        if ($this->inclusion_criteria === null) {
-            $this->inclusion_criteria = array('');
-        }
-
         return $this->inclusion_criteria;
     }
 
@@ -170,7 +166,7 @@ class SampleMetaDataGroup extends UuidEntity implements Questionable, Reviewable
      */
     public function setInclusionCriteria(?array $inclusion_criteria): void
     {
-        $this->inclusion_criteria = null == $inclusion_criteria ? null : array_values(array_filter($inclusion_criteria));
+        $this->inclusion_criteria = null == $inclusion_criteria ? null : array_values($inclusion_criteria);
     }
 
     /**
@@ -178,10 +174,6 @@ class SampleMetaDataGroup extends UuidEntity implements Questionable, Reviewable
      */
     public function getExclusionCriteria(): ?array
     {
-        if ($this->exclusion_criteria === null) {
-            $this->exclusion_criteria = array('');
-        }
-
         return $this->exclusion_criteria;
     }
 
@@ -190,7 +182,7 @@ class SampleMetaDataGroup extends UuidEntity implements Questionable, Reviewable
      */
     public function setExclusionCriteria(?array $exclusion_criteria): void
     {
-        $this->exclusion_criteria = null == $exclusion_criteria ? null : array_values(array_filter($exclusion_criteria));
+        $this->exclusion_criteria = null == $exclusion_criteria ? null : array_values($exclusion_criteria);
     }
 
     /**
@@ -198,10 +190,6 @@ class SampleMetaDataGroup extends UuidEntity implements Questionable, Reviewable
      */
     public function getPopulation(): ?array
     {
-        if ($this->population === null) {
-            $this->population = array('');
-        }
-
         return $this->population;
     }
 
@@ -210,7 +198,7 @@ class SampleMetaDataGroup extends UuidEntity implements Questionable, Reviewable
      */
     public function setPopulation(?array $population): void
     {
-        $this->population = null == $population ? null : array_values(array_filter($population));
+        $this->population = null == $population ? null : array_values($population);
     }
 
     /**

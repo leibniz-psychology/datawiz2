@@ -171,11 +171,11 @@ class CodebookController extends AbstractController
                 if (key_exists("var_db_id", $variable)) {
                     $var = $this->em->getRepository(DatasetVariables::class)->find($variable["var_db_id"]);
                     $var->setName($variable["name"] ?? $var->getName());
-                    $var->setLabel($variable["label"]);
-                    $var->setItemText($variable["itemText"]);
-                    $var->setValues($variable["values"]);
-                    $var->setMissings($variable["missings"]);
-                    $var->setMeasure($variable["measure"]);
+                    $var->setLabel($variable["label"] ?? null);
+                    $var->setItemText($variable["itemText"] ?? null);
+                    $var->setValues($variable["values"] ?? null);
+                    $var->setMissings($variable["missings"] ?? null);
+                    $var->setMeasure($variable["measure"] ?? null);
                     $this->em->persist($var);
                     $this->em->flush();
                 }

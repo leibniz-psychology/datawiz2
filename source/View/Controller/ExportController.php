@@ -23,6 +23,7 @@ use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use ZipArchive;
@@ -50,7 +51,7 @@ class ExportController extends AbstractController
         $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
         $metadataAwareNameConverter = new MetadataAwareNameConverter($classMetadataFactory);
         $this->serializer = new Serializer(
-            [new ObjectNormalizer($classMetadataFactory, $metadataAwareNameConverter)],
+            [new DateTimeNormalizer(), new ObjectNormalizer($classMetadataFactory, $metadataAwareNameConverter)],
             ['json' => new JsonEncoder(), 'xml' => new XmlEncoder(), 'csv' => new CsvEncoder()]
         );
     }
@@ -79,7 +80,7 @@ class ExportController extends AbstractController
             ]
         );
 
-        return $this->render('Pages/Export/export.html.twig', ['json' => $json, "experiment" => $experiment]);
+        return $this->render('Pages/Export/export.html.twig', ['json' => json_decode($json), "experiment" => $experiment]);
     }
 
     /**

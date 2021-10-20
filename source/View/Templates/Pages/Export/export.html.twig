@@ -12,7 +12,7 @@
 {% endblock %}
 {% block content %}
 
-    {{ dump(json) }}
+
     <form action="{{ path('export_action', {uuid: experiment.id}) }}" method="POST">
         <div>
             <h1>EXPORT FORMAT:</h1>
@@ -41,6 +41,8 @@
             <button type="submit">Export</button>
         </div>
     </form>
+
+    {{ dump(json) }}
 
 
 

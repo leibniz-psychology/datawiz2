@@ -173,8 +173,8 @@ class CodebookController extends AbstractController
                     $var->setName($variable["name"] ?? $var->getName());
                     $var->setLabel($variable["label"] ?? null);
                     $var->setItemText($variable["itemText"] ?? null);
-                    $var->setValues($variable["values"] ?? null);
-                    $var->setMissings($variable["missings"] ?? null);
+                    $var->setValues($variable["values"] ? array_values(array_filter($variable["values"])) : null);
+                    $var->setMissings($variable["missings"] ? array_values(array_filter($variable["missings"])) : null);
                     $var->setMeasure($variable["measure"] ?? null);
                     $this->em->persist($var);
                     $this->em->flush();

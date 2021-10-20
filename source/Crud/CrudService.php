@@ -6,9 +6,12 @@ use App\Domain\Model\Filemanagement\AdditionalMaterial;
 use App\Domain\Model\Filemanagement\Dataset;
 use App\Domain\Model\Study\Experiment;
 use Doctrine\ORM\EntityManagerInterface;
+use League\Csv\Exception;
+use League\Csv\Reader;
 use League\Flysystem\FileExistsException;
 use League\Flysystem\FileNotFoundException;
 use League\Flysystem\Filesystem;
+use SplTempFileObject;
 
 class CrudService implements Crudable
 {
@@ -108,8 +111,8 @@ class CrudService implements Crudable
             if ($this->filesystem->has($dataset->getStorageName())) {
                 $this->filesystem->delete($dataset->getStorageName());
             }
-            if ($this->filesystem->has("matrix/".$dataset->getId().".json")) {
-                $this->filesystem->delete("matrix/".$dataset->getId().".json");
+            if ($this->filesystem->has("matrix/".$dataset->getId().".csv")) {
+                $this->filesystem->delete("matrix/".$dataset->getId().".csv");
             }
             if ($dataset->getCodebook() != null) {
                 foreach ($dataset->getCodebook() as $var) {
@@ -129,13 +132,17 @@ class CrudService implements Crudable
     public function saveDatasetMatrix(array $matrix, string $datasetId): bool
     {
         try {
-            if ($this->filesystem->has("matrix/$datasetId.json")) {
-                $this->filesystem->update("matrix/$datasetId.json", json_encode($matrix));
-            } else {
-                $this->filesystem->write("matrix/$datasetId.json", json_encode($matrix));
+            $tmp = new SplTempFileObject();
+            foreach ($matrix as $record) {
+                $tmp->fputcsv($record);
             }
-            $success = true;
-        } catch (FileExistsException | FileNotFoundException $e) {
+            $reader = Reader::createFromFileObject($tmp);
+            if ($this->filesystem->has("matrix/$datasetId.csv")) {
+                $success = $this->filesystem->update("matrix/$datasetId.csv", $reader->toString());
+            } else {
+                $success = $this->filesystem->write("matrix/$datasetId.csv", $reader->toString());
+            }
+        } catch (FileExistsException | FileNotFoundException | Exception $e) {
             $success = false;
         }
 

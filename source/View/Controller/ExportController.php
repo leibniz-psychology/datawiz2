@@ -6,6 +6,7 @@ namespace App\View\Controller;
 use App\Domain\Model\Filemanagement\Dataset;
 use App\Domain\Model\Study\Experiment;
 use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FileNotFoundException;
 use League\Flysystem\Filesystem;
@@ -162,6 +163,7 @@ class ExportController extends AbstractController
 
     /**
      * @param Experiment $experiment
+     * @param string $format
      * @param ZipArchive $zip
      */
     private function appendDatasetToZip(Experiment $experiment, string $format, ZipArchive &$zip)
@@ -173,17 +175,20 @@ class ExportController extends AbstractController
             }
             $folder = 'datasets/'.$folderName;
             $zip->addEmptyDir($folder);
-            if ($this->filesystem->has($dataset->getStorageName())) {
-                try {
+            try {
+                if ($this->filesystem->has($dataset->getStorageName())) {
                     $zip->addFromString("$folder/original_".$dataset->getOriginalName(), $this->filesystem->read($dataset->getStorageName()));
-                } catch (FileNotFoundException $e) {
-                    // TODO
                 }
+                if ($this->filesystem->has("matrix/{$dataset->getId()}.csv")) {
+                    $matrix = $this->filesystem->read("matrix/{$dataset->getId()}.csv");
+                    if ($matrix) {
+                        $matrix = $this->buildCSVHeader($dataset->getCodebook()).$matrix;
+                        $zip->addFromString("$folder/datamatrix.csv", $matrix);
+                    }
+                }
+            } catch (FileNotFoundException $e) {
+                $this->logger->error($e);
             }
-            /*$zip->addFromString(
-                "$folder/codebook.csv",
-                $this->serializer->serialize($dataset->getCodebook(), 'csv', [AbstractNormalizer::GROUPS => 'codebook', 'output_utf8_bom' => true])
-            );*/
             $zip->addFromString(
                 "$folder/codebook.$format",
                 $this->serializer->serialize(
@@ -199,6 +204,17 @@ class ExportController extends AbstractController
                 )
             );
         }
+    }
+
+
+    private function buildCSVHeader(Collection $codebook): string
+    {
+        $header = [];
+        foreach ($codebook as $var) {
+            $header[] = $var->getName();
+        }
+
+        return implode(",", $header).PHP_EOL;
     }
 
 }

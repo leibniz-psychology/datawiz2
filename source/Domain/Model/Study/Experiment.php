@@ -75,13 +75,6 @@ class Experiment extends UuidEntity implements Ownable
     private $settingsMetaDataGroup;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Domain\Model\Filemanagement\AdditionalMaterial", mappedBy="experiment", cascade={"persist"})
-     * @SerializedName("material")
-     * @Groups({"material"})
-     */
-    private Collection $additionalMaterials;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Domain\Model\Filemanagement\Dataset", mappedBy="experiment", cascade={"persist"})
      * @SerializedName("datasets")
      * @Groups({"dataset"})
@@ -89,7 +82,15 @@ class Experiment extends UuidEntity implements Ownable
     private Collection $originalDatasets;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Domain\Model\Filemanagement\AdditionalMaterial", mappedBy="experiment", cascade={"persist"})
+     * @SerializedName("material")
+     * @Groups({"material"})
+     */
+    private Collection $additionalMaterials;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Domain\Model\Administration\DataWizUser")
+     *
      */
     private $owner;
 
@@ -213,9 +214,11 @@ class Experiment extends UuidEntity implements Ownable
         return $this->additionalMaterials;
     }
 
-    public function addAdditionalMaterials(AdditionalMaterial $additionalMaterials): void
+    public function addAdditionalMaterials(?AdditionalMaterial $additionalMaterials): void
     {
-        $this->additionalMaterials->add($additionalMaterials);
+        if (null != $additionalMaterials) {
+            $this->additionalMaterials->add($additionalMaterials);
+        }
     }
 
     public function removeAdditionalMaterials(AdditionalMaterial $materials): void
@@ -228,9 +231,11 @@ class Experiment extends UuidEntity implements Ownable
         return $this->originalDatasets;
     }
 
-    public function addOriginalDatasets(Dataset $originalDatasets): void
+    public function addOriginalDatasets(?Dataset $originalDatasets): void
     {
-        $this->originalDatasets->add($originalDatasets);
+        if (null != $originalDatasets) {
+            $this->originalDatasets->add($originalDatasets);
+        }
     }
 
     public function removeOriginalDatasets(Dataset $originalDatasets): void

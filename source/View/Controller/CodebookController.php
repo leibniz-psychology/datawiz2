@@ -207,18 +207,36 @@ class CodebookController extends AbstractController
         if ($arr && is_iterable($arr) && key_exists('variables', $arr) && !empty($arr['variables']) && is_iterable($arr['variables'])) {
             foreach ($arr['variables'] as $variable) {
                 if (key_exists("var_db_id", $variable)) {
+                    $values = $variable["values"] ? $this->setMissingArrayFields(array_values(array_filter($variable["values"]))) : null;
+                    $missings = $variable["missings"] ? $this->setMissingArrayFields(array_values(array_filter($variable["missings"]))) : null;
                     $var = $this->em->getRepository(DatasetVariables::class)->find($variable["var_db_id"]);
                     $var->setName($variable["name"] ?? $var->getName());
-                    $var->setLabel($variable["label"]);
-                    $var->setItemText($variable["itemText"]);
-                    $var->setValues($variable["values"]);
-                    $var->setMissings($variable["missings"]);
-                    $var->setMeasure($variable["measure"]);
+                    $var->setLabel($variable["label"] ?? null);
+                    $var->setItemText($variable["itemText"] ?? null);
+                    $var->setValues(null != $values && 0 != sizeof($values) ? $values : null);
+                    $var->setMissings(null != $missings && 0 != sizeof($missings) ? $missings : null);
+                    $var->setMeasure($variable["measure"] ?? null);
                     $this->em->persist($var);
                     $this->em->flush();
                 }
             }
         }
+    }
+
+    private function setMissingArrayFields(?array $arr): ?array
+    {
+        if (null != $arr) {
+            foreach ($arr as &$item) {
+                if (key_exists('name', $item) && !key_exists('label', $item)) {
+                    $item['label'] = '';
+                }
+                if (!key_exists('name', $item) && key_exists('label', $item)) {
+                    $item['name'] = '';
+                }
+            }
+        }
+
+        return $arr;
     }
 
 }

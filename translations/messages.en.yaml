@@ -339,3 +339,17 @@ codebook:
   help:
     title: 'Codebook editor help'
     close: 'Close help'
+
+error:
+  dataset:
+    matrix:
+      empty: 'Data dictionary is empty. Please check if your uploaded file is a valid CSV/TSV or SAV file.'
+      notFound: 'Internal Server Error: File was not found on file System'
+      unprocessable: 'Internal Server Error: Unable to process uploaded file, please check if your uploaded file is a valid CSV/TSV or SAV file.'
+  export:
+    zip:
+      create: 'Internal server error: Something went wrong while packing your files into the export DRO, please contact support.'
+      empty: 'Internal server error: Something went wrong while packing your files into the export DRO, please contact support.'
+      tempFile: 'Internal Server Error: Unable to create temporary DRO file on filesystem, please contact the support.'
+  experiment:
+    null: 'Internal server error: The study you are looking for is not available!'

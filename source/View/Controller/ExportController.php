@@ -128,19 +128,19 @@ class ExportController extends AbstractController
                     $zip->addFromString('empty.txt', 'No file exported!');
                     $zip->close();
                     if ($zipError) {
-                        $exportError = "export.error.zip.create";
+                        $exportError = "error.export.zip.create";
                     } else {
-                        $exportError = "export.error.zip.empty";
+                        $exportError = "error.export.zip.empty";
                     }
                 }
                 unlink($zipName);
             } else {
                 $this->logger->critical("ExportController::exportAction(POST): Error during creating ZIP file: Could not create temp file for export");
-                $exportError = "export.error.zip.tempFile";
+                $exportError = "error.export.zip.tempFile";
             }
         } else {
             $this->logger->critical("ExportController::exportAction(POST): Error during getting experiment: Experiment == null");
-            $exportError = "export.error.experiment.null";
+            $exportError = "error.experiment.null";
         }
 
         return $response ?? $this->render('Pages/Export/export.html.twig', ['export_error' => $exportError ?? null, "experiment" => $experiment]);

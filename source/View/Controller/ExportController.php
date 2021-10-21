@@ -140,7 +140,7 @@ class ExportController extends AbstractController
             }
         } else {
             $this->logger->critical("ExportController::exportAction(POST): Error during getting experiment: Experiment == null");
-            $exportError = "error.experiment.null";
+            $exportError = "error.experiment.empty";
         }
 
         return $response ?? $this->render('Pages/Export/export.html.twig', ['export_error' => $exportError ?? null, "experiment" => $experiment]);

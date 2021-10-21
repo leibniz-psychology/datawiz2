@@ -352,4 +352,4 @@ error:
       empty: 'Internal server error: Something went wrong while packing your files into the export DRO, please contact support.'
       tempFile: 'Internal Server Error: Unable to create temporary DRO file on filesystem, please contact the support.'
   experiment:
-    null: 'Internal server error: The study you are looking for is not available!'
+    empty: 'Internal server error: The study you are looking for is not available!'

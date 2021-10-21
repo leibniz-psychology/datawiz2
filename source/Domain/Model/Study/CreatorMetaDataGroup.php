@@ -9,6 +9,8 @@ use App\Review\Reviewable;
 use App\Review\ReviewDataCollectable;
 use App\Review\ReviewValidator;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * @ORM\Entity
@@ -18,31 +20,43 @@ class CreatorMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
 {
     /**
      * @ORM\Column(type="text", length=100, nullable=true)
+     * @SerializedName("given_name")
+     * @Groups("study")
      */
     private ?string $givenName = null;
 
     /**
      * @ORM\Column(type="text", length=100, nullable=true)
+     * @SerializedName("family_name")
+     * @Groups("study")
      */
     private ?string $familyName = null;
 
     /**
      * @ORM\Column(type="text", length=250, nullable=true)
+     * @SerializedName("email")
+     * @Groups("study")
      */
     private ?string $email = null;
 
     /**
      * @ORM\Column(type="text", length=250, nullable=true)
+     * @SerializedName("orcid")
+     * @Groups("study")
      */
     private ?string $orcid = null;
 
     /**
      * @ORM\Column(type="text", length=1500, nullable=true)
+     * @SerializedName("affiliation")
+     * @Groups("study")
      */
     private ?string $affiliation = null;
 
     /**
      * @ORM\Column(type="array", nullable=true)
+     * @SerializedName("roles")
+     * @Groups("study")
      */
     private ?array $creditRoles = null;
 
@@ -97,6 +111,11 @@ class CreatorMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
                 null != ReviewDataDictionary::CREATOR_ROLES['errorLevel'] && ReviewValidator::validateArrayValues($this->getCreditRoles())
             ),
         ];
+    }
+
+    public function isEmpty(): bool
+    {
+        return empty($this->getFamilyName()) && empty($this->getGivenName()) && empty($this->getEmail());
     }
 
     /**

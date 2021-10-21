@@ -1,0 +1,70 @@
+{% extends "Layouts/threeColumn.html.twig" %}
+{% from "Components/_macros.html.twig" import helpButton %}
+{% from "Components/_macros.html.twig" import sectionHelp %}
+{% from "Components/_macros.html.twig" import formHelp %}
+{% from "Components/_macros.html.twig" import wizNav %}
+
+{% set isPartOfStudyDocumentation = true %}
+{% set isStudyDescriptionSubItem = false %}
+
+{% block title %}
+    Export
+{% endblock %}
+{% block content %}
+
+    {# TODO: export error includes a messages.xx.yaml string if an error occurred during export #}
+    {{ dump(export_error) }}
+    {% if experiment is null %}
+        {# TODO: error view if exp. == null #}
+    {% else %}
+        <form action="{{ path('export_action', {uuid: experiment.id}) }}" method="POST">
+            <div style="padding-top: 25px">
+                <h1>EXPORT FORMAT:</h1>
+                <label>JSON
+                    <input type="radio" name="exportFormat" value="json" checked>
+                </label>
+                <label>XML
+                    <input type="radio" name="exportFormat" value="xml">
+                </label>
+            </div>
+            <div style="padding-top: 25px">
+                <label> Export Study
+                    <input type="hidden" name="exportStudy" value="study">
+                </label>
+            </div>
+            <div style="padding-top: 25px">
+                <h2>Export Dataset</h2>
+                {% for dataset in experiment.originalDatasets %}
+                    <div>
+                        <label>{{ dataset.originalName }}
+                            <input type="checkbox" name="exportDataset[]" value="{{ dataset.id }}" checked>
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+            <div style="padding-top: 25px">
+                <h2>Export Material</h2>
+                {% for material in experiment.additionalMaterials %}
+                    <div>
+                        <label>{{ material.originalName }}
+                            <input type="checkbox" name="exportMaterial[]" value="{{ material.id }}" checked>
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+            <div style="padding-top: 25px">
+                <button type="submit">Export</button>
+            </div>
+        </form>
+    {% endif %}
+
+
+    {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
+        request: app.request,
+        prevUrl: 'Study-materials',
+        prevTitle: 'Upload materials',
+        nextUrl: null,
+        nextTitle: null,
+        form: null
+    })) }}
+{% endblock %}

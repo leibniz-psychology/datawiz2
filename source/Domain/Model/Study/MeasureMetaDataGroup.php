@@ -10,6 +10,8 @@ use App\Review\Reviewable;
 use App\Review\ReviewDataCollectable;
 use App\Review\ReviewValidator;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * @ORM\Entity()
@@ -20,13 +22,15 @@ class MeasureMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
 
     /**
      * @ORM\Column(type="array", length=1500, nullable=true)
-     * @var $measures array|null
+     * @SerializedName("measures")
+     * @Groups({"study"})
      */
     private ?array $measures = null;
 
     /**
      * @ORM\Column(type="array", length=1500, nullable=true)
-     * @var $apparatus array|null
+     * @SerializedName("apparatus")
+     * @Groups({"study"})
      */
     private ?array $apparatus = null;
 
@@ -69,10 +73,6 @@ class MeasureMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
      */
     public function getMeasures(): ?array
     {
-        if ($this->measures === null) {
-            $this->measures = array('');
-        }
-
         return $this->measures;
     }
 
@@ -89,10 +89,6 @@ class MeasureMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
      */
     public function getApparatus(): ?array
     {
-        if ($this->apparatus === null) {
-            $this->apparatus = array('');
-        }
-
         return $this->apparatus;
     }
 

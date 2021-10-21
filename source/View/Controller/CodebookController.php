@@ -9,6 +9,8 @@ use App\Domain\Model\Filemanagement\Dataset;
 use App\Domain\Model\Study\MeasureMetaDataGroup;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
+use League\Csv\Reader;
+use League\Csv\UnableToProcessCsv;
 use League\Flysystem\FileNotFoundException;
 use League\Flysystem\Filesystem;
 use Psr\Log\LoggerInterface;
@@ -110,19 +112,55 @@ class CodebookController extends AbstractController
      * @param string $uuid
      * @return JsonResponse
      */
-    public function datasetMatrixAction(string $uuid): JsonResponse
+    public function datasetMatrixAction(Request $request, string $uuid): JsonResponse
     {
-        $this->logger->debug("Enter CodebookController::createViewMeasuresAction with [UUID: $uuid]");
-        $file = null;
-        if ($this->filesystem->has("matrix/".$uuid.".json")) {
+        $size = $request->get('size') ?? 0;
+        $page = $request->get('page') ?? 1;
+        $this->logger->debug("Enter CodebookController::datasetMatrixAction with [UUID: $uuid]");
+        $dataset = $this->em->getRepository(Dataset::class)->find($uuid);
+        $response = null;
+        if ($dataset) {
+            foreach ($dataset->getCodebook() as $var) {
+                $response['header'][] = $var->getName();
+            }
+        }
+        if ($this->filesystem->has("matrix/".$uuid.".csv")) {
             try {
-                $file = $this->filesystem->read("matrix/".$uuid.".json");
+                $file = Reader::createFromString($this->filesystem->read("matrix/".$uuid.".csv"));
+                if ($file->count() != 0) {
+                    if (0 == $size) {
+                        $response['content'] = $file;
+                        $response['pagination']['max_items'] = $file->count();
+                        $response['pagination']['items'] = $file->count();
+                        $response['pagination']['current_page'] = 1;
+                        $response['pagination']['max_pages'] = 1;
+                    } else {
+                        $min = 0 != $page ? ($page - 1) * $size : 0;
+                        $max = $min + $size;
+                        for ($count = $min; $count < $max; $count++) {
+                            $response['content'][] = $file->fetchOne($count);
+                        }
+                        $response['pagination']['max_items'] = $file->count();
+                        $response['pagination']['items'] = $size;
+                        $response['pagination']['current_page'] = $page;
+                        $response['pagination']['max_pages'] = ceil(0 != $file->count() ? ($file->count() / $size) : 0);
+                    }
+                } else {
+                    $response['error'] = 'error.dataset.matrix.empty';
+                }
             } catch (FileNotFoundException $e) {
-                $this->logger->critical("Exception in CodebookController::createViewMeasuresAction [UUID: $uuid] Exception: ".$e->getMessage());
+                $this->logger->critical("FileNotFoundException in CodebookController::createViewMeasuresAction [UUID: $uuid] Exception: ".$e->getMessage());
+                $response['error'] = 'error.dataset.matrix.notFound';
+            } catch (UnableToProcessCsv $e) {
+                $this->logger->critical("UnableToProcessCsv in CodebookController::createViewMeasuresAction [UUID: $uuid] Exception: ".$e->getMessage());
+                $response['error'] = 'error.dataset.matrix.unprocessable';
             }
         }
 
-        return new JsonResponse($file ? json_decode($file, true) : "", $file ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);
+        return new JsonResponse(
+            $response,
+            key_exists('error', $response) && !empty($response['error']) ? Response::HTTP_UNPROCESSABLE_ENTITY : Response::HTTP_OK
+        );
     }
 
     /**
@@ -169,18 +207,36 @@ class CodebookController extends AbstractController
         if ($arr && is_iterable($arr) && key_exists('variables', $arr) && !empty($arr['variables']) && is_iterable($arr['variables'])) {
             foreach ($arr['variables'] as $variable) {
                 if (key_exists("var_db_id", $variable)) {
+                    $values = $variable["values"] ? $this->setMissingArrayFields(array_values(array_filter($variable["values"]))) : null;
+                    $missings = $variable["missings"] ? $this->setMissingArrayFields(array_values(array_filter($variable["missings"]))) : null;
                     $var = $this->em->getRepository(DatasetVariables::class)->find($variable["var_db_id"]);
                     $var->setName($variable["name"] ?? $var->getName());
-                    $var->setLabel($variable["label"]);
-                    $var->setItemText($variable["itemText"]);
-                    $var->setValues($variable["values"]);
-                    $var->setMissings($variable["missings"]);
-                    $var->setMeasure($variable["measure"]);
+                    $var->setLabel($variable["label"] ?? null);
+                    $var->setItemText($variable["itemText"] ?? null);
+                    $var->setValues(null != $values && 0 != sizeof($values) ? $values : null);
+                    $var->setMissings(null != $missings && 0 != sizeof($missings) ? $missings : null);
+                    $var->setMeasure($variable["measure"] ?? null);
                     $this->em->persist($var);
                     $this->em->flush();
                 }
             }
         }
+    }
+
+    private function setMissingArrayFields(?array $arr): ?array
+    {
+        if (null != $arr) {
+            foreach ($arr as &$item) {
+                if (key_exists('name', $item) && !key_exists('label', $item)) {
+                    $item['label'] = '';
+                }
+                if (!key_exists('name', $item) && key_exists('label', $item)) {
+                    $item['name'] = '';
+                }
+            }
+        }
+
+        return $arr;
     }
 
 }

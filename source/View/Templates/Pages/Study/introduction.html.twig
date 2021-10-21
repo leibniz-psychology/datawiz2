@@ -35,8 +35,8 @@
 
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
-        prevUrl: 'Study-documentation',
-        prevTitle: 'saveNav.introduction.prev'|trans,
+        prevUrl: null,
+        prevTitle: null,
         nextUrl: 'Study-documentation',
         nextTitle: 'saveNav.introduction.next'|trans,
         form: null

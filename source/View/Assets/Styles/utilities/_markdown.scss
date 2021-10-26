@@ -4,19 +4,19 @@
   }
 
   h1 {
-    @apply text-3xl font-semibold;
-  }
-
-  h2 {
     @apply text-2xl font-semibold;
   }
 
+  h2 {
+    @apply text-xl font-semibold;
+  }
+
   h3 {
-    @apply mt-2 text-xl font-semibold first:mt-0;
+    @apply mt-2 text-lg font-semibold first:mt-0;
   }
 
   h4 {
-    @apply mt-4 text-lg font-semibold leading-tight first:mt-0;
+    @apply mt-4 text-base font-semibold leading-tight first:mt-0;
   }
 
   h5 {
@@ -30,7 +30,7 @@
   }
 
   p {
-    @apply mt-2 leading-snug;
+    @apply mt-2 leading-snug max-w-prose;
   }
 
   ul,
@@ -47,7 +47,7 @@
   }
 
   li {
-    @apply mt-2 ml-4;
+    @apply mt-2 ml-4 max-w-prose;
   }
 
   dl {
@@ -55,7 +55,7 @@
   }
 
   dt {
-    @apply mt-2 font-bold first:mt-0;
+    @apply mt-2 font-bold first:mt-0 max-w-prose;
   }
 
   dd {
@@ -63,9 +63,9 @@
   }
 
   blockquote {
-    @apply p-2 mt-2 font-mono bg-mono-200;
+    @apply mt-2 font-mono;
     p {
-      @apply first:mt-0;
+      @apply p-2 first:mt-0 bg-mono-200;
 
       word-break: break-word;
       word-wrap: break-word;

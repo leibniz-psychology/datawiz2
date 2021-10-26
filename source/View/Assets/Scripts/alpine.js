@@ -1,5 +1,6 @@
 import Alpine from "alpinejs";
 import trap from "@alpinejs/trap";
+import List from "list.js";
 
 window.Alpine = Alpine;
 
@@ -85,6 +86,20 @@ Alpine.data("modal", () => ({
     ["x-transition:leave-end"]() {
       return "opacity-0";
     },
+  },
+}));
+
+const listOptions = {
+  valueNames: ["ExperimentName", "ExperimentTitle"],
+  searchDelay: 250,
+};
+
+Alpine.data("experimentsList", () => ({
+  filterText: "",
+  myList: new List("ExperimentsList", listOptions),
+  clear() {
+    this.myList.search("");
+    this.filterText = "";
   },
 }));
 

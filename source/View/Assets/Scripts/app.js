@@ -6,7 +6,6 @@
  */
 
 // any CSS you import will output into a single Style file (app.Style in this case)
-import "tailwindcss/tailwind.css";
 import "../Styles/app.scss";
 
 import "dropzone/dist/dropzone.css";

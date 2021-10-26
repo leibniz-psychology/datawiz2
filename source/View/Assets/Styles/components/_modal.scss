@@ -20,7 +20,7 @@
   @apply flex-auto p-6;
 }
 .Modal-Footer {
-  @apply flex items-center p-6 border-t border-gray-200 border-solid rounded-b;
+  @apply flex items-center justify-end p-6 border-t border-gray-200 border-solid rounded-b;
 }
 .Modal-Button_warning {
   @apply px-3 text-white bg-red-600 hover:bg-red-500;

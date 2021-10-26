@@ -12,6 +12,12 @@ module.exports = {
     ],
   },
   theme: {
+    fontFamily: {
+      sans: ["Open Sans", ...defaultTheme.fontFamily.sans],
+      condensed: ["Open Sans Condensed", ...defaultTheme.fontFamily.sans],
+      serif: ["Zilla Slab", ...defaultTheme.fontFamily.serif],
+      mono: defaultTheme.fontFamily.mono,
+    },
     extend: {
       colors: {
         mono: colors.warmGray,

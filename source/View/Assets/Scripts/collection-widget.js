@@ -56,7 +56,10 @@ function buildListElem(list, newWidget) {
   let newElem = document.createElement("template");
   newElem.innerHTML = tags;
   newElem.content.firstElementChild.innerHTML = newWidget;
-  newElem.content.firstElementChild.append(buildDeleteButton(list));
+  const deleteButtonPos = list.getAttribute("data-delete-position");
+  if (deleteButtonPos === "prepend") {
+    newElem.content.firstElementChild.prepend(buildDeleteButton(list));
+  } else newElem.content.firstElementChild.append(buildDeleteButton(list));
 
   return newElem.content.firstElementChild;
 }

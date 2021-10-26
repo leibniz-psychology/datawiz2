@@ -1,38 +1,21 @@
-.StudyNav-NavItem {
-  @apply block py-2 pl-3 pr-3 mt-1 underline bg-mono-300 ring-inset;
-}
+@import "components/radio_check";
+@import "components/buttons";
+@import "components/navigation";
+@import "components/modal";
+@import "components/widget_author";
 
-.StudyNav-NavItem_active {
-  @apply pl-2 font-bold no-underline border-l-4 border-black;
-  &_isParent {
-    @apply border-l-0;
-  }
-}
-
-.StudyNav-NavItem_settings {
-  @apply flex items-center mt-0 bg-transparent;
-}
-
-.StudyNav-SubNavItem {
-  @apply block py-1 pl-4 pr-3 leading-tight underline bg-mono-200 ring-inset;
-}
-
-.StudyNav-SubNavItem_active {
-  @apply pl-3 font-bold no-underline border-l-4 border-black;
-}
-
-.StudyNav-SubNavItem_active_settings {
-  @apply pl-2;
+.MetaDataGroup-Title {
+  @apply px-6 pt-4 pb-4 text-2xl font-semibold rounded-lg bg-mono-100 text-zpid-purple-700;
 }
 
 .MetaData-Title {
-  @apply flex justify-between w-full px-6 pt-3 pb-3 text-xl font-semibold bg-mono-300 bg-gradient-to-b from-mono-300 to-mono-200;
+  @apply flex justify-between w-full px-6 pt-3 pb-3 text-xl font-semibold bg-gradient-to-b from-mono-100 to-mono-50 text-zpid-purple-700;
 
   scroll-margin-top: 6rem;
 }
 
 .MetaData-Label {
-  @apply block px-6 mt-1 leading-snug;
+  @apply block px-6 mt-1 leading-snug max-w-prose;
 }
 
 .MetaData-Widget {
@@ -50,22 +33,7 @@
 }
 
 .MetaData-AddButton {
-  @apply block h-full mx-auto mt-1 underline bg-transparent border-0 shadow-none hover:bg-transparent;
-}
-
-.MetaData-RemoveButton {
-  @apply px-2 py-0.5 ml-1 border border-mono-500 bg-white hover:bg-mono-100 rounded-xl;
-}
-
-.MetaData-HelpButton {
-  @apply relative w-8 h-8 px-2 ml-2 font-semibold text-gray-800 border rounded-full shadow bg-mono-100 border-mono-400;
-  &:hover {
-    @apply bg-white;
-  }
-}
-
-.MetaData-SubmitButton {
-  @apply flex self-center px-6 py-1 mt-2 bg-white border rounded-md justify-self-center border-mono-400 hover:bg-mono-50;
+  @apply flex;
 
   &::before {
     @apply w-[1.125rem] h-[1.125rem] mr-1;
@@ -74,15 +42,40 @@
     // TODO edit svg to accept parameters
     /* prettier-ignore */
     background:
-      url("../Images/ri:save-3-fill.svg"
-      param(--color theme("colors.mono.700")))
+      url("../Images/fluent:add-20-regular.svg"
+      param(--color theme("colors.white")))
+      left center no-repeat;
+    content: "";
+  }
+}
+
+.MetaData-RemoveButton {
+  @apply px-2 py-0.5 ml-1 border border-mono-500 bg-white hover:bg-mono-100 rounded-xl;
+}
+
+.MetaData-HelpButton {
+  @apply relative w-8 h-8 text-xl font-bold text-white border rounded-full bg-zpid-purple-700 hover:bg-zpid-blue;
+}
+
+.MetaData-SubmitButton {
+  @apply flex self-center justify-self-center;
+
+  &::before {
+    @apply w-[1.125rem] h-[1.125rem] mr-1;
+
+    align-self: center;
+    // TODO edit svg to accept parameters
+    /* prettier-ignore */
+    background:
+      url("../Images/ic:outline-save.svg"
+      param(--color theme("colors.white")))
       left center no-repeat;
     content: "";
   }
 }
 
 .Help-Section {
-  @apply flex bg-mono-200;
+  @apply flex bg-mono-100;
 }
 
 .Help-MetaData {
@@ -102,40 +95,11 @@
 }
 
 .WizNavBar {
-  @apply sticky z-10 grid grid-flow-col px-2 mt-4 border-t auto-cols-fr -bottom-px border-mono-500 bg-mono-100;
-
-  /* Fix for sticky */
-  padding-bottom: calc(0.25rem + 1px);
-  transition: 0.05s;
+  @apply sticky z-10 grid grid-flow-col px-2 py-2 mt-4 transition duration-75 border-t rounded-b-lg auto-cols-fr -bottom-px border-mono-500 bg-mono-100;
 }
 
-/* styles for when the header is in sticky mode */
 .WizNavBar_isSticky {
-  @apply text-black border-t border-b-2 border-mono-500 bg-opacity-90;
+  @apply border-l border-r rounded-b-none bg-opacity-90;
 
-  box-shadow: 0 -5px 30px -10px #555;
+  box-shadow: 0 -5px 30px -10px rgb(175, 175, 175);
 }
-
-// .StudyMaterial-Delete {
-//   @apply inline-flex px-6 py-1 mt-2 bg-white border rounded-md border-mono-400 hover:bg-mono-200;
-
-//   &::before {
-//     @apply w-8 h-8 mr-1;
-
-//     align-self: center;
-//     /* prettier-ignore */
-//     background:
-//       url("../Images/radix-icons:cross-2.svg"
-//       param(--color theme("colors.mono.700")))
-//       left center no-repeat;
-//     content: "";
-//   }
-
-//   &:hover::before {
-//     /* prettier-ignore */
-//     background:
-//       url("../Images/radix-icons:cross-2.svg"
-//       param(--color theme("colors.red.500")))
-//       left center no-repeat;
-//   }
-// }

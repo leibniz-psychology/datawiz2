@@ -26,7 +26,7 @@ Encore
    */
   .addEntry("app", "./source/View/Assets/Scripts/app.js")
   .addEntry("codebook", "./source/View/Assets/Scripts/app-codebook.js")
-  //.addEntry('page1', './source/View/Assets/Scripts/page1.Scripts')
+  .addEntry("landing", "./source/View/Assets/Scripts/app-landing.js")
   //.addEntry('page2', './source/View/Assets/Scripts/page2.Scripts')
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

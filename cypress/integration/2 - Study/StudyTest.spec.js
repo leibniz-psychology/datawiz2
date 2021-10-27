@@ -16,7 +16,7 @@ describe("Study Test", () => {
   it("Create new documentation", () => {
     cy.visit("/dashboard");
     cy.get("button").contains("Open data documentation tool").click();
-    cy.get("h3").contains("My data documentations");
+    cy.get("h2").contains("Data documentation");
     cy.get("button").contains("Create new documentation").click();
     cy.get("#settings_shortName").clear().type(study.name);
     cy.get("#settings_submit").click();

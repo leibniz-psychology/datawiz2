@@ -34,6 +34,7 @@ class SampleType extends AbstractType
                     'attr' => [
                         'x-data' => '',
                         'x-on:keydown.enter.prevent' => '',
+                        'class' => 'w-full'
                     ],
                 ],
                 'allow_add' => true,
@@ -51,6 +52,7 @@ class SampleType extends AbstractType
                     'attr' => [
                         'x-data' => '',
                         'x-on:keydown.enter.prevent' => '',
+                        'class' => 'w-full'
                     ],
                 ],
                 'allow_add' => true,
@@ -68,6 +70,7 @@ class SampleType extends AbstractType
                     'attr' => [
                         'x-data' => '',
                         'x-on:keydown.enter.prevent' => '',
+                        'class' => 'w-full'
                     ],
                 ],
                 'allow_add' => true,

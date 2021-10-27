@@ -3,16 +3,12 @@ html {
 }
 
 body {
-  @apply w-full h-full bg-mono-400;
-}
-
-// TODO remove generic button styling and create BEMable button class
-button {
-  @apply px-2 py-0.5 bg-white border border-gray-500 rounded hover:bg-mono-100 shadow;
+  @apply w-full h-full;
 }
 
 input[type="password"],
 input[type="text"],
+input[type="email"],
 textarea {
   @apply p-2 bg-white border placeholder-mono-500 border-mono-500;
 }
@@ -21,12 +17,7 @@ textarea {
   @apply shadow-sm outline-none ring;
 }
 
-.SiteContainer {
-  min-height: 100%;
-  grid-template-rows: auto 1fr auto;
-}
-
-a[href*="//"]:not([href*="datawiz2.dev.zpid.de/"])::after
+a[href*="//"]:not([href*="datawiz2.dev.zpid.de/"], .no-linkout)::after
 {
   position: relative;
   top: 0.125rem;
@@ -45,7 +36,7 @@ a[href*="//"]:not([href*="datawiz2.dev.zpid.de/"])::after
   white-space: nowrap;
 }
 
-a[href*="//"]:not([href*="datawiz2.dev.zpid.de/"]):hover::after
+a[href*="//"]:not([href*="datawiz2.dev.zpid.de/"], .no-linkout):hover::after
 {
   /* prettier-ignore */
   background:

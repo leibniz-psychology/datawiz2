@@ -1,48 +1,132 @@
 {% extends "Layouts/base.html.twig" %}
+{% from "Components/_macros.html.twig" import helpButton %}
+{% from "Components/_macros.html.twig" import sectionHelp %}
+{% from "Components/_macros.html.twig" import formHelp %}
 
 {% set isPartOfStudyDocumentation = true %}
 
-{% block title %}
+{# {% block title %}
     Studies
-{% endblock %}
+{% endblock %} #}
 
 {% block body %}
-    <div class="col-span-full xl:col-start-3 xl:col-end-11">
-        <main class="mt-12">
-            <div class="flex mt-6">
-                <h2 class="inline text-2xl font-semibold">
-                    My studies
-                </h2>
-                <span class="self-center">
-                    <button class="px-2 ml-2 bg-white border rounded-md border-mono-500 hover:bg-mono-100" onclick="window.location.href='{{ path("Study-new") }}'">
-                        Create new study
-                    </button>
-                </span>
-            </div>
-            <ul>
-                {% for experiment in all_experiments %}
-                    <li>
-                        <div class="mt-4 bg-mono-50">
-                            <a class="text-xl underline" href="{{ path('Study-documentation', {uuid: experiment.id}) }}">
-                                {{ experiment.settingsMetaDataGroup.shortName }}
-                            </a>
+    <div class="mx-auto mt-12 min-h-[calc(100%-15.5rem)] flex gap-x-12 max-w-screen-xl">
+        {# <main class="{% if all_experiments %} w-[60%] {% else %}w-1/2{% endif %}"> #}
+        <main {% if all_experiments %}class="w-[70%]" {% else %}class="w-1/2"{% endif %}>
+            <h2 class="ml-8 text-3xl font-bold text-zpid-purple-700">
+                Data documentation
+            </h2>
+            <p class="mt-4 ml-8 max-w-prose">Document research data, add datasets and materials, describe your data with
+                codebooks, then export and share your data in one convenient zip file.</p>
+            {% if not all_experiments %}
+                <p class="mt-4 ml-8 max-w-prose ">Click the button below to create your first study. Don't worry, you'll
+                    be guided through the whole process!
+                </p>
+            {% endif %}
+            <button class="flex items-center mt-3 ml-8 Button Button_primary Button_primary_act Button_standalone"
+                    onclick="window.location.href='{{ path("Study-new") }}'">
+                {# <span class="mr-2 iconify-inline" data-icon="fluent:add-20-regular"></span> #}
+                Create new documentation
+            </button>
+            {% if all_experiments %}
+
+
+                <div class="mt-4" id="ExperimentsList" x-data="{...experimentsList(), filterText: ''}"
+                     @keyup.escape="clear()">
+                    <div class="mt-10 ml-8 xl:items-center xl:justify-between xl:flex">
+                        <h3 class="flex-shrink-0 text-2xl font-bold xl:flex text-zpid-purple-700">
+                            My data documentations
+                        </h3>
+                        <div class="flex items-center justify-end">
                             <div>
-                                <span class="font-semibold">Title:</span>
-                                {{ experiment.basicInformationMetaDataGroup.title }}
+                                Sort by
+                                <button class="ml-1 underline sort" data-sort="ExperimentName" type="button">
+                                    Name
+                                </button>
+                                <button class="underline sort ml-0.5" data-sort="ExperimentName" type="button">
+                                    Title
+                                </button>
                             </div>
-                            <div>
-                                <span class="font-semibold">Datasets:</span>
+
+                            <div class="relative inline-flex items-center mx-4">
+                                <label for="filter" class="absolute top-0 bottom-0 left-0 flex items-center">
+                                    {# Icon: mdi:magnify #}
+                                    <span class="inline-flex w-5 h-5 mx-auto ml-2 iconify-inline"
+                                          data-icon="mdi:magnify"></span>
+                                </label>
+                                <input placeholder="Search documentations" x-model="filterText" id="filter"
+                                       class="pl-8 !pr-7 !py-[0.1875rem] border rounded-full border-mono-500 search">
+                                {# <span class="absolute top-0 bottom-0 left-0">O</span> #}
+                                <button aria-label="{{ "generic.clear-search"|trans }}"
+                                        class="absolute top-0 bottom-0 right-0 flex items-center w-6 p-0 my-1 mr-2 bg-transparent border-none rounded-none shadow-none hover:bg-transparent"
+                                        @click="clear()" x-show="filterText !== ''" x-cloak>
+                                    {# Icon: mdi:close #}
+                                    <svg class="inline-flex w-5 h-5 mx-auto text-gray-800 fill-current"
+                                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                         aria-hidden="true" role="img" style="vertical-align: -0.125em;" width="1em"
+                                         height="1em"
+                                         preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                        <title>{{ "generic.clear-search"|trans }}</title>
+                                        <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z"
+                                              fill="currentColor"/>
+                                    </svg>
+                                </button>
                             </div>
                         </div>
-                    </li>
-                {% endfor %}
-            </ul>
-            <h2 class="mt-6 text-2xl font-semibold">
-                Shared studies
-            </h2>
-            <div class="mt-4 italic">
-                An overview of studies you have shared with others appears here
-            </div>
+                    </div>
+                    <ul class="mt-4 list">
+                        {% for experiment in all_experiments %}
+                            <li class="p-4 mt-2 ml-4 first:mt-0 bg-mono-50">
+                                <div class="grid grid-cols-6">
+                                    <h4 class="text-xl font-semibold text-zpid-purple-700 col-span-full">
+                                        <a class="underline ExperimentName"
+                                           href="{{ path('Study-documentation', {uuid: experiment.id}) }}">
+                                            {{ experiment.settingsMetaDataGroup.shortName }}
+                                        </a>
+                                    </h4>
+                                    <div class="mt-2 col-span-full">
+                                        <span class="font-semibold">Title:</span>
+                                        <span class="ExperimentTitle">{{ experiment.basicInformationMetaDataGroup.title }}</span>
+                                    </div>
+                                    <div class="col-start-1 col-end-4">
+                                        <a class="font-semibold underline"
+                                           href="{{ path('Study-datasets', {uuid: experiment.id}) }}">Datasets:</a>
+                                    </div>
+                                    <div class="col-start-4 col-end-7">
+                                        <span class="font-semibold">Date created:</span>
+                                    </div>
+                                    <div class="col-start-1 col-end-4">
+                                        <a class="font-semibold underline"
+                                           href="{{ path('Study-materials', {uuid: experiment.id}) }}">Materials:</a>
+                                    </div>
+                                    <div>
+                                        <span class="font-semibold">Last edited:</span>
+                                    </div>
+                                    <div class="col-span-full">
+                                        <a href="{{ path('Study-delete', {uuid: experiment.id}) }}">Delete</a>
+                                    </div>
+                                </div>
+                                {# <button class="Button Button_secondary Button_secondary_go Button_standalone ">Open study</button> #}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            {# <h2 class="mt-6 text-2xl font-semibold">
+            Shared studies
+        </h2>
+        <div class="mt-4 italic">
+            An overview of studies you have shared with others appears here
+        </div> #}
         </main>
+        <div class="w-[30%] mr-8">
+            <aside class="sticky top-0 overflow-hidden border rounded-lg shadow-sm bg-mono-100 markdown scrollbar scrollbar-thumb-gray-400 scrollbar-thin scrollbar-track-gray-100 max-h-[calc(100vh)] overflow-y-auto">
+                <div class="Help-Section">
+                    {% block help_for_section %}
+                        {{ sectionHelp("data_documentation") }}
+                    {% endblock %}
+                </div>
+            </aside>
+        </div>
     </div>
 {% endblock %}

@@ -6,6 +6,7 @@ namespace App\Io\Formats\Csv;
 
 use League\Csv\Exception;
 use League\Csv\Reader;
+use League\Csv\Writer;
 use League\Flysystem\FileNotFoundException;
 use League\Flysystem\FilesystemInterface;
 use Psr\Log\LoggerInterface;
@@ -26,7 +27,7 @@ class CsvImportable
         $this->filesystem = $assetsFilesystem;
     }
 
-    public function csvToArray(string $fileId, string $delimiter, string $escape, int $headerRows): ?array
+    public function csvToArray(string $fileId, string $delimiter, string $escape, int $headerRows, int $resultSize = 0): ?array
     {
         $result = null;
         try {
@@ -48,7 +49,7 @@ class CsvImportable
             $records = $csv->getRecords();
             $count = 0;
             foreach ($records as $record) {
-                if (10 <= $count) {
+                if ($resultSize != 0 && $resultSize <= $count) {
                     break;
                 }
                 $result['records'][] = $record;
@@ -62,6 +63,4 @@ class CsvImportable
 
         return $result;
     }
-
-
 }

@@ -95,6 +95,7 @@ class FileManagementController extends AbstractController
             $data = json_decode($data, true);
             if ($data && is_iterable($data) && key_exists('codebook', $data)) {
                 foreach ($data['codebook'] as $var) {
+                    $matrixHeader[] = $var['name'];
                     $this->em->persist(
                         DatasetVariables::createNew(
                             $dataset,
@@ -133,7 +134,7 @@ class FileManagementController extends AbstractController
         $file = $this->em->find(Dataset::class, $fileId);
         $data = null;
         if ($file) {
-            $data = $this->csvImportable->csvToArray($file->getStorageName(), $delimiter, $escape, $headerRows);
+            $data = $this->csvImportable->csvToArray($file->getStorageName(), $delimiter, $escape, $headerRows, 10);
         }
 
         return new JsonResponse($data, $data ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);

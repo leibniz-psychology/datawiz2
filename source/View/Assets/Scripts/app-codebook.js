@@ -75,7 +75,11 @@ Alpine.data("codebook", () => ({
       method: "post",
       url: this.url,
       data: {
-        variables: Alpine.store("codebook").variables,
+        // variables: Alpine.store("codebook").variables,
+        variables: JSON.parse(
+          JSON.stringify(Alpine.store("codebook").variables),
+          (key, value) => (value === null || value === "" ? undefined : value)
+        ),
         id: this.id,
       },
     })

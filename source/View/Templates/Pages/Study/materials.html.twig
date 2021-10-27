@@ -9,13 +9,16 @@
 {% endblock %}
 
 {% block content %}
-    <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
-        {{ "title.material.h2"|trans }}
+    <h2 class="MetaDataGroup-Title">
+        {{ "title.material.title"|trans }}
     </h2>
     {{ include("Components/_infoBridge.html.twig",{value: experiment.id}) }}
-    <form action="{{ oneup_uploader_endpoint("materials") }}"
-          class="mx-6 border-2 border-dashed border-mono-500 dropzone"
-          id="datawiz-dropzone"></form>
+    <div class="mt-6">
+        <form action="{{ oneup_uploader_endpoint("materials") }}"
+              class="mx-6 border-2 border-dashed border-mono-500 dropzone"
+              id="datawiz-dropzone">
+        </form>
+    </div>
     {% if (experiment.additionalMaterials|length) > 0 %}
         <h3 class="mx-6 mt-6 text-xl">
             {{ "title.material.h3"|trans }}
@@ -28,7 +31,7 @@
                             <span class="text-lg font-semibold font-">
                                 {{ material.originalName }}
                             </span>
-                            <button class="flex items-center self-start px-2 ml-2 border rounded hover:text-red-700 hover:bg-red-50 border-mono-300 hover:border-red-700"
+                            <button class="flex items-center self-start ml-2 Button Button_tertiary Button_tertiary_danger Button_standalone"
                                     @click="show()">
                                 {# Icon: mi:delete - https://icon-sets.iconify.design/mi/delete/ #}
                                 <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
@@ -61,12 +64,14 @@
                                 </div>
 
                                 <div class="Modal-Footer">
-                                    <button class="Modal-Button_warning" type="button"
+                                    <button class="Button Button_primary Button_primary_danger Button_standalone"
+                                            type="button"
                                             @click="window.location.href='{{ path('File-delete_material', { "uuid": material.id }) }}'"
                                     >
                                         {{ "title.material.deleteModal.confirm"|trans }}
                                     </button>
-                                    <button class="Modal-Button_cancel" type="button" x-ref="focusFirst"
+                                    <button class="ml-2 Button Button_tertiary Button_tertiary_act Button_standalone"
+                                            type="button" x-ref="focusFirst"
                                             @click="hide()">
                                         {{ "generic.cancel"|trans }}
                                     </button>
@@ -91,9 +96,9 @@
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
         prevUrl: 'Study-datasets',
-        prevTitle: 'saveNav.material.prev'|trans,
+        prevTitle: 'title.dataset.title-short'|trans,
         nextUrl: 'Study-review',
-        nextTitle: 'saveNav.material.next'|trans,
+        nextTitle: 'title.review.title'|trans,
         form: null
     })) }}
 

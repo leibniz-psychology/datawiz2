@@ -1,41 +1,55 @@
 {% extends "Layouts/base.html.twig" %}
 
 {% block body %}
-    <div class="col-span-3">
-        <div class="border-2 shadow-lg bg-mono-200 border-mono-500">
-            {{ render(controller('App\\View\\Controller\\NavigationController::sidebarNavigationAction', {request: app.request })) }}
+    <div class="max-w-screen-xl pl-2 mx-auto">
+        {# Icon: ic:sharp-arrow-back-ios-new #}
+
+        <a href="{{ path("Study-overview") }}"
+           class="inline-flex items-center mt-2 underline Button Button_tertiary Button_tertiary_go Button_standalone">
+            <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" class="arrow-left w-4 h-4 mr-1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            My data documentations
+        </a>
+    </div>
+    <div class="flex max-w-screen-xl mx-auto mt-2 bg-white gap-x-4 gap-y-1 min-h-[calc(100%-15.75rem)]">
+        <div class="w-[21%]">
+            <div class="sticky top-0 overflow-hidden border rounded-lg shadow-sm">
+                {{ render(controller('App\\View\\Controller\\NavigationController::sidebarNavigationAction', {request: app.request })) }}
+            </div>
         </div>
-    </div>
 
-    <div class="col-span-5">
-        <section class="border-2 shadow-lg bg-mono-200 border-mono-500">
-            {% block content %}
-                Something went wrong. Please return to the
-                <a href="{{ path("Study-overview") }}">Study overview</a>
-            {% endblock %}
-        </section>
-    </div>
+        <div class="w-[49%]">
+            <section class="border rounded-lg shadow-sm bg-mono-50">
+                {% block content %}
+                    Something went wrong. Please return to the
+                    <a href="{{ path("Study-overview") }}">Study overview</a>
+                {% endblock %}
+            </section>
+        </div>
 
-    <div class="col-span-4">
-        <aside class="border-2 shadow-lg bg-mono-200 border-mono-500 markdown">
-            <div class="Help-Section">
-                {% block help_for_section %}
-                    <div class="Help-Text Help-Text_section">
-                        <h2 class="text-2xl font-semibold">
-                            Help
-                        </h2>
+        <div class="w-[30%]">
+            <aside class="sticky top-0 overflow-hidden border rounded-lg shadow-sm bg-mono-100 markdown scrollbar scrollbar-thumb-gray-400 scrollbar-thin scrollbar-track-gray-100 max-h-[calc(100vh)] overflow-y-auto">
+                <div class="Help-Section">
+                    {% block help_for_section %}
+                        <div class="py-1 Help-Text Help-Text_section">
+                            <h2 class="text-2xl font-semibold">
+                                Help
+                            </h2>
+                        </div>
+                    {% endblock %}
+                </div>
+                {% block help_for_metadata %}
+                    <div class="relative Help-MetaData">
+                        <div class="Help-Text Help-Text_metaData">
+                            <p class="mt-2">
+                                Help is under construction. Please come back later.
+                            </p>
+                        </div>
                     </div>
                 {% endblock %}
-            </div>
-            {% block help_for_metadata %}
-                <div class="relative Help-MetaData">
-                    <div class="Help-Text Help-Text_metaData">
-                        <p class="mt-2">
-                            Help is under construction. Please come back later.
-                        </p>
-                    </div>
-                </div>
-            {% endblock %}
-        </aside>
+            </aside>
+        </div>
     </div>
 {% endblock %}

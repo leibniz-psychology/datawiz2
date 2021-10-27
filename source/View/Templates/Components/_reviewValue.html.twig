@@ -1,0 +1,39 @@
+{% if item.displayCondition %}
+    <div class="{% if item.errorMessage %} border-l-8{% else %}ml-6{% endif %} {% if item.errorType == 'error' %}border-l-pink-100{% elseif item.errorType == 'warn' %} border-l-green-100{% endif %} mt-3 mr-6">
+        <h3 class="{% if item.errorMessage %}ml-4{% endif %} font-bold text-xl text-zpid-purple-700">{{ item.dataName|trans }}</h3>
+        <div class="mt-2">
+            {% for entry in item.dataValue %}
+                {% if entry != null and entry != '' %}
+                    <p class="mt-2.5 first:mt-0 max-w-prose">
+                        {{ entry }}
+                        <a href="#"
+                           class="inline-flex items-center ml-0.5 text-sm border rounded-lg group hover:underline text-mono-500 bg-sky-50 border-mono-300"
+                           title="{{ 'generic.edit'|trans }}">
+                            {# Icon: ic:outline-edit #}
+                            <svg class="m-1 text-xs" xmlns="http://www.w3.org/2000/svg"
+                                 xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                                 style="vertical-align: -0.125em;" width="1em" height="1em"
+                                 preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                <path fill="none" stroke="currentColor" stroke-width="2"
+                                      d="M14 4l6 6l-6-6zm8.294 1.294c.39.39.387 1.025-.008 1.42L9 20l-7 2l2-7L17.286 1.714a1 1 0 0 1 1.42-.008l3.588 3.588zM3 19l2 2m2-4l8-8"/>
+                            </svg>
+                        </a>
+                    </p>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% if item.errorMessage and item.errorType == 'error' %}
+            <p class="max-w-prose mt-2.5 ml-4 mr-6">
+                The field <em>{{ item.dataName|trans }}</em> is mandatory for a basic data documentation.<br>
+            </p>
+        {% endif %}
+        {% if item.errorMessage and item.errorType == 'warn' %}
+            <p class="max-w-prose mt-2.5 ml-4 mr-6">
+                The field <em>{{ item.dataName|trans }}</em> is recommended for an extended data documentation.<br>
+            </p>
+        {% endif %}
+        {% if item.errorMessage %}
+            <a href="#" class="inline-block mt-2 ml-4 mr-6 underline">Add now!</a>
+        {% endif %}
+    </div>
+{% endif %}

@@ -1,0 +1,27 @@
+.StudyNav-NavItem {
+  @apply block py-2 pl-7 pr-1.5 border-b bg-mono-50 ring-inset border-mono-300 hover:bg-zpid-blue-50;
+}
+
+.StudyNav-NavItem_active {
+  @apply pl-6 font-semibold no-underline border-l-4 border-l-zpid-blue;
+}
+
+.StudyNav-NavItem_settings {
+  @apply flex items-center pl-5 border-b-0;
+}
+
+.StudyNav-NavItem_settings_active {
+  @apply pl-5;
+}
+
+.StudyNav-SubNav {
+  @apply py-3 border-b bg-mono-100 border-mono-300;
+}
+
+.StudyNav-SubNavItem {
+  @apply block py-2 pl-7 pr-1.5 leading-tight ring-inset hover:bg-zpid-blue-50;
+}
+
+.StudyNav-SubNavItem_active {
+  @apply font-semibold text-zpid-blue;
+}

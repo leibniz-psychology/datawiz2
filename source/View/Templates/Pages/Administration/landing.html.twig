@@ -1,80 +1,73 @@
-{% extends "Layouts/base.html.twig" %}
+{% extends "Layouts/corporate.html.twig" %}
 
-{% block title %}
-    Welcome to DataWiz
+{% block javascripts %}
+    {{ encore_entry_script_tags("landing") }}
 {% endblock %}
 
 {% block body %}
-    <div class="col-span-full xl:col-start-3 xl:col-end-11">
-        <main class="max-w-5xl mx-auto mt-12">
-            <h1 class="text-3xl font-semibold">
-                DataWiz &mdash; your one-stop data management tool as a
-                researching psychologist
-            </h1>
+    <main class="mx-24 mt-12">
+        <h1 class="text-3xl font-semibold text-zpid-purple-700 max-w-prose">
+            DataWiz &mdash; the data management tool for researching psychologists
+        </h1>
 
-            <p class="mt-4 text-lg">
-                Here's how DataWiz helps you during the whole research process:
-            </p>
+        <p class="mt-4 text-lg max-w-prose">
+            Here's how DataWiz helps you during the whole research process:
+        </p>
 
-            <div class="flex flex-col">
-                <h2 class="px-2 mt-8 text-2xl font-semibold leading-relaxed bg-mono-200">
-                    Data Documentation
-                </h2>
-                <div class="flex mt-4">
-                    {# <img src="https://via.placeholder.com/550x300.png/CCDDCC/999999/?text=RDM+Product+Teaser" alt="RDM-Dummy-Teaser" class="order-2 mb-4 ml-4"> #}
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAiYAAAEsBAMAAAAFk2WOAAAAG1BMVEXM3cyZmZmfoZ+ssqy/zL+yu7KlqqXF1MW4w7irKI7FAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAEk0lEQVR4nO3YzXPaRhjH8RVv4shKIDgip7Z7RPYk6REmnUmP0JROj8iNJz1C3Jlcoe7E/3afZ1eAeGk7PTgD6fdz8C7SSvb+vNpdZAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALsCK14MfSVZypGFHeqJid2ef394nZ0fu1vNekdPng3XZ9spKslcMxnoibyUiR0fXPdVZxJPp9NcOqGVGzvTTPpyPLR2c/6V7R5ct9/twDUJb29f2dvb22f+o5+Z60uYDnxl0tFMtNZcZ6IfPsYH1x3PRO9ln/Gv/TJ8XyYzX6lKVxdJT2txKZNmdHDd15/JqFUMGLs0i14itUqvlMmRfv5/MjHZwCy62iv/c33ezoPugwyfz/Y3+RTeJEM7d53XaH6M3puGtW1/wyKTz+mlFj+n99KieZfoLN28i8Z6R73TKfN9XvW3lUUrHcrT9LqUSc2aoJ33tOe6KI2s7W4z0YPL/UyqcnAmo02Ka0naWn36pJAh6O500nwU+WA7YBatTP6b+VMpk2ok64/9xmTJNJdZOI3fJdtMsnhq++Go99bf0GcySaaZtMw6309ima+/e5TlvG7v30nh7nTSXJ/fyDbNZ7LoSiajvnT20zaTmnQvsB9kuIx1Fq5J69Umk5qbgvbmk1BaNqWSLk09Mo2OH4BatNydTpvfk8XrARNoJvKjFoXlPVvXBDL4qzr5puOGtG5sMtGD1Xgvk7q2zJehDCP33Mly3tfFzTR67k6nzfe5t5OJ/OHVzk4mSxP0dC0yumxX2rp9WWeiB2sv9zLRkWEmY/NJW5qK397k8kjWO+5Opy2ILi4uXKe3z049NpX2OhM5f/XauP+1a7LqaxFuMinC2M2k4pKU6Tj8IbPyvF0O5WDqR2TQ/tJ9/K/8nszOynOsDPdFKyyvxb5ctFwLLbaZuIP7mfjRNTMPmoMJc2slVncs2bY8WcW2ZL0/Wc205+lwNfvnTMy/ZKKj72IWpvbXP+Vz88bKvGz12NXZZLLZs8miLJ3Mxjo/ls778vDZCf/m2XHzia7hw2JtfiNfLPPxbsuTVUwjm739UOurWTEMdjMpzbE130AKN+O+2M9EZ9Xf/fxrTfNJUu9q3iZ8e3aZyOZM64teZI5kUqzFVRkEdc1kroVbmTv7a7Gut/lYp9O6rDt+fp70d1uerN1MJj1Xb0TxsUzWe7ZoLgvL3MhiJUVThtaovV1NSnu2eaWjXwTcqFkVe7buWWWyeafUkv9t+1gm6719/iHUt1D5dXgnRRo/ymWV5Mk39NdlyS9ZLAH+9BjZp6a9f3RxSjE4n0y6pXePLRkQraOZFN8BP1rb0RctsteTQj7JwKnufgdsuKVY1h17nXZM7r78FcW5ZBLELpOrpfErrvbnSCabdwXRUsII7/SVgX6SzUeYF1/s1u8KIm35kF6aP7419eJdQa6/4PQzAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA8/gKN56+loYVy0AAAAABJRU5ErkJggg=="
-                        alt="RDM-Dummy-Teaser"
-                        class="order-2 w-1/2 mb-4 ml-4" />
-                    <div class="order-1 w-1/2">
-                        <p class="leading-snug">
-                            Years of experience with the research data center
-                            PsychData have shown that data management is most
-                            effective when it is instated early, preferably
-                            concomitant with the research process.
-                        </p>
-                        <ul class="mt-4 leading-snug list-disc list-inside">
-                            <li class="mt-2 ml-2">
-                                Document your studies with style
-                            </li>
-                            <li class="mt-2 ml-2">Add and edit Codebooks</li>
-                            <li class="mt-2 ml-2">Upload materials</li>
-                            <li class="mt-2 ml-2">
-                                Export in open data formats
-                            </li>
-                        </ul>
-                    </div>
+        <div class="flex flex-col">
+            <h2 class="px-2 mt-8 text-2xl font-semibold leading-relaxed bg-mono-200">
+                Data Documentation
+            </h2>
+            <div class="flex mt-4">
+                {# <img src="https://via.placeholder.com/550x300.png/CCDDCC/999999/?text=RDM+Product+Teaser" alt="RDM-Dummy-Teaser" class="order-2 mb-4 ml-4"> #}
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAiYAAAEsBAMAAAAFk2WOAAAAG1BMVEXM3cyZmZmfoZ+ssqy/zL+yu7KlqqXF1MW4w7irKI7FAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAEk0lEQVR4nO3YzXPaRhjH8RVv4shKIDgip7Z7RPYk6REmnUmP0JROj8iNJz1C3Jlcoe7E/3afZ1eAeGk7PTgD6fdz8C7SSvb+vNpdZAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALsCK14MfSVZypGFHeqJid2ef394nZ0fu1vNekdPng3XZ9spKslcMxnoibyUiR0fXPdVZxJPp9NcOqGVGzvTTPpyPLR2c/6V7R5ct9/twDUJb29f2dvb22f+o5+Z60uYDnxl0tFMtNZcZ6IfPsYH1x3PRO9ln/Gv/TJ8XyYzX6lKVxdJT2txKZNmdHDd15/JqFUMGLs0i14itUqvlMmRfv5/MjHZwCy62iv/c33ezoPugwyfz/Y3+RTeJEM7d53XaH6M3puGtW1/wyKTz+mlFj+n99KieZfoLN28i8Z6R73TKfN9XvW3lUUrHcrT9LqUSc2aoJ33tOe6KI2s7W4z0YPL/UyqcnAmo02Ka0naWn36pJAh6O500nwU+WA7YBatTP6b+VMpk2ok64/9xmTJNJdZOI3fJdtMsnhq++Go99bf0GcySaaZtMw6309ima+/e5TlvG7v30nh7nTSXJ/fyDbNZ7LoSiajvnT20zaTmnQvsB9kuIx1Fq5J69Umk5qbgvbmk1BaNqWSLk09Mo2OH4BatNydTpvfk8XrARNoJvKjFoXlPVvXBDL4qzr5puOGtG5sMtGD1Xgvk7q2zJehDCP33Mly3tfFzTR67k6nzfe5t5OJ/OHVzk4mSxP0dC0yumxX2rp9WWeiB2sv9zLRkWEmY/NJW5qK397k8kjWO+5Opy2ILi4uXKe3z049NpX2OhM5f/XauP+1a7LqaxFuMinC2M2k4pKU6Tj8IbPyvF0O5WDqR2TQ/tJ9/K/8nszOynOsDPdFKyyvxb5ctFwLLbaZuIP7mfjRNTMPmoMJc2slVncs2bY8WcW2ZL0/Wc205+lwNfvnTMy/ZKKj72IWpvbXP+Vz88bKvGz12NXZZLLZs8miLJ3Mxjo/ls778vDZCf/m2XHzia7hw2JtfiNfLPPxbsuTVUwjm739UOurWTEMdjMpzbE130AKN+O+2M9EZ9Xf/fxrTfNJUu9q3iZ8e3aZyOZM64teZI5kUqzFVRkEdc1kroVbmTv7a7Gut/lYp9O6rDt+fp70d1uerN1MJj1Xb0TxsUzWe7ZoLgvL3MhiJUVThtaovV1NSnu2eaWjXwTcqFkVe7buWWWyeafUkv9t+1gm6719/iHUt1D5dXgnRRo/ymWV5Mk39NdlyS9ZLAH+9BjZp6a9f3RxSjE4n0y6pXePLRkQraOZFN8BP1rb0RctsteTQj7JwKnufgdsuKVY1h17nXZM7r78FcW5ZBLELpOrpfErrvbnSCabdwXRUsII7/SVgX6SzUeYF1/s1u8KIm35kF6aP7419eJdQa6/4PQzAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA8/gKN56+loYVy0AAAAABJRU5ErkJggg=="
+                     alt="RDM-Dummy-Teaser"
+                     class="order-2 w-1/2 mb-4 ml-4"/>
+                <div class="order-1 w-1/2">
+                    <p class="leading-snug">
+                        Years of experience with the research data center
+                        PsychData have shown that data management is most
+                        effective when it is instated early, preferably
+                        concomitant with the research process.
+                    </p>
+                    <ul class="mt-4 leading-snug list-disc list-inside">
+                        <li class="mt-2 ml-2">Document your studies with style</li>
+                        <li class="mt-2 ml-2">Add and edit Codebooks</li>
+                        <li class="mt-2 ml-2">Upload materials</li>
+                        <li class="mt-2 ml-2">Export in open data formats</li>
+                    </ul>
                 </div>
-                <button class="self-center px-3 py-1 mt-6 mb-8 text-xl font-normal"
-                    onclick="location.href='{{ path("Security-login") }}';">
-                    Start using DataWiz - it's free!
-                </button>
             </div>
+            <button class="self-center mt-6 mb-8 text-xl Button Button_primary Button_primary_go Button_standalone"
+                    onclick="location.href='{{ path("Security-login") }}';">
+                Start using DataWiz - it's free!
+            </button>
+        </div>
 
-            <div class="relative mt-4 mb-6">
-                <h2 class="px-2 text-2xl font-semibold leading-relaxed bg-mono-200">
-                    Ethics application forms
-                </h2>
-                <span class="absolute px-2 border border-gray-300 top-1.5 right-2 bg-yellow-50">
+        <div class="relative mt-4 mb-6">
+            <h2 class="px-2 text-2xl font-semibold leading-relaxed bg-mono-200">
+                Ethics application forms
+            </h2>
+            <span class="absolute px-2 border border-gray-300 top-1.5 right-2 bg-yellow-50">
                     Coming Soon!
                 </span>
-                <div class="flex mt-4">
-                    {# <img src="https://via.placeholder.com/550x300.png/DDCCCC/999999/?text=Ethics+Product+Teaser" alt="Ethics-Dummy-Teaser" class="order-2 mb-4 ml-4"> #}
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAiYAAAEsBAMAAAAFk2WOAAAAG1BMVEXdzMyZmZmhn5/Mv7/UxcW7srKqpaWyrKzDuLhfqn85AAAACXBIWXMAAA7EAAAOxAGVKw4bAAADjklEQVR42u3YT1PaQBjH8Q1E4chGDB4TR6vHINP2GjRqj2CdntmxL4C0dnqFQ9u33Wd3IxLQOtOZHmK/n0MqTx6Zya/7LyoFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADw17TVkx9avefuR5ONWpBsdoXua3T2qjKJqky2krG34z9mEr26TKKRyJ7PJCqKt3rxUiZqNDrbG43yV5LJwz8+jZ3JE/eXsxczeXbuvYJMnry/uX78H5lMddzqvYvu3ZNdp3f2cpI/3JdikNxMwi+xlLrmNEhsmyRjO6fVcuMzkZ6FXKI7+6N8ny+oaOe4cZnc6JPWgeww9snadrEMU62P1sZJcKonQ633ZCJpvawycZ3yq2uZSM+BOnfLrVyj3BdUtNxv5NzRdxfpRJ6sNSjKpDPIrwZr60kQHWfp/bV80rfvdZWJ66zPnfT+MlLTz6qcqfI+NHNfUPrwY9P2YrfvyBQYzuTJhjO127dPGK32nUwFsepKg1l0Jam0ysR11jKxd6cLk6ugp1Lb4gtKz1QjM5EhPrYPW2aqexr0lSrWzifBnurIxBnOd+U6rTJxnbVMJCI1nv9QNhOdqzD3BdWsk4uMg6Jwc6fvpkNPGVve1V9r51h5RpeDHUg+Omk2W/tOq18UYxkTF6V8zyBbFXRz92KXSer2j1Q/7jvVMmsbesFaJulWJoEdVknb2KPxuZZ9xxceehqbif8/7ZZ2k9nOZNUmV72Vydi9KQyjb2fy6ZdMyvHDq0Pzx4kdIj/jeia7G3NnnPjO2jhxm4+ZVCuumflC4zMxmdrZ68yVHzCPmVRrrCw7Q5fJMHGdG+uJJLFIXTjf3bByhcZnMp3Lo9lnieqZVHuxHL7KxCZTJq6zlklH7i7nEuZSxpvsyIkvNC0T/16s81UmwX5hZp04ux7UM1H+zJZmbS1HOtXVieu0e+4qk1DfftCZWVzqvirvwnLuCw3LxJ1P+srEq0y6UsjtH0SONjKpzvaxKZNQn6TTxHXKr66dY6da79vj/ye3vMrZ3hWamcnZ4HFDse+CtXfAKpPQxHLiaJuBfLhK5U3Qd54N1jLpmjdykEtP24eZfwd0hYZlAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/3G/yxn+S5+/GmQAAAABJRU5ErkJggg=="
-                        alt="Ethics-Dummy-Teaser"
-                        class="order-1 w-1/2 mb-4 mr-4" />
-                    <div class="order-2 w-1/2">
-                        <p class="leading-snug">
-                            Intro text about ethics application forms goes here
-                        </p>
-                        <ul class="mt-4 leading-snug list-disc list-inside">
-                            <li class="mt-2 ml-2">
-                                Write ethics approval applications with style
-                            </li>
-                            <li class="mt-2 ml-2">Get help while doing so</li>
-                        </ul>
-                    </div>
+            <div class="flex mt-4">
+                {# <img src="https://via.placeholder.com/550x300.png/DDCCCC/999999/?text=Ethics+Product+Teaser" alt="Ethics-Dummy-Teaser" class="order-2 mb-4 ml-4"> #}
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAiYAAAEsBAMAAAAFk2WOAAAAG1BMVEXdzMyZmZmhn5/Mv7/UxcW7srKqpaWyrKzDuLhfqn85AAAACXBIWXMAAA7EAAAOxAGVKw4bAAADjklEQVR42u3YT1PaQBjH8Q1E4chGDB4TR6vHINP2GjRqj2CdntmxL4C0dnqFQ9u33Wd3IxLQOtOZHmK/n0MqTx6Zya/7LyoFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADw17TVkx9avefuR5ONWpBsdoXua3T2qjKJqky2krG34z9mEr26TKKRyJ7PJCqKt3rxUiZqNDrbG43yV5LJwz8+jZ3JE/eXsxczeXbuvYJMnry/uX78H5lMddzqvYvu3ZNdp3f2cpI/3JdikNxMwi+xlLrmNEhsmyRjO6fVcuMzkZ6FXKI7+6N8ny+oaOe4cZnc6JPWgeww9snadrEMU62P1sZJcKonQ633ZCJpvawycZ3yq2uZSM+BOnfLrVyj3BdUtNxv5NzRdxfpRJ6sNSjKpDPIrwZr60kQHWfp/bV80rfvdZWJ66zPnfT+MlLTz6qcqfI+NHNfUPrwY9P2YrfvyBQYzuTJhjO127dPGK32nUwFsepKg1l0Jam0ysR11jKxd6cLk6ugp1Lb4gtKz1QjM5EhPrYPW2aqexr0lSrWzifBnurIxBnOd+U6rTJxnbVMJCI1nv9QNhOdqzD3BdWsk4uMg6Jwc6fvpkNPGVve1V9r51h5RpeDHUg+Omk2W/tOq18UYxkTF6V8zyBbFXRz92KXSer2j1Q/7jvVMmsbesFaJulWJoEdVknb2KPxuZZ9xxceehqbif8/7ZZ2k9nOZNUmV72Vydi9KQyjb2fy6ZdMyvHDq0Pzx4kdIj/jeia7G3NnnPjO2jhxm4+ZVCuumflC4zMxmdrZ68yVHzCPmVRrrCw7Q5fJMHGdG+uJJLFIXTjf3bByhcZnMp3Lo9lnieqZVHuxHL7KxCZTJq6zlklH7i7nEuZSxpvsyIkvNC0T/16s81UmwX5hZp04ux7UM1H+zJZmbS1HOtXVieu0e+4qk1DfftCZWVzqvirvwnLuCw3LxJ1P+srEq0y6UsjtH0SONjKpzvaxKZNQn6TTxHXKr66dY6da79vj/ye3vMrZ3hWamcnZ4HFDse+CtXfAKpPQxHLiaJuBfLhK5U3Qd54N1jLpmjdykEtP24eZfwd0hYZlAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/3G/yxn+S5+/GmQAAAABJRU5ErkJggg=="
+                     alt="Ethics-Dummy-Teaser"
+                     class="order-1 w-1/2 mb-4 mr-4"/>
+                <div class="order-2 w-1/2">
+                    <p class="leading-snug">
+                        Intro text about ethics application forms goes here
+                    </p>
+                    <ul class="mt-4 leading-snug list-disc list-inside">
+                        <li class="mt-2 ml-2">
+                            Write ethics approval applications with style
+                        </li>
+                        <li class="mt-2 ml-2">Get help while doing so</li>
+                    </ul>
                 </div>
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
 {% endblock %}

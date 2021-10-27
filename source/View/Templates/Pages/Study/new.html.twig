@@ -7,14 +7,40 @@
 {% endblock %}
 
 {% block body %}
-    <div class="col-span-full xl:col-start-3 xl:col-end-11">
-        <main>
-            <h2 class="mt-6 text-2xl font-semibold">
-                {{ "title.new.h2"|trans }}
-            </h2>
-            <div class="mt-6">
-                {{ form(form) }}
-            </div>
-        </main>
-    </div>
+
+    <main class="max-w-screen-xl mx-auto mt-12 min-h-[calc(100%-12.5rem)] px-8">
+        <h2 class="text-3xl font-bold text-zpid-purple-700">
+            {{ "title.new.title"|trans }}
+        </h2>
+
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        <div class="mt-6">
+            {{ form_label(form.shortName, null, {
+                'label': 'input.study-name.label',
+                'label_attr': {
+                    'class': 'block max-w-prose'
+                },
+            }) }}
+            {{ form_errors(form.shortName) }}
+            {{ form_widget(form.shortName, {
+                'attr': {
+                    'class': 'w-full sm:w-1/2 block mt-1',
+                    'x-init': '$el.focus()',
+                }
+            }) }}
+        </div>
+
+
+        {{ form_widget(form.submit, {
+            'label': 'Create study',
+            'attr': {
+                'class': 'Button Button_primary Button_primary_act Button_standalone mt-4',
+            }
+        }) }}
+
+        {{ form_end(form) }}
+    </main>
+
 {% endblock %}

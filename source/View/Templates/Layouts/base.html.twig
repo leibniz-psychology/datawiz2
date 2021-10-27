@@ -4,14 +4,20 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="shortcut icon" href="/favicon.ico"/>
-    <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico"/>
-    <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
-    <link rel="icon" href="/favicon.ico"/>
+    {% include "Layouts/_favico.html.twig" %}
+    {# TODO: create svg logo, so zilla-slab font can be removed #}
+    <link rel="preload" href="{{ asset('build/fonts/Zilla_Slab-normal-400.woff') }}" as="font" crossorigin="">
+    <link rel="preload" href="{{ asset('build/fonts/Zilla_Slab-normal-600.woff') }}" as="font" crossorigin="">
+    <link rel="preload" href="{{ asset('build/fonts/Open_Sans-normal-400.woff') }}" as="font" crossorigin="">
+    <link rel="preload" href="{{ asset('build/fonts/Open_Sans-normal-500.woff') }}" as="font" crossorigin="">
+    <link rel="preload" href="{{ asset('build/fonts/Open_Sans-normal-600.woff') }}" as="font" crossorigin="">
+    <link rel="preload" href="{{ asset('build/fonts/Open_Sans-normal-700.woff') }}" as="font" crossorigin="">
     <title>
-        {% block title %}
-            Welcome!
-        {% endblock %}
+        {% if block("title") is defined %}
+            {{ block("title") }} - DataWiz
+        {% else %}
+            DataWiz - Research data management made easy!
+        {% endif %}
     </title>
     {% block stylesheets %}
         {{ encore_entry_link_tags("app") }}
@@ -22,33 +28,20 @@
     <script src="https://code.iconify.design/2/2.0.3/iconify.min.js" defer></script>
 </head>
 <body>
-<div class="grid grid-cols-12 px-2 mx-auto bg-white gap-x-4 gap-y-1 SiteContainer">
-    {% block header %}
-        <header class="grid grid-cols-12 border-2 h-14 col-span-full border-mono-500 bg-mono-300">
-            <div class="flex col-start-1 col-end-3">
-                <a class="flex items-center h-full px-2 pr-6 mr-1 font-serif text-3xl text-white bg-gradient-to-r from-indigo-500 to-yellow-500 hover:to-indigo-500 hover:from-yellow-500"
-                   href="/">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         aria-hidden="true"
-                         width="1em"
-                         height="1em"
-                         style="-ms-transform:rotate(360deg);-webkit-transform:rotate(360deg)"
-                         viewbox="0 0 16 16"
-                         transform="rotate(360)">
-                        <path fill="currentColor"
-                              d="M0 5h3v1H0V5zM5 0h1v3H5V0zM6 11H5V8.5l1 1zM11 6H9.5l-1-1H11zM3.131 7.161l.707.707-2.97 2.97-.707-.707 2.97-2.97zM10.131.161l.707.707-2.97 2.97-.707-.707 2.97-2.97zM.836.199l3.465 3.465-.707.707L.129.906.836.199zM6.1 4.1L4 6.1l9.8 9.9 2.2-2.1-9.9-9.8zm0 1.4L8.5 8l-.6.6-2.5-2.5.7-.6z"/>
-                    </svg>
-                    <span class="ml-1 font-bold">
-                                Data
-                            </span>Wiz<span class="ml-1 text-sm italic place-self-end">next</span>
-                </a>
+{% block header %}
+    <div class="bg-gradient-to-r from-[#240d46] to-zpid-purple-700">
+        <header class="flex w-full max-w-screen-xl mx-auto border-b bg-mono-50 h-14 border-mono-300">
+            <a class="flex flex-row items-center px-8 font-serif text-3xl text-white bg-zpid-blue" href="/">
+                <span class="font-semibold">Data</span>Wiz
+            </a>
+            <div class="flex w-full pl-6 pr-8">
+                {{ include("Components/_navigationHeader.html.twig") }}
+                {{ include("Components/_userProfileReference.html.twig") }}
             </div>
-            {{ include("Components/_navigationHeader.html.twig") }}
-            {{ include("Components/_userProfileReference.html.twig") }}
         </header>
-    {% endblock %}
-    {% block body %}{% endblock %}
-    {{ include("Components/_footer.html.twig") }}
-</div>
+    </div>
+{% endblock %}
+{% block body %}{% endblock %}
+{{ include("Components/_footer.html.twig") }}
 </body>
 </html>

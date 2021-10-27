@@ -3,7 +3,7 @@ export default {
     this.filterText = text;
   },
   getOriginalVariable(id) {
-    return this.variables.filter((variable) => variable.id === id)[0];
+    return this.variables.find((variable) => variable.id === id);
   },
   cloneVariables() {
     return JSON.parse(JSON.stringify(this.variables));
@@ -29,9 +29,9 @@ export default {
   getCurrentVariable() {
     let currVar = {};
     if (this.variables.length > 0)
-      currVar = this.variables.filter(
+      currVar = this.variables.find(
         (variable) => variable.id === this.currentVariableID
-      )[0];
+      );
     return currVar;
   },
   getPreviousVariableID() {

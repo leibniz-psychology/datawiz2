@@ -4,14 +4,17 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="shortcut icon" href="/favicon.ico"/>
-    <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico"/>
-    <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
-    <link rel="icon" href="/favicon.ico"/>
+    {% include "Layouts/_favico.html.twig" %}
+    <link rel="preload" href="{{ asset('build/fonts/Open_Sans-normal-400.woff') }}" as="font" crossorigin="">
+    <link rel="preload" href="{{ asset('build/fonts/Open_Sans-normal-500.woff') }}" as="font" crossorigin="">
+    <link rel="preload" href="{{ asset('build/fonts/Open_Sans-normal-600.woff') }}" as="font" crossorigin="">
+    <link rel="preload" href="{{ asset('build/fonts/Open_Sans-normal-700.woff') }}" as="font" crossorigin="">
     <title>
-        {% block title %}
-            Welcome!
-        {% endblock %}
+        {% if block("title") is defined %}
+            {{ block("title") }} - DataWiz
+        {% else %}
+            DataWiz - Research data management made easy!
+        {% endif %}
     </title>
     {% block stylesheets %}
         {{ encore_entry_link_tags("app") }}
@@ -23,8 +26,9 @@
     <script src="https://code.iconify.design/2/2.0.3/iconify.min.js" defer></script>
 </head>
 <body>
-<div class="grid grid-cols-12 mx-auto bg-white SiteContainer"
-     x-data="{...codebook(), url: '{{ path('codebook_dataupdate', {uuid: codebook.id}) }}', id: '{{ codebook.id }}', measuresURL: '{{ path('codebook_measures', {uuid: codebook.id}) }}' }">
+<div class="grid grid-cols-12 bg-white SiteContainer"
+     x-data="{...codebook(), url: '{{ path('codebook_dataupdate', {uuid: codebook.id}) }}', id: '{{ codebook.id }}', measuresURL: '{{ path('codebook_measures', {uuid: codebook.id}) }}', matrixURL: '{{ path('codebook_matrix', {uuid: codebook.id}) }}' }"
+     x-init="loadMatrix(); $store.codebook.activeTab = 'matrix'">
     {% block header %}
         <header class="sticky top-0 z-10 flex items-center w-full border-2 h-14 border-mono-500 bg-mono-300 col-span-full">
 
@@ -41,15 +45,32 @@
                         </span>Wiz<span class="ml-1 text-sm italic place-self-start">next</span>
             </a>
 
-            <div class="relative ml-2" @keyup.escape="$store.codebook.filterText = ''">
+            <div class="flex items-center ml-3">
+                <button class="flex items-center flex-shrink-0 ml-2"
+                        @click="$store.codebook.activeTab = 'matrix'; loadMatrix()">
+                    <svg class="w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                         style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet"
+                         viewBox="0 0 24 24">
+                        <path d="M4 3h14l2.707 2.707a1 1 0 0 1 .293.707V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm3 1v5h9V4H7zm-1 8v7h12v-7H6zm7-7h2v3h-2V5z"
+                              fill="currentColor"></path>
+                    </svg>
+                    Data matrix
+                </button>
+                <button class="ml-2" @click="$store.codebook.activeTab = 'codebook'">
+                    Codebook
+                </button>
+            </div>
+
+            <div class="relative ml-2" @keyup.escape="$store.codebook.filterText = ''"
+                 x-show="$store.codebook.activeTab === 'codebook'">
                 <label for="filter" class="mr-1">{{ "generic.search"|trans }}:</label>
                 <input x-data="{tooltip: '{{ 'codebook.search.tooltip'|trans }}'}" type="text" name=""
                        id="filter" placeholder="{{ 'codebook.search.placeholder'|trans }}"
-                       x-model="$store.codebook.filterText"
+                       x-model.debounce="$store.codebook.filterText"
                        class="!pl-4 !pr-7 !py-[0.1875rem] border rounded-full border-mono-500"
 
                        x-tooltip.on.focus.placement.right.theme.light-border="tooltip">
-                {# TODO remove styling (padding, bg, rounded, shadow) from generic buttons and style buttons individually #}
                 <button aria-label="{{ "generic.clear-search"|trans }}"
                         class="absolute top-0 bottom-0 right-0 flex items-center w-6 p-0 my-1 mr-2 bg-transparent border-none rounded-none shadow-none hover:bg-transparent"
                         @click="$store.codebook.filterText = ''" x-show="$store.codebook.filterText !== ''" x-cloak>
@@ -67,7 +88,8 @@
 
             <div class="flex items-center justify-center ml-auto mr-3">
                 {{ codebook.id }}
-                <button class="flex items-center flex-shrink-0 ml-2" @click="save()">
+                <button class="flex items-center flex-shrink-0 ml-3 Button Button_primary Button_primary_act Button_standalone"
+                        @click="save()" type="button">
                     {# Icon: ri:save-3-fill #}
                     <svg class="w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg"
                          xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
@@ -79,7 +101,7 @@
                     {{ "generic.save-changes"|trans }}
                 </button>
                 {# <button class="ml-2" @click="$store.codebookSettings.showHelp.sideBar = !$store.codebookSettings.showHelp.sideBar" x-text="$store.codebookSettings.showHelp.sideBar ? 'Hide Help' : 'Show Help'"> #}
-                <button class="ml-2"
+                <button class="ml-2 Button Button_secondary Button_secondary_act Button_standalone" type="button"
                         @click="$store.codebookSettings.showHelp.sideBar = !$store.codebookSettings.showHelp.sideBar">
                     {{ "generic.help"|trans }}
                 </button>

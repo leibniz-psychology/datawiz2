@@ -10,6 +10,8 @@ use App\Questionnaire\Forms\FileDescriptionType;
 use App\Questionnaire\Questionable;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * @ORM\Entity()
@@ -38,33 +40,43 @@ class AdditionalMaterial extends UuidEntity implements Questionable
 
     /**
      * @ORM\Column(type="string", length=256)
+     * @SerializedName("original_name")
+     * @Groups({"material"})
      */
     private string $originalName;
 
     /**
      * @ORM\Column(type="string", length=256)
+     * @SerializedName("original_mimetype")
+     * @Groups({"material"})
      */
     private string $originalMimetype;
 
     /**
      * @ORM\Column(type="datetime")
+     * @SerializedName("uploaded")
+     * @Groups({"material"})
      */
     private ?DateTime $dateUploaded = null;
 
     /**
      * @ORM\Column(type="integer")
+     * @SerializedName("original_size")
+     * @Groups({"material"})
      */
     private int $originalSize = 0;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @SerializedName("description")
+     * @Groups({"material"})
+     */
+    private ?string $description = null;
 
     /**
      * @ORM\Column(type="string", length=256)
      */
     private string $storageName;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private ?string $description = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Domain\Model\Study\Experiment", inversedBy="additionalMaterials")

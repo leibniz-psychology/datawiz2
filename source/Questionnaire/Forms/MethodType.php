@@ -40,6 +40,7 @@ class MethodType extends AbstractType
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
                     'class' => 'MetaData-TextInput disabled:opacity-50',
+                    'rows' => '3',
                     'x-data' => '',
                     ':disabled' => '$store.app.settingType === `Artificial setting` || $store.app.settingType === undefined',
                 ],
@@ -118,7 +119,10 @@ class MethodType extends AbstractType
                 'required' => false,
                 'label' => 'input.manipulations.label',
                 'label_attr' => ['class' => 'MetaData-Label'],
-                'attr' => ['class' => 'MetaData-TextInput'],
+                'attr' => [
+                    'class' => 'MetaData-TextInput',
+                    'rows' => '5',
+                ],
             ])
             ->add(MetaDataDictionary::EXPERIMENTAL_DESIGN, ChoiceType::class, [
                 'required' => false,
@@ -156,6 +160,7 @@ class MethodType extends AbstractType
             ->add("otherControlOperations", TextareaType::class, [
                 'required' => false,
                 'label' => 'input.control-operations.other.label',
+                'attr' => ['class' => 'p-1', 'rows' => '4',],
             ]);
     }
 

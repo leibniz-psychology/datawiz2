@@ -129,24 +129,16 @@ the form.
                                 $nextTick(() => {document.querySelector(`.CodeInput_${type}_${ {{ options.labels }}.length - 1}`).focus()});
                             }"
                            x-model="item.label">
-                    <button title="{{ 'generic.remove'|trans }}" class="h-full ml-1 hover:text-mono-500"
+                    <button title="{{ 'generic.remove'|trans }}"
+                            class="!rounded-l-none !py-1.5 Button Button_tertiary Button_tertiary_danger Button_fieldSize"
                             @click="if ({{ options.labels }}.length > 1) {{ options.labels }}.splice(index, 1); else if ({{ options.labels }}.length === 1) { {{ options.labels }}[index] = {name: '', label: ''} };">
-                        {# <span class="iconify" data-icon="clarity:remove-solid" data-inline="false"></span> #}
-                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
-                             xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em"
-                             height="1em"
-                             style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);"
-                             preserveaspectratio="xMidYMid meet" viewbox="0 0 36 36">
-                            <path class="clr-i-solid clr-i-solid-path-1"
-                                  d="M18 2a16 16 0 1 0 16 16A16 16 0 0 0 18 2zm8 22.1a1.4 1.4 0 0 1-2 2l-6-6l-6 6.02a1.4 1.4 0 1 1-2-2l6-6.04l-6.17-6.22a1.4 1.4 0 1 1 2-2L18 16.1l6.17-6.17a1.4 1.4 0 1 1 2 2L20 18.08z"
-                                  fill="currentColor"/>
-                        </svg>
+                        <span class="iconify-inline" data-icon="mi:delete"></span>
                     </button>
                 </div>
             </div>
         </template>
         <div class="mt-2">
-            <button class="flex items-center"
+            <button class="flex items-center Button Button_secondary Button_secondary_act Button_fieldSize"
                     @click="{{ options.labels }}.push({name: '', label: ''}); $nextTick(() => {document.querySelector(`.CodeInput_${type}_${ {{ options.labels }}.length - 1}`).focus()})">
                 {# Icon: fluent:add-20-regular #}
                 <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -229,7 +221,7 @@ the form.
                x-show="showInput || descriptionText !== ''" x-cloak>{{ "generic.description"|trans }}</label>
         <button @click="showInput = true; focusInput('#file-desc-{{ loopIndex }}');" type="button"
                 x-text="descriptionText === '' ? '{{ "title.dataset.description.add"|trans }}' : '{{ "title.dataset.description.edit"|trans }}'"
-                x-show="!showInput" x-cloak>
+                x-show="!showInput" x-cloak class="Button Button_secondary Button_secondary_act Button_fieldSize">
             {% if file.description %}
                 {{ "title.dataset.description.edit"|trans }}
             {% else %}
@@ -243,9 +235,9 @@ the form.
             <textarea x-ref="descriptionInput" rows="3" id="file-desc-{{ loopIndex }}" name="file-desc-{{ loopIndex }}"
                       class="w-full file-desc-textarea">{{ file.description }}</textarea>
             <div class="">
-                <button class="px-2 py-0.5 border rounded border-mono-300"
+                <button class="Button Button_secondary Button_secondary_act Button_fieldSize"
                         @click="saveDescription(`{{ updateURL }}`, $refs.descriptionInput.value); descriptionText = $refs.descriptionInput.value; showInput = false">{{ "generic.save-changes"|trans }}</button>
-                <button class="px-2 py-0.5 border rounded border-mono-300"
+                <button class="Button Button_tertiary Button_tertiary_act Button_fieldSize"
                         @click="showInput = false">{{ "generic.cancel"|trans }}</button>
             </div>
         </div>

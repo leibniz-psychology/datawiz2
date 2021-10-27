@@ -8,45 +8,32 @@
 
 <div class="WizNavBar">
     {% if options.prevUrl != '' %}
-        <a class="flex items-center self-center px-2 py-1 mt-2 underline justify-self-start"
+        <a class="flex items-center self-center underline justify-self-start Button Button_tertiary Button_tertiary_go Button_standalone"
            href="{{ options.prevUrl }}">
             <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" class="arrow-left w-4 h-4 mr-1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
             </svg>{{ options.prevTitle }}
         </a>
-    {% else %}
-        {# empty span hack is needed so grid layout works #}
-        <span></span>
     {% endif %}
 
-    {% if form is defined and form is not null%}
+    {% if form is defined and form is not null %}
         {{ form_widget(form.submit, {
-            'label': 'generic.save',
+            'label': 'generic.save-changes',
             'attr': {
-                'class': 'MetaData-SubmitButton',
+                'class': 'MetaData-SubmitButton Button Button_primary Button_primary_act Button_standalone',
             }
         }) }}
     {% endif %}
 
-    {# {% if options.nextUrl != '' %}
-            <button class="flex items-center self-center px-2 py-1 mt-2 bg-white border rounded-md justify-self-end border-mono-400 hover:bg-mono-200" onclick="location.href='{{ options.nextUrl }}';" role="link" type="button">
-                {{ options.nextTitle }}
-                <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" class="arrow-right w-4 h-4 ml-1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                </svg>
-            </button> #}
-    {% if options.nextUrl != '' %}
-        <a class="flex items-center self-center px-2 py-1 mt-2 underline justify-self-end "
-           href="{{ options.nextUrl }}">
+    {% if options.nextUrl is defined and options.nextUrl is not null %}
+        <a class="flex items-center self-center underline justify-self-end Button Button_tertiary Button_tertiary_go Button_standalone"
+           href="{{ options.nextUrl }}" role="button">
             {{ options.nextTitle }}
             <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" class="arrow-right w-4 h-4 ml-1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
             </svg>
         </a>
-    {% else %}
-        {# empty span hack is needed so grid layout works #}
-        <span></span>
     {% endif %}
 </div>

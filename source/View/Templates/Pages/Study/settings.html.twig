@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-    <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
+    <h2 class="MetaDataGroup-Title">
         {{ "title.settings.title"|trans }}
     </h2>
 
@@ -21,21 +21,33 @@
             </legend>
 
         </div>
-        {{ form_label(form.shortName) }}
+        <div class="MetaData-Label">
+            {{ form_label(form.shortName, null, {
+                'label': 'input.study-name.label',
+                'label_attr': {
+                    'class': 'block max-w-prose'
+                },
+            }) }}
+        </div>
         {{ form_errors(form.shortName) }}
-        <div class="w-1/2 MetaData-Widget">
-            {{ form_widget(form.shortName) }}
+        <div class="mt-1 md:items-center md:flex MetaData-Widget">
+            {{ form_widget(form.shortName, {
+                'attr': {
+                    'class': 'w-full md:w-3/4',
+                    'x-init': '$el.focus()',
+                }
+            }) }}
+            {{ form_widget(form.submit, {
+                'attr': {
+                    'class': 'Button Button_primary Button_primary_act Button_standalone mt-1 md:mt-0 md:ml-2',
+                },
+                'label': "generic.rename"
+            }) }}
         </div>
     </fieldset>
 
-    {{ form_widget(form.submit, {
-        'attr': {
-            'class': 'mx-6 mt-4',
-        },
-        'label': "generic.save"
-    }) }}
 
-    <fieldset class="mt-8 mb-8" x-data="modal()" @keydown.window.escape="hide()">
+    <fieldset class="pb-8 mt-[6.25rem]" x-data="modal()" @keydown.window.escape="hide()">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
                 {{ "input.danger-zone.legend"|trans }}
@@ -51,7 +63,7 @@
                 <div class="mt-2">
                     {{ "input.danger-zone.delete.description"|trans }}
                 </div>
-                <button class="inline-flex items-center self-start px-2 mt-4 border rounded hover:text-red-700 hover:bg-red-50 border-mono-300 hover:border-red-700"
+                <button class="inline-flex items-center self-start mt-4 Button Button_secondary Button_secondary_danger Button_standalone"
                         @click="show()" type="button">
                     <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
                          xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
@@ -80,16 +92,17 @@
                 </div>
 
                 <div class="Modal-Body">
-                    {{ "title.dataset.deleteModal.body"|trans({'#datasetName#':"<span class='font-semibold'>" ~ experiment.settingsMetaDataGroup.shortName ~ "</span>"})|raw }}
+                    {{ "title.settings.deleteModal.body"|trans({'#studyName#':"<span class='font-semibold'>" ~ experiment.settingsMetaDataGroup.shortName ~ "</span>"})|raw }}
                 </div>
 
                 <div class="Modal-Footer">
-                    <button class="Modal-Button_warning" type="button"
+                    <button class="Button Button_primary Button_primary_danger Button_standalone" type="button"
                             @click="window.location.href='{{ path('Study-delete', { "uuid": experiment.id }) }}'"
                     >
                         {{ "title.settings.deleteModal.confirm"|trans }}
                     </button>
-                    <button class="Modal-Button_cancel" type="button" x-ref="focusFirst" @click="hide()">
+                    <button class="ml-2 Button Button_tertiary Button_tertiary_act Button_standalone" type="button"
+                            x-ref="focusFirst" @click="hide()">
                         {{ "generic.cancel"|trans }}
                     </button>
                 </div>

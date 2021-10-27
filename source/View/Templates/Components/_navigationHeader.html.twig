@@ -1,20 +1,20 @@
 {% if app.user %}
-    <div class="flex items-center col-start-3 col-end-11">
+    <div class="flex h-full mr-auto">
         <a href="{{ path("dashboard") }}"
-            class="flex px-1 pt-1 pb-1 text-base border-b-4 border-transparent hover:border-mono-600
-            {{- app.request.pathinfo == path("dashboard") ? ' border-mono-600' -}}">
+           class="flex items-center ring-inset px-3 pt-1 h-full text-base border-b-4 border-transparent hover:border-zpid-blue
+            {{- app.request.pathinfo == path("dashboard") ? ' border-zpid-blue font-semibold' -}}">
             <span class="iconify iconify--mdi mr-0.5 h-4 w-4 self-center"
-                data-icon="mdi:view-grid">
+                  data-icon="mdi:view-grid">
 
             </span>
             Dashboard
         </a>
 
         <a href="{{ path("Study-overview") }}"
-            class="px-1 pt-1 pb-1 ml-8 text-base border-b-4 hover:border-mono-600 border-transparent
-            {{- isPartOfStudyDocumentation|default(false) ? ' border-mono-600' -}}">
+           class="flex items-center ring-inset h-full px-3 ml-4 text-base pt-1 border-b-4 border-transparent hover:border-zpid-blue
+            {{- isPartOfStudyDocumentation|default(false) ? ' border-zpid-blue font-semibold' -}}">
             <div>
-                Study Documentation
+                Data documentation
             </div>
         </a>
     </div>

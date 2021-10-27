@@ -27,6 +27,7 @@ class ReviewController extends DataWizController
         $entityAtChange = $this->getEntityAtChange($uuid);
 
         return $this->render('Pages/Review/index.html.twig', [
+            'experiment' => $this->getEntityAtChange($uuid),
             'experimentName' => $entityAtChange->getSettingsMetaDataGroup()->getShortName(),
             'basicInfoReview' => $entityAtChange->getBasicInformationMetaDataGroup()->getReviewCollection(),
             'basicCreatorInfoReview' => $entityAtChange->getBasicInformationMetaDataGroup()->getCreators(),

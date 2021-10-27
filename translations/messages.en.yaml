@@ -1,34 +1,32 @@
 title:
+  overview:
+    title: 'Data documentation'
+    
   new:
-    title: 'Create new Study'
-    h2: 'New Study'
+    title: 'Create new study'
   introduction:
-    title: 'Datasets for your Study'
-    h2: 'Getting Started'
+    title: 'Getting Started'
     h3_1: 'Step-by-step'
     h3_2: 'Get help'
     help: "Hit the help button #helpBtn# next to a topic if something's unclear. A\
       \ help text will appear on the right side of the screen. There you'll find practical\
       \ examples and online resources that help clear things up."
+  describe-study:
+    title: 'Describe your study'
   basic:
-    title: 'General Information'
-    h2: 'General dataset description'
+    title: 'Resource description'
   theroies:
-    title: 'Theories for your Study'
-    h2: 'Objectives & hypotheses'
+    title: 'Study goals'
   method:
-    title: 'Methods of your Study'
-    h2: 'Study method'
+    title: 'Study method'
   measures:
-    title: 'Measurements for your Study'
-    h2: 'Data collection'
+    title: 'Data collection'
   samples:
-    title: 'Samples for your Study'
-    h2: 'Sampling'
+    title: 'Sampling'
   dataset:
-    title: 'Datasets for your Study'
-    h2: 'Datasets for the Study'
-    h3: 'Already uploaded'
+    title: 'Upload and describe datasets'
+    title-short: 'Upload datasets'
+    h3: 'Uploaded datasets'
     deleteModal:
       title: 'Are you absolutely sure?'
       body: 'This action cannot be undone. This will permanently delete the #datasetName#
@@ -42,13 +40,18 @@ title:
       date: 'Upload date'
       size: 'File size'
   material:
-    title: 'Materials for your Study'
-    h2: 'Materials for the Study'
+    title: 'Upload supplementary materials'
+    title-short: 'Upload materials'
     h3: 'Uploaded materials'
     deleteModal:
       body: 'This action cannot be undone. This will permanently delete the #materialName#
         material.'
       confirm: 'I understand, delete this material'
+  review:
+    title: 'Review input'
+  export:
+    title: 'Export data documentation'
+    title-short: 'Export'
   settings:
     title: 'Study settings'
     deleteModal:
@@ -60,6 +63,7 @@ generic:
   description: 'Description'
   remove: 'Remove'
   edit: 'Edit'
+  rename: 'Rename'
   save: 'Save'
   save-changes: 'Save changes'
   previous: 'Previous'
@@ -84,10 +88,9 @@ input:
   relatedPubs:
     legend: 'Related publications'
     label: '<span class="block">Cite publications that use the data from this dataset.</span><span
-      class="flex items-center mt-3 text-sm"><span class="w-4 h-4 ml-1 mr-1 iconify
-      bg-mono-50" data-icon="mdi:information-variant" data-inline="false"></span>Enter
+      class="flex items-center mt-3 text-sm"><span class="w-4 h-4 ml-1 mr-1 iconify bg-mono-50" data-icon="mdi:information-variant" data-inline="false"></span>Enter
       one publication per field. Leave empty if not applicable.</span>'
-    add: 'Add another related publication +'
+    add: 'Add another related publication'
   creator:
     legend: 'Creator(s)'
     label: 'The persons responsible for the research data'
@@ -98,12 +101,11 @@ input:
     orcid: 'ORCID'
     affiliation: 'Affiliation'
     roles: 'Roles'
-    add: 'Add another creator +'
+    add: 'Add another creator'
     credit:
-      label: '<span class="block">Lorem Ipsum</span><span class="flex items-center
-        mt-3 text-sm"><span class="w-4 h-4 ml-1 mr-1 iconify bg-mono-50" data-icon="mdi:information-variant"
+      label: '<span class="block">Lorem Ipsum</span><span class="flex items-center mt-3 text-sm"><span class="w-4 h-4 ml-1 mr-1 iconify bg-mono-50" data-icon="mdi:information-variant"
         data-inline="false"></span>Lorem ipsum</span>'
-      add: 'Add another role +'
+      add: 'Add another role'
       choices:
         placeholder: 'Please select a role'
         conceptualization: 'Conceptualization'
@@ -133,8 +135,7 @@ input:
     choices:
       experimental: '<span class="block">Experimental</span><span class="block text-sm">Your
         study involved an experimental manipulation</span>'
-      non-experimental: '<span class="block">Non-experimental</span><span class="block
-        text-sm">Your study did not involve an experimental manipulation</span>'
+      non-experimental: '<span class="block">Non-experimental</span><span class="block text-sm">Your study did not involve an experimental manipulation</span>'
     details:
       legend: 'Design Description'
       experimental:
@@ -214,11 +215,11 @@ input:
     legend: 'Tests and measures'
     label: 'Provide definitions of all measures you collected on participants. Provide
       the proper name of standardized measures (tests).'
-    add: 'Add another measure +'
+    add: 'Add another measure'
   apparatus:
     legend: 'Apparatus (Instruments, Equipment)'
     label: 'Which instruments (apparatus, equipment) did you use in your study?'
-    add: 'Add another apparatus +'
+    add: 'Add another apparatus'
   participants:
     legend: 'Participants'
     label: 'Describe participants, specifying their pertinent characteristics for
@@ -227,15 +228,15 @@ input:
     legend: 'Population'
     label: 'Provide information on the group of individuals to which your results
       can be generalized'
-    add: 'Add another population +'
+    add: 'Add another population'
   inclusion:
     legend: 'Inclusion criteria'
     label: 'State inclusion criteria for participants'
-    add: 'Add another inclusion criteria +'
+    add: 'Add another inclusion criteria'
   exclusion:
     legend: 'Exclusion criteria'
     label: 'State exclusion criteria for participants'
-    add: 'Add another exclusion criteria +'
+    add: 'Add another exclusion criteria'
   sampling:
     legend: 'Sampling method'
     label: 'Choose your sampling method'
@@ -272,32 +273,6 @@ input:
       title: 'Delete study'
       description: 'Deleting a study permanenetly deletes all its data.'
       action: 'Delete this study'
-
-saveNav:
-  introduction:
-    prev: 'Basic information'
-    next: 'Basic information'
-  basic:
-    prev: 'Introduction'
-    next: 'Objectives & hypotheses'
-  theroies:
-    prev: 'Basic information'
-    next: 'Study method'
-  method:
-    prev: 'Objectives & Hypotheses'
-    next: 'Data collection'
-  measures:
-    prev: 'Study method'
-    next: 'Sampling'
-  samples:
-    prev: 'Data collection'
-    next: 'Manage datasets'
-  dataset:
-    prev: 'Sampling'
-    next: 'Upload materials'
-  material:
-    prev: 'Manage datasets'
-    next: 'Review input'
 
 link:
   user:

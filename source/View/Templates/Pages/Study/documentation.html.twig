@@ -2,7 +2,6 @@
 {% from "Components/_macros.html.twig" import helpButton %}
 {% from "Components/_macros.html.twig" import sectionHelp %}
 {% from "Components/_macros.html.twig" import formHelp %}
-{% from "Components/_macros.html.twig" import wizNav %}
 
 {% set isPartOfStudyDocumentation = true %}
 {% set isStudyDescriptionSubItem = true %}
@@ -12,31 +11,15 @@
 {% endblock %}
 
 {% block content %}
-    <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
-        {{ "title.basic.h2"|trans }}
+    <h2 class="MetaDataGroup-Title">
+        {{ "title.basic.title"|trans }}
     </h2>
-
     {{ form_start(form) }}
     {{ form_errors(form) }}
 
-
-
-    {#
-    <fieldset class="mt-8">
-        <div class="MetaData-Title">
-            <legend class="MetaData-Legend">
-                Contact
-            </legend>
-            {{ helpButton("contact") }}
-        </div>
-        {{ form_label(form.contact) }}
-        {{ form_errors(form.contact) }}
-        {{ form_widget(form.contact) }}
-    </fieldset> #}
-
     <fieldset>
         <div class="MetaData-Title">
-            <legend class="MetaData-Legend">
+            <legend class="MetaData-Legend" id="{{ 'input.title.legend'|trans }}">
                 {{ "input.title.legend"|trans }}
             </legend>
             {{ helpButton("title") }}
@@ -64,7 +47,7 @@
 
     <fieldset class="mt-8">
         <div class="MetaData-Title">
-            <legend class="MetaData-Legend">
+            <legend class="MetaData-Legend" id="{{ 'input.relatedPubs.legend'|trans }}">
                 {{ "input.relatedPubs.legend"|trans }}
             </legend>
             {{ helpButton("related_publications") }}
@@ -78,7 +61,7 @@
             } %}
     </fieldset>
 
-    <fieldset>
+    <fieldset class="mt-8">
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
                 {{ "input.creator.legend"|trans }}
@@ -97,9 +80,9 @@
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
         prevUrl: 'Study-introduction',
-        prevTitle: 'saveNav.basic.prev'|trans,
+        prevTitle: 'title.introduction.title'|trans,
         nextUrl: 'Study-theory',
-        nextTitle: 'saveNav.basic.next'|trans,
+        nextTitle: 'title.theroies.title'|trans,
         form: form
     })) }}
 
@@ -111,8 +94,7 @@
 {% endblock %}
 
 {% block help_for_metadata %}
-    {# {{ formHelp("basic", "creator") }}
-    {{ formHelp("basic", "contact") }} #}
+    {{ formHelp("basic", "creator") }}
     {{ formHelp("basic", "title") }}
     {{ formHelp("basic", "description") }}
     {{ formHelp("basic", "related_publications") }}

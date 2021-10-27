@@ -23,6 +23,7 @@ class MeasureType extends AbstractType
                     'attr' => [
                         'x-data' => '',
                         'x-on:keydown.enter.prevent' => '',
+                        'class' => 'w-full'
                     ],
                 ],
                 'allow_add' => true,
@@ -40,6 +41,7 @@ class MeasureType extends AbstractType
                     'attr' => [
                         'x-data' => '',
                         'x-on:keydown.enter.prevent' => '',
+                        'class' => 'w-full'
                     ],
                 ],
                 'allow_add' => true,

@@ -20,6 +20,7 @@ class TheoryType extends AbstractType
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
                     'class' => 'MetaData-TextInput',
+                    'rows' => '6'
                 ],
             ])
             ->add(MetaDataDictionary::HYPOTHESIS, TextareaType::class, [
@@ -28,6 +29,7 @@ class TheoryType extends AbstractType
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
                     'class' => 'MetaData-TextInput',
+                    'rows' => '6'
                 ],
             ]);
     }

@@ -2,7 +2,6 @@
 {% from "Components/_macros.html.twig" import helpButton %}
 {% from "Components/_macros.html.twig" import sectionHelp %}
 {% from "Components/_macros.html.twig" import formHelp %}
-{% from "Components/_macros.html.twig" import wizNav %}
 
 {% set isPartOfStudyDocumentation = true %}
 {% set isStudyDescriptionSubItem = true %}
@@ -12,8 +11,8 @@
 {% endblock %}
 
 {% block content %}
-    <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
-        {{ "title.measures.h2"|trans }}
+    <h2 class="MetaDataGroup-Title">
+        {{ "title.measures.title"|trans }}
     </h2>
     {{ form_start(form) }}
     {{ form_errors(form) }}
@@ -50,9 +49,9 @@
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
         prevUrl: 'Study-method',
-        prevTitle: 'saveNav.measures.prev'|trans,
+        prevTitle: 'title.method.title'|trans,
         nextUrl: 'Study-sample',
-        nextTitle: 'saveNav.measures.next'|trans,
+        nextTitle: 'title.samples.title'|trans,
         form: form
     })) }}
     {{ form_end(form) }}

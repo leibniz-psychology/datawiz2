@@ -9,24 +9,22 @@
 {% endblock %}
 
 {% block content %}
-    <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
-        {{ "title.dataset.h2"|trans }}
+    <h2 class="MetaDataGroup-Title">
+        {{ "title.dataset.title"|trans }}
     </h2>
     {{ include("Components/_infoBridge.html.twig",{value: experiment.id}) }}
-    {# <form action="{{ oneup_uploader_endpoint("datasets") }}"
-          class="dropzone"
-          id="datawiz-dropzone"
-          style="width:200px; height:200px; border:4px dashed black"></form> #}
-    <form action="{{ oneup_uploader_endpoint("datasets") }}" data-experiment-id="{{ experiment.id }}"
-          class="mx-6 border-2 border-dashed border-mono-500 dropzone" id="datawiz-dropzone"
-          data-preview-csv="{{ path("File-preview-csv",{"fileId": " "}) }}"
-          data-submit-csv="{{ path("File-submit-csv",{"fileId": " "}) }}"
-          data-preview-sav="{{ path("File-preview-sav",{"fileId": " "}) }}"
-          data-submit-sav="{{ path("File-submit-sav",{"fileId": " "}) }}"
-    >
-        <input type="hidden" id="dataset-import-data" name="dataset-import-data" value=""/>
-    </form>
-    <h3 class="mx-6 mt-6 text-xl">
+    <div class="mt-6">
+        <form action="{{ oneup_uploader_endpoint("datasets") }}" data-experiment-id="{{ experiment.id }}"
+              class="mx-6 border-2 border-dashed border-mono-500 dropzone" id="datawiz-dropzone"
+              data-preview-csv="{{ path("File-preview-csv",{"fileId": " "}) }}"
+              data-submit-csv="{{ path("File-submit-csv",{"fileId": " "}) }}"
+              data-preview-sav="{{ path("File-preview-sav",{"fileId": " "}) }}"
+              data-submit-sav="{{ path("File-submit-sav",{"fileId": " "}) }}"
+        >
+            <input type="hidden" id="dataset-import-data" name="dataset-import-data" value=""/>
+        </form>
+    </div>
+    <h3 class="mx-6 mt-6 text-xl text-zpid-purple-700">
         {{ "title.dataset.h3"|trans }}
     </h3>
     <ul class="mx-6 mt-6">
@@ -34,10 +32,10 @@
             <li class="pt-3 pb-4 mt-2 first:mt-0 bg-mono-100">
                 <div class="bg-mono-100" x-data="modal()" @keydown.window.escape="hide()">
                     <h4 class="flex justify-between mx-4">
-                        <span class="text-lg font-semibold font-">
+                        <span class="text-lg font-semibold text-zpid-purple-700">
                             {{ dataset.originalName }}
                         </span>
-                        <button class="flex items-center self-start px-2 ml-2 border rounded hover:text-red-700 hover:bg-red-50 border-mono-300 hover:border-red-700"
+                        <button class="flex items-center self-start ml-2 Button Button_tertiary Button_tertiary_danger Button_standalone"
                                 @click="show()">
                             {# Icon: mi:delete - https://icon-sets.iconify.design/mi/delete/ #}
                             <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
@@ -70,12 +68,14 @@
                             </div>
 
                             <div class="Modal-Footer">
-                                <button class="Modal-Button_warning" type="button"
+                                <button class="Button Button_primary Button_primary_danger Button_standalone"
+                                        type="button"
                                         @click="window.location.href='{{ path('File-delete_dataset', { "uuid": dataset.id }) }}'"
                                 >
                                     {{ "title.dataset.deleteModal.confirm"|trans }}
                                 </button>
-                                <button class="Modal-Button_cancel" type="button" x-ref="focusFirst" @click="hide()">
+                                <button class="ml-2 Button Button_tertiary Button_tertiary_act Button_standalone"
+                                        type="button" x-ref="focusFirst" @click="hide()">
                                     {{ "generic.cancel"|trans }}
                                 </button>
                             </div>
@@ -85,15 +85,15 @@
                     <div class="mx-4 mt-1">
                         <span class="font-semibold">{{ "title.dataset.details.date"|trans }}</span><span
                                 class="ml-1">{{ dataset.dateUploaded|date }}</span>
-                        <span class="font-semibold">{{ "title.dataset.details.date"|trans }}</span><span
+                        <span class="font-semibold">{{ "title.dataset.details.size"|trans }}</span><span
                                 class="ml-1">{{ bytesToSize(dataset.originalSize) }}</span>
                     </div>
 
                     {{ editDescription(dataset, loop.index, path('File-update_description', { 'uuid': dataset.id })) }}
 
                     <div class="flex mx-4 mt-4">
-                        <a href="#"
-                           class="flex items-center px-2 border rounded border-mono-500">
+                        {# <a href="#" role="button"
+                           class="flex items-center Button Button_secondary Button_secondary_go Button_standalone">
                             <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
                                  xmlns:xlink="http://www.w3.org/1999/xlink"
                                  aria-hidden="true" role="img" style="vertical-align: -0.125em;" width="1em"
@@ -103,9 +103,9 @@
                                       fill="currentColor"/>
                             </svg>
                             {{ "link.view.dataset"|trans }}
-                        </a>
+                        </a> #}
                         <a href="{{ path('codebook_index', {uuid: dataset.id}) }}"
-                           class="flex items-center px-2 ml-1 border rounded border-mono-500">
+                           class="flex items-center Button Button_secondary Button_secondary_go Button_standalone">
                             <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
                                  xmlns:xlink="http://www.w3.org/1999/xlink"
                                  aria-hidden="true" role="img" style="vertical-align: -0.125em;" width="1em"
@@ -239,9 +239,9 @@
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
         prevUrl: 'Study-sample',
-        prevTitle: 'saveNav.dataset.prev'|trans,
+        prevTitle: 'title.samples.title'|trans,
         nextUrl: 'Study-materials',
-        nextTitle: 'saveNav.dataset.next'|trans,
+        nextTitle: 'title.material.title-short'|trans,
         form: null
     })) }}
 {% endblock %}

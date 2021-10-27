@@ -10,8 +10,8 @@
 {% endblock %}
 
 {% block content %}
-    <h2 class="px-6 pt-3 pb-4 text-2xl font-semibold">
-        {{ "title.introduction.h2"|trans }}
+    <h2 class="MetaDataGroup-Title">
+        {{ "title.introduction.title"|trans }}
     </h2>
 
     <div class="MetaData-Title">
@@ -29,7 +29,7 @@
         </h3>
         {{ helpButton("help_intro") }}
     </div>
-    <div class="mb-6 MetaData-Widget">
+    <div class="mb-6 MetaData-Widget max-w-prose">
         {{ "title.introduction.help"|trans({'#helpBtn#':helpButton('help_intro')})|raw }}
     </div>
 
@@ -38,7 +38,7 @@
         prevUrl: null,
         prevTitle: null,
         nextUrl: 'Study-documentation',
-        nextTitle: 'saveNav.introduction.next'|trans,
+        nextTitle: 'title.basic.title'|trans,
         form: null
     })) }}
 

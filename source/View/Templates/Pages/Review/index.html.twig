@@ -2,7 +2,10 @@
 {% from "Components/_macros.html.twig" import helpButton %}
 {% from "Components/_macros.html.twig" import sectionHelp %}
 {% from "Components/_macros.html.twig" import formHelp %}
-{% from "Components/_macros.html.twig" import wizNav %}
+
+{% macro sectionTitle(titleText) %}
+    <h2 class="mx-6 text-2xl font-semibold text-zpid-blue">{{ titleText }}</h2>
+{% endmacro %}
 
 {% set isPartOfStudyDocumentation = true %}
 {% set isStudyDescriptionSubItem = false %}
@@ -12,20 +15,22 @@
 {% endblock %}
 
 {% block content %}
-    <div class="inline-block p-4 m-8 text-2xl border-2 border-gray-800 rounded-lg shadow-lg">
-        Review for {{ experimentName }}
-    </div>
-    <p>
-        Please check your given information for completion and correctness.
+    <h2 class="MetaDataGroup-Title">
+        {{ "title.review.title"|trans }}
+    </h2>
+    <p class="mx-6 mt-8 max-w-prose">
+        Please review your documentation and check for completion and correctness. Make sure all fields marked as <span
+                class="px-1 bg-red-50">mandatory</span> are set. For best results, fill in the <span
+                class="px-1 bg-green-50">recommended</span> fields as well.
     </p>
     <article>
-        <section style="margin-top: 20px">
-            <h2 class="text-2xl font-semibold">Basic Information</h2>
+        <section class="mt-4">
+            {{ _self.sectionTitle("title.basic.title"|trans) }}
             {% for reviewItem in basicInfoReview %}
-                {% include 'Components/_reviewValue.html.twig' with {item: reviewItem} %}
+                {% include 'Components/_reviewValue.html.twig' with {item: reviewItem } %}
             {% endfor %}
-            <div class="" style="margin-top: 20px">
-                <h2 class="text-2xl font-semibold">Creators:</h2>
+            <div class="mt-5">
+                <h2 class="mx-6 text-xl font-bold text-zpid-purple-700">Creators</h2>
                 {% for reviewCreator in basicCreatorInfoReview %}
                     {% for reviewItem in reviewCreator.reviewCollection %}
                         {% include 'Components/_reviewValue.html.twig' with {item: reviewItem} %}
@@ -33,38 +38,50 @@
                 {% endfor %}
             </div>
         </section>
-        <section style="margin-top: 20px">
-            <h2 class="text-2xl font-semibold">Objectives & hypotheses</h2>
+        <section class="mt-8">
+            {{ _self.sectionTitle("title.theroies.title"|trans) }}
             {% for reviewItem in theoryReview %}
                 {% include 'Components/_reviewValue.html.twig' with {item: reviewItem} %}
             {% endfor %}
         </section>
-        <section style="margin-top: 20px">
-            <h2 class="text-2xl font-semibold">Study Method</h2>
+        <section class="mt-8">
+            {{ _self.sectionTitle("title.method.title"|trans) }}
             {% for reviewItem in methodReview %}
                 {% include 'Components/_reviewValue.html.twig' with {item: reviewItem} %}
             {% endfor %}
         </section>
-        <section style="margin-top: 20px">
-            <h2 class="text-2xl font-semibold">Data Collection</h2>
+        <section class="mt-8">
+            {{ _self.sectionTitle("title.measures.title"|trans) }}
             {% for reviewItem in measureReview %}
                 {% include 'Components/_reviewValue.html.twig' with {item: reviewItem} %}
             {% endfor %}
         </section>
-        <section style="margin-top: 20px">
-            <h2 class="text-2xl font-semibold">Sampling</h2>
+        <section class="mt-8">
+            {{ _self.sectionTitle("title.samples.title"|trans) }}
             {% for reviewItem in sampleReview %}
                 {% include 'Components/_reviewValue.html.twig' with {item: reviewItem} %}
             {% endfor %}
+        </section>
+        <section class="mt-8">
+            {{ _self.sectionTitle("title.dataset.title"|trans) }}
+            <div class="mx-6 mt-2 italic">
+                List of datasets goes here
+            </div>
+        </section>
+        <section class="mt-8">
+            {{ _self.sectionTitle("title.material.title"|trans) }}
+            <div class="mx-6 mt-2 italic">
+                List of materials goes here
+            </div>
         </section>
     </article>
 
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
         prevUrl: 'Study-materials',
-        prevTitle: 'Upload materials'|trans,
-        nextUrl: 'Study-review',
-        nextTitle: 'Export study'|trans,
+        prevTitle: 'title.material.title-short'|trans,
+        nextUrl: 'export_index',
+        nextTitle: 'title.export.title-short'|trans,
         form: null
     })) }}
 {% endblock %}

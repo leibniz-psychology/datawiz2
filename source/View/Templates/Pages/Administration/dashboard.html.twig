@@ -1,80 +1,81 @@
 {% extends "Layouts/base.html.twig" %}
 
 {% block title %}
-    DataWiz Features
+    Dashboard - DataWiz
 {% endblock %}
 
 {% block body %}
-    <div class="col-span-full xl:col-start-3 xl:col-end-11">
-        <main class="mt-12">
-            <h2 class="flex items-center text-3xl font-semibold">
-                <span class="inline w-8 h-8 mr-2 iconify iconify-inline"
-                    data-icon="mdi:view-grid">
+    <main class="max-w-screen-xl mx-auto mt-12 min-h-[calc(100%-15.5rem)]">
+        <h2 class="flex items-center text-3xl font-bold text-zpid-purple-700 mx-8">
+            {# <span class="inline w-8 h-8 mr-2 iconify iconify-inline"
+                data-icon="mdi:view-grid">
+            </span> #}
+            Dashboard
+        </h2>
 
-                </span>Dashboard
-            </h2>
-
-            <div class="grid grid-cols-4 gap-6 mt-4">
-                <div class="flex flex-col col-span-2 px-4 pt-4 pb-5 border rounded-md shadow-md bg-mono-200 border-mono-300">
-                    <h3 class="text-xl font-semibold">
-                        Study Documentation
-                    </h3>
-                    <div class="mt-2 mb-4 leading-snug">
-                        Document research data, add datasets, edit codebooks,
-                        and export your studies to repositories
-                    </div>
-                    <button class="self-start"
-                        onclick="location.href='{{ path("Study-overview") }}';">
-                        Open Data documentation
-                    </button>
-                </div>
-                <div class="relative flex flex-col col-span-2 px-4 pt-4 pb-5 border rounded-md shadow-md bg-mono-200 border-mono-300">
-                    <h3 class="text-xl font-semibold">
-                        Ethics application forms
-                    </h3>
-                    <div class="absolute px-2 border border-gray-300 right-2 bg-mono-100 -top-3">
-                        Coming Soon!
-                    </div>
-                    <div class="mt-2 mb-4 leading-snug">
-                        Write ethics approval applications with style.
-                    </div>
-                    {# <button class="self-start px-2 py-1 mt-auto border rounded-md border-mono-400 hover:bg-mono-50 bg-mono-100" onclick="location.href={{ path("Ethics-overview") }};;">
-                  Open Ethics application forms
-                </button> #}
-                </div>
+        <div class="flex gap-6 mt-4">
+            <div class="relative flex flex-col w-1/2 px-8 pt-6 pb-8 border border-gray-300 rounded-md shadow-md bg-gray-50">
+                <h3 class="text-2xl font-semibold text-zpid-purple-700">
+                    Data documentation
+                </h3>
+                <p class="mt-2 leading-snug max-w-prose">
+                    Document research data, add datasets, edit codebooks,
+                    and export your studies to repositories
+                </p>
+                <button class="self-start mt-5 Button Button_primary Button_primary_go Button_standalone"
+                        onclick="location.href='{{ path("Study-overview") }}';" type="button">
+                    Open data documentation tool
+                </button>
             </div>
+            <div class="relative flex flex-col w-1/2 px-8 pt-6 pb-8 border border-gray-300 rounded-md shadow-md bg-gray-50">
+                <h3 class="text-2xl font-semibold text-zpid-purple-700">
+                    Ethics application forms
+                </h3>
+                <div class="absolute px-3 border border-gray-300 right-6 bg-zpid-blue rounded -top-4 text-white py-1">
+                    Coming soon!
+                </div>
+                <p class="mt-2 mb-4 leading-snug max-w-prose">
+                    Write ethics approval applications with style.
+                </p>
+                {# <button class="self-start px-2 py-1 mt-auto border rounded-md border-mono-400 hover:bg-mono-50 bg-mono-100" onclick="location.href={{ path("Ethics-overview") }};;">
+                Open Ethics application forms
+            </button> #}
+            </div>
+        </div>
 
-            <h2 class="mt-24 text-2xl font-semibold">
-                Related products on leibniz-psychology.org
-            </h2>
-            <div class="px-2 pt-1 pb-2 mt-3 rounded bg-mono-100">
+        <h2 class="mt-24 text-2xl font-semibold text-zpid-purple-700 mx-8">
+            Related products on <a href="https://leibniz-psychology.org" class="underline no-linkout"
+                                   title="Go to Leibniz Psychology website">leibniz-psychology.org</a>
+        </h2>
+        <div class="flex mx-6 gap-x-4">
+            <div class="w-1/2 px-2 pt-1 pb-2 mt-3 rounded bg-mono-100">
                 <h3 class="text-lg">
                     <a href="https://prereg-psych.org/"
-                        class="border-b border-mono-900 hover:text-blue-500 hover:border-blue-500"
-                        target="_blank">
+                       class="border-b border-mono-900 hover:text-blue-500 hover:border-blue-500"
+                       target="_blank">
                         PreReg in Psychology
                     </a>
                 </h3>
-                <span>
+                <p class="mt-2 max-w-prose">
                     By using preregistration, researchers can verify that their
                     studies have been conducted, analyzed, and reported as
                     initially specified.
-                </span>
+                </p>
             </div>
-            <div class="px-2 pt-1 pb-2 mt-4 rounded bg-mono-100">
+            <div class="w-1/2 px-2 pt-1 pb-2 mt-3 rounded bg-mono-100">
                 <h3 class="text-lg">
                     <a href="https://psychnotebook.org/"
-                        class="border-b border-mono-900 hover:text-blue-500 hover:border-blue-500"
-                        target="_blank">
+                       class="border-b border-mono-900 hover:text-blue-500 hover:border-blue-500"
+                       target="_blank">
                         PsychNotebook
                     </a>
                 </h3>
-                <span class="">
+                <p class="mt-2 max-w-prose">
                     PsychNotebook is a web-based platform for planning and
                     analyzing studies in the field of psychology and related
                     disciplines.
-                </span>
+                </p>
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
 {% endblock %}

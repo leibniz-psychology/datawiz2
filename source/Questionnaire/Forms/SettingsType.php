@@ -19,14 +19,7 @@ class SettingsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add(MetaDataDictionary::SHORTNAME, TextType::class, [
-                'required' => true,
-                'label' => 'input.study-name.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
-                'attr' => [
-                    'class' => 'MetaData-TextInput',
-                ]
-            ]);
+            ->add(MetaDataDictionary::SHORTNAME, TextType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

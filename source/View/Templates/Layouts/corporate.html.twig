@@ -28,20 +28,38 @@
     <script src="https://code.iconify.design/2/2.0.3/iconify.min.js" defer></script>
 </head>
 <body>
+
+<div class="flex items-center justify-between h-24 max-w-screen-xl px-12 mx-auto bg-white">
+    <a href="https://leibniz-psychology.org/" class="flex items-center no-linkout"><img
+                src="{{ asset('build/images/leibniz_psychology.svg') }}" alt="Leibniz Psychology" width="257"
+                height="56"></a>
+    <a href="#" class="text-lg">Contact</a>
+</div>
 {% block header %}
+    {# TODO: check gradient colors #}
     <div class="bg-gradient-to-r from-[#240d46] to-zpid-purple-700">
-        <header class="flex w-full max-w-screen-xl mx-auto border-b bg-mono-50 h-14 border-mono-300">
-            <a class="flex flex-row items-center px-8 font-serif text-3xl text-white bg-zpid-blue" href="/">
-                <span class="font-semibold">Data</span>Wiz
-            </a>
-            <div class="flex w-full pl-6 pr-8">
+        <header class="max-w-screen-xl mx-auto">
+            <div class="flex flex-wrap items-center h-32 bg-right bg-no-repeat bg-zpid-blue bg-header-cyan">
+                {# TODO: use img/svg instead as loading font just for logo is too heavy #}
+                <span class="flex mt-6" style="flex: 0 0 100%">
+                    <a class="ml-12 font-serif text-6xl text-white" href="/">
+                        <span class="font-semibold">Data</span>Wiz
+                    </a>
+                </span>
+                <span class="mb-2 text-lg text-white shadow ml-[11.5rem]">Research data management &ndash; <em>but easy!</em></span>
+
+            </div>
+            <div class="flex items-center h-12 px-12 bg-white border-l border-r border-mono-500">
                 {{ include("Components/_navigationHeader.html.twig") }}
                 {{ include("Components/_userProfileReference.html.twig") }}
             </div>
         </header>
     </div>
 {% endblock %}
-{% block body %}{% endblock %}
+
+<div class="max-w-screen-xl px-12 py-px mx-auto bg-white border-l border-r border-mono-500">
+    {% block body %}{% endblock %}
+</div>
 {{ include("Components/_footer.html.twig") }}
 </body>
 </html>

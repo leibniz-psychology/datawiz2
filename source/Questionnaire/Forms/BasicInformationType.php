@@ -25,6 +25,7 @@ class BasicInformationType extends AbstractType
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
                     'class' => 'MetaData-TextInput',
+                    'rows' => '3'
                 ]
             ])
             ->add(MetaDataDictionary::DESCRIPTION, TextareaType::class, [
@@ -33,12 +34,19 @@ class BasicInformationType extends AbstractType
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
                     'class' => 'MetaData-TextInput',
+                    'rows' => '14'
                 ]
             ])
             ->add(MetaDataDictionary::RELATED_PUBS, CollectionType::class, [
                 'required' => false,
                 'entry_type' => TextareaType::class,
-                'entry_options' => ['label' => false],
+                'entry_options' => [
+                    'label' => false,
+                    'attr' => [
+                        'class' => 'w-full',
+                        'rows' => '4'
+                    ]
+                ],
                 'allow_add' => true,
                 'prototype' => true,
                 'allow_delete' => true,
@@ -58,6 +66,7 @@ class BasicInformationType extends AbstractType
                     'attr' => [
                         'x-data' => '',
                         'x-on:keydown.enter.prevent' => '',
+                        'class' => 'Creator-Details'
                     ]
                 ],
                 'allow_add' => true,

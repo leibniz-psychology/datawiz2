@@ -25,6 +25,7 @@ class SavImportable
 
     public function savToArray(Dataset $dataset): array
     {
+        $this->logger->debug("SavImportable::savToArray:Enter with Dataset: {$dataset->getId()}");
         $data = null;
         $sav = $this->spssApiClient->savToArray($dataset);
         if ($sav && key_exists('variables', $sav)) {
@@ -50,6 +51,7 @@ class SavImportable
         if ($sav && key_exists('dataMatrix', $sav)) {
             $data['records'] = $sav['dataMatrix'];
         }
+        $this->logger->debug("SavImportable::savToArray:Leave with result size: ".sizeof($data ?: []));
 
         return $data;
     }
@@ -57,6 +59,7 @@ class SavImportable
 
     private function _createMissings(?string $type, ?string $val1, ?string $val2, ?string $val3): ?array
     {
+        $this->logger->debug("SavImportable::_createMissings:Enter with Type: $type; Val1: $val1; Val2: $val2; Val3: $val3;");
         $missings = null;
         if ($type) {
             switch ($type) {
@@ -86,12 +89,15 @@ class SavImportable
                     break;
             }
         }
+        $this->logger->debug("SavImportable::_createMissings:Enter with result size: ".sizeof($missings ?: []));
 
         return $missings;
     }
 
     private function _createValueLabelArray(array $val): array
     {
+        $this->logger->debug("SavImportable::_createValueLabelArray:Enter with array size: ".sizeof($val ?: []));
+
         return [
             "name" => key_exists('value', $val) ? $val['value'] : '',
             "label" => key_exists('label', $val) ? $val['label'] : '',

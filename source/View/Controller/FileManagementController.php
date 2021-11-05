@@ -90,9 +90,11 @@ class FileManagementController extends AbstractController
     {
         $this->logger->debug("Enter FileManagementController::previewSavAction with [FileId: $fileId]");
         $dataset = $this->em->find(Dataset::class, $fileId);
-        $data = $request->get('dataset-import-data') ?? null;
+        $data = null;
+        if ($dataset) {
+            $data = $this->savImportable->savToArray($dataset);
+        }
         if (isset($dataset) && isset($data) && !empty($data)) {
-            $data = json_decode($data, true);
             if ($data && is_iterable($data) && key_exists('codebook', $data)) {
                 foreach ($data['codebook'] as $var) {
                     $matrixHeader[] = $var['name'];

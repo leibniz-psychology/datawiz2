@@ -87,7 +87,8 @@ Dropzone.options.datawizDropzone = {
             .trim()
             .replace("%20", "") +
           encodeURI(responseText["flySystem"][0]["fileId"]);
-        GET(previewSavUrl, this.element, submitSavUrl);
+        //GET(previewSavUrl, this.element, submitSavUrl);
+        POST(submitSavUrl, this.element);
         location.reload();
       } else {
         location.reload();
@@ -125,7 +126,6 @@ function GET(url, form, submitUrl) {
       else throw new Error("Hell no! What happened?");
     })
     .then((data) => {
-      console.log(data);
       form.querySelector("#dataset-import-data").value = JSON.stringify(data);
       POST(submitUrl, form);
     })

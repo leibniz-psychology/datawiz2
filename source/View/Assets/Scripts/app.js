@@ -58,18 +58,17 @@ Dropzone.options.datawizDropzone = {
           modal.classList.toggle("flex");
           backdrop.classList.toggle("flex");
           submitBtn.addEventListener("click", function () {
-            POST(submitUrl, form);
-            location.reload();
+            POST(submitUrl, form, false, true);
           });
           const input = form.querySelectorAll(
             'select, input:not([type="hidden"])'
           );
           input.forEach((e) => {
             e.addEventListener("change", function () {
-              POST(previewUrl, form, true);
+              POST(previewUrl, form, true,false);
             });
           });
-          POST(previewUrl, form, true);
+          POST(previewUrl, form, true,false);
         }
       } else if (
         responseText["flySystem"] &&
@@ -88,8 +87,7 @@ Dropzone.options.datawizDropzone = {
             .replace("%20", "") +
           encodeURI(responseText["flySystem"][0]["fileId"]);
         //GET(previewSavUrl, this.element, submitSavUrl);
-        POST(submitSavUrl, this.element);
-        location.reload();
+        POST(submitSavUrl, this.element,false,true);
       } else {
         location.reload();
       }
@@ -97,7 +95,7 @@ Dropzone.options.datawizDropzone = {
   },
 };
 
-function POST(url, form, importPreview = false) {
+function POST(url, form, importPreview = false, reloadPage = false) {
   fetch(url, {
     method: "POST",
     body: new FormData(form),
@@ -110,7 +108,9 @@ function POST(url, form, importPreview = false) {
       if (importPreview === true) {
         Alpine.store("import").codebook = data;
       }
-      console.log(data);
+      if(reloadPage){
+        location.reload();
+      }
     })
     .catch((error) => {
       console.log(error);

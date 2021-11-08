@@ -4,8 +4,8 @@ namespace App\Domain\Definition;
 
 class ErrorType
 {
-    const ERROR = 'error';
-    const WARN = 'warn';
-    const INFO = 'info';
+    const MANDATORY = 'mandatory';
+    const RECOMMENDED = 'recommended';
+    const OPTIONAL = 'optional';
     const NONE = null;
 }

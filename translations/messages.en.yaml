@@ -96,7 +96,7 @@ input:
     add: 'Add another related publication'
     empty: '<a href="#link#" class="#class#">Add related publications</a>'
   creator:
-    legend: 'Creator(s)'
+    legend: 'Creators'
     label: 'The persons responsible for the research data'
     empty: '<a href="#link#" class="#class#">Add creators</a> to ensure the findability of your data'
     name:

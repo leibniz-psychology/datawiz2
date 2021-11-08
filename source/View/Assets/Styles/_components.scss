@@ -101,5 +101,31 @@
 .WizNavBar_isSticky {
   @apply border-l border-r rounded-b-none bg-opacity-90;
 
-  box-shadow: 0 -5px 30px -10px rgb(175, 175, 175);
+  box-shadow: 0 -5px 30px -10px rgb(175 175 175);
+}
+
+.ReviewItem-Highlight {
+  @apply relative;
+
+  &::before {
+    @apply left-0 top-0 bottom-0 absolute inline-block w-3.5 -ml-3.5 overflow-hidden whitespace-nowrap;
+  }
+}
+
+.ReviewItem-Highlight_mandatory {
+  // @apply bg-gradient-to-t from-transparent via-pink-50 to-transparent;
+
+  &::before {
+    @apply font-bold text-pink-500;
+
+    content: "!";
+  }
+}
+
+.ReviewItem-Highlight_recommended {
+  // @apply bg-gradient-to-t from-transparent via-[#edfbff] to-transparent;
+
+  &::before {
+    content: "!";
+  }
 }

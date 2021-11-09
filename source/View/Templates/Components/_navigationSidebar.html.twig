@@ -19,8 +19,7 @@
     <ul>
         <li>
             <a href="{{ path('Study-introduction', {uuid: experiment.id}) }}"
-               class="StudyNav-NavItem {{- route_name == 'Study-introduction' ? ' StudyNav-NavItem_active' -}}">Getting
-                started</a>
+               class="StudyNav-NavItem {{- route_name == 'Study-introduction' ? ' StudyNav-NavItem_active' -}}">{{ "title.introduction.title"|trans }}</a>
         </li>
         <li>
             <a href="{{ path('Study-documentation', {uuid: experiment.id}) }}"
@@ -96,7 +95,7 @@
                class="StudyNav-NavItem StudyNav-NavItem_settings
                 {{- route_name == 'Study-settings' ? ' StudyNav-NavItem_active StudyNav-NavItem_settings_active' -}}">
                 <i class="w-4 h-4 mt-px mr-1 iconify text-mono-600" data-icon="ic-round-settings"></i>
-                Study settings</a>
+                {{ "title.settings.title"|trans }}</a>
         </li>
     </ul>
 </nav>

@@ -6,36 +6,35 @@
 
 {% block body %}
     <main class="max-w-screen-xl mx-auto mt-12 min-h-[calc(100%-15.5rem)]">
-        <h2 class="flex items-center text-3xl font-bold text-zpid-purple-700 mx-8">
+        <h2 class="flex items-center mx-8 text-3xl font-bold text-zpid-purple-700">
             {# <span class="inline w-8 h-8 mr-2 iconify iconify-inline"
                 data-icon="mdi:view-grid">
             </span> #}
-            Dashboard
+            {{ "title.dashboard.title"|trans }}
         </h2>
 
         <div class="flex gap-6 mt-4">
             <div class="relative flex flex-col w-1/2 px-8 pt-6 pb-8 border border-gray-300 rounded-md shadow-md bg-gray-50">
                 <h3 class="text-2xl font-semibold text-zpid-purple-700">
-                    Data documentation
+                    {{ "title.dashboard.modules.documentation.title"|trans }}
                 </h3>
                 <p class="mt-2 leading-snug max-w-prose">
-                    Document research data, add datasets, edit codebooks,
-                    and export your studies to repositories
+                    {{ "title.dashboard.modules.documentation.description"|trans }}
                 </p>
                 <button class="self-start mt-5 Button Button_primary Button_primary_go Button_standalone"
                         onclick="location.href='{{ path("Study-overview") }}';" type="button">
-                    Open data documentation tool
+                    {{ "title.dashboard.modules.documentation.open"|trans }}
                 </button>
             </div>
             <div class="relative flex flex-col w-1/2 px-8 pt-6 pb-8 border border-gray-300 rounded-md shadow-md bg-gray-50">
                 <h3 class="text-2xl font-semibold text-zpid-purple-700">
-                    Ethics application forms
+                    {{ "title.dashboard.modules.ethics-forms.title"|trans }}
                 </h3>
-                <div class="absolute px-3 border border-gray-300 right-6 bg-zpid-blue rounded -top-4 text-white py-1">
-                    Coming soon!
+                <div class="absolute px-3 py-1 text-white border border-gray-300 rounded right-6 bg-zpid-blue -top-4">
+                    {{ "title.dashboard.modules.coming-soon"|trans }}
                 </div>
                 <p class="mt-2 mb-4 leading-snug max-w-prose">
-                    Write ethics approval applications with style.
+                    {{ "title.dashboard.modules.ethics-forms.description"|trans }}
                 </p>
                 {# <button class="self-start px-2 py-1 mt-auto border rounded-md border-mono-400 hover:bg-mono-50 bg-mono-100" onclick="location.href={{ path("Ethics-overview") }};;">
                 Open Ethics application forms
@@ -43,37 +42,36 @@
             </div>
         </div>
 
-        <h2 class="mt-24 text-2xl font-semibold text-zpid-purple-700 mx-8">
-            Related products on <a href="https://leibniz-psychology.org" class="underline no-linkout"
-                                   title="Go to Leibniz Psychology website">leibniz-psychology.org</a>
+        <h2 class="mx-8 mt-24 text-2xl font-semibold text-zpid-purple-700">
+            {{ "title.dashboard.related.title-start"|trans }} <a href="https://leibniz-psychology.org"
+                                                                 class="underline no-linkout" target="_blank"
+                                                                 title="{{ "title.dashboard.related.title-linktitle"|trans }}">{{ "title.dashboard.related.title-link"|trans }}</a>{{ "title.dashboard.related.title-end"|trans }}
         </h2>
         <div class="flex mx-6 gap-x-4">
             <div class="w-1/2 px-2 pt-1 pb-2 mt-3 rounded bg-mono-100">
                 <h3 class="text-lg">
                     <a href="https://prereg-psych.org/"
                        class="border-b border-mono-900 hover:text-blue-500 hover:border-blue-500"
-                       target="_blank">
-                        PreReg in Psychology
+                       target="_blank"
+                       title="{{ "title.dashboard.related.prereg.title-linktitle"|trans }}">
+                        {{ "title.dashboard.related.prereg.title"|trans }}
                     </a>
                 </h3>
                 <p class="mt-2 max-w-prose">
-                    By using preregistration, researchers can verify that their
-                    studies have been conducted, analyzed, and reported as
-                    initially specified.
+                    {{ "title.dashboard.related.prereg.description"|trans }}
                 </p>
             </div>
             <div class="w-1/2 px-2 pt-1 pb-2 mt-3 rounded bg-mono-100">
                 <h3 class="text-lg">
                     <a href="https://psychnotebook.org/"
                        class="border-b border-mono-900 hover:text-blue-500 hover:border-blue-500"
-                       target="_blank">
-                        PsychNotebook
+                       target="_blank"
+                       title="{{ "title.dashboard.related.psychnotebook.title-linktitle"|trans }}">
+                        {{ "title.dashboard.related.psychnotebook.title"|trans }}
                     </a>
                 </h3>
                 <p class="mt-2 max-w-prose">
-                    PsychNotebook is a web-based platform for planning and
-                    analyzing studies in the field of psychology and related
-                    disciplines.
+                    {{ "title.dashboard.related.psychnotebook.description"|trans }}
                 </p>
             </div>
         </div>

@@ -1,9 +1,48 @@
 title:
+  dashboard:
+    title: 'Dashboard'
+    modules:
+      documentation:
+        title: 'Data documentation'
+        description: 'Document research data, add datasets, edit codebooks, and export your studies to repositories.'
+        open: 'Open data documentation tool'
+      ethics-forms:
+        title: 'Ethics application forms'
+        description: 'Write ethics approval applications with style.'
+      coming-soon: 'Coming soon!'
+    related:
+      title-start: 'Related products on'
+      title-link: 'leibniz-psychology.org'
+      title-end: ''
+      title-linktitle: 'Go to Leibniz Psychology website'
+      prereg:
+        title: 'PreReg in Psychology'
+        title-linktitle: 'Go to PreReg in Psychology website'
+        description: 'By using preregistration, researchers can verify that their studies have been conducted, analyzed, and reported as initially specified.'
+      psychnotebook:
+        title: 'PsychNotebook'
+        title-linktitle: 'Go to PsychNotebook website'
+        description: 'PsychNotebook is a web-based platform for planning and analyzing studies in the field of psychology and related disciplines.'
   overview:
     title: 'Data documentation'
-    
+    intro: 'Document research data, add datasets and materials, describe your data with codebooks, then export and share your data in one convenient zip file.'
+    intro_extended: "Click the button below to create your first study. Don't worry, you'll be guided through the whole process!"
+    list:
+      header: 'My data documentations'
+      empty: 'New data documentations will appear here.'
+      filter:
+        sort:
+          by: 'Sort by'
+          name: 'Name'
+          title: 'Title'
+        placeholder: 'Search documentations'
+      datasets: 'Datasets'
+      materials: 'Materials'
+      created: 'Dated created'
+      edited: 'Last edited'
   new:
-    title: 'Create new study'
+    title: 'Create new documentation'
+    create: 'Create documentation'
   introduction:
     title: 'Getting Started'
     h3_1: 'Step-by-step'
@@ -26,7 +65,8 @@ title:
   dataset:
     title: 'Upload and describe datasets'
     title-short: 'Upload datasets'
-    h3: 'Uploaded datasets'
+    h3: 'My datasets'
+    empty: 'Uploaded datasets will appear here.'
     deleteModal:
       title: 'Are you absolutely sure?'
       body: 'This action cannot be undone. This will permanently delete the #datasetName#
@@ -42,7 +82,8 @@ title:
   material:
     title: 'Upload supplementary materials'
     title-short: 'Upload materials'
-    h3: 'Uploaded materials'
+    h3: 'My materials'
+    empty: 'Uploaded materials will appear here.'
     deleteModal:
       body: 'This action cannot be undone. This will permanently delete the #materialName#
         material.'
@@ -53,8 +94,22 @@ title:
   export:
     title: 'Export data documentation'
     title-short: 'Export'
+    export: 'Export documentation'
+    format:
+      title: 'Export format'
+      description: 'Choose the file format for the study documentation. JSON is way geekier, XML is harder to read.'
+      json: 'Export as JSON'
+      xml: 'Export as XML'
+    datasets:
+      title: 'Include datasets'
+      description: 'Choose which datasets to include in the export file'
+      empty: 'No datasets found'
+    materials:
+      title: 'Include supplementary materials'
+      description: 'Choose which materials to include in the export file'
+      empty: 'No materials found'
   settings:
-    title: 'Study settings'
+    title: 'Settings'
     deleteModal:
       body: 'This action cannot be undone. This will permanently delete the #studyName#
         study including its documentation, datasets, codebooks and materials.'
@@ -108,8 +163,7 @@ input:
     roles: 'Roles'
     add: 'Add another creator'
     credit:
-      label: '<span class="block">Lorem Ipsum</span><span class="flex items-center mt-3 text-sm"><span class="w-4 h-4 ml-1 mr-1 iconify bg-mono-50" data-icon="mdi:information-variant"
-        data-inline="false"></span>Lorem ipsum</span>'
+      label: 'Creator role'
       add: 'Add another role'
       choices:
         placeholder: 'Please select a role'
@@ -145,6 +199,7 @@ input:
         study involved an experimental manipulation</span>'
       non-experimental: '<span class="block">Non-experimental</span><span class="block text-sm">Your study did not involve an experimental manipulation</span>'
     details:
+      legend: 'Research design details'
       empty: '<a href="#link#" class="#class#">Further describe the research design</a> to increase the reusability of your data'
       experimental:
         label: 'Further describe the <span class="font-semibold">experimental design</span>
@@ -180,7 +235,7 @@ input:
           case-control-study: 'Case-control study'
           cross-sectional-study: 'Cross-sectional study'
   manipulations:
-    legend: 'Experimental manipulation(s), treatments, or interventions'
+    legend: 'Experimental manipulations, treatments, or interventions'
     label: 'Provide details of your experimental manipulation(s) including a summary
       of the instructions. Clearly define your variables (treatments).'
     empty: '<a href="#link#" class="#class#">Add experimental manipulations, treatments or interventions</a> to increase the reusability of your data'
@@ -230,7 +285,7 @@ input:
     empty: '<a href="#link#" class="#class#">Add measures</a> to increase the reusability of your data'
     add: 'Add another measure'
   apparatus:
-    legend: 'Apparatus (Instruments, Equipment)'
+    legend: 'Apparatus (instruments, equipment)'
     label: 'Which instruments (apparatus, equipment) did you use in your study?'
     empty: '<a href="#link#" class="#class#">Add apparatus, instruments or equipments</a> to increase the reusability of your data'
     add: 'Add another apparatus'
@@ -284,6 +339,9 @@ input:
     legend: 'Power analysis (statistical)'
     label: 'Provide details of the power analysis used to calculate your sample size'
     empty: '<a href="#link#" class="#class#">Add power analysis</a> to increase the reusability of your data'
+  documentation-name:
+    legend: 'Documentation name'
+    label: 'Provide a short name for your documentation'
   danger-zone:
     legend: 'Danger zone'
     label: 'Irreversible and destructive actions'

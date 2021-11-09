@@ -22,10 +22,13 @@
               id="datawiz-dropzone">
         </form>
     </div>
-    {% if (experiment.additionalMaterials|length) > 0 %}
-        <h3 class="mx-6 mt-6 text-xl">
+    <div class="MetaData-Title">
+        <legend class="MetaData-Legend">
             {{ "title.material.h3"|trans }}
-        </h3>
+        </legend>
+        {{ helpButton("my_materials") }}
+    </div>
+    {% if (experiment.additionalMaterials|length) > 0 %}
         <ul class="mx-6 mt-6">
             {% for material in experiment.additionalMaterials %}
                 <li class="pt-3 pb-4 mt-2 first:mt-0 bg-mono-100">
@@ -94,6 +97,10 @@
                 </li>
             {% endfor %}
         </ul>
+    {% else %}
+        <p class="mx-6">
+            {{ "title.material.empty"|trans }}
+        </p>
     {% endif %}
 
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {

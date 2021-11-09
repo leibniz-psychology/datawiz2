@@ -1,8 +1,6 @@
-## About participants
-
 Who took part in the study? Report major demographic characteristics (for example, age, sex, ethnicity, socioeconomic status) as well as important topic-specific characteristics (for example, achievement level in studies of educational interventions). In order to produce generalizable results, the subjects selected must be representative of the population about which new knowledge is being sought.
 
-### Participants example
+### Example
 
 > The sample comprised 90 university students (77% female), between 18 and 24 years old. Seventy-three of those participants were bachelor students in psychology who participated in exchange for course credits. The remaining 17 participants, who learned about the study through local advertisement such as flyers and social media, took part in the study on a voluntary basis.
 

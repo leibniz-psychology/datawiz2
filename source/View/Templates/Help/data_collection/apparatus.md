@@ -1,8 +1,6 @@
-## About apparatus
-
 Provide a description of apparatus used, such as specialized equipment by model and supplier, and their function in the experiment. Definition apparatus: any instrument or equipment used in an experiment or other research.
 
-### Apparatus examples
+### Examples
 
 > The sentences were presented on the screen of a notebook computer. The speakers were recorded in a sound-treated room, using an AKG SE300B microphone, which was attached to an AKG N6-6E preamplifier, on a Tascam DA-P1 DAT recorder.
 

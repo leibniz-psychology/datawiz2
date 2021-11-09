@@ -1,5 +1,3 @@
-## About design
-
 Between-subjects design
 : A study in which individuals are assigned to only one treatment or experimental condition and each person provides only one score for data analysis. For example, in a between-subjects design investigating the efficacy of three different drugs for treating depression, one group of depressed individuals would receive one of the drugs, a different group would receive another one of the drugs, and yet another group would receive the remaining drug. Thus, the researcher is comparing the effect each medication has on a different set of people. Also called between-groups design; independent-groups design. (APA Dictionary, 2014)
 

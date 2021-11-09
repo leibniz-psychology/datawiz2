@@ -14,37 +14,33 @@
         {# <main class="{% if all_experiments %} w-[60%] {% else %}w-1/2{% endif %}"> #}
         <main {% if all_experiments %}class="w-[70%]" {% else %}class="w-1/2"{% endif %}>
             <h2 class="ml-8 text-3xl font-bold text-zpid-purple-700">
-                Data documentation
+                {{ "title.overview.title"|trans }}
             </h2>
-            <p class="mt-4 ml-8 max-w-prose">Document research data, add datasets and materials, describe your data with
-                codebooks, then export and share your data in one convenient zip file.</p>
+            <p class="mt-4 ml-8 max-w-prose">{{ "title.overview.intro"|trans }}</p>
             {% if not all_experiments %}
-                <p class="mt-4 ml-8 max-w-prose ">Click the button below to create your first study. Don't worry, you'll
-                    be guided through the whole process!
+                <p class="mt-4 ml-8 max-w-prose ">{{ "title.overview.intro_extended"|trans }}
                 </p>
             {% endif %}
             <button class="flex items-center mt-3 ml-8 Button Button_primary Button_primary_act Button_standalone"
                     onclick="window.location.href='{{ path("Study-new") }}'">
                 {# <span class="mr-2 iconify-inline" data-icon="fluent:add-20-regular"></span> #}
-                Create new documentation
+                {{ "title.new.title"|trans }}
             </button>
             {% if all_experiments %}
-
-
                 <div class="mt-4" id="ExperimentsList" x-data="{...experimentsList(), filterText: ''}"
                      @keyup.escape="clear()">
                     <div class="mt-10 ml-8 xl:items-center xl:justify-between xl:flex">
                         <h3 class="flex-shrink-0 text-2xl font-bold xl:flex text-zpid-purple-700">
-                            My data documentations
+                            {{ "title.overview.list.header"|trans }}
                         </h3>
                         <div class="flex items-center justify-end">
                             <div>
-                                Sort by
+                                {{ "title.overview.list.filter.sort.by"|trans }}
                                 <button class="ml-1 underline sort" data-sort="ExperimentName" type="button">
-                                    Name
+                                    {{ "title.overview.list.filter.sort.name"|trans }}
                                 </button>
                                 <button class="underline sort ml-0.5" data-sort="ExperimentName" type="button">
-                                    Title
+                                    {{ "title.overview.list.filter.sort.title"|trans }}
                                 </button>
                             </div>
 
@@ -54,7 +50,8 @@
                                     <span class="inline-flex w-5 h-5 mx-auto ml-2 iconify-inline"
                                           data-icon="mdi:magnify"></span>
                                 </label>
-                                <input placeholder="Search documentations" x-model="filterText" id="filter"
+                                <input placeholder="{{ "title.overview.list.filter.placeholder"|trans }}"
+                                       x-model="filterText" id="filter"
                                        class="pl-8 !pr-7 !py-[0.1875rem] border rounded-full border-mono-500 search">
                                 {# <span class="absolute top-0 bottom-0 left-0">O</span> #}
                                 <button aria-label="{{ "generic.clear-search"|trans }}"
@@ -90,20 +87,23 @@
                                     </div>
                                     <div class="col-start-1 col-end-4">
                                         <a class="font-semibold underline"
-                                           href="{{ path('Study-datasets', {uuid: experiment.id}) }}">Datasets:</a>
+                                           href="{{ path('Study-datasets', {uuid: experiment.id}) }}">{{ "title.overview.list.datasets"|trans }}
+                                            :</a>
                                     </div>
                                     <div class="col-start-4 col-end-7">
-                                        <span class="font-semibold">Date created:</span>
+                                        <span class="font-semibold">{{ "title.overview.list.created"|trans }}:</span>
                                     </div>
                                     <div class="col-start-1 col-end-4">
                                         <a class="font-semibold underline"
-                                           href="{{ path('Study-materials', {uuid: experiment.id}) }}">Materials:</a>
+                                           href="{{ path('Study-materials', {uuid: experiment.id}) }}">{{ "title.overview.list.materials"|trans }}
+                                            :</a>
                                     </div>
                                     <div>
-                                        <span class="font-semibold">Last edited:</span>
+                                        <span class="font-semibold">{{ "title.overview.list.edited"|trans }}:</span>
                                     </div>
+                                    {# TODO Remove delete link in final version #}
                                     <div class="col-span-full">
-                                        <a href="{{ path('Study-delete', {uuid: experiment.id}) }}">Delete</a>
+                                        <a href="{{ path('Study-delete', {uuid: experiment.id}) }}">{{ "generic.delete"|trans }}</a>
                                     </div>
                                 </div>
                                 {# <button class="Button Button_secondary Button_secondary_go Button_standalone ">Open study</button> #}
@@ -111,6 +111,11 @@
                         {% endfor %}
                     </ul>
                 </div>
+            {% else %}
+                <h3 class="flex-shrink-0 mt-10 ml-8 text-2xl font-bold xl:flex text-zpid-purple-700">
+                    {{ "title.overview.list.header"|trans }}
+                </h3>
+                <p class="mx-8 mt-3 max-w-prose">{{ "title.overview.list.empty"|trans }}</p>
             {% endif %}
             {# <h2 class="mt-6 text-2xl font-semibold">
             Shared studies
@@ -120,12 +125,10 @@
         </div> #}
         </main>
         <div class="w-[30%] mr-8">
-            <aside class="sticky top-0 overflow-hidden border rounded-lg shadow-sm bg-mono-100 markdown scrollbar scrollbar-thumb-gray-400 scrollbar-thin scrollbar-track-gray-100 max-h-[calc(100vh)] overflow-y-auto">
-                <div class="Help-Section">
-                    {% block help_for_section %}
-                        {{ sectionHelp("data_documentation") }}
-                    {% endblock %}
-                </div>
+            <aside class="sticky top-0 overflow-hidden border rounded-lg shadow-sm scrollbar scrollbar-thumb-gray-400 scrollbar-thin scrollbar-track-gray-100 max-h-[calc(100vh)] overflow-y-auto">
+                {% block help_for_section %}
+                    {{ sectionHelp("data_documentation") }}
+                {% endblock %}
             </aside>
         </div>
     </div>

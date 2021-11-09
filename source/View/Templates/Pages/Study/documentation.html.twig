@@ -94,8 +94,8 @@
 {% endblock %}
 
 {% block help_for_metadata %}
-    {{ formHelp("basic", "creator") }}
-    {{ formHelp("basic", "title") }}
-    {{ formHelp("basic", "description") }}
-    {{ formHelp("basic", "related_publications") }}
+    {{ formHelp("basic", "title", "input.title.legend") }}
+    {{ formHelp("basic", "description", "input.description.legend") }}
+    {{ formHelp("basic", "related_publications", "input.relatedPubs.legend") }}
+    {{ formHelp("basic", "creator", "input.creator.legend") }}
 {% endblock %}

@@ -1,8 +1,6 @@
-## About exclusion criteria
-
 The description of participant characteristics in your report should include the exclusion criteria you applied when picking participants, including any restrictions based on demographic or other characteristics.
 
-### Exclusion criteria example
+### Example
 
 > Exclusion criteria included age over 60 years, psychosis, bipolar diagnosis, severe suicidal intent, alcohol or drug dependence during the year before intake, organic brain damage, pregnancy, or unwillingness to undergo psychotherapy.
 

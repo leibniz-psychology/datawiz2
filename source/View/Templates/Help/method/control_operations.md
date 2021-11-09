@@ -1,5 +1,3 @@
-## About control operations
-
 Which control operations did you use to limit the effects of participant variables (order and sequence effects)?
 
 ### Block randomization

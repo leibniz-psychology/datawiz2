@@ -1,3 +1,5 @@
+{% from "Components/_macros.html.twig" import sectionHelp %}
+
 {% extends "Layouts/threeColumn.html.twig" %}
 
 {% set isPartOfStudyDocumentation = true %}
@@ -17,13 +19,13 @@
     <fieldset>
         <div class="MetaData-Title">
             <legend class="MetaData-Legend">
-                {{ "input.study-name.legend"|trans }}
+                {{ "input.documentation-name.legend"|trans }}
             </legend>
 
         </div>
         <div class="MetaData-Label">
             {{ form_label(form.shortName, null, {
-                'label': 'input.study-name.label',
+                'label': 'input.documentation-name.label',
                 'label_attr': {
                     'class': 'block max-w-prose'
                 },
@@ -111,4 +113,8 @@
     </fieldset>
 
     {{ form_end(form) }}
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("settings") }}
 {% endblock %}

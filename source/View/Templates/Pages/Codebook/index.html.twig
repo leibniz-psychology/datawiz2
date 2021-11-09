@@ -23,44 +23,44 @@
                                     </th>
                                     <th scope="col" class="CodeBookHead-Cell w-[15%]">
                                         {{ "codebook.var-props.name"|trans }}
-                                        <button class="inline-flex items-center justify-center w-6 h-6 ml-0 MetaData-HelpButton"
-                                                @click="$store.codebookSettings.showHelp.sideBar = true; $store.codebookSettings.showHelp.variableName = true">
+                                        <button class="inline-flex items-center justify-center w-5 h-5 ml-1 font-semibold border rounded-full bg-mono-100 border-mono-500"
+                                                x-data="codebookHelp('variableName_details')" x-bind="helpButton">
                                             ?
                                         </button>
                                         </span>
                                     </th>
                                     <th scope="col" class="CodeBookHead-Cell w-[20%]">
                                         {{ "codebook.var-props.label"|trans }}
-                                        <button class="inline-flex items-center justify-center w-6 h-6 ml-0 MetaData-HelpButton"
-                                                @click="$store.codebookSettings.showHelp.sideBar = true; $store.codebookSettings.showHelp.variableLabel = true">
+                                        <button class="inline-flex items-center justify-center w-5 h-5 ml-1 font-semibold border rounded-full bg-mono-100 border-mono-500"
+                                                x-data="codebookHelp('variableLabel_details')" x-bind="helpButton">
                                             ?
                                         </button>
                                     </th>
                                     <th scope="col" class="CodeBookHead-Cell w-[20%]">
                                         {{ "codebook.var-props.item-text"|trans }}
-                                        <button class="inline-flex items-center justify-center w-6 h-6 ml-0 MetaData-HelpButton"
-                                                @click="$store.codebookSettings.showHelp.sideBar = true; $store.codebookSettings.showHelp.itemText = true">
+                                        <button class="inline-flex items-center justify-center w-5 h-5 ml-1 font-semibold border rounded-full bg-mono-100 border-mono-500"
+                                                x-data="codebookHelp('itemText_details')" x-bind="helpButton">
                                             ?
                                         </button>
                                     </th>
                                     <th scope="col" class="CodeBookHead-Cell w-[15%]">
                                         {{ "codebook.var-props.values.title"|trans }}
-                                        <button class="inline-flex items-center justify-center w-6 h-6 ml-0 MetaData-HelpButton"
-                                                @click="$store.codebookSettings.showHelp.sideBar = true; $store.codebookSettings.showHelp.valueLabels = true">
+                                        <button class="inline-flex items-center justify-center w-5 h-5 ml-1 font-semibold border rounded-full bg-mono-100 border-mono-500"
+                                                x-data="codebookHelp('valueLabels_details')" x-bind="helpButton">
                                             ?
                                         </button>
                                     </th>
                                     <th scope="col" class="CodeBookHead-Cell w-[15%]">
                                         {{ "codebook.var-props.missings.title"|trans }}
-                                        <button class="inline-flex items-center justify-center w-6 h-6 ml-0 MetaData-HelpButton"
-                                                @click="$store.codebookSettings.showHelp.sideBar = true; $store.codebookSettings.showHelp.missings = true">
+                                        <button class="inline-flex items-center justify-center w-5 h-5 ml-1 font-semibold border rounded-full bg-mono-100 border-mono-500"
+                                                x-data="codebookHelp('missings_details')" x-bind="helpButton">
                                             ?
                                         </button>
                                     </th>
                                     <th scope="col" class="CodeBookHead-Cell w-[15%]">
                                         {{ "codebook.var-props.measure.title"|trans }}
-                                        <button class="inline-flex items-center justify-center w-6 h-6 ml-0 MetaData-HelpButton"
-                                                @click="$store.codebookSettings.showHelp.sideBar = true; $store.codebookSettings.showHelp.measure = true">
+                                        <button class="inline-flex items-center justify-center w-5 h-5 ml-1 font-semibold border rounded-full bg-mono-100 border-mono-500"
+                                                x-data="codebookHelp('measure_details')" x-bind="helpButton">
                                             ?
                                         </button>
                                     </th>
@@ -182,7 +182,7 @@
     </template>
     <template x-if="$store.codebook.variables.length !== 0">
         <aside class="col-span-full md:col-start-10 md:col-end-13"
-               :class="$store.codebookSettings.showHelp.sideBar === false ? '!bg-sky-100' : ''">
+               :class="$store.codebookSettings.showHelp.sideBar === false ? '!bg-sky-100' : 'p-1'">
 
             <div class="sticky w-full top-14 overflow-y-auto h-[calc(100vh-3.5rem)]"
                  x-show="!$store.codebookSettings.showHelp.sideBar" x-cloak>
@@ -268,10 +268,10 @@
                 </div>
             </div>
 
-            <div class="sticky w-full top-14 overflow-y-auto max-h-[calc(100vh-3.5rem)]"
+            <div class="sticky w-full top-14 overflow-y-auto max-h-[calc(100vh-3.5rem)] scrollbar scrollbar-thumb-gray-400 scrollbar-thin scrollbar-track-gray-100 border border-zpid-blue shadow-xl"
                  x-show="$store.codebookSettings.showHelp.sideBar" x-transition:enter.duration.250ms>
                 <div class="relative">
-                    <h2 class="py-3 pl-4 pr-2 text-2xl font-medium text-gray-700">{{ "codebook.help.title"|trans }}</h2>
+                    <h2 class="py-3 pl-4 pr-2 text-xl font-medium text-zpid-purple-700">{{ "codebook.help.title"|trans }}</h2>
                     <div class="absolute top-3 right-2">
                         <button class="flex items-center justify-center p-1 border-none rounded-full shadow-none bg-mono-100 hover:bg-mono-300"
                                 x-on:click="$store.codebookSettings.showHelp.sideBar = false"

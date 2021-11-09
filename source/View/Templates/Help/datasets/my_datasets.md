@@ -1,0 +1,1 @@
+Provide a short description of your dataset (the dataset label) and view or edit the codebooks. This allows you to check imported codebooks or write codebooks if not present yet. Codebooks (also called data dictionaries or variable-level metadata) provide the coding scheme for your variables. Codebooks are essential documents that help researchers understand your datasets.

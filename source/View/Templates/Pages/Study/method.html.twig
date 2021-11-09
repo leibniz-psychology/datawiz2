@@ -33,14 +33,14 @@
                 {{ form_widget(choice) }}
                 {{ form_label(choice, null, {
                     'label_attr': {
-                        'class': 'RadioButton-Label RadioButton-Label_card items-center w-full px-2 py-2 border border-gray-500 rounded-lg',
+                        'class': 'RadioButton-Label RadioButton-Label_card',
                         '@click': '$store.app.researchDesign = "' ~ choice.vars.value ~ '"'
                     },
                     'label_html': true,
                 }) }}
             {% endfor -%}
             <div x-show="$store.app.researchDesign === '{{ form.research_design.vars.choices[0].value }}'"
-                 x-cloak="x-cloak" class="mt-2 ml-4" x-transition:enter="transition duration-300"
+                 x-cloak="x-cloak" class="mt-4 ml-4" x-transition:enter="transition duration-300"
                  x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
                  x-transition:leave="transition duration-[0ms]" x-transition:leave-start="opacity-100"
                  x-transition:leave-end="opacity-0">
@@ -55,7 +55,7 @@
                 {% endfor -%}
             </div>
             <div x-show="$store.app.researchDesign === '{{ form.research_design.vars.choices[1].value }}'"
-                 x-cloak="x-cloak" class="mt-2 ml-4"
+                 x-cloak="x-cloak" class="mt-4 ml-4"
                  x-init="$store.app.nonExperimentalType = '{{ form.nonExperimentalDetails.vars.value }}'"
                  x-transition:enter="transition duration-300" x-transition:enter-start="opacity-0"
                  x-transition:enter-end="opacity-100" x-transition:leave="transition duration-[0ms]"
@@ -220,9 +220,9 @@
 {% endblock %}
 
 {% block help_for_metadata %}
-    {{ formHelp("method", "research_design") }}
-    {{ formHelp("method", "setting") }}
-    {{ formHelp("method", "manipulations") }}
-    {{ formHelp("method", "experimental_design") }}
-    {{ formHelp("method", "control_operations") }}
+    {{ formHelp("method", "research_design", "input.design.legend") }}
+    {{ formHelp("method", "setting", "input.setting.legend") }}
+    {{ formHelp("method", "manipulations", "input.manipulations.legend") }}
+    {{ formHelp("method", "experimental_design", "input.experimental-design.legend") }}
+    {{ formHelp("method", "control_operations", "input.control-operations.legend") }}
 {% endblock %}

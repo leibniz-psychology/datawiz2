@@ -7,14 +7,14 @@
                   data-icon="mdi:view-grid">
 
             </span>
-            Dashboard
+            {{ "title.dashboard.title"|trans }}
         </a>
 
         <a href="{{ path("Study-overview") }}"
            class="flex items-center ring-inset h-full px-3 ml-4 text-base pt-1 border-b-4 border-transparent hover:border-zpid-blue
             {{- isPartOfStudyDocumentation|default(false) ? ' border-zpid-blue font-semibold' -}}">
             <div>
-                Data documentation
+                {{ "title.dashboard.modules.documentation.title"|trans }}
             </div>
         </a>
     </div>

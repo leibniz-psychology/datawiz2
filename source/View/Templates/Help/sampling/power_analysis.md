@@ -1,8 +1,6 @@
-## About power analysis
-
 Statistical power (also called power of a hypothesis test) is the probability that a test will correctly reject a false null hypothesis (Polak, 2020). It is a measure of how effective a statistical procedure is at identifying real differences between populations: It is the probability that use of the test will lead to the null hypothesis of no effect being rejected when the alternative hypothesis is true. For example, if a given statistical test has a power of .70, then there is a 70% probability that its use will result in the null hypothesis correctly being rejected as false, with a corresponding 30% chance that its use will lead to a type ii error. Power ranges from 0 to 1, with values of .80 or above generally considered acceptable. Researchers try to maximize power in their study designs prior to data gathering. (APA Dictionary, 2014) You can use G\*Power as a general stand-alone power analysis program for statistical tests commonly used in social and behavioral research (Erdfelder, Faul, & Buchner, 1996)
 
-### Power analysis example
+### Example
 
 > Required sample sizes of ~30 for each protocol (n = 15 M + n = 15 F) were calculated a priori following pilot and previous observations in our laboratory of sex differences in novel tank test (d = 1.25, power = 0.8, alpha = 0.05).
 

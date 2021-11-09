@@ -1,6 +1,9 @@
 {% extends "Layouts/threeColumn.html.twig" %}
 {% from "Components/_macros.html.twig" import bytesToSize %}
 {% from "Components/_macros.html.twig" import editDescription %}
+{% from "Components/_macros.html.twig" import helpButton %}
+{% from "Components/_macros.html.twig" import sectionHelp %}
+{% from "Components/_macros.html.twig" import formHelp %}
 
 {% set isPartOfStudyDocumentation = true %}
 
@@ -24,75 +27,79 @@
             <input type="hidden" id="dataset-import-data" name="dataset-import-data" value=""/>
         </form>
     </div>
-    <h3 class="mx-6 mt-6 text-xl text-zpid-purple-700">
-        {{ "title.dataset.h3"|trans }}
-    </h3>
-    <ul class="mx-6 mt-6">
-        {% for dataset in experiment.originalDatasets %}
-            <li class="pt-3 pb-4 mt-2 first:mt-0 bg-mono-100">
-                <div class="bg-mono-100" x-data="modal()" @keydown.window.escape="hide()">
-                    <h4 class="flex justify-between mx-4">
+    <div class="MetaData-Title">
+        <legend class="MetaData-Legend">
+            {{ "title.dataset.h3"|trans }}
+        </legend>
+        {{ helpButton("my_datasets") }}
+    </div>
+    {% if experiment.originalDatasets|length > 0 %}
+        <ul class="mx-6 mt-6">
+            {% for dataset in experiment.originalDatasets %}
+                <li class="pt-3 pb-4 mt-2 first:mt-0 bg-mono-100">
+                    <div class="bg-mono-100" x-data="modal()" @keydown.window.escape="hide()">
+                        <h4 class="flex justify-between mx-4">
                         <span class="text-lg font-semibold text-zpid-purple-700">
                             {{ dataset.originalName }}
                         </span>
-                        <button class="flex items-center self-start ml-2 Button Button_tertiary Button_tertiary_danger Button_standalone"
-                                @click="show()">
-                            {# Icon: mi:delete - https://icon-sets.iconify.design/mi/delete/ #}
-                            <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
-                                 xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
-                                 width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                <g fill="none">
-                                    <path d="M7 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2h4a1 1 0 1 1 0 2h-1.069l-.867 12.142A2 2 0 0 1 17.069 22H6.93a2 2 0 0 1-1.995-1.858L4.07 8H3a1 1 0 0 1 0-2h4V4zm2 2h6V4H9v2zM6.074 8l.857 12H17.07l.857-12H6.074zM10 10a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1zm4 0a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1z"
-                                          fill="currentColor"/>
-                                </g>
-                            </svg>
-                            {{ "generic.delete"|trans }}
-                        </button>
-                    </h4>
+                            <button class="flex items-center self-start ml-2 Button Button_tertiary Button_tertiary_danger Button_standalone"
+                                    @click="show()">
+                                {# Icon: mi:delete - https://icon-sets.iconify.design/mi/delete/ #}
+                                <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
+                                     xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                                     width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                    <g fill="none">
+                                        <path d="M7 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2h4a1 1 0 1 1 0 2h-1.069l-.867 12.142A2 2 0 0 1 17.069 22H6.93a2 2 0 0 1-1.995-1.858L4.07 8H3a1 1 0 0 1 0-2h4V4zm2 2h6V4H9v2zM6.074 8l.857 12H17.07l.857-12H6.074zM10 10a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1zm4 0a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1z"
+                                              fill="currentColor"/>
+                                    </g>
+                                </svg>
+                                {{ "generic.delete"|trans }}
+                            </button>
+                        </h4>
 
-                    <!-- Modal confirming delete action -->
-                    <div class="Modal-Overlay" x-bind="overlay" x-cloak>
-                        <div class="Modal-Dialog" @click.outside="hide()">
+                        <!-- Modal confirming delete action -->
+                        <div class="Modal-Overlay" x-bind="overlay" x-cloak>
+                            <div class="Modal-Dialog" @click.outside="hide()">
 
-                            <div class="Modal-Header">
-                                <div class="Modal-Title">
-                                    {{ "title.dataset.deleteModal.title"|trans }}
+                                <div class="Modal-Header">
+                                    <div class="Modal-Title">
+                                        {{ "title.dataset.deleteModal.title"|trans }}
+                                    </div>
+                                    <button class="Modal-Button_close" @click="hide()" type="button">
+                                        <span class="w-6 h-6 iconify" data-icon="mdi:close" data-inline="false"></span>
+                                    </button>
                                 </div>
-                                <button class="Modal-Button_close" @click="hide()" type="button">
-                                    <span class="w-6 h-6 iconify" data-icon="mdi:close" data-inline="false"></span>
-                                </button>
-                            </div>
 
-                            <div class="Modal-Body">
-                                {{ "title.dataset.deleteModal.body"|trans({'#datasetName#':"<span class='font-semibold'>" ~ dataset.originalName ~ "</span>"})|raw }}
-                            </div>
+                                <div class="Modal-Body">
+                                    {{ "title.dataset.deleteModal.body"|trans({'#datasetName#':"<span class='font-semibold'>" ~ dataset.originalName ~ "</span>"})|raw }}
+                                </div>
 
-                            <div class="Modal-Footer">
-                                <button class="Button Button_primary Button_primary_danger Button_standalone"
-                                        type="button"
-                                        @click="window.location.href='{{ path('File-delete_dataset', { "uuid": dataset.id }) }}'"
-                                >
-                                    {{ "title.dataset.deleteModal.confirm"|trans }}
-                                </button>
-                                <button class="ml-2 Button Button_tertiary Button_tertiary_act Button_standalone"
-                                        type="button" x-ref="focusFirst" @click="hide()">
-                                    {{ "generic.cancel"|trans }}
-                                </button>
+                                <div class="Modal-Footer">
+                                    <button class="Button Button_primary Button_primary_danger Button_standalone"
+                                            type="button"
+                                            @click="window.location.href='{{ path('File-delete_dataset', { "uuid": dataset.id }) }}'"
+                                    >
+                                        {{ "title.dataset.deleteModal.confirm"|trans }}
+                                    </button>
+                                    <button class="ml-2 Button Button_tertiary Button_tertiary_act Button_standalone"
+                                            type="button" x-ref="focusFirst" @click="hide()">
+                                        {{ "generic.cancel"|trans }}
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="mx-4 mt-1">
-                        <span class="font-semibold">{{ "title.dataset.details.date"|trans }}</span><span
-                                class="ml-1">{{ dataset.dateUploaded|date }}</span>
-                        <span class="font-semibold">{{ "title.dataset.details.size"|trans }}</span><span
-                                class="ml-1">{{ bytesToSize(dataset.originalSize) }}</span>
-                    </div>
+                        <div class="mx-4 mt-1">
+                            <span class="font-semibold">{{ "title.dataset.details.date"|trans }}</span><span
+                                    class="ml-1">{{ dataset.dateUploaded|date }}</span>
+                            <span class="font-semibold">{{ "title.dataset.details.size"|trans }}</span><span
+                                    class="ml-1">{{ bytesToSize(dataset.originalSize) }}</span>
+                        </div>
 
-                    {{ editDescription(dataset, loop.index, path('File-update_description', { 'uuid': dataset.id })) }}
+                        {{ editDescription(dataset, loop.index, path('File-update_description', { 'uuid': dataset.id })) }}
 
-                    <div class="flex mx-4 mt-4">
-                        {# <a href="#" role="button"
+                        <div class="flex mx-4 mt-4">
+                            {# <a href="#" role="button"
                            class="flex items-center Button Button_secondary Button_secondary_go Button_standalone">
                             <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
                                  xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -104,23 +111,28 @@
                             </svg>
                             {{ "link.view.dataset"|trans }}
                         </a> #}
-                        <a href="{{ path('codebook_index', {uuid: dataset.id}) }}"
-                           class="flex items-center Button Button_secondary Button_secondary_go Button_standalone">
-                            <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
-                                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                                 aria-hidden="true" role="img" style="vertical-align: -0.125em;" width="1em"
-                                 height="1em"
-                                 preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                <path d="M21.7 13.35l-1 1l-2.05-2.05l1-1c.21-.22.56-.22.77 0l1.28 1.28c.22.21.22.56 0 .77M12 18.94l6.07-6.06l2.05 2.05L14.06 21H12v-2.06M4 2h14a2 2 0 0 1 2 2v4.17L16.17 12H12v4.17L10.17 18H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2m0 4v4h6V6H4m8 0v4h6V6h-6m-8 6v4h6v-4H4z"
-                                      fill="currentColor"/>
-                            </svg>
-                            {{ "link.edit.codebook"|trans }}
-                        </a>
+                            <a href="{{ path('codebook_index', {uuid: dataset.id}) }}"
+                               class="flex items-center Button Button_secondary Button_secondary_go Button_standalone">
+                                <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
+                                     xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     aria-hidden="true" role="img" style="vertical-align: -0.125em;" width="1em"
+                                     height="1em"
+                                     preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                    <path d="M21.7 13.35l-1 1l-2.05-2.05l1-1c.21-.22.56-.22.77 0l1.28 1.28c.22.21.22.56 0 .77M12 18.94l6.07-6.06l2.05 2.05L14.06 21H12v-2.06M4 2h14a2 2 0 0 1 2 2v4.17L16.17 12H12v4.17L10.17 18H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2m0 4v4h6V6H4m8 0v4h6V6h-6m-8 6v4h6v-4H4z"
+                                          fill="currentColor"/>
+                                </svg>
+                                {{ "link.edit.codebook"|trans }}
+                            </a>
+                        </div>
                     </div>
-                </div>
-            </li>
-        {% endfor %}
-    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="mx-6">
+            {{ "title.dataset.empty"|trans }}
+        </p>
+    {% endif %}
     <!-- Modal -->
     <div class="fixed inset-0 z-50 items-center justify-center hidden overflow-x-hidden overflow-y-auto outline-none focus:outline-none"
          id="modal-dataset-import">
@@ -220,15 +232,15 @@
                 <!--footer-->
                 <div class="flex items-center justify-end p-6 border-t border-gray-200 border-solid rounded-b">
                     <button
-                            class="px-6 py-2 mb-1 mr-1 text-sm font-bold text-purple-500 uppercase transition-all duration-150 ease-linear outline-none background-transparent focus:outline-none"
-                            type="button">
-                        Cancel
-                    </button>
-                    <button
-                            class="px-4 py-2 mb-1 mr-1 text-xs font-bold text-white uppercase transition-all duration-150 ease-linear bg-purple-500 rounded shadow outline-none active:bg-purple-600 hover:shadow-md focus:outline-none"
+                            class="Button Button_primary Button_primary_act Button_standalone"
                             type="button"
                             id="dataset-import-submit">
                         Import dataset
+                    </button>
+                    <button
+                            class="ml-2 Button Button_tertiary Button_tertiary_act Button_standalone"
+                            type="button">
+                        Cancel
                     </button>
                 </div>
             </div>
@@ -244,4 +256,12 @@
         nextTitle: 'title.material.title-short'|trans,
         form: null
     })) }}
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("datasets") }}
+{% endblock %}
+
+{% block help_for_metadata %}
+    {{ formHelp("datasets", "my_datasets", "title.dataset.h3") }}
 {% endblock %}

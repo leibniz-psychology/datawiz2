@@ -4,7 +4,7 @@
 {% from "Components/_macros.html.twig" import formHelp %}
 
 {% macro sectionTitle(titleText) %}
-    <h2 class="mx-6 text-2xl font-semibold text-zpid-blue">{{ titleText }}</h2>
+    <h2 class="mx-6 text-xl font-bold border-b text-zpid-purple border-zpid-purple">{{ titleText }}</h2>
 {% endmacro %}
 
 {% set isPartOfStudyDocumentation = true %}
@@ -18,19 +18,17 @@
     <h2 class="MetaDataGroup-Title">
         {{ "title.review.title"|trans }}
     </h2>
-    <p class="mx-6 mt-8 max-w-prose">
-        Please review your documentation and check for completion and correctness. Make sure all fields marked as <span
-                class="px-1 bg-red-50">mandatory</span> are set. For best results, fill in the <span
-                class="px-1 bg-green-50">recommended</span> fields as well.
+    <p class="mx-6 mt-3 max-w-prose">
+        {{ "title.review.description"|trans }}
     </p>
     <article>
-        <section class="mt-4">
+        <section class="mt-8">
             {{ _self.sectionTitle("title.basic.title"|trans) }}
             {% for reviewItem in basicInfoReview %}
                 {% include 'Components/_reviewValue.html.twig' with {item: reviewItem } %}
             {% endfor %}
             <div class="mt-5">
-                <h2 class="mx-6 text-xl font-bold text-zpid-purple-700">Creators</h2>
+                <h2 class="mx-6 text-xl font-bold text-zpid-purple-700">{{ "input.creator.legend"|trans }}</h2>
                 {% for reviewCreator in basicCreatorInfoReview %}
                     {% for reviewItem in reviewCreator.reviewCollection %}
                         {% include 'Components/_reviewValue.html.twig' with {item: reviewItem} %}
@@ -62,18 +60,20 @@
                 {% include 'Components/_reviewValue.html.twig' with {item: reviewItem} %}
             {% endfor %}
         </section>
-        <section class="mt-8">
+        {# TODO Add list of datasets #}
+        {# <section class="mt-8">
             {{ _self.sectionTitle("title.dataset.title"|trans) }}
             <div class="mx-6 mt-2 italic">
                 List of datasets goes here
             </div>
-        </section>
-        <section class="mt-8">
+        </section> #}
+        {# TODO Add list of materials #}
+        {# <section class="mt-8">
             {{ _self.sectionTitle("title.material.title"|trans) }}
             <div class="mx-6 mt-2 italic">
                 List of materials goes here
             </div>
-        </section>
+        </section> #}
     </article>
 
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
@@ -84,4 +84,8 @@
         nextTitle: 'title.export.title-short'|trans,
         form: null
     })) }}
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("review") }}
 {% endblock %}

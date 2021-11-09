@@ -1,8 +1,6 @@
-## About sample size
-
 The sample size is the number of observations (cases, individuals, units) included in the sample to be studied.
 
-### Sample size examples
+### Examples
 
 > In total, 41 of the participants completed all of their sessions in their own home ("home group"), 27 participants completed all of their sessions in the lab ("lab group"), and 11 participants completed some sessions at home and some in the lab ("mixed group").
 

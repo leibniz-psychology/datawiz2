@@ -1,8 +1,6 @@
-## About tests and measures
-
 All data result from some form of measurement (including observations, collections, and so forth). The results of the measurement are so-called measures. A measure in psychology is an indicator of a not directly observable attribute/construct. Psychological measures are either numerical or categorical in nature. General types of numerical variables include: frequency measures (for example number of words recalled from a list), latency measures (for example reaction time to name a visual object), and intensity or strength measures (for example magnitude estimation of stimulus intensity). Ratings using numerical scales (for example 1 to 7) are sometimes referred to as Likert scales. Categorical variables involve classification of cases into distinct groups. Although numbers might be used to label the levels of categorical variables, especially when there are numerous classes (for example psychiatric diagnoses), the numbers have limited quantitative meaning and simply provide convenient labels for the distinct groups.
 
-### Tests and measures examples
+### Examples
 
 > Evidence indicates that (cognitive) activation is a quantifiable dimension which can be measured by physiological indices. One such measure is the Galvanic Skin Response (GSR), which is the change in electrical conductance of the skin following stimulation. Scores in conductance units were obtained for each subject for the twelve experimental words.
 >

@@ -1,4 +1,7 @@
 {
+    "dflydev/dot-access-data": {
+        "version": "v3.0.1"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -132,6 +135,12 @@
     "laminas/laminas-code": {
         "version": "3.4.1"
     },
+    "league/commonmark": {
+        "version": "2.0.2"
+    },
+    "league/config": {
+        "version": "v1.1.1"
+    },
     "league/csv": {
         "version": "9.7.1"
     },
@@ -146,6 +155,12 @@
     },
     "monolog/monolog": {
         "version": "1.25.4"
+    },
+    "nette/schema": {
+        "version": "v1.2.2"
+    },
+    "nette/utils": {
+        "version": "v3.2.5"
     },
     "nikic/php-parser": {
         "version": "v4.12.0"

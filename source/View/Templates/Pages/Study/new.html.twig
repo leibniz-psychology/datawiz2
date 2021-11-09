@@ -7,8 +7,21 @@
 {% endblock %}
 
 {% block body %}
+    <div class="max-w-screen-xl pl-4 mx-auto">
+        {# Icon: ic:sharp-arrow-back-ios-new #}
 
-    <main class="max-w-screen-xl mx-auto mt-12 min-h-[calc(100%-12.5rem)] px-8">
+        <a href="{{ path("Study-overview") }}"
+           class="inline-flex items-center mt-2 underline Button Button_tertiary Button_tertiary_go Button_standalone">
+            <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" class="arrow-left w-4 h-4 mr-1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            {{ "title.overview.list.header"|trans }}
+        </a>
+    </div>
+
+    <main class="max-w-screen-xl mx-auto mt-9 min-h-[calc(100%-12.5rem)] px-8">
+
         <h2 class="text-3xl font-bold text-zpid-purple-700">
             {{ "title.new.title"|trans }}
         </h2>
@@ -18,7 +31,7 @@
 
         <div class="mt-6">
             {{ form_label(form.shortName, null, {
-                'label': 'input.study-name.label',
+                'label': 'input.documentation-name.label',
                 'label_attr': {
                     'class': 'block max-w-prose'
                 },
@@ -34,7 +47,7 @@
 
 
         {{ form_widget(form.submit, {
-            'label': 'Create study',
+            'label': 'title.new.create',
             'attr': {
                 'class': 'Button Button_primary Button_primary_act Button_standalone mt-4',
             }

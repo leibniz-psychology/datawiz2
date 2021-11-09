@@ -23,11 +23,11 @@
 }
 
 .Button_primary_act {
-  @apply bg-zpid-green-600 border-zpid-green-600 hover:bg-zpid-green-500 hover:border-zpid-green-500;
+  @apply bg-zpid-green border-zpid-green-600 hover:bg-zpid-green-600 hover:border-zpid-green-600;
 }
 
 .Button_secondary_act {
-  @apply hover:border-zpid-green-600 border-mono-400 text-mono-800 bg-mono-50 hover:bg-zpid-green-50;
+  @apply hover:border-zpid-green border-mono-400 text-mono-800 bg-mono-50 hover:bg-zpid-green-50;
 }
 
 .Button_tertiary_act {

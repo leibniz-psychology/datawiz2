@@ -13,18 +13,23 @@
 .Modal-Title {
   @apply text-xl font-semibold;
 }
+
 .Modal-Button_close {
   @apply w-auto p-0 m-0 border-0 rounded-none shadow-none hover:bg-transparent;
 }
+
 .Modal-Body {
   @apply flex-auto p-6;
 }
+
 .Modal-Footer {
   @apply flex items-center justify-end p-6 border-t border-gray-200 border-solid rounded-b;
 }
+
 .Modal-Button_warning {
   @apply px-3 text-white bg-red-600 hover:bg-red-500;
 }
+
 .Modal-Button_cancel {
   @apply ml-2;
 }

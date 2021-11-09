@@ -30,25 +30,21 @@
         </div>
 
         <div class="w-[30%]">
-            <aside class="sticky top-0 overflow-hidden border rounded-lg shadow-sm bg-mono-100 markdown scrollbar scrollbar-thumb-gray-400 scrollbar-thin scrollbar-track-gray-100 max-h-[calc(100vh)] overflow-y-auto">
-                <div class="Help-Section">
-                    {% block help_for_section %}
-                        <div class="py-1 Help-Text Help-Text_section">
-                            <h2 class="text-2xl font-semibold">
-                                Help
-                            </h2>
-                        </div>
-                    {% endblock %}
-                </div>
-                {% block help_for_metadata %}
-                    <div class="relative Help-MetaData">
-                        <div class="Help-Text Help-Text_metaData">
-                            <p class="mt-2">
-                                Help is under construction. Please come back later.
-                            </p>
-                        </div>
+            <aside class="sticky top-0 overflow-hidden border rounded-lg shadow-sm bg-white scrollbar scrollbar-thumb-gray-400 scrollbar-thin scrollbar-track-gray-100 max-h-[calc(100vh)] overflow-y-auto">
+                {% block help_for_section %}
+                    <div class="w-full Help-Text Help-Text_section markdown">
+                        <h1>
+                            Help for this section
+                        </h1>
+                        <p>
+                            Help! Anybody?
+                        </p>
                     </div>
                 {% endblock %}
+                <div>
+                    {% block help_for_metadata %}
+                    {% endblock %}
+                </div>
             </aside>
         </div>
     </div>

@@ -1,8 +1,6 @@
-## About inclusion criteria
-
 The description of participant characteristics in your report should include the inclusion criteria you applied when picking participants, including any restrictions based on demographic or other characteristics.
 
-### Inclusion criteria example
+### Example
 
 > The inclusion criteria consisted of presence of at least one DSM-IV personality disorder diagnosis, or a diagnosis of passive-aggressive or depressive personality disorder from the DSM-IV appendix.
 

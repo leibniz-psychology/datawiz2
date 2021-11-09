@@ -161,11 +161,11 @@
 {% endblock %}
 
 {% block help_for_metadata %}
-    {{ formHelp("sampling", "participants") }}
-    {{ formHelp("sampling", "inclusion_criteria") }}
-    {{ formHelp("sampling", "exclusion_criteria") }}
-    {{ formHelp("sampling", "population") }}
-    {{ formHelp("sampling", "sampling_method") }}
-    {{ formHelp("sampling", "sample_size") }}
-    {{ formHelp("sampling", "power_analysis") }}
+    {{ formHelp("sampling", "participants", "input.participants.legend") }}
+    {{ formHelp("sampling", "inclusion_criteria", "input.population.legend") }}
+    {{ formHelp("sampling", "exclusion_criteria", "input.inclusion.legend") }}
+    {{ formHelp("sampling", "population", "input.exclusion.legend") }}
+    {{ formHelp("sampling", "sampling_method", "input.sampling.legend") }}
+    {{ formHelp("sampling", "sample_size", "input.sample-size.legend") }}
+    {{ formHelp("sampling", "power_analysis", "input.power-analysis.legend") }}
 {% endblock %}

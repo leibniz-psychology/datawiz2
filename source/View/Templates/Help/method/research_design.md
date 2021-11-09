@@ -1,5 +1,3 @@
-## About research design
-
 A research design is a strategic plan of the procedures to be followed during a study in order to reach valid conclusions, with particular consideration given to participant selection and assignment to conditions, data collection, and data analysis. Research designs may take a variety of forms, including not only experiments but also quasi-experiments, observational studies, longitudinal designs, surveys, focus groups, and other nonexperimental methods.
 
 ### Experimental vs. non-experimental designs

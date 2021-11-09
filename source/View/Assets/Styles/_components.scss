@@ -54,7 +54,7 @@
 }
 
 .MetaData-HelpButton {
-  @apply relative w-8 h-8 text-xl font-bold text-white border rounded-full bg-zpid-purple-700 hover:bg-zpid-blue;
+  @apply inline-flex items-center justify-center flex-shrink-0 w-6 h-6 text-lg font-bold text-white rounded-full shadow-lg bg-zpid-purple-700 hover:bg-zpid-purple-500;
 }
 
 .MetaData-SubmitButton {
@@ -74,24 +74,88 @@
   }
 }
 
-.Help-Section {
-  @apply flex bg-mono-100;
-}
-
-.Help-MetaData {
-  @apply flex bg-white;
-}
-
 .Help-Text {
-  @apply mx-4;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  blockquote,
+  dl {
+    @apply px-4;
+  }
 }
 
 .Help-Text_section {
-  @apply mt-3 mb-4;
+  @apply mb-4;
+
+  h1 {
+    @apply pt-3.5 pb-[1.125rem] bg-mono-100 text-zpid-purple;
+    // @apply text-xl #{!important};
+  }
 }
 
 .Help-Text_metaData {
   @apply mt-4 mb-6;
+}
+
+.Help-Text_metaData-Title {
+  @apply flex justify-between w-full;
+
+  &::after {
+    @apply transition rotate-90;
+
+    content: "›";
+  }
+}
+
+.Help-Text_metaData_expanded {
+  &::after {
+    @apply transition transform -rotate-90 -translate-x-1;
+  }
+}
+
+details.Help-Text > summary {
+  @apply flex items-center overflow-hidden break-all;
+
+  &::before {
+    @apply flex items-center justify-center w-4 h-4 p-2 mr-3 text-sm font-semibold border rounded-full border-zpid-purple;
+
+    content: "?";
+  }
+
+  &::after {
+    @apply flex items-center justify-center w-4 h-4 ml-auto text-xl transition rotate-90;
+
+    content: "›";
+  }
+}
+
+details.Help-Text[open] > summary {
+  @apply bg-mono-100;
+
+  &::before {
+    @apply text-white border-transparent bg-zpid-blue;
+  }
+
+  &::after {
+    @apply transition transform -rotate-90 -translate-x-1;
+
+    content: "›";
+  }
+}
+
+@keyframes details-show {
+  from {
+    opacity: 0%;
+    transform: var(--details-translate, translateY(-0.5em));
+  }
+}
+
+details.Help-Text[open] > *:not(summary) {
+  animation: details-show 250ms ease-in-out;
 }
 
 .WizNavBar {

@@ -45,3 +45,8 @@ a[href*="//"]:not([href*="datawiz2.dev.zpid.de/"], .no-linkout):hover::after
     theme("colors.blue.500")))
     left center no-repeat;
 }
+
+details > summary::marker {
+  display: none;
+  content: "";
+}

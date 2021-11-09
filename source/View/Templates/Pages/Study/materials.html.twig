@@ -1,6 +1,9 @@
 {% extends "Layouts/threeColumn.html.twig" %}
 {% from "Components/_macros.html.twig" import bytesToSize %}
 {% from "Components/_macros.html.twig" import editDescription %}
+{% from "Components/_macros.html.twig" import helpButton %}
+{% from "Components/_macros.html.twig" import sectionHelp %}
+{% from "Components/_macros.html.twig" import formHelp %}
 
 {% set isPartOfStudyDocumentation = true %}
 
@@ -102,4 +105,12 @@
         form: null
     })) }}
 
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("materials") }}
+{% endblock %}
+
+{% block help_for_metadata %}
+    {{ formHelp("materials", "my_materials", "title.material.h3") }}
 {% endblock %}

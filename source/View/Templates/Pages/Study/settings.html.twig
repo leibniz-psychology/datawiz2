@@ -1,3 +1,5 @@
+{% from "Components/_macros.html.twig" import sectionHelp %}
+
 {% extends "Layouts/threeColumn.html.twig" %}
 
 {% set isPartOfStudyDocumentation = true %}
@@ -111,4 +113,8 @@
     </fieldset>
 
     {{ form_end(form) }}
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("settings") }}
 {% endblock %}

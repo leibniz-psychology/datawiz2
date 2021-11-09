@@ -10,13 +10,15 @@
                 </span>
                 {{- referenceName -}}
             </a>
-            <a href="{{ path("Security-logout") }}" class="flex-shrink-0 ml-6">
+            <a href="{{ path("Security-logout") }}"
+               class="flex items-center flex-shrink-0 h-full px-3 pt-1 ml-6 text-base border-b-4 border-transparent ring-inset hover:border-zpid-blue">
                 <span class="w-4 h-4 mr-0.5 inline iconify-inline"
                       data-icon="ic-baseline-log-out">
                 </span>{{ "link.user.logout"|trans }}
             </a>
         {% else %}
-            <a href="{{ path("Security-login") }}" class="flex-shrink-0">
+            <a href="{{ path("Security-login") }}"
+               class="flex items-center flex-shrink-0 h-full px-3 pt-1 text-base border-b-4 border-transparent ring-inset hover:border-zpid-blue">
                 <span class="w-4 h-4 mr-0.5 inline iconify-inline"
                       data-icon="ic-baseline-log-in">
                 </span>{{ "link.user.login"|trans }}

@@ -8,6 +8,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
+        "ext-zip": "*",
         "composer/package-versions-deprecated": "^1.10",
         "doctrine/doctrine-bundle": "^2.1",
         "doctrine/doctrine-migrations-bundle": "^3.0",
@@ -15,6 +16,7 @@
         "erusev/parsedown": "^1.7",
         "erusev/parsedown-extra": "^0.8.1",
         "knpuniversity/oauth2-client-bundle": "^2.2",
+        "league/commonmark": "^2.0",
         "league/csv": "^9.7",
         "oneup/flysystem-bundle": "^3.0",
         "oneup/uploader-bundle": "^3.1",
@@ -44,8 +46,7 @@
         "symfony/yaml": "5.3.*",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/markdown-extra": "^3.3",
-        "twig/twig": "^2.12|^3.0",
-	    "ext-zip": "*"
+        "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.3",

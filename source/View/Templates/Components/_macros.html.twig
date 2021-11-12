@@ -182,3 +182,14 @@
         </div>
     </div>
 {% endmacro %}
+
+{% macro dropzoneTemplate() %}
+<div class="dz-message " data-dz-message>
+    <button class="inline-flex items-center Button Button_primary Button_primary_act Button_standalone" type="button">
+        {# Icon: ic:outline-open-in-browser #}
+        <span class="w-5 h-5 mr-2 iconify-inline" data-icon="ic:outline-drive-folder-upload"></span>
+        {{ "title.dataset.upload.button"|trans }}
+    </button>
+    <span class="block mt-3">{{ "title.dataset.upload.dragDrop"|trans }}</span>
+</div>
+{% endmacro %}

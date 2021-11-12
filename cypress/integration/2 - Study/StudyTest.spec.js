@@ -136,7 +136,7 @@ describe("Study Test", () => {
     )
       .click()
       .click();
-    cy.get("input[id^=measure_measures_]").each(($el, index) => {
+    cy.get("textarea[id^=measure_measures_]").each(($el, index) => {
       cy.wrap($el)
         .clear()
         .type(study["measure_measures_" + index]);
@@ -149,7 +149,7 @@ describe("Study Test", () => {
     )
       .click()
       .click();
-    cy.get("input[id^=measure_apparatus_]").each(($el, index) => {
+    cy.get("textarea[id^=measure_apparatus_]").each(($el, index) => {
       cy.wrap($el)
         .clear()
         .type(study["measure_apparatus_" + index]);

@@ -13,6 +13,7 @@ use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
 use League\CommonMark\MarkdownConverter;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class MethodType extends AbstractType
 {
@@ -173,7 +174,9 @@ class MethodType extends AbstractType
                 'required' => false,
                 'label' => 'input.control-operations.other.label',
                 'attr' => ['class' => 'p-1', 'rows' => '4',],
-            ]);
+            ])
+            ->add('saveAndPrevious', SubmitType::class)
+            ->add('saveAndNext', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

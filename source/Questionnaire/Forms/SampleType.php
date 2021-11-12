@@ -15,6 +15,7 @@ use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
 use League\CommonMark\MarkdownConverter;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class SampleType extends AbstractType
 {
@@ -130,7 +131,8 @@ class SampleType extends AbstractType
                 'label' => 'input.power-analysis.label',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => ['class' => 'MetaData-TextInput'],
-            ]);
+            ])
+            ->add('saveAndPrevious', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

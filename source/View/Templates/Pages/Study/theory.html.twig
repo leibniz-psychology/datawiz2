@@ -48,9 +48,7 @@
 
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
-        prevUrl: 'Study-documentation',
         prevTitle: 'title.basic.title'|trans,
-        nextUrl: 'Study-method',
         nextTitle: 'title.method.title'|trans,
         form: form
     })) }}

@@ -13,6 +13,7 @@ use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
 use League\CommonMark\MarkdownConverter;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class BasicInformationType extends AbstractType
 {
@@ -88,7 +89,8 @@ class BasicInformationType extends AbstractType
                 'attr' => [
                     'class' => 'MetaData-Widget MetaData-Widget_collection',
                 ]
-            ]);
+            ])
+            ->add('saveAndNext', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class MeasureType extends AbstractType
 {
@@ -48,7 +49,9 @@ class MeasureType extends AbstractType
                 'label' => 'input.apparatus.label',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => ['class' => 'MetaData-Widget MetaData-Widget_collection'],
-            ]);
+            ])
+            ->add('saveAndPrevious', SubmitType::class)
+            ->add('saveAndNext', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -7,16 +7,27 @@ use App\Domain\Model\Study\BasicInformationMetaDataGroup;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Parsedown;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
+use League\CommonMark\MarkdownConverter;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BasicInformationType extends AbstractType
 {
+    private $translator;
+
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $parseDown = new Parsedown();
+        $environment = new Environment();
+        $environment->addExtension(new InlinesOnlyExtension());
+        $commonMark = new MarkdownConverter($environment);
 
         $builder
             ->add(MetaDataDictionary::TITLE, TextareaType::class, [
@@ -50,9 +61,9 @@ class BasicInformationType extends AbstractType
                 'allow_add' => true,
                 'prototype' => true,
                 'allow_delete' => true,
-                'label' => $parseDown->line(
+                'label' => $commonMark->convertToHtml($this->translator->trans(
                     'input.relatedPubs.label'
-                ),
+                ))->getContent(),
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'label_html' => true,
                 'attr' => [

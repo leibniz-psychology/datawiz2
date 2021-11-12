@@ -4,27 +4,39 @@ namespace App\Questionnaire\Forms;
 
 use App\Domain\Definition\MetaDataDictionary;
 use App\Domain\Model\Study\MethodMetaDataGroup;
-use Parsedown;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
+use League\CommonMark\MarkdownConverter;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class MethodType extends AbstractType
 {
+    private $translator;
+
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $parseDown = new Parsedown();
+        $environment = new Environment();
+        $environment->addExtension(new InlinesOnlyExtension());
+        $commonMark = new MarkdownConverter($environment);
 
         $builder
             ->add(MetaDataDictionary::SETTING, ChoiceType::class, [
                 'required' => false,
                 'placeholder' => false,
                 'choices' => [
-                    $parseDown->line('input.setting.choices.artificial') => 'Artificial setting',
-                    $parseDown->line('input.setting.choices.rl') => 'Real-life setting',
-                    $parseDown->line('input.setting.choices.natural') => 'Natural setting',
+                    $commonMark->convertToHtml($this->translator->trans('input.setting.choices.artificial'))->getContent() => 'Artificial setting',
+                    $commonMark->convertToHtml($this->translator->trans('input.setting.choices.rl'))->getContent() => 'Real-life setting',
+                    $commonMark->convertToHtml($this->translator->trans('input.setting.choices.natural'))->getContent() => 'Natural setting',
                 ],
                 'expanded' => true,
                 'label' => 'input.setting.label',
@@ -49,8 +61,8 @@ class MethodType extends AbstractType
                 'required' => false,
                 'placeholder' => false,
                 'choices' => [
-                    $parseDown->line('input.design.choices.experimental') => 'Experimental',
-                    $parseDown->line('input.design.choices.non-experimental') => 'Non-experimental',
+                    $commonMark->convertToHtml($this->translator->trans('input.design.choices.experimental'))->getContent() => 'Experimental',
+                    $commonMark->convertToHtml($this->translator->trans('input.design.choices.non-experimental'))->getContent() => 'Non-experimental',
                 ],
                 'expanded' => true,
                 'label' => 'input.design.label',
@@ -68,13 +80,13 @@ class MethodType extends AbstractType
                 'required' => false,
                 'placeholder' => false,
                 'choices' => [
-                    $parseDown->line('input.design.details.experimental.choices.random-assignment') => 'Random assignment',
-                    $parseDown->line('input.design.details.experimental.choices.non-random-assignment') => 'Non-random assignment',
-                    $parseDown->line('input.design.details.experimental.choices.clinical-trial') => 'Clinical trial',
+                    $commonMark->convertToHtml($this->translator->trans('input.design.details.experimental.choices.random-assignment'))->getContent() => 'Random assignment',
+                    $commonMark->convertToHtml($this->translator->trans('input.design.details.experimental.choices.non-random-assignment'))->getContent() => 'Non-random assignment',
+                    $commonMark->convertToHtml($this->translator->trans('input.design.details.experimental.choices.clinical-trial'))->getContent() => 'Clinical trial',
                 ],
                 'expanded' => true,
                 'label' => 'input.design.details.experimental.label',
-                'label_attr' => ['class' => 'MetaData-Label px-0'],
+                'label_attr' => ['class' => 'MetaData-Label !pl-0'],
                 'label_html' => true,
                 'attr' => ['class' => 'p-1'],
                 'choice_attr' => function () {
@@ -87,15 +99,15 @@ class MethodType extends AbstractType
                 'required' => false,
                 'placeholder' => false,
                 'choices' => [
-                    $parseDown->line('input.design.details.non-experimental.choices.observational-study') => 'Observational study',
-                    $parseDown->line('input.design.details.non-experimental.choices.survey-research') => 'Survey research',
-                    $parseDown->line('input.design.details.non-experimental.choices.correlational-research') => 'Correlational research',
-                    $parseDown->line('input.design.details.non-experimental.choices.causal-comparative-research') => 'Causal-comparative research',
-                    $parseDown->line('input.design.details.non-experimental.choices.single-case') => 'Single case',
+                    $commonMark->convertToHtml($this->translator->trans('input.design.details.non-experimental.choices.observational-study'))->getContent() => 'Observational study',
+                    $commonMark->convertToHtml($this->translator->trans('input.design.details.non-experimental.choices.survey-research'))->getContent() => 'Survey research',
+                    $commonMark->convertToHtml($this->translator->trans('input.design.details.non-experimental.choices.correlational-research'))->getContent() => 'Correlational research',
+                    $commonMark->convertToHtml($this->translator->trans('input.design.details.non-experimental.choices.causal-comparative-research'))->getContent() => 'Causal-comparative research',
+                    $commonMark->convertToHtml($this->translator->trans('input.design.details.non-experimental.choices.single-case'))->getContent() => 'Single case',
                 ],
                 'expanded' => true,
                 'label' => 'input.design.details.non-experimental.label',
-                'label_attr' => ['class' => 'MetaData-Label px-0'],
+                'label_attr' => ['class' => 'MetaData-Label !pl-0'],
                 'label_html' => true,
                 'attr' => ['class' => 'p-1'],
                 'choice_attr' => function () {
@@ -128,9 +140,9 @@ class MethodType extends AbstractType
                 'required' => false,
                 'placeholder' => false,
                 'choices' => [
-                    $parseDown->line('input.experimental-design.choices.independent') => 'Independent measures / between-subjects design',
-                    $parseDown->line('input.experimental-design.choices.repeated') => 'Repeated measures / within-subjects design',
-                    $parseDown->line('input.experimental-design.choices.matched') => 'Matched pairs design',
+                    $commonMark->convertToHtml($this->translator->trans('input.experimental-design.choices.independent'))->getContent() => 'Independent measures / between-subjects design',
+                    $commonMark->convertToHtml($this->translator->trans('input.experimental-design.choices.repeated'))->getContent() => 'Repeated measures / within-subjects design',
+                    $commonMark->convertToHtml($this->translator->trans('input.experimental-design.choices.matched'))->getContent() => 'Matched pairs design',
                 ],
                 'expanded' => true,
                 'label' => 'input.experimental-design.label',

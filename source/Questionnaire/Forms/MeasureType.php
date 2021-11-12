@@ -6,7 +6,7 @@ use App\Domain\Definition\MetaDataDictionary;
 use App\Domain\Model\Study\MeasureMetaDataGroup;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,13 +17,12 @@ class MeasureType extends AbstractType
         $builder
             ->add(MetaDataDictionary::MEASURES, CollectionType::class, [
                 'required' => false,
-                'entry_type' => TextType::class,
+                'entry_type' => TextareaType::class,
                 'entry_options' => [
                     'label' => false,
                     'attr' => [
-                        'x-data' => '',
-                        'x-on:keydown.enter.prevent' => '',
-                        'class' => 'w-full'
+                        'class' => 'w-full',
+                        'rows' => '3'
                     ],
                 ],
                 'allow_add' => true,
@@ -35,13 +34,12 @@ class MeasureType extends AbstractType
             ])
             ->add(MetaDataDictionary::APPARATUS, CollectionType::class, [
                 'required' => false,
-                'entry_type' => TextType::class,
+                'entry_type' => TextareaType::class,
                 'entry_options' => [
                     'label' => false,
                     'attr' => [
-                        'x-data' => '',
-                        'x-on:keydown.enter.prevent' => '',
-                        'class' => 'w-full'
+                        'class' => 'w-full',
+                        'rows' => '3'
                     ],
                 ],
                 'allow_add' => true,

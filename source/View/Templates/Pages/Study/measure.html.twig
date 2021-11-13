@@ -48,9 +48,7 @@
     </fieldset>
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
-        prevUrl: 'Study-method',
         prevTitle: 'title.method.title'|trans,
-        nextUrl: 'Study-sample',
         nextTitle: 'title.samples.title'|trans,
         form: form
     })) }}

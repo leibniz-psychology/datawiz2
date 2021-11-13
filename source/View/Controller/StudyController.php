@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/studies", name="Study-")
@@ -152,6 +153,10 @@ class StudyController extends AbstractController
             $this->em->persist($formData);
             $this->em->flush();
 
+            if ($form->get('saveAndNext')->isClicked()) {
+                return $this->redirectToRoute('Study-theory', ['uuid' => $uuid]);
+            }
+
             return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
         }
 
@@ -177,6 +182,13 @@ class StudyController extends AbstractController
         if ($this->questionnaire->isSubmittedAndValid($form)) {
             $this->em->persist($entityAtChange);
             $this->em->flush();
+
+            switch (true) {
+                case $form->get('saveAndPrevious')->isClicked():
+                    return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
+                case $form->get('saveAndNext')->isClicked():
+                    return $this->redirectToRoute('Study-method', ['uuid' => $uuid]);
+            }
         }
 
         return $this->render('Pages/Study/theory.html.twig', [
@@ -208,6 +220,10 @@ class StudyController extends AbstractController
             $formData->setExclusionCriteria(array_values($formData->getExclusionCriteria()));
             $this->em->persist($formData);
             $this->em->flush();
+
+            if ($form->get('saveAndPrevious')->isClicked()) {
+                return $this->redirectToRoute('Study-measure', ['uuid' => $uuid]);
+            }
         }
 
         return $this->render('Pages/Study/sample.html.twig', [
@@ -236,6 +252,14 @@ class StudyController extends AbstractController
             $formData->setMeasures(array_filter($formData->getMeasures()));
             $this->em->persist($formData);
             $this->em->flush();
+
+            if ($form->get('saveAndPrevious')->isClicked()) {
+                return $this->redirectToRoute('Study-method', ['uuid' => $uuid]);
+            }
+
+            if ($form->get('saveAndNext')->isClicked()) {
+                return $this->redirectToRoute('Study-sample', ['uuid' => $uuid]);
+            }
         }
 
         return $this->render('Pages/Study/measure.html.twig', [
@@ -260,6 +284,14 @@ class StudyController extends AbstractController
         if ($this->questionnaire->isSubmittedAndValid($form)) {
             $this->em->persist($entityAtChange);
             $this->em->flush();
+
+            if ($form->get('saveAndPrevious')->isClicked()) {
+                return $this->redirectToRoute('Study-theory', ['uuid' => $uuid]);
+            }
+
+            if ($form->get('saveAndNext')->isClicked()) {
+                return $this->redirectToRoute('Study-measure', ['uuid' => $uuid]);
+            }
         }
 
         return $this->render('Pages/Study/method.html.twig', [

@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class TheoryType extends AbstractType
 {
@@ -31,7 +32,9 @@ class TheoryType extends AbstractType
                     'class' => 'MetaData-TextInput',
                     'rows' => '6'
                 ],
-            ]);
+            ])
+            ->add('saveAndPrevious', SubmitType::class)
+            ->add('saveAndNext', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -13,8 +13,6 @@
         "doctrine/doctrine-bundle": "^2.1",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.7",
-        "erusev/parsedown": "^1.7",
-        "erusev/parsedown-extra": "^0.8.1",
         "knpuniversity/oauth2-client-bundle": "^2.2",
         "league/commonmark": "^2.0",
         "league/csv": "^9.7",

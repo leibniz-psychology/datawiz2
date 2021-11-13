@@ -16,8 +16,9 @@ Alpine.plugin(Tooltip);
 Alpine.plugin(Scroll);
 // Alpine.plugin(Fern);
 Alpine.store("codebook", {
-  filterText: "",
+  activeTab: "codebook",
   currentVariableID: 1,
+  filterText: "",
   variables: [],
   ...storeFunctions,
 });
@@ -33,12 +34,16 @@ window.Alpine = Alpine;
 Alpine.data("codebook", () => ({
   filteredVariables: [],
   measures: [],
+  matrix: [],
+  maxEntries: 20,
+  entries: 0,
+  showPage: 1,
+  maxPages: 1,
 
   init() {
     axios
       .get(this.url)
       .then(({ data, status, statusText }) => {
-        console.log(`GET ${this.url} ${status} ${statusText}`);
         Alpine.store("codebook").variables = data.variables;
         this.filteredVariables = Alpine.store("codebook").cloneVariables();
         this.$watch(
@@ -57,7 +62,6 @@ Alpine.data("codebook", () => ({
       .get(this.measuresURL)
       .then(({ data, status, statusText }) => {
         this.measures = data.measures;
-        console.log(`GET ${this.measuresURL} ${status} ${statusText}`);
       })
       .catch((error) => {
         console.log(error);
@@ -84,12 +88,30 @@ Alpine.data("codebook", () => ({
       },
     })
       .then(({ data, status, statusText }) => {
-        console.log(`POST ${this.url} ${status} ${statusText}`);
         Alpine.store("codebook").variables = data.variables;
       })
       .catch((error) => {
         console.log(error.toJSON());
       });
+  },
+  loadMatrix() {
+    const url = `${this.matrixURL}?size=${this.maxEntries}&page=${this.showPage}`;
+    axios
+      .get(url)
+      .then(({ data, status, statusText }) => {
+        this.maxPages = data.pagination.max_pages;
+        this.entries = data.pagination.max_items;
+        this.matrix = data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+  nextPage() {
+    if (this.showPage < this.maxPages) this.showPage++;
+  },
+  previousPage() {
+    if (this.showPage > 1) this.showPage--;
   },
 }));
 
@@ -167,6 +189,23 @@ Alpine.data("copyValues", () => ({
       console.log("No property defined to copy to: ");
       console.log(propertyToCopy);
     }
+  },
+}));
+
+Alpine.data("codebookHelp", (helpName) => ({
+  helpButton: {
+    ["@click"]() {
+      this.$store.codebookSettings.showHelp.sideBar = true;
+      document.getElementById(helpName).toggleAttribute("open");
+      this.$store.codebook[helpName] = document
+        .getElementById(helpName)
+        .hasAttribute("open");
+    },
+    ["x-bind:class"]() {
+      return this.$store.codebook[helpName] === true
+        ? "!bg-zpid-blue text-white"
+        : "";
+    },
   },
 }));
 

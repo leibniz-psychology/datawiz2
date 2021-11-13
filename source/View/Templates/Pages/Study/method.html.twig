@@ -205,9 +205,7 @@
 
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
-        prevUrl: 'Study-theory',
         prevTitle: 'title.theroies.title'|trans,
-        nextUrl: 'Study-measure',
         nextTitle: 'title.measures.title'|trans,
         form: form
     })) }}

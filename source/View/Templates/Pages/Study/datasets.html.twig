@@ -4,6 +4,7 @@
 {% from "Components/_macros.html.twig" import helpButton %}
 {% from "Components/_macros.html.twig" import sectionHelp %}
 {% from "Components/_macros.html.twig" import formHelp %}
+{% from "Components/_macros.html.twig" import dropzoneTemplate %}
 
 {% set isPartOfStudyDocumentation = true %}
 
@@ -18,12 +19,13 @@
     {{ include("Components/_infoBridge.html.twig",{value: experiment.id}) }}
     <div class="mt-6">
         <form action="{{ oneup_uploader_endpoint("datasets") }}" data-experiment-id="{{ experiment.id }}"
-              class="mx-6 border-2 border-dashed border-mono-500 dropzone" id="datawiz-dropzone"
+              class="mx-6 border-2 !border-dashed border-mono-500 dropzone" id="datawiz-dropzone"
               data-preview-csv="{{ path("File-preview-csv",{"fileId": " "}) }}"
               data-submit-csv="{{ path("File-submit-csv",{"fileId": " "}) }}"
               data-preview-sav="{{ path("File-preview-sav",{"fileId": " "}) }}"
               data-submit-sav="{{ path("File-submit-sav",{"fileId": " "}) }}"
         >
+            {{ dropzoneTemplate() }}
             <input type="hidden" id="dataset-import-data" name="dataset-import-data" value=""/>
         </form>
     </div>

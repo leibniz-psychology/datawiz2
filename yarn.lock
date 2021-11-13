@@ -12,10 +12,10 @@
   resolved "https://registry.yarnpkg.com/@alpine-collective/toolkit-scroll/-/toolkit-scroll-1.0.0.tgz#cb8645375cb5ee2c1dd3c0571e84cd4a6fdb5518"
   integrity sha512-Wa5hs5Q/G4Yjyv7pn5Aur/EFLIAu1OVGMniLSoz1uiRlDwIWRLC7YFkRwlgqWfw/97cHdHKOSsL0YyyfHUGUBQ==
 
-"@alpinejs/trap@^3.5.0":
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/@alpinejs/trap/-/trap-3.5.0.tgz#038ca6406a9270f10f14b49ecf3734a50d416e7a"
-  integrity sha512-+dF32OmOM8PyaWaZqm7M1/tHO6fV88HrZteDRnI2uvi0mAOdalaUQqEzRA2QUa4Usj3n9HftOqhRNHoOOFSbpQ==
+"@alpinejs/trap@^3.5.1":
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/@alpinejs/trap/-/trap-3.5.1.tgz#45ffadc52016f6b4b0d8af3e789966b171510537"
+  integrity sha512-D0EnbOnKOliY+Sl2+1xHAAipeGTivZP7v7gDL/Xg1MIQOPuV0yXdpjGz9CvA7TKju35lJmbMvWQESzYtVi6YGg==
   dependencies:
     focus-trap "^6.6.1"
 
@@ -1378,10 +1378,10 @@ alphanum-sort@^1.0.2:
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
 
-alpinejs@^3.5.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/alpinejs/-/alpinejs-3.5.0.tgz#7acb3026306f4a419117bcc9f9242c9a059644be"
-  integrity sha512-75gboKtn1AjGxLLWXMSZQbD1VroGqcncNmbNSPq2v9XjpGIb8U+YAHUJ0hp2MEYmMFfkXPekhSg4ESXlxh9ifg==
+alpinejs@^3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/alpinejs/-/alpinejs-3.5.1.tgz#dd7c96b7c9346b559df85561d981b9e5ca2617a1"
+  integrity sha512-GqdRNYpEW/rCoh45oqbGLQ1w2Uygt8DNEiqD7Di/kklJ+EZ3xjDAlFlgJ2xf37K+NtzEu2NdmkaYY6B9NBI79Q==
   dependencies:
     "@vue/reactivity" "~3.1.1"
 
@@ -6577,10 +6577,10 @@ timsort@^0.3.0:
   resolved "https://registry.yarnpkg.com/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
 
-tippy.js@^6.3.5:
-  version "6.3.5"
-  resolved "https://registry.yarnpkg.com/tippy.js/-/tippy.js-6.3.5.tgz#cbc99d34f87ccc127e6460032b86c8d47971d38f"
-  integrity sha512-B9hAQ5KNF+jDJRg6cRysV6Y3J+5fiNfD60GuXR5TP0sfrcltpgdzVc7f1wMtjQ3W0+Xsy80CDvk0Z+Vr0cM4sQ==
+tippy.js@^6.3.7:
+  version "6.3.7"
+  resolved "https://registry.yarnpkg.com/tippy.js/-/tippy.js-6.3.7.tgz#8ccfb651d642010ed9a32ff29b0e9e19c5b8c61c"
+  integrity sha512-E1d3oP2emgJ9dRQZdf3Kkn0qJgI6ZLpyS5z6ZkY1DF3kaQaBsGZsndEpHwx+eC+tYM41HaSNvNtLx8tU57FzTQ==
   dependencies:
     "@popperjs/core" "^2.9.0"
 

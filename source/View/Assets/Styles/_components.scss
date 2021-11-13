@@ -64,11 +64,38 @@
     @apply w-[1.125rem] h-[1.125rem] mr-1;
 
     align-self: center;
-    // TODO edit svg to accept parameters
     /* prettier-ignore */
     background:
       url("../Images/ic:outline-save.svg"
       param(--color theme("colors.white")))
+      left center no-repeat;
+    content: "";
+  }
+}
+
+.MetaData-SubmitButton_previous {
+  &::before {
+    @apply w-[1.125rem] h-[1.125rem] mr-1;
+
+    align-self: center;
+    /* prettier-ignore */
+    background:
+      url("../Images/ic:sharp-arrow-back.svg"
+      param(--color theme("colors.zpid-purple.500")))
+      left center no-repeat;
+    content: "";
+  }
+}
+
+.MetaData-SubmitButton_next {
+  &::after {
+    @apply w-[1.125rem] h-[1.125rem] ml-1;
+
+    align-self: center;
+    /* prettier-ignore */
+    background:
+      url("../Images/ic:sharp-arrow-forward.svg"
+      param(--color theme("colors.zpid-purple.500")))
       left center no-repeat;
     content: "";
   }

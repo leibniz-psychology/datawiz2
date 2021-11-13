@@ -79,6 +79,9 @@ title:
     details:
       date: 'Upload date'
       size: 'File size'
+    upload:
+      button: 'Upload files'
+      dragDrop: 'Or drag files here to upload.'
   material:
     title: 'Upload supplementary materials'
     title-short: 'Upload materials'
@@ -362,7 +365,7 @@ link:
 
 codebook:
   search:
-    placeholder: 'Enter search term'
+    placeholder: 'Search variables'
     tooltip: 'Search by variable name, label or item text'
   var-props:
     title: 'Description of variable'
@@ -390,6 +393,14 @@ codebook:
   help:
     title: 'Codebook editor help'
     close: 'Close help'
+  nav:
+    matrix: 'View data matrix'
+    codebook: 'Edit codebook'
+    goback: 'My datasets'
+  matrix:
+    previous: 'Previous page'
+    next: 'Next page'
+
 
 error:
   dataset:

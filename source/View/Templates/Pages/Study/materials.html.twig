@@ -24,14 +24,14 @@
             {{ dropzoneTemplate() }}
         </form>
     </div>
-    <div class="MetaData-Title">
+    <div class="mt-6 MetaData-Title">
         <legend class="MetaData-Legend">
             {{ "title.material.h3"|trans }}
         </legend>
         {{ helpButton("my_materials") }}
     </div>
     {% if (experiment.additionalMaterials|length) > 0 %}
-        <ul class="mx-6 mt-6">
+        <ul class="mx-6">
             {% for material in experiment.additionalMaterials %}
                 <li class="pt-3 pb-4 mt-2 first:mt-0 bg-mono-100">
                     <div class="bg-mono-100" x-data="modal()" @keydown.window.escape="hide()">

@@ -44,12 +44,10 @@ Alpine.data("modal", () => ({
 
   show() {
     this.showModal = true;
-    document.body.classList.add("overflow-hidden");
     this.setFocus();
   },
   hide() {
     this.showModal = false;
-    document.body.classList.remove("overflow-hidden");
   },
   setFocus() {
     if (this.$refs.focusFirst) {
@@ -65,7 +63,7 @@ Alpine.data("modal", () => ({
     ["x-bind:x-ref"]() {
       return "overlay";
     },
-    ["x-trap"]() {
+    ["x-trap.inert.noscroll"]() {
       return this.showModal;
     },
     ["x-transition:enter"]() {
@@ -100,6 +98,25 @@ Alpine.data("experimentsList", () => ({
   clear() {
     this.myList.search("");
     this.filterText = "";
+  },
+}));
+
+Alpine.data("helpButton", () => ({
+  helpEls: document.querySelectorAll("[id*=details_]"),
+  showHelp(formID) {
+    const isHighlighted =
+      document.getElementById(formID).hasAttribute("open") &&
+      this.$store.app.helpSelected;
+    this.helpEls.forEach(function (userItem) {
+      userItem.removeAttribute("open");
+    });
+    if (!isHighlighted) {
+      document.getElementById(formID).setAttribute("open", "");
+      this.$store.app.helpSelected = formID;
+    } else {
+      document.getElementById(formID).removeAttribute("open");
+      this.$store.app.helpSelected = "";
+    }
   },
 }));
 

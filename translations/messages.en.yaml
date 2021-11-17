@@ -4,7 +4,7 @@ title:
     modules:
       documentation:
         title: 'Data documentation'
-        description: 'Document research data, add datasets, edit codebooks, and export your studies to repositories.'
+        description: 'Document research data, add datasets, edit codebooks, and export your studies in open formats.'
         open: 'Open data documentation tool'
       ethics-forms:
         title: 'Ethics application forms'
@@ -50,6 +50,9 @@ title:
     help: "Hit the help button #helpBtn# next to a topic if something's unclear. A\
       \ help text will appear on the right side of the screen. There you'll find practical\
       \ examples and online resources that help clear things up."
+    start:
+      intro: "DataWiz will guide you through a few short **steps** to describe your study and its research data so others can find, understand, and reuse it more easily. The result is a **ZIP file** that you can upload to a data repository.\n\nYou can **navigate** the steps using the sidebar 👈 on the left or use the buttons at the bottom of each page to move forward or back.\n\nIf you need **help** with any input field, you'll find more info in the sidebar 👉 on the right - just click the #helpBtn# button.\n\nThere's a brief summary of each step below, or you can jump right in: #startBtn#"
+      steps: "## Summary of steps\n\n1. In step 1, **Describe your study**, you'll document information _about_ the study and the research data itself. We'll ask you about **basic information** (title, description, associated articles, and people that contributed to the study and to data collection), **goals** and hypotheses of the study, the study's research **method** (experimental, observational etc.), how the **data were collected**, and finally, in **Sampling**, about the study's subjects and how they were chosen.\n2. In **Upload and describe datasets** you'll do just that, so _be sure to have your research data files ready._ You'll be able to create a **codebook** to describe the variables and values in your data matrix. (If your data is in SPSS format, DataWiz will convert it into a sustainable, open CSV format, but will also save a copy of the original file.)\n3. In **Upload materials** you can add any supplementary materials that may help to understand and replicate the study. **Examples:** associated analyses and analysis software code; forms, questionnaires, or stimulus material presented to particpants.\n4. In **Review input** you'll find a one-page overview of the information you entered in the previous steps, so you can make sure everything is in order before exporting.\n5. Finally, you'll be able to **Export** a ZIP file that includes you documentation and codebook (in XML and JSON format), the research data itself (original files and csv versions), and copies of any related materials."
   describe-study:
     title: 'Describe your study'
   basic:
@@ -331,8 +334,7 @@ input:
         were chosen non-randomly on the basis of a specific plan</span>'
       other: 'Other'
     other:
-      label: 'If other, please describe your sampling method (see help for a list
-        of methods)'
+      label: 'If other, please describe your sampling method. See help for a list of methods.'
   sample-size:
     legend: 'Sample size'
     label: 'Provide the achieved sample size as total number of cases N or as number

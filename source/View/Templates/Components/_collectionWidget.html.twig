@@ -1,6 +1,6 @@
 {{ form_label(collection) }}
 {{ form_errors(collection) }}
-<div class="MetaData-Widget MetaData-Widget_collection">
+<div class="MetaData-Widget MetaData-Widget_collection{% if partOfCollection is defined and (partOfCollection == true) %} !px-4{% endif %}">
     <ul id="{{ id }}" class="{% if listClass is defined %}{{ listClass }}{% endif %}"
         data-prototype="{{ form_widget(collection.vars.prototype)|e }}"
             {% if condensed is defined and (condensed == true) %}

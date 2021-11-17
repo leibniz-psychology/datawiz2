@@ -3,3 +3,9 @@
 [x-cloak] {
   display: none !important;
 }
+
+@layer utilities {
+  .underline-dotted {
+    text-decoration-style: dotted;
+  }
+}

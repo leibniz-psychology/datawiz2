@@ -29,14 +29,14 @@
             <input type="hidden" id="dataset-import-data" name="dataset-import-data" value=""/>
         </form>
     </div>
-    <div class="MetaData-Title">
+    <div class="mt-6 MetaData-Title">
         <legend class="MetaData-Legend">
             {{ "title.dataset.h3"|trans }}
         </legend>
         {{ helpButton("my_datasets") }}
     </div>
     {% if experiment.originalDatasets|length > 0 %}
-        <ul class="mx-6 mt-6">
+        <ul class="mx-6">
             {% for dataset in experiment.originalDatasets %}
                 <li class="pt-3 pb-4 mt-2 first:mt-0 bg-mono-100">
                     <div class="bg-mono-100" x-data="modal()" @keydown.window.escape="hide()">
@@ -115,6 +115,7 @@
                         </a> #}
                             <a href="{{ path('codebook_index', {uuid: dataset.id}) }}"
                                class="flex items-center Button Button_secondary Button_secondary_go Button_standalone">
+                                {# Icon: mi:table-edit #}
                                 <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
                                      xmlns:xlink="http://www.w3.org/1999/xlink"
                                      aria-hidden="true" role="img" style="vertical-align: -0.125em;" width="1em"
@@ -177,14 +178,16 @@
                             <input type="checkbox" id="dataset-import-header-rows" name="dataset-import-header-rows"
                                    value="1" x-model="useHeader">
                             <label for="dataset-import-header-rows">Parse first line as column header</label>
-                            <div x-show="!useHeader" x-transition.opacity.duration.100ms class="flex items-center"><span
-                                        class="mr-1 iconify-inline bg-mono-200"
-                                        data-icon="mdi:information-variant"></span>Generic variable names <span
-                                        class="italic font-semibold">var_0, var_1, ...</span> will be used.
+                            <div x-show="!useHeader" x-transition.opacity.duration.100ms class="flex items-center">
+                                <span class="mr-1 iconify-inline bg-mono-200"
+                                      data-icon="mdi:information-variant"></span>
+                                Generic variable names will be used:
+                                <span class="italic font-semibold ml-0.5">var_0, var_1, var_2, ...</span>.
                             </div>
                         </div>
                     </form>
                     <h4 class="mt-4 text-xl font-semibold">Preview</h4>
+                    <div>Only the first five rows are shown</div>
                     <div x-data="" class="mt-2 overflow-x-scroll max-h-[50vh]">
                         <template x-if="$store.import.codebook">
                             <table class="border-separate table-fixed" style="border-spacing: 0">
@@ -193,9 +196,8 @@
                                     <tr>
                                         <template x-for="item in $store.import.codebook.header.slice(0,25)">
                                             <th scope="col"
-                                                class="text-sm text-left text-gray-700 border-b border-mono-500 bg-mono-200"
+                                                class="py-2 pl-3 pr-1 text-sm font-semibold text-left text-gray-700 bg-gray-200 border-b border-gray-400"
                                                 x-text="item">
-
                                             </th>
                                         </template>
                                     </tr>
@@ -206,9 +208,8 @@
                                         <template
                                                 x-for="(record, index) in Object.values($store.import.codebook.records[0]).slice(0,25)">
                                             <th scope="col"
-                                                class="text-sm italic text-left text-gray-700 border-b border-mono-500 bg-mono-200"
+                                                class="py-2 pl-3 pr-1 text-sm italic font-semibold text-left text-gray-700 bg-gray-200 border-b border-gray-400"
                                                 x-text="`var_${index}`">
-
                                             </th>
                                         </template>
                                     </tr>
@@ -219,8 +220,7 @@
                                     <template x-for="records in $store.import.codebook.records">
                                         <tr class="even:bg-mono-100 odd:bg-mono-50 TableRow">
                                             <template x-for="record in Object.values(records).slice(0,25)">
-                                                <td class="text-sm" x-text="record">
-
+                                                <td class="py-2 pl-3 pr-1 text-sm text-gray-700" x-text="record">
                                                 </td>
                                             </template>
                                         </tr>

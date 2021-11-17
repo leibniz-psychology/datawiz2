@@ -29,14 +29,14 @@
             <input type="hidden" id="dataset-import-data" name="dataset-import-data" value=""/>
         </form>
     </div>
-    <div class="MetaData-Title">
+    <div class="mt-6 MetaData-Title">
         <legend class="MetaData-Legend">
             {{ "title.dataset.h3"|trans }}
         </legend>
         {{ helpButton("my_datasets") }}
     </div>
     {% if experiment.originalDatasets|length > 0 %}
-        <ul class="mx-6 mt-6">
+        <ul class="mx-6">
             {% for dataset in experiment.originalDatasets %}
                 <li class="pt-3 pb-4 mt-2 first:mt-0 bg-mono-100">
                     <div class="bg-mono-100" x-data="modal()" @keydown.window.escape="hide()">
@@ -115,6 +115,7 @@
                         </a> #}
                             <a href="{{ path('codebook_index', {uuid: dataset.id}) }}"
                                class="flex items-center Button Button_secondary Button_secondary_go Button_standalone">
+                                {# Icon: mi:table-edit #}
                                 <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
                                      xmlns:xlink="http://www.w3.org/1999/xlink"
                                      aria-hidden="true" role="img" style="vertical-align: -0.125em;" width="1em"

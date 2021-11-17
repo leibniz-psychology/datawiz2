@@ -16,6 +16,8 @@ import "./alpine";
 import "./detectStickyElements";
 import "./collection-widget";
 
+import "../Images/leibniz_psychology_small.svg";
+
 Dropzone.options.datawizDropzone = {
   createImageThumbnails: false,
   init: function () {
@@ -65,7 +67,7 @@ Dropzone.options.datawizDropzone = {
             let input = document.createElement("input");
             input.setAttribute("type", "hidden");
             input.setAttribute("name", "dataset-import-remove");
-            input.setAttribute("value", 'true');
+            input.setAttribute("value", "true");
             form.append(input);
             console.log(form);
             POST(submitUrl, form, false, true);
@@ -75,10 +77,10 @@ Dropzone.options.datawizDropzone = {
           );
           input.forEach((e) => {
             e.addEventListener("change", function () {
-              POST(previewUrl, form, true,false);
+              POST(previewUrl, form, true, false);
             });
           });
-          POST(previewUrl, form, true,false);
+          POST(previewUrl, form, true, false);
         }
       } else if (
         responseText["flySystem"] &&
@@ -97,7 +99,7 @@ Dropzone.options.datawizDropzone = {
             .replace("%20", "") +
           encodeURI(responseText["flySystem"][0]["fileId"]);
         //GET(previewSavUrl, this.element, submitSavUrl);
-        POST(submitSavUrl, this.element,false,true);
+        POST(submitSavUrl, this.element, false, true);
       } else {
         location.reload();
       }
@@ -118,7 +120,7 @@ function POST(url, form, importPreview = false, reloadPage = false) {
       if (importPreview === true) {
         Alpine.store("import").codebook = data;
       }
-      if(reloadPage){
+      if (reloadPage) {
         location.reload();
       }
     })

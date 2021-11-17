@@ -123,15 +123,16 @@
                                     <td class="w-[15%] text-sm text-gray-700 max-w-0">
                                         <template
                                                 x-if="$store.codebook.getOriginalVariable(item.id).values.length === 0 || $store.codebook.getOriginalVariable(item.id).values[0].name === ''">
-                                            <button class=""
+                                            <button class="p-1 underline underline-dotted"
                                                     @click="$store.codebook.currentVariableID = item.id; document.querySelector(`.CodeInput_values_${ $store.codebook.getOriginalVariable(item.id).values.length - 1}`).focus()"
                                                     @focus="$store.codebook.currentVariableID = item.id">
-                                                {{ "generic.add"|trans }}
+                                                {{ "generic.add"|trans }} labels
                                             </button>
                                         </template>
                                         <template
                                                 x-if="$store.codebook.getOriginalVariable(item.id).values.length > 0 && $store.codebook.getOriginalVariable(item.id).values[0].name !== ''">
-                                            <a class="block p-1 underline truncate PopupLink" role="button"
+                                            <a class="block p-1 underline truncate underline-dotted PopupLink"
+                                               role="button"
                                                tabindex="0"
                                                x-data="popup(item, 'values')" x-bind="labels"
                                                @focus="$store.codebook.currentVariableID = item.id"></a>
@@ -141,15 +142,16 @@
                                     <td class="w-[15%] text-sm text-gray-700 max-w-0">
                                         <template
                                                 x-if="$store.codebook.getOriginalVariable(item.id).missings.length === 0 || $store.codebook.getOriginalVariable(item.id).missings[0].name === ''">
-                                            <button class=""
+                                            <button class="p-1 underline underline-dotted"
                                                     @click="$store.codebook.currentVariableID = item.id; document.querySelector(`.CodeInput_missings_${ $store.codebook.getOriginalVariable(item.id).missings.length - 1}`).focus()"
                                                     @focus="$store.codebook.currentVariableID = item.id">
-                                                {{ "generic.add"|trans }}
+                                                {{ "generic.add"|trans }} missings
                                             </button>
                                         </template>
                                         <template
                                                 x-if="$store.codebook.getOriginalVariable(item.id).missings.length > 0 && $store.codebook.getOriginalVariable(item.id).missings[0].name !== ''">
-                                            <a class="block p-1 underline truncate PopupLink" role="button"
+                                            <a class="block p-1 underline truncate underline-dotted PopupLink"
+                                               role="button"
                                                tabindex="0"
                                                x-data="popup(item, 'missings')" x-bind="labels"
                                                @focus="$store.codebook.currentVariableID = item.id"></a>
@@ -159,12 +161,15 @@
                                     <td class="w-[10%] text-sm text-gray-700 max-w-0">
                                         <template
                                                 x-if="$store.codebook.getOriginalVariable(item.id).measure === ''">
-                                            <button @click="document.querySelector('#measureInput').focus();"
-                                                    @focus="$store.codebook.currentVariableID = item.id">{{ "generic.select"|trans }}</a>
+                                            <button class="p-1 underline underline-dotted"
+                                                    @click="document.querySelector('#measureInput').focus();"
+                                                    @focus="$store.codebook.currentVariableID = item.id">{{ "generic.select"|trans }}
+                                                measure</a>
                                         </template>
                                         <template
                                                 x-if="$store.codebook.getOriginalVariable(item.id).measure !== ''">
-                                            <a role="button" tabindex="0" class="block p-1 underline truncate"
+                                            <a role="button" tabindex="0"
+                                               class="block p-1 underline truncate underline-dotted"
                                                x-text="$store.codebook.getOriginalVariable(item.id).measure"
                                                x-tooltip.html.theme.light-border="$store.codebook.getOriginalVariable(item.id).measure"
                                                @click="$store.codebook.currentVariableID = item.id; document.querySelector('#measureInput').focus();"

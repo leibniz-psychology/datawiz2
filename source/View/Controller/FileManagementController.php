@@ -154,37 +154,42 @@ class FileManagementController extends AbstractController
         $this->logger->debug("Enter FileManagementController::submitCSVAction with [FileId: $fileId]");
         $delimiter = $request->get('dataset-import-delimiter') ?? ",";
         $escape = $request->get('dataset-import-escape') ?? "double";
+        $remove = $request->get('dataset-import-remove') ?? null;
         $headerRows = filter_var($request->get('dataset-import-header-rows'), FILTER_VALIDATE_INT) ?? 0;
         $dataset = $this->em->find(Dataset::class, $fileId);
         $data = null;
         $error = null;
         if ($dataset) {
-            $data = $this->csvImportable->csvToArray($dataset->getStorageName(), $delimiter, $escape, $headerRows);
-            if ($data && key_exists('header', $data) && is_iterable($data['header']) && sizeof($data['header']) > 0) {
-                $varId = 1;
-                foreach ($data['header'] as $var) {
-                    $this->em->persist(DatasetVariables::createNew($dataset, $varId++, $var));
-                }
-                $this->em->flush();
-            } elseif ($data && key_exists('records', $data) && is_iterable($data['records']) && sizeof($data['records']) > 0) {
-                $varId = 1;
-                foreach ($data['records'][0] as $ignored) {
-                    $this->em->persist(DatasetVariables::createNew($dataset, $varId, "var_$varId"));
-                    $varId++;
-                }
-                $this->em->flush();
+            if ($remove) {
+                $error = $this->crud->deleteDataset($dataset) ? false : "error.import.csv.codebook.delete";
             } else {
-                $error = "error.import.csv.codebook.empty";
-            }
-            if (null == $error && $data && key_exists('records', $data) && is_iterable($data['records']) && sizeof($data['records']) > 0) {
-                $this->crud->saveDatasetMatrix($data['records'], $dataset->getId());
-            } else {
-                $error = "error.import.csv.matrix.empty";
+                $data = $this->csvImportable->csvToArray($dataset->getStorageName(), $delimiter, $escape, $headerRows);
+                if ($data && key_exists('header', $data) && is_iterable($data['header']) && sizeof($data['header']) > 0) {
+                    $varId = 1;
+                    foreach ($data['header'] as $var) {
+                        $this->em->persist(DatasetVariables::createNew($dataset, $varId++, $var));
+                    }
+                    $this->em->flush();
+                } elseif ($data && key_exists('records', $data) && is_iterable($data['records']) && sizeof($data['records']) > 0) {
+                    $varId = 1;
+                    foreach ($data['records'][0] as $ignored) {
+                        $this->em->persist(DatasetVariables::createNew($dataset, $varId, "var_$varId"));
+                        $varId++;
+                    }
+                    $this->em->flush();
+                } else {
+                    $error = "error.import.csv.codebook.empty";
+                }
+                if (null == $error && $data && key_exists('records', $data) && is_iterable($data['records']) && sizeof($data['records']) > 0) {
+                    $this->crud->saveDatasetMatrix($data['records'], $dataset->getId());
+                } else {
+                    $error = "error.import.csv.matrix.empty";
+                }
             }
         } else {
             $error = "error.import.csv.dataset.empty";
         }
-        if (null != $error) {
+        if (null != $error && !$remove) {
             $this->crud->deleteDataset($dataset);
         }
 

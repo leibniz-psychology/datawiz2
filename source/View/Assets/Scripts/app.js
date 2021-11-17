@@ -37,6 +37,7 @@ Dropzone.options.datawizDropzone = {
           "#modal-dataset-import-backdrop"
         );
         const submitBtn = document.querySelector("#dataset-import-submit");
+        const cancelBtn = document.querySelector("#dataset-import-cancel");
         const form = document.querySelector("#dataset-import-form");
         if (form !== undefined) {
           const previewUrl =
@@ -58,6 +59,15 @@ Dropzone.options.datawizDropzone = {
           modal.classList.toggle("flex");
           backdrop.classList.toggle("flex");
           submitBtn.addEventListener("click", function () {
+            POST(submitUrl, form, false, true);
+          });
+          cancelBtn.addEventListener("click", function () {
+            let input = document.createElement("input");
+            input.setAttribute("type", "hidden");
+            input.setAttribute("name", "dataset-import-remove");
+            input.setAttribute("value", 'true');
+            form.append(input);
+            console.log(form);
             POST(submitUrl, form, false, true);
           });
           const input = form.querySelectorAll(

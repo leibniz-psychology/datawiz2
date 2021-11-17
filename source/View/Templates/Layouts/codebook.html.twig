@@ -31,8 +31,6 @@
      x-init="if ($store.codebook.activeTab === 'matrix') loadMatrix()">
     {% block header %}
         <header class="sticky top-0 z-10 flex items-center border-b h-14 border-mono-300 col-span-full bg-mono-50">
-
-
             <div class="flex items-center h-full">
                 <a href="{{ path('Study-datasets', {uuid: codebook.experiment.id}) }}"
                    class="inline-flex items-center flex-shrink-0 ml-2 Button Button_primary Button_primary_go Button_standalone"
@@ -45,13 +43,13 @@
                     {{ "codebook.nav.goback"|trans }}
                 </a>
                 <button class="flex-shrink-0 h-full px-2 ml-6 border-t-4 border-b-4 border-transparent focus:ring-inset hover:border-b-zpid-blue"
-                        :class="$store.codebook.activeTab === 'matrix' ? 'border-b-zpid-blue' : ''"
+                        :class="$store.codebook.activeTab === 'matrix' ? 'border-b-zpid-blue font-semibold' : ''"
                         @click="$store.codebook.activeTab = 'matrix'; loadMatrix()">
                     {{ "codebook.nav.matrix"|trans }}
                 </button>
                 <button class="flex-shrink-0 h-full px-2 ml-4 border-t-4 border-b-4 border-transparent focus:ring-inset hover:border-b-zpid-blue"
                         @click="$store.codebook.activeTab = 'codebook'"
-                        :class="$store.codebook.activeTab === 'codebook' ? 'border-b-zpid-blue' : ''">
+                        :class="$store.codebook.activeTab === 'codebook' ? 'border-b-zpid-blue font-semibold' : ''">
                     {{ "codebook.nav.codebook"|trans }}
                 </button>
             </div>

@@ -123,7 +123,12 @@ Alpine.data("popup", (item, kind) => ({
           ${this.$store.codebook
             .getOriginalVariable(item.id)
             [kind].map((item) => {
-              return "<li>" + item.name + " = " + item.label + "<li>";
+              return (
+                "<li>" +
+                item.name +
+                `${item.label ? " = " + item.label : ""}` +
+                "<li>"
+              );
             })
             .join("")}
         </ul>`;
@@ -141,7 +146,7 @@ Alpine.data("popup", (item, kind) => ({
       return this.$store.codebook
         .getOriginalVariable(item.id)
         [kind].map((item) => {
-          return item.name + " = " + item.label;
+          return item.name + `${item.label ? " = " + item.label : ""}`;
         })
         .join(", ");
     },

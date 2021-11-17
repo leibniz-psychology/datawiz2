@@ -76,7 +76,7 @@
                     <div class="MetaData-Widget">
                         {% for material in experiment.additionalMaterials %}
                             <div class="flex items-center">
-                                <input id="material_{{ material.id }}" type="checkbox" name="exportmaterial[]"
+                                <input id="material_{{ material.id }}" type="checkbox" name="exportMaterial[]"
                                        value="{{ material.id }}" checked>
                                 <label for="material_{{ material.id }}" class="ml-2">{{ material.originalName }}</label>
                             </div>

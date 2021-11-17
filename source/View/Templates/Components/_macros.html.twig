@@ -1,8 +1,8 @@
 {% macro helpButton(formIdentifier) %}
     <button class="MetaData-HelpButton" type="button"
-            @click="document.getElementById('{{ formIdentifier }}_details').toggleAttribute('open'); $store.app.{{ formIdentifier }}_details = document.getElementById('{{ formIdentifier }}_details').hasAttribute('open')"
-            :class="$store.app.{{ formIdentifier }}_details && '!bg-zpid-blue'" x-data="{}">
-        ?
+            x-on:click="showHelp('details_{{ formIdentifier }}')"
+            :class="$store.app.helpSelected === 'details_{{ formIdentifier }}' && '!bg-zpid-blue'"
+            x-data="helpButton()">?
     </button>
 {% endmacro %}
 
@@ -13,12 +13,14 @@
 {% endmacro %}
 
 {% macro formHelp(sectionIdentifier, formIdentifier, helpTitle) %}
-    <details class="w-full border last:rounded-b-lg Help-Text" id="{{ formIdentifier }}_details"
-             @click="$nextTick(() => { $store.app.{{ formIdentifier }}_details = $el.open });" x-data="">
-        <summary class="px-4 py-2 text-base cursor-pointer text-zpid-purple focus:ring-inset bg-mono-50">
+    <details class="w-full border last:rounded-b-lg Help-Text" id="details_{{ formIdentifier }}"
+             @click="$nextTick(() => { $store.app.helpSelected = '' })" x-data=""
+             :class="$store.app.helpSelected === 'details_{{ formIdentifier }}' && 'Help-Text_isHighlighted'">
+        <summary
+                class="px-4 py-3 text-base font-semibold outline-none cursor-pointer text-zpid-purple focus:ring-inset bg-mono-50">
             <span class="mr-2">{{ helpTitle|trans }}</span>
         </summary>
-        <div class="pb-4 markdown Details-SlideOut">
+        <div class="pb-8 markdown Details-SlideOut">
             {{ source("Help/#{sectionIdentifier}/#{formIdentifier}.md")|markdown_to_html }}
         </div>
     </details>
@@ -184,12 +186,13 @@
 {% endmacro %}
 
 {% macro dropzoneTemplate() %}
-<div class="dz-message " data-dz-message>
-    <button class="inline-flex items-center Button Button_primary Button_primary_act Button_standalone" type="button">
-        {# Icon: ic:outline-open-in-browser #}
-        <span class="w-5 h-5 mr-2 iconify-inline" data-icon="ic:outline-drive-folder-upload"></span>
-        {{ "title.dataset.upload.button"|trans }}
-    </button>
-    <span class="block mt-3">{{ "title.dataset.upload.dragDrop"|trans }}</span>
-</div>
+    <div class="dz-message " data-dz-message>
+        <button class="inline-flex items-center Button Button_primary Button_primary_act Button_standalone"
+                type="button">
+            {# Icon: ic:outline-open-in-browser #}
+            <span class="w-5 h-5 mr-2 iconify-inline" data-icon="ic:outline-drive-folder-upload"></span>
+            {{ "title.dataset.upload.button"|trans }}
+        </button>
+        <span class="block mt-3">{{ "title.dataset.upload.dragDrop"|trans }}</span>
+    </div>
 {% endmacro %}

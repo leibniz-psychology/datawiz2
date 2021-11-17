@@ -44,7 +44,7 @@
                                 </button>
                             </div>
 
-                            <div class="relative inline-flex items-center mx-4">
+                            <div class="relative inline-flex items-center ml-4">
                                 <label for="filter" class="absolute top-0 bottom-0 left-0 flex items-center">
                                     {# Icon: mdi:magnify #}
                                     <span class="inline-flex w-5 h-5 mx-auto ml-2 iconify-inline"
@@ -73,9 +73,9 @@
                     </div>
                     <ul class="mt-4 list">
                         {% for experiment in all_experiments %}
-                            <li class="p-4 mt-2 ml-4 first:mt-0 bg-mono-50">
+                            <li class="p-4 mt-2 ml-8 first:mt-0 bg-mono-50">
                                 <div class="grid grid-cols-6">
-                                    <h4 class="text-xl font-semibold text-zpid-purple-700 col-span-full">
+                                    <h4 class="text-2xl font-semibold text-zpid-purple-700 col-span-full">
                                         <a class="underline ExperimentName"
                                            href="{{ path('Study-documentation', {uuid: experiment.id}) }}">
                                             {{ experiment.settingsMetaDataGroup.shortName }}
@@ -85,26 +85,36 @@
                                         <span class="font-semibold">Title:</span>
                                         <span class="ExperimentTitle">{{ experiment.basicInformationMetaDataGroup.title }}</span>
                                     </div>
-                                    <div class="col-start-1 col-end-4">
-                                        <a class="font-semibold underline"
-                                           href="{{ path('Study-datasets', {uuid: experiment.id}) }}">{{ "title.overview.list.datasets"|trans }}
-                                            :</a>
-                                    </div>
-                                    <div class="col-start-4 col-end-7">
-                                        <span class="font-semibold">{{ "title.overview.list.created"|trans }}:</span>
-                                    </div>
-                                    <div class="col-start-1 col-end-4">
-                                        <a class="font-semibold underline"
-                                           href="{{ path('Study-materials', {uuid: experiment.id}) }}">{{ "title.overview.list.materials"|trans }}
-                                            :</a>
-                                    </div>
-                                    <div>
-                                        <span class="font-semibold">{{ "title.overview.list.edited"|trans }}:</span>
-                                    </div>
-                                    {# TODO Remove delete link in final version #}
                                     <div class="col-span-full">
-                                        <a href="{{ path('Study-delete', {uuid: experiment.id}) }}">{{ "generic.delete"|trans }}</a>
+                                        <a class="font-semibold underline"
+                                           href="{{ path('Study-datasets', {uuid: experiment.id}) }}">{{ "title.overview.list.datasets"|trans ~ ":" }}</a>
+                                        {% if experiment.originalDatasets|length > 0 %}
+                                            {% for dataset in experiment.originalDatasets %}
+                                                {{ dataset.originalName }}
+                                            {% endfor %}
+                                        {% endif %}
                                     </div>
+                                    <div class="col-span-full">
+                                        <a class="font-semibold underline"
+                                           href="{{ path('Study-materials', {uuid: experiment.id}) }}">{{ "title.overview.list.materials"|trans ~ ":" }}</a>
+                                        {% if experiment.additionalMaterials|length > 0 %}
+                                            {% for material in experiment.additionalMaterials %}
+                                                {{ material.originalName }}
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                    {# TODO Add creation date #}
+                                    {# <div class="col-start-1 col-end-4">
+                                        <span class="font-semibold">{{ "title.overview.list.created"|trans }}:</span>
+                                    </div> #}
+                                    {# TODO Add last edited date #}
+                                    {# <div class="col-start-4 col-end-7">
+                                        <span class="font-semibold">{{ "title.overview.list.edited"|trans }}:</span>
+                                    </div> #}
+                                    {# TODO Remove delete link in final version #}
+                                    {# <div class="col-span-full">
+                                        <a href="{{ path('Study-delete', {uuid: experiment.id}) }}">{{ "generic.delete"|trans }}</a>
+                                    </div> #}
                                 </div>
                                 {# <button class="Button Button_secondary Button_secondary_go Button_standalone ">Open study</button> #}
                             </li>

@@ -31,32 +31,35 @@
      x-init="if ($store.codebook.activeTab === 'matrix') loadMatrix()">
     {% block header %}
         <header class="sticky top-0 z-10 flex items-center border-b h-14 border-mono-300 col-span-full bg-mono-50">
-            <div class="flex items-center h-full">
-                <a href="{{ path('Study-datasets', {uuid: codebook.experiment.id}) }}"
-                   class="inline-flex items-center flex-shrink-0 ml-2 Button Button_primary Button_primary_go Button_standalone"
-                   @click="save()">
-                    {# Icon: ic:sharp-arrow-back-ios-new #}
-                    <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" class="arrow-left w-4 h-4 mr-1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                    </svg>
-                    {{ "codebook.nav.goback"|trans }}
-                </a>
-                <button class="flex-shrink-0 h-full px-2 ml-6 border-t-4 border-b-4 border-transparent focus:ring-inset hover:border-b-zpid-blue"
-                        :class="$store.codebook.activeTab === 'matrix' ? 'border-b-zpid-blue font-semibold' : ''"
-                        @click="$store.codebook.activeTab = 'matrix'; loadMatrix()">
-                    {{ "codebook.nav.matrix"|trans }}
-                </button>
-                <button class="flex-shrink-0 h-full px-2 ml-4 border-t-4 border-b-4 border-transparent focus:ring-inset hover:border-b-zpid-blue"
-                        @click="$store.codebook.activeTab = 'codebook'"
-                        :class="$store.codebook.activeTab === 'codebook' ? 'border-b-zpid-blue font-semibold' : ''">
-                    {{ "codebook.nav.codebook"|trans }}
-                </button>
+            <a href="{{ path('Study-datasets', {uuid: codebook.experiment.id}) }}"
+               class="inline-flex items-center flex-shrink-0 ml-2 Button Button_primary Button_primary_go Button_standalone"
+               @click="save()">
+                {# Icon: ic:sharp-arrow-back-ios-new #}
+                <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" class="arrow-left w-4 h-4 mr-1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                {{ "codebook.nav.goback"|trans }}
+            </a>
+            <button class="flex-shrink-0 h-full px-2 ml-6 border-t-4 border-b-4 border-transparent focus:ring-inset hover:border-b-zpid-blue"
+                    :class="$store.codebook.activeTab === 'matrix' ? 'border-b-zpid-blue font-semibold' : ''"
+                    @click="$store.codebook.activeTab = 'matrix'; loadMatrix()">
+                {{ "codebook.nav.matrix"|trans }}
+            </button>
+            <button class="flex-shrink-0 h-full px-2 ml-4 border-t-4 border-b-4 border-transparent focus:ring-inset hover:border-b-zpid-blue"
+                    @click="$store.codebook.activeTab = 'codebook'"
+                    :class="$store.codebook.activeTab === 'codebook' ? 'border-b-zpid-blue font-semibold' : ''">
+                {{ "codebook.nav.codebook"|trans }}
+            </button>
+            {# Icon: mi:table #}
+            <div class="ml-12">
+                <span class="w-5 h-5 text-zpid-purple iconify" data-icon="mdi:table"></span>
             </div>
-            <span class="ml-10 text-lg font-semibold text-zpid-purple">{{ codebook.originalName }}</span>
-
-            <div class="flex items-center justify-center ml-auto mr-2 gap-x-2"
-                 x-show="$store.codebook.activeTab === 'codebook'" x-cloak>
+            <span class="w-full ml-0.5 mr-6 overflow-x-hidden font-semibold text-zpid-purple whitespace-nowrap overflow-ellipsis">
+                {{ codebook.originalName }}
+            </span>
+            <div class="flex items-center justify-end mr-2 gap-x-2" x-show="$store.codebook.activeTab === 'codebook'"
+                 x-cloak>
                 <div class="relative" @keyup.escape="$store.codebook.filterText = ''">
                     <input x-data="{tooltip: '{{ 'codebook.search.tooltip'|trans }}'}" type="text" name=""
                            id="filter"

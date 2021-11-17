@@ -153,11 +153,32 @@ class StudyController extends AbstractController
             $this->em->persist($formData);
             $this->em->flush();
 
-            if ($form->get('saveAndNext')->isClicked()) {
-                return $this->redirectToRoute('Study-theory', ['uuid' => $uuid]);
+            switch (true) {
+                case $form->get('saveAndNext')->isClicked():
+                    return $this->redirectToRoute('Study-theory', ['uuid' => $uuid]);
+                case $form->get('saveAndIntroduction')->isClicked():
+                    return $this->redirectToRoute('Study-introduction', ['uuid' => $uuid]);
+                case $form->get('saveAndDocumentation')->isClicked():
+                    return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
+                case $form->get('saveAndTheory')->isClicked():
+                    return $this->redirectToRoute('Study-theory', ['uuid' => $uuid]);
+                case $form->get('saveAndMethod')->isClicked():
+                    return $this->redirectToRoute('Study-method', ['uuid' => $uuid]);
+                case $form->get('saveAndMeasure')->isClicked():
+                    return $this->redirectToRoute('Study-measure', ['uuid' => $uuid]);
+                case $form->get('saveAndSample')->isClicked():
+                    return $this->redirectToRoute('Study-sample', ['uuid' => $uuid]);
+                case $form->get('saveAndDatasets')->isClicked():
+                    return $this->redirectToRoute('Study-datasets', ['uuid' => $uuid]);
+                case $form->get('saveAndMaterials')->isClicked():
+                    return $this->redirectToRoute('Study-materials', ['uuid' => $uuid]);
+                case $form->get('saveAndReview')->isClicked():
+                    return $this->redirectToRoute('Study-review', ['uuid' => $uuid]);
+                case $form->get('saveAndExport')->isClicked():
+                    return $this->redirectToRoute('export_index', ['uuid' => $uuid]);
+                case $form->get('saveAndSettings')->isClicked():
+                    return $this->redirectToRoute('Study-settings', ['uuid' => $uuid]);
             }
-
-            return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
         }
 
         return $this->render('Pages/Study/documentation.html.twig', [
@@ -188,6 +209,28 @@ class StudyController extends AbstractController
                     return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
                 case $form->get('saveAndNext')->isClicked():
                     return $this->redirectToRoute('Study-method', ['uuid' => $uuid]);
+                case $form->get('saveAndIntroduction')->isClicked():
+                    return $this->redirectToRoute('Study-introduction', ['uuid' => $uuid]);
+                case $form->get('saveAndDocumentation')->isClicked():
+                    return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
+                case $form->get('saveAndTheory')->isClicked():
+                    return $this->redirectToRoute('Study-theory', ['uuid' => $uuid]);
+                case $form->get('saveAndMethod')->isClicked():
+                    return $this->redirectToRoute('Study-method', ['uuid' => $uuid]);
+                case $form->get('saveAndMeasure')->isClicked():
+                    return $this->redirectToRoute('Study-measure', ['uuid' => $uuid]);
+                case $form->get('saveAndSample')->isClicked():
+                    return $this->redirectToRoute('Study-sample', ['uuid' => $uuid]);
+                case $form->get('saveAndDatasets')->isClicked():
+                    return $this->redirectToRoute('Study-datasets', ['uuid' => $uuid]);
+                case $form->get('saveAndMaterials')->isClicked():
+                    return $this->redirectToRoute('Study-materials', ['uuid' => $uuid]);
+                case $form->get('saveAndReview')->isClicked():
+                    return $this->redirectToRoute('Study-review', ['uuid' => $uuid]);
+                case $form->get('saveAndExport')->isClicked():
+                    return $this->redirectToRoute('export_index', ['uuid' => $uuid]);
+                case $form->get('saveAndSettings')->isClicked():
+                    return $this->redirectToRoute('Study-settings', ['uuid' => $uuid]);
             }
         }
 
@@ -221,8 +264,31 @@ class StudyController extends AbstractController
             $this->em->persist($formData);
             $this->em->flush();
 
-            if ($form->get('saveAndPrevious')->isClicked()) {
-                return $this->redirectToRoute('Study-measure', ['uuid' => $uuid]);
+            switch (true) {
+                case $form->get('saveAndPrevious')->isClicked():
+                    return $this->redirectToRoute('Study-measure', ['uuid' => $uuid]);
+                case $form->get('saveAndIntroduction')->isClicked():
+                    return $this->redirectToRoute('Study-introduction', ['uuid' => $uuid]);
+                case $form->get('saveAndDocumentation')->isClicked():
+                    return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
+                case $form->get('saveAndTheory')->isClicked():
+                    return $this->redirectToRoute('Study-theory', ['uuid' => $uuid]);
+                case $form->get('saveAndMethod')->isClicked():
+                    return $this->redirectToRoute('Study-method', ['uuid' => $uuid]);
+                case $form->get('saveAndMeasure')->isClicked():
+                    return $this->redirectToRoute('Study-measure', ['uuid' => $uuid]);
+                case $form->get('saveAndSample')->isClicked():
+                    return $this->redirectToRoute('Study-sample', ['uuid' => $uuid]);
+                case $form->get('saveAndDatasets')->isClicked():
+                    return $this->redirectToRoute('Study-datasets', ['uuid' => $uuid]);
+                case $form->get('saveAndMaterials')->isClicked():
+                    return $this->redirectToRoute('Study-materials', ['uuid' => $uuid]);
+                case $form->get('saveAndReview')->isClicked():
+                    return $this->redirectToRoute('Study-review', ['uuid' => $uuid]);
+                case $form->get('saveAndExport')->isClicked():
+                    return $this->redirectToRoute('export_index', ['uuid' => $uuid]);
+                case $form->get('saveAndSettings')->isClicked():
+                    return $this->redirectToRoute('Study-settings', ['uuid' => $uuid]);
             }
         }
 
@@ -253,12 +319,33 @@ class StudyController extends AbstractController
             $this->em->persist($formData);
             $this->em->flush();
 
-            if ($form->get('saveAndPrevious')->isClicked()) {
-                return $this->redirectToRoute('Study-method', ['uuid' => $uuid]);
-            }
-
-            if ($form->get('saveAndNext')->isClicked()) {
-                return $this->redirectToRoute('Study-sample', ['uuid' => $uuid]);
+            switch (true) {
+                case $form->get('saveAndPrevious')->isClicked():
+                    return $this->redirectToRoute('Study-method', ['uuid' => $uuid]);
+                case $form->get('saveAndNext')->isClicked():
+                    return $this->redirectToRoute('Study-sample', ['uuid' => $uuid]);
+                case $form->get('saveAndIntroduction')->isClicked():
+                    return $this->redirectToRoute('Study-introduction', ['uuid' => $uuid]);
+                case $form->get('saveAndDocumentation')->isClicked():
+                    return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
+                case $form->get('saveAndTheory')->isClicked():
+                    return $this->redirectToRoute('Study-theory', ['uuid' => $uuid]);
+                case $form->get('saveAndMethod')->isClicked():
+                    return $this->redirectToRoute('Study-method', ['uuid' => $uuid]);
+                case $form->get('saveAndMeasure')->isClicked():
+                    return $this->redirectToRoute('Study-measure', ['uuid' => $uuid]);
+                case $form->get('saveAndSample')->isClicked():
+                    return $this->redirectToRoute('Study-sample', ['uuid' => $uuid]);
+                case $form->get('saveAndDatasets')->isClicked():
+                    return $this->redirectToRoute('Study-datasets', ['uuid' => $uuid]);
+                case $form->get('saveAndMaterials')->isClicked():
+                    return $this->redirectToRoute('Study-materials', ['uuid' => $uuid]);
+                case $form->get('saveAndReview')->isClicked():
+                    return $this->redirectToRoute('Study-review', ['uuid' => $uuid]);
+                case $form->get('saveAndExport')->isClicked():
+                    return $this->redirectToRoute('export_index', ['uuid' => $uuid]);
+                case $form->get('saveAndSettings')->isClicked():
+                    return $this->redirectToRoute('Study-settings', ['uuid' => $uuid]);
             }
         }
 
@@ -285,12 +372,33 @@ class StudyController extends AbstractController
             $this->em->persist($entityAtChange);
             $this->em->flush();
 
-            if ($form->get('saveAndPrevious')->isClicked()) {
-                return $this->redirectToRoute('Study-theory', ['uuid' => $uuid]);
-            }
-
-            if ($form->get('saveAndNext')->isClicked()) {
-                return $this->redirectToRoute('Study-measure', ['uuid' => $uuid]);
+            switch (true) {
+                case $form->get('saveAndPrevious')->isClicked():
+                    return $this->redirectToRoute('Study-theory', ['uuid' => $uuid]);
+                case $form->get('saveAndNext')->isClicked():
+                    return $this->redirectToRoute('Study-measure', ['uuid' => $uuid]);
+                case $form->get('saveAndIntroduction')->isClicked():
+                    return $this->redirectToRoute('Study-introduction', ['uuid' => $uuid]);
+                case $form->get('saveAndDocumentation')->isClicked():
+                    return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
+                case $form->get('saveAndTheory')->isClicked():
+                    return $this->redirectToRoute('Study-theory', ['uuid' => $uuid]);
+                case $form->get('saveAndMethod')->isClicked():
+                    return $this->redirectToRoute('Study-method', ['uuid' => $uuid]);
+                case $form->get('saveAndMeasure')->isClicked():
+                    return $this->redirectToRoute('Study-measure', ['uuid' => $uuid]);
+                case $form->get('saveAndSample')->isClicked():
+                    return $this->redirectToRoute('Study-sample', ['uuid' => $uuid]);
+                case $form->get('saveAndDatasets')->isClicked():
+                    return $this->redirectToRoute('Study-datasets', ['uuid' => $uuid]);
+                case $form->get('saveAndMaterials')->isClicked():
+                    return $this->redirectToRoute('Study-materials', ['uuid' => $uuid]);
+                case $form->get('saveAndReview')->isClicked():
+                    return $this->redirectToRoute('Study-review', ['uuid' => $uuid]);
+                case $form->get('saveAndExport')->isClicked():
+                    return $this->redirectToRoute('export_index', ['uuid' => $uuid]);
+                case $form->get('saveAndSettings')->isClicked():
+                    return $this->redirectToRoute('Study-settings', ['uuid' => $uuid]);
             }
         }
 

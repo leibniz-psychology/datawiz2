@@ -136,7 +136,7 @@ class FileManagementController extends AbstractController
         $file = $this->em->find(Dataset::class, $fileId);
         $data = null;
         if ($file) {
-            $data = $this->csvImportable->csvToArray($file->getStorageName(), $delimiter, $escape, $headerRows, 10);
+            $data = $this->csvImportable->csvToArray($file->getStorageName(), $delimiter, $escape, $headerRows, 5);
         }
 
         return new JsonResponse($data, $data ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);

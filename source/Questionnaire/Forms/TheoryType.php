@@ -34,7 +34,62 @@ class TheoryType extends AbstractType
                 ],
             ])
             ->add('saveAndPrevious', SubmitType::class)
-            ->add('saveAndNext', SubmitType::class);
+            ->add('saveAndNext', SubmitType::class)
+            ->add('saveAndIntroduction', SubmitType::class, [
+                'attr' => [
+                    'class' => 'hidden Button_saveAndIntroduction',
+                ]
+            ])
+            ->add('saveAndDocumentation', SubmitType::class, [
+                'attr' => [
+                    'class' => 'hidden Button_saveAndDocumentation',
+                ]
+            ])
+            ->add('saveAndTheory', SubmitType::class, [
+                'attr' => [
+                    'class' => 'hidden Button_saveAndTheory',
+                ]
+            ])
+            ->add('saveAndMethod', SubmitType::class, [
+                'attr' => [
+                    'class' => 'hidden Button_saveAndMethod',
+                ]
+            ])
+            ->add('saveAndMeasure', SubmitType::class, [
+                'attr' => [
+                    'class' => 'hidden Button_saveAndMeasure',
+                ]
+            ])
+            ->add('saveAndSample', SubmitType::class, [
+                'attr' => [
+                    'class' => 'hidden Button_saveAndSample',
+                ]
+            ])
+            ->add('saveAndDatasets', SubmitType::class, [
+                'attr' => [
+                    'class' => 'hidden Button_saveAndDatasets',
+                ]
+            ])
+            ->add('saveAndMaterials', SubmitType::class, [
+                'attr' => [
+                    'class' => 'hidden Button_saveAndMaterials',
+                ]
+            ])
+            ->add('saveAndReview', SubmitType::class, [
+                'attr' => [
+                    'class' => 'hidden Button_saveAndReview',
+                ]
+            ])
+            ->add('saveAndExport', SubmitType::class, [
+                'attr' => [
+                    'class' => 'hidden Button_saveAndExport',
+                ]
+            ])
+            ->add('saveAndSettings', SubmitType::class, [
+                'attr' => [
+                    'class' => 'hidden Button_saveAndSettings',
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

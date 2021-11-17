@@ -1,10 +1,18 @@
 {% set route_name = app.request.attributes.all().request.attributes.get('_route') %}
+{% set needs_saving = (
+    route_name == 'Study-documentation' or
+    route_name == 'Study-theory' or
+    route_name == 'Study-method' or
+    route_name == 'Study-measure' or
+    route_name == 'Study-sample'
+    ) %}
 
-<div class="py-[1.125rem] pl-6 pr-3 border-b bg-mono-100 border-mono-300">
+<div class="py-[1.125rem] pl-6 pr-3 border-b bg-mono-100 border-mono-300" x-data="">
     <span class="text-zpid-purple-700 text-xl font-bold break-all mr-0.5 leading-tight">{{ experiment.settingsMetaDataGroup.shortName }}
     </span>
     <a href="{{ path('Study-settings', {uuid: experiment.id}) }}"
-       class="inline-flex items-center mt-0.5 border rounded-lg border-mono-300 bg-sky-50 hover:underline" title="Edit">
+       class="inline-flex items-center mt-0.5 border rounded-lg border-mono-300 bg-sky-50 hover:underline" title="Edit"
+       {%- if needs_saving -%}@click.prevent="document.querySelector('.Button_saveAndSettings').click()"{%- endif -%}>
         {# Icon: ic:outline-edit #}
         <svg class="m-1 text-sm" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
              aria-hidden="true" role="img" style="vertical-align: -0.125em;" width="1em" height="1em"
@@ -16,54 +24,57 @@
 </div>
 
 <nav>
-    <ul>
+    <ul x-data="">
         <li>
             <a href="{{ path('Study-introduction', {uuid: experiment.id}) }}"
-               class="StudyNav-NavItem {{- route_name == 'Study-introduction' ? ' StudyNav-NavItem_active' -}}">{{ "title.introduction.title"|trans }}</a>
+               class="StudyNav-NavItem {{- route_name == 'Study-introduction' ? ' StudyNav-NavItem_active' -}}"
+               {%- if needs_saving -%}@click.prevent="document.querySelector('.Button_saveAndIntroduction').click()"{%- endif -%}>{{ "title.introduction.title"|trans }}</a>
         </li>
         <li>
             <a href="{{ path('Study-documentation', {uuid: experiment.id}) }}"
                class="StudyNav-NavItem
-                {{- route_name == 'Study-documentation' or
-               route_name == 'Study-theory' or
-               route_name == 'Study-method' or
-               route_name == 'Study-measure' or
-               route_name == 'Study-sample' ?' StudyNav-NavItem_active StudyNav-NavItem_active_isParent' -}}">
+                {{- needs_saving ?' StudyNav-NavItem_active StudyNav-NavItem_active_isParent' -}}"
+               {%- if needs_saving -%}@click.prevent="document.querySelector('.Button_saveAndDocumentation').click()"{%- endif -%}>
                 1. {{ "title.describe-study.title"|trans }}
             </a>
             <ul class="StudyNav-SubNav">
                 <li>
                     <a href="{{ path('Study-documentation', {uuid: experiment.id}) }}"
                        class="StudyNav-SubNavItem
-                        {{- route_name == 'Study-documentation' ? ' StudyNav-SubNavItem_active' -}}">
+                        {{- route_name == 'Study-documentation' ? ' StudyNav-SubNavItem_active' -}}"
+                       {%- if needs_saving -%}@click.prevent="document.querySelector('.Button_saveAndDocumentation').click()"{%- endif -%}>
                         {{ "title.basic.title"|trans }}
                     </a>
                 </li>
                 <li>
                     <a href="{{ path('Study-theory', {uuid: experiment.id}) }}"
                        class="StudyNav-SubNavItem
-                        {{- route_name == 'Study-theory' ? ' StudyNav-SubNavItem_active' -}}">
+                        {{- route_name == 'Study-theory' ? ' StudyNav-SubNavItem_active' -}}"
+                       {%- if needs_saving -%}@click.prevent="document.querySelector('.Button_saveAndTheory').click()"{%- endif -%}>
                         {{ "title.theroies.title"|trans }}
                     </a>
                 </li>
                 <li>
                     <a href="{{ path('Study-method', {uuid: experiment.id}) }}"
                        class="StudyNav-SubNavItem
-                        {{- route_name == 'Study-method' ? ' StudyNav-SubNavItem_active' -}}">
+                        {{- route_name == 'Study-method' ? ' StudyNav-SubNavItem_active' -}}"
+                       {%- if needs_saving -%}@click.prevent="document.querySelector('.Button_saveAndMethod').click()"{%- endif -%}>
                         {{ "title.method.title"|trans }}
                     </a>
                 </li>
                 <li>
                     <a href="{{ path('Study-measure', {uuid: experiment.id}) }}"
                        class="StudyNav-SubNavItem
-                        {{- route_name == 'Study-measure' ? ' StudyNav-SubNavItem_active' -}}">
+                        {{- route_name == 'Study-measure' ? ' StudyNav-SubNavItem_active' -}}"
+                       {%- if needs_saving -%}@click.prevent="document.querySelector('.Button_saveAndMeasure').click()"{%- endif -%}>
                         {{ "title.measures.title"|trans }}
                     </a>
                 </li>
                 <li>
                     <a href="{{ path('Study-sample', {uuid: experiment.id}) }}"
                        class="StudyNav-SubNavItem
-                        {{- route_name == 'Study-sample' ? ' StudyNav-SubNavItem_active' -}}">
+                        {{- route_name == 'Study-sample' ? ' StudyNav-SubNavItem_active' -}}"
+                       {%- if needs_saving -%}@click.prevent="document.querySelector('.Button_saveAndSample').click()"{%- endif -%}>
                         {{ "title.samples.title"|trans }}
                     </a>
                 </li>
@@ -71,29 +82,34 @@
         </li>
         <li>
             <a href="{{ path('Study-datasets', {uuid: experiment.id}) }}"
-               class="StudyNav-NavItem {{- route_name == 'Study-datasets' ? ' StudyNav-NavItem_active' -}}">
+               class="StudyNav-NavItem {{- route_name == 'Study-datasets' ? ' StudyNav-NavItem_active' -}}"
+               {%- if needs_saving -%}@click.prevent="document.querySelector('.Button_saveAndDatasets').click()"{%- endif -%}>
                 2. {{ "title.dataset.title"|trans }}</a>
         </li>
         <li>
             <a href="{{ path('Study-materials', {uuid: experiment.id}) }}"
-               class="StudyNav-NavItem {{- route_name == 'Study-materials' ? ' StudyNav-NavItem_active' -}}">
+               class="StudyNav-NavItem {{- route_name == 'Study-materials' ? ' StudyNav-NavItem_active' -}}"
+               {%- if needs_saving -%}@click.prevent="document.querySelector('.Button_saveAndMaterials').click()"{%- endif -%}>
                 3. {{ "title.material.title-short"|trans }}</a>
         </li>
         <li>
             <a href="{{ path('Study-review', {uuid: experiment.id}) }}"
-               class="StudyNav-NavItem {{- route_name == 'Study-review' ? ' StudyNav-NavItem_active' -}}">
+               class="StudyNav-NavItem {{- route_name == 'Study-review' ? ' StudyNav-NavItem_active' -}}"
+               {%- if needs_saving -%}@click.prevent="document.querySelector('.Button_saveAndReview').click()"{%- endif -%}>
                 4. {{ "title.review.title"|trans }}</a>
         </li>
         <li>
             <a href="{{ path('export_index', {uuid: experiment.id}) }}"
-               class="StudyNav-NavItem {{- route_name == 'export_index' ? ' StudyNav-NavItem_active' -}}">
+               class="StudyNav-NavItem {{- route_name == 'export_index' ? ' StudyNav-NavItem_active' -}}"
+               {%- if needs_saving -%}@click.prevent="document.querySelector('.Button_saveAndExport').click()"{%- endif -%}>
                 5. {{ "title.export.title-short"|trans }}</a>
         </li>
         {# <hr class="border border-mono-400" /> #}
         <li>
             <a href="{{ path('Study-settings', {uuid: experiment.id}) }}"
                class="StudyNav-NavItem StudyNav-NavItem_settings
-                {{- route_name == 'Study-settings' ? ' StudyNav-NavItem_active StudyNav-NavItem_settings_active' -}}">
+                {{- route_name == 'Study-settings' ? ' StudyNav-NavItem_active StudyNav-NavItem_settings_active' -}}"
+               {%- if needs_saving -%}@click.prevent="document.querySelector('.Button_saveAndSettings').click()"{%- endif -%}>
                 <i class="w-4 h-4 mt-px mr-1 iconify text-mono-600" data-icon="ic-round-settings"></i>
                 {{ "title.settings.title"|trans }}</a>
         </li>

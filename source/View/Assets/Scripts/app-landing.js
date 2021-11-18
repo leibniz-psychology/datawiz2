@@ -9,5 +9,6 @@
 import "../Styles/app.scss";
 
 import "../Images/leibniz_psychology.svg";
+import "../Images/rdm_teaser.jpg";
 
 import "./alpine";

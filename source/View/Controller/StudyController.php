@@ -179,6 +179,8 @@ class StudyController extends AbstractController
                 case $form->get('saveAndSettings')->isClicked():
                     return $this->redirectToRoute('Study-settings', ['uuid' => $uuid]);
             }
+
+            return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
         }
 
         return $this->render('Pages/Study/documentation.html.twig', [

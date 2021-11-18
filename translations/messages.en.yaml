@@ -118,8 +118,8 @@ title:
     title: 'Settings'
     deleteModal:
       body: 'This action cannot be undone. This will permanently delete the #studyName#
-        study including its documentation, datasets, codebooks and materials.'
-      confirm: 'I understand, delete this study'
+        documentation including its study data, uploaded datasets, codebooks and materials.'
+      confirm: 'I understand, delete this documentation'
 
 generic:
   description: 'Description'
@@ -351,9 +351,9 @@ input:
     legend: 'Danger zone'
     label: 'Irreversible and destructive actions'
     delete:
-      title: 'Delete study'
-      description: 'Deleting a study permanenetly deletes all its data.'
-      action: 'Delete this study'
+      title: 'Delete documentation'
+      description: 'Deleting a documentation permanenetly deletes all its data.'
+      action: 'Delete this documentation'
 
 link:
   user:

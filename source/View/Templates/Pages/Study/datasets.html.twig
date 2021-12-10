@@ -46,7 +46,7 @@
                         </span>
                             <button class="flex items-center self-start ml-2 Button Button_tertiary Button_tertiary_danger Button_standalone"
                                     @click="show()">
-                                {# Icon: mi:delete - https://icon-sets.iconify.design/mi/delete/ #}
+                                {# Icon: mi:delete #}
                                 <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
                                      xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
                                      width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
@@ -68,7 +68,8 @@
                                         {{ "title.dataset.deleteModal.title"|trans }}
                                     </div>
                                     <button class="Modal-Button_close" @click="hide()" type="button">
-                                        <span class="w-6 h-6 iconify" data-icon="mdi:close" data-inline="false"></span>
+                                        {# Icon: mdi:close #}
+                                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z" fill="currentColor"/></svg>
                                     </button>
                                 </div>
 

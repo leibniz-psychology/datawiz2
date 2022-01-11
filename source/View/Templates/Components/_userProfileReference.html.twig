@@ -1,15 +1,6 @@
 {% if app.environment != "test" %}
     <div class="flex items-center justify-end h-full ml-auto">
         {% if app.user %}
-            {% set referenceName = "link.user.profile"|trans %}
-            <a href="{{ path("profile") }}"
-               class="flex items-center ring-inset h-full px-3 ml-4 text-base pt-1 border-b-4 border-transparent hover:border-zpid-blue
-            {{- app.request.pathinfo == path("profile") ? ' border-zpid-blue font-semibold' -}}">
-                <span class="w-4 h-4 mr-0.5 inline iconify-inline"
-                      data-icon="gg:profile">
-                </span>
-                {{- referenceName -}}
-            </a>
             <a href="{{ path("Security-logout") }}"
                class="flex items-center flex-shrink-0 h-full px-3 pt-1 ml-6 text-base border-b-4 border-transparent ring-inset hover:border-zpid-blue"
                title="{{ 'link.user.logout'|trans({'#userEmail#':app.user.email}) }}">

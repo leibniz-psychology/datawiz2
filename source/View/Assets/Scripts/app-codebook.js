@@ -7,14 +7,12 @@ import Alpine from "alpinejs";
 import Tooltip from "@ryangjchandler/alpine-tooltip";
 import Scroll from "@alpine-collective/toolkit-scroll";
 
-// import Fern from "@ryangjchandler/fern";
 import storeFunctions from "./codebook/storeFunctions.js";
 
 import axios from "axios";
 
 Alpine.plugin(Tooltip);
 Alpine.plugin(Scroll);
-// Alpine.plugin(Fern);
 Alpine.store("codebook", {
   activeTab: "codebook",
   currentVariableID: 1,
@@ -39,6 +37,7 @@ Alpine.data("codebook", () => ({
   entries: 0,
   showPage: 1,
   maxPages: 1,
+  reloadingMatrix: true,
 
   init() {
     axios
@@ -79,7 +78,6 @@ Alpine.data("codebook", () => ({
       method: "post",
       url: this.url,
       data: {
-        // variables: Alpine.store("codebook").variables,
         variables: JSON.parse(
           JSON.stringify(Alpine.store("codebook").variables),
           (key, value) => (value === null || value === "" ? undefined : value)
@@ -102,16 +100,20 @@ Alpine.data("codebook", () => ({
         this.maxPages = data.pagination.max_pages;
         this.entries = data.pagination.max_items;
         this.matrix = data;
+        this.reloadingMatrix = false;
       })
       .catch((error) => {
         console.log(error);
       });
   },
-  nextPage() {
-    if (this.showPage < this.maxPages) this.showPage++;
+  isPageEnd() {
+    return this.showPage >= this.maxPages;
   },
-  previousPage() {
-    if (this.showPage > 1) this.showPage--;
+  isPageStart() {
+    return this.showPage === 1;
+  },
+  scrollHorizontal(el) {
+    el.scrollIntoView({ behavior: "smooth", inline: "center" });
   },
 }));
 

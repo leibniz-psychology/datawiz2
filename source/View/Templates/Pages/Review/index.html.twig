@@ -11,7 +11,7 @@
 {% set isStudyDescriptionSubItem = false %}
 
 {% block title %}
-    Data Overview
+    {{ "title.review.title"|trans }}
 {% endblock %}
 
 {% block content %}
@@ -25,13 +25,13 @@
         <section class="mt-8">
             {{ _self.sectionTitle("title.basic.title"|trans) }}
             {% for reviewItem in basicInfoReview %}
-                {% include 'Components/_reviewValue.html.twig' with {item: reviewItem } %}
+                {% include 'Components/_reviewValue.html.twig' with {item: reviewItem, route: 'Study-documentation' } %}
             {% endfor %}
             <div class="mt-5">
                 <h2 class="mx-6 text-xl font-bold text-zpid-purple-700">{{ "input.creator.legend"|trans }}</h2>
                 {% for reviewCreator in basicCreatorInfoReview %}
                     {% for reviewItem in reviewCreator.reviewCollection %}
-                        {% include 'Components/_reviewValue.html.twig' with {item: reviewItem} %}
+                        {% include 'Components/_reviewValue.html.twig' with {item: reviewItem, route: 'Study-documentation'} %}
                     {% endfor %}
                 {% endfor %}
             </div>
@@ -39,25 +39,25 @@
         <section class="mt-8">
             {{ _self.sectionTitle("title.theroies.title"|trans) }}
             {% for reviewItem in theoryReview %}
-                {% include 'Components/_reviewValue.html.twig' with {item: reviewItem} %}
+                {% include 'Components/_reviewValue.html.twig' with {item: reviewItem, route: 'Study-theory'} %}
             {% endfor %}
         </section>
         <section class="mt-8">
             {{ _self.sectionTitle("title.method.title"|trans) }}
             {% for reviewItem in methodReview %}
-                {% include 'Components/_reviewValue.html.twig' with {item: reviewItem} %}
+                {% include 'Components/_reviewValue.html.twig' with {item: reviewItem, route: 'Study-method'} %}
             {% endfor %}
         </section>
         <section class="mt-8">
             {{ _self.sectionTitle("title.measures.title"|trans) }}
             {% for reviewItem in measureReview %}
-                {% include 'Components/_reviewValue.html.twig' with {item: reviewItem} %}
+                {% include 'Components/_reviewValue.html.twig' with {item: reviewItem, route: 'Study-measure'} %}
             {% endfor %}
         </section>
         <section class="mt-8">
             {{ _self.sectionTitle("title.samples.title"|trans) }}
             {% for reviewItem in sampleReview %}
-                {% include 'Components/_reviewValue.html.twig' with {item: reviewItem} %}
+                {% include 'Components/_reviewValue.html.twig' with {item: reviewItem, route: 'Study-sample'} %}
             {% endfor %}
         </section>
         {# TODO Add list of datasets #}

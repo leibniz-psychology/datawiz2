@@ -20,7 +20,7 @@
 
     <fieldset>
         <div class="MetaData-Title">
-            <legend class="MetaData-Legend">
+            <legend class="MetaData-Legend" id="{{ 'input.design.legend'|trans|slug }}">
                 {{ "input.design.legend"|trans }}
             </legend>
             {{ helpButton("research_design") }}
@@ -39,6 +39,7 @@
                     'label_html': true,
                 }) }}
             {% endfor -%}
+            <span id="{{ 'input.design.details.legend'|trans|slug }}"></span>
             <div x-show="$store.app.researchDesign === '{{ form.research_design.vars.choices[0].value }}'"
                  x-cloak="x-cloak" class="mt-4 ml-4" x-transition:enter="transition duration-300"
                  x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
@@ -96,7 +97,7 @@
 
     <fieldset class="mt-8">
         <div class="MetaData-Title">
-            <legend class="MetaData-Legend">
+            <legend class="MetaData-Legend" id="{{ 'input.setting.legend'|trans|slug }}">
                 {{ "input.setting.legend"|trans }}
             </legend>
             {{ helpButton("setting") }}
@@ -115,7 +116,9 @@
                 }) }}
             {% endfor -%}
         </div>
-        {{ form_label(form.settingLocation) }}
+        {{ form_label(form.settingLocation, null, {
+            'label_attr': {'id': 'input.setting.location.legend'|trans|slug },
+        }) }}
         <div class="MetaData-Widget">
             {{ form_errors(form.settingLocation) }}
             {{ form_widget(form.settingLocation) }}
@@ -126,7 +129,7 @@
               x-show="$store.app.researchDesign === '{{ form.research_design.vars.choices[0].value }}'"
               x-cloak="x-cloak">
         <div class="MetaData-Title">
-            <legend class="MetaData-Legend">
+            <legend class="MetaData-Legend" id="{{ 'input.manipulations.legend'|trans|slug }}">
                 {{ "input.manipulations.legend"|trans }}
             </legend>
             {{ helpButton("manipulations") }}
@@ -142,7 +145,7 @@
               x-show="$store.app.researchDesign === '{{ form.research_design.vars.choices[0].value }}'"
               x-cloak="x-cloak">
         <div class="MetaData-Title">
-            <legend class="MetaData-Legend">
+            <legend class="MetaData-Legend" id="{{ 'input.experimental-design.legend'|trans|slug }}">
                 {{ "input.experimental-design.legend"|trans }}
             </legend>
             {{ helpButton("experimental_design") }}
@@ -169,7 +172,7 @@
               x-show="$store.app.researchDesign === '{{ form.research_design.vars.choices[0].value }}'"
               x-cloak="x-cloak">
         <div class="MetaData-Title">
-            <legend class="MetaData-Legend">
+            <legend class="MetaData-Legend" id="{{ 'input.control-operations.legend'|trans|slug }}">
                 {{ "input.control-operations.legend"|trans }}
             </legend>
             {{ helpButton("control_operations") }}

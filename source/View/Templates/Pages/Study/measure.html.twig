@@ -18,7 +18,7 @@
     {{ form_errors(form) }}
     <fieldset>
         <div class="MetaData-Title">
-            <legend class="MetaData-Legend">
+            <legend class="MetaData-Legend" id="{{ 'input.measures.legend'|trans|slug }}">
                 {{ "input.measures.legend"|trans }}
             </legend>
             {{ helpButton("measure") }}
@@ -33,7 +33,7 @@
     </fieldset>
     <fieldset class="mt-8">
         <div class="MetaData-Title">
-            <legend class="MetaData-Legend">
+            <legend class="MetaData-Legend" id="{{ 'input.apparatus.legend'|trans|slug }}">
                 {{ "input.apparatus.legend"|trans }}
             </legend>
             {{ helpButton("apparatus") }}

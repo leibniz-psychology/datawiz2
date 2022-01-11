@@ -52,7 +52,7 @@
         <template x-for="(item, index) in {{ options.labels }}" :key="index">
             <div class="mt-0.5" x-ref="inputContainer">
                 <div class="inline-flex items-center w-full">
-                    <input class="w-[50%] p-1 bg-white border placeholder-mono-500" rows="1"
+                    <input class="w-[50%] p-1 bg-white border placeholder-mono-500 border-gray-500 ring-inset" rows="1"
                            :class="`CodeInput_${type}_${index}`"
                            autocomplete="off" x-on:keydown.enter.prevent="
                             if (index === {{ options.labels }}.length - 1 && (type === 'missings' || document.querySelector(`.ValueInput_${type}_${index}`).value !== '') && $el.value !== '') {
@@ -61,7 +61,7 @@
                             }"
                            x-model="item.name">
                     <span class="mx-1">=</span>
-                    <input class="w-full p-1 bg-white border placeholder-mono-500" rows="1"
+                    <input class="w-full p-1 bg-white border border-gray-500 placeholder-mono-500 ring-inset" rows="1"
                            :class="`ValueInput_${type}_${index}`"
                            autocomplete="off" placeholder="{{ options.placeHolder }}"
                            x-on:keydown.enter.prevent="

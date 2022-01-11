@@ -67,7 +67,7 @@ class CreatorType extends AbstractType
                 'label' => 'input.creator.credit.label',
                 'label_html' => true,
                 'required' => false,
-                'label_attr' => ['class' => 'MetaData-Label'],
+                'label_attr' => ['class' => 'MetaData-Label !px-4 !mt-0'],
                 'attr' => ['class' => 'MetaData-Widget MetaData-Widget_collection'],
                 'entry_type'   => ChoiceType::class,
                 'delete_empty' => function (String $role = null) {

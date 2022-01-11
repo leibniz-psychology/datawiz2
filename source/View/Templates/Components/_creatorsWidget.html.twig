@@ -7,13 +7,13 @@
         data-widget-counter="{{ collection|length + 1 }}"
         data-delete-position="prepend"
         data-delete-prototype='<button type="button" class="Creator-RemoveButton remove-another-collection-widget Button Button_tertiary Button_tertiary_danger Button_fieldSize" data-list-selector="#{{ id }}">
-        {{ removeTxt|trans }} creator</button>'>
+        {{ removeTxt|trans }}</button>'>
         {% for item in collection %}
             <li class="items-baseline pb-4 mt-2 border rounded-sm border-mono-400 first:mt-0 ">
                 <button type="button"
                         class="Creator-RemoveButton remove-another-collection-widget Button Button_tertiary Button_tertiary_danger Button_fieldSize"
                         data-list-selector="#{{ id }}">
-                    {{ removeTxt|trans }} creator
+                    {{ removeTxt|trans }}
                 </button>
                 <div class="Creator-Details">
                     <div class="Creator-Detail Creator-Detail_given">
@@ -50,7 +50,7 @@
                                 condensed: true,
                                 partOfCollection: true,
                                 addTxt: 'input.creator.credit.add',
-                                removeTxt: 'generic.remove',
+                                removeTxt: 'input.creator.credit.remove',
                             } %}
                     </div>
                 </div>

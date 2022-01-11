@@ -11,9 +11,8 @@ title:
         description: 'Write ethics approval applications with style.'
       coming-soon: 'Coming soon!'
     related:
-      title-start: 'Related products on'
+      title: 'Related products on #relatedCorporateLink#'
       title-link: 'leibniz-psychology.org'
-      title-end: ''
       title-linktitle: 'Go to Leibniz Psychology website'
       prereg:
         title: 'PreReg in Psychology'
@@ -34,8 +33,8 @@ title:
         sort:
           by: 'Sort by'
           name: 'Name'
-          title: 'Title'
         placeholder: 'Search documentations'
+      title: 'Title'
       datasets: 'Datasets'
       materials: 'Materials'
       created: 'Dated created'
@@ -47,7 +46,8 @@ title:
     title: 'Getting Started'
     h3_1: 'Step-by-step'
     h3_2: 'Get help'
-    help: "Hit the help button #helpBtn# next to a topic if something's unclear. A\
+    help:
+      "Hit the help button #helpBtn# next to a topic if something's unclear. A\
       \ help text will appear on the right side of the screen. There you'll find practical\
       \ examples and online resources that help clear things up."
     start:
@@ -99,6 +99,7 @@ title:
     description: 'Review your documentation and check for completion and correctness.'
   export:
     title: 'Export data documentation'
+    description: 'Export your data documentation in one ZIP file.'
     title-short: 'Export'
     export: 'Export documentation'
     format:
@@ -139,6 +140,7 @@ generic:
   help: 'Help'
   select: 'Select'
   loading: 'Loading…'
+  of: 'of'
 
 input:
   title:
@@ -151,9 +153,9 @@ input:
     empty: '<a href="#link#" class="#class#">Add description</a> to ensure the findability of your data'
   relatedPubs:
     legend: 'Related publications'
-    label: '<span class="block">Cite publications that use the data from this dataset.</span><span
-      class="flex items-center mt-3 text-sm"><span class="w-4 h-4 ml-1 mr-1 iconify bg-mono-50" data-icon="mdi:information-variant" data-inline="false"></span>Enter
-      one publication per field. Leave empty if not applicable.</span>'
+    label:
+      '<span class="block">Cite publications that use the data from this dataset.</span><span
+      class="flex mt-1 text-sm Label-Info">Enter one publication per field. Leave empty if not applicable.</span>'
     add: 'Add another related publication'
     empty: '<a href="#link#" class="#class#">Add related publications</a>'
   creator:
@@ -168,9 +170,11 @@ input:
     affiliation: 'Affiliation'
     roles: 'Roles'
     add: 'Add another creator'
+    remove: 'Remove creator'
     credit:
-      label: 'Creator role'
+      label: 'Creator roles'
       add: 'Add another role'
+      remove: 'Remove role'
       choices:
         placeholder: 'Please select a role'
         conceptualization: 'Conceptualization'
@@ -357,8 +361,9 @@ input:
 
 link:
   user:
-    logout: 'Logout'
-    login: 'Login'
+    logout: 'Log out #userEmail#'
+    logout-short: 'Log out'
+    login: 'Log in'
     profile: 'User Profile'
   edit:
     codebook: 'Edit codebook'
@@ -402,7 +407,7 @@ codebook:
   matrix:
     previous: 'Previous page'
     next: 'Next page'
-
+    items: 'items per page'
 
 error:
   dataset:
@@ -417,3 +422,13 @@ error:
       tempFile: 'Internal Server Error: Unable to create temporary DRO file on filesystem, please contact the support.'
   experiment:
     empty: 'Internal server error: The study you are looking for is not available!'
+
+product:
+  name: 'DataWiz'
+  tagline: 'Research data management made easy!'
+  contact: 'Contact'
+  poweredByLink:
+    url: 'https://leibniz-psychology.org'
+    label: 'powered by'
+    title: 'Visit Leibniz Psychology website'
+    logoAltText: 'Leibniz Psychology Logo'

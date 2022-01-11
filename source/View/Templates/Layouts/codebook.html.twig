@@ -11,9 +11,9 @@
     <link rel="preload" href="{{ asset('build/fonts/Open_Sans-normal-700.woff') }}" as="font" crossorigin="">
     <title>
         {% if block("title") is defined %}
-            {{ block("title") }} - DataWiz
+            {{ block("title") }} - {{ "product.name"|trans }}
         {% else %}
-            DataWiz - Research data management made easy!
+            {{ "product.name"|trans }} - {{ "product.tagline"|trans }}
         {% endif %}
     </title>
     {% block stylesheets %}

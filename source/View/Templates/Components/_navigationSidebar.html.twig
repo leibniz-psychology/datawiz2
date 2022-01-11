@@ -11,7 +11,7 @@
     <span class="text-zpid-purple-700 text-xl font-bold break-all mr-0.5 leading-tight">{{ experiment.settingsMetaDataGroup.shortName }}
     </span>
     <a href="{{ path('Study-settings', {uuid: experiment.id}) }}"
-       class="inline-flex items-center mt-0.5 border rounded-lg border-mono-300 bg-sky-50 hover:underline" title="Edit"
+       class="inline-flex items-center mt-0.5 border rounded-lg border-mono-300 bg-sky-50 hover:underline" title="{{ "generic.edit"|trans }}"
        {%- if needs_saving -%}@click.prevent="document.querySelector('.Button_saveAndSettings').click()"{%- endif -%}>
         {# Icon: ic:outline-edit #}
         <svg class="m-1 text-sm" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"

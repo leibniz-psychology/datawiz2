@@ -1,8 +1,8 @@
 {% if item.displayCondition %}
-{% if route is defined and route is not null %}
-{% set editUrl = path(route, {uuid: experiment.id}) %}
-{% set editUrl = editUrl ~ '/#' ~ item.dataName|trans|slug %}
-{% endif %}
+    {% if route is defined and route is not null %}
+        {% set editUrl = path(route, {uuid: experiment.id}) %}
+        {% set editUrl = editUrl ~ '/#' ~ item.dataName|trans|slug %}
+    {% endif %}
 
     <div class="mt-6">
         <h3 class="mx-6 text-lg font-semibold text-zpid-purple-700">{{ item.dataName|trans }}</h3>
@@ -13,15 +13,15 @@
                         {{ entry }}
                         {% if editUrl is defined and editUrl is not null %}
                             <a href="{{ editUrl }}"
-                                class="inline-flex items-center ml-0.5 text-sm top-px relative text-mono-400 hover:text-zpid-blue"
-                                title="{{ 'generic.edit'|trans }}">
+                               class="inline-flex items-center ml-0.5 text-sm top-px relative text-mono-400 hover:text-zpid-blue"
+                               title="{{ 'generic.edit'|trans }}">
                                 {# Icon: ic:outline-edit #}
                                 <svg class="h-full m-1" xmlns="http://www.w3.org/2000/svg"
-                                        xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
-                                        style="vertical-align: -0.125em;" width="1em" height="1em"
-                                        preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                     xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                                     style="vertical-align: -0.125em;" width="1em" height="1em"
+                                     preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                                     <path fill="none" stroke="currentColor" stroke-width="2"
-                                            d="M14 4l6 6l-6-6zm8.294 1.294c.39.39.387 1.025-.008 1.42L9 20l-7 2l2-7L17.286 1.714a1 1 0 0 1 1.42-.008l3.588 3.588zM3 19l2 2m2-4l8-8"/>
+                                          d="M14 4l6 6l-6-6zm8.294 1.294c.39.39.387 1.025-.008 1.42L9 20l-7 2l2-7L17.286 1.714a1 1 0 0 1 1.42-.008l3.588 3.588zM3 19l2 2m2-4l8-8"/>
                                 </svg>
                             </a>
                         {% endif %}

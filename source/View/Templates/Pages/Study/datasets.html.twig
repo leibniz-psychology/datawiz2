@@ -69,7 +69,13 @@
                                     </div>
                                     <button class="Modal-Button_close" @click="hide()" type="button">
                                         {# Icon: mdi:close #}
-                                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z" fill="currentColor"/></svg>
+                                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
+                                             xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                                             style="vertical-align: -0.125em;" width="1em" height="1em"
+                                             preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                            <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z"
+                                                  fill="currentColor"/>
+                                        </svg>
                                     </button>
                                 </div>
 
@@ -148,9 +154,16 @@
                     <h3 class="text-3xl font-semibold">
                         Import dataset
                     </h3>
-                    <button class="Modal-Button_close" type="button" @keydown.window.escape="$refs.cancelUpload.click()" @click="$refs.cancelUpload.click()" title="Cancel import">
+                    <button class="Modal-Button_close" type="button" @keydown.window.escape="$refs.cancelUpload.click()"
+                            @click="$refs.cancelUpload.click()" title="Cancel import">
                         {# Icon: mdi:close #}
-                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z" fill="currentColor"/></svg>
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
+                             xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                             style="vertical-align: -0.125em;" width="1em" height="1em"
+                             preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                            <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z"
+                                  fill="currentColor"/>
+                        </svg>
                     </button>
                 </div>
                 <!--body-->
@@ -182,8 +195,9 @@
                         <div x-data="{ useHeader: true}" class="mt-0.5">
                             <div class="flex items-center">
                                 <input type="checkbox" id="dataset-import-header-rows" name="dataset-import-header-rows"
-                                    value="1" x-model="useHeader" class="w-4 h-4 mr-2">
-                                <label class="block" for="dataset-import-header-rows">First line is the column header</label>
+                                       value="1" x-model="useHeader" class="w-4 h-4 mr-2">
+                                <label class="block" for="dataset-import-header-rows">First line is the column
+                                    header</label>
                             </div>
                         </div>
                     </form>
@@ -221,7 +235,8 @@
                                     <template x-for="records in $store.import.codebook.records">
                                         <tr class="even:bg-gray-50 TableRow">
                                             <template x-for="record in Object.values(records).slice(0,20)">
-                                                <td class="py-2 pl-3 pr-1 text-sm text-gray-700 truncate border border-gray-100 max-w-[20rem]" x-text="record">
+                                                <td class="py-2 pl-3 pr-1 text-sm text-gray-700 truncate border border-gray-100 max-w-[20rem]"
+                                                    x-text="record">
                                                 </td>
                                             </template>
                                         </tr>

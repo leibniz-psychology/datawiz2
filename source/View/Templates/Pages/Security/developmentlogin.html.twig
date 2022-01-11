@@ -14,7 +14,8 @@
 
                 {% if app.user %}
                     <div class="mb-3">
-                        You are logged in as {{ app.user.username }}, <a href="{{ path('Study-overview') }}">Overview</a>
+                        You are logged in as {{ app.user.username }}, <a
+                                href="{{ path('Study-overview') }}">Overview</a>
                     </div>
                 {% endif %}
 
@@ -22,17 +23,18 @@
                     Please sign in
                 </h2>
                 <label for="inputEmail" class="block mt-4">Email address</label>
-                <input type="text" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="" required autofocus>
+                <input type="text" value="{{ last_username }}" name="email" id="inputEmail" class="form-control"
+                       placeholder="" required autofocus>
                 <label for="inputPassword" class="block">Password</label>
                 <input type="password"
-                    name="password"
-                    id="inputPassword"
-                    class="form-control"
-                    placeholder=""
-                    required />
+                       name="password"
+                       id="inputPassword"
+                       class="form-control"
+                       placeholder=""
+                       required/>
                 <input type="hidden"
-                    name="_csrf_token"
-                    value="{{ csrf_token("authenticate") }}" />
+                       name="_csrf_token"
+                       value="{{ csrf_token("authenticate") }}"/>
 
                 <button class="block mt-2" type="submit">Sign in</button>
             </form>

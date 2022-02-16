@@ -16,7 +16,7 @@ FROM php:7.4-fpm-alpine
 ENV APP_ENV=dev
 
 RUN apk add --update --no-cache --virtual .build-dependencies $PHPIZE_DEPS \
-    && apk add --update --no-cache php-intl icu-dev zlib-dev zip libzip-dev python make g++ \
+    && apk add --update --no-cache php-intl icu-dev zlib-dev zip libzip-dev \
     && pecl install apcu \
     && pecl install xdebug \
     && apk del .build-dependencies \

@@ -5,7 +5,7 @@ FROM php:7.4-fpm-alpine
 ENV APP_ENV=dev
 
 RUN apk add --update --no-cache --virtual .build-dependencies $PHPIZE_DEPS \
-    && apk add --update --no-cache php-intl icu-dev zlib-dev zip libzip-dev \
+    && apk add --update --no-cache php-intl icu-dev zlib-dev zip libzip-dev python make g++ \
     && apk add yarn\
     && pecl install apcu \
     && pecl install xdebug \
@@ -13,6 +13,10 @@ RUN apk add --update --no-cache --virtual .build-dependencies $PHPIZE_DEPS \
 	&& docker-php-ext-configure intl \
 	&& docker-php-ext-install intl mysqli pdo pdo_mysql opcache zip \
 	&& docker-php-ext-enable apcu intl mysqli pdo pdo_mysql opcache xdebug zip
+
+RUN apk add --no-cache --virtual .gyp python make g++ \
+    && yarn global add node-gyp \
+    && apk del .gyp
 
 COPY . /build
 COPY --from=composer /usr/bin/composer /usr/bin/composer
@@ -24,7 +28,6 @@ RUN cd /build \
     && mkdir -p var/flysystem \
     && mkdir -p var/log \
 	&& composer install\
-    && yarn global add node-gyp \
 	&& yarn install \
  	&& yarn dev \
     && chown -R www-data:www-data /build

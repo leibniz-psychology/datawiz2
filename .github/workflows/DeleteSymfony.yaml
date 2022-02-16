@@ -1,0 +1,67 @@
+# Beispiel code für dev-k8s
+
+on:
+  # Ermöglicht das manuelle Auslösen der git action
+  workflow_dispatch:
+
+jobs:
+  delete-on-aks:
+    name: Delete Symfony App from AKS with Branch ${{ github.ref_name }}
+    #    needs: build-image
+    runs-on: self-hosted
+    permissions:
+      contents: read
+    env:
+      GH_BRANCH: ${{ github.ref_name }}
+      GH_SHA: ${{ github.sha }}
+      NAMESPACE: ${{ github.ref_name }} #works with branch development and staging, for main branch and prod development it doesn't work
+      APP: datawiz2
+      REGISTRY: ${{ secrets.ACR_NAME }}.azurecr.io
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - name: Construct image ref
+        run: echo "IMAGE_REF=${REGISTRY}/${GITHUB_REPOSITORY,,}/${APP}:$(cat ${APP}/VERSION)" >> $GITHUB_ENV
+
+      # this step is required because of AAD and Azure RBAC integration
+      - name: Set up kubelogin for non-interactive login
+        run: |
+          curl -LO https://github.com/Azure/kubelogin/releases/download/v0.0.9/kubelogin-linux-amd64.zip
+          sudo unzip -j kubelogin-linux-amd64.zip -d /usr/local/bin
+          rm -f kubelogin-linux-amd64.zip
+          kubelogin --version
+
+      - name: Install Azure cli
+        run: |
+          sudo apt-get install ca-certificates curl apt-transport-https lsb-release gnupg
+          curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
+          AZ_REPO=$(lsb_release -cs)
+          echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+          sudo apt-get update
+          sudo apt-get install azure-cli
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: "${{ secrets.AZURE_CREDENTIALS }}"
+
+      - name: Install kubectl
+        run: |
+          sudo apt-get update && sudo apt-get install -y apt-transport-https
+          curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+          echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+          sudo apt-get update
+          sudo apt-get install -y kubectl
+
+      - name: Set KUBECONFIG env variable
+        run: echo "KUBECONFIG=${RUNNER_TEMP}/kubeconfig-$(date +%s)" >> $GITHUB_ENV
+
+      - name: Set AKS cluster context
+        run: |
+          az aks get-credentials -n ${{ secrets.CLUSTER_RESOURCE_GROUP_NAME }} -g ${{ secrets.CLUSTER_NAME }} -f ${KUBECONFIG}
+          kubelogin convert-kubeconfig -l azurecli  # this is required for me because of AAD and Azure RBAC integration
+
+      - name: Delete on AKS
+        run: |
+          kubectl delete -f .github/workflows/manifests/${{ env.GH_BRANCH }}/symfony.yaml --namespace=${{ env.NAMESPACE }}

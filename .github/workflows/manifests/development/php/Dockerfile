@@ -6,6 +6,7 @@ COPY . /build
 RUN apk add --no-cache --virtual .gyp python make g++ \
     && yarn global add node-gyp \
     && apk del .gyp \
+    && cd /build \
     && yarn install
 
 
@@ -24,7 +25,7 @@ RUN apk add --update --no-cache --virtual .build-dependencies $PHPIZE_DEPS \
 	&& docker-php-ext-enable apcu intl mysqli pdo pdo_mysql opcache xdebug zip
 
 
-COPY --from=builder node_modules /build/node_modules
+COPY --from=builder /build/node_modules /build/node_modules
 COPY . /build
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY .github/workflows/manifests/development/php/conf/*.ini /usr/local/etc/php/conf.d/

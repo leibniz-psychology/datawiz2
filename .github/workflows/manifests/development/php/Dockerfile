@@ -3,9 +3,9 @@ FROM composer:latest AS composer
 
 FROM node:alpine AS builder
 COPY . /build
-RUN apk add --no-cache --virtual .gyp python3 make g++ \
+RUN apk add --update python3 make g++ \
+    && rm -rf /var/cache/apk/* \
     && yarn global add node-gyp \
-    && apk del .gyp \
     && cd /build \
     && yarn install \
     && yarn dev

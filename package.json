@@ -2,10 +2,10 @@
   "devDependencies": {
     "@a2lix/symfony-collection": "^0.4.0",
     "@alpine-collective/toolkit-scroll": "^1.0.0",
-    "@alpinejs/trap": "^3.5.1",
+    "@alpinejs/trap": "3.7.1",
     "@ryangjchandler/alpine-tooltip": "^0.4.0",
     "@symfony/webpack-encore": "^1.6.1",
-    "alpinejs": "^3.5.1",
+    "alpinejs": "3.7.1",
     "autoprefixer": "^10.4.0",
     "axios": "^0.24.0",
     "core-js": "^3.19.1",

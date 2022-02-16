@@ -7,14 +7,14 @@
 {% set isStudyDescriptionSubItem = false %}
 
 {% block title %}
-    Export
+    {{ "title.export.export"|trans }}
 {% endblock %}
 {% block content %}
     <h2 class="MetaDataGroup-Title">
         {{ "title.export.title"|trans }}
     </h2>
     <p class="mx-6 mt-8 max-w-prose">
-        Export your data documentation in one ZIP file.
+        {{ "title.export.description"|trans }}
     </p>
     {# TODO: export error includes a messages.xx.yaml string if an error occurred during export #}
     {# {{ dump(export_error) }} #}

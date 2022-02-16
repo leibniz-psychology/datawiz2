@@ -14,9 +14,9 @@
     <link rel="preload" href="{{ asset('build/fonts/Open_Sans-normal-700.woff') }}" as="font" crossorigin="">
     <title>
         {% if block("title") is defined %}
-            {{ block("title") }} - DataWiz
+            {{ block("title") }} - {{ "product.name"|trans }}
         {% else %}
-            DataWiz - Research data management made easy!
+            {{ "product.name"|trans }} - {{ "product.tagline"|trans }}
         {% endif %}
     </title>
     {% block stylesheets %}
@@ -25,7 +25,6 @@
     {% block javascripts %}
         {{ encore_entry_script_tags("app") }}
     {% endblock %}
-    <script src="https://code.iconify.design/2/2.0.3/iconify.min.js" defer></script>
 </head>
 <body>
 
@@ -34,7 +33,7 @@
        title="Visit Leibniz Psychology website"><img
                 src="{{ asset('build/images/leibniz_psychology.svg') }}" alt="Leibniz Psychology" width="257"
                 height="56"></a>
-    <a href="#" class="text-lg">Contact</a>
+    <a href="#" class="text-lg">{{ "product.contact"|trans }}</a>
 </div>
 {% block header %}
     {# TODO: check gradient colors #}
@@ -48,7 +47,7 @@
                                 class="self-start px-1.5 font-sans text-sm italic font-medium bg-white border rounded-md text-zpid-blue-800">beta</span>
                     </a>
                 </span>
-                <span class="mb-2 text-lg text-white shadow ml-[11.5rem]">Research data management made easy!</span>
+                <span class="mb-2 text-lg text-white shadow ml-[11.5rem]">{{ "product.tagline"|trans }}</span>
 
             </div>
             <div class="flex items-center h-12 px-12 bg-white border-l border-r border-mono-500">

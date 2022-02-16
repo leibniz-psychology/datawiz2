@@ -1,15 +1,18 @@
 {% extends "Layouts/base.html.twig" %}
 
 {% block title %}
-    Dashboard - DataWiz
+    {{ "title.dashboard.title"|trans }}
 {% endblock %}
+
+{% macro relatedCorporateLink() %}
+    <a href="https://leibniz-psychology.org" class="underline no-linkout" target="_blank"
+       title="{{ "title.dashboard.related.title-linktitle"|trans }}">{{ "title.dashboard.related.title-link"|trans }}
+    </a>
+{% endmacro %}
 
 {% block body %}
     <main class="max-w-screen-xl mx-auto mt-12 min-h-[calc(100%-15.5rem)] mb-12 flex flex-col">
         <h2 class="flex items-center mx-8 text-3xl font-bold text-zpid-purple-700">
-            {# <span class="inline w-8 h-8 mr-2 iconify iconify-inline"
-                data-icon="mdi:view-grid">
-            </span> #}
             {{ "title.dashboard.title"|trans }}
         </h2>
 
@@ -44,11 +47,7 @@
 
         <div class="w-full mt-auto mb-12">
             <h2 class="mx-8 mt-24 text-2xl font-semibold text-zpid-purple-700">
-                {{ "title.dashboard.related.title-start"|trans }}
-                <a href="https://leibniz-psychology.org" class="underline no-linkout" target="_blank"
-                   title="{{ "title.dashboard.related.title-linktitle"|trans }}">{{ "title.dashboard.related.title-link"|trans }}
-                </a>
-                {{ "title.dashboard.related.title-end"|trans }}
+                {{ "title.dashboard.related.title"|trans({'#relatedCorporateLink#':_self.relatedCorporateLink()})|raw }}
             </h2>
             <div class="flex mx-8 gap-x-4">
                 <div class="w-1/2 px-2 pt-1 pb-2 mt-3 rounded bg-mono-100">

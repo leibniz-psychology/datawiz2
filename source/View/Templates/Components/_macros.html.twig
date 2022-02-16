@@ -52,7 +52,7 @@
         <template x-for="(item, index) in {{ options.labels }}" :key="index">
             <div class="mt-0.5" x-ref="inputContainer">
                 <div class="inline-flex items-center w-full">
-                    <input class="w-[50%] p-1 bg-white border placeholder-mono-500" rows="1"
+                    <input class="w-[50%] p-1 bg-white border placeholder-mono-500 border-gray-500 ring-inset" rows="1"
                            :class="`CodeInput_${type}_${index}`"
                            autocomplete="off" x-on:keydown.enter.prevent="
                             if (index === {{ options.labels }}.length - 1 && (type === 'missings' || document.querySelector(`.ValueInput_${type}_${index}`).value !== '') && $el.value !== '') {
@@ -61,7 +61,7 @@
                             }"
                            x-model="item.name">
                     <span class="mx-1">=</span>
-                    <input class="w-full p-1 bg-white border placeholder-mono-500" rows="1"
+                    <input class="w-full p-1 bg-white border border-gray-500 placeholder-mono-500 ring-inset" rows="1"
                            :class="`ValueInput_${type}_${index}`"
                            autocomplete="off" placeholder="{{ options.placeHolder }}"
                            x-on:keydown.enter.prevent="
@@ -73,7 +73,15 @@
                     <button title="{{ 'generic.remove'|trans }}"
                             class="!rounded-l-none !py-1.5 Button Button_tertiary Button_tertiary_danger Button_fieldSize"
                             @click="if ({{ options.labels }}.length > 1) {{ options.labels }}.splice(index, 1); else if ({{ options.labels }}.length === 1) { {{ options.labels }}[index] = {name: '', label: ''} };">
-                        <span class="iconify-inline" data-icon="mi:delete"></span>
+                        {# Icon: mi:delete #}
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                             aria-hidden="true" role="img" style="vertical-align: -0.125em;" width="1em" height="1em"
+                             preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                            <g fill="none">
+                                <path d="M7 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2h4a1 1 0 1 1 0 2h-1.069l-.867 12.142A2 2 0 0 1 17.069 22H6.93a2 2 0 0 1-1.995-1.858L4.07 8H3a1 1 0 0 1 0-2h4V4zm2 2h6V4H9v2zM6.074 8l.857 12H17.07l.857-12H6.074zM10 10a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1zm4 0a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1z"
+                                      fill="currentColor"/>
+                            </g>
+                        </svg>
                     </button>
                 </div>
             </div>
@@ -99,11 +107,11 @@
     <div class="relative ml-1" x-data="copyValues()">
         <button @click="showCopyTo = !showCopyTo"
                 class="flex items-center justify-center px-1 ml-1 bg-white border rounded-md hover:bg-mono-100">{{ "codebook.var-props.copy.to"|trans }}
+            {# Icon: carbon:caret-down #}
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
-                 focusable="false" width="1em" height="1em"
-                 style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);"
-                 preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                <path d="M5 8l7 8l7-8z" fill="#626262" fill-rule="evenodd"/>
+                 role="img" style="vertical-align: -0.125em;" width="1em" height="1em"
+                 preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
+                <path d="M24 12l-8 10l-8-10z" fill="currentColor"/>
             </svg>
         </button>
         <div class="absolute right-0 z-10 p-1 border shadow-xl bg-mono-300 w-36" x-show="showCopyTo" x-cloak
@@ -190,7 +198,12 @@
         <button class="inline-flex items-center Button Button_primary Button_primary_act Button_standalone"
                 type="button">
             {# Icon: ic:outline-open-in-browser #}
-            <span class="w-5 h-5 mr-2 iconify-inline" data-icon="ic:outline-drive-folder-upload"></span>
+            <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                 aria-hidden="true" role="img" style="vertical-align: -0.125em;" width="1em" height="1em"
+                 preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V6h5.17l2 2H20v10zM9.41 14.42L11 12.84V17h2v-4.16l1.59 1.59L16 13.01L12.01 9L8 13.01l1.41 1.41z"
+                      fill="currentColor"/>
+            </svg>
             {{ "title.dataset.upload.button"|trans }}
         </button>
         <span class="block mt-3">{{ "title.dataset.upload.dragDrop"|trans }}</span>

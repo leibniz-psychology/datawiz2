@@ -1,6 +1,9 @@
 <footer class="flex items-center justify-center h-24 bg-zpid-purple-700 col-span-full">
-    <a href="https://leibniz-psychology.org" class="text-sm text-white hover:underline no-linkout"
-       title="Visit Leibniz Psychology website" target="_blank" rel="noreferrer">powered by<img
-                src="{{ asset('build/images/leibniz_psychology_small.svg') }}" alt="Logo of Leibniz Psychology"
+    <a href="{{ "product.poweredByLink.url"|trans }}"
+       class="flex items-center text-sm text-white hover:underline no-linkout"
+       title="{{ "product.poweredByLink.title"|trans }}" target="_blank"
+       rel="noreferrer">{{ "product.poweredByLink.label"|trans }}<img
+                src="{{ asset('build/images/leibniz_psychology_small.svg') }}"
+                alt="{{ "product.poweredByLink.logoAltText"|trans }}"
                 class="inline-block h-6 ml-2"></a>
 </footer>

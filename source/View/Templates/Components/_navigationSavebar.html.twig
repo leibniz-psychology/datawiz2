@@ -8,12 +8,9 @@
 
 <div class="WizNavBar">
     {% if options.prevUrl is defined and options.prevUrl is not null %}
-        <a class="flex items-center self-center underline justify-self-start Button Button_tertiary Button_tertiary_go Button_standalone"
+        <a class="flex items-center self-center underline justify-self-start Button Button_tertiary Button_tertiary_go Button_standalone MetaData-SubmitButton_previous"
            href="{{ options.prevUrl }}">
-            <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" class="arrow-left w-4 h-4 mr-1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-            </svg>{{ options.prevTitle }}
+            {{ options.prevTitle }}
         </a>
     {% elseif options.prevTitle is defined and options.prevTitle is not null %}
         {{ form_widget(form.saveAndPrevious, {
@@ -34,13 +31,9 @@
     {% endif %}
 
     {% if options.nextUrl is defined and options.nextUrl is not null %}
-        <a class="flex items-center self-center underline justify-self-end Button Button_tertiary Button_tertiary_go Button_standalone"
+        <a class="flex items-center self-center underline justify-self-end Button Button_tertiary Button_tertiary_go Button_standalone MetaData-SubmitButton_next"
            href="{{ options.nextUrl }}" role="button">
             {{ options.nextTitle }}
-            <svg fill="none" viewbox="0 0 24 24" stroke="currentColor" class="arrow-right w-4 h-4 ml-1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-            </svg>
         </a>
     {% elseif options.nextTitle is defined and options.nextTitle is not null %}
         {{ form_widget(form.saveAndNext, {

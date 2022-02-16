@@ -3,10 +3,13 @@
         <a href="{{ path("dashboard") }}"
            class="flex items-center ring-inset px-3 pt-1 h-full text-base border-b-4 border-transparent hover:border-zpid-blue
             {{- app.request.pathinfo == path("dashboard") ? ' border-zpid-blue font-semibold' -}}">
-            <span class="iconify iconify--mdi mr-0.5 h-4 w-4 self-center"
-                  data-icon="mdi:view-grid">
-
-            </span>
+            {# Icon: mdi:view-grid #}
+            <svg class="mr-0.5 h-4 w-4 self-center" xmlns="http://www.w3.org/2000/svg"
+                 xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                 style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet"
+                 viewBox="0 0 24 24">
+                <path d="M3 11h8V3H3m0 18h8v-8H3m10 8h8v-8h-8m0-10v8h8V3" fill="currentColor"/>
+            </svg>
             {{ "title.dashboard.title"|trans }}
         </a>
 

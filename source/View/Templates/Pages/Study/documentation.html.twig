@@ -19,7 +19,7 @@
 
     <fieldset>
         <div class="MetaData-Title">
-            <legend class="MetaData-Legend" id="{{ 'input.title.legend'|trans }}">
+            <legend class="MetaData-Legend" id="{{ 'input.title.legend'|trans|slug }}">
                 {{ "input.title.legend"|trans }}
             </legend>
             {{ helpButton("title") }}
@@ -33,7 +33,7 @@
 
     <fieldset class="mt-8">
         <div class="MetaData-Title">
-            <legend class="MetaData-Legend">
+            <legend class="MetaData-Legend" id="{{ 'input.description.legend'|trans|slug }}">
                 {{ "input.description.legend"|trans }}
             </legend>
             {{ helpButton("description") }}
@@ -47,7 +47,7 @@
 
     <fieldset class="mt-8">
         <div class="MetaData-Title">
-            <legend class="MetaData-Legend" id="{{ 'input.relatedPubs.legend'|trans }}">
+            <legend class="MetaData-Legend" id="{{ 'input.relatedPubs.legend'|trans|slug }}">
                 {{ "input.relatedPubs.legend"|trans }}
             </legend>
             {{ helpButton("related_publications") }}
@@ -63,7 +63,7 @@
 
     <fieldset class="mt-8">
         <div class="MetaData-Title">
-            <legend class="MetaData-Legend">
+            <legend class="MetaData-Legend" id="{{ 'input.creator.legend'|trans|slug }}">
                 {{ "input.creator.legend"|trans }}
             </legend>
             {{ helpButton("creator") }}
@@ -73,7 +73,7 @@
                 collection: form.creators,
                 id: 'creators-fields-list',
                 addTxt: 'input.creator.add',
-                removeTxt: 'generic.remove',
+                removeTxt: 'input.creator.remove',
             } %}
     </fieldset>
 

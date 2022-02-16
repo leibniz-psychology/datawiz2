@@ -1,5 +1,14 @@
 FROM composer:latest AS composer
 
+
+FROM node:alpine AS builder
+COPY . /build
+RUN apk add --no-cache --virtual .gyp python make g++ \
+    && yarn global add node-gyp \
+    && apk del .gyp \
+    && yarn install
+
+
 FROM php:7.4-fpm-alpine
 
 ENV APP_ENV=dev
@@ -14,10 +23,8 @@ RUN apk add --update --no-cache --virtual .build-dependencies $PHPIZE_DEPS \
 	&& docker-php-ext-install intl mysqli pdo pdo_mysql opcache zip \
 	&& docker-php-ext-enable apcu intl mysqli pdo pdo_mysql opcache xdebug zip
 
-RUN apk add --no-cache --virtual .gyp python make g++ \
-    && yarn global add node-gyp \
-    && apk del .gyp
 
+COPY --from=builder node_modules /build/node_modules
 COPY . /build
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY .github/workflows/manifests/development/php/conf/*.ini /usr/local/etc/php/conf.d/
@@ -28,7 +35,6 @@ RUN cd /build \
     && mkdir -p var/flysystem \
     && mkdir -p var/log \
 	&& composer install\
-	&& yarn install \
  	&& yarn dev \
     && chown -R www-data:www-data /build
 

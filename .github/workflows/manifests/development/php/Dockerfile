@@ -24,6 +24,7 @@ RUN cd /build \
     && mkdir -p var/flysystem \
     && mkdir -p var/log \
 	&& composer install\
+    && npm install -g node-gyp \
 	&& yarn install \
  	&& yarn dev \
     && chown -R www-data:www-data /build

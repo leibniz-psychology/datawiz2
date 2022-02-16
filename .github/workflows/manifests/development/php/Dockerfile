@@ -32,7 +32,7 @@ COPY .github/workflows/manifests/development/php/conf/www.* /usr/local/etc/php-f
 
 RUN cd /build \
     && mkdir -p var/cache \
-    && mkdir -p var/flysystem \
+    && mkdir -p var/uploads \
     && mkdir -p var/log \
 	&& composer install\
     && chown -R www-data:www-data /build

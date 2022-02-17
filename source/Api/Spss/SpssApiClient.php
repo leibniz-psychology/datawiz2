@@ -14,7 +14,7 @@ use Symfony\Component\Mime\Part\DataPart;
 class SpssApiClient
 {
 
-    const SPSS_API_URI = "http://datawiz.leibniz-psychology.org:8081/api/spss/tojson";
+    private string $spss_uri;
 
     private ApiClientService $clientService;
     private LoggerInterface $logger;
@@ -26,11 +26,12 @@ class SpssApiClient
      * @param ApiClientService $clientService
      * @param LoggerInterface $logger
      */
-    public function __construct(FilesystemInterface $assetsFilesystem, ApiClientService $clientService, LoggerInterface $logger)
+    public function __construct(FilesystemInterface $assetsFilesystem, ApiClientService $clientService, LoggerInterface $logger, string $spss_uri)
     {
         $this->clientService = $clientService;
         $this->logger = $logger;
         $this->filesystem = $assetsFilesystem;
+        $this->spss_uri = $spss_uri;
     }
 
 
@@ -41,7 +42,7 @@ class SpssApiClient
             try {
                 $fileContent = $this->filesystem->read($dataset->getStorageName());
                 $result = $this->clientService->POST(
-                    self::SPSS_API_URI,
+                    $this->spss_uri.'/spss/tojson',
                     [
                         'file' => new DataPart($fileContent, $dataset->getStorageName(), $dataset->getOriginalMimetype()),
                     ]

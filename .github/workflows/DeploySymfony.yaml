@@ -49,6 +49,11 @@ jobs:
         run: |
           az acr login --name ${{ secrets.ACR_NAME }}
 
+      - name: Create SPSS-API image build and push to a Azure Container Registry (ACR)
+        run: |
+          docker build . -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_spss:latest-dev  --file .github/workflows/manifests/${{ env.GH_BRANCH }}/spss_api/Dockerfile
+          docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_spss:latest-dev
+
       - name: Create PHP-FPM image build and push to a Azure Container Registry (ACR)
         run: |
           docker build . -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_php_fpm:latest-dev  --file .github/workflows/manifests/${{ env.GH_BRANCH }}/php/Dockerfile

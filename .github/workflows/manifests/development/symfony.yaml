@@ -143,7 +143,7 @@ spec:
               cpu: "1"
           imagePullPolicy: Always
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: datawiz2
@@ -163,10 +163,13 @@ spec:
     - host: datawiz2.dev.zpid.org
       http:
         paths:
-          - path:
+          - path: /
             backend:
-              serviceName: datawiz2
-              servicePort: 80
+              service:
+                name: datawiz2
+                port:
+                  number: 80
+            pathType: Exact
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy

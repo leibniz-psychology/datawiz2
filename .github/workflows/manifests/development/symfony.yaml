@@ -107,6 +107,26 @@ spec:
               value: mysql://root:devzpid@datawiz2-mysql:3306/app?serverVersion=mariadb-10.7.1&charset=utf8
             - name: SPSS_API_URI
               value: http://127.0.0.1:8081/api
+            - name: OAUTH_KEYCLOAK_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: datawiz2-keycloak-credentials
+                  key: client
+            - name: OAUTH_KEYCLOAK_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: datawiz2-keycloak-credentials
+                  key: secret
+            - name: OAUTH_KEYCLOAK_AUTH_SERVER_URL
+              valueFrom:
+                secretKeyRef:
+                  name: datawiz2-keycloak-credentials
+                  key: server
+            - name: OAUTH_KEYCLOAK_REALM
+              valueFrom:
+                secretKeyRef:
+                  name: datawiz2-keycloak-credentials
+                  key: realm
           imagePullPolicy: Always
           volumeMounts:
             - name: shared-files

@@ -7,11 +7,11 @@ module.exports = {
     mode: "layers",
     layers: ["components", "utilities"],
     content: [
-      "./source/View/Templates/**/*.html.twig",
-      "./source/Questionnaire/Forms/**/*.php",
-      "./source/View/Assets/Scripts/**/*.js",
-      "./source/View/Templates/Help/**/*.md",
-      "./source/View/Templates/Pages/Landing/**/*.md",
+      "./src/View/Templates/**/*.html.twig",
+      "./src/Questionnaire/Forms/**/*.php",
+      "./src/View/Assets/Scripts/**/*.js",
+      "./src/View/Templates/Help/**/*.md",
+      "./src/View/Templates/Pages/Landing/**/*.md",
     ],
   },
   theme: {

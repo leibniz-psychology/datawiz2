@@ -24,10 +24,10 @@ Encore
    * Each entry will result in one JavaScript file (e.g. app.Scripts)
    * and one CSS file (e.g. app.Style) if your JavaScript imports CSS.
    */
-  .addEntry("app", "./source/View/Assets/Scripts/app.js")
-  .addEntry("codebook", "./source/View/Assets/Scripts/app-codebook.js")
-  .addEntry("landing", "./source/View/Assets/Scripts/app-landing.js")
-  //.addEntry('page2', './source/View/Assets/Scripts/page2.Scripts')
+  .addEntry("app", "./src/View/Assets/Scripts/app.js")
+  .addEntry("codebook", "./src/View/Assets/Scripts/app-codebook.js")
+  .addEntry("landing", "./src/View/Assets/Scripts/app-landing.js")
+  //.addEntry('page2', './src/View/Assets/Scripts/page2.Scripts')
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()

@@ -3,6 +3,7 @@
 namespace App\Domain\Model\Administration;
 
 use App\Domain\Access\Administration\DataWizUserRepository;
+use App\Domain\Definition\UserRoles;
 use App\Security\Authorization\Authorizable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -14,8 +15,6 @@ use Symfony\Component\Uid\Uuid;
  */
 class DataWizUser implements UserInterface
 {
-    use Authorizable;
-
     /**
      * @ORM\Id()
      * @ORM\Column(type="uuid")
@@ -43,11 +42,6 @@ class DataWizUser implements UserInterface
     private ?string $lastname = null;
 
 
-    public function __construct(bool $admin = false)
-    {
-        $this->initializeRoles($admin);
-    }
-
     /**
      * @return Uuid
      */
@@ -64,6 +58,25 @@ class DataWizUser implements UserInterface
         $this->id = $id;
     }
 
+    /**
+     * @return array
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        $roles[] = UserRoles::USER;
+
+        return array_unique($roles);
+    }
+
+    /**
+     * @param array $roles
+     */
+    public function setRoles(array $roles): void
+    {
+        $this->roles = $roles;
+    }
+
 
     public function getPassword()
     {
@@ -75,7 +88,7 @@ class DataWizUser implements UserInterface
         return null;
     }
 
-    public function getUsername()
+    public function getUsername(): ?string
     {
         return $this->email;
     }

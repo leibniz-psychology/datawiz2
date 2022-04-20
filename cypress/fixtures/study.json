@@ -4,7 +4,10 @@
 	"description": "[Dieses Projekt ist in seinem Aufbau und Inhalt angelehnt an die LOGIK Studie, der Münchner Längsschnittstudie zur Entwicklung individueller Kompetenzen  (Weinert , 1984). Inhalte wurden angepasst um diesem Rahmen zu entsprechen, Inhalte wurden gekürzt und vereinfacht, Informationen zum Datenmanagement sind weitestgehend frei erfunden.]\n\nZiel der Längsschnittstudie ist es, die Stabilität individueller Unterschiede, sowie mögliche Entwicklungsmuster zu untersuchen. Insgesamt sollen verschiedene Entwicklungsbereiche untersucht werden, darunter Intelligenz, Psychomotorik, wissenschaftliches Denken, Gedächtnis, moralische Motivation, soziale Kompetenz, Selbstkonzept und Selbstvertrauen, Lese- und Rechtschreibfertigkeiten und mathematische Kompetenzen. Desweiteren sollen komplexe Wechselwirkungen zwischen diesen einzelnen Entwicklungsverläufen erforscht werden. Dabei soll auch die Bedeutung des schulischen Unterrichts bezogen auf Entwicklungsunterschiede eine wichtige Forschungsfrage darstellen. Die Studie beinhaltet insgesamt vier Erhebungswellen. \n",
 	"relPub": {
 		"0": "WHO Regional Office For Europe. (2020). COVID-19 Snapshot MOnitoring (COSMO Standard): Monitoring knowledge, risk perceptions, preventive behaviours, and public trust in the current coronavirus outbreak - WHO standard protocol. PsychArchives. https://doi.org/10.23668/PSYCHARCHIVES.2782",
-		"1": "Gollwitzer, M. (2020). DFG Priority Program SPP 2317 Proposal: A meta-scientific program to analyze and optimize replicability in the behavioral, social, and cognitive sciences (META-REP). PsychArchives. https://doi.org/10.23668/PSYCHARCHIVES.3010"
+		"1": "Gollwitzer, M. (2020). DFG Priority Program SPP 2317 Proposal: A meta-scientific program to analyze and optimize replicability in the behavioral, social, and cognitive sciences (META-REP). PsychArchives. https://doi.org/10.23668/PSYCHARCHIVES.3010",
+		"2": "Gollwitzer, M. (2020). DFG Priority Program SPP 2317 Proposal: A meta-scientific program to analyze and optimize replicability in the behavioral, social, and cognitive sciences (META-REP). PsychArchives. https://doi.org/10.23668/PSYCHARCHIVES.3010",
+		"3": "Gollwitzer, M. (2020). DFG Priority Program SPP 2317 Proposal: A meta-scientific program to analyze and optimize replicability in the behavioral, social, and cognitive sciences (META-REP). PsychArchives. https://doi.org/10.23668/PSYCHARCHIVES.3010",
+		"4": "Gollwitzer, M. (2020). DFG Priority Program SPP 2317 Proposal: A meta-scientific program to analyze and optimize replicability in the behavioral, social, and cognitive sciences (META-REP). PsychArchives. https://doi.org/10.23668/PSYCHARCHIVES.3010"
 	},
 	"creator": {
 		"givenName": "Max",
@@ -23,8 +26,14 @@
 	"measure_measures_0": "Fragebogen zu soziodemografischen Merkmalen",
 	"measure_measures_1": "Fragebogen zur Erfassung ausgewählter Persönlichkeitsmerkmale",
 	"measure_measures_2": "Selbstkonzept Skalen von Harter (deutschsprachig)",
+	"measure_measures_3": "Selbstkonzept Skalen von Harter (deutschsprachig)",
+	"measure_measures_4": "Selbstkonzept Skalen von Harter (deutschsprachig)",
+	"measure_measures_5": "Selbstkonzept Skalen von Harter (deutschsprachig)",
 	"measure_apparatus_0": "Fragebogen zu soziodemografischen Merkmalen",
 	"measure_apparatus_1": "Fragebogen zur Erfassung ausgewählter Persönlichkeitsmerkmale",
-	"measure_apparatus_2": "Selbstkonzept Skalen von Harter (deutschsprachig)"
+	"measure_apparatus_2": "Selbstkonzept Skalen von Harter (deutschsprachig)",
+	"measure_apparatus_3": "Selbstkonzept Skalen von Harter (deutschsprachig)",
+	"measure_apparatus_4": "Selbstkonzept Skalen von Harter (deutschsprachig)",
+	"measure_apparatus_5": "Selbstkonzept Skalen von Harter (deutschsprachig)"
 
 }

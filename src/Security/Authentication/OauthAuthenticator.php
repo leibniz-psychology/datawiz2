@@ -3,6 +3,7 @@
 namespace App\Security\Authentication;
 
 use App\Crud\Crudable;
+use App\Domain\Definition\UserRoles;
 use App\Domain\Model\Administration\DataWizUser;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
@@ -62,6 +63,7 @@ class OauthAuthenticator extends SocialAuthenticator
             if ($user === null) {
                 $user = new DataWizUser();
                 $user->setId(new Uuid($keycloakUser->getId()));
+                $user->setRoles([UserRoles::USER]);
             }
             if (key_exists('email', $kcArray)) {
                 $user->setEmail($kcArray['email']);

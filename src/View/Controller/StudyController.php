@@ -3,6 +3,7 @@
 namespace App\View\Controller;
 
 use App\Crud\Crudable;
+use App\Domain\Definition\UserRoles;
 use App\Domain\Model\Study\CreatorMetaDataGroup;
 use App\Domain\Model\Study\Experiment;
 use App\Questionnaire\Questionnairable;
@@ -10,18 +11,16 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/studies", name="Study-")
  * @IsGranted("ROLE_USER")
- *
- * Class StudyController
- * @package App\View\Controller
  */
 class StudyController extends AbstractController
 {
@@ -58,7 +57,7 @@ class StudyController extends AbstractController
         $this->logger->debug("Enter StudyController::overviewAction");
 
         return $this->render('Pages/Study/overview.html.twig', [
-            'all_experiments' => $this->em->getRepository(Experiment::class)->findAll(),
+            'all_experiments' => $this->em->getRepository(Experiment::class)->findBy(['owner' => $this->getUser()]),
         ]);
     }
 
@@ -66,11 +65,11 @@ class StudyController extends AbstractController
      * @Route("/new", name="new")
      *
      * @param Questionnairable $questionnaire
-     * @param Crudable $crud
      * @param Request $request
      * @return Response
+     * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
-    public function newAction(Questionnairable $questionnaire, Crudable $crud, Request $request): Response
+    public function newAction(Questionnairable $questionnaire, Request $request): Response
     {
         $this->logger->debug("Enter StudyController::newAction");
         $newExperiment = Experiment::createNewExperiment($this->security->getUser());
@@ -99,17 +98,22 @@ class StudyController extends AbstractController
     public function settingsAction(string $uuid, Request $request): Response
     {
         $this->logger->debug("Enter StudyController::settingsAction with [UUID: $uuid]");
-        $entityAtChange = $this->getEntityAtChange($uuid);
-        $form = $this->questionnaire->askAndHandle($entityAtChange->getSettingsMetaDataGroup(), 'save', $request);
+        $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
+
+        if (!$this->_checkAccess($experiment)) {
+            return $this->redirectToRoute('dashboard');
+        }
+
+        $form = $this->questionnaire->askAndHandle($experiment->getSettingsMetaDataGroup(), 'save', $request);
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {
-            $this->em->persist($entityAtChange);
+            $this->em->persist($experiment);
             $this->em->flush();
         }
 
         return $this->render('Pages/Study/settings.html.twig', [
             'form' => $form->createView(),
-            'experiment' => $entityAtChange,
+            'experiment' => $experiment,
         ]);
     }
 
@@ -119,16 +123,22 @@ class StudyController extends AbstractController
      * @param string $uuid
      * @param Request $request
      * @return Response
+     * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
     public function documentationAction(string $uuid, Request $request): Response
     {
         $this->logger->debug("Enter StudyController::documentationAction with [UUID: $uuid]");
-        $entityAtChange = $this->getEntityAtChange($uuid);
-        $basicInformation = $entityAtChange->getBasicInformationMetaDataGroup();
+        $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
+
+        if (!$this->_checkAccess($experiment)) {
+            return $this->redirectToRoute('dashboard');
+        }
+
+        $basicInformation = $experiment->getBasicInformationMetaDataGroup();
         if (sizeof($basicInformation->getCreators()) == 0) {
             $basicInformation->getCreators()->add(new CreatorMetaDataGroup());
         }
-        $basicInformation->setRelatedPublications($this->prepareEmptyArray($basicInformation->getRelatedPublications()));
+        $basicInformation->setRelatedPublications($this->_prepareEmptyArray($basicInformation->getRelatedPublications()));
         $form = $this->questionnaire->askAndHandle($basicInformation, 'save', $request);
         if ($this->questionnaire->isSubmittedAndValid($form)) {
             $formData = $form->getData();
@@ -156,28 +166,10 @@ class StudyController extends AbstractController
             switch (true) {
                 case $form->get('saveAndNext')->isClicked():
                     return $this->redirectToRoute('Study-theory', ['uuid' => $uuid]);
-                case $form->get('saveAndIntroduction')->isClicked():
-                    return $this->redirectToRoute('Study-introduction', ['uuid' => $uuid]);
-                case $form->get('saveAndDocumentation')->isClicked():
-                    return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
-                case $form->get('saveAndTheory')->isClicked():
-                    return $this->redirectToRoute('Study-theory', ['uuid' => $uuid]);
-                case $form->get('saveAndMethod')->isClicked():
-                    return $this->redirectToRoute('Study-method', ['uuid' => $uuid]);
-                case $form->get('saveAndMeasure')->isClicked():
-                    return $this->redirectToRoute('Study-measure', ['uuid' => $uuid]);
-                case $form->get('saveAndSample')->isClicked():
-                    return $this->redirectToRoute('Study-sample', ['uuid' => $uuid]);
-                case $form->get('saveAndDatasets')->isClicked():
-                    return $this->redirectToRoute('Study-datasets', ['uuid' => $uuid]);
-                case $form->get('saveAndMaterials')->isClicked():
-                    return $this->redirectToRoute('Study-materials', ['uuid' => $uuid]);
-                case $form->get('saveAndReview')->isClicked():
-                    return $this->redirectToRoute('Study-review', ['uuid' => $uuid]);
-                case $form->get('saveAndExport')->isClicked():
-                    return $this->redirectToRoute('export_index', ['uuid' => $uuid]);
-                case $form->get('saveAndSettings')->isClicked():
-                    return $this->redirectToRoute('Study-settings', ['uuid' => $uuid]);
+                default:
+                    if ($response = $this->_routeButtonClicks($form, $uuid)) {
+                        return $response;
+                    }
             }
 
             return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
@@ -185,7 +177,7 @@ class StudyController extends AbstractController
 
         return $this->render('Pages/Study/documentation.html.twig', [
             'form' => $form->createView(),
-            'experiment' => $entityAtChange,
+            'experiment' => $experiment,
         ]);
     }
 
@@ -195,15 +187,21 @@ class StudyController extends AbstractController
      * @param string $uuid
      * @param Request $request
      * @return Response
+     * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
     public function theoryAction(string $uuid, Request $request): Response
     {
         $this->logger->debug("Enter StudyController::theoryAction with [UUID: $uuid]");
-        $entityAtChange = $this->getEntityAtChange($uuid);
-        $form = $this->questionnaire->askAndHandle($entityAtChange->getTheoryMetaDataGroup(), 'save', $request);
+        $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
+
+        if (!$this->_checkAccess($experiment)) {
+            return $this->redirectToRoute('dashboard');
+        }
+
+        $form = $this->questionnaire->askAndHandle($experiment->getTheoryMetaDataGroup(), 'save', $request);
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {
-            $this->em->persist($entityAtChange);
+            $this->em->persist($experiment);
             $this->em->flush();
 
             switch (true) {
@@ -211,34 +209,16 @@ class StudyController extends AbstractController
                     return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
                 case $form->get('saveAndNext')->isClicked():
                     return $this->redirectToRoute('Study-method', ['uuid' => $uuid]);
-                case $form->get('saveAndIntroduction')->isClicked():
-                    return $this->redirectToRoute('Study-introduction', ['uuid' => $uuid]);
-                case $form->get('saveAndDocumentation')->isClicked():
-                    return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
-                case $form->get('saveAndTheory')->isClicked():
-                    return $this->redirectToRoute('Study-theory', ['uuid' => $uuid]);
-                case $form->get('saveAndMethod')->isClicked():
-                    return $this->redirectToRoute('Study-method', ['uuid' => $uuid]);
-                case $form->get('saveAndMeasure')->isClicked():
-                    return $this->redirectToRoute('Study-measure', ['uuid' => $uuid]);
-                case $form->get('saveAndSample')->isClicked():
-                    return $this->redirectToRoute('Study-sample', ['uuid' => $uuid]);
-                case $form->get('saveAndDatasets')->isClicked():
-                    return $this->redirectToRoute('Study-datasets', ['uuid' => $uuid]);
-                case $form->get('saveAndMaterials')->isClicked():
-                    return $this->redirectToRoute('Study-materials', ['uuid' => $uuid]);
-                case $form->get('saveAndReview')->isClicked():
-                    return $this->redirectToRoute('Study-review', ['uuid' => $uuid]);
-                case $form->get('saveAndExport')->isClicked():
-                    return $this->redirectToRoute('export_index', ['uuid' => $uuid]);
-                case $form->get('saveAndSettings')->isClicked():
-                    return $this->redirectToRoute('Study-settings', ['uuid' => $uuid]);
+                default:
+                    if ($response = $this->_routeButtonClicks($form, $uuid)) {
+                        return $response;
+                    }
             }
         }
 
         return $this->render('Pages/Study/theory.html.twig', [
             'form' => $form->createView(),
-            'experiment' => $entityAtChange,
+            'experiment' => $experiment,
         ]);
     }
 
@@ -248,16 +228,22 @@ class StudyController extends AbstractController
      * @param string $uuid
      * @param Request $request
      * @return Response
+     * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
     public function sampleAction(string $uuid, Request $request): Response
     {
         $this->logger->debug("Enter StudyController::sampleAction with [UUID: $uuid]");
-        $entityAtChange = $this->getEntityAtChange($uuid);
-        $sampleGroup = $entityAtChange->getSampleMetaDataGroup();
-        $sampleGroup->setPopulation($this->prepareEmptyArray($sampleGroup->getPopulation()));
-        $sampleGroup->setInclusionCriteria($this->prepareEmptyArray($sampleGroup->getInclusionCriteria()));
-        $sampleGroup->setExclusionCriteria($this->prepareEmptyArray($sampleGroup->getExclusionCriteria()));
-        $form = $this->questionnaire->askAndHandle($entityAtChange->getSampleMetaDataGroup(), 'save', $request);
+        $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
+
+        if (!$this->_checkAccess($experiment)) {
+            return $this->redirectToRoute('dashboard');
+        }
+
+        $sampleGroup = $experiment->getSampleMetaDataGroup();
+        $sampleGroup->setPopulation($this->_prepareEmptyArray($sampleGroup->getPopulation()));
+        $sampleGroup->setInclusionCriteria($this->_prepareEmptyArray($sampleGroup->getInclusionCriteria()));
+        $sampleGroup->setExclusionCriteria($this->_prepareEmptyArray($sampleGroup->getExclusionCriteria()));
+        $form = $this->questionnaire->askAndHandle($experiment->getSampleMetaDataGroup(), 'save', $request);
         if ($this->questionnaire->isSubmittedAndValid($form)) {
             $formData = $form->getData();
             $formData->setPopulation(array_values($formData->getPopulation()));
@@ -269,34 +255,16 @@ class StudyController extends AbstractController
             switch (true) {
                 case $form->get('saveAndPrevious')->isClicked():
                     return $this->redirectToRoute('Study-measure', ['uuid' => $uuid]);
-                case $form->get('saveAndIntroduction')->isClicked():
-                    return $this->redirectToRoute('Study-introduction', ['uuid' => $uuid]);
-                case $form->get('saveAndDocumentation')->isClicked():
-                    return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
-                case $form->get('saveAndTheory')->isClicked():
-                    return $this->redirectToRoute('Study-theory', ['uuid' => $uuid]);
-                case $form->get('saveAndMethod')->isClicked():
-                    return $this->redirectToRoute('Study-method', ['uuid' => $uuid]);
-                case $form->get('saveAndMeasure')->isClicked():
-                    return $this->redirectToRoute('Study-measure', ['uuid' => $uuid]);
-                case $form->get('saveAndSample')->isClicked():
-                    return $this->redirectToRoute('Study-sample', ['uuid' => $uuid]);
-                case $form->get('saveAndDatasets')->isClicked():
-                    return $this->redirectToRoute('Study-datasets', ['uuid' => $uuid]);
-                case $form->get('saveAndMaterials')->isClicked():
-                    return $this->redirectToRoute('Study-materials', ['uuid' => $uuid]);
-                case $form->get('saveAndReview')->isClicked():
-                    return $this->redirectToRoute('Study-review', ['uuid' => $uuid]);
-                case $form->get('saveAndExport')->isClicked():
-                    return $this->redirectToRoute('export_index', ['uuid' => $uuid]);
-                case $form->get('saveAndSettings')->isClicked():
-                    return $this->redirectToRoute('Study-settings', ['uuid' => $uuid]);
+                default:
+                    if ($response = $this->_routeButtonClicks($form, $uuid)) {
+                        return $response;
+                    }
             }
         }
 
         return $this->render('Pages/Study/sample.html.twig', [
             'form' => $form->createView(),
-            'experiment' => $entityAtChange,
+            'experiment' => $experiment,
         ]);
     }
 
@@ -306,14 +274,20 @@ class StudyController extends AbstractController
      * @param string $uuid
      * @param Request $request
      * @return Response
+     * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
     public function measureAction(string $uuid, Request $request): Response
     {
         $this->logger->debug("Enter StudyController::measureAction with [UUID: $uuid]");
-        $entityAtChange = $this->getEntityAtChange($uuid);
-        $entityAtChange->getMeasureMetaDataGroup()->setMeasures($this->prepareEmptyArray($entityAtChange->getMeasureMetaDataGroup()->getMeasures()));
-        $entityAtChange->getMeasureMetaDataGroup()->setApparatus($this->prepareEmptyArray($entityAtChange->getMeasureMetaDataGroup()->getApparatus()));
-        $form = $this->questionnaire->askAndHandle($entityAtChange->getMeasureMetaDataGroup(), 'save', $request);
+        $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
+
+        if (!$this->_checkAccess($experiment)) {
+            return $this->redirectToRoute('dashboard');
+        }
+
+        $experiment->getMeasureMetaDataGroup()->setMeasures($this->_prepareEmptyArray($experiment->getMeasureMetaDataGroup()->getMeasures()));
+        $experiment->getMeasureMetaDataGroup()->setApparatus($this->_prepareEmptyArray($experiment->getMeasureMetaDataGroup()->getApparatus()));
+        $form = $this->questionnaire->askAndHandle($experiment->getMeasureMetaDataGroup(), 'save', $request);
         if ($this->questionnaire->isSubmittedAndValid($form)) {
             $formData = $form->getData();
             $formData->setApparatus(array_filter($formData->getApparatus()));
@@ -326,34 +300,16 @@ class StudyController extends AbstractController
                     return $this->redirectToRoute('Study-method', ['uuid' => $uuid]);
                 case $form->get('saveAndNext')->isClicked():
                     return $this->redirectToRoute('Study-sample', ['uuid' => $uuid]);
-                case $form->get('saveAndIntroduction')->isClicked():
-                    return $this->redirectToRoute('Study-introduction', ['uuid' => $uuid]);
-                case $form->get('saveAndDocumentation')->isClicked():
-                    return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
-                case $form->get('saveAndTheory')->isClicked():
-                    return $this->redirectToRoute('Study-theory', ['uuid' => $uuid]);
-                case $form->get('saveAndMethod')->isClicked():
-                    return $this->redirectToRoute('Study-method', ['uuid' => $uuid]);
-                case $form->get('saveAndMeasure')->isClicked():
-                    return $this->redirectToRoute('Study-measure', ['uuid' => $uuid]);
-                case $form->get('saveAndSample')->isClicked():
-                    return $this->redirectToRoute('Study-sample', ['uuid' => $uuid]);
-                case $form->get('saveAndDatasets')->isClicked():
-                    return $this->redirectToRoute('Study-datasets', ['uuid' => $uuid]);
-                case $form->get('saveAndMaterials')->isClicked():
-                    return $this->redirectToRoute('Study-materials', ['uuid' => $uuid]);
-                case $form->get('saveAndReview')->isClicked():
-                    return $this->redirectToRoute('Study-review', ['uuid' => $uuid]);
-                case $form->get('saveAndExport')->isClicked():
-                    return $this->redirectToRoute('export_index', ['uuid' => $uuid]);
-                case $form->get('saveAndSettings')->isClicked():
-                    return $this->redirectToRoute('Study-settings', ['uuid' => $uuid]);
+                default:
+                    if ($response = $this->_routeButtonClicks($form, $uuid)) {
+                        return $response;
+                    }
             }
         }
 
         return $this->render('Pages/Study/measure.html.twig', [
             'form' => $form->createView(),
-            'experiment' => $entityAtChange,
+            'experiment' => $experiment,
         ]);
     }
 
@@ -363,15 +319,21 @@ class StudyController extends AbstractController
      * @param string $uuid
      * @param Request $request
      * @return Response
+     * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
     public function methodAction(string $uuid, Request $request): Response
     {
         $this->logger->debug("Enter StudyController::methodAction with [UUID: $uuid]");
-        $entityAtChange = $this->getEntityAtChange($uuid);
-        $form = $this->questionnaire->askAndHandle($entityAtChange->getMethodMetaDataGroup(), 'save', $request);
+        $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
+
+        if (!$this->_checkAccess($experiment)) {
+            return $this->redirectToRoute('dashboard');
+        }
+
+        $form = $this->questionnaire->askAndHandle($experiment->getMethodMetaDataGroup(), 'save', $request);
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {
-            $this->em->persist($entityAtChange);
+            $this->em->persist($experiment);
             $this->em->flush();
 
             switch (true) {
@@ -379,34 +341,16 @@ class StudyController extends AbstractController
                     return $this->redirectToRoute('Study-theory', ['uuid' => $uuid]);
                 case $form->get('saveAndNext')->isClicked():
                     return $this->redirectToRoute('Study-measure', ['uuid' => $uuid]);
-                case $form->get('saveAndIntroduction')->isClicked():
-                    return $this->redirectToRoute('Study-introduction', ['uuid' => $uuid]);
-                case $form->get('saveAndDocumentation')->isClicked():
-                    return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
-                case $form->get('saveAndTheory')->isClicked():
-                    return $this->redirectToRoute('Study-theory', ['uuid' => $uuid]);
-                case $form->get('saveAndMethod')->isClicked():
-                    return $this->redirectToRoute('Study-method', ['uuid' => $uuid]);
-                case $form->get('saveAndMeasure')->isClicked():
-                    return $this->redirectToRoute('Study-measure', ['uuid' => $uuid]);
-                case $form->get('saveAndSample')->isClicked():
-                    return $this->redirectToRoute('Study-sample', ['uuid' => $uuid]);
-                case $form->get('saveAndDatasets')->isClicked():
-                    return $this->redirectToRoute('Study-datasets', ['uuid' => $uuid]);
-                case $form->get('saveAndMaterials')->isClicked():
-                    return $this->redirectToRoute('Study-materials', ['uuid' => $uuid]);
-                case $form->get('saveAndReview')->isClicked():
-                    return $this->redirectToRoute('Study-review', ['uuid' => $uuid]);
-                case $form->get('saveAndExport')->isClicked():
-                    return $this->redirectToRoute('export_index', ['uuid' => $uuid]);
-                case $form->get('saveAndSettings')->isClicked():
-                    return $this->redirectToRoute('Study-settings', ['uuid' => $uuid]);
+                default:
+                    if ($response = $this->_routeButtonClicks($form, $uuid)) {
+                        return $response;
+                    }
             }
         }
 
         return $this->render('Pages/Study/method.html.twig', [
             'form' => $form->createView(),
-            'experiment' => $entityAtChange,
+            'experiment' => $experiment,
         ]);
     }
 
@@ -419,10 +363,14 @@ class StudyController extends AbstractController
     public function materialsAction(string $uuid): Response
     {
         $this->logger->debug("Enter StudyController::materialsAction with [UUID: $uuid]");
-        $entityAtChange = $this->getEntityAtChange($uuid);
+        $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
+
+        if (!$this->_checkAccess($experiment)) {
+            return $this->redirectToRoute('dashboard');
+        }
 
         return $this->render('Pages/Study/materials.html.twig', [
-            'experiment' => $entityAtChange,
+            'experiment' => $experiment,
         ]);
     }
 
@@ -435,10 +383,14 @@ class StudyController extends AbstractController
     public function datasetsAction(string $uuid): Response
     {
         $this->logger->debug("Enter StudyController::datasetsAction with [UUID: $uuid]");
-        $entityAtChange = $this->getEntityAtChange($uuid);
+        $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
+
+        if (!$this->_checkAccess($experiment)) {
+            return $this->redirectToRoute('dashboard');
+        }
 
         return $this->render('Pages/Study/datasets.html.twig', [
-            'experiment' => $entityAtChange,
+            'experiment' => $experiment,
         ]);
     }
 
@@ -451,10 +403,14 @@ class StudyController extends AbstractController
     public function introductionAction(string $uuid): Response
     {
         $this->logger->debug("Enter StudyController::introductionAction with [UUID: $uuid]");
-        $entityAtChange = $this->getEntityAtChange($uuid);
+        $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
+
+        if (!$this->_checkAccess($experiment)) {
+            return $this->redirectToRoute('dashboard');
+        }
 
         return $this->render('Pages/Study/introduction.html.twig', [
-            'experiment' => $entityAtChange,
+            'experiment' => $experiment,
         ]);
     }
 
@@ -467,28 +423,70 @@ class StudyController extends AbstractController
     public function deleteAction(string $uuid): Response
     {
         $this->logger->debug("Enter StudyController::deleteAction with [UUID: $uuid]");
-        $entityAtChange = $this->getEntityAtChange($uuid);
-        $result = $this->crud->deleteStudy($entityAtChange);
+        $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
+
+        if (!$this->_checkAccess($experiment)) {
+            return $this->redirectToRoute('dashboard');
+        }
+
+        $this->crud->deleteStudy($experiment);
 
         return $this->redirectToRoute('Study-overview');
     }
 
 
-    protected function getEntityAtChange(string $uuid, string $className = Experiment::class)
-    {
-        return $this->em->getRepository($className)->find($uuid);
-    }
-
     /**
      * @param array|null $array
      * @return array|string[]
      */
-    private function prepareEmptyArray(?array $array): array
+    private function _prepareEmptyArray(?array $array): array
     {
         if (null === $array || 0 >= sizeof($array)) {
             $array = array("");
         }
 
         return $array;
+    }
+
+
+    /**
+     * @param FormInterface $form
+     * @param string $uuid
+     * @return RedirectResponse|null
+     * @noinspection PhpPossiblePolymorphicInvocationInspection
+     */
+    private function _routeButtonClicks(FormInterface $form, string $uuid): ?RedirectResponse
+    {
+        switch (true) {
+            case $form->get('saveAndIntroduction')->isClicked():
+                return $this->redirectToRoute('Study-introduction', ['uuid' => $uuid]);
+            case $form->get('saveAndDocumentation')->isClicked():
+                return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
+            case $form->get('saveAndTheory')->isClicked():
+                return $this->redirectToRoute('Study-theory', ['uuid' => $uuid]);
+            case $form->get('saveAndMethod')->isClicked():
+                return $this->redirectToRoute('Study-method', ['uuid' => $uuid]);
+            case $form->get('saveAndMeasure')->isClicked():
+                return $this->redirectToRoute('Study-measure', ['uuid' => $uuid]);
+            case $form->get('saveAndSample')->isClicked():
+                return $this->redirectToRoute('Study-sample', ['uuid' => $uuid]);
+            case $form->get('saveAndDatasets')->isClicked():
+                return $this->redirectToRoute('Study-datasets', ['uuid' => $uuid]);
+            case $form->get('saveAndMaterials')->isClicked():
+                return $this->redirectToRoute('Study-materials', ['uuid' => $uuid]);
+            case $form->get('saveAndReview')->isClicked():
+                return $this->redirectToRoute('Study-review', ['uuid' => $uuid]);
+            case $form->get('saveAndExport')->isClicked():
+                return $this->redirectToRoute('export_index', ['uuid' => $uuid]);
+            case $form->get('saveAndSettings')->isClicked():
+                return $this->redirectToRoute('Study-settings', ['uuid' => $uuid]);
+        }
+
+        return null;
+    }
+
+    private function _checkAccess(Experiment $experiment): bool
+    {
+        return $this->isGranted(UserRoles::ADMINISTRATOR) || $experiment->getOwner() === $this->getUser();
     }
 }

@@ -1,0 +1,13 @@
+{% extends "Layouts/base.html.twig" %}
+
+{% block title %}
+    {{ "title.dashboard.title"|trans }}
+{% endblock %}
+
+
+{% block body %}
+    <main class="max-w-screen-xl mx-auto mt-12 min-h-[calc(100%-15.5rem)] mb-12 flex flex-col">
+        {{ dump(studies) }}
+        {{ dump(user) }}
+    </main>
+{% endblock %}

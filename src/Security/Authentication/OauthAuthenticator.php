@@ -5,6 +5,7 @@ namespace App\Security\Authentication;
 use App\Crud\Crudable;
 use App\Domain\Definition\UserRoles;
 use App\Domain\Model\Administration\DataWizUser;
+use DateTime;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -64,6 +65,7 @@ class OauthAuthenticator extends SocialAuthenticator
                 $user = new DataWizUser();
                 $user->setId(new Uuid($keycloakUser->getId()));
                 $user->setRoles([UserRoles::USER]);
+                $user->setDateRegistered(new DateTime());
             }
             if (key_exists('email', $kcArray)) {
                 $user->setEmail($kcArray['email']);
@@ -74,6 +76,7 @@ class OauthAuthenticator extends SocialAuthenticator
             if (key_exists('family_name', $kcArray)) {
                 $user->setLastname($kcArray['family_name']);
             }
+            $user->setLastLogin(new DateTime());
             $this->crud->update($user);
         }
 

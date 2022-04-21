@@ -121,6 +121,24 @@ title:
       body: 'This action cannot be undone. This will permanently delete the #studyName#
         documentation including its study data, uploaded datasets, codebooks and materials.'
       confirm: 'I understand, delete this documentation'
+  admin:
+    dashboard:
+      title: 'Admin panel'
+      user:
+        title: 'User Administration'
+        description: 'lorem ipsum'
+        open: 'Show all user'
+        edit: 'Edit'
+        name: 'Name'
+        email: 'Email'
+        registered: 'Date registered'
+        last: 'Last seen'
+        roles: 'Roles'
+      studies:
+        title: 'Study Administration'
+        description: 'lorem ipsum'
+        open: 'Show all studies'
+
 
 generic:
   description: 'Description'
@@ -432,3 +450,8 @@ product:
     label: 'powered by'
     title: 'Visit Leibniz Psychology website'
     logoAltText: 'Leibniz Psychology Logo'
+
+roles:
+  ROLE_ADMIN: 'Admin'
+  ROLE_USER: 'User'
+  ROLE_REVIEWER: 'Reviewer'

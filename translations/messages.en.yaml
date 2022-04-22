@@ -134,6 +134,8 @@ title:
         registered: 'Date registered'
         last: 'Last seen'
         roles: 'Roles'
+        details:
+          title: 'messages'
       studies:
         title: 'Study Administration'
         description: 'lorem ipsum'
@@ -455,3 +457,7 @@ roles:
   ROLE_ADMIN: 'Admin'
   ROLE_USER: 'User'
   ROLE_REVIEWER: 'Reviewer'
+aria:
+  sort:
+    ascending: 'messages'
+    descending: 'messages'

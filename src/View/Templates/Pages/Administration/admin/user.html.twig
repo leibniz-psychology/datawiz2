@@ -10,22 +10,88 @@
         <h2 class="flex items-center mx-8 text-3xl font-bold text-zpid-purple-700">
             {{ "title.admin.dashboard.title"|trans }}
         </h2>
-
         <div class="flex mt-4">
             <div class="relative flex flex-col w-full px-8 pt-6 pb-8 ml-8 mr-8 border border-gray-300 rounded-md bg-gray-50">
                 <h3 class="text-2xl font-semibold text-zpid-purple-700">
                     {{ "title.admin.dashboard.user.title"|trans }}
                 </h3>
+                {% set sort = {'lastname': 'ASC', 'email': 'ASC', 'dateRegistered': 'ASC', 'lastLogin': 'ASC'} %}
+                {% set order = pagination.sort|split(';') %}
+                {% if order is defined and order|length > 1 %}
+                    {% if order[1] == 'ASC' %}
+                        {% set sort = sort|merge({(order[0]): 'DESC'}) %}
+                    {% endif %}
+                {% endif %}
                 <div class="flex pt-3 pb-3 border-b-2 border-gray-300 pt-8">
-                    <div class="w-1/5 font-bold">{{ "title.admin.dashboard.user.name"|trans }}/{{ "input.creator.name.family"|trans }}</div>
-                    <div class="w-1/5 font-bold">{{ "title.admin.dashboard.user.email"|trans }}</div>
-                    <div class="w-1/5 font-bold">{{ "title.admin.dashboard.user.registered"|trans }}</div>
-                    <div class="w-1/5 font-bold">{{ "title.admin.dashboard.user.last"|trans }}</div>
+                    <div class="w-1/5">
+                        <a href="{{ path('admin_dashboard_user', { q:pagination.q, page: pagination.page, limit: pagination.limit, sort: 'lastname;'~sort['lastname'] }) }}">
+                            <div class="flex">
+                                <div class="flex-shrink pr-3">
+                                    {% if sort['lastname'] == 'ASC' %}
+                                        <img src="{{ asset('sort-asc.svg') }}" alt="{{ "aria.sort.ascending"|trans }}" class="h-6">
+                                    {% else %}
+                                        <img src="{{ asset('sort-desc.svg') }}" alt="{{ "aria.sort.descending"|trans }}" class="h-6">
+                                    {% endif %}
+                                </div>
+                                <div class="flex-1 font-bold">
+                                    {{ "title.admin.dashboard.user.name"|trans }}/{{ "input.creator.name.family"|trans }}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="w-1/5 font-bold">
+                        <a href="{{ path('admin_dashboard_user', { q:pagination.q, page: pagination.page, limit: pagination.limit, sort: 'email;'~sort['email'] }) }}">
+                            <div class="flex">
+                                <div class="flex-shrink pr-3">
+                                    {% if sort['email'] == 'ASC' %}
+                                        <img src="{{ asset('sort-asc.svg') }}" alt="{{ "aria.sort.ascending"|trans }}" class="h-6">
+                                    {% else %}
+                                        <img src="{{ asset('sort-desc.svg') }}" alt="{{ "aria.sort.descending"|trans }}" class="h-6">
+                                    {% endif %}
+                                </div>
+                                <div class="flex-1 font-bold">
+                                    {{ "title.admin.dashboard.user.email"|trans }}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="w-1/5 font-bold">
+                        <a href="{{ path('admin_dashboard_user', { q:pagination.q, page: pagination.page, limit: pagination.limit, sort: 'dateRegistered;'~sort['dateRegistered'] }) }}">
+                            <div class="flex">
+                                <div class="flex-shrink pr-3">
+                                    {% if sort['dateRegistered'] == 'ASC' %}
+                                        <img src="{{ asset('sort-asc.svg') }}" alt="{{ "aria.sort.ascending"|trans }}" class="h-6">
+                                    {% else %}
+                                        <img src="{{ asset('sort-desc.svg') }}" alt="{{ "aria.sort.descending"|trans }}" class="h-6">
+                                    {% endif %}
+                                </div>
+                                <div class="flex-1 font-bold">
+                                    {{ "title.admin.dashboard.user.registered"|trans }}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="w-1/5 font-bold">
+                        <a href="{{ path('admin_dashboard_user', { q:pagination.q, page: pagination.page, limit: pagination.limit, sort: 'lastLogin;'~sort['lastLogin'] }) }}">
+                            <div class="flex">
+                                <div class="flex-shrink pr-3">
+                                    {% if sort['lastLogin'] == 'ASC' %}
+                                        <img src="{{ asset('sort-asc.svg') }}" alt="{{ "aria.sort.ascending"|trans }}" class="h-6">
+                                    {% else %}
+                                        <img src="{{ asset('sort-desc.svg') }}" alt="{{ "aria.sort.descending"|trans }}" class="h-6">
+                                    {% endif %}
+                                </div>
+                                <div class="flex-1 font-bold">
+                                    {{ "title.admin.dashboard.user.last"|trans }}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                     <div class="flex-grow font-bold">{{ "title.admin.dashboard.user.roles"|trans }}</div>
                 </div>
                 {% for u in user %}
                     <div class="flex flex-row pt-3 pb-3 border-b-2 border-gray-300">
-                        <div class="w-1/5">{{ u.firstname }}&nbsp;{{ u.lastname }}</div>
+                        <div class="w-1/5">{{ u.lastname }},&nbsp;{{ u.firstname }}</div>
                         <div class="w-1/5">{{ u.email }}</div>
                         <div class="w-1/5">{{ u.dateRegistered|date('Y-m-d H:i:s') }}</div>
                         <div class="w-1/5">{{ u.lastLogin|date('Y-m-d H:i:s') }}</div>
@@ -38,18 +104,14 @@
                         </div>
                         <div class="w-auto">
                             <a class="Button Button_primary Button_primary_go Button_standalone"
-                               href="{{ path("admin_dashboard_studies") }}" type="button">
+                               href="{{ path("admin_dashboard_user_edit", {uid: u.id}) }}" type="button">
                                 {{ "title.admin.dashboard.user.edit"|trans }}
                             </a>
                         </div>
                     </div>
                 {% endfor %}
-                {{ dump(pagination) }}
                 {% include 'Components/_pagination.html.twig' %}
             </div>
-
-
-            {# <a href="{{path('admin_dashboard_user', pagination)}}">test</a> #}
         </div>
     </main>
 {% endblock %}

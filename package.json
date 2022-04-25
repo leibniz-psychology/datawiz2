@@ -78,5 +78,9 @@
       "comment-empty-line-before": null,
       "selector-class-pattern": null
     }
+  },
+  "dependencies": {
+    "datatables.net": "^1.11.5",
+    "datatables.net-dt": "^1.11.5"
   }
 }

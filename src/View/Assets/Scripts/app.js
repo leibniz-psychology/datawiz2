@@ -18,6 +18,8 @@ import "./collection-widget";
 
 import "../Images/leibniz_psychology_small.svg";
 
+import './tables'
+
 Dropzone.options.datawizDropzone = {
   createImageThumbnails: false,
   init: function () {

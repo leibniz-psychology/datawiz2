@@ -3,10 +3,13 @@
 namespace App\View\Controller;
 
 use App\Crud\Crudable;
+use App\Domain\Definition\States;
 use App\Domain\Definition\UserRoles;
+use App\Domain\Model\Administration\DataWizUser;
 use App\Domain\Model\Study\CreatorMetaDataGroup;
 use App\Domain\Model\Study\Experiment;
 use App\Questionnaire\Questionnairable;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -72,10 +75,13 @@ class StudyController extends AbstractController
     public function newAction(Questionnairable $questionnaire, Request $request): Response
     {
         $this->logger->debug("Enter StudyController::newAction");
-        $newExperiment = Experiment::createNewExperiment($this->security->getUser());
+        $newExperiment = Experiment::createNewExperiment($this->em->getRepository(DataWizUser::class)->find($this->security->getUser()));
         $form = $questionnaire->askAndHandle($newExperiment->getSettingsMetaDataGroup(), 'create', $request);
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {
+            $newExperiment->setDateCreated(new DateTime());
+            $newExperiment->setDateSubmitted(null);
+            $newExperiment->setState(States::STATE_STUDY_NONE);
             $this->em->persist($newExperiment);
             $this->em->flush();
 

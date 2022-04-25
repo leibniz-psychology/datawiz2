@@ -18,4 +18,25 @@ class ExperimentRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Experiment::class);
     }
+
+    public function findByBasicMetadata(array $orderBy = null, $limit = null, $offset = null)
+    {
+        $qb = $this->createQueryBuilder('e');
+        if (is_iterable($orderBy) && sizeof($orderBy) > 1) {
+            switch ($orderBy[0]) {
+                case 'shortName':
+                    $qb->join('e.settingsMetaDataGroup', 'es')
+                        ->orderBy('es.'.$orderBy[0], $orderBy[1]);
+                    break;
+                case 'title':
+                    $qb->join('e.basicInformationMetaDataGroup', 'eb')
+                        ->orderBy('eb.'.$orderBy[0], $orderBy[1]);
+                    break;
+            }
+        }
+
+        return $qb->setMaxResults($limit)->setFirstResult($offset)
+            ->getQuery()
+            ->execute();
+    }
 }

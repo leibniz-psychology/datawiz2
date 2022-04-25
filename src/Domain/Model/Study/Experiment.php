@@ -3,13 +3,15 @@
 namespace App\Domain\Model\Study;
 
 use App\Domain\Access\Study\ExperimentRepository;
+use App\Domain\Definition\States;
+use App\Domain\Model\Administration\DataWizUser;
 use App\Domain\Model\Administration\UuidEntity;
 use App\Domain\Model\Filemanagement\AdditionalMaterial;
 use App\Domain\Model\Filemanagement\Dataset;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
@@ -31,7 +33,7 @@ class Experiment extends UuidEntity
      * @Groups({"study"})
      * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\BasicInformationMetaDataGroup", mappedBy="experiment", cascade={"persist", "remove"})
      */
-    private $basicInformationMetaDataGroup;
+    private BasicInformationMetaDataGroup $basicInformationMetaDataGroup;
 
     /**
      * One Experiment has One Theory section.
@@ -39,7 +41,7 @@ class Experiment extends UuidEntity
      * @Groups({"study"})
      * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\TheoryMetaDataGroup", mappedBy="experiment", cascade={"persist", "remove"})
      */
-    private $theoryMetaDataGroup;
+    private TheoryMetaDataGroup $theoryMetaDataGroup;
 
     /**
      * One Experiment has One Theory section.
@@ -47,7 +49,7 @@ class Experiment extends UuidEntity
      * @Groups({"study"})
      * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\MethodMetaDataGroup", mappedBy="experiment", cascade={"persist", "remove"})
      */
-    private $methodMetaDataGroup;
+    private MethodMetaDataGroup $methodMetaDataGroup;
 
     /**
      * One Experiment has One Theory section.
@@ -55,7 +57,7 @@ class Experiment extends UuidEntity
      * @Groups({"study"})
      * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\MeasureMetaDataGroup", mappedBy="experiment", cascade={"persist", "remove"})
      */
-    private $measureMetaDataGroup;
+    private MeasureMetaDataGroup $measureMetaDataGroup;
 
     /**
      * One Experiment has One Sample section.
@@ -63,7 +65,7 @@ class Experiment extends UuidEntity
      * @Groups({"study"})
      * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\SampleMetaDataGroup", mappedBy="experiment", cascade={"persist", "remove"})
      */
-    private $sampleMetaDataGroup;
+    private SampleMetaDataGroup $sampleMetaDataGroup;
 
     /**
      * One Experiment has One Settings section.
@@ -71,7 +73,7 @@ class Experiment extends UuidEntity
      * @Groups({"settings"})
      * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\SettingsMetaDataGroup", mappedBy="experiment", cascade={"persist", "remove"})
      */
-    private $settingsMetaDataGroup;
+    private SettingsMetaDataGroup $settingsMetaDataGroup;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Domain\Model\Filemanagement\Dataset", mappedBy="experiment", cascade={"persist"})
@@ -91,31 +93,50 @@ class Experiment extends UuidEntity
      * @ORM\ManyToOne(targetEntity="App\Domain\Model\Administration\DataWizUser")
      *
      */
-    private $owner;
+    private DataWizUser $owner;
 
     /**
-     * @return mixed
+     * @ORM\Column(type="datetime")
      */
-    public function getOwner()
+    private DateTime $dateCreated;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private ?DateTime $dateSubmitted = null;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private int $state = States::STATE_STUDY_NONE;
+
+    /**
+     * @return DataWizUser
+     */
+    public function getOwner(): DataWizUser
     {
         return $this->owner;
     }
 
-    private function setOwner($owner)
+    /**
+     * @param DataWizUser $owner
+     * @return void
+     */
+    private function setOwner(DataWizUser $owner): void
     {
         $this->owner = $owner;
     }
 
     /**
-     * @return mixed
+     * @return SampleMetaDataGroup
      */
-    public function getSampleMetaDataGroup()
+    public function getSampleMetaDataGroup(): SampleMetaDataGroup
     {
         return $this->sampleMetaDataGroup;
     }
 
     /**
-     * @param mixed $sampleMetaDataGroup
+     * @param SampleMetaDataGroup $sampleMetaDataGroup
      */
     public function setSampleMetaDataGroup(SampleMetaDataGroup $sampleMetaDataGroup): void
     {
@@ -124,15 +145,15 @@ class Experiment extends UuidEntity
     }
 
     /**
-     * @return mixed
+     * @return SettingsMetaDataGroup
      */
-    public function getSettingsMetaDataGroup()
+    public function getSettingsMetaDataGroup(): SettingsMetaDataGroup
     {
         return $this->settingsMetaDataGroup;
     }
 
     /**
-     * @param mixed $settingsMetaDataGroup
+     * @param SettingsMetaDataGroup $settingsMetaDataGroup
      */
     public function setSettingsMetaDataGroup(SettingsMetaDataGroup $settingsMetaDataGroup): void
     {
@@ -141,15 +162,15 @@ class Experiment extends UuidEntity
     }
 
     /**
-     * @return mixed
+     * @return BasicInformationMetaDataGroup
      */
-    public function getBasicInformationMetaDataGroup()
+    public function getBasicInformationMetaDataGroup(): BasicInformationMetaDataGroup
     {
         return $this->basicInformationMetaDataGroup;
     }
 
     /**
-     * @param mixed $basicInformationMetaDataGroup
+     * @param BasicInformationMetaDataGroup $basicInformationMetaDataGroup
      */
     public function setBasicInformationMetaDataGroup(BasicInformationMetaDataGroup $basicInformationMetaDataGroup): void
     {
@@ -158,15 +179,15 @@ class Experiment extends UuidEntity
     }
 
     /**
-     * @return mixed
+     * @return TheoryMetaDataGroup
      */
-    public function getTheoryMetaDataGroup()
+    public function getTheoryMetaDataGroup(): TheoryMetaDataGroup
     {
         return $this->theoryMetaDataGroup;
     }
 
     /**
-     * @param mixed $theoryMetaDataGroup
+     * @param TheoryMetaDataGroup $theoryMetaDataGroup
      */
     public function setTheoryMetaDataGroup(TheoryMetaDataGroup $theoryMetaDataGroup): void
     {
@@ -175,15 +196,15 @@ class Experiment extends UuidEntity
     }
 
     /**
-     * @return mixed
+     * @return MeasureMetaDataGroup
      */
-    public function getMeasureMetaDataGroup()
+    public function getMeasureMetaDataGroup(): MeasureMetaDataGroup
     {
         return $this->measureMetaDataGroup;
     }
 
     /**
-     * @param mixed $measureMetaDataGroup
+     * @param MeasureMetaDataGroup $measureMetaDataGroup
      */
     public function setMeasureMetaDataGroup(MeasureMetaDataGroup $measureMetaDataGroup): void
     {
@@ -192,15 +213,15 @@ class Experiment extends UuidEntity
     }
 
     /**
-     * @return mixed
+     * @return MethodMetaDataGroup
      */
-    public function getMethodMetaDataGroup()
+    public function getMethodMetaDataGroup(): MethodMetaDataGroup
     {
         return $this->methodMetaDataGroup;
     }
 
     /**
-     * @param mixed $methodMetaDataGroup
+     * @param MethodMetaDataGroup $methodMetaDataGroup
      */
     public function setMethodMetaDataGroup(MethodMetaDataGroup $methodMetaDataGroup): void
     {
@@ -208,11 +229,18 @@ class Experiment extends UuidEntity
         $methodMetaDataGroup->setExperiment($this);
     }
 
+    /**
+     * @return Collection
+     */
     public function getAdditionalMaterials(): Collection
     {
         return $this->additionalMaterials;
     }
 
+    /**
+     * @param AdditionalMaterial|null $additionalMaterials
+     * @return void
+     */
     public function addAdditionalMaterials(?AdditionalMaterial $additionalMaterials): void
     {
         if (null != $additionalMaterials) {
@@ -220,16 +248,76 @@ class Experiment extends UuidEntity
         }
     }
 
+    /**
+     * @param AdditionalMaterial $materials
+     * @return void
+     */
     public function removeAdditionalMaterials(AdditionalMaterial $materials): void
     {
         $this->additionalMaterials->removeElement($materials);
     }
 
+    /**
+     * @return Collection
+     */
     public function getOriginalDatasets(): Collection
     {
         return $this->originalDatasets;
     }
 
+    /**
+     * @return DateTime
+     */
+    public function getDateCreated(): DateTime
+    {
+        return $this->dateCreated;
+    }
+
+    /**
+     * @param DateTime $dateCreated
+     */
+    public function setDateCreated(DateTime $dateCreated): void
+    {
+        $this->dateCreated = $dateCreated;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getDateSubmitted(): ?DateTime
+    {
+        return $this->dateSubmitted;
+    }
+
+    /**
+     * @param DateTime|null $dateSubmitted
+     */
+    public function setDateSubmitted(?DateTime $dateSubmitted): void
+    {
+        $this->dateSubmitted = $dateSubmitted;
+    }
+
+    /**
+     * @return int
+     */
+    public function getState(): int
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param int $state
+     */
+    public function setState(int $state): void
+    {
+        $this->state = $state;
+    }
+
+
+    /**
+     * @param Dataset|null $originalDatasets
+     * @return void
+     */
     public function addOriginalDatasets(?Dataset $originalDatasets): void
     {
         if (null != $originalDatasets) {
@@ -237,12 +325,20 @@ class Experiment extends UuidEntity
         }
     }
 
+    /**
+     * @param Dataset $originalDatasets
+     * @return void
+     */
     public function removeOriginalDatasets(Dataset $originalDatasets): void
     {
         $this->originalDatasets->removeElement($originalDatasets);
     }
 
-    public static function createNewExperiment(UserInterface $owner): Experiment
+    /**
+     * @param DataWizUser $owner
+     * @return Experiment
+     */
+    public static function createNewExperiment(DataWizUser $owner): Experiment
     {
         $newExperiment = new Experiment();
         $newExperiment->setSettingsMetaDataGroup(new SettingsMetaDataGroup());
@@ -255,4 +351,6 @@ class Experiment extends UuidEntity
 
         return $newExperiment;
     }
+
+
 }

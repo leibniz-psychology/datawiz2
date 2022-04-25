@@ -140,6 +140,13 @@ title:
         title: 'Study Administration'
         description: 'lorem ipsum'
         open: 'Show all studies'
+        table:
+          shortName: 'Short Name'
+          title: 'Title'
+          contributor: 'Contributor'
+          created: 'Date Created'
+          submitted: 'Date Submitted'
+          state: 'State'
 
 
 generic:
@@ -457,6 +464,11 @@ roles:
   ROLE_ADMIN: 'Admin'
   ROLE_USER: 'User'
   ROLE_REVIEWER: 'Reviewer'
+
+states:
+  0: 'None'
+  1: 'Submitted'
+
 aria:
   sort:
     ascending: 'messages'

@@ -7,17 +7,64 @@
 
 {% block body %}
     <main class="max-w-screen-xl mx-auto mt-12 min-h-[calc(100%-15.5rem)] mb-12 flex flex-col">
-        <h2 class="flex items-center mx-8 text-3xl font-bold text-zpid-purple-700">
-            {{ "title.admin.dashboard.title"|trans }}
+        <h2 class="flex items-center text-3xl font-bold text-zpid-purple-700">
+            {{ "title.admin.dashboard.studies.title"|trans }}
         </h2>
-
-        <div class="flex gap-6 mt-4">
-            <div class="relative flex flex-col w-1/1 px-8 pt-6 pb-8 ml-8 border border-gray-300 rounded-md shadow-md bg-gray-50">
-                <h3 class="text-2xl font-semibold text-zpid-purple-700">
-                    {{ "title.admin.dashboard.user.title"|trans }}
-                </h3>
-
-            </div>
+        <div class="relative flex flex-col w-full mt-6 px-8 pt-6 pb-8 border border-gray-300 rounded-md shadow-md bg-gray-50">
+            <table class="data-table text-sm pt-6">
+                <thead>
+                <tr>
+                    <th>
+                        {{ 'title.admin.dashboard.studies.table.shortName'|trans }}
+                    </th>
+                    <th>
+                        {{ 'title.admin.dashboard.studies.table.title'|trans }}
+                    </th>
+                    <th>
+                        {{ 'title.admin.dashboard.studies.table.contributor'|trans }}
+                    </th>
+                    <th>
+                        {{ 'title.admin.dashboard.studies.table.created'|trans }}
+                    </th>
+                    <th>
+                        {{ 'title.admin.dashboard.studies.table.submitted'|trans }}
+                    </th>
+                    <th>
+                        {{ 'title.admin.dashboard.studies.table.state'|trans }}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for study in studies %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('Study-documentation', {uuid:study.id}) }}" class="underline">
+                                {{ study.settingsMetaDataGroup.shortName }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ path('Study-documentation', {uuid:study.id}) }}" class="underline">
+                                {{ study.basicInformationMetaDataGroup.title }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ study.owner.firstName }} {{ study.owner.lastName }} ({{ study.owner.email }})
+                        </td>
+                        <td>
+                            {{ study.dateCreated|date('Y-m-d H:i:s') }}
+                        </td>
+                        <td>
+                            {% if study.dateSubmitted is not null %}
+                                {{ study.dateSubmitted|date('Y-m-d H:i:s') }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ "states.#{study.state}"|trans }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </main>
 {% endblock %}

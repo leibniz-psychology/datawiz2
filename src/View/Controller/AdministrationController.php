@@ -2,6 +2,7 @@
 
 namespace App\View\Controller;
 
+use App\Domain\Access\Study\ExperimentRepository;
 use App\Domain\Form\UserDetailForm;
 use App\Domain\Model\Administration\DataWizUser;
 use App\Domain\Model\Study\Experiment;
@@ -21,17 +22,19 @@ class AdministrationController extends AbstractController
 {
     private EntityManagerInterface $em;
     private LoggerInterface $logger;
+    private ExperimentRepository $experimentRepository;
 
     /**
      * @param EntityManagerInterface $em
      * @param LoggerInterface $logger
+     * @param ExperimentRepository $experimentRepository
      */
-    public function __construct(EntityManagerInterface $em, LoggerInterface $logger)
+    public function __construct(EntityManagerInterface $em, LoggerInterface $logger, ExperimentRepository $experimentRepository)
     {
         $this->em = $em;
         $this->logger = $logger;
+        $this->experimentRepository = $experimentRepository;
     }
-
 
     /**
      * @Route(
@@ -72,20 +75,19 @@ class AdministrationController extends AbstractController
         $user = $this->em->getRepository(DataWizUser::class)->findBy([], [$sortArray[0] => $sortArray[1]], $limit, $page * $limit);
         $count = $this->em->getRepository(DataWizUser::class)->count([]);
 
-        $pagination = [
-            'q' => $q,
-            'maxItems' => $count,
-            'maxPages' => intval(ceil($count / $limit)),
-            'limit' => $limit,
-            'page' => $page,
-            'sort' => $sort,
-        ];
 
         return $this->render(
             'Pages/Administration/admin/user.html.twig',
             [
                 "user" => $user,
-                "pagination" => $pagination,
+                "pagination" => [
+                    'q' => $q,
+                    'maxItems' => $count,
+                    'maxPages' => intval(ceil($count / $limit)),
+                    'limit' => $limit,
+                    'page' => $page,
+                    'sort' => $sort,
+                ],
             ]
         );
     }
@@ -121,12 +123,15 @@ class AdministrationController extends AbstractController
     }
 
     /**
-     * @Route("/admin/dashboard/studies", name="admin_dashboard_studies")
+     * @Route("/admin/studies", name="admin_dashboard_studies")
      *
+     * @param Request $request
      * @return Response
      */
-    public function listStudies(): Response
+    public function listStudies(Request $request): Response
     {
+        $this->logger->debug("AdministrationController::listStudies: Enter");
+
         return $this->render(
             'Pages/Administration/admin/studies.html.twig',
             [

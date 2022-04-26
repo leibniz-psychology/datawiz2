@@ -1,7 +1,9 @@
 on:
   workflow_dispatch:
-  repository_dispatch:
-    types: [ trigger-symfony-deployment ]
+  push:
+    branches: [ development ]
+  pull_request:
+    branches: [ development ]
 
 jobs:
   deploy-to-aks:
@@ -10,10 +12,10 @@ jobs:
     permissions:
       contents: read
     env:
-      APP: ${{ github.event.client_payload.app }}
-      GH_BRANCH: ${{ github.event.client_payload.branch }}
-      GH_SHA: ${{ github.event.client_payload.sha }}
-      NAMESPACE: ${{ github.event.client_payload.namespace }}
+      APP: datawiz2
+      GH_BRANCH: ${{ github.ref_name }}
+      GH_SHA: ${{ github.sha }}
+      NAMESPACE: ${{ github.ref_name }} #works with branch development and staging, for main branch and prod development it doesn't work
       REGISTRY: ${{ secrets.ACR_NAME }}.azurecr.io
     steps:
       - name: Check out the repo
@@ -78,9 +80,9 @@ jobs:
           az aks get-credentials -n ${{ secrets.CLUSTER_RESOURCE_GROUP_NAME }} -g ${{ secrets.CLUSTER_NAME }} -f ${KUBECONFIG}
           kubelogin convert-kubeconfig -l azurecli  # this is required for me because of AAD and Azure RBAC integration
 
-      #- name: Delete old deployment on AKS if exists
-      #  run: |
-      #    kubectl delete --ignore-not-found -f .github/workflows/manifests/${{ env.GH_BRANCH }}/symfony.yaml --namespace=${{ env.NAMESPACE }}
+      - name: Delete old deployment on AKS if exists
+        run: |
+          kubectl delete --ignore-not-found -f .github/workflows/manifests/${{ env.GH_BRANCH }}/symfony.yaml --namespace=${{ env.NAMESPACE }}
 
       - name: Deploy new Symfony Application to AKS
         uses: azure/k8s-deploy@v1

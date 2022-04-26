@@ -1,8 +1,9 @@
-# Beispiel code für dev-k8s
-
 on:
-  # Ermöglicht das manuelle Auslösen der git action
   workflow_dispatch:
+  push:
+    branches: [ development ]
+  pull_request:
+    branches: [ development ]
 
 jobs:
   delete-on-aks:
@@ -12,10 +13,10 @@ jobs:
     permissions:
       contents: read
     env:
+      APP: datawiz2
       GH_BRANCH: ${{ github.ref_name }}
       GH_SHA: ${{ github.sha }}
       NAMESPACE: ${{ github.ref_name }} #works with branch development and staging, for main branch and prod development it doesn't work
-      APP: datawiz2
       REGISTRY: ${{ secrets.ACR_NAME }}.azurecr.io
     steps:
       - name: Check out the repo
@@ -65,3 +66,19 @@ jobs:
       - name: Delete on AKS
         run: |
           kubectl delete -f .github/workflows/manifests/${{ env.GH_BRANCH }}/symfony.yaml --namespace=${{ env.NAMESPACE }}
+
+      - name: Trigger Deployment workflow
+        if: success()
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.REPO_GHA_PAT }}
+          repository: ${{ github.repository }}
+          event-type: trigger-symfony-deployment
+          client-payload: |
+          '{
+          "app": "${{ github.APP }}",
+          "branch": "${{ env.GH_BRANCH }}",
+          "sha": "${{ env.GH_SHA }}",
+          "namespace": "${{ env.NAMESPACE }}",
+          "ref": "${{ github.ref }}",         
+          }'

@@ -1,9 +1,7 @@
 on:
   workflow_dispatch:
-  push:
-    branches: [ development ]
-  pull_request:
-    branches: [ development ]
+  repository_dispatch:
+    types: [ trigger-symfony-deployment ]
 
 jobs:
   deploy-to-aks:
@@ -12,10 +10,10 @@ jobs:
     permissions:
       contents: read
     env:
-      APP: datawiz2
-      GH_BRANCH: ${{ github.ref_name }}
-      GH_SHA: ${{ github.sha }}
-      NAMESPACE: ${{ github.ref_name }} #works with branch development and staging, for main branch and prod development it doesn't work
+      APP: ${{ github.event.client_payload.app }}
+      GH_BRANCH: ${{ github.event.client_payload.branch }}
+      GH_SHA: ${{ github.event.client_payload.sha }}
+      NAMESPACE: ${{ github.event.client_payload.namespace }}
       REGISTRY: ${{ secrets.ACR_NAME }}.azurecr.io
     steps:
       - name: Check out the repo

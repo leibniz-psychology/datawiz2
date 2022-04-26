@@ -1,7 +1,7 @@
 {% extends "Layouts/base.html.twig" %}
 
 {% block title %}
-    {{ "title.admin.dashboard.title"|trans }}
+    {{ "title.admin.dashboard.studies.open"|trans }}
 {% endblock %}
 
 
@@ -65,6 +65,14 @@
                 {% endfor %}
                 </tbody>
             </table>
+            <div class="flex pt-8 justify-between">
+                <div>
+                    <a class="flex items-center underline justify-self-start Button Button_tertiary Button_tertiary_go Button_standalone MetaData-SubmitButton_previous"
+                       href="{{ backPath }}">
+                        {{ 'link.back'|trans }}
+                    </a>
+                </div>
+            </div>
         </div>
     </main>
 {% endblock %}

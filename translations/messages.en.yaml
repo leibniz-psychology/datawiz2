@@ -123,10 +123,13 @@ title:
       confirm: 'I understand, delete this documentation'
   admin:
     dashboard:
-      title: 'Admin panel'
+      title:
+        moderation: 'Moderation'
+        admin: 'Administration'
+        panel: 'Management'
       user:
-        title: 'User Administration'
-        description: 'lorem ipsum'
+        title: 'User'
+        description: 'Overview of all DataWiz users and their roles. Roles can be assigned to users, all other metadata are not editable as they are synchronized via SSO.'
         open: 'Show all user'
         edit: 'Edit'
         name: 'Name'
@@ -135,10 +138,12 @@ title:
         last: 'Last seen'
         roles: 'Roles'
         details:
-          title: 'messages'
+          title: 'User Details'
+        action: 'Actions'
+        studies: 'Show Studies'
       studies:
-        title: 'Study Administration'
-        description: 'lorem ipsum'
+        title: 'Studies'
+        description: 'Overview of all studies. Administrators can edit studies and also delete them. Be warned!'
         open: 'Show all studies'
         table:
           shortName: 'Short Name'
@@ -147,6 +152,10 @@ title:
           created: 'Date Created'
           submitted: 'Date Submitted'
           state: 'State'
+      ph:
+        title: 'Placeholder'
+        description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut'
+        open: 'Coming soon!'
 
 
 generic:
@@ -396,6 +405,8 @@ link:
     codebook: 'Edit codebook'
   view:
     dataset: 'View dataset'
+  back:
+    'Back'
 
 codebook:
   search:

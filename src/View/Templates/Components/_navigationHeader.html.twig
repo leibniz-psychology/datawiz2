@@ -21,20 +21,20 @@
             </div>
         </a>
         {% if is_granted("ROLE_REVIEWER") %}
-            <a href="{{ path("admin_dashboard") }}"
+            {# <a href="{{ path("admin_dashboard") }}"
                class="flex items-center ring-inset h-full px-3 ml-4 text-base pt-1 border-b-4 border-transparent hover:border-zpid-blue
-                {{- app.request.pathinfo == path("admin_dashboard") ? ' border-zpid-blue font-semibold' -}}">
+            #}{# {{- app.request.pathinfo == path("admin_dashboard") ? ' border-zpid-blue font-semibold' -}} #}{# ">
                 <div>
                     {{ "title.reviewer.dashboard.title"|trans }}
                 </div>
-            </a>
+            </a> #}
         {% endif %}
-        {% if is_granted("ROLE_ADMIN") %}
-            <a href="{{ path("admin_dashboard") }}"
+        {% if is_granted("ROLE_REVIEWER") %}
+            <a href="{{ path("moderation_dashboard") }}"
                class="flex items-center ring-inset h-full px-3 ml-4 text-base pt-1 border-b-4 border-transparent hover:border-zpid-blue
-                {{- app.request.pathinfo == path("admin_dashboard") ? ' border-zpid-blue font-semibold' -}}">
+                {{- app.request.pathinfo starts with '/moderation' or app.request.pathinfo starts with '/admin' ? ' border-zpid-blue font-semibold' -}}">
                 <div>
-                    {{ "title.admin.dashboard.title"|trans }}
+                    {{ "title.admin.dashboard.title.panel"|trans }}
                 </div>
             </a>
         {% endif %}

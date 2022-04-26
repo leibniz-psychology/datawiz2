@@ -2,11 +2,9 @@
 
 namespace App\View\Controller;
 
-use App\Domain\Access\Study\ExperimentRepository;
 use App\Domain\Form\UserDetailForm;
 use App\Domain\Model\Administration\DataWizUser;
 use App\Domain\Model\Study\Experiment;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -22,72 +20,34 @@ class AdministrationController extends AbstractController
 {
     private EntityManagerInterface $em;
     private LoggerInterface $logger;
-    private ExperimentRepository $experimentRepository;
 
     /**
      * @param EntityManagerInterface $em
      * @param LoggerInterface $logger
-     * @param ExperimentRepository $experimentRepository
      */
-    public function __construct(EntityManagerInterface $em, LoggerInterface $logger, ExperimentRepository $experimentRepository)
+    public function __construct(EntityManagerInterface $em, LoggerInterface $logger)
     {
         $this->em = $em;
         $this->logger = $logger;
-        $this->experimentRepository = $experimentRepository;
     }
 
-    /**
-     * @Route(
-     *     "/admin/dashboard",
-     *      name="admin_dashboard"
-     * )
-     *
-     * @return Response
-     */
-    public function dashboard(): Response
-    {
-        $this->logger->debug("AdministrationController::dashboard: Enter");
-
-        return $this->render('Pages/Administration/admin/dashboard.html.twig');
-    }
 
     /**
      * @Route(
      *     "/admin/user",
-     *     name="admin_dashboard_user"
+     *     name="admin_user"
      * )
      *
-     * @param Request $request
      * @return Response
      */
-    public function listUser(Request $request): Response
+    public function listUser(): Response
     {
         $this->logger->debug("AdministrationController::listUser: Enter");
-
-        $q = $request->get('q', '');
-        $limit = intval($request->get('limit', 20));
-        $page = intval($request->get('page', 0));
-        $sort = $request->get('sort', 'lastname;'.Criteria::ASC);
-        $sortArray = preg_split('/;/', $sort);
-        if ($sortArray == null || sizeof($sortArray) < 2) {
-            $sortArray = ['lastname', Criteria::ASC];
-        }
-        $user = $this->em->getRepository(DataWizUser::class)->findBy([], [$sortArray[0] => $sortArray[1]], $limit, $page * $limit);
-        $count = $this->em->getRepository(DataWizUser::class)->count([]);
-
 
         return $this->render(
             'Pages/Administration/admin/user.html.twig',
             [
-                "user" => $user,
-                "pagination" => [
-                    'q' => $q,
-                    'maxItems' => $count,
-                    'maxPages' => intval(ceil($count / $limit)),
-                    'limit' => $limit,
-                    'page' => $page,
-                    'sort' => $sort,
-                ],
+                "user" => $this->em->getRepository(DataWizUser::class)->findAll(),
             ]
         );
     }
@@ -95,7 +55,7 @@ class AdministrationController extends AbstractController
     /**
      * @Route(
      *     "/admin/user/{uid}",
-     *      name="admin_dashboard_user_edit"
+     *      name="admin_user_edit"
      * )
      *
      * @param Request $request
@@ -113,7 +73,7 @@ class AdministrationController extends AbstractController
             $this->em->persist($user);
             $this->em->flush();
 
-            return $this->redirectToRoute('admin_dashboard_user');
+            return $this->redirectToRoute('admin_user');
         }
 
         return $this->render("Pages/Administration/admin/user_profile.html.twig", [
@@ -123,12 +83,14 @@ class AdministrationController extends AbstractController
     }
 
     /**
-     * @Route("/admin/studies", name="admin_dashboard_studies")
+     * @Route(
+     *     "/admin/studies",
+     *     name="admin_studies"
+     * )
      *
-     * @param Request $request
      * @return Response
      */
-    public function listStudies(Request $request): Response
+    public function listStudies(): Response
     {
         $this->logger->debug("AdministrationController::listStudies: Enter");
 
@@ -136,6 +98,29 @@ class AdministrationController extends AbstractController
             'Pages/Administration/admin/studies.html.twig',
             [
                 "studies" => $this->em->getRepository(Experiment::class)->findAll(),
+                "backPath" => $this->generateUrl('moderation_dashboard'),
+            ]
+        );
+    }
+
+    /**
+     * @Route(
+     *     "/admin/user/{uid}/studies",
+     *     name="admin_user_studies"
+     * )
+     *
+     * @param string $uid
+     * @return Response
+     */
+    public function listStudiesForUser(string $uid): Response
+    {
+        $this->logger->debug("AdministrationController::listStudies: Enter");
+
+        return $this->render(
+            'Pages/Administration/admin/studies.html.twig',
+            [
+                "studies" => $this->em->getRepository(Experiment::class)->findBy(['owner' => $this->em->getRepository(DataWizUser::class)->find($uid)]),
+                "backPath" => $this->generateUrl('admin_user'),
             ]
         );
     }

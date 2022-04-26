@@ -50,13 +50,13 @@ class UserController extends AbstractController
         $application = new Application($this->kernel);
         $application->setAutoExit(false);
         $command = new ArrayInput([
-                                      'command' => 'pax:add-user-role',
+                                      'command' => 'dw:add-user-role',
                                       'email' => 'boelter@uni-trier.de',
                                       'role' => UserRoles::ADMINISTRATOR,
                                   ]);
         $application->run($command, new NullOutput());
         $command = new ArrayInput([
-                                      'command' => 'pax:add-user-role',
+                                      'command' => 'dw:add-user-role',
                                       'email' => 'rb@leibniz-psychology.org',
                                       'role' => UserRoles::ADMINISTRATOR,
                                   ]);

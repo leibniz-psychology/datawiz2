@@ -9,7 +9,7 @@ doctrine:
             App:
                 is_bundle: false
                 type: annotation
-                dir: '%kernel.project_dir%/source/Domain/Model'
+                dir: '%kernel.project_dir%/src/Domain/Model'
                 prefix: 'App\Domain\Model'
                 alias: App
         filters:

@@ -10,7 +10,7 @@
     "axios": "^0.24.0",
     "core-js": "^3.19.1",
     "cross-env": "^7.0.3",
-    "cypress": "^8.7.0",
+    "cypress": "9.5.4",
     "cypress-wait-until": "^1.7.2",
     "dropzone": "5.9.3",
     "fibers": "^5.0.0",
@@ -78,5 +78,9 @@
       "comment-empty-line-before": null,
       "selector-class-pattern": null
     }
+  },
+  "dependencies": {
+    "datatables.net": "^1.11.5",
+    "datatables.net-dt": "^1.11.5"
   }
 }

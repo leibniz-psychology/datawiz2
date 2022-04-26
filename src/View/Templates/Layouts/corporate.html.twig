@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    {% include "Layouts/_favico.html.twig" %}
+    {# TODO: create svg logo, so zilla-slab font can be removed #}
+    <link rel="preload" href="{{ asset('build/fonts/Zilla_Slab-normal-400.woff') }}" as="font" crossorigin="">
+    <link rel="preload" href="{{ asset('build/fonts/Zilla_Slab-normal-600.woff') }}" as="font" crossorigin="">
+    <link rel="preload" href="{{ asset('build/fonts/Open_Sans-normal-400.woff') }}" as="font" crossorigin="">
+    <link rel="preload" href="{{ asset('build/fonts/Open_Sans-normal-500.woff') }}" as="font" crossorigin="">
+    <link rel="preload" href="{{ asset('build/fonts/Open_Sans-normal-600.woff') }}" as="font" crossorigin="">
+    <link rel="preload" href="{{ asset('build/fonts/Open_Sans-normal-700.woff') }}" as="font" crossorigin="">
+    <title>
+        {% if block("title") is defined %}
+            {{ block("title") }} - {{ "product.name"|trans }}
+        {% else %}
+            {{ "product.name"|trans }} - {{ "product.tagline"|trans }}
+        {% endif %}
+    </title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags("app") }}
+    {% endblock %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags("app") }}
+    {% endblock %}
+</head>
+<body>
+
+<div class="flex items-center justify-between h-24 max-w-screen-xl px-12 mx-auto bg-white">
+    <a href="https://leibniz-psychology.org/" class="flex items-center no-linkout" target="_blank" rel="noreferrer"
+       title="Visit Leibniz Psychology website"><img
+                src="{{ asset('build/images/leibniz_psychology.svg') }}" alt="Leibniz Psychology" width="257"
+                height="56"></a>
+    <a href="#" class="text-lg">{{ "product.contact"|trans }}</a>
+</div>
+{% block header %}
+    {# TODO: check gradient colors #}
+    <div class="bg-gradient-to-r from-[#240d46] to-zpid-purple-700">
+        <header class="max-w-screen-xl mx-auto">
+            <div class="flex flex-wrap items-center h-32 bg-right bg-no-repeat bg-zpid-blue bg-header-cyan">
+                {# TODO: use img/svg instead as loading font just for logo is too heavy #}
+                <span class="flex mt-6" style="flex: 0 0 100%">
+                    <a class="flex ml-12 font-serif text-6xl text-white" href="/">
+                        <span class="font-semibold">Data</span>Wiz<span
+                                class="self-start px-1.5 font-sans text-sm italic font-medium bg-white border rounded-md text-zpid-blue-800">beta</span>
+                    </a>
+                </span>
+                <span class="mb-2 text-lg text-white ml-[11.5rem]">{{ "product.tagline"|trans }}</span>
+
+            </div>
+            <div class="flex items-center h-12 px-12 bg-white border-l border-r border-mono-500">
+                {{ include("Components/_navigationHeader.html.twig") }}
+                {{ include("Components/_userProfileReference.html.twig") }}
+            </div>
+        </header>
+    </div>
+{% endblock %}
+
+<div class="max-w-screen-xl px-12 py-px pb-12 mx-auto bg-white border-l border-r border-mono-500">
+    {% block body %}{% endblock %}
+</div>
+{{ include("Components/_footer.html.twig") }}
+</body>
+</html>

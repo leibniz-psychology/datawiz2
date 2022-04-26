@@ -45,7 +45,7 @@
         "twig/extra-bundle": "^3.3",
         "twig/markdown-extra": "^3.3",
         "twig/string-extra": "^3.3",
-        "twig/twig": "^3.0"
+        "twig/twig": "^2.0 | ^3.0"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.3",
@@ -60,7 +60,7 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "source/"
+            "App\\": "src/"
         }
     },
     "autoload-dev": {

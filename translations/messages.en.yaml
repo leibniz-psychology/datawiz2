@@ -121,6 +121,42 @@ title:
       body: 'This action cannot be undone. This will permanently delete the #studyName#
         documentation including its study data, uploaded datasets, codebooks and materials.'
       confirm: 'I understand, delete this documentation'
+  admin:
+    dashboard:
+      title:
+        moderation: 'Moderation'
+        admin: 'Administration'
+        panel: 'Management'
+      user:
+        title: 'User'
+        description: 'Overview of all DataWiz users and their roles. Roles can be assigned to users, all other metadata are not editable as they are synchronized via SSO.'
+        open: 'Show all user'
+        edit: 'Edit'
+        name: 'Name'
+        email: 'Email'
+        registered: 'Date registered'
+        last: 'Last seen'
+        roles: 'Roles'
+        details:
+          title: 'User Details'
+        action: 'Actions'
+        studies: 'Show Studies'
+      studies:
+        title: 'Studies'
+        description: 'Overview of all studies. Administrators can edit studies and also delete them. Be warned!'
+        open: 'Show all studies'
+        table:
+          shortName: 'Short Name'
+          title: 'Title'
+          contributor: 'Contributor'
+          created: 'Date Created'
+          submitted: 'Date Submitted'
+          state: 'State'
+      ph:
+        title: 'Placeholder'
+        description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut'
+        open: 'Coming soon!'
+
 
 generic:
   description: 'Description'
@@ -369,6 +405,8 @@ link:
     codebook: 'Edit codebook'
   view:
     dataset: 'View dataset'
+  back:
+    'Back'
 
 codebook:
   search:
@@ -432,3 +470,17 @@ product:
     label: 'powered by'
     title: 'Visit Leibniz Psychology website'
     logoAltText: 'Leibniz Psychology Logo'
+
+roles:
+  ROLE_ADMIN: 'Admin'
+  ROLE_USER: 'User'
+  ROLE_REVIEWER: 'Reviewer'
+
+states:
+  0: 'None'
+  1: 'Submitted'
+
+aria:
+  sort:
+    ascending: 'messages'
+    descending: 'messages'

@@ -12,3 +12,6 @@ security:
                     - App\Security\Authentication\OauthAuthenticator
             logout:
                 path: Security-logout
+    role_hierarchy:
+        ROLE_REVIEWER: ROLE_USER
+        ROLE_ADMIN: ROLE_REVIEWER

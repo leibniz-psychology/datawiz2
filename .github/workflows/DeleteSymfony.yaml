@@ -74,11 +74,4 @@ jobs:
           token: ${{ secrets.REPO_GHA_PAT }}
           repository: ${{ github.repository }}
           event-type: trigger-symfony-deployment
-          client-payload: |
-          '{
-          "app": "${{ github.APP }}",
-          "branch": "${{ env.GH_BRANCH }}",
-          "sha": "${{ env.GH_SHA }}",
-          "namespace": "${{ env.NAMESPACE }}",
-          "ref": "${{ github.ref }}",         
-          }'
+          client-payload: '{"app": "${{ github.APP }}", "branch": "${{ env.GH_BRANCH }}", "sha": "${{ env.GH_SHA }}", "namespace": "${{ env.NAMESPACE }}", "ref": "${{ github.ref }}"}'

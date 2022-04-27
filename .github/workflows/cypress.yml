@@ -49,7 +49,7 @@ jobs:
       - name: Install missing libs
         run: |
           sudo apt update -y && sudo apt install -y libsodium-dev
-          sudo apt install php php-cli php-fpm php-mbstring php-xml php-ctype php-json php-common php-mysql php-zip php-gd php-curl php-xml php-pear php-bcmath php-intl php-iconv php-pdo php-dom
+          sudo apt install -y php php-cli php-fpm php-mbstring php-xml php-ctype php-json php-common php-mysql php-zip php-gd php-curl php-xml php-pear php-bcmath php-intl php-iconv php-pdo php-dom
 
       - name: Checkout
         uses: actions/checkout@v3

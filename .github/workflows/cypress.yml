@@ -48,9 +48,7 @@ jobs:
 
       - name: Install missing libs
         run: |
-          echo "deb https://dl.yarnpkg.com/debian/ stable main" 
-          sudo tee /etc/apt/sources.list.d/yarn.list
-          sudo apt update -y && sudo apt install -y libsodium-dev yarn
+          sudo apt update -y && sudo apt install -y libsodium-dev
 
       - name: Checkout
         uses: actions/checkout@v3
@@ -63,10 +61,14 @@ jobs:
           version: 2
 
       - name: Install Yarn dependencies
-        run: yarn install
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: install
 
       - name: Encore generate dev build
-        run: yarn encore dev
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: dev
 
       - name: Make Migrations
         run: |

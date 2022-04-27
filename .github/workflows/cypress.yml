@@ -97,6 +97,6 @@ jobs:
           /home/runner/.symfony/bin/symfony serve -d
 
       - name: Run Cypress
-        run: npx cypress run -b chrome --headless
+        run: npx cypress run -b electron --headless
 
 

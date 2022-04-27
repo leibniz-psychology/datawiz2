@@ -46,11 +46,10 @@ jobs:
         run: wget https://get.symfony.com/cli/installer -O - | bash
 
       - name: Install missing libs
-        run: |
-          sudo apt update -y && sudo apt install -y libsodium-dev build-essential npm
-          sudo npm install -g npm@latest
-          sudo npm install -g n
-          sudo n stable
+        run: |          
+          curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+          sudo apt update -y && sudo apt install -y libsodium-dev build-essential
+          sudo apt-get install -y nodejs npm
           sudo npm install -g yarn
 
       - name: Checkout

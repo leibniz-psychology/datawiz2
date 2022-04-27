@@ -24,7 +24,7 @@ env:
   CYPRESS_password: ${{ secrets.CYPRESS_password }}
   CYPRESS_loginPath: /security/login
   CYPRESS_logoutPath: /security/logout
-  key: continuous-integration-linux-v2
+  extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, iconv, json, mbstring, pdo, mysql
 
 jobs:
   symfony:
@@ -47,15 +47,17 @@ jobs:
         run: wget https://get.symfony.com/cli/installer -O - | bash
 
       - name: Install missing libs
-        run: |
-          sudo apt update -y && sudo apt install -y libsodium-dev
-          sudo apt install -y php php-cli php-fpm php-mbstring php-xml php-ctype php-json php-common php-mysql php-zip php-gd php-curl php-xml php-pear php-bcmath php-intl php-iconv php-pdo php-dom
+        run: sudo apt-get update -y && sudo apt install -y libsodium-dev
 
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install Composer
+      - name: Install dependencies
         uses: php-actions/composer@v6
+        with:
+          php_version: ${{ matrix.php-versions }}
+          php_extensions: ${{ env.extensions }}
+          version: 2
 
       - name: Validate composer.json and composer.lock
         run: composer validate

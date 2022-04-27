@@ -24,7 +24,7 @@ env:
   CYPRESS_password: ${{ secrets.CYPRESS_password }}
   CYPRESS_loginPath: /security/login
   CYPRESS_logoutPath: /security/logout
-  extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, iconv, json, mbstring, pdo, mysql
+  extensions: mbstring xml ctype iconv intl pdo_sqlite dom gd iconv json mbstring pdo mysql
 
 jobs:
   symfony:

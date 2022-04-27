@@ -39,7 +39,6 @@
   "scripts": {
     "dev-server": "cross-env NODE_ENV=development encore dev-server",
     "dev": "encore dev",
-    "fonts": "rimraf source/View/Assets/Fonts/* && google-webfonts < fonts.list --font-display-type fallback --css-filename _googlewebfonts.scss --css-dir ./ --out-base-dir source/View/Assets/Styles --fonts-dir ../Fonts",
     "watch": "encore dev --watch",
     "build": "cross-env NODE_ENV=production encore production --progress"
   },

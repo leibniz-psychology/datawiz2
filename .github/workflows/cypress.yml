@@ -24,7 +24,6 @@ env:
   CYPRESS_password: ${{ secrets.CYPRESS_password }}
   CYPRESS_loginPath: /security/login
   CYPRESS_logoutPath: /security/logout
-  extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, iconv, json, mbstring, pdo, mysql
   key: continuous-integration-linux-v2
 
 jobs:
@@ -48,31 +47,12 @@ jobs:
         run: wget https://get.symfony.com/cli/installer -O - | bash
 
       - name: Install missing libs
-        run: sudo apt-get update -y && sudo apt install -y libsodium-dev
+        run: |
+          sudo apt update -y && sudo apt install -y libsodium-dev
+          sudo apt install php php-cli php-fpm php-mbstring php-xml php-ctype php-json php-common php-mysql php-zip php-gd php-curl php-xml php-pear php-bcmath php-intl php-filter php-iconv php-pdo php-dom
 
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Setup cache environment
-        id: extcache
-        uses: shivammathur/cache-extensions@v1
-        with:
-          php-version: ${{ matrix.php-versions }}
-          extensions: ${{ env.extensions }}
-          key: ${{ env.key }}
-
-      - name: Cache extensions
-        uses: actions/cache@v2
-        with:
-          path: ${{ steps.extcache.outputs.dir }}
-          key: ${{ steps.extcache.outputs.key }}
-          restore-keys: ${{ steps.extcache.outputs.key }}
-
-      - name: Setup PHP, extensions and composer with shivammathur/setup-php
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-versions }}
-          extensions: ${{ env.extensions }}
 
       - name: Validate composer.json and composer.lock
         run: composer validate

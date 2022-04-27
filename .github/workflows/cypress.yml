@@ -48,7 +48,7 @@ jobs:
       - name: Install missing libs
         run: |
           sudo apt update -y && sudo apt install -y libsodium-dev nodejs npm
-          npm install -g yarn
+          sudo npm install -g yarn
 
       - name: Checkout
         uses: actions/checkout@v3

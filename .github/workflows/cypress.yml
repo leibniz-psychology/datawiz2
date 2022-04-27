@@ -49,7 +49,7 @@ jobs:
         run: |          
           curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
           sudo apt update -y && sudo apt install -y libsodium-dev build-essential xvfb
-          sudo apt-get install -y nodejs
+          sudo apt-get install -y nodejs libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
           sudo npm install -g yarn
 
       - name: Checkout

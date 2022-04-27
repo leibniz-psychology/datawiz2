@@ -24,7 +24,7 @@ env:
   CYPRESS_password: ${{ secrets.CYPRESS_password }}
   CYPRESS_loginPath: /security/login
   CYPRESS_logoutPath: /security/logout
-  extensions: intl gd mysqli
+  extensions: zip intl gd mysqli
 
 jobs:
   symfony:
@@ -62,17 +62,7 @@ jobs:
       - name: Validate composer.json and composer.lock
         run: composer validate
 
-      - name: Cache Composer packages
-        id: composer-cache
-        uses: actions/cache@v2
-        with:
-          path: vendor
-          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-php-
-
       - name: Install composer dependencies
-        if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Install Yarn dependencies

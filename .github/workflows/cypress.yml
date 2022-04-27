@@ -48,8 +48,9 @@ jobs:
       - name: Install missing libs
         run: |          
           curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-          sudo apt update -y && sudo apt install -y libsodium-dev build-essential xvfb
-          sudo apt-get install -y nodejs libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+          echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections
+          sudo apt update -y
+          sudo apt-get install -y -q nodejs libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb libsodium-dev build-essential
           sudo npm install -g yarn
 
       - name: Checkout

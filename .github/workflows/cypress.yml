@@ -47,7 +47,10 @@ jobs:
 
       - name: Install missing libs
         run: |
-          sudo apt update -y && sudo apt install -y libsodium-dev nodejs npm
+          sudo apt update -y && sudo apt install -y libsodium-dev build-essential npm
+          sudo npm install -g npm@latest
+          sudo npm install -g n
+          sudo n stable
           sudo npm install -g yarn
 
       - name: Checkout

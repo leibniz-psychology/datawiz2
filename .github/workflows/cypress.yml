@@ -45,6 +45,9 @@ jobs:
       - name: Install Symfony CLI
         run: wget https://get.symfony.com/cli/installer -O - | bash
 
+      - name: Install missing libs
+        run: sudo apt install -y libsodium-dev
+
       - name: Checkout
         uses: actions/checkout@v2
 

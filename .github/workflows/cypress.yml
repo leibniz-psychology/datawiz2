@@ -24,6 +24,8 @@ env:
   CYPRESS_password: ${{ secrets.CYPRESS_password }}
   CYPRESS_loginPath: /security/login
   CYPRESS_logoutPath: /security/logout
+  extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, iconv, json, mbstring, pdo, mysql
+  key: continuous-integration-linux-v2
 
 jobs:
   symfony:
@@ -49,15 +51,28 @@ jobs:
         run: sudo apt-get update -y && sudo apt install -y libsodium-dev
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      - name: Setup cache environment
+        id: extcache
+        uses: shivammathur/cache-extensions@v1
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: ${{ env.extensions }}
+          key: ${{ env.key }}
+
+      - name: Cache extensions
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.extcache.outputs.dir }}
+          key: ${{ steps.extcache.outputs.key }}
+          restore-keys: ${{ steps.extcache.outputs.key }}
 
       - name: Setup PHP, extensions and composer with shivammathur/setup-php
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, filter, gd, iconv, json, mbstring, pdo, mysql
-        env:
-          update: true
+          extensions: ${{ env.extensions }}
 
       - name: Validate composer.json and composer.lock
         run: composer validate

@@ -1,10 +1,10 @@
 name: DataWiz 2 Build
 on:
   workflow_dispatch:
-#  push:
-#    branches: [ development ]
-#  pull_request:
-#    branches: [ development ]
+  push:
+    branches: [ development ]
+  pull_request:
+    branches: [ development ]
 
 env:
   DATABASE_URL: mysql://root:root@127.0.0.1:3306/dashboard?serverVersion=8.0
@@ -28,7 +28,7 @@ env:
 jobs:
   symfony:
     name: Symfony 5.4 (PHP ${{ matrix.php-versions }})
-    runs-on: ubuntu-20.04
+    runs-on: self-hosted
     services:
       database:
         image: mysql:latest

@@ -59,12 +59,6 @@ jobs:
           php_extensions: ${{ env.extensions }}
           version: 2
 
-      - name: Validate composer.json and composer.lock
-        run: composer validate
-
-      - name: Install composer dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
-
       - name: Install Yarn dependencies
         run: yarn install
 

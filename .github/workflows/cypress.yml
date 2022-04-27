@@ -48,7 +48,7 @@ jobs:
       - name: Install missing libs
         run: |          
           curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-          sudo apt update -y && sudo apt install -y libsodium-dev build-essential
+          sudo apt update -y && sudo apt install -y libsodium-dev build-essential xvfb
           sudo apt-get install -y nodejs
           sudo npm install -g yarn
 
@@ -83,7 +83,7 @@ jobs:
         run: yarn install
 
       - name: Encore generate dev build
-        run: yarn encore dev
+        run: yarn dev
 
       - name: Make Migrations
         run: |

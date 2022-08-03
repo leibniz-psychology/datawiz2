@@ -22,7 +22,7 @@
                             <th scope="col" class="CodeBookHead-Cell">
                                 {# Icon: mdi:table-eye #}
                                 <svg class="w-5 h-5 ml-auto text-zpid-purple" xmlns="http://www.w3.org/2000/svg"
-                                     xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                                     aria-hidden="true" role="img"
                                      style="vertical-align: -0.125em;" width="1em" height="1em"
                                      preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                                     <path d="M17 16.88c.56 0 1 .44 1 1s-.44 1-1 1s-1-.45-1-1s.44-1 1-1m0-3c2.73 0 5.06 1.66 6 4c-.94 2.34-3.27 4-6 4s-5.06-1.66-6-4c.94-2.34 3.27-4 6-4m0 1.5a2.5 2.5 0 0 0 0 5a2.5 2.5 0 0 0 0-5M18 3H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5.42c-.16-.32-.3-.66-.42-1c.12-.34.26-.68.42-1H4v-4h6v2.97c.55-.86 1.23-1.6 2-2.21V13h1.15c1.16-.64 2.47-1 3.85-1c1.06 0 2.07.21 3 .59V5c0-1.1-.9-2-2-2m-8 8H4V7h6v4m8 0h-6V7h6v4z"
@@ -184,7 +184,7 @@
                             class="flex items-center px-2 py-0.5 bg-white border border-gray-300 rounded-tl rounded-bl text-mono-900 shadow-sm ring-inset"
                             @click="$store.codebook.currentVariableID = $store.codebook.getPreviousVariableID(); $scroll(`#variable_${$store.codebook.currentVariableID}`, {behavior: 'smooth', offset: 160})">
                     {# Icon: carbon:caret-left #}
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    <svg xmlns="http://www.w3.org/2000/svg"
                          aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet"
                          viewBox="0 0 32 32"><path d="M20 24l-10-8l10-8z" fill="currentColor"/></svg>
                     </button>
@@ -192,7 +192,7 @@
                             class="flex items-center px-2 py-0.5 bg-white border border-gray-300 rounded-tr-md rounded-br-md text-mono-900 shadow-sm ring-inset"
                             @click="$store.codebook.currentVariableID = $store.codebook.getNextVariableID(); $scroll(`#variable_${$store.codebook.currentVariableID}`, {behavior: 'smooth', offset: 160})">
                     {# Icon: carbon:caret-right #}
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    <svg xmlns="http://www.w3.org/2000/svg"
                          aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet"
                          viewBox="0 0 32 32"><path d="M12 8l10 8l-10 8z" fill="currentColor"/></svg>
                     </button>
@@ -268,7 +268,7 @@
                             title="{{ 'codebook.help.close'|trans }}">
                         {# Icon: mdi:close #}
                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
-                             xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                             aria-hidden="true" role="img"
                              style="vertical-align: -0.125em;" width="1em" height="1em"
                              preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                             <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z"
@@ -279,7 +279,7 @@
             </div>
 
             <div class="ml-4 mr-2 markdown">
-                {{ source("Help/codebook/_section.md")|markdown_to_html }}
+                {{ "codebook.section"|trans({},'help_markdown')|raw|markdown_to_html }}
             </div>
 
             {{ codebookHelp("variableName", "Variable names") }}
@@ -329,7 +329,7 @@
             <div class="flex items-center justify-center w-full mt-48 text-2xl col-span-full">
                 {# Icon: gg:spinner #}
                 <svg class="mr-0.5 animate-spin" xmlns="http://www.w3.org/2000/svg"
-                     xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                     aria-hidden="true" role="img"
                      style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet"
                      viewBox="0 0 24 24">
                     <g fill="none">

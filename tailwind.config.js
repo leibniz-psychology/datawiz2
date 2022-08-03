@@ -10,8 +10,7 @@ module.exports = {
       "./src/View/Templates/**/*.html.twig",
       "./src/Questionnaire/Forms/**/*.php",
       "./src/View/Assets/Scripts/**/*.js",
-      "./src/View/Templates/Help/**/*.md",
-      "./src/View/Templates/Pages/Landing/**/*.md",
+      "./src/translations/help_markdown.en.yaml",
     ],
   },
   theme: {

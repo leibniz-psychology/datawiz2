@@ -296,4 +296,3 @@ yarn-error.log
 /cypress.env.json
 /cypress/videos/
 /k8s-secrets.sh
-/k8s-secrets.sh

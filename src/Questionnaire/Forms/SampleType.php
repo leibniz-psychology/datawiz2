@@ -7,31 +7,16 @@ use App\Domain\Model\Study\SampleMetaDataGroup;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use League\CommonMark\Environment\Environment;
-use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
-use League\CommonMark\MarkdownConverter;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class SampleType extends AbstractType
 {
-    private $translator;
-
-    public function __construct(TranslatorInterface $translator)
-    {
-        $this->translator = $translator;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $environment = new Environment();
-        $environment->addExtension(new InlinesOnlyExtension());
-        $commonMark = new MarkdownConverter($environment);
-
         $builder
             ->add("participants", TextareaType::class, [
                 'required' => false,
@@ -39,7 +24,7 @@ class SampleType extends AbstractType
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
                     'class' => 'MetaData-TextInput',
-                    'rows' => '3'
+                    'rows' => '3',
                 ],
             ])
             ->add(MetaDataDictionary::POPULATION, CollectionType::class, [
@@ -50,7 +35,7 @@ class SampleType extends AbstractType
                     'attr' => [
                         'x-data' => '',
                         'x-on:keydown.enter.prevent' => '',
-                        'class' => 'w-full'
+                        'class' => 'w-full',
                     ],
                 ],
                 'allow_add' => true,
@@ -68,7 +53,7 @@ class SampleType extends AbstractType
                     'attr' => [
                         'x-data' => '',
                         'x-on:keydown.enter.prevent' => '',
-                        'class' => 'w-full'
+                        'class' => 'w-full',
                     ],
                 ],
                 'allow_add' => true,
@@ -86,7 +71,7 @@ class SampleType extends AbstractType
                     'attr' => [
                         'x-data' => '',
                         'x-on:keydown.enter.prevent' => '',
-                        'class' => 'w-full'
+                        'class' => 'w-full',
                     ],
                 ],
                 'allow_add' => true,
@@ -102,11 +87,11 @@ class SampleType extends AbstractType
                 'placeholder' => false,
                 'label' => 'input.sampling.label',
                 'choices' => [
-                    $commonMark->convertToHtml($this->translator->trans('input.sampling.choices.convenience'))->getContent() => 'Convenience sampling (accidental sampling, opportunity sampling)',
-                    $commonMark->convertToHtml($this->translator->trans('input.sampling.choices.random'))->getContent() => 'Random sampling (probability sampling)',
-                    $commonMark->convertToHtml($this->translator->trans('input.sampling.choices.systematic'))->getContent() => 'Systematic sampling (quasirandom sampling)',
-                    $commonMark->convertToHtml($this->translator->trans('input.sampling.choices.stratified'))->getContent() => 'Stratified sampling',
-                    $commonMark->convertToHtml($this->translator->trans('input.sampling.choices.quota'))->getContent() => 'Quota sampling',
+                    'input.sampling.choices.convenience' => 'Convenience sampling (accidental sampling, opportunity sampling)',
+                    'input.sampling.choices.random' => 'Random sampling (probability sampling)',
+                    'input.sampling.choices.systematic' => 'Systematic sampling (quasirandom sampling)',
+                    'input.sampling.choices.stratified' => 'Stratified sampling',
+                    'input.sampling.choices.quota' => 'Quota sampling',
                     'input.sampling.choices.other' => 'Other',
                 ],
                 'label_attr' => ['class' => 'MetaData-Label'],
@@ -134,59 +119,70 @@ class SampleType extends AbstractType
             ])
             ->add('saveAndPrevious', SubmitType::class)
             ->add('saveAndIntroduction', SubmitType::class, [
+                'label' => 'input.hidden',
                 'attr' => [
                     'class' => 'hidden Button_saveAndIntroduction',
-                ]
+                ],
             ])
             ->add('saveAndDocumentation', SubmitType::class, [
+                'label' => 'input.hidden',
                 'attr' => [
                     'class' => 'hidden Button_saveAndDocumentation',
-                ]
+                ],
             ])
             ->add('saveAndTheory', SubmitType::class, [
+                'label' => 'input.hidden',
                 'attr' => [
                     'class' => 'hidden Button_saveAndTheory',
-                ]
+                ],
             ])
             ->add('saveAndMethod', SubmitType::class, [
+                'label' => 'input.hidden',
                 'attr' => [
                     'class' => 'hidden Button_saveAndMethod',
-                ]
+                ],
             ])
             ->add('saveAndMeasure', SubmitType::class, [
+                'label' => 'input.hidden',
                 'attr' => [
                     'class' => 'hidden Button_saveAndMeasure',
-                ]
+                ],
             ])
             ->add('saveAndSample', SubmitType::class, [
+                'label' => 'input.hidden',
                 'attr' => [
                     'class' => 'hidden Button_saveAndSample',
-                ]
+                ],
             ])
             ->add('saveAndDatasets', SubmitType::class, [
+                'label' => 'input.hidden',
                 'attr' => [
                     'class' => 'hidden Button_saveAndDatasets',
-                ]
+                ],
             ])
             ->add('saveAndMaterials', SubmitType::class, [
+                'label' => 'input.hidden',
                 'attr' => [
                     'class' => 'hidden Button_saveAndMaterials',
-                ]
+                ],
             ])
             ->add('saveAndReview', SubmitType::class, [
+                'label' => 'input.hidden',
                 'attr' => [
                     'class' => 'hidden Button_saveAndReview',
-                ]
+                ],
             ])
             ->add('saveAndExport', SubmitType::class, [
+                'label' => 'input.hidden',
                 'attr' => [
                     'class' => 'hidden Button_saveAndExport',
-                ]
+                ],
             ])
             ->add('saveAndSettings', SubmitType::class, [
+                'label' => 'input.hidden',
                 'attr' => [
                     'class' => 'hidden Button_saveAndSettings',
-                ]
+                ],
             ]);
     }
 

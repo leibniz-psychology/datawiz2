@@ -179,6 +179,7 @@ generic:
   of: 'of'
 
 input:
+  hidden: ''
   title:
     legend: 'Title'
     label: 'Provide a title for your dataset'
@@ -448,6 +449,8 @@ codebook:
     items: 'items per page'
 
 error:
+  roles:
+    empty: 'Please select at least one role'
   dataset:
     matrix:
       empty: 'Data dictionary is empty. Please check if your uploaded file is a valid CSV/TSV or SAV file.'

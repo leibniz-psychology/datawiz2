@@ -48,8 +48,8 @@
     </fieldset>
     {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
-        prevTitle: 'title.method.title'|trans,
-        nextTitle: 'title.samples.title'|trans,
+        prevTitle: 'title.method.title',
+        nextTitle: 'title.samples.title',
         form: form
     })) }}
     {{ form_end(form) }}

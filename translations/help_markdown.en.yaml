@@ -8,26 +8,26 @@ basic:
 
     ### Example
 
-    > Beyond resources: Formal models of complexity effects and age differences in working memory
+    > Beyond resources: Formal models of complexity effects and age differences in working memory.
   creator: |
     The persons responsible for creating the dataset. Usually these are the principal investigators of a study.
 
     ### Examples
-    
+
     > Oberauer, Klaus
-    
+
     > Kliegl, Reinhold
   description: |
     A brief description of the study which the research data (one or more datasets) belong to. Individual datasets can be labelled upon upload. Provide the context in which the research data were created (purpose, nature, and scope). You might be able to use the abstract of a related publication.
 
     ### Example
-    
+
     > Working memory is usually described as a system for the simultaneous remembering and processing of information. The "Memory Updating" task allows the demands of the two components - remembering and processing - to be incrementally varied independently from each other. We used a numerical version of this task to measure the capacity of working memory in young and old adults. To this end, we investigated working memory by manipulating the presentation time for individual calculations for each person using an individual time-accuracy functions task with increasing load on working memory (simultaneously remembering 1 to 6 digits). The results show that both the asymptotic-achieved accuracy, as well as the rate at which accuracy reaches the asymptote, increases with the memory load and with age. While several alternative mathematical models were used on the data, only two of them (one based on interference, one for time-dependent trace decay) yielded a satisfactory fit to the data. This data can be used as a benchmark dataset for formal models of working memory capacity.
   related_publications: |
     The bibliographic citation of publication(s) that use the data from this dataset
 
     ### Example
-    
+
     > Oberauer, K. & Kliegl, R. (2001). Beyond resources - formal models for complexity effects and age differences in working memory. European Journal of Cognitive Psychology, 13, 187-215.
 codebook:
   section: |
@@ -69,28 +69,28 @@ codebook:
     A brief description to identify the variable.
 
     ### Examples
-    
+
     > age in years
-    
+
     > patient key
   variableName: |
     The short, unique, and unambiguous name of the variable. One word only. Use letters, numbers and underscores, avoid spaces.
 
     ### Examples
-    
+
     > age
-    
+
     > pat_key
 data_collection:
   section: |
     # Data collection help
-    
+
     How did you gather the information on your variables of interest? Which measures and which eqipment did you use?
   apparatus: |
     Provide a description of apparatus used, such as specialized equipment by model and supplier, and their function in the experiment. Definition apparatus: any instrument or equipment used in an experiment or other research.
 
     ### Examples
-    
+
     > The sentences were presented on the screen of a notebook computer. The speakers were recorded in a sound-treated room, using an AKG SE300B microphone, which was attached to an AKG N6-6E preamplifier, on a Tascam DA-P1 DAT recorder.
 
     <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[Adank, P., Evans, B. G., Stuart-Smith, J., & Scott, S. K. (2009). Comprehension of familiar and unfamiliar native accents under adverse listening conditions. Journal of Experimental Psychology: Human Perception and Performance, 35(2), 520-529. https://doi.org/10.1037/a0013552]</div> -->
@@ -98,58 +98,58 @@ data_collection:
     All data result from some form of measurement (including observations, collections, and so forth). The results of the measurement are so-called measures. A measure in psychology is an indicator of a not directly observable attribute/construct. Psychological measures are either numerical or categorical in nature. General types of numerical variables include: frequency measures (for example number of words recalled from a list), latency measures (for example reaction time to name a visual object), and intensity or strength measures (for example magnitude estimation of stimulus intensity). Ratings using numerical scales (for example 1 to 7) are sometimes referred to as Likert scales. Categorical variables involve classification of cases into distinct groups. Although numbers might be used to label the levels of categorical variables, especially when there are numerous classes (for example psychiatric diagnoses), the numbers have limited quantitative meaning and simply provide convenient labels for the distinct groups.
 
     ### Examples
-    
+
     > Evidence indicates that (cognitive) activation is a quantifiable dimension which can be measured by physiological indices. One such measure is the Galvanic Skin Response (GSR), which is the change in electrical conductance of the skin following stimulation. Scores in conductance units were obtained for each subject for the twelve experimental words.
     >
     > Nelson, J. Thor, "Approach and avoidance responses to a Tat dimension as related to reaction time and galvanic skin response on a word association test" (1961). Masters Theses 1911 - February 2014. 1828. Retrieved from https://scholarworks.umass.edu/theses/1828    
-    
+
     > Employment-related self-efficacy. The Perceived Employability subscale (PEM) of the Bigelow Quality of Life Questionnaire (BQQ; Bigelow, McFarland, Gareau, & Young, 1991) was used to measure employment-related self-efficacy. The PEM consists of eight items that assess an individual's confidence to find and maintain employment (for example, how comfortable do you feel going out to look for a job?). Items are rated on a 4-point Likert scale and summed, with higher scores indicating higher efficacy. Only five of the eight items from the PEM subscale were included . . . with adequate internal consistency (Cronbach's α = .72). (p. 301)
     >
     > This description reveals the construct of interest (employment-related self-efficacy), how it was measured (with a questionnaire), and that the measure had five questions each with four possible responses. [Cooper, Harris M.. Reporting Quantitative Research in Psychology. American Psychological Association. Kindle-Version.]
 data_documentation:
   section: |
     # Why data documentation is so important
-    
+
     Here is _the place_ to stress the importance of data documentation and give users ther final "push". Add some basic information here about **why** one should document one's data and how DataWiz can help along the way.
 datasets:
   section: |
     # Datasets help
-    
+
     You can upload one or more datasets belonging to your study.
-    
+
     ## File structure
-    
+
     The research data must be represented as tabular data in flat rectangular files. Columns represent different variables, while rows represent different observations (e.g. subjects).
-    
+
     ## File formats
-    
+
     Possible file formats are SPSS Statistics dataset (.sav) files [according to IBM, SPSS data files (.sav extension) are backward and forward compatible], Tab separated files (.tsv) and Comma separated files (.csv). DataWiz will import SPSS metadata (variable attributes) into its codebook. It will also read the variable names (headings) of .tsv or .csv files.
   my_datasets: |
     Provide a short description of your dataset (the dataset label) and view or edit the codebooks. This allows you to check imported codebooks or write codebooks if not present yet. Codebooks (also called data dictionaries or variable-level metadata) provide the coding scheme for your variables. Codebooks are essential documents that help researchers understand your datasets.
 export:
   section: |
     # Export help
-    
+
     **TODO** _Add export help here_ {.bg-pink-50 .mx-6}
 materials:
   section: |
     # Materials help
-    
+
     Supplementary information is material that helps understanding how you carried out your research and evaluating your scientific claims. Materials can be publications (pre- or post-prints), reports, lab books, stimuli, computer code, data management plans, ethics approval forms, consent forms, pre-registration documents, multimedia files or anything that helps to understand your study.
-    
+
     It is considered good practice of scientific research to be as open and transparent as possible. Open science not only means making data and publications accessible to the community but also the methodologies and workflows. DataWiz supports a high level of research transparency in that you can bundle your research data, its documentation and the supplemental materials into a file that can be imported by public research repositories like PsychArchives.
   my_materials: |
     **TODO** Add help text here. {.bg-pink-50 .mx-6}
 method:
   section: |
     # Study method help
-    
+
     How was your study carried out? Describe details of your study's method.
   control_operations: |
     Which control operations did you use to limit the effects of participant variables (order and sequence effects)?
 
     ### Block randomization
-    
+
     Block randomization. A method for assigning study participants to experimental conditions in which individuals are arbitrarily divided into subsets or blocks and then some random process is used to place individuals from those blocks into the different conditions. For example, a researcher might divide participants into blocks of 10 and then randomly assign half of the people in each to the control group and half to the experimental group. Block randomization is distinct from blocking in that the block does not have any significance other than as an assignment unit.
 
     ### Complete counterbalancing (all possible orders)
@@ -161,40 +161,40 @@ method:
     Incomplete counterbalancing. An experimental design that controls for order effects by using a limited number of possible sequences of treatments administered in such a way that each treatment appears equally often in each position. For instance, the following arrangement of sequences of three treatments (A, B, C), each assigned to a different subgroup of participants, demonstrates incomplete counterbalancing: A-B-C to Subgroup 1, B-C-A to Subgroup 2, and C-A-B to Subgroup 3. (also called partial counterbalancing).
 
     ### Latin Square
-    
+
     Latin square. A type of within-subjects design in which treatments, denoted by Latin letters, are administered in sequences that are systematically varied such that each treatment occurs equally often in each position of the sequence (first, second, third, etc.). The number of treatments administered must be the same as the number of groups or individual participants receiving them. For example, for an experimental design involving four treatments (A, B, C, and D) and four people, one person might receive Treatment A, then B, then C, and then D; a second person might receive them in sequence B, C, D, and A; a third person in sequence C, D, A, and B; and a fourth person in sequence D, A, B, and C. It is important to note that although Latin squares control for order effects they do not control for carryover effects or practice effects.
-    
+
     ### Latin Square using a random starting order with rotation (rotate order)
-    
+
     Latin Square using a Random starting order with rotation. In this method, we randomly select an order for the top row, and then rotate the position of each condition by one placement in each subsequent row.
-    
+
     ### Reverse counterbalancing (ABBA-counterbalancing)
-    
+
     Reverse counterbalancing. A specific procedure for ordering stimulus materials in a research study that involves administering one order (A-B-C) for one half of the participants and the opposite order (C-B-A) for the other half. Reverse counterbalancing is used to minimize any potential influence of presentation on results.
   experimental_design: |
     Between-subjects design
     : A study in which individuals are assigned to only one treatment or experimental condition and each person provides only one score for data analysis. For example, in a between-subjects design investigating the efficacy of three different drugs for treating depression, one group of depressed individuals would receive one of the drugs, a different group would receive another one of the drugs, and yet another group would receive the remaining drug. Thus, the researcher is comparing the effect each medication has on a different set of people. Also called between-groups design; independent-groups design. (APA Dictionary, 2014)
-    
+
     Within-subjects design
     : An experimental design in which the effects of treatments are seen through the comparison of scores of the same participant observed under all the treatment conditions. For example, teachers may want to give a pre- and postcourse survey of skills and attitudes to gauge how much both changed as a result of the course. Such a design could be analyzed with a dependent-samples t test, a within-subjects analysis of variance, or an analysis of covariance. Also called related-measures design; repeated measures design; within-groups design. (APA Dictionary, 2014)
-    
+
     Matched-pairs design
     : A study involving two groups of participants in which each member of one group is paired with a similar person in the other group, that is, someone who matches them on one or more variables that are not the main focus of the study but nonetheless could influence its outcome. For example, a researcher evaluating the effectiveness of a new drug in treating Alzheimer's disease might identify pairs of individuals of the same age and intelligence and then randomly assign one person from each pair to the treatment condition that will receive the drug and the other to the control condition that will not. A matched-groups design (matched-samples design; matched-subjects design) is a similar approach but broader in that it allows for the inclusion of more than two groups of participants. (APA Dictionary, 2014)
   manipulations: |
     Experimental manipulation (treatment, intervention)
     : In an experiment, the manipulation of one or more independent variables (treatment variables) in order to investigate their effect on a dependent variable. An example would be the assignment of a specific treatment or placebo to participants in a research study in order to control possible confounds and assess the effect of the treatment.
-    
+
     Treatment
     : The intervention to which some participants in an experimental design (the experimental group or treatment group) are exposed, in contrast to a control group, who do not receive the intervention. Also called treatment conditions.
-    
+
     Treatment variable
     : The independent variable, whose effect on a dependent variable is studied in a research project.
-    
+
     Independent variable (IV)
     : The variable in an experiment that is specifically manipulated or is observed to occur before the dependent, or outcome, variable, in order to assess its effect or influence. Independent variables may or may not be causally related to the dependent variable. In statistical analyses—such as path analysis, regression analysis, and structural equation modeling—an independent variable is likely to be referred to as a causal variable, explanatory variable, or predictor variable. See also treatment in the APA Dictionary of Psychology.
 
     ### Example
-    
+
     > For example, in Darley and Latané's experiment, the independent variable was the number of witnesses that participants believed to be present. The researchers manipulated this independent variable by telling participants that there were either one, two, or five other students involved in the discussion, thereby creating three conditions.
 
     <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[Darley, J. M., & Latané, B. (1968). Bystander intervention in emergencies: Diffusion of responsibility. Journal of Personality and Social Psychology, 4, 377-383.]</div> -->
@@ -202,160 +202,160 @@ method:
     A research design is a strategic plan of the procedures to be followed during a study in order to reach valid conclusions, with particular consideration given to participant selection and assignment to conditions, data collection, and data analysis. Research designs may take a variety of forms, including not only experiments but also quasi-experiments, observational studies, longitudinal designs, surveys, focus groups, and other nonexperimental methods.
 
     ### Experimental vs. non-experimental designs
-    
+
     **Experimental design** describes the way participants are allocated to experimental groups of an investigation.
-    
+
     **Non-experimental research** is usually descriptive or correlational, which means that you are either describing a situation or phenomenon simply as it stands, or you are describing a relationship between two or more variables, all without any interference from the researcher.
-    
+
     ### Experimental designs
-    
+
     #### Random assignment
-    
+
     Random assignment refers to how chosen participants are assigned to experimental groups. Helpful source: [The Research Randomizer website](http://www.randomizer.org)
-    
+
     #### Random assignment example
-    
+
     > Imagine that a researcher is interested in learning whether or not drinking caffeinated beverages prior to an exam will improve test performance. After randomly selecting a pool of participants, each person is randomly assigned to either the control group or the experimental group. The participants in the control group consume a placebo drink prior to the exam that does not contain any caffeine. Those in the experimental group, on the other hand, consume a caffeinated beverage before taking the test. Participants in both groups then take the test, and the researcher compares the results to determine if the caffeinated beverage had any impact on test performance. (Kendra Cherry)
-    
+
     #### Non-random assignment
-    
+
     Quasi-experimental design: Subjects are assigned to groups based on non-random criteria. Many types of quasi-experimental designs exist. The most common types are nonequivalent groups design, regression discontinuity, and natural experiments.
-    
+
     #### Non-random assignment example
-    
+
     > You discover that a few of the psychotherapists in the clinic have decided to try out the new therapy, while others who treat similar patients have chosen to stick with the normal protocol. You can use these pre-existing groups to study the symptom progression of the patients treated with the new therapy versus those receiving the standard course of treatment. Although the groups were not randomly assigned, if you properly account for any systematic differences between them, you can be reasonably confident any differences must arise from the treatment and not other confounding variables. (Lauren Thomas)
-    
+
     #### Clinical trial
-    
+
     NIH Definition of a Clinical Trial: A research study in which one or more human subjects are prospectively assigned to one or more interventions (which may include placebo or other control) to evaluate the effects of those interventions on health-related biomedical or behavioral outcomes. See also Consolidated Standards of Reporting Trials (CONSORT).
-    
+
     #### Clinical trial example
-    
+
     > In a study by Vinnars et al. (2009), two treatments for personality disorder were compared. The experimental treatment was a manualized version of supportive-expressive psychotherapy (SEP), and the control condition was nonmanualized community-delivered psychodynamic treatment (CDPT). Thus, this was a simple one-factor between-subjects design with two experimental conditions.
-    
+
     <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[Vinnars, B., Thormählen, B., Gallop, R., Norén, K., & Barber, J. P. (2009). Do personality problems improve during psychodynamic supportive-expressive psychotherapy? Secondary outcome results from a randomized controlled trial for psychiatric outpatients with personality disorders. Psychotherapy: Theory, Research, Practice, Training, 46(3), 362-375. https://doi.org/10.1037/a0017002]</div> -->
-    
+
     ### Non-experimental designs
-    
+
     #### Observational study
-    
+
     Observational research is a type of descriptive research that differs from most other forms of data gathering in that the researcher's goal is not to manipulate the variables being observed. While participants may or may not be aware of the researchers presence, the researchers do not try to control variables (as in an experiment), or ask participants to respond to direct questions (as in an interview or survey based study). Instead, the participants are simply observed in a natural setting, defined as a place in which behavior ordinarily occurs, rather than a place that has been arranged specifically for the purpose of observing the behavior.
-    
+
     #### Observational study example
-    
+
     > Jane Goodall's famous research on chimpanzees is a classic example of naturalistic observation. Dr. Goodall spent three decades observing chimpanzees in their natural environment in East Africa. She examined such things as chimpanzee's social structure, mating patterns, gender roles, family structure, and care of offspring by observing them in the wild. [Goodall, Jane (1966). Behaviour of free-living chimpanzees. (PhD thesis)]
-    
+
     #### Cohort study
-    
+
     A study design where one or more samples (called cohorts) are followed prospectively and subsequent status evaluations with respect to a disease or outcome are conducted to determine which initial participants exposure characteristics (risk factors) are associated with it. As the study is conducted, outcome from participants in each cohort is measured and relationships with specific characteristics determined
-    
+
     #### Cohort study example
-    
+
     > This prospective cohort study explored "the joint effects of sleep quality and sleep duration on the development of coronary heart disease." The study included 60,586 participants and an association was shown between increased risk of coronary heart disease and individuals who experienced short sleep duration and poor sleep quality. Long sleep duration did not demonstrate a significant association.
-    
+
     <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[Lao, X., Liu, X., Deng, H., Chan, T., Ho, K., Wang, F., ... Yeoh, E. (2018). Sleep Quality, Sleep Duration, and the Risk of Coronary Heart Disease: A Prospective Cohort Study With 60,586 Adults. Journal Of Clinical Sleep Medicine, 14(1), 109-117. https://doi.org/10.5664/jcsm.6894]</div> -->
-    
+
     #### Case-control study
-    
+
     A study that compares patients who have a disease or outcome of interest (cases) with patients who do not have the disease or outcome (controls), and looks back retrospectively to compare how frequently the exposure to a risk factor is present in each group to determine the relationship between the risk factor and the disease. Case control studies are observational because no intervention is attempted and no attempt is made to alter the course of the disease. The goal is to retrospectively determine the exposure to the risk factor of interest from each of the two groups of individuals: cases and controls. These studies are designed to estimate odds. Case control studies are observational because no intervention is attempted and no attempt is made to alter the course of the disease. The goal is to retrospectively determine the exposure to the risk factor of interest from each of the two groups of individuals: cases and controls. These studies are designed to estimate odds.
-    
+
     #### Case-control study example
-    
+
     > This case-control study compared serum vitamin D levels in individuals who experience migraine headaches with their matched controls. Studied over a period of thirty days, individuals with higher levels of serum Vitamin D was associated with lower odds of migraine headache.
-    
+
     <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[Togha, M., Razeghi Jahromi, S., Ghorbani, Z., Martami, F., & Seifishahpar, M. (2018). Serum Vitamin D Status in a Group of Migraine Patients Compared With Healthy Controls: A Case-Control Study. Headache, 58(10), 1530-1540. https://doi.org/10.1111/head.13423]</div> -->
-    
+
     #### Cross-sectional study
-    
+
     A cross-sectional study involves looking at data from a population at one specific point in time. The participants in this type of study are selected based on particular variables of interest. Researchers record the information that is present in a population, but they do not manipulate variables. This type of research can be used to describe characteristics that exist in a community, but not to determine cause-and-effect relationships between different variables. See "How Does the Cross-Sectional Research Method Work?"
-    
+
     #### Cross-sectional study example
-    
+
     > Researchers may find that people who reported engaging in certain health behaviors were also more likely to be diagnosed with specific ailments. While a cross-sectional study cannot prove for certain that these behaviors caused the condition, such studies can point to a relationship worth investigating further.
-    
+
     #### Survey research
-    
+
     Similar to an interview, a survey may use close-ended questions, open-ended questions, or a combination of the two. "Closed-ended questions" are questions that limit the person taking the survey to choose from a set of responses. Multiple choice, check all that apply, and ratings scale questions are all examples of closed-ended questions. "Open-ended questions" are simply questions that allow people to write in their own response.
-    
+
     #### Survey research example
-    
+
     > The National Comorbidity Survey is a large-scale mental health survey conducted in the United States (see http://www.hcp.med.harvard.edu/ncs). In just one part of this survey, nearly 10,000 adults were given a structured mental health interview in their homes in 2002 and 2003. Results include information on the lifetime prevalence of some anxiety, mood, and substance use disorders. (Lifetime prevalence is the percentage of the population that develops the problem sometime in their lifetime.) Obviously, this kind of information can be of great use both to basic researchers seeking to understand the causes and correlates of mental disorders as well as to clinicians and policymakers who need to understand exactly how common these disorders are.
-    
+
     #### Correlational research
-    
+
     In a correlational study, the researchers observe the participants, ask them questions, or collect records on them from archives. The data gathered are then correlated with one another (or are subjected to complex data analyses, discussed in Chapter 5) to see how they relate to one another. Again, the key is that the data are collected under the most naturalistic circumstances possible, with no experimental manipulation.
-    
+
     #### Correlational research example
-    
+
     > You want to know if wealthy people are less likely to be patient. From your experience, you believe that wealthy people are impatient. However, you want to establish a statistical pattern that proves or disproves your belief. In this case, you can carry out correlational research to identify a trend that links both variables. [(formplus)](https://www.formpl.us/blog/correlational-research)
-    
+
     <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[Is there is a relationship  between watching violent television and aggressive behavior? Bushman, B. J., & Huesmann, L. R. (2001). Effects of televised violence on aggression. In D. Singer & J. Singer (Eds.), Handbook of children and the media (pp. 223-254). Thousand Oaks, CA: Sage.]</div> -->
-    
+
     #### Causal-comparative research
-    
+
     A causal-comparative design (ex post facto design) is a research design that seeks to find relationships between independent and dependent variables after an action or event has already occurred. The researcher's goal is to determine whether the independent variable affected the outcome, or dependent variable, by comparing two or more groups of individuals. Causal-comparative studies’ purpose is to identify the cause and effect relationships between the variables.
-    
+
     #### Causal-comparative research example
-    
+
     > A researcher identifies a dependent variable, such as high dropout rates in high schools. The next step is to explore reasons the dependent variable has occurred or is occurring. In this example, several issues may affect dropout rates, including such elements as parental support, socioeconomic level, gender, ethnicity, and teacher support. The researcher will need to select which issue is of importance to his or her research goals. One hypothesis might be, "Students from lower socioeconomic levels drop out of high school at higher rates than students from higher socioeconomic levels." Thus, the independent variable in this scenario would be socioeconomic levels of high school students. (Encyclopedia of Research Design)
-    
+
     #### Single case
-    
+
     An article that describes and interprets an individual case, often written in the form of a detailed story. Case reports often describe: Unique cases that cannot be explained by known diseases or syndromes; Cases that show an important variation of a disease or condition; Cases that show unexpected events that may yield new or useful information; Cases in which one patient has two or more unexpected diseases or disorders; Case reports are considered the lowest level of evidence, but they are also the first line of evidence, because they are where new issues and ideas emerge. This is why they form the base of our pyramid. A good case report will be clear about the importance of the observation being reported. If multiple case reports show something similar, the next step might be a case-control study to determine if there is a relationship between the relevant variables.
-    
+
     #### Single case example
-    
+
     > This case report is written by the patient, a physician who contracted SARS, and his colleague who treated him, during the 2003 outbreak of SARS in Hong Kong. They describe how the disease progressed in Dr. Wu and based on Dr. Wu's case, advised that a chest CT showed hidden pneumonic changes and facilitate a rapid diagnosis.
-    
+
     <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[Wu, E. B., & Sung, J. J. Y. (2003). Haemorrhagic-fever-like changes and normal chest radiograph in a doctor with SARS. Lancet, 361(9368), 1520-1521.]</div> -->
   setting: |
     Setting
     : Setting is an environment or surrounding in which an event (a study) takes place. It may provide particular information about placement and timing, such as Paris, France, in the year 1789. Setting could be simply descriptive, like a lonely cottage on a mountain. Social conditions, historical time, geographical locations, weather, immediate surroundings, and timing are all different aspects of setting. In psychology, one distinguishes between artificial, real-life and natural settings.
-    
+
     ### Artificial setting
-    
+
     In artificial settings like laboratories extraneous variables such as noise, temperature, light, seating arrangements, etc can be kept constant for all participants.
-    
+
     #### Artificial setting example
-    
+
     > Subjects, recruited from the student body of the University of Houston, College of Optometry, were seated in front of the instrument with their head stabilized in a chin rest and forehead strap. Room illumination was dimmed.
-    
+
     <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[Win-HallDM, OstrinLA, KasthuriranganS, GlasserA. Objective accommodative measurements with the Grand Seiko and Hartinger coincidence refractometer. Optom Vis Sci. 2007;84(9)879-887.]</div> -->
-    
+
     ### Real-life setting
-    
+
     Real-life settings are more naturalistic but researchers still have control of the independent variables.
-    
+
     #### Real-life setting example
-    
+
     > During the (medical examination) preparation process, all students experienced the same events. Every weekday, all participating students studied in the morning and attended classes in the afternoon. On Fridays, the students took a mock examination in their usual classroom. The psychological anxiety and perceived stress levels of the students were also evaluated on day 1, at 2 days before the official examination and at 10-15 days after the results were published.
-    
+
     <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[Gonzalez-Cabrera J, Fernandez-Prada M, Iribar-Ibabe C, Peinado JM. Acute and chronic stress increase salivary cortisol: a study in the real-life setting of a national examination undertaken by medical graduates. Stress. 2014;17:149-56.]</div> -->
-    
+
     ### Natural setting
-    
+
     Natural settings are the most realistic way of researching human behaviour in everyday life as participants are in their natural environment. Researchers have no control of the independent variables and must instead select ones that happen to naturally occur in the environment.
-    
+
     #### Natural setting example
-    
+
     > The Appalachian National Scenic Trail (AT) stretches 2168 miles over fourteen different states along the eastern region of the United States. Data were users of the AT over the summer and fall of 1999. Sampling occurred along the entire length of the trail. A stratified sampling technique was employed to obtain a representative sample of all AT hikers. To accomplish this, the length of the trail was segmented into 22 sections basedon use estimates provided by the various associations chargedwith maintaining the trail.
-    
+
     <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[Kyle, G., Graefe, A., Manning, R., & Bacon, J. (2004). Effects of place attachment on users' perceptions of social and environmental conditions in a natural setting. Journal of Environmental Psychology, 24, 213-225.]</div> -->
 review:
   section: |
     # Review input help
-    
+
     **TODO** _Add review help here_ {.bg-pink-50 .mx-6}
 sampling:
   section: |
     # Sampling help
-    
+
     How did you select participants (observations, cases) from a population of specific interest for your study?
   exclusion_criteria: |
     The description of participant characteristics in your report should include the exclusion criteria you applied when picking participants, including any restrictions based on demographic or other characteristics.
 
     ### Example
-    
+
     > Exclusion criteria included age over 60 years, psychosis, bipolar diagnosis, severe suicidal intent, alcohol or drug dependence during the year before intake, organic brain damage, pregnancy, or unwillingness to undergo psychotherapy.
 
     <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[Vinnars, B., Thormählen, B., Gallop, R., Norén, K., & Barber, J. P. (2009). Do personality problems improve during psychodynamic supportive-expressive psychotherapy? Secondary outcome results from a randomized controlled trial for psychiatric outpatients with personality disorders. Psychotherapy: Theory, Research, Practice, Training, 46(3), 362-375. https://doi.org/10.1037/a0017002]</div> -->
@@ -363,7 +363,7 @@ sampling:
     The description of participant characteristics in your report should include the inclusion criteria you applied when picking participants, including any restrictions based on demographic or other characteristics.
 
     ### Example
-    
+
     > The inclusion criteria consisted of presence of at least one DSM-IV personality disorder diagnosis, or a diagnosis of passive-aggressive or depressive personality disorder from the DSM-IV appendix.
 
     <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[Vinnars, B., Thormählen, B., Gallop, R., Norén, K., & Barber, J. P. (2009). Do personality problems improve during psychodynamic supportive-expressive psychotherapy? Secondary outcome results from a randomized controlled trial for psychiatric outpatients with personality disorders. Psychotherapy: Theory, Research, Practice, Training, 46(3), 362-375. https://doi.org/10.1037/a0017002]</div> -->
@@ -371,7 +371,7 @@ sampling:
     Who took part in the study? Report major demographic characteristics (for example, age, sex, ethnicity, socioeconomic status) as well as important topic-specific characteristics (for example, achievement level in studies of educational interventions). In order to produce generalizable results, the subjects selected must be representative of the population about which new knowledge is being sought.
 
     ### Example
-    
+
     > The sample comprised 90 university students (77% female), between 18 and 24 years old. Seventy-three of those participants were bachelor students in psychology who participated in exchange for course credits. The remaining 17 participants, who learned about the study through local advertisement such as flyers and social media, took part in the study on a voluntary basis.
 
     <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[De Vuyst et al, 2019; https://doi.org/10.1371/journal.pone.0219121]</div> -->
@@ -379,7 +379,7 @@ sampling:
     A theoretically defined, complete group of objects (people, animals, institutions) from which a sample is drawn to obtain empirical observations and to which results can be generalized. Identify the population that you're intending to make conclusions about and make sure the selected sample represents that population. If the sample represents a smaller group within that population, then the conclusions have to be downsized in scope also.
 
     ### Example
-    
+
     > Study samples had to comprise trauma-exposed, nonclinical adult populations to be included in the analysis.
 
     <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[Zalta, A. K., Tirone, V., Orlowska, D., Blais, R. K., Lofgreen, A., Klassen, B., Held, P., Stevens, N. R., Adkins, E., & Dent, A. L. (2021). Examining moderators of the relationship between social support and self-reported PTSD symptoms: A meta-analysis. Psychological Bulletin, 147(1), 33-54. https://doi.org/10.1037/bul0000316]</div> -->
@@ -387,7 +387,7 @@ sampling:
     Statistical power (also called power of a hypothesis test) is the probability that a test will correctly reject a false null hypothesis (Polak, 2020). It is a measure of how effective a statistical procedure is at identifying real differences between populations: It is the probability that use of the test will lead to the null hypothesis of no effect being rejected when the alternative hypothesis is true. For example, if a given statistical test has a power of .70, then there is a 70% probability that its use will result in the null hypothesis correctly being rejected as false, with a corresponding 30% chance that its use will lead to a type ii error. Power ranges from 0 to 1, with values of .80 or above generally considered acceptable. Researchers try to maximize power in their study designs prior to data gathering. (APA Dictionary, 2014) You can use G\*Power as a general stand-alone power analysis program for statistical tests commonly used in social and behavioral research (Erdfelder, Faul, & Buchner, 1996)
 
     ### Example
-    
+
     > Required sample sizes of ~30 for each protocol (n = 15 M + n = 15 F) were calculated a priori following pilot and previous observations in our laboratory of sex differences in novel tank test (d = 1.25, power = 0.8, alpha = 0.05).
 
     <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer float-right underline' : cursor !== 'default' }" class="text-xs">[Fontana, B. D., Cleal, M., & Parker, M. O. (2019). Female adult zebrafish (Danio rerio) show higher levels of anxiety-like behavior than males, but do not differ in learning and memory capacity. European Journal of Neuroscience, ejn.14588. https://doi.org/10.1111/ejn.14588]</div> -->
@@ -395,62 +395,62 @@ sampling:
     The sample size is the number of observations (cases, individuals, units) included in the sample to be studied.
 
     ### Examples
-    
+
     > In total, 41 of the participants completed all of their sessions in their own home ("home group"), 27 participants completed all of their sessions in the lab ("lab group"), and 11 participants completed some sessions at home and some in the lab ("mixed group").
-    
+
     <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[Xu, Z., Adam, K.C.S., Fang, X. et al. The reliability and stability of visual working memory capacity. Behav Res 50, 576-588 (2018). https://doi.org/10.3758/s13428-017-0886-6]</div> -->
-    
+
     > There were 76 children tested, all attending Royce primary school, Manchester. They were divided into four age categories according to school class group, as detailed in Table 1.
-    
+
     <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[J.N. Towse & G.J. Hitch (1995) Is there a Relationship between Task Demand and Storage Space in Tests of Working Memory Capacity?, The Quarterly Journal of Experimental Psychology Section A, 48:1, 108-124, DOI: 10.1080/14640749508401379]</div> -->
-    
+
     > One hundred sixty-six subjects (M age = 20.0 years, 103 female) were recruited from the Washington University in St. Louis Department of Psychology human subject pool.
-    
+
     <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[Pooja K. Agarwal, Jason R. Finley, Nathan S. Rose & Henry L. Roediger III (2016): Benefits from retrieval practice are greater for students with lower working memory capacity, Memory, DOI: 10.1080/09658211.2016.1220579]</div> -->
   sampling_method: |
     Sampling is the process of selecting individuals (observations, cases) from a population of specific interest.
 
     ### Convenience sampling
-    
+
     Convenience sampling is any process for selecting a sample of individuals or cases that is neither random nor systematic but rather is governed by chance or ready availability. Interviewing the first 50 people to exit a store is an example of convenience sampling. Data obtained from convenience sampling do not generalize to the larger population; there may be significant sampling bias, and sampling error cannot be estimated. Also called accidental sampling; opportunity sampling. (APA Dictionary) Convenience sampling is by far the most common non-probability sampling strategy: It is cheap, efficient, and simple to implement.
-    
+
     #### Example
-    
+
     > One of the most common examples of convenience sampling in psychology is the use of student volunteers as study participants. Recommendation for further reading: Bornstein MH, Jager J, Putnick DL. Sampling in developmental science: Situations, shortcomings, solutions, and standards. Developmental Review. 2013;33:357-370. [PMC free article]
-    
+
     ### Random sampling
-    
+
     (Simple) random sampling is the most basic approach to drawing a random sample of cases, observations, or individuals from a population, in which the cases are selected individually using a fair process, such as the toss of a coin or a table of random digits. Also called independent random sampling or r representative sampling. (APA Dictionary) Probability sampling strategies yield an unbiased sample that is representative of the target population; however, probability samples can be cost-prohibitive.
-    
+
     #### Example
-    
+
     > Random sampling for a TV violence study. Our first step is to define the population. We might begin by considering the population as all children in the United States that are 5-15 years old. Our next step will be to obtain an exhaustive list of these children. Using U. S. Census data would be one approach. The third step is to select a random sample. The simplest technique would be to use a database of the population and instruct the database software to randomly select children from the population. The number to be selected is determined by the researcher and is typically based on the largest number that can be sampled given the logistical resources of the researcher. The larger the sample, the more accurately it will represent the population. After the sample is selected from the population, the final step is to contact the parents of these children to obtain consent to participate. [Authorized free PDF version of Free Fundamentals of Behavioral Research Textbook by William J. Lammers and Pietro Badia]
-    
+
     ### Systematic sampling (quasirandom sampling)
-    
+
     Systematic sampling is a type of sampling process in which all the members of a population are listed and then some objective, orderly procedure is applied to randomly choose specific cases. For example, the population might be listed alphabetically and every seventh case selected. Also called quasirandom sampling; systematic random sampling. (APA Dictionary)
-    
+
     #### Example
-    
+
     > Suppose a supermarket wants to study buying habits of their customers, then using systematic sampling they can choose every 10th or 15th customer entering the supermarket and conduct the study on this sample. This is random sampling with a system. From the sampling frame, a starting point is chosen at random, and choices thereafter are at regular intervals. (Wikipedia "Systematic sampling")
-    
+
     ### Quota sampling
-    
+
     Quota sampling is a method of forming a sample in which a prespecified number of individuals with certain background characteristics, such as a particular age, race, ethnicity, sex, or education, are selected for inclusion. Often, participants are recruited as they arrive; once the quota for a given demographic group is filled, the researcher stops recruiting subjects from that group. A researcher who uses this approach can obtain a final study sample that has the same proportional characteristics as the target population, enabling statistical testing to be performed on a subset of cases that is appropriately representative of the larger group of interest. (APA Dictionary) Quota sampling is the non probability version of stratified sampling.
-    
+
     #### Example
-    
+
     > The UK adult population aged 18+ years was the target population for the COVID‐19 psychological research consortium (C19PRC) study. A longitudinal, internet panel survey was designed to assess: (1) COVID‐19 related knowledge, attitudes, and behaviors; (2) the occurrence of common mental health disorders as well as the role of (3) psychological factors and (4) social and political attitudes, in influencing the public's response to the pandemic. Quota sampling (age, sex, and household income) was used to recruit a nationally representative sample of adults.
-    
+
     <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[McBride, O., Murphy, J., Shevlin, M., Gibson-Miller, J., Hartman, T. K., Hyland, P., et al. (2020). Monitoring the psychological, social, and economic impact of the COVID-19 pandemic in the population: Context, design and conduct of the longitudinal COVID-19 psychological research consortium (C19PRC) study. International Journal of Methods in Psychiatric Research. https://doi.org/10.1002/mpr.1861.]</div> -->
-    
+
     ### Other sampling methods
-    
+
     There are many more sampling methods than those listed. If your method is not included, please type it in the appropriate field. Other methods could be, for example: self-selected sampling (volunteer sampling), cohort sampling, diversity sampling, experience sampling (event sampling, diary study), prospective sampling, retrospective sampling, theoretical sampling, clustered sampling, purposive sampling (judgement sampling), snowball sampling, etc.
 settings:
   section: |
     # Settings help
-    
+
     **TODO** _Add settings help here_ {.bg-pink-50 .mx-6}
 study_introduction:
   section: |
@@ -459,15 +459,15 @@ study_introduction:
     Here you'll find a quick introduction about how to use DataWiz to document a study, its datasets and materials.
   help_intro: |
     A click on a (?)-button reveals further help and background information about the respective study element. You'll find examples or online resources that should make using DataWiz a breeze
-    
+
     ### Examples
-    
+
     > Here's an example text
-    
+
     > Here's another example text
   step_by_step: |
     Follow these steps to make your data understandable, discoverable, citable and reusable.
-    
+
     1. **Describe your study** including basic information as well as research study level documentation
 
     - The **Resource description** on your study enables other researchers to find and cite your data
@@ -475,9 +475,9 @@ study_introduction:
     - **Study method** is all about how your study was carried out
     - In **Data collection**, you'll describe how you gathered the information on your variables of interest. Which measures and which equipment did you use?
     - In **Sampling**, you'll provide information about your study's sample.
-    
+
       Together with the documentation of your datasets it helps someone not familiar with the data understand, and use the data.
-    
+
       2. **Upload and describe datasets** and codebooks. The datasets documentation describes what the entries in your data matrix mean. It is sometimes called a codebook or a data-dictionary. It explains the variables used in your study, such as the names given to variables, how they were defined, and their possible response options. If your data is in proprietary format, DataWiz will convert it to a sustainable (open) format.
       3. **Upload materials** The more information you provide, the better others can understand your data. Supplementary documentation that can be associated with datasets helps to facilitate data reuse. You can upload any kind of supplementary materials like associated analyses, or experimental-control data.
       4. **Review input** to check the documentation you provided. Share an overview of your documentation with fellow researchers to get feedback.
@@ -485,19 +485,19 @@ study_introduction:
 theory:
   section: |
     # Objectives & hypotheses help
-    
+
     State the problem under investigation. How did you go about answering your research question? Why did you pick this design to answer this question?
   hypothesis: |
     A hypothesis (plural hypotheses) is a precise, testable statement of what the researchers predict will be the outcome of the study.
 
     ### Example
-    
+
     > With increasing loads on working memory and old age the asymptotic accuracy in the time-accuracy functions and the rate of approach to the asymptote decrease.
   objective: |
     Your aims answer the question, 'What are you doing?' The objectives are the answer to the question, 'How are you doing it?' Your objectives should be stated using action verbs that are specific enough to be measured, for example: to compare, to calculate, to assess, to test, to determine, to verify, to calculate, to describe, to explain, and so forth.
 
     ### Example
-    
+
     > The general aim of this research is to differentiate moral obligation from moral norms and moral conviction, as well as to compare their ability to predict collective action. In order to do so, the research objectives are: (a) conceptualize and operationalize moral obligation (Study 1, N = 171); (b) test its predictive power for intention to participate in protests (Study 2, N = 622); and (c) test moral obligation in a real context (Study 3, N = 407).
 
 

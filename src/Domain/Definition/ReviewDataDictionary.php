@@ -14,7 +14,7 @@ class ReviewDataDictionary
     const CREATOR_EMAIL = ['legend' => 'input.creator.email', 'errorMsg' => 'input.creator.empty.email', 'errorLevel' => ErrorType::RECOMMENDED];
     const CREATOR_ORCID = ['legend' => 'input.creator.orcid', 'errorMsg' => 'input.creator.empty.orcid', 'errorLevel' => ErrorType::OPTIONAL];
     const CREATOR_AFFILIATION = ['legend' => 'input.creator.affiliation', 'errorMsg' => 'input.creator.empty.affiliation', 'errorLevel' => ErrorType::MANDATORY];
-    const CREATOR_ROLES = ['legend' => 'input.creator.roles', 'errorMsg' => 'input.creator.empty.roles', 'errorLevel' => ErrorType::MANDATORY];
+    const CREATOR_ROLES = ['legend' => 'input.creator.roles', 'errorMsg' => 'error.roles.empty', 'errorLevel' => ErrorType::MANDATORY];
     /*THEORY*/
     const OBJECTIVES = ['legend' => 'input.objective.legend', 'errorMsg' => 'input.objective.empty', 'errorLevel' => ErrorType::RECOMMENDED];
     const HYPOTHESIS = ['legend' => 'input.hypothesis.legend', 'errorMsg' => 'input.hypothesis.empty', 'errorLevel' => ErrorType::RECOMMENDED];

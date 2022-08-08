@@ -1,3 +1,0 @@
-doctrine_migrations:
-    migrations_paths:
-        'App\Migrations': 'src/Domain/State/Migrations/Development'

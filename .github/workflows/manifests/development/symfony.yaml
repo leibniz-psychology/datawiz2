@@ -97,7 +97,7 @@ spec:
             claimName: datawiz2-pv-files-claim
       containers:
         - name: php
-          image: crzpiddev.azurecr.io/datawiz2_php_fpm:latest-dev
+          image: crzpiddev.azurecr.io/datawiz2_php_fpm:latest-development
           resources:
             requests:
               memory: "128Mi"
@@ -147,7 +147,7 @@ spec:
               exec:
                 command: [ "/bin/sh", "-c", "cp -r -p /build/. /var/www" ]
         - name: nginx
-          image: crzpiddev.azurecr.io/datawiz2_nginx:latest-dev
+          image: crzpiddev.azurecr.io/datawiz2_nginx:latest-development
           resources:
             requests:
               memory: "128Mi"
@@ -162,7 +162,7 @@ spec:
           ports:
             - containerPort: 80
         - name: spss
-          image: crzpiddev.azurecr.io/datawiz2_spss:latest-dev
+          image: crzpiddev.azurecr.io/datawiz2_spss:latest-development
           resources:
             requests:
               memory: "128Mi"

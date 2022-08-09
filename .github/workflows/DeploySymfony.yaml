@@ -41,13 +41,13 @@ jobs:
           sudo apt-get install azure-cli
 
       - name: Azure Login (Development/Staging)
-        if: ${{ github.ref_name }} != 'beta'
+        if: "contains(github.ref_name , 'development') || contains(github.ref_name , 'staging')"
         uses: azure/login@v1
         with:
           creds: "${{ secrets.AZURE_CREDENTIALS }}"
 
       - name: Azure Login (Beta)
-        if: ${{ github.ref_name }} == 'beta'
+        if: "contains(github.ref_name , 'beta')"
         uses: azure/login@v1
         with:
           creds: "${{ secrets.AZURE_CREDENTIALS_BETA }}"
@@ -57,7 +57,7 @@ jobs:
           az acr login --name ${{ secrets.ACR_NAME }}
 
       - name: Create SPSS-API image build and push to a Azure Container Registry (ACR)
-        if: ${{ github.ref_name }} != 'beta'
+        if: "contains(github.ref_name , 'development') || contains(github.ref_name , 'staging')"
         run: |
           docker build . -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_spss:latest-${{ env.GH_BRANCH }}  --file .github/workflows/manifests/${{ env.GH_BRANCH }}/spss_api/Dockerfile
           docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_spss:latest-${{ env.GH_BRANCH }}

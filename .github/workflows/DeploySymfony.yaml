@@ -41,13 +41,13 @@ jobs:
           sudo apt-get install azure-cli
 
       - name: Azure Login (Development/Staging)
-        if: "contains(github.ref_name , 'development') || contains(github.ref_name , 'staging')"
+        if: ${{ github.ref_name != "beta" }}
         uses: azure/login@v1
         with:
           creds: "${{ secrets.AZURE_CREDENTIALS }}"
 
       - name: Azure Login (Beta)
-        if: "contains(github.ref_name , 'beta')"
+        if: ${{ github.ref_name == "beta" }}
         uses: azure/login@v1
         with:
           creds: "${{ secrets.AZURE_CREDENTIALS_BETA }}"

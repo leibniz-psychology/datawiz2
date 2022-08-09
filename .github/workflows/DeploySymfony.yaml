@@ -1,9 +1,9 @@
 on:
   workflow_dispatch:
   push:
-    branches: [ development, staging ]
+    branches: [ development, staging, beta ]
   pull_request:
-    branches: [ development, staging ]
+    branches: [ development, staging, beta ]
 
 jobs:
   deploy-to-aks:
@@ -15,7 +15,7 @@ jobs:
       APP: datawiz2
       GH_BRANCH: ${{ github.ref_name }}
       GH_SHA: ${{ github.sha }}
-      NAMESPACE: ${{ github.ref_name }} #works with branch development and staging, for main branch and prod development it doesn't work
+      NAMESPACE: ${{ github.ref_name }} #works with branch development, beta and staging, for main branch and production deployment it doesn't work
       REGISTRY: ${{ secrets.ACR_NAME }}.azurecr.io
     steps:
       - name: Check out the repo
@@ -40,26 +40,36 @@ jobs:
           sudo apt-get update
           sudo apt-get install azure-cli
 
-      - name: Azure Login
+      - name: Azure Login (Development/Staging)
+        if: ${{ github.ref_name }} != 'beta'
         uses: azure/login@v1
         with:
           creds: "${{ secrets.AZURE_CREDENTIALS }}"
+
+      - name: Azure Login (Beta)
+        if: ${{ github.ref_name }} == 'beta'
+        uses: azure/login@v1
+        with:
+          creds: "${{ secrets.AZURE_CREDENTIALS_BETA }}"
 
       - name: Connect to Azure Container Registry (ACR)
         run: |
           az acr login --name ${{ secrets.ACR_NAME }}
 
       - name: Create SPSS-API image build and push to a Azure Container Registry (ACR)
+        if: ${{ github.ref_name }} != 'beta'
         run: |
           docker build . -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_spss:latest-${{ env.GH_BRANCH }}  --file .github/workflows/manifests/${{ env.GH_BRANCH }}/spss_api/Dockerfile
           docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_spss:latest-${{ env.GH_BRANCH }}
 
       - name: Create PHP-FPM image build and push to a Azure Container Registry (ACR)
+        if: ${{ github.ref_name }} != 'beta'
         run: |
           docker build . -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_php_fpm:latest-${{ env.GH_BRANCH }}  --file .github/workflows/manifests/${{ env.GH_BRANCH }}/php/Dockerfile
           docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_php_fpm:latest-${{ env.GH_BRANCH }}
 
       - name: Create NGINX image and push to a Azure Container Registry (ACR)
+        if: ${{ github.ref_name }} != 'beta'
         run: |
           docker build . -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_nginx:latest-${{ env.GH_BRANCH }}  --file .github/workflows/manifests/${{ env.GH_BRANCH }}/nginx/Dockerfile
           docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_nginx:latest-${{ env.GH_BRANCH }}

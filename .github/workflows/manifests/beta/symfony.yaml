@@ -204,10 +204,10 @@ metadata:
     appgw.ingress.kubernetes.io/use-private-ip: "true"
     external-dns.alpha.kubernetes.io/hostname: datawiz2.beta.zpid.org
     appgw.ingress.kubernetes.io/ssl-redirect: "true"
-    appgw.ingress.kubernetes.io/health-probe-status-codes: "200-599"
-    appgw.ingress.kubernetes.io/health-probe-interval: "10"
-    appgw.ingress.kubernetes.io/health-probe-timeout: "15"
-    appgw.ingress.kubernetes.io/request-timeout: "100"
+    # appgw.ingress.kubernetes.io/health-probe-status-codes: "200-599"
+    # appgw.ingress.kubernetes.io/health-probe-interval: "10"
+    # appgw.ingress.kubernetes.io/health-probe-timeout: "15"
+    # appgw.ingress.kubernetes.io/request-timeout: "100"
 spec:
   tls:
     - secretName: cert-betawildcard

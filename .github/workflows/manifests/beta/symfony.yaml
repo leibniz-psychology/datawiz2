@@ -172,20 +172,47 @@ spec:
               cpu: "1"
           imagePullPolicy: Always
 ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: datawiz2
+#   annotations:
+#     kubernetes.io/ingress.class: traefik # für public beta
+#     traefik.ingress.kubernetes.io/router.entrypoints: websecure # für public beta
+#     external-dns.alpha.kubernetes.io/hostname: datawiz2.beta.zpid.org
+#     traefik.ingress.kubernetes.io/router.tls: "true" # für public beta
+# spec:
+#   tls:
+#     - secretName: cert-betawildcard
+#   rules:
+#     - host: datawiz2.beta.zpid.org
+#       http:
+#         paths:
+#           - path: /
+#             backend:
+#               service:
+#                 name: datawiz2
+#                 port:
+#                   number: 80
+#             pathType: Exact
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: datawiz2
   annotations:
-    kubernetes.io/ingress.class: traefik # für public beta
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure # für public beta
-    external-dns.alpha.kubernetes.io/hostname: datawiz2.beta.zpid.org
-    traefik.ingress.kubernetes.io/router.tls: "true" # für public beta
+    kubernetes.io/ingress.class: azure/application-gateway
+    appgw.ingress.kubernetes.io/use-private-ip: "true"
+    external-dns.alpha.kubernetes.io/hostname: datawiz2.stg.zpid.org
+    appgw.ingress.kubernetes.io/ssl-redirect: "true"
+    appgw.ingress.kubernetes.io/health-probe-status-codes: "200-599"
+    appgw.ingress.kubernetes.io/health-probe-interval: "10"
+    appgw.ingress.kubernetes.io/health-probe-timeout: "15"
+    appgw.ingress.kubernetes.io/request-timeout: "100"
 spec:
   tls:
-    - secretName: cert-betawildcard
+    - secretName: cert-stgwildcard
   rules:
-    - host: datawiz2.beta.zpid.org
+    - host: datawiz2.stg.zpid.org
       http:
         paths:
           - path: /

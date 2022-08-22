@@ -1,0 +1,308 @@
+---
+# kubectl config set-context prod-k8s-datawiz2-beta --namespace=datawiz2-beta --cluster=prod-k8s --user=clusterUser_prod-k8s_prod-k8s
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: datawiz2-beta
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+  namespace: datawiz2-beta
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: datawiz2-beta
+type: Opaque
+data:
+  kcServer: aHR0cHM6Ly9rZXljbG9hay56cGlkLmRlL2F1dGg=
+  spss-api: aHR0cDovLzEyNy4wLjAuMTo4MDgxL2FwaQ==
+  # echo -n "my-new-password" | base64 # kubectl edit secret 
+  dbPassword: a2pzNGI2ZWdyWlQ=
+  dbUrl: bXlzcWw6Ly9yb290OmtqczRiNmVnclpUQGRhdGF3aXoyLWJldGEtbXlzcWw6MzMwNi9hcHA/c2VydmVyVmVyc2lvbj1tYXJpYWRiLTEwLjcuMSZjaGFyc2V0PXV0Zjg=
+  kcClient: ZGF0YXdpejI=
+  kcRealm: WlBJRA==
+  # # kubectl get secret datawiz2-beta -o jsonpath="{.data.kcSecret}" --namespace=beta | base64 --decode
+  kcSecret: UkxhVVBJVkZoS09IMUlPbUN4SUNsdm11cUNzU0NtYWw=
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: datawiz2-beta
+  labels:
+    app: datawiz2-beta
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: datawiz2-beta
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: datawiz2-beta-mysql
+  namespace: datawiz2-beta
+  labels:
+    app: datawiz2-beta
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: datawiz2-beta
+    tier: mysql
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: datawiz2-beta-mysql
+  namespace: datawiz2-beta
+  labels:
+    app: datawiz2-beta
+spec:
+  selector:
+    matchLabels:
+      app: datawiz2-beta
+      tier: mysql
+  replicas: 1
+  revisionHistoryLimit: 0
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: datawiz2-beta
+        tier: mysql
+    spec:
+      volumes:
+        - name: datawiz2-beta-persistent-dbs
+          persistentVolumeClaim:
+            claimName: datawiz2-beta-pv-dbs-claim
+      containers:
+      # az acr import --name crzpidprod --source crzpiddev.azurecr.io/mariadb:10.7.1 --image mariadb:10.7.1
+        - image: crzpidprod.azurecr.io/mariadb:10.7.1
+          name: datawiz2-beta-mysql
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: 100m
+            limits:
+              memory: "1Gi"
+              cpu: "1"
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: datawiz2-beta
+                  key: dbPassword
+          ports:
+            - containerPort: 3306
+              name: dw2-beta-mysql
+          volumeMounts:
+            - name: datawiz2-beta-persistent-dbs
+              mountPath: /var/lib/mysql
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: datawiz2-beta
+  namespace: datawiz2-beta
+spec:
+  selector:
+    matchLabels:
+      app: datawiz2-beta
+  replicas: 1
+  revisionHistoryLimit: 0
+  template:
+    metadata:
+      labels:
+        app: datawiz2-beta
+        tier: frontend
+    spec:
+      volumes:
+        - name: datawiz2-beta-shared-files
+          emptyDir: { }
+        - name: datawiz2-beta-persistent-storage
+          persistentVolumeClaim:
+            claimName: datawiz2-beta-pv-files-claim
+      containers:
+        - name: datawiz2-beta-php
+        # az acr import --name crzpidprod --source crzpiddev.azurecr.io/datawiz2_php_fpm@sha256:1b57985401f92ca3012a91db932c039b583c4ee367bff0b51dea867c4f16230a
+          image: crzpidprod.azurecr.io/datawiz2_php_fpm@sha256:1b57985401f92ca3012a91db932c039b583c4ee367bff0b51dea867c4f16230a
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: 100m
+            limits:
+              memory: "1Gi"
+              cpu: "1"
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: datawiz2-beta
+                  key: dbUrl
+            - name: SPSS_API_URI
+              valueFrom:
+                secretKeyRef:
+                  name: datawiz2-beta
+                  key: spss-api
+            - name: OAUTH_KEYCLOAK_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: datawiz2-beta
+                  key: kcClient
+            - name: OAUTH_KEYCLOAK_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: datawiz2-beta
+                  key: kcSecret
+            - name: OAUTH_KEYCLOAK_AUTH_SERVER_URL
+              valueFrom:
+                secretKeyRef:
+                  name: datawiz2-beta
+                  key: kcServer
+            - name: OAUTH_KEYCLOAK_REALM
+              valueFrom:
+                secretKeyRef:
+                  name: datawiz2-beta
+                  key: kcRealm
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: datawiz2-beta-shared-files
+              mountPath: /var/www
+            - name: datawiz2-beta-persistent-storage
+              mountPath: /var/www/var/uploads
+          lifecycle:
+            postStart:
+              exec:
+                command: [ "/bin/sh", "-c", "cp -r -p /build/. /var/www" ]
+        - name: datawiz2-beta-nginx
+        # az acr import --name crzpidprod --source crzpiddev.azurecr.io/datawiz2_nginx@sha256:29173a606636f0d9b942d1481805903d6847db09b1931c5dd2956df9c912feed
+          image: crzpidprod.azurecr.io/datawiz2_nginx@sha256:29173a606636f0d9b942d1481805903d6847db09b1931c5dd2956df9c912feed
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: 100m
+            limits:
+              memory: "512Mi"
+              cpu: "1"
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: datawiz2-beta-shared-files
+              mountPath: /var/www
+          ports:
+            - containerPort: 80
+        - name: datawiz2-beta-spss
+        # az acr import --name crzpidprod --source crzpiddev.azurecr.io/datawiz2_spss@sha256:3fb2259e29a300ca3eb7f9cd34c7524c9eea828b64105da8872ea3a7c141f1c8
+          image: crzpidprod.azurecr.io/datawiz2_spss@sha256:3fb2259e29a300ca3eb7f9cd34c7524c9eea828b64105da8872ea3a7c141f1c8
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: 100m
+            limits:
+              memory: "512Mi"
+              cpu: "1"
+          imagePullPolicy: Always
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: datawiz2-beta
+  namespace: datawiz2-beta
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+    appgw.ingress.kubernetes.io/ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: le-clusterissuer-http01
+spec:
+  tls:
+   - hosts:
+     - datawiz2.beta.zpid.org
+     secretName: datawiz2-beta-cert
+  rules:
+    - host: datawiz2.beta.zpid.org
+      http:
+        paths:
+          - path: /
+            backend:
+              service:
+                name: datawiz2-beta
+                port:
+                  number: 80
+            pathType: Exact
+---
+### Damit die HTTP01 challenge des CERT MANAGER erfolgreich ist, ist vermutlich eine Firewallregel für den Ingress + TEMP POD der HTTP01 challenge notwendig.
+# apiVersion: networking.k8s.io/v1
+# kind: NetworkPolicy
+# metadata:
+#   name: datawiz2-beta.HTTP01
+#   namespace: datawiz2-beta
+# spec:
+#   podSelector:
+#     matchLabels:
+#       xx: yy #### ??
+#   ingress:
+#     - ports:
+#         - port: 80 #### ??
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: datawiz2-beta.mysql
+  namespace: datawiz2-beta
+spec:
+  podSelector:
+    matchLabels:
+      app: datawiz2-beta
+      tier: mysql
+  ingress:
+    - ports:
+        - port: 3306
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: datawiz2-beta.frontend
+  namespace: datawiz2-beta
+spec:
+  podSelector:
+    matchLabels:
+      app: datawiz2-beta
+      tier: frontend
+  ingress:
+    - ports:
+        - port: 80
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: datawiz2-beta-pv-files-claim
+  namespace: datawiz2-beta
+  labels:
+    app: datawiz2-beta
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 4Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: datawiz2-beta-pv-dbs-claim
+  namespace: datawiz2-beta
+  labels:
+    app: datawiz2-beta
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 4Gi

@@ -1,4 +1,4 @@
-var Encore = require("@symfony/webpack-encore");
+const Encore = require("@symfony/webpack-encore");
 const path = require("path");
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
@@ -28,6 +28,8 @@ Encore
   .addEntry("codebook", "./src/View/Assets/Scripts/app-codebook.js")
   .addEntry("landing", "./src/View/Assets/Scripts/app-landing.js")
   //.addEntry('page2', './src/View/Assets/Scripts/page2.Scripts')
+    // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
+    .enableStimulusBridge('./src/View/Assets/Scripts/controllers.json')
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()
@@ -55,11 +57,16 @@ Encore
     };
   })
 
-  // enables @babel/preset-env polyfills
-  .configureBabelPresetEnv((config) => {
-    config.useBuiltIns = "usage";
-    config.corejs = 3;
-  })
+    // configure Babel
+    // .configureBabel((config) => {
+    //     config.plugins.push('@babel/a-babel-plugin');
+    // })
+
+    // enables and configure @babel/preset-env polyfills
+    .configureBabelPresetEnv((config) => {
+        config.useBuiltIns = 'usage';
+        config.corejs = '3.23';
+    })
 
   // enables Sass/SCSS support
   .enableSassLoader()
@@ -85,6 +92,15 @@ Encore
 // uncomment to get integrity="..." attributes on your script & link tags
 // requires WebpackEncoreBundle 1.4 or higher
 //.enableIntegrityHashes(Encore.isProduction())
+// uncomment if you use React
+//.enableReactPreset()
+
+// uncomment to get integrity="..." attributes on your script & link tags
+// requires WebpackEncoreBundle 1.4 or higher
+//.enableIntegrityHashes(Encore.isProduction())
+
+// uncomment if you're having problems with a jQuery plugin
+//.autoProvidejQuery()
 
 // uncomment if you're having problems with a jQuery plugin
 //.autoProvidejQuery()

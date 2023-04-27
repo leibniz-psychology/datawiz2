@@ -8,6 +8,8 @@
 // any CSS you import will output into a single Style file (app.Style in this case)
 import "../Styles/app.scss";
 
+import './bootstrap';
+
 import "dropzone/dist/dropzone.css";
 
 import Dropzone from "dropzone";

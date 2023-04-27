@@ -86,7 +86,7 @@ class FileManagementController extends AbstractController
      * @param Request $request
      * @return JsonResponse
      */
-    public function submitSavAction(string $fileId, Request $request): JsonResponse
+    public function submitSavAction(string $fileId): JsonResponse
     {
         $this->logger->debug("Enter FileManagementController::previewSavAction with [FileId: $fileId]");
         $dataset = $this->em->find(Dataset::class, $fileId);
@@ -205,7 +205,7 @@ class FileManagementController extends AbstractController
      * @param string $uuid
      * @return RedirectResponse|Response
      */
-    public function deleteDatasetAction(string $uuid)
+    public function deleteDatasetAction(string $uuid): RedirectResponse
     {
         $this->logger->debug("Enter FileManagementController::deleteMaterialAction with [UUID: $uuid]");
         $dataset = $this->em->find(Dataset::class, $uuid);
@@ -223,7 +223,7 @@ class FileManagementController extends AbstractController
      * @param Request $request
      * @return RedirectResponse
      */
-    public function deleteMaterialAction(string $uuid, Request $request): RedirectResponse
+    public function deleteMaterialAction(string $uuid): RedirectResponse
     {
         $this->logger->debug("Enter FileManagementController::deleteMaterialAction with [UUID: $uuid]");
         $material = $this->em->find(AdditionalMaterial::class, $uuid);

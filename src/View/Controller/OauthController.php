@@ -40,7 +40,7 @@ class OauthController extends AbstractController
     /**
      * @Route("/logout", name="logout")
      */
-    public function loginCheckAction(Request $request, ClientRegistry $clientRegistry)
+    public function loginCheckAction(ClientRegistry $clientRegistry)
     {
     }
 

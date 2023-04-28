@@ -27,33 +27,13 @@ use Symfony\Component\Security\Core\Security;
  */
 class StudyController extends AbstractController
 {
-    private Security $security;
-    private Questionnairable $questionnaire;
-    private EntityManagerInterface $em;
-    private LoggerInterface $logger;
-    private Crudable $crud;
-
-    /**
-     * @param Security $security
-     * @param Questionnairable $questionnaire
-     * @param EntityManagerInterface $em
-     * @param LoggerInterface $logger
-     * @param Crudable $crud
-     */
-    public function __construct(Security $security, Questionnairable $questionnaire, EntityManagerInterface $em, LoggerInterface $logger, Crudable $crud)
+    public function __construct(private readonly Security $security, private readonly Questionnairable $questionnaire, private readonly EntityManagerInterface $em, private readonly LoggerInterface $logger, private readonly Crudable $crud)
     {
-        $this->security = $security;
-        $this->questionnaire = $questionnaire;
-        $this->em = $em;
-        $this->logger = $logger;
-        $this->crud = $crud;
     }
 
 
     /**
      * @Route("/", name="overview")
-     *
-     * @return Response
      */
     public function overviewAction(): Response
     {
@@ -67,9 +47,6 @@ class StudyController extends AbstractController
     /**
      * @Route("/new", name="new")
      *
-     * @param Questionnairable $questionnaire
-     * @param Request $request
-     * @return Response
      * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
     public function newAction(Questionnairable $questionnaire, Request $request): Response
@@ -96,10 +73,6 @@ class StudyController extends AbstractController
 
     /**
      * @Route("/{uuid}/settings", name="settings")
-     *
-     * @param string $uuid
-     * @param Request $request
-     * @return Response
      */
     public function settingsAction(string $uuid, Request $request): Response
     {
@@ -126,9 +99,6 @@ class StudyController extends AbstractController
     /**
      * @Route("/{uuid}/documentation", name="documentation")
      *
-     * @param string $uuid
-     * @param Request $request
-     * @return Response
      * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
     public function documentationAction(string $uuid, Request $request): Response
@@ -190,9 +160,6 @@ class StudyController extends AbstractController
     /**
      * @Route("/{uuid}/theory", name="theory")
      *
-     * @param string $uuid
-     * @param Request $request
-     * @return Response
      * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
     public function theoryAction(string $uuid, Request $request): Response
@@ -231,9 +198,6 @@ class StudyController extends AbstractController
     /**
      * @Route("/{uuid}/sample", name="sample")
      *
-     * @param string $uuid
-     * @param Request $request
-     * @return Response
      * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
     public function sampleAction(string $uuid, Request $request): Response
@@ -277,9 +241,6 @@ class StudyController extends AbstractController
     /**
      * @Route("/{uuid}/measure", name="measure")
      *
-     * @param string $uuid
-     * @param Request $request
-     * @return Response
      * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
     public function measureAction(string $uuid, Request $request): Response
@@ -322,9 +283,6 @@ class StudyController extends AbstractController
     /**
      * @Route("/{uuid}/method", name="method")
      *
-     * @param string $uuid
-     * @param Request $request
-     * @return Response
      * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
     public function methodAction(string $uuid, Request $request): Response
@@ -362,9 +320,6 @@ class StudyController extends AbstractController
 
     /**
      * @Route("/{uuid}/materials", name="materials")
-     *
-     * @param string $uuid
-     * @return Response
      */
     public function materialsAction(string $uuid): Response
     {
@@ -382,9 +337,6 @@ class StudyController extends AbstractController
 
     /**
      * @Route("/{uuid}/datasets", name="datasets")
-     *
-     * @param string $uuid
-     * @return Response
      */
     public function datasetsAction(string $uuid): Response
     {
@@ -402,9 +354,6 @@ class StudyController extends AbstractController
 
     /**
      * @Route("/{uuid}/introduction", name="introduction")
-     *
-     * @param string $uuid
-     * @return Response
      */
     public function introductionAction(string $uuid): Response
     {
@@ -422,9 +371,6 @@ class StudyController extends AbstractController
 
     /**
      * @Route("/{uuid}/delete", name="delete")
-     *
-     * @param string $uuid
-     * @return Response
      */
     public function deleteAction(string $uuid): Response
     {
@@ -440,15 +386,10 @@ class StudyController extends AbstractController
         return $this->redirectToRoute('Study-overview');
     }
 
-
-    /**
-     * @param array|null $array
-     * @return array|string[]
-     */
     private function _prepareEmptyArray(?array $array): array
     {
         if (null === $array || 0 >= sizeof($array)) {
-            $array = array("");
+            $array = [""];
         }
 
         return $array;
@@ -456,39 +397,24 @@ class StudyController extends AbstractController
 
 
     /**
-     * @param FormInterface $form
-     * @param string $uuid
-     * @return RedirectResponse|null
      * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
     private function _routeButtonClicks(FormInterface $form, string $uuid): ?RedirectResponse
     {
-        switch (true) {
-            case $form->get('saveAndIntroduction')->isClicked():
-                return $this->redirectToRoute('Study-introduction', ['uuid' => $uuid]);
-            case $form->get('saveAndDocumentation')->isClicked():
-                return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
-            case $form->get('saveAndTheory')->isClicked():
-                return $this->redirectToRoute('Study-theory', ['uuid' => $uuid]);
-            case $form->get('saveAndMethod')->isClicked():
-                return $this->redirectToRoute('Study-method', ['uuid' => $uuid]);
-            case $form->get('saveAndMeasure')->isClicked():
-                return $this->redirectToRoute('Study-measure', ['uuid' => $uuid]);
-            case $form->get('saveAndSample')->isClicked():
-                return $this->redirectToRoute('Study-sample', ['uuid' => $uuid]);
-            case $form->get('saveAndDatasets')->isClicked():
-                return $this->redirectToRoute('Study-datasets', ['uuid' => $uuid]);
-            case $form->get('saveAndMaterials')->isClicked():
-                return $this->redirectToRoute('Study-materials', ['uuid' => $uuid]);
-            case $form->get('saveAndReview')->isClicked():
-                return $this->redirectToRoute('Study-review', ['uuid' => $uuid]);
-            case $form->get('saveAndExport')->isClicked():
-                return $this->redirectToRoute('export_index', ['uuid' => $uuid]);
-            case $form->get('saveAndSettings')->isClicked():
-                return $this->redirectToRoute('Study-settings', ['uuid' => $uuid]);
-        }
-
-        return null;
+        return match (true) {
+            $form->get('saveAndIntroduction')->isClicked() => $this->redirectToRoute('Study-introduction', ['uuid' => $uuid]),
+            $form->get('saveAndDocumentation')->isClicked() => $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]),
+            $form->get('saveAndTheory')->isClicked() => $this->redirectToRoute('Study-theory', ['uuid' => $uuid]),
+            $form->get('saveAndMethod')->isClicked() => $this->redirectToRoute('Study-method', ['uuid' => $uuid]),
+            $form->get('saveAndMeasure')->isClicked() => $this->redirectToRoute('Study-measure', ['uuid' => $uuid]),
+            $form->get('saveAndSample')->isClicked() => $this->redirectToRoute('Study-sample', ['uuid' => $uuid]),
+            $form->get('saveAndDatasets')->isClicked() => $this->redirectToRoute('Study-datasets', ['uuid' => $uuid]),
+            $form->get('saveAndMaterials')->isClicked() => $this->redirectToRoute('Study-materials', ['uuid' => $uuid]),
+            $form->get('saveAndReview')->isClicked() => $this->redirectToRoute('Study-review', ['uuid' => $uuid]),
+            $form->get('saveAndExport')->isClicked() => $this->redirectToRoute('export_index', ['uuid' => $uuid]),
+            $form->get('saveAndSettings')->isClicked() => $this->redirectToRoute('Study-settings', ['uuid' => $uuid]),
+            default => null,
+        };
     }
 
     private function _checkAccess(Experiment $experiment): bool

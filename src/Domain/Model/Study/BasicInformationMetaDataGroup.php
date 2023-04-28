@@ -63,9 +63,6 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, 
         return BasicInformationType::class;
     }
 
-    /**
-     * @return array
-     */
     public function getReviewCollection(): array
     {
         return [
@@ -87,81 +84,51 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, 
         ];
     }
 
-    /**
-     * @return string|null
-     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * @param string|null $title
-     */
     public function setTitle(?string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * @return string|null
-     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @param string|null $description
-     */
     public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * @return array|null
-     */
     public function getRelatedPublications(): ?array
     {
         return $this->related_publications;
     }
 
-    /**
-     * @param array|null $related_publications
-     */
     public function setRelatedPublications(?array $related_publications): void
     {
         $this->related_publications = null == $related_publications ? null : array_values($related_publications);
     }
 
-    /**
-     * @return Experiment
-     */
     public function getExperiment(): Experiment
     {
         return $this->experiment;
     }
 
-    /**
-     * @param Experiment $experiment
-     */
     public function setExperiment(Experiment $experiment): void
     {
         $this->experiment = $experiment;
     }
 
-    /**
-     * @return Collection|null
-     */
     public function getCreators(): ?Collection
     {
         return $this->creators;
     }
 
-    /**
-     * @param Collection|null $creators
-     */
     public function setCreators(?Collection $creators): void
     {
         $this->creators = $creators;

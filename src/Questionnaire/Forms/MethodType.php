@@ -29,9 +29,7 @@ class MethodType extends AbstractType
                 'label' => 'input.setting.label',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => ['class' => 'p-1'],
-                'choice_attr' => function () {
-                    return ['class' => 'RadioButton-Input'];
-                },
+                'choice_attr' => fn() => ['class' => 'RadioButton-Input'],
             ])
             ->add("settingLocation", TextareaType::class, [
                 'required' => false,
@@ -57,11 +55,9 @@ class MethodType extends AbstractType
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'help_attr' => ['class' => 'px-6 pt-1'],
                 'attr' => ['class' => 'p-1'],
-                'choice_attr' => function () {
-                    return [
-                        'class' => 'RadioButton-Input',
-                    ];
-                },
+                'choice_attr' => fn() => [
+                    'class' => 'RadioButton-Input',
+                ],
             ])
             ->add("experimentalDetails", ChoiceType::class, [
                 'required' => false,
@@ -76,11 +72,9 @@ class MethodType extends AbstractType
                 'label_attr' => ['class' => 'MetaData-Label !pl-0'],
                 'label_html' => true,
                 'attr' => ['class' => 'p-1'],
-                'choice_attr' => function () {
-                    return [
-                        'class' => 'RadioButton-Input',
-                    ];
-                },
+                'choice_attr' => fn() => [
+                    'class' => 'RadioButton-Input',
+                ],
             ])
             ->add("nonExperimentalDetails", ChoiceType::class, [
                 'required' => false,
@@ -97,11 +91,9 @@ class MethodType extends AbstractType
                 'label_attr' => ['class' => 'MetaData-Label !pl-0'],
                 'label_html' => true,
                 'attr' => ['class' => 'p-1'],
-                'choice_attr' => function () {
-                    return [
-                        'class' => 'RadioButton-Input',
-                    ];
-                },
+                'choice_attr' => fn() => [
+                    'class' => 'RadioButton-Input',
+                ],
             ])
             ->add("observationalType", ChoiceType::class, [
                 'required' => false,
@@ -152,9 +144,7 @@ class MethodType extends AbstractType
                 'label' => 'input.control-operations.label',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => ['class' => 'p-1'],
-                'choice_attr' => function () {
-                    return ['class' => 'RadioButton-Input'];
-                },
+                'choice_attr' => fn() => ['class' => 'RadioButton-Input'],
             ])
             ->add("otherControlOperations", TextareaType::class, [
                 'required' => false,

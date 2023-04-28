@@ -15,17 +15,8 @@ use SplTempFileObject;
 
 class CrudService implements Crudable
 {
-    private Filesystem $filesystem;
-    private EntityManagerInterface $em;
-
-    /**
-     * @param Filesystem $filesystem
-     * @param EntityManagerInterface $em
-     */
-    public function __construct(Filesystem $filesystem, EntityManagerInterface $em)
+    public function __construct(private readonly Filesystem $filesystem, private readonly EntityManagerInterface $em)
     {
-        $this->filesystem = $filesystem;
-        $this->em = $em;
     }
 
 
@@ -97,7 +88,7 @@ class CrudService implements Crudable
             $this->em->remove($material);
             $this->em->flush();
             $success = true;
-        } catch (FileNotFoundException $e) {
+        } catch (FileNotFoundException) {
             $success = false;
         }
 
@@ -122,7 +113,7 @@ class CrudService implements Crudable
             $this->em->remove($dataset);
             $this->em->flush();
             $success = true;
-        } catch (FileNotFoundException $e) {
+        } catch (FileNotFoundException) {
             $success = false;
         }
 
@@ -142,7 +133,7 @@ class CrudService implements Crudable
             } else {
                 $success = $this->filesystem->write("matrix/$datasetId.csv", $reader->toString());
             }
-        } catch (FileExistsException | FileNotFoundException | Exception $e) {
+        } catch (FileExistsException | FileNotFoundException | Exception) {
             $success = false;
         }
 

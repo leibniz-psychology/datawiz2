@@ -18,17 +18,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AdministrationController extends AbstractController
 {
-    private EntityManagerInterface $em;
-    private LoggerInterface $logger;
-
-    /**
-     * @param EntityManagerInterface $em
-     * @param LoggerInterface $logger
-     */
-    public function __construct(EntityManagerInterface $em, LoggerInterface $logger)
+    public function __construct(
+        private readonly EntityManagerInterface $em,
+        private readonly LoggerInterface $logger
+    )
     {
-        $this->em = $em;
-        $this->logger = $logger;
     }
 
 
@@ -37,8 +31,6 @@ class AdministrationController extends AbstractController
      *     "/admin/user",
      *     name="admin_user"
      * )
-     *
-     * @return Response
      */
     public function listUser(): Response
     {
@@ -57,10 +49,6 @@ class AdministrationController extends AbstractController
      *     "/admin/user/{uid}",
      *      name="admin_user_edit"
      * )
-     *
-     * @param Request $request
-     * @param string $uid
-     * @return Response
      */
     public function editUserDetails(Request $request, string $uid): Response
     {
@@ -87,8 +75,6 @@ class AdministrationController extends AbstractController
      *     "/admin/studies",
      *     name="admin_studies"
      * )
-     *
-     * @return Response
      */
     public function listStudies(): Response
     {
@@ -108,9 +94,6 @@ class AdministrationController extends AbstractController
      *     "/admin/user/{uid}/studies",
      *     name="admin_user_studies"
      * )
-     *
-     * @param string $uid
-     * @return Response
      */
     public function listStudiesForUser(string $uid): Response
     {

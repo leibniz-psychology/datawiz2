@@ -53,25 +53,16 @@ class DataWizUser implements UserInterface
     private DateTime $lastLogin;
 
 
-    /**
-     * @return Uuid
-     */
     public function getId(): Uuid
     {
         return $this->id;
     }
 
-    /**
-     * @param Uuid $id
-     */
     public function setId(Uuid $id): void
     {
         $this->id = $id;
     }
 
-    /**
-     * @return array
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -80,9 +71,6 @@ class DataWizUser implements UserInterface
         return array_unique($roles);
     }
 
-    /**
-     * @param array $roles
-     */
     public function setRoles(array $roles): void
     {
         $this->roles = $roles;
@@ -109,49 +97,31 @@ class DataWizUser implements UserInterface
         return null;
     }
 
-    /**
-     * @return string|null
-     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @param string|null $email
-     */
     public function setEmail(?string $email): void
     {
         $this->email = $email;
     }
 
-    /**
-     * @return string|null
-     */
     public function getFirstname(): ?string
     {
         return $this->firstname;
     }
 
-    /**
-     * @param string|null $firstname
-     */
     public function setFirstname(?string $firstname): void
     {
         $this->firstname = $firstname;
     }
 
-    /**
-     * @return string|null
-     */
     public function getLastname(): ?string
     {
         return $this->lastname;
     }
 
-    /**
-     * @param string|null $lastname
-     */
     public function setLastname(?string $lastname): void
     {
         $this->lastname = $lastname;
@@ -163,33 +133,21 @@ class DataWizUser implements UserInterface
         return $this->getId();
     }
 
-    /**
-     * @return DateTime
-     */
     public function getDateRegistered(): DateTime
     {
         return $this->dateRegistered;
     }
 
-    /**
-     * @param DateTime $dateRegistered
-     */
     public function setDateRegistered(DateTime $dateRegistered): void
     {
         $this->dateRegistered = $dateRegistered;
     }
 
-    /**
-     * @return DateTime
-     */
     public function getLastLogin(): DateTime
     {
         return $this->lastLogin;
     }
 
-    /**
-     * @param DateTime $lastLogin
-     */
     public function setLastLogin(DateTime $lastLogin): void
     {
         $this->lastLogin = $lastLogin;

@@ -15,17 +15,11 @@ abstract class UuidEntity
      */
     protected Uuid $id;
 
-    /**
-     * @return Uuid
-     */
     public function getId(): Uuid
     {
         return $this->id;
     }
 
-    /**
-     * @param Uuid $id
-     */
     public function setId(Uuid $id): void
     {
         $this->id = $id;

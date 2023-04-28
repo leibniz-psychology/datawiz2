@@ -83,97 +83,61 @@ class AdditionalMaterial extends UuidEntity implements Questionable
      */
     private Experiment $experiment;
 
-    /**
-     * @return string
-     */
     public function getOriginalName(): string
     {
         return $this->originalName;
     }
 
-    /**
-     * @param string $originalName
-     */
     public function setOriginalName(string $originalName): void
     {
         $this->originalName = $originalName;
     }
 
-    /**
-     * @return string
-     */
     public function getOriginalMimetype(): string
     {
         return $this->originalMimetype;
     }
 
-    /**
-     * @param string $originalMimetype
-     */
     public function setOriginalMimetype(string $originalMimetype): void
     {
         $this->originalMimetype = $originalMimetype;
     }
 
-    /**
-     * @return DateTime|null
-     */
     public function getDateUploaded(): ?DateTime
     {
         return $this->dateUploaded;
     }
 
-    /**
-     * @param DateTime|null $dateUploaded
-     */
     public function setDateUploaded(?DateTime $dateUploaded): void
     {
         $this->dateUploaded = $dateUploaded;
     }
 
-    /**
-     * @return int
-     */
     public function getOriginalSize(): int
     {
         return $this->originalSize;
     }
 
-    /**
-     * @param int $originalSize
-     */
     public function setOriginalSize(int $originalSize): void
     {
         $this->originalSize = $originalSize;
     }
 
-    /**
-     * @return string
-     */
     public function getStorageName(): string
     {
         return $this->storageName;
     }
 
-    /**
-     * @param string $storageName
-     */
     public function setStorageName(string $storageName): void
     {
         $this->storageName = $storageName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @param string|null $description
-     */
     public function setDescription(?string $description): void
     {
         $this->description = $description;

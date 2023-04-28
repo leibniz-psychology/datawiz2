@@ -9,11 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class QuestionnaireService implements Questionnairable
 {
-    private $formBuilder;
-
-    public function __construct(FormFactoryInterface $formBuilder)
+    public function __construct(private readonly FormFactoryInterface $formBuilder)
     {
-        $this->formBuilder = $formBuilder;
     }
 
     public function formFromEntity(Questionable $entity, string $buttonLabel): ?FormInterface

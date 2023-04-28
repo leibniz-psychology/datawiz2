@@ -13,14 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class NavigationController extends AbstractController
 {
-    private EntityManagerInterface $em;
-
-    /**
-     * @param EntityManagerInterface $em
-     */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private readonly EntityManagerInterface $em)
     {
-        $this->em = $em;
     }
 
 

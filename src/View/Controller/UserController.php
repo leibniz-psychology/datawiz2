@@ -21,17 +21,8 @@ class UserController extends AbstractController
 {
 
 
-    private LoggerInterface $logger;
-    private KernelInterface $kernel;
-
-    /**
-     * @param LoggerInterface $logger
-     * @param KernelInterface $kernel
-     */
-    public function __construct(LoggerInterface $logger, KernelInterface $kernel)
+    public function __construct(private readonly LoggerInterface $logger, private readonly KernelInterface $kernel)
     {
-        $this->logger = $logger;
-        $this->kernel = $kernel;
     }
 
 
@@ -41,7 +32,6 @@ class UserController extends AbstractController
      *     name="dw_install"
      * )
      *
-     * @return Response
      * @throws Exception
      */
     public function installDW(): Response

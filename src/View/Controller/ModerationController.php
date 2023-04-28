@@ -14,17 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ModerationController extends AbstractController
 {
-    private EntityManagerInterface $em;
-    private LoggerInterface $logger;
-
-    /**
-     * @param EntityManagerInterface $em
-     * @param LoggerInterface $logger
-     */
-    public function __construct(EntityManagerInterface $em, LoggerInterface $logger)
+    public function __construct(private readonly EntityManagerInterface $em, private readonly LoggerInterface $logger)
     {
-        $this->em = $em;
-        $this->logger = $logger;
     }
 
 
@@ -33,8 +24,6 @@ class ModerationController extends AbstractController
      *     "/moderation/dashboard",
      *      name="moderation_dashboard"
      * )
-     *
-     * @return Response
      */
     public function dashboard(): Response
     {

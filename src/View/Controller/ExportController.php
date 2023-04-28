@@ -35,21 +35,10 @@ use ZipArchive;
 class ExportController extends AbstractController
 {
 
-    private LoggerInterface $logger;
-    private EntityManagerInterface $em;
-    private Serializer $serializer;
-    private Filesystem $filesystem;
+    private readonly Serializer $serializer;
 
-    /**
-     * @param LoggerInterface $logger
-     * @param EntityManagerInterface $em
-     * @param Filesystem $filesystem
-     */
-    public function __construct(LoggerInterface $logger, EntityManagerInterface $em, Filesystem $filesystem)
+    public function __construct(private readonly LoggerInterface $logger, private readonly EntityManagerInterface $em, private readonly Filesystem $filesystem)
     {
-        $this->logger = $logger;
-        $this->em = $em;
-        $this->filesystem = $filesystem;
         $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
         $metadataAwareNameConverter = new MetadataAwareNameConverter($classMetadataFactory);
         $this->serializer = new Serializer(
@@ -61,9 +50,6 @@ class ExportController extends AbstractController
 
     /**
      * @Route("/export/{uuid}", name="export_index", methods={"GET"})
-     *
-     * @param string $uuid
-     * @return Response
      */
     public function exportIndex(string $uuid): Response
     {
@@ -75,10 +61,6 @@ class ExportController extends AbstractController
 
     /**
      * @Route("/export/{uuid}", name="export_action", methods={"POST"})
-     *
-     * @param Request $request
-     * @param string $uuid
-     * @return Response
      */
     public function exportAction(Request $request, string $uuid): Response
     {
@@ -147,9 +129,6 @@ class ExportController extends AbstractController
     }
 
     /**
-     * @param Experiment $experiment
-     * @param string $format
-     * @param ZipArchive $zip
      * @return bool Error:True on failure, False on success
      */
     private function appendStudyToZip(Experiment $experiment, string $format, ZipArchive &$zip): bool
@@ -173,9 +152,6 @@ class ExportController extends AbstractController
     }
 
     /**
-     * @param Experiment $experiment
-     * @param string $format
-     * @param ZipArchive $zip
      * @return bool Error:True on failure, False on success
      */
     private function appendDatasetToZip(Experiment $experiment, string $format, ZipArchive &$zip): bool
@@ -183,8 +159,8 @@ class ExportController extends AbstractController
         $error = false;
         foreach ($experiment->getOriginalDatasets() as $dataset) {
             $folderName = $dataset->getOriginalName();
-            if (str_contains($folderName, '.')) {
-                $folderName = explode('.', $folderName)[0];
+            if (str_contains((string) $folderName, '.')) {
+                $folderName = explode('.', (string) $folderName)[0];
             }
             $folder = 'datasets/'.$this->sanitizeFilename($folderName);
             $error = $zip->addEmptyDir($folder) ? $error : true;
@@ -228,12 +204,7 @@ class ExportController extends AbstractController
         return $error;
     }
 
-    /**
-     * @param Experiment $experiment
-     * @param ZipArchive $zip
-     * @return bool|mixed
-     */
-    private function appendMaterialToZip(Experiment $experiment, ZipArchive &$zip): bool
+    private function appendMaterialToZip(Experiment $experiment, ZipArchive &$zip): mixed
     {
         $error = false;
         foreach ($experiment->getAdditionalMaterials() as $material) {
@@ -253,10 +224,6 @@ class ExportController extends AbstractController
         return $error;
     }
 
-    /**
-     * @param Collection $codebook
-     * @return string
-     */
     private function buildCSVHeader(Collection $codebook): string
     {
         $header = [];
@@ -267,13 +234,9 @@ class ExportController extends AbstractController
         return implode(",", $header).PHP_EOL;
     }
 
-    /**
-     * @param string|null $name
-     * @return string|null
-     */
     private function sanitizeFilename(?string $name): ?string
     {
-        $chars = array(" ", '"', "'", "&", "/", "\\", "?", "#", "<", ">", ".", ",");
+        $chars = [" ", '"', "'", "&", "/", "\\", "?", "#", "<", ">", ".", ","];
 
         return null != $name ? strtolower(trim(str_replace($chars, '_', $name))) : 'unnamed';
     }

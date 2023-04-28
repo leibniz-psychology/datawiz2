@@ -97,9 +97,6 @@ class MethodMetaDataGroup extends UuidEntity implements Questionable, Reviewable
      */
     protected Experiment $experiment;
 
-    /**
-     * @return array
-     */
     public function getReviewCollection(): array
     {
         return [
@@ -160,185 +157,116 @@ class MethodMetaDataGroup extends UuidEntity implements Questionable, Reviewable
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getFormTypeForEntity(): string
     {
         return MethodType::class;
     }
 
-    /**
-     * @return string|null
-     */
     public function getSetting(): ?string
     {
         return $this->setting;
     }
 
-    /**
-     * @param string|null $setting
-     */
     public function setSetting(?string $setting): void
     {
         $this->setting = $setting;
     }
 
-    /**
-     * @return string|null
-     */
     public function getSettingLocation(): ?string
     {
         return $this->setting_location;
     }
 
-    /**
-     * @param string|null $setting_location
-     */
     public function setSettingLocation(?string $setting_location): void
     {
         $this->setting_location = $setting_location;
     }
 
-    /**
-     * @return string|null
-     */
     public function getResearchDesign(): ?string
     {
         return $this->research_design;
     }
 
-    /**
-     * @param string|null $research_design
-     */
     public function setResearchDesign(?string $research_design): void
     {
         $this->research_design = $research_design;
     }
 
-    /**
-     * @return string|null
-     */
     public function getExperimentalDetails(): ?string
     {
         return $this->experimental_details;
     }
 
-    /**
-     * @param string|null $experimental_details
-     */
     public function setExperimentalDetails(?string $experimental_details): void
     {
         $this->experimental_details = $experimental_details;
     }
 
-    /**
-     * @return string|null
-     */
     public function getNonExperimentalDetails(): ?string
     {
         return $this->non_experimental_details;
     }
 
-    /**
-     * @param string|null $non_experimental_details
-     */
     public function setNonExperimentalDetails(?string $non_experimental_details): void
     {
         $this->non_experimental_details = $non_experimental_details;
     }
 
-    /**
-     * @return string|null
-     */
     public function getObservationalType(): ?string
     {
         return $this->observational_type;
     }
 
-    /**
-     * @param string|null $observational_type
-     */
     public function setObservationalType(?string $observational_type): void
     {
         $this->observational_type = $observational_type;
     }
 
-    /**
-     * @return string|null
-     */
     public function getManipulations(): ?string
     {
         return $this->manipulations;
     }
 
-    /**
-     * @param string|null $manipulations
-     */
     public function setManipulations(?string $manipulations): void
     {
         $this->manipulations = $manipulations;
     }
 
-    /**
-     * @return string|null
-     */
     public function getExperimentalDesign(): ?string
     {
         return $this->experimental_design;
     }
 
-    /**
-     * @param string|null $experimental_design
-     */
     public function setExperimentalDesign(?string $experimental_design): void
     {
         $this->experimental_design = $experimental_design;
     }
 
-    /**
-     * @return string|null
-     */
     public function getControlOperations(): ?string
     {
         return $this->control_operations;
     }
 
-    /**
-     * @param string|null $control_operations
-     */
     public function setControlOperations(?string $control_operations): void
     {
         $this->control_operations = $control_operations;
     }
 
-    /**
-     * @return string|null
-     */
     public function getOtherControlOperations(): ?string
     {
         return $this->other_control_operations;
     }
 
-    /**
-     * @param string|null $other_control_operations
-     */
     public function setOtherControlOperations(?string $other_control_operations): void
     {
         $this->other_control_operations = $other_control_operations;
     }
 
-    /**
-     * @return Experiment
-     */
     public function getExperiment(): Experiment
     {
         return $this->experiment;
     }
 
-    /**
-     * @param Experiment $experiment
-     */
     public function setExperiment(Experiment $experiment): void
     {
         $this->experiment = $experiment;

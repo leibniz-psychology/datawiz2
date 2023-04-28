@@ -12,9 +12,9 @@ use Twig\Extra\Markdown\MarkdownInterface;
 class CommonMarkdown implements MarkdownInterface
 {
     // Define your configuration, if needed
-    private $config = [];
-    private $environment;
-    private $converter;
+    private array $config = [];
+    private readonly Environment $environment;
+    private readonly MarkdownConverter $converter;
 
     public function __construct(MarkdownConverter $converter = null)
     {

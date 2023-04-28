@@ -13,75 +13,56 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
-/**
- * @ORM\Entity()
- * @ORM\Table(name="experiment_sample")
- */
+#[ORM\Table(name: 'experiment_sample')]
+#[ORM\Entity]
 class SampleMetaDataGroup extends UuidEntity implements Questionable, Reviewable
 {
 
-    /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
-     * @SerializedName("participants")
-     * @Groups({"study"})
-     */
+    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[SerializedName('participants')]
+    #[Groups(['study'])]
     private ?string $participants = null;
 
-    /**
-     * @ORM\Column(type="array", length=1500, nullable=true)
-     * @SerializedName("inclusion_criteria")
-     * @Groups({"study"})
-     */
+    #[ORM\Column(length: 1500, nullable: true)]
+    #[SerializedName('inclusion_criteria')]
+    #[Groups(['study'])]
     private ?array $inclusion_criteria = null;
 
-    /**
-     * @ORM\Column(type="array", length=1500, nullable=true)
-     * @SerializedName("exclusion_criteria")
-     * @Groups({"study"})
-     */
+    #[ORM\Column(length: 1500, nullable: true)]
+    #[SerializedName('exclusion_criteria')]
+    #[Groups(['study'])]
     private ?array $exclusion_criteria = null;
 
-    /**
-     * @ORM\Column(type="array", length=1500, nullable=true)
-     * @SerializedName("population")
-     * @Groups({"study"})
-     */
+    #[ORM\Column(length: 1500, nullable: true)]
+    #[SerializedName('population')]
+    #[Groups(['study'])]
     private ?array $population = null;
 
-    /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
-     * @SerializedName("sampling_method")
-     * @Groups({"study"})
-     */
+    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[SerializedName('sampling_method')]
+    #[Groups(['study'])]
     private ?string $sampling_method = null;
 
-    /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
-     * @SerializedName("other_sampling_method")
-     * @Groups({"study"})
-     */
+    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[SerializedName('other_sampling_method')]
+    #[Groups(['study'])]
     private ?string $other_sampling_method = null;
 
-    /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
-     * @SerializedName("sample_size")
-     * @Groups({"study"})
-     */
+    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[SerializedName('sample_size')]
+    #[Groups(['study'])]
     private ?string $sample_size = null;
 
-    /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
-     * @SerializedName("power_analysis")
-     * @Groups({"study"})
-     */
+    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[SerializedName('power_analysis')]
+    #[Groups(['study'])]
     private ?string $power_analysis = null;
 
     /**
      * One Sample section has One Experiment.
-     *
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\Experiment", inversedBy="sampleMetaDataGroup")
      */
-    protected Experiment $experiment;
+    #[ORM\OneToOne(inversedBy: 'sampleMetaDataGroup')]
+    protected ?Experiment $experiment = null;
 
     public function getReviewCollection(): array
     {

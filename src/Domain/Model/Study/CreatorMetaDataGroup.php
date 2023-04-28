@@ -12,59 +12,43 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="experiment_basic_creators")
- */
+#[ORM\Table(name: 'experiment_basic_creators')]
+#[ORM\Entity]
 class CreatorMetaDataGroup extends UuidEntity implements Questionable, Reviewable
 {
-    /**
-     * @ORM\Column(type="text", length=100, nullable=true)
-     * @SerializedName("given_name")
-     * @Groups("study")
-     */
+    #[ORM\Column(type: 'text', length: 100, nullable: true)]
+    #[SerializedName('given_name')]
+    #[Groups('study')]
     private ?string $givenName = null;
 
-    /**
-     * @ORM\Column(type="text", length=100, nullable=true)
-     * @SerializedName("family_name")
-     * @Groups("study")
-     */
+    #[ORM\Column(type: 'text', length: 100, nullable: true)]
+    #[SerializedName('family_name')]
+    #[Groups('study')]
     private ?string $familyName = null;
 
-    /**
-     * @ORM\Column(type="text", length=250, nullable=true)
-     * @SerializedName("email")
-     * @Groups("study")
-     */
+    #[ORM\Column(type: 'text', length: 250, nullable: true)]
+    #[SerializedName('email')]
+    #[Groups('study')]
     private ?string $email = null;
 
-    /**
-     * @ORM\Column(type="text", length=250, nullable=true)
-     * @SerializedName("orcid")
-     * @Groups("study")
-     */
+    #[ORM\Column(type: 'text', length: 250, nullable: true)]
+    #[SerializedName('orcid')]
+    #[Groups('study')]
     private ?string $orcid = null;
 
-    /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
-     * @SerializedName("affiliation")
-     * @Groups("study")
-     */
+    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[SerializedName('affiliation')]
+    #[Groups('study')]
     private ?string $affiliation = null;
 
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     * @SerializedName("roles")
-     * @Groups("study")
-     */
+    #[ORM\Column(nullable: true)]
+    #[SerializedName('roles')]
+    #[Groups('study')]
     private ?array $creditRoles = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Domain\Model\Study\BasicInformationMetaDataGroup", inversedBy="creators")
-     * @ORM\JoinColumn(name="basic_id", referencedColumnName="id")
-     */
-    protected BasicInformationMetaDataGroup $basicInformation;
+    #[ORM\ManyToOne(inversedBy: 'creators')]
+    #[ORM\JoinColumn(name: 'basic_id', referencedColumnName: 'id')]
+    protected ?BasicInformationMetaDataGroup $basicInformation = null;
 
     public function getFormTypeForEntity(): string
     {

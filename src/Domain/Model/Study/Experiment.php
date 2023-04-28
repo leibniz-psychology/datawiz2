@@ -15,9 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
-/**
- * @ORM\Entity(repositoryClass=ExperimentRepository::class)
- */
+#[ORM\Entity(repositoryClass: ExperimentRepository::class)]
 class Experiment extends UuidEntity
 {
 
@@ -29,85 +27,72 @@ class Experiment extends UuidEntity
 
     /**
      * One Experiment has One basic Information section.
-     * @SerializedName("basic")
-     * @Groups({"study"})
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\BasicInformationMetaDataGroup", mappedBy="experiment", cascade={"persist", "remove"})
      */
-    private BasicInformationMetaDataGroup $basicInformationMetaDataGroup;
+    #[SerializedName('basic')]
+    #[Groups(['study'])]
+    #[ORM\OneToOne(mappedBy: 'experiment', cascade: ['persist', 'remove'])]
+    private ?BasicInformationMetaDataGroup $basicInformationMetaDataGroup = null;
 
     /**
      * One Experiment has One Theory section.
-     * @SerializedName("theory")
-     * @Groups({"study"})
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\TheoryMetaDataGroup", mappedBy="experiment", cascade={"persist", "remove"})
      */
-    private TheoryMetaDataGroup $theoryMetaDataGroup;
+    #[SerializedName('theory')]
+    #[Groups(['study'])]
+    #[ORM\OneToOne(mappedBy: 'experiment', cascade: ['persist', 'remove'])]
+    private ?TheoryMetaDataGroup $theoryMetaDataGroup = null;
 
     /**
      * One Experiment has One Theory section.
-     * @SerializedName("method")
-     * @Groups({"study"})
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\MethodMetaDataGroup", mappedBy="experiment", cascade={"persist", "remove"})
      */
-    private MethodMetaDataGroup $methodMetaDataGroup;
+    #[SerializedName('method')]
+    #[Groups(['study'])]
+    #[ORM\OneToOne(mappedBy: 'experiment', cascade: ['persist', 'remove'])]
+    private ?MethodMetaDataGroup $methodMetaDataGroup = null;
 
     /**
      * One Experiment has One Theory section.
-     * @SerializedName("measure")
-     * @Groups({"study"})
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\MeasureMetaDataGroup", mappedBy="experiment", cascade={"persist", "remove"})
      */
-    private MeasureMetaDataGroup $measureMetaDataGroup;
+    #[SerializedName('measure')]
+    #[Groups(['study'])]
+    #[ORM\OneToOne(mappedBy: 'experiment', cascade: ['persist', 'remove'])]
+    private ?MeasureMetaDataGroup $measureMetaDataGroup = null;
 
     /**
      * One Experiment has One Sample section.
-     * @SerializedName("sample")
-     * @Groups({"study"})
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\SampleMetaDataGroup", mappedBy="experiment", cascade={"persist", "remove"})
      */
-    private SampleMetaDataGroup $sampleMetaDataGroup;
+    #[SerializedName('sample')]
+    #[Groups(['study'])]
+    #[ORM\OneToOne(mappedBy: 'experiment', cascade: ['persist', 'remove'])]
+    private ?SampleMetaDataGroup $sampleMetaDataGroup = null;
 
     /**
      * One Experiment has One Settings section.
-     * @SerializedName("settings")
-     * @Groups({"settings"})
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\SettingsMetaDataGroup", mappedBy="experiment", cascade={"persist", "remove"})
      */
-    private SettingsMetaDataGroup $settingsMetaDataGroup;
+    #[SerializedName('settings')]
+    #[Groups(['settings'])]
+    #[ORM\OneToOne(mappedBy: 'experiment', cascade: ['persist', 'remove'])]
+    private ?SettingsMetaDataGroup $settingsMetaDataGroup = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Domain\Model\Filemanagement\Dataset", mappedBy="experiment", cascade={"persist"})
-     * @SerializedName("datasets")
-     * @Groups({"dataset"})
-     */
+    #[ORM\OneToMany(mappedBy: 'experiment', targetEntity: 'App\Domain\Model\Filemanagement\Dataset', cascade: ['persist'])]
+    #[SerializedName('datasets')]
+    #[Groups(['dataset'])]
     private Collection $originalDatasets;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Domain\Model\Filemanagement\AdditionalMaterial", mappedBy="experiment", cascade={"persist"})
-     * @SerializedName("material")
-     * @Groups({"material"})
-     */
+    #[ORM\OneToMany(mappedBy: 'experiment', targetEntity: 'App\Domain\Model\Filemanagement\AdditionalMaterial', cascade: ['persist'])]
+    #[SerializedName('material')]
+    #[Groups(['material'])]
     private Collection $additionalMaterials;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Domain\Model\Administration\DataWizUser")
-     *
-     */
-    private DataWizUser $owner;
+    #[ORM\ManyToOne()]
+    private ?DataWizUser $owner = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private DateTime $dateCreated;
+    #[ORM\Column()]
+    private ?DateTime $dateCreated = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(nullable: true)]
     private ?DateTime $dateSubmitted = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column()]
     private int $state = States::STATE_STUDY_NONE;
 
     public function getOwner(): DataWizUser

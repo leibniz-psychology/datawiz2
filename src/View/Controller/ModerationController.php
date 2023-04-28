@@ -9,9 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @IsGranted("ROLE_REVIEWER")
- */
+#[IsGranted('ROLE_REVIEWER')]
 class ModerationController extends AbstractController
 {
     public function __construct(private readonly EntityManagerInterface $em, private readonly LoggerInterface $logger)
@@ -19,12 +17,7 @@ class ModerationController extends AbstractController
     }
 
 
-    /**
-     * @Route(
-     *     "/moderation/dashboard",
-     *      name="moderation_dashboard"
-     * )
-     */
+    #[Route(path: '/moderation/dashboard', name: 'moderation_dashboard')]
     public function dashboard(): Response
     {
         $this->logger->debug("AdministrationController::dashboard: Enter");

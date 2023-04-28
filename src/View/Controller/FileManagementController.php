@@ -21,12 +21,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/filemanagement", name="File-")
- * @IsGranted("ROLE_USER")
- *
- * Class FileManagementController
  * @package App\View\Controller
  */
+#[Route(path: '/filemanagement', name: 'File-')]
+#[IsGranted('ROLE_USER')]
 class FileManagementController extends AbstractController
 {
     public function __construct(private readonly Crudable $crud, private readonly Questionnairable $questionnaire, private readonly CsvImportable $csvImportable, private readonly SavImportable $savImportable, private readonly EntityManagerInterface $em, private readonly LoggerInterface $logger)
@@ -34,9 +32,7 @@ class FileManagementController extends AbstractController
     }
 
 
-    /**
-     * @Route("/preview/sav/{fileId}", name="preview-sav")
-     */
+    #[Route(path: '/preview/sav/{fileId}', name: 'preview-sav')]
     public function previewSavAction(string $fileId): JsonResponse
     {
         $this->logger->debug("Enter FileManagementController::previewSavAction with [FileId: $fileId]");
@@ -49,9 +45,7 @@ class FileManagementController extends AbstractController
         return new JsonResponse($data ?? [], null != $data ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    /**
-     * @Route("/submit/sav/{fileId}", name="submit-sav")
-     */
+    #[Route(path: '/submit/sav/{fileId}', name: 'submit-sav')]
     public function submitSavAction(string $fileId): JsonResponse
     {
         $this->logger->debug("Enter FileManagementController::previewSavAction with [FileId: $fileId]");
@@ -86,9 +80,7 @@ class FileManagementController extends AbstractController
         return new JsonResponse($data ?? [], null != $data ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    /**
-     * @Route("/preview/csv/{fileId}", name="preview-csv")
-     */
+    #[Route(path: '/preview/csv/{fileId}', name: 'preview-csv')]
     public function previewCsvAction(string $fileId, Request $request): JsonResponse
     {
         $this->logger->debug("Enter FileManagementController::previewCSVAction with [FileId: $fileId]");
@@ -104,9 +96,7 @@ class FileManagementController extends AbstractController
         return new JsonResponse($data, $data ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    /**
-     * @Route("/submit/csv/{fileId}", name="submit-csv")
-     */
+    #[Route(path: '/submit/csv/{fileId}', name: 'submit-csv')]
     public function submitCSVAction(string $fileId, Request $request): JsonResponse
     {
         $this->logger->debug("Enter FileManagementController::submitCSVAction with [FileId: $fileId]");
@@ -157,9 +147,7 @@ class FileManagementController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/{uuid}/delete/dataset", name="delete_dataset")
-     */
+    #[Route(path: '/{uuid}/delete/dataset', name: 'delete_dataset')]
     public function deleteDatasetAction(string $uuid): RedirectResponse
     {
         $this->logger->debug("Enter FileManagementController::deleteMaterialAction with [UUID: $uuid]");
@@ -171,9 +159,7 @@ class FileManagementController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{uuid}/delete/material", name="delete_material")
-     */
+    #[Route(path: '/{uuid}/delete/material', name: 'delete_material')]
     public function deleteMaterialAction(string $uuid): RedirectResponse
     {
         $this->logger->debug("Enter FileManagementController::deleteMaterialAction with [UUID: $uuid]");
@@ -184,9 +170,7 @@ class FileManagementController extends AbstractController
         return $this->redirectToRoute('Study-materials', ['uuid' => $experimentId]);
     }
 
-    /**
-     * @Route("/{uuid}/update/description", name="update_description", methods={"POST"})
-     */
+    #[Route(path: '/{uuid}/update/description', name: 'update_description', methods: ['POST'])]
     public function updateDescriptionAction(string $uuid, Request $request): JsonResponse
     {
         $this->logger->debug("Enter FileManagementController::updateDescriptionAction with [UUID: $uuid]");
@@ -207,9 +191,7 @@ class FileManagementController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{uuid}/details", name="details")
-     */
+    #[Route(path: '/{uuid}/details', name: 'details')]
     public function materialDetailsAction(string $uuid, Request $request): Response
     {
         $this->logger->debug("Enter FileManagementController::materialDetailsAction with [UUID: $uuid]");

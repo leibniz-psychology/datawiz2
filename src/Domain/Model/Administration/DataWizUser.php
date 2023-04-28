@@ -10,47 +10,31 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 
-/**
- * @ORM\Entity(repositoryClass=DataWizUserRepository::class)
- * @ORM\Table(name="user")
- */
+#[ORM\Table(name: 'user')]
+#[ORM\Entity(repositoryClass: DataWizUserRepository::class)]
 class DataWizUser implements UserInterface
 {
-    /**
-     * @ORM\Id()
-     * @ORM\Column(type="uuid")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'uuid')]
     private UUid $id;
 
-    /**
-     * @ORM\Column(type="simple_array")
-     */
+    #[ORM\Column(type: 'simple_array')]
     private array $roles;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(nullable: true)]
     private ?string $email = null;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(nullable: true)]
     private ?string $firstname = null;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(nullable: true)]
     private ?string $lastname = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private DateTime $dateRegistered;
+    #[ORM\Column()]
+    private ?DateTime $dateRegistered = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private DateTime $lastLogin;
+    #[ORM\Column()]
+    private ?DateTime $lastLogin = null;
 
 
     public function getId(): Uuid

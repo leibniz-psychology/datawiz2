@@ -29,9 +29,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use ZipArchive;
 
-/**
- * @IsGranted("ROLE_USER")
- */
+#[IsGranted('ROLE_USER')]
 class ExportController extends AbstractController
 {
 
@@ -48,9 +46,7 @@ class ExportController extends AbstractController
     }
 
 
-    /**
-     * @Route("/export/{uuid}", name="export_index", methods={"GET"})
-     */
+    #[Route(path: '/export/{uuid}', name: 'export_index', methods: ['GET'])]
     public function exportIndex(string $uuid): Response
     {
         $this->logger->debug("Enter ExportController::exportAction(GET) for UUID: $uuid");
@@ -59,9 +55,7 @@ class ExportController extends AbstractController
         return $this->render('Pages/Export/export.html.twig', ['export_error' => null, "experiment" => $experiment]);
     }
 
-    /**
-     * @Route("/export/{uuid}", name="export_action", methods={"POST"})
-     */
+    #[Route(path: '/export/{uuid}', name: 'export_action', methods: ['POST'])]
     public function exportAction(Request $request, string $uuid): Response
     {
         $this->logger->debug("Enter ExportController::exportAction(POST) for UUID: $uuid");

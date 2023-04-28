@@ -10,9 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
-/**
- * @ORM\Entity()
- */
+#[ORM\Entity]
 class DatasetVariables extends UuidEntity
 {
 
@@ -42,58 +40,42 @@ class DatasetVariables extends UuidEntity
     }
 
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column()]
     private int $varId;
 
-    /**
-     * @ORM\Column(type="string", length=250)
-     * @SerializedName("name")
-     * @Groups({"codebook"})
-     */
+    #[ORM\Column(length: 250)]
+    #[SerializedName('name')]
+    #[Groups(['codebook'])]
     private string $name;
 
-    /**
-     * @ORM\Column(type="string", length=500, nullable=true)
-     * @SerializedName("label")
-     * @Groups({"codebook"})
-     */
+    #[ORM\Column(length: 500, nullable: true)]
+    #[SerializedName('label')]
+    #[Groups(['codebook'])]
     private ?string $label = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @SerializedName("item_text")
-     * @Groups({"codebook"})
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[SerializedName('item_text')]
+    #[Groups(['codebook'])]
     private ?string $itemText = null;
 
-    /**
-     * @ORM\Column(type="array", nullable=true, name="val_label")
-     * @SerializedName("value_label")
-     * @Groups({"codebook"})
-     */
+    #[ORM\Column(name: 'val_label', nullable: true)]
+    #[SerializedName('value_label')]
+    #[Groups(['codebook'])]
     private ?array $values = null;
 
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     * @SerializedName("missings")
-     * @Groups({"codebook"})
-     */
+    #[ORM\Column(nullable: true)]
+    #[SerializedName('missings')]
+    #[Groups(['codebook'])]
     private ?array $missings = null;
 
-    /**
-     * @ORM\Column(type="string", length=250, nullable=true)
-     * @SerializedName("measure")
-     * @Groups({"codebook"})
-     */
+    #[ORM\Column(length: 250, nullable: true)]
+    #[SerializedName('measure')]
+    #[Groups(['codebook'])]
     private ?string $measure = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Domain\Model\Filemanagement\Dataset", inversedBy="codebook")
-     * @ORM\JoinColumn(name="dataset_id", referencedColumnName="id")
-     */
-    private Dataset $dataset;
+    #[ORM\ManyToOne(inversedBy: 'codebook')]
+    #[ORM\JoinColumn(name: 'dataset_id', referencedColumnName: 'id')]
+    private ?Dataset $dataset = null;
 
 
     public function getDataset(): Dataset

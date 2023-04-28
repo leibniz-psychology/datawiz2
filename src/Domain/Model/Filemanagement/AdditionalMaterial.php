@@ -13,10 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
-/**
- * @ORM\Entity()
- * @ORM\Table(name="material")
- */
+#[ORM\Table(name: 'material')]
+#[ORM\Entity]
 class AdditionalMaterial extends UuidEntity implements Questionable
 {
 
@@ -38,50 +36,36 @@ class AdditionalMaterial extends UuidEntity implements Questionable
         return $file;
     }
 
-    /**
-     * @ORM\Column(type="string", length=256)
-     * @SerializedName("original_name")
-     * @Groups({"material"})
-     */
-    private string $originalName;
+    #[ORM\Column(length: 256)]
+    #[SerializedName('original_name')]
+    #[Groups(['material'])]
+    private ?string $originalName = null;
 
-    /**
-     * @ORM\Column(type="string", length=256)
-     * @SerializedName("original_mimetype")
-     * @Groups({"material"})
-     */
-    private string $originalMimetype;
+    #[ORM\Column(length: 256)]
+    #[SerializedName('original_mimetype')]
+    #[Groups(['material'])]
+    private ?string $originalMimetype = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @SerializedName("uploaded")
-     * @Groups({"material"})
-     */
+    #[ORM\Column()]
+    #[SerializedName('uploaded')]
+    #[Groups(['material'])]
     private ?DateTime $dateUploaded = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @SerializedName("original_size")
-     * @Groups({"material"})
-     */
-    private int $originalSize = 0;
+    #[ORM\Column()]
+    #[SerializedName('original_size')]
+    #[Groups(['material'])]
+    private ?int $originalSize = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @SerializedName("description")
-     * @Groups({"material"})
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[SerializedName('description')]
+    #[Groups(['material'])]
     private ?string $description = null;
 
-    /**
-     * @ORM\Column(type="string", length=256)
-     */
-    private string $storageName;
+    #[ORM\Column(length: 256)]
+    private ?string $storageName = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Domain\Model\Study\Experiment", inversedBy="additionalMaterials")
-     */
-    private Experiment $experiment;
+    #[ORM\ManyToOne(inversedBy: 'additionalMaterials')]
+    private ?Experiment $experiment = null;
 
     public function getOriginalName(): string
     {

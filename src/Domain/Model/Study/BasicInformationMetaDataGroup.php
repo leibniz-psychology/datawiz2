@@ -14,50 +14,36 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="experiment_basic")
- */
+#[ORM\Table(name: 'experiment_basic')]
+#[ORM\Entity]
 class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, Reviewable
 {
-    /**
-     * @ORM\Column(type="text", length=255, nullable=true)
-     * @SerializedName("title")
-     * @Groups({"study"})
-     */
+    #[ORM\Column(type: 'text', length: 255, nullable: true)]
+    #[SerializedName('title')]
+    #[Groups(['study'])]
     private ?string $title = null;
 
-    /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
-     * @SerializedName("description")
-     * @Groups({"study"})
-     */
+    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[SerializedName('description')]
+    #[Groups(['study'])]
     private ?string $description = null;
 
-    /**
-     * @ORM\Column(type="array", length=1500, nullable=true)
-     * @SerializedName("related_publications")
-     * @Groups("study")
-     */
+    #[ORM\Column(length: 1500, nullable: true)]
+    #[SerializedName('related_publications')]
+    #[Groups('study')]
     private ?array $related_publications = null;
 
     /**
      * One basic Information section has One Experiment.
-     *
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\Experiment", inversedBy="basicInformationMetaDataGroup")
      */
-    private Experiment $experiment;
+    #[ORM\OneToOne(inversedBy: 'basicInformationMetaDataGroup')]
+    private ?Experiment $experiment = null;
 
-    /**
-     * @SerializedName("creators")
-     * @Groups("study")
-     * @ORM\OneToMany(targetEntity="App\Domain\Model\Study\CreatorMetaDataGroup", mappedBy="basicInformation")
-     */
-    private Collection $creators;
+    #[SerializedName('creators')]
+    #[Groups('study')]
+    #[ORM\OneToMany(mappedBy: 'basicInformation', targetEntity: 'App\Domain\Model\Study\CreatorMetaDataGroup')]
+    private ?Collection $creators = null;
 
-    /**
-     * @return string
-     */
     public function getFormTypeForEntity(): string
     {
         return BasicInformationType::class;

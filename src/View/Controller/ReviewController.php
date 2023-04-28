@@ -12,9 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @IsGranted("ROLE_USER")
- */
+#[IsGranted('ROLE_USER')]
 class ReviewController extends AbstractController
 {
     public function __construct(private readonly EntityManagerInterface $em)
@@ -22,9 +20,7 @@ class ReviewController extends AbstractController
     }
 
 
-    /**
-     * @Route("review/{uuid}", name="Study-review")
-     */
+    #[Route(path: 'review/{uuid}', name: 'Study-review')]
     public function reviewAction(string $uuid): Response
     {
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);

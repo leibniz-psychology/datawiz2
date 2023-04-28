@@ -29,43 +29,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class FileManagementController extends AbstractController
 {
-    private Crudable $crud;
-    private Questionnairable $questionnaire;
-    private CsvImportable $csvImportable;
-    private SavImportable $savImportable;
-    private EntityManagerInterface $em;
-    private LoggerInterface $logger;
-
-    /**
-     * @param Crudable $crud
-     * @param Questionnairable $questionnaire
-     * @param CsvImportable $csvImportable
-     * @param SavImportable $savImportable
-     * @param EntityManagerInterface $em
-     * @param LoggerInterface $logger
-     */
-    public function __construct(
-        Crudable $crud,
-        Questionnairable $questionnaire,
-        CsvImportable $csvImportable,
-        SavImportable $savImportable,
-        EntityManagerInterface $em,
-        LoggerInterface $logger
-    ) {
-        $this->crud = $crud;
-        $this->questionnaire = $questionnaire;
-        $this->csvImportable = $csvImportable;
-        $this->savImportable = $savImportable;
-        $this->em = $em;
-        $this->logger = $logger;
+    public function __construct(private readonly Crudable $crud, private readonly Questionnairable $questionnaire, private readonly CsvImportable $csvImportable, private readonly SavImportable $savImportable, private readonly EntityManagerInterface $em, private readonly LoggerInterface $logger)
+    {
     }
 
 
     /**
      * @Route("/preview/sav/{fileId}", name="preview-sav")
-     *
-     * @param string $fileId
-     * @return JsonResponse
      */
     public function previewSavAction(string $fileId): JsonResponse
     {
@@ -81,10 +51,6 @@ class FileManagementController extends AbstractController
 
     /**
      * @Route("/submit/sav/{fileId}", name="submit-sav")
-     *
-     * @param string $fileId
-     * @param Request $request
-     * @return JsonResponse
      */
     public function submitSavAction(string $fileId): JsonResponse
     {
@@ -122,10 +88,6 @@ class FileManagementController extends AbstractController
 
     /**
      * @Route("/preview/csv/{fileId}", name="preview-csv")
-     *
-     * @param string $fileId
-     * @param Request $request
-     * @return JsonResponse
      */
     public function previewCsvAction(string $fileId, Request $request): JsonResponse
     {
@@ -144,10 +106,6 @@ class FileManagementController extends AbstractController
 
     /**
      * @Route("/submit/csv/{fileId}", name="submit-csv")
-     *
-     * @param string $fileId
-     * @param Request $request
-     * @return JsonResponse
      */
     public function submitCSVAction(string $fileId, Request $request): JsonResponse
     {
@@ -201,9 +159,6 @@ class FileManagementController extends AbstractController
 
     /**
      * @Route("/{uuid}/delete/dataset", name="delete_dataset")
-     *
-     * @param string $uuid
-     * @return RedirectResponse|Response
      */
     public function deleteDatasetAction(string $uuid): RedirectResponse
     {
@@ -218,10 +173,6 @@ class FileManagementController extends AbstractController
 
     /**
      * @Route("/{uuid}/delete/material", name="delete_material")
-     *
-     * @param string $uuid
-     * @param Request $request
-     * @return RedirectResponse
      */
     public function deleteMaterialAction(string $uuid): RedirectResponse
     {
@@ -235,10 +186,6 @@ class FileManagementController extends AbstractController
 
     /**
      * @Route("/{uuid}/update/description", name="update_description", methods={"POST"})
-     *
-     * @param string $uuid
-     * @param Request $request
-     * @return JsonResponse
      */
     public function updateDescriptionAction(string $uuid, Request $request): JsonResponse
     {
@@ -262,10 +209,6 @@ class FileManagementController extends AbstractController
 
     /**
      * @Route("/{uuid}/details", name="details")
-     *
-     * @param string $uuid
-     * @param Request $request
-     * @return Response
      */
     public function materialDetailsAction(string $uuid, Request $request): Response
     {

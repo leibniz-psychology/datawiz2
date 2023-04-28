@@ -17,22 +17,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ReviewController extends AbstractController
 {
-    private EntityManagerInterface $em;
-
-    /**
-     * @param EntityManagerInterface $em
-     */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private readonly EntityManagerInterface $em)
     {
-        $this->em = $em;
     }
 
 
     /**
      * @Route("review/{uuid}", name="Study-review")
-     *
-     * @param string $uuid
-     * @return Response
      */
     public function reviewAction(string $uuid): Response
     {

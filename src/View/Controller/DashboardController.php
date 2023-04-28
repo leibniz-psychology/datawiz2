@@ -11,8 +11,6 @@ class DashboardController extends AbstractController
 {
     /**
      * @Route("/", name="landing")
-     *
-     * @return Response
      */
     public function landingAction(): Response
     {
@@ -22,8 +20,6 @@ class DashboardController extends AbstractController
     /**
      * @Route("/dashboard", name="dashboard")
      * @IsGranted("ROLE_USER")
-     *
-     * @return Response
      */
     public function dashboardAction(): Response
     {

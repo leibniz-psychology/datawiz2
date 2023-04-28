@@ -101,115 +101,73 @@ class Dataset extends UuidEntity
         $experiment->addOriginalDatasets($this);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getOriginalName()
+    public function getOriginalName(): string
     {
         return $this->originalName;
     }
 
-    /**
-     * @param mixed $originalName
-     */
-    public function setOriginalName($originalName): void
+    public function setOriginalName(string $originalName): void
     {
         $this->originalName = $originalName;
     }
 
-    /**
-     * @return string
-     */
     public function getOriginalMimetype(): string
     {
         return $this->originalMimetype;
     }
 
-    /**
-     * @param string $originalMimetype
-     */
     public function setOriginalMimetype(string $originalMimetype): void
     {
         $this->originalMimetype = $originalMimetype;
     }
 
 
-    /**
-     * @return DateTime|null
-     */
     public function getDateUploaded(): ?DateTime
     {
         return $this->dateUploaded;
     }
 
-    /**
-     * @param DateTime|null $dateUploaded
-     */
     public function setDateUploaded(?DateTime $dateUploaded): void
     {
         $this->dateUploaded = $dateUploaded;
     }
 
-    /**
-     * @return int
-     */
     public function getOriginalSize(): int
     {
         return $this->originalSize;
     }
 
-    /**
-     * @param int $originalSize
-     */
     public function setOriginalSize(int $originalSize): void
     {
         $this->originalSize = $originalSize;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getStorageName()
+    public function getStorageName(): string
     {
         return $this->storageName;
     }
 
-    /**
-     * @param mixed $storageName
-     */
-    public function setStorageName($storageName): void
+    public function setStorageName(mixed $storageName): void
     {
         $this->storageName = $storageName;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @param string|null $description
-     */
     public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
 
 
-    /**
-     * @return Collection
-     */
     public function getCodebook(): Collection
     {
         return $this->codebook;
     }
 
-    /**
-     * @param Collection $codebook
-     */
     public function setCodebook(Collection $codebook): void
     {
         $this->codebook = $codebook;

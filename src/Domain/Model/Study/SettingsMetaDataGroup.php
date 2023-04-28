@@ -28,41 +28,26 @@ class SettingsMetaDataGroup extends UuidEntity implements Questionable
      */
     protected Experiment $experiment;
 
-    /**
-     * @return string
-     */
     public function getFormTypeForEntity(): string
     {
         return SettingsType::class;
     }
 
-    /**
-     * @return string|null
-     */
     public function getShortName(): ?string
     {
         return $this->shortName;
     }
 
-    /**
-     * @param string|null $shortName
-     */
     public function setShortName(?string $shortName): void
     {
         $this->shortName = $shortName;
     }
 
-    /**
-     * @return Experiment
-     */
     public function getExperiment(): Experiment
     {
         return $this->experiment;
     }
 
-    /**
-     * @param Experiment $experiment
-     */
     public function setExperiment(Experiment $experiment): void
     {
         $this->experiment = $experiment;

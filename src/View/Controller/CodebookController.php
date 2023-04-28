@@ -30,28 +30,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CodebookController extends AbstractController
 {
-    protected EntityManagerInterface $em;
-    protected LoggerInterface $logger;
-    private Filesystem $filesystem;
-
-    /**
-     * @param EntityManagerInterface $em
-     * @param LoggerInterface $logger
-     * @param Filesystem $filesystem
-     */
-    public function __construct(EntityManagerInterface $em, LoggerInterface $logger, Filesystem $filesystem)
+    public function __construct(protected EntityManagerInterface $em, protected LoggerInterface $logger, private readonly Filesystem $filesystem)
     {
-        $this->em = $em;
-        $this->logger = $logger;
-        $this->filesystem = $filesystem;
     }
 
 
     /**
      * @Route("/{uuid}", name="index")
-     *
-     * @param string $uuid
-     * @return Response
      */
     public function codebookIndexAction(string $uuid): Response
     {
@@ -62,17 +47,13 @@ class CodebookController extends AbstractController
 
     /**
      * @Route("/{uuid}/data", name="dataupdate")
-     *
-     * @param string $uuid
-     * @param Request $request
-     * @return JsonResponse
      */
     public function performUpdateAction(string $uuid, Request $request): JsonResponse
     {
         $this->logger->debug("Enter CodebookController::performUpdateAction with [UUID: $uuid]");
         $dataset = $this->em->getRepository(Dataset::class)->find($uuid);
         if ($dataset && $request->isMethod("POST")) {
-            $postedData = json_decode($request->getContent(), true);
+            $postedData = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
             $this->saveCodebookVariables($postedData);
         }
         $jsonCodebook = $this->codebookCollectionToJsonArray($dataset->getCodebook());
@@ -82,9 +63,6 @@ class CodebookController extends AbstractController
 
     /**
      * @Route("/{uuid}/measures", name="measures")
-     *
-     * @param string $uuid
-     * @return JsonResponse
      */
     public function createViewMeasuresAction(string $uuid): JsonResponse
     {
@@ -108,9 +86,6 @@ class CodebookController extends AbstractController
 
     /**
      * @Route("/{uuid}/matrix", name="matrix")
-     *
-     * @param string $uuid
-     * @return JsonResponse
      */
     public function datasetMatrixAction(Request $request, string $uuid): JsonResponse
     {
@@ -163,10 +138,6 @@ class CodebookController extends AbstractController
         );
     }
 
-    /**
-     * @param Collection|null $codebook
-     * @return null|array
-     */
     private function codebookCollectionToJsonArray(?Collection $codebook): ?array
     {
         $jsonCodebook = null;
@@ -199,9 +170,6 @@ class CodebookController extends AbstractController
         return $jsonCodebook;
     }
 
-    /**
-     * @param array $arr
-     */
     private function saveCodebookVariables(array $arr)
     {
         if ($arr && is_iterable($arr) && key_exists('variables', $arr) && !empty($arr['variables']) && is_iterable($arr['variables'])) {

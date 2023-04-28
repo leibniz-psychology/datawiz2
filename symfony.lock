@@ -86,9 +86,6 @@
     "firebase/php-jwt": {
         "version": "v4.0.0"
     },
-    "friendsofphp/proxy-manager-lts": {
-        "version": "v1.0.2"
-    },
     "guzzlehttp/guzzle": {
         "version": "6.5.5"
     },
@@ -109,9 +106,6 @@
         "files": [
             "config/packages/knpu_oauth2_client.yaml"
         ]
-    },
-    "laminas/laminas-code": {
-        "version": "3.4.1"
     },
     "league/commonmark": {
         "version": "2.0.2"

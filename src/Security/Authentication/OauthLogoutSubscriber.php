@@ -12,13 +12,8 @@ use Symfony\Component\Security\Http\Event\LogoutEvent;
 
 class OauthLogoutSubscriber implements EventSubscriberInterface
 {
-    private ClientRegistry $clientRegistry;
-    private UrlGeneratorInterface $urlGenerator;
-
-    public function __construct(ClientRegistry $clientRegistry, UrlGeneratorInterface $urlGenerator)
+    public function __construct(private readonly ClientRegistry $clientRegistry, private readonly UrlGeneratorInterface $urlGenerator)
     {
-        $this->clientRegistry = $clientRegistry;
-        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -36,8 +31,6 @@ class OauthLogoutSubscriber implements EventSubscriberInterface
 
     /**
      * This function handles the Keycloak logout event!
-     *
-     * @param LogoutEvent $event
      */
     public function onLogoutEvent(LogoutEvent $event)
     {

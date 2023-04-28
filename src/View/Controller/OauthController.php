@@ -8,7 +8,6 @@ use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -22,11 +21,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class OauthController extends AbstractController
 {
-    private $clientRegistry;
-
-    public function __construct(ClientRegistry $clientRegistry)
+    public function __construct(private readonly ClientRegistry $clientRegistry)
     {
-        $this->clientRegistry = $clientRegistry;
     }
 
     /**

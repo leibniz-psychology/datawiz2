@@ -22,18 +22,8 @@ class OauthAuthenticator extends SocialAuthenticator
 {
     use TargetPathTrait;
 
-    private ClientRegistry $clientRegistry;
-    private Crudable $crud;
-    private UrlGeneratorInterface $urlGenerator;
-
-    public function __construct(
-        ClientRegistry $clientRegistry,
-        Crudable $crud,
-        UrlGeneratorInterface $urlGenerator
-    ) {
-        $this->clientRegistry = $clientRegistry;
-        $this->crud = $crud;
-        $this->urlGenerator = $urlGenerator;
+    public function __construct(private readonly ClientRegistry $clientRegistry, private readonly Crudable $crud, private readonly UrlGeneratorInterface $urlGenerator)
+    {
     }
 
     public function start(Request $request, AuthenticationException $authException = null): RedirectResponse

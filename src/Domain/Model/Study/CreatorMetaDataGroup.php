@@ -66,17 +66,11 @@ class CreatorMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
      */
     protected BasicInformationMetaDataGroup $basicInformation;
 
-    /**
-     * @return string
-     */
     public function getFormTypeForEntity(): string
     {
         return CreatorMetaDataGroup::class;
     }
 
-    /**
-     * @return array
-     */
     public function getReviewCollection(): array
     {
         return [
@@ -118,117 +112,75 @@ class CreatorMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
         return empty($this->getFamilyName()) && empty($this->getGivenName()) && empty($this->getEmail());
     }
 
-    /**
-     * @return string|null
-     */
     public function getGivenName(): ?string
     {
         return $this->givenName;
     }
 
-    /**
-     * @param string|null $givenName
-     */
     public function setGivenName(?string $givenName): void
     {
         $this->givenName = $givenName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getFamilyName(): ?string
     {
         return $this->familyName;
     }
 
-    /**
-     * @param string|null $familyName
-     */
     public function setFamilyName(?string $familyName): void
     {
         $this->familyName = $familyName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @param string|null $email
-     */
     public function setEmail(?string $email): void
     {
         $this->email = $email;
     }
 
-    /**
-     * @return string|null
-     */
     public function getOrcid(): ?string
     {
         return $this->orcid;
     }
 
-    /**
-     * @param string|null $orcid
-     */
     public function setOrcid(?string $orcid): void
     {
         $this->orcid = $orcid;
     }
 
-    /**
-     * @return string|null
-     */
     public function getAffiliation(): ?string
     {
         return $this->affiliation;
     }
 
-    /**
-     * @param string|null $affiliation
-     */
     public function setAffiliation(?string $affiliation): void
     {
         $this->affiliation = $affiliation;
     }
 
-    /**
-     * @return null|array
-     */
     public function getCreditRoles(): ?array
     {
         if (null === $this->creditRoles) {
-            $this->creditRoles = array('');
+            $this->creditRoles = [''];
         }
 
         return $this->creditRoles;
     }
 
-    /**
-     * @param array|null $creditRoles
-     */
     public function setCreditRoles(?array $creditRoles): void
     {
         $this->creditRoles = null == $creditRoles ? null : array_values($creditRoles);
     }
 
-    /**
-     * @return BasicInformationMetaDataGroup
-     */
     public function getBasicInformation(): BasicInformationMetaDataGroup
     {
         return $this->basicInformation;
     }
 
-    /**
-     * @param BasicInformationMetaDataGroup $basicInformation
-     */
     public function setBasicInformation(BasicInformationMetaDataGroup $basicInformation): void
     {
         $this->basicInformation = $basicInformation;

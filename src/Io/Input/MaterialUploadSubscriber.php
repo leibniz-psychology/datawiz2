@@ -13,14 +13,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class MaterialUploadSubscriber implements EventSubscriberInterface
 {
-    private EntityManagerInterface $em;
-
-    /**
-     * @param EntityManagerInterface $em
-     */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private readonly EntityManagerInterface $em)
     {
-        $this->em = $em;
     }
 
     public static function getSubscribedEvents(): array
@@ -31,8 +25,6 @@ class MaterialUploadSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param PostUploadEvent $event
-     *
      * Every time a file is uploaded we want to save the metadata about this file
      */
     public function onMaterialPostUpload(PostUploadEvent $event)

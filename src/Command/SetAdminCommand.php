@@ -12,13 +12,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 class SetAdminCommand extends Command
 {
     protected static $defaultName = 'dw:add-user-role';
-    private EntityManagerInterface $em;
 
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private readonly EntityManagerInterface $em)
     {
         parent::__construct();
-        $this->em = $em;
     }
 
 

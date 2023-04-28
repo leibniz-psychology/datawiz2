@@ -21,10 +21,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
-/**
- * @Route("/studies", name="Study-")
- * @IsGranted("ROLE_USER")
- */
+#[Route(path: '/studies', name: 'Study-')]
+#[IsGranted('ROLE_USER')]
 class StudyController extends AbstractController
 {
     public function __construct(private readonly Security $security, private readonly Questionnairable $questionnaire, private readonly EntityManagerInterface $em, private readonly LoggerInterface $logger, private readonly Crudable $crud)
@@ -32,9 +30,7 @@ class StudyController extends AbstractController
     }
 
 
-    /**
-     * @Route("/", name="overview")
-     */
+    #[Route(path: '/', name: 'overview')]
     public function overviewAction(): Response
     {
         $this->logger->debug("Enter StudyController::overviewAction");
@@ -45,10 +41,9 @@ class StudyController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="new")
-     *
      * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
+    #[Route(path: '/new', name: 'new')]
     public function newAction(Questionnairable $questionnaire, Request $request): Response
     {
         $this->logger->debug("Enter StudyController::newAction");
@@ -71,9 +66,7 @@ class StudyController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{uuid}/settings", name="settings")
-     */
+    #[Route(path: '/{uuid}/settings', name: 'settings')]
     public function settingsAction(string $uuid, Request $request): Response
     {
         $this->logger->debug("Enter StudyController::settingsAction with [UUID: $uuid]");
@@ -97,10 +90,9 @@ class StudyController extends AbstractController
     }
 
     /**
-     * @Route("/{uuid}/documentation", name="documentation")
-     *
      * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
+    #[Route(path: '/{uuid}/documentation', name: 'documentation')]
     public function documentationAction(string $uuid, Request $request): Response
     {
         $this->logger->debug("Enter StudyController::documentationAction with [UUID: $uuid]");
@@ -158,10 +150,9 @@ class StudyController extends AbstractController
     }
 
     /**
-     * @Route("/{uuid}/theory", name="theory")
-     *
      * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
+    #[Route(path: '/{uuid}/theory', name: 'theory')]
     public function theoryAction(string $uuid, Request $request): Response
     {
         $this->logger->debug("Enter StudyController::theoryAction with [UUID: $uuid]");
@@ -196,10 +187,9 @@ class StudyController extends AbstractController
     }
 
     /**
-     * @Route("/{uuid}/sample", name="sample")
-     *
      * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
+    #[Route(path: '/{uuid}/sample', name: 'sample')]
     public function sampleAction(string $uuid, Request $request): Response
     {
         $this->logger->debug("Enter StudyController::sampleAction with [UUID: $uuid]");
@@ -239,10 +229,9 @@ class StudyController extends AbstractController
     }
 
     /**
-     * @Route("/{uuid}/measure", name="measure")
-     *
      * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
+    #[Route(path: '/{uuid}/measure', name: 'measure')]
     public function measureAction(string $uuid, Request $request): Response
     {
         $this->logger->debug("Enter StudyController::measureAction with [UUID: $uuid]");
@@ -281,10 +270,9 @@ class StudyController extends AbstractController
     }
 
     /**
-     * @Route("/{uuid}/method", name="method")
-     *
      * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
+    #[Route(path: '/{uuid}/method', name: 'method')]
     public function methodAction(string $uuid, Request $request): Response
     {
         $this->logger->debug("Enter StudyController::methodAction with [UUID: $uuid]");
@@ -318,9 +306,7 @@ class StudyController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{uuid}/materials", name="materials")
-     */
+    #[Route(path: '/{uuid}/materials', name: 'materials')]
     public function materialsAction(string $uuid): Response
     {
         $this->logger->debug("Enter StudyController::materialsAction with [UUID: $uuid]");
@@ -335,9 +321,7 @@ class StudyController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{uuid}/datasets", name="datasets")
-     */
+    #[Route(path: '/{uuid}/datasets', name: 'datasets')]
     public function datasetsAction(string $uuid): Response
     {
         $this->logger->debug("Enter StudyController::datasetsAction with [UUID: $uuid]");
@@ -352,9 +336,7 @@ class StudyController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{uuid}/introduction", name="introduction")
-     */
+    #[Route(path: '/{uuid}/introduction', name: 'introduction')]
     public function introductionAction(string $uuid): Response
     {
         $this->logger->debug("Enter StudyController::introductionAction with [UUID: $uuid]");
@@ -369,9 +351,7 @@ class StudyController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{uuid}/delete", name="delete")
-     */
+    #[Route(path: '/{uuid}/delete', name: 'delete')]
     public function deleteAction(string $uuid): Response
     {
         $this->logger->debug("Enter StudyController::deleteAction with [UUID: $uuid]");

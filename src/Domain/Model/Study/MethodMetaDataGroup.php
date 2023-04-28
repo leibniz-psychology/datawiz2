@@ -13,89 +13,66 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
-/**
- * @ORM\Entity()
- * @ORM\Table(name="experiment_method")
- */
+#[ORM\Table(name: 'experiment_method')]
+#[ORM\Entity]
 class MethodMetaDataGroup extends UuidEntity implements Questionable, Reviewable
 {
-    /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
-     * @SerializedName("research_design")
-     * @Groups({"study"})
-     */
+    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[SerializedName('research_design')]
+    #[Groups(['study'])]
     private ?string $research_design = null;
 
-    /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
-     * @SerializedName("experimental_details")
-     * @Groups({"experimental"})
-     */
+    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[SerializedName('experimental_details')]
+    #[Groups(['experimental'])]
     private ?string $experimental_details = null;
 
-    /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
-     * @SerializedName("non_experimental_details")
-     * @Groups({"non_experimental"})
-     */
+    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[SerializedName('non_experimental_details')]
+    #[Groups(['non_experimental'])]
     private ?string $non_experimental_details = null;
 
-    /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
-     * @SerializedName("observational_type")
-     * @Groups({"non_experimental"})
-     */
+    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[SerializedName('observational_type')]
+    #[Groups(['non_experimental'])]
     private ?string $observational_type = null;
 
-    /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
-     * @SerializedName("setting")
-     * @Groups({"study"})
-     */
+    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[SerializedName('setting')]
+    #[Groups(['study'])]
     private ?string $setting = null;
 
-    /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
-     * @SerializedName("setting_location")
-     * @Groups({"study"})
-     */
+    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[SerializedName('setting_location')]
+    #[Groups(['study'])]
     private ?string $setting_location = null;
 
 
-    /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
-     * @SerializedName("manipulations")
-     * @Groups({"experimental"})
-     */
+    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[SerializedName('manipulations')]
+    #[Groups(['experimental'])]
     private ?string $manipulations = null;
 
-    /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
-     * @SerializedName("experimental_design")
-     * @Groups({"experimental"})
-     */
+    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[SerializedName('experimental_design')]
+    #[Groups(['experimental'])]
     private ?string $experimental_design = null;
 
-    /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
-     * @SerializedName("control_operations")
-     * @Groups({"experimental"})
-     */
+    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[SerializedName('control_operations')]
+    #[Groups(['experimental'])]
     private ?string $control_operations = null;
 
-    /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
-     * @SerializedName("other_control_operations")
-     * @Groups({"experimental"})
-     */
+    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[SerializedName('other_control_operations')]
+    #[Groups(['experimental'])]
     private ?string $other_control_operations = null;
 
     /**
      * One basic Information section has One Experiment.
-     *
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\Experiment", inversedBy="methodMetaDataGroup")
      */
-    protected Experiment $experiment;
+    #[ORM\OneToOne(inversedBy: 'methodMetaDataGroup')]
+    protected ?Experiment $experiment = null;
 
     public function getReviewCollection(): array
     {

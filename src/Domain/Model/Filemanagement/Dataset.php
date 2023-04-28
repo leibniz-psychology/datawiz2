@@ -13,9 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
-/**
- * @ORM\Entity()
- */
+#[ORM\Entity]
 class Dataset extends UuidEntity
 {
 
@@ -24,56 +22,40 @@ class Dataset extends UuidEntity
         $this->codebook = new ArrayCollection();
     }
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Domain\Model\Study\Experiment", inversedBy="originalDatasets")
-     */
-    private Experiment $experiment;
+    #[ORM\ManyToOne(inversedBy: 'originalDatasets')]
+    private ?Experiment $experiment = null;
 
-    /**
-     * @ORM\Column(type="string", length=256)
-     * @SerializedName("original_name")
-     * @Groups({"dataset"})
-     */
-    private string $originalName;
+    #[ORM\Column(length: 256)]
+    #[SerializedName('original_name')]
+    #[Groups(['dataset'])]
+    private ?string $originalName = null;
 
-    /**
-     * @ORM\Column(type="string", length=256)
-     * @SerializedName("original_mimetype")
-     * @Groups({"dataset"})
-     */
-    private string $originalMimetype;
+    #[ORM\Column(length: 256)]
+    #[SerializedName('original_mimetype')]
+    #[Groups(['dataset'])]
+    private ?string $originalMimetype = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @SerializedName("uploaded")
-     * @Groups({"dataset"})
-     */
+    #[ORM\Column()]
+    #[SerializedName('uploaded')]
+    #[Groups(['dataset'])]
     private ?DateTime $dateUploaded = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @SerializedName("original_size")
-     * @Groups({"dataset"})
-     */
-    private int $originalSize = 0;
+    #[ORM\Column()]
+    #[SerializedName('original_size')]
+    #[Groups(['dataset'])]
+    private ?int $originalSize = null;
 
-    /**
-     * @ORM\Column(type="string", length=256)
-     */
-    private string $storageName;
+    #[ORM\Column(length: 256)]
+    private ?string $storageName = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @SerializedName("description")
-     * @Groups({"dataset"})
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[SerializedName('description')]
+    #[Groups(['dataset'])]
     private ?string $description = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Domain\Model\Codebook\DatasetVariables", mappedBy="dataset")
-     * @SerializedName("codebook")
-     * @Groups({"codebook"})
-     */
+    #[ORM\OneToMany(mappedBy: 'dataset', targetEntity: 'App\Domain\Model\Codebook\DatasetVariables')]
+    #[SerializedName('codebook')]
+    #[Groups(['codebook'])]
     private Collection $codebook;
 
 

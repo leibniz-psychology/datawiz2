@@ -13,33 +13,26 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
-/**
- * @ORM\Entity()
- * @ORM\Table(name="experiment_measure")
- */
+#[ORM\Table(name: 'experiment_measure')]
+#[ORM\Entity]
 class MeasureMetaDataGroup extends UuidEntity implements Questionable, Reviewable
 {
 
-    /**
-     * @ORM\Column(type="array", length=1500, nullable=true)
-     * @SerializedName("measures")
-     * @Groups({"study"})
-     */
+    #[ORM\Column(length: 1500, nullable: true)]
+    #[SerializedName('measures')]
+    #[Groups(['study'])]
     private ?array $measures = null;
 
-    /**
-     * @ORM\Column(type="array", length=1500, nullable=true)
-     * @SerializedName("apparatus")
-     * @Groups({"study"})
-     */
+    #[ORM\Column(length: 1500, nullable: true)]
+    #[SerializedName('apparatus')]
+    #[Groups(['study'])]
     private ?array $apparatus = null;
 
     /**
      * One basic Information section has One Experiment.
-     *
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\Experiment", inversedBy="measureMetaDataGroup")
      */
-    protected Experiment $experiment;
+    #[ORM\OneToOne(inversedBy: 'measureMetaDataGroup')]
+    protected ?Experiment $experiment = null;
 
     public function getReviewCollection(): array
     {

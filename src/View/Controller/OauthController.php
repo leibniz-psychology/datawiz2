@@ -11,38 +11,29 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/security",
- *     name="Security-",
- *     condition="'%kernel.environment%' in ['dev', 'prod']"
- * )
  *
  * Class OauthController
  * @package App\View\Controller
  */
+#[Route(path: '/security', name: 'Security-', condition: "'%kernel.environment%' in ['dev', 'prod']")]
 class OauthController extends AbstractController
 {
     public function __construct(private readonly ClientRegistry $clientRegistry)
     {
     }
 
-    /**
-     * @Route("/login", name="login")
-     */
+    #[Route(path: '/login', name: 'login')]
     public function loginAction(): RedirectResponse
     {
         return $this->clientRegistry->getClient('keycloak')->redirect(['openid'], []);
     }
 
-    /**
-     * @Route("/logout", name="logout")
-     */
+    #[Route(path: '/logout', name: 'logout')]
     public function loginCheckAction(ClientRegistry $clientRegistry)
     {
     }
 
-    /**
-     * @Route("/login/check", name="check")
-     */
+    #[Route(path: '/login/check', name: 'check')]
     public function logoutAction()
     {
     }

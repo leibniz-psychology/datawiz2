@@ -13,9 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @IsGranted("ROLE_ADMIN")
- */
+#[IsGranted('ROLE_ADMIN')]
 class AdministrationController extends AbstractController
 {
     public function __construct(
@@ -26,12 +24,7 @@ class AdministrationController extends AbstractController
     }
 
 
-    /**
-     * @Route(
-     *     "/admin/user",
-     *     name="admin_user"
-     * )
-     */
+    #[Route(path: '/admin/user', name: 'admin_user')]
     public function listUser(): Response
     {
         $this->logger->debug("AdministrationController::listUser: Enter");
@@ -44,12 +37,7 @@ class AdministrationController extends AbstractController
         );
     }
 
-    /**
-     * @Route(
-     *     "/admin/user/{uid}",
-     *      name="admin_user_edit"
-     * )
-     */
+    #[Route(path: '/admin/user/{uid}', name: 'admin_user_edit')]
     public function editUserDetails(Request $request, string $uid): Response
     {
         $this->logger->debug("AdministrationController::editUserDetails: Enter with uuid: $uid");
@@ -70,12 +58,7 @@ class AdministrationController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(
-     *     "/admin/studies",
-     *     name="admin_studies"
-     * )
-     */
+    #[Route(path: '/admin/studies', name: 'admin_studies')]
     public function listStudies(): Response
     {
         $this->logger->debug("AdministrationController::listStudies: Enter");
@@ -89,12 +72,7 @@ class AdministrationController extends AbstractController
         );
     }
 
-    /**
-     * @Route(
-     *     "/admin/user/{uid}/studies",
-     *     name="admin_user_studies"
-     * )
-     */
+    #[Route(path: '/admin/user/{uid}/studies', name: 'admin_user_studies')]
     public function listStudiesForUser(string $uid): Response
     {
         $this->logger->debug("AdministrationController::listStudies: Enter");

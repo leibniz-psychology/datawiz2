@@ -9,18 +9,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractController
 {
-    /**
-     * @Route("/", name="landing")
-     */
+    #[Route(path: '/', name: 'landing')]
     public function landingAction(): Response
     {
         return $this->render('Pages/Administration/landing.html.twig');
     }
 
-    /**
-     * @Route("/dashboard", name="dashboard")
-     * @IsGranted("ROLE_USER")
-     */
+    #[Route(path: '/dashboard', name: 'dashboard')]
+    #[IsGranted('ROLE_USER')]
     public function dashboardAction(): Response
     {
         return $this->render('Pages/Administration/dashboard.html.twig');

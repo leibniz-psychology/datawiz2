@@ -10,23 +10,18 @@ use App\Questionnaire\Forms\SettingsType;
 use App\Questionnaire\Questionable;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity()
- * @ORM\Table(name="experiment_settings")
- */
+#[ORM\Table(name: 'experiment_settings')]
+#[ORM\Entity]
 class SettingsMetaDataGroup extends UuidEntity implements Questionable
 {
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $shortName = null;
 
     /**
      * One Settings section has One Experiment.
-     *
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\Experiment", inversedBy="settingsMetaDataGroup")
      */
-    protected Experiment $experiment;
+    #[ORM\OneToOne(inversedBy: 'settingsMetaDataGroup')]
+    protected ?Experiment $experiment = null;
 
     public function getFormTypeForEntity(): string
     {

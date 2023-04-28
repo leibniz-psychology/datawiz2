@@ -14,9 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @IsGranted("ROLE_USER")
- */
+#[IsGranted('ROLE_USER')]
 class UserController extends AbstractController
 {
 
@@ -27,13 +25,9 @@ class UserController extends AbstractController
 
 
     /**
-     * @Route(
-     *     "/admin/install",
-     *     name="dw_install"
-     * )
-     *
      * @throws Exception
      */
+    #[Route(path: '/admin/install', name: 'dw_install')]
     public function installDW(): Response
     {
         $this->logger->debug("UserController::installDW: Enter");

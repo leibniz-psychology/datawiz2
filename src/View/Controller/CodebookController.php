@@ -22,12 +22,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/codebook", name="codebook_")
- * @IsGranted("ROLE_USER")
- *
- * Class CodebookController
  * @package App\View\Controller
  */
+#[Route(path: '/codebook', name: 'codebook_')]
+#[IsGranted('ROLE_USER')]
 class CodebookController extends AbstractController
 {
     public function __construct(protected EntityManagerInterface $em, protected LoggerInterface $logger, private readonly Filesystem $filesystem)
@@ -35,9 +33,7 @@ class CodebookController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{uuid}", name="index")
-     */
+    #[Route(path: '/{uuid}', name: 'index')]
     public function codebookIndexAction(string $uuid): Response
     {
         return $this->render('Pages/Codebook/index.html.twig', [
@@ -45,9 +41,7 @@ class CodebookController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{uuid}/data", name="dataupdate")
-     */
+    #[Route(path: '/{uuid}/data', name: 'dataupdate')]
     public function performUpdateAction(string $uuid, Request $request): JsonResponse
     {
         $this->logger->debug("Enter CodebookController::performUpdateAction with [UUID: $uuid]");
@@ -61,9 +55,7 @@ class CodebookController extends AbstractController
         return new JsonResponse($jsonCodebook, $jsonCodebook != null && sizeof($jsonCodebook) > 0 ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);
     }
 
-    /**
-     * @Route("/{uuid}/measures", name="measures")
-     */
+    #[Route(path: '/{uuid}/measures', name: 'measures')]
     public function createViewMeasuresAction(string $uuid): JsonResponse
     {
         $this->logger->debug("Enter CodebookController::createViewMeasuresAction with [UUID: $uuid]");
@@ -84,9 +76,7 @@ class CodebookController extends AbstractController
         return new JsonResponse($viewMeasures, key_exists('measures', $viewMeasures) ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);
     }
 
-    /**
-     * @Route("/{uuid}/matrix", name="matrix")
-     */
+    #[Route(path: '/{uuid}/matrix', name: 'matrix')]
     public function datasetMatrixAction(Request $request, string $uuid): JsonResponse
     {
         $size = $request->get('size') ?? 0;

@@ -3,7 +3,7 @@ oneup_flysystem:
     adapters:
         default_adapter:
             local:
-                directory: '%kernel.project_dir%/var/uploads'
+                location: '%kernel.project_dir%/var/uploads'
     filesystems:
         assets:
             adapter: default_adapter

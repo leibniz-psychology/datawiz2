@@ -12,20 +12,19 @@ use App\Questionnaire\Questionnairable;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/studies', name: 'Study-')]
 #[IsGranted('ROLE_USER')]
 class StudyController extends AbstractController
 {
-    public function __construct(private readonly Security $security, private readonly Questionnairable $questionnaire, private readonly EntityManagerInterface $em, private readonly LoggerInterface $logger, private readonly Crudable $crud)
+    public function __construct(private readonly \Symfony\Bundle\SecurityBundle\Security $security, private readonly Questionnairable $questionnaire, private readonly EntityManagerInterface $em, private readonly LoggerInterface $logger, private readonly Crudable $crud)
     {
     }
 
@@ -61,7 +60,7 @@ class StudyController extends AbstractController
         }
 
         return $this->render('Pages/Study/new.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
             'experiment' => $newExperiment,
         ]);
     }
@@ -84,7 +83,7 @@ class StudyController extends AbstractController
         }
 
         return $this->render('Pages/Study/settings.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
             'experiment' => $experiment,
         ]);
     }
@@ -144,7 +143,7 @@ class StudyController extends AbstractController
         }
 
         return $this->render('Pages/Study/documentation.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
             'experiment' => $experiment,
         ]);
     }
@@ -181,7 +180,7 @@ class StudyController extends AbstractController
         }
 
         return $this->render('Pages/Study/theory.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
             'experiment' => $experiment,
         ]);
     }
@@ -223,7 +222,7 @@ class StudyController extends AbstractController
         }
 
         return $this->render('Pages/Study/sample.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
             'experiment' => $experiment,
         ]);
     }
@@ -264,7 +263,7 @@ class StudyController extends AbstractController
         }
 
         return $this->render('Pages/Study/measure.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
             'experiment' => $experiment,
         ]);
     }
@@ -301,7 +300,7 @@ class StudyController extends AbstractController
         }
 
         return $this->render('Pages/Study/method.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
             'experiment' => $experiment,
         ]);
     }

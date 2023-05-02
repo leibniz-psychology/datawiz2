@@ -5,18 +5,6 @@
     "dflydev/dot-access-data": {
         "version": "v3.0.1"
     },
-    "doctrine/annotations": {
-        "version": "1.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "a2759dd6123694c8d901d0ec80006e044c2e6457"
-        },
-        "files": [
-            "config/routes/annotations.yaml"
-        ]
-    },
     "doctrine/cache": {
         "version": "1.10.2"
     },
@@ -188,18 +176,6 @@
     },
     "ralouphie/getallheaders": {
         "version": "3.0.3"
-    },
-    "sensio/framework-extra-bundle": {
-        "version": "5.2",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "5.2",
-            "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
-        },
-        "files": [
-            "config/packages/sensio_framework_extra.yaml"
-        ]
     },
     "stevenmaguire/oauth2-keycloak": {
         "version": "2.1.0"
@@ -391,14 +367,8 @@
     "symfony/polyfill-php72": {
         "version": "v1.17.1"
     },
-    "symfony/polyfill-php73": {
-        "version": "v1.17.1"
-    },
     "symfony/polyfill-php80": {
         "version": "v1.17.1"
-    },
-    "symfony/polyfill-php81": {
-        "version": "v1.23.0"
     },
     "symfony/polyfill-uuid": {
         "version": "v1.22.1"
@@ -438,9 +408,6 @@
         "version": "v4.4.11"
     },
     "symfony/security-csrf": {
-        "version": "v4.4.11"
-    },
-    "symfony/security-guard": {
         "version": "v4.4.11"
     },
     "symfony/security-http": {

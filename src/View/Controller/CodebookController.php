@@ -11,15 +11,15 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
 use League\Csv\UnableToProcessCsv;
-use League\Flysystem\FileNotFoundException;
 use League\Flysystem\Filesystem;
+use League\Flysystem\UnableToReadFile;
 use Psr\Log\LoggerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * @package App\View\Controller
@@ -113,8 +113,8 @@ class CodebookController extends AbstractController
                 } else {
                     $response['error'] = 'error.dataset.matrix.empty';
                 }
-            } catch (FileNotFoundException $e) {
-                $this->logger->critical("FileNotFoundException in CodebookController::createViewMeasuresAction [UUID: $uuid] Exception: ".$e->getMessage());
+            } catch (UnableToReadFile $e) {
+                $this->logger->critical("UnableToReadFile in CodebookController::createViewMeasuresAction [UUID: $uuid] Exception: ".$e->getMessage());
                 $response['error'] = 'error.dataset.matrix.notFound';
             } catch (UnableToProcessCsv $e) {
                 $this->logger->critical("UnableToProcessCsv in CodebookController::createViewMeasuresAction [UUID: $uuid] Exception: ".$e->getMessage());

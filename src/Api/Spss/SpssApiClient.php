@@ -6,8 +6,8 @@ namespace App\Api\Spss;
 
 use App\Api\ApiClientService;
 use App\Domain\Model\Filemanagement\Dataset;
-use League\Flysystem\FileNotFoundException;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
+use League\Flysystem\UnableToReadFile;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Mime\Part\DataPart;
 
@@ -17,7 +17,12 @@ class SpssApiClient
     /**
      * SpssApiClient constructor.
      */
-    public function __construct(private readonly FilesystemInterface $assetsFilesystem, private readonly ApiClientService $clientService, private readonly LoggerInterface $logger, private readonly string $spss_uri)
+    public function __construct(
+        private readonly FilesystemOperator $assetsFilesystem,
+        private readonly ApiClientService $clientService,
+        private readonly LoggerInterface $logger,
+        private readonly string $spss_uri
+    )
     {
     }
 
@@ -34,7 +39,7 @@ class SpssApiClient
                         'file' => new DataPart($fileContent, $dataset->getStorageName(), $dataset->getOriginalMimetype()),
                     ]
                 );
-            } catch (FileNotFoundException $e) {
+            } catch (UnableToReadFile $e) {
                 $this->logger->error("SpssApiClient::savToJson Exception thrown: {$e->getMessage()}");
             }
         }

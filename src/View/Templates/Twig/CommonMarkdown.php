@@ -3,6 +3,7 @@
 namespace App\View\Templates\Twig;
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Exception\CommonMarkException;
 use League\CommonMark\Extension\Attributes\AttributesExtension;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\DescriptionList\DescriptionListExtension;
@@ -26,8 +27,11 @@ class CommonMarkdown implements MarkdownInterface
         $this->converter = $converter ?: new MarkdownConverter($this->environment);
     }
 
+    /**
+     * @throws CommonMarkException
+     */
     public function convert(string $body): string
     {
-        return $this->converter->convertToHtml($body);
+        return $this->converter->convert($body);
     }
 }

@@ -61,12 +61,12 @@ class DataWizUser implements UserInterface
     }
 
 
-    public function getPassword()
+    public function getPassword(): null
     {
         return null;
     }
 
-    public function getSalt()
+    public function getSalt(): null
     {
         return null;
     }

@@ -34,7 +34,7 @@ class DataWizUserRepository extends ServiceEntityRepository implements UserLoade
             ->getOneOrNullResult();
     }
 
-    public function loadUserByUsername(string $username)
+    public function loadUserByUsername(string $username): ?DataWizUser
     {
         return $this->loadUserByIdentifier($username);
     }

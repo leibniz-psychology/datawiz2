@@ -4,7 +4,6 @@ namespace App\Domain\Model\Administration;
 
 use App\Domain\Access\Administration\DataWizUserRepository;
 use App\Domain\Definition\UserRoles;
-use App\Security\Authorization\Authorizable;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -60,23 +59,7 @@ class DataWizUser implements UserInterface
         $this->roles = $roles;
     }
 
-
-    public function getPassword(): null
-    {
-        return null;
-    }
-
-    public function getSalt(): null
-    {
-        return null;
-    }
-
-    public function getUsername(): ?string
-    {
-        return $this->email;
-    }
-
-    public function eraseCredentials()
+    public function eraseCredentials(): null
     {
         return null;
     }

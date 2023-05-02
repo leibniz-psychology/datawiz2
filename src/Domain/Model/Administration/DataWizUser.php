@@ -112,7 +112,7 @@ class DataWizUser implements UserInterface
     }
 
 
-    public function getUserIdentifier(): ?string
+    public function getUserIdentifier(): string
     {
         return $this->getId();
     }

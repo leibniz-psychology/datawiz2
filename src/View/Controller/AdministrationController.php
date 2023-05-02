@@ -7,11 +7,11 @@ use App\Domain\Model\Administration\DataWizUser;
 use App\Domain\Model\Study\Experiment;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_ADMIN')]
 class AdministrationController extends AbstractController
@@ -54,7 +54,7 @@ class AdministrationController extends AbstractController
 
         return $this->render("Pages/Administration/admin/user_profile.html.twig", [
             'adminEdit' => true,
-            'userForm' => $form->createView(),
+            'userForm' => $form,
         ]);
     }
 

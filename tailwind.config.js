@@ -2,17 +2,14 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require("tailwindcss/colors");
 
 module.exports = {
-  mode: "jit",
-  purge: {
-    mode: "layers",
-    layers: ["components", "utilities"],
-    content: [
-      "./src/View/Templates/**/*.html.twig",
-      "./src/Questionnaire/Forms/**/*.php",
-      "./src/View/Assets/Scripts/**/*.js",
-      "./translations/help_markdown.en.yaml",
-    ],
-  },
+  mode: "layers",
+  layers: ["components", "utilities"],
+  content: [
+    "./src/View/Templates/**/*.html.twig",
+    "./src/Questionnaire/Forms/**/*.php",
+    "./src/View/Assets/Scripts/**/*.js",
+    "./translations/help_markdown.en.yaml",
+  ],
   theme: {
     fontFamily: {
       sans: ["Open Sans", ...defaultTheme.fontFamily.sans],
@@ -22,7 +19,7 @@ module.exports = {
     },
     extend: {
       colors: {
-        mono: colors.warmGray,
+        mono: colors.stone,
         sky: colors.sky,
         "zpid-purple": {
           DEFAULT: "#352071",
@@ -83,11 +80,6 @@ module.exports = {
       backgroundImage: {
         "header-cyan": "url('../Images/header_cyan.jpg')",
       },
-    },
-  },
-  variants: {
-    extend: {
-      margin: ["first"],
     },
   },
   plugins: [require("tailwind-scrollbar")],

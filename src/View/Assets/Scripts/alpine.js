@@ -1,10 +1,10 @@
 import Alpine from "alpinejs";
-import trap from "@alpinejs/trap";
+import focus from '@alpinejs/focus'
 import List from "list.js";
 
 window.Alpine = Alpine;
 
-Alpine.plugin(trap);
+Alpine.plugin(focus);
 
 Alpine.store("app", { helpSelected: "" });
 Alpine.store("import", {

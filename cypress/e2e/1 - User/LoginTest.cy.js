@@ -1,16 +1,9 @@
 describe('Login Test', () => {
 
-	before(() => {
-		cy.kcLogin(Cypress.env("username"), Cypress.env("password"));
-	});
-
 	beforeEach(() => {
+		cy.kcLogin(Cypress.env("username"), Cypress.env("password"));
 		cy.request(Cypress.env("loginPath"));
 	});
-
-	/*after(() => {
-		cy.kcLogout();
-	})*/
 
 	it('Check Login', () => {
 		cy.visit('/dashboard');

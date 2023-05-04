@@ -1,17 +1,11 @@
 import study from "../../fixtures/study.json";
 
 describe("Study Test", () => {
-  before(() => {
-    cy.kcLogin(Cypress.env("username"), Cypress.env("password"));
-  });
 
   beforeEach(() => {
+    cy.kcLogin(Cypress.env("username"), Cypress.env("password"));
     cy.request(Cypress.env("loginPath"));
   });
-
-  /*after(() => {
-		cy.kcLogout();
-	})*/
 
   it("Create new documentation", () => {
     cy.visit("/dashboard");

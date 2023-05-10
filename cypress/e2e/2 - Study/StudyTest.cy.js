@@ -125,30 +125,22 @@ describe("Study Test", () => {
     cy.visit("/studies");
     cy.get("a").contains(study.name).click();
     cy.get("a").contains("Data collection").click();
-    cy.get(
-      '.add-another-collection-widget[data-list-selector="#measures-fields-list"]'
-    )
-      .click()
-      .click();
+    cy.get("button").contains("Add another measure").click().click();
     cy.get("textarea[id^=measure_measures_]").each(($el, index) => {
       cy.wrap($el)
         .clear()
         .type(study["measure_measures_" + index]);
       if (index === 1) {
-        cy.wrap($el).siblings(".remove-another-collection-widget").click();
+        cy.wrap($el).siblings("button").click();
       }
     });
-    cy.get(
-      '.add-another-collection-widget[data-list-selector="#apparatus-fields-list"]'
-    )
-      .click()
-      .click();
+    cy.get("button").contains("Add another apparatus").click().click();
     cy.get("textarea[id^=measure_apparatus_]").each(($el, index) => {
       cy.wrap($el)
         .clear()
         .type(study["measure_apparatus_" + index]);
       if (index === 1) {
-        cy.wrap($el).siblings(".remove-another-collection-widget").click();
+        cy.wrap($el).siblings("button").click();
       }
     });
     cy.get("#measure_submit").click();

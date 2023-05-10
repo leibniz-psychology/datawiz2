@@ -1,65 +1,48 @@
 {{ form_label(collection) }}
 {{ form_errors(collection) }}
-<div class="MetaData-Widget MetaData-Widget_collection">
-    <ul id="{{ id }}"
-        data-prototype="{{ form_widget(collection.vars.prototype)|e }}"
-        data-widget-tags="{{ "<li class='items-baseline pb-4 mt-2 border rounded border-mono-400 first:mt-0'>Man what the</li>"|e }}"
-        data-widget-counter="{{ collection|length + 1 }}"
-        data-delete-position="prepend"
-        data-delete-prototype='<button type="button" class="Creator-RemoveButton remove-another-collection-widget Button Button_tertiary Button_tertiary_danger Button_fieldSize" data-list-selector="#{{ id }}">
-        {{ removeTxt|trans }}</button>'>
+<div class="MetaData-Widget MetaData-Widget_collection"
+        {{ stimulus_controller('collection-widget', {
+            counter: collection|length + 1,
+            widgetPrototype: _self.widget(collection.vars.prototype, removeTxt),
+        }) }}>
+
+    <ul id="{{ id }}" {{ stimulus_target('collection-widget', 'list') }}>
         {% for item in collection %}
-            <li class="items-baseline pb-4 mt-2 border rounded-sm border-mono-400 first:mt-0 ">
-                <button type="button"
-                        class="Creator-RemoveButton remove-another-collection-widget Button Button_tertiary Button_tertiary_danger Button_fieldSize"
-                        data-list-selector="#{{ id }}">
-                    {{ removeTxt|trans }}
-                </button>
-                <div class="Creator-Details">
-                    <div class="Creator-Detail Creator-Detail_given">
-                        {{ form_label(item.givenName) }}
-                        {{ form_errors(item.givenName) }}
-                        {{ form_widget(item.givenName) }}
-                    </div>
-                    <div class="Creator-Detail Creator-Detail_family">
-                        {{ form_label(item.familyName) }}
-                        {{ form_errors(item.familyName) }}
-                        {{ form_widget(item.familyName) }}
-                    </div>
-                    <div class="Creator-Detail Creator-Detail_email">
-                        {{ form_label(item.email) }}
-                        {{ form_errors(item.email) }}
-                        {{ form_widget(item.email) }}
-                    </div>
-                    <div class="Creator-Detail Creator-Detail_orcid">
-                        {{ form_label(item.orcid) }}
-                        {{ form_errors(item.orcid) }}
-                        {{ form_widget(item.orcid) }}
-                    </div>
-                    <div class="Creator-Detail Creator-Detail_affiliation">
-                        {{ form_label(item.affiliation) }}
-                        {{ form_errors(item.affiliation) }}
-                        {{ form_widget(item.affiliation) }}
-                    </div>
-                    <div class="Creator-Detail Creator-Detail_roles">
-                        {% include "Components/_collectionWidget.html.twig" with
-                            {
-                                collection: item.creditRoles,
-                                id: item.vars.id~'_creditRoles',
-                                listClass: 'xl:grid xl:grid-cols-2 xl:gap-x-3',
-                                condensed: true,
-                                partOfCollection: true,
-                                addTxt: 'input.creator.credit.add',
-                                removeTxt: 'input.creator.credit.remove',
-                            } %}
-                    </div>
-                </div>
-            </li>
+            {{ _self.widget(item, removeTxt) }}
         {% endfor %}
     </ul>
+
     <button type="button"
-            class="mt-2 add-another-collection-widget Button Button_secondary Button_secondary_act Button_fieldSize MetaData-AddButton"
-            data-list-selector="#{{ id }}">
+            {{ stimulus_action('collection-widget', 'addItemToCollection') }}
+            class="mt-2 add-another-collection-widget Button Button_secondary Button_secondary_act Button_fieldSize MetaData-AddButton">
         {{ addTxt|trans }}
     </button>
 </div>
+
+{% macro widget(item, removeTxt) %}
+    <li class='items-baseline pb-4 mt-2 border rounded border-mono-400 first:mt-0'>
+        {{ _self.removeButton(removeTxt) }}
+        {% do item.creditRoles.setRendered() %}
+        {{ form_widget(item) }}
+        <div class="Creator-Detail Creator-Detail_roles">
+            {% include "Components/_collectionWidget.html.twig" with
+                {
+                    collection: item.creditRoles,
+                    id: item.vars.id~'_creditRoles',
+                    listClass: 'xl:grid xl:grid-cols-2 xl:gap-x-3',
+                    condensed: true,
+                    partOfCollection: true,
+                    addTxt: 'input.creator.credit.add',
+                    removeTxt: 'input.creator.credit.remove',
+                } %}
+        </div>
+    </li>
+{% endmacro %}
+
+{% macro removeButton(removeTxt) %}
+    <button type="button"
+            {{ stimulus_action('collection-widget', 'removeItemFromCollection') }}
+            class="Creator-RemoveButton Button Button_tertiary Button_tertiary_danger Button_fieldSize">
+        {{ removeTxt|trans }}
+    </button>
+{% endmacro %}

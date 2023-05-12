@@ -8,7 +8,7 @@ jobs:
   delete-on-aks:
     name: Delete Symfony App from AKS with Branch ${{ github.ref_name }}
     #    needs: build-image
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     permissions:
       contents: read
     env:
@@ -19,7 +19,7 @@ jobs:
       REGISTRY: ${{ secrets.ACR_NAME }}.azurecr.io
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Construct image ref
         run: echo "IMAGE_REF=${REGISTRY}/${GITHUB_REPOSITORY,,}/${APP}:$(cat ${APP}/VERSION)" >> $GITHUB_ENV

@@ -28,6 +28,9 @@ describe("Study Test", () => {
         cy.wrap($el).clear().type(study.relPub[index]);
       }
     );
+
+    cy.get("button").contains("Remove creator").click();
+    cy.get("button").contains("Remove creator").click();
     cy.get("#basic_information_creators_0_givenName")
       .clear()
       .type(study.creator.givenName);
@@ -43,7 +46,27 @@ describe("Study Test", () => {
     cy.get("#basic_information_creators_0_affiliation")
       .clear()
       .type(study.creator.affiliation);
-    /* TODO CREDIT ROLES TEST */
+    cy.get("#basic_information_creators_0_creditRoles_0").select(study.creator.roles[0]);
+    cy.get("button").contains("Add another role").click();
+    cy.get("#basic_information_creators_0_creditRoles_2").select(study.creator.roles[1]);
+
+    cy.get("button").contains("Add another creator").click();
+    cy.get("#basic_information_creators_3_givenName")
+        .clear()
+        .type(study.creator2.givenName);
+    cy.get("#basic_information_creators_3_familyName")
+        .clear()
+        .type(study.creator2.familyName);
+    cy.get("#basic_information_creators_3_email")
+        .clear()
+        .type(study.creator2.email);
+    cy.get("#basic_information_creators_3_orcid")
+        .clear()
+        .type(study.creator2.orcid);
+    cy.get("#basic_information_creators_3_affiliation")
+        .clear()
+        .type(study.creator2.affiliation);
+
     cy.get("#basic_information_submit").click();
   });
 

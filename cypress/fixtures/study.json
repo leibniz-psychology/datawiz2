@@ -16,7 +16,19 @@
 		"orcid": "https://sandbox.orcid.org/0000-0002-8184-5122",
 		"affiliation": "Leibniz-Institut für Psychologie (ZPID)",
 		"roles": {
-			"0": ""
+			"0": "Investigation",
+			"1": "Software"
+		}
+	},
+	"creator2": {
+		"givenName": "Maria",
+		"familyName": "Musterfrau",
+		"email": "maria.musterfrau@mustermail.de",
+		"orcid": "https://sandbox.orcid.org/0000-0002-1694-233X",
+		"affiliation": "Leibniz-Institut für Psychologie (ZPID)",
+		"roles": {
+			"0": "Conceptualization",
+			"1": "Supervision"
 		}
 	},
 	"theory_objective": "[Dieses Projekt ist in seinem Aufbau und Inhalt angelehnt an die LOGIK Studie, der Münchner Längsschnittstudie zur Entwicklung individueller Kompetenzen (Weinert , 1984). Inhalte wurden angepasst um diesem Rahmen zu entsprechen, Inhalte wurden gekürzt und vereinfacht, Informationen zum Datenmanagement sind weitestgehend frei erfunden.] Ziel der Längsschnittstudie ist es, die Stabilität individueller Unterschiede, sowie mögliche Entwicklungsmuster zu untersuchen. Insgesamt sollen verschiedene Entwicklungsbereiche untersucht werden, darunter Intelligenz, Psychomotorik, wissenschaftliches Denken, Gedächtnis, moralische Motivation, soziale Kompetenz, Selbstkonzept und Selbstvertrauen, Lese- und Rechtschreibfertigkeiten und mathematische Kompetenzen. Desweiteren sollen komplexe Wechselwirkungen zwischen diesen einzelnen Entwicklungsverläufen erforscht werden. Dabei soll auch die Bedeutung des schulischen Unterrichts bezogen auf Entwicklungsunterschiede eine wichtige Forschungsfrage darstellen. Die Studie beinhaltet insgesamt vier Erhebungswellen.",

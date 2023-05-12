@@ -20,7 +20,7 @@
 </div>
 
 {% macro widget(item, removeTxt, condensed) %}
-    <li class="flex mt-2 {% if condensed is defined and (condensed == true) %}items-center{% else %}items-baseline{% endif %}">
+    <li class="flex mt-2 {% if condensed is defined and (condensed == true) %}items-center{% else %}items-start{% endif %}">
         {{ form_widget(item) }}
         {{ _self.removeButton(removeTxt, condensed) }}
     </li>

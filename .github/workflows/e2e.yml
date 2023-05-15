@@ -1,10 +1,6 @@
-name: DataWiz 2 Build
-on:
-  workflow_dispatch:
-  push:
-    branches: [ development ]
-  pull_request:
-    branches: [ development ]
+name: Cypress e2e test
+
+on: [ workflow_call ]
 
 env:
   DATABASE_URL: mysql://root:root@127.0.0.1:3306/dashboard?serverVersion=8.0
@@ -26,8 +22,8 @@ env:
   CYPRESS_logoutPath: /security/logout
 
 jobs:
-  symfony:
-    name: Symfony 6.2 (PHP ${{ matrix.php-versions }})
+  e2e:
+    name: Run e2e tests (PHP ${{ matrix.php-versions }})
     runs-on: ubuntu-latest
     services:
       database:

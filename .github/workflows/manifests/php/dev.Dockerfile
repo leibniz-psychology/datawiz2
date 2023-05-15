@@ -1,24 +1,27 @@
 FROM composer:latest AS composer
 
 
-FROM node:alpine AS builder
+FROM node:18-alpine AS builder
 COPY . /build
 RUN apk add --update python3 make g++ \
     && rm -rf /var/cache/apk/* \
     && yarn global add node-gyp \
     && cd /build \
     && yarn install \
-    && yarn build
+    && yarn dev
 
 
-FROM php:7.4-fpm-alpine
+FROM php:8.2-fpm-alpine
 
-ENV APP_ENV=prod
+ENV APP_ENV=dev
 
 RUN apk add --update --no-cache --virtual .build-dependencies $PHPIZE_DEPS \
+    && apk add --no-cache linux-headers \
     && apk add --update --no-cache php-intl icu-dev zlib-dev zip libzip-dev \
     && pecl install apcu \
     && pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && pecl clear-cache \
     && apk del .build-dependencies \
 	&& docker-php-ext-configure intl \
 	&& docker-php-ext-install intl mysqli pdo pdo_mysql opcache zip \
@@ -27,8 +30,8 @@ RUN apk add --update --no-cache --virtual .build-dependencies $PHPIZE_DEPS \
 
 COPY --from=builder /build /build
 COPY --from=composer /usr/bin/composer /usr/bin/composer
-COPY .github/workflows/manifests/development/php/conf/*.ini /usr/local/etc/php/conf.d/
-COPY .github/workflows/manifests/development/php/conf/www.* /usr/local/etc/php-fpm.d/
+COPY .github/workflows/manifests/php/conf/*.ini /usr/local/etc/php/conf.d/
+COPY .github/workflows/manifests/php/conf/www.* /usr/local/etc/php-fpm.d/
 
 RUN cd /build \
     && mkdir -p var/cache \

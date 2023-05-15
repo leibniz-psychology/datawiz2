@@ -1,0 +1,19 @@
+name: Dev Workflow
+
+on:
+  push:
+    branches-ignore: [ master ]
+  pull_request:
+    branches-ignore: [ master ]
+
+jobs:
+  call-e2e-workflow:
+    uses: ./.github/workflows/e2e.yml
+    secrets: inherit
+
+  call-container-build-workflow:
+    uses: ./.github/workflows/container-build.yml
+    with:
+      container-tag: ${{ github.head_ref || github.ref_name }}
+      build-stage: dev
+    secrets: inherit

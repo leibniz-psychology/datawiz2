@@ -1,0 +1,28 @@
+name: Dev Workflow
+
+on:
+  push:
+    branches-ignore: [ master ]
+  pull_request:
+    branches-ignore: [ master ]
+
+jobs:
+  get-branch-name:
+    name: Get branch name
+    runs-on: ubuntu-latest
+    outputs:
+      current-branch: ${{ steps.branch-name.outputs.current-branch }}
+    steps:
+      - id: branch-name
+        uses: tj-actions/branch-names@v6
+
+  call-cypress-workflow:
+    uses: ./.github/workflows/cypress.yml
+
+  call-container-build-workflow:
+    needs:
+      - call-cypress-workflow
+    uses: ./.github/workflows/container-build.yml
+    with:
+      container-tag: ${{ needs.get-branch-name.outputs.current-branch }}
+    secrets: inherit

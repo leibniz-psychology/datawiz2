@@ -1,0 +1,17 @@
+name: Main Workflow
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  call-cypress-workflow:
+    uses: ./.github/workflows/cypress.yml
+
+  call-container-build-workflow:
+    needs:
+      - call-cypress-workflow
+    uses: ./.github/workflows/container-build.yml
+    with:
+      container-tag: latest-dev
+    secrets: inherit

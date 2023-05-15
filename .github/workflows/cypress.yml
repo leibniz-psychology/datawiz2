@@ -1,10 +1,6 @@
 name: DataWiz 2 Build
-on:
-  workflow_dispatch:
-  push:
-    branches: [ development ]
-  pull_request:
-    branches: [ development ]
+
+on: [ workflow_call ]
 
 env:
   DATABASE_URL: mysql://root:root@127.0.0.1:3306/dashboard?serverVersion=8.0
@@ -61,8 +57,6 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           extensions: mbstring, xml, ctype, iconv, intl, dom, filter, gd, iconv, json, pdo, mysql
-        env:
-          runner: self-hosted
 
       - name: Validate composer.json and composer.lock
         run: composer validate

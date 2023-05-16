@@ -1,4 +1,5 @@
 # DataWiz - Research Data Documentation Assistant
+
 ![Symfony Version](https://img.shields.io/badge/Symfony-^6.2-success?logo=symfony&style=flat-square)
 ![PHP Version](https://img.shields.io/badge/Php-^8.2-informational?logo=PHP&style=flat-square&logoColor=white)
 ![Composer Version](https://img.shields.io/badge/Composer-^2.0-informational?logo=Composer&style=flat-square&logoColor=white)
@@ -7,7 +8,7 @@
 [![DataWiz 2 Build](https://github.com/leibniz-psychology/datawiz2/actions/workflows/cypress.yml/badge.svg?branch=master)](https://github.com/leibniz-psychology/datawiz2/actions/workflows/cypress.yml)
 [![Übersetzungsstatus](http://weblate.zpid.de/widgets/datawiz/-/datawiz-2/svg-badge.svg)](http://weblate.zpid.de/engage/datawiz/)
 
-DataWiz helps Psychologist with their research documentation. 
+DataWiz helps Psychologist with their research documentation.
 As web based system DataWiz is free to use by anyone and contributions are welcome.
 More details of how to use DataWiz and how to contribute can be found at our homepage.
 
@@ -19,34 +20,36 @@ You can find and test the latest version of Datawiz 2 (currently in beta) [here]
 
 ## Supported development environments
 
-If you use `macos` or `ubuntu` you should have __no problems__, 
+If you use `macos` or `ubuntu` you should have __no problems__,
 because those operating systems are used by the main contributors.
 For those who want to use `windows`, please consider running __Windows Subsystem For Linux__ (_WSL_).
-While there is no intention to maintain any `windows` specific configuration from our side, 
+While there is no intention to maintain any `windows` specific configuration from our side,
 you are still welcome to contribute and maintain those changes.
 
 ## Development requirements
 
-To start developing you will need a local installation of `php`, `composer`, `nodejs (and yarn)`, `make`, `core utils`, `awk`, and the `symfony cli`.
-Please consider our recommended versions, 
-if you encounter any problems running a development instance of DataWiz.
-
+To start developing you will need a local installation of
+`php`, `composer`, `nodejs (and yarn)`, `make`, `core utils`, `awk` and the `symfony cli`.
+Please consider our recommended versions, if you encounter any problems running a development instance of DataWiz.
 
 ## Deployment
 
 DataWiz depends on multiple vendors.
-- All metadata is stored in a **MySql/MariaDB**.
-- The Single Sign On requires a running **Keycloak**.
+
+- All metadata is stored in a __MySql/MariaDB__.
+- The Single Sign On requires a running __Keycloak__.
 
 A full production deployment is therefore a complicated process, which is beyond the scope of this repository.
-If you still wish to deploy DataWiz yourself, please contact our IT-Service department for further information and available resources.
+If you still wish to deploy DataWiz yourself, please contact our IT-Service department for further information and
+available resources.
 Consider before your deployment, that we offer a production instance free of charge under our product portfolio.
-
 
 ## How to get help?
 
-If you are new to the codebase, there are multiple resources provided for you to learn.
+If you are new to the codebase, there are multiple resources provided for you
+to learn.
 
-- Many decision made within development are explained and/or discussed within our [issue](https://github.com/leibniz-psychology/datawiz2/issues) pages.
-- The most important concepts are explained in the projects' [wiki](https://github.com/leibniz-psychology/datawiz2/wiki) page.
-
+- Many decision made within development are explained and/or discussed within
+  our [issue](https://github.com/leibniz-psychology/datawiz2/issues) pages.
+- The most important concepts are explained in the projects'
+  [wiki](https://github.com/leibniz-psychology/datawiz2/wiki) page.

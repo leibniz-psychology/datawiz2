@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\View\Controller;
-
 
 use App\Domain\Definition\UserRoles;
 use App\Domain\Model\Study\Experiment;
@@ -18,7 +16,6 @@ class ReviewController extends AbstractController
     public function __construct(private readonly EntityManagerInterface $em)
     {
     }
-
 
     #[Route(path: 'review/{uuid}', name: 'Study-review')]
     public function reviewAction(string $uuid): Response
@@ -40,7 +37,6 @@ class ReviewController extends AbstractController
             'sampleReview' => $experiment->getSampleMetaDataGroup()->getReviewCollection(),
         ]);
     }
-
 
     private function _checkAccess(Experiment $experiment): bool
     {

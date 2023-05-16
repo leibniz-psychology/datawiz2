@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\View\Controller;
-
 
 use App\Domain\Model\Study\Experiment;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,7 +14,6 @@ class NavigationController extends AbstractController
     public function __construct(private readonly EntityManagerInterface $em)
     {
     }
-
 
     public function sidebarNavigationAction(Request $request): Response
     {

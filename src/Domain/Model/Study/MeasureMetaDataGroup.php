@@ -17,6 +17,11 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 #[ORM\Entity]
 class MeasureMetaDataGroup extends UuidEntity implements Questionable, Reviewable
 {
+    /**
+     * One basic Information section has One Experiment.
+     */
+    #[ORM\OneToOne(inversedBy: 'measureMetaDataGroup')]
+    protected ?Experiment $experiment = null;
 
     #[ORM\Column(length: 1500, nullable: true)]
     #[SerializedName('measures')]
@@ -28,24 +33,18 @@ class MeasureMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
     #[Groups(['study'])]
     private ?array $apparatus = null;
 
-    /**
-     * One basic Information section has One Experiment.
-     */
-    #[ORM\OneToOne(inversedBy: 'measureMetaDataGroup')]
-    protected ?Experiment $experiment = null;
-
     public function getReviewCollection(): array
     {
         return [
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::MEASURES,
                 $this->getMeasures(),
-                null != ReviewDataDictionary::MEASURES['errorLevel'] && ReviewValidator::validateArrayValues($this->getMeasures())
+                ReviewDataDictionary::MEASURES['errorLevel'] != null && ReviewValidator::validateArrayValues($this->getMeasures())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::APPARATUS,
                 $this->getApparatus(),
-                null != ReviewDataDictionary::APPARATUS['errorLevel'] && ReviewValidator::validateArrayValues($this->getApparatus())
+                ReviewDataDictionary::APPARATUS['errorLevel'] != null && ReviewValidator::validateArrayValues($this->getApparatus())
             ),
         ];
     }
@@ -62,7 +61,7 @@ class MeasureMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
 
     public function setMeasures(?array $measures): void
     {
-        $this->measures = null == $measures ? null : array_values($measures);
+        $this->measures = $measures == null ? null : array_values($measures);
     }
 
     public function getApparatus(): ?array
@@ -72,7 +71,7 @@ class MeasureMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
 
     public function setApparatus(?array $apparatus): void
     {
-        $this->apparatus = null == $apparatus ? null : array_values($apparatus);
+        $this->apparatus = $apparatus == null ? null : array_values($apparatus);
     }
 
     public function getExperiment(): Experiment

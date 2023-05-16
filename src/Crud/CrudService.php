@@ -11,7 +11,6 @@ use League\Csv\Reader;
 use League\Flysystem\FileExistsException;
 use League\Flysystem\FileNotFoundException;
 use League\Flysystem\Filesystem;
-use SplTempFileObject;
 
 class CrudService implements Crudable
 {
@@ -19,9 +18,10 @@ class CrudService implements Crudable
     {
     }
 
-
     /**
      * Wrapper for find from EntityManager.
+     *
+     * @param mixed $id
      */
     public function readById(string $type, $id)
     {
@@ -42,6 +42,9 @@ class CrudService implements Crudable
 
     /**
      * Wrapper to call findBy from the repository of the given type.
+     *
+     * @param null|mixed $limit
+     * @param null|mixed $offset
      */
     public function readByCriteria(string $type, array $criteria, ?array $orderBy = null, $limit = null, $offset = null): array
     {
@@ -52,6 +55,8 @@ class CrudService implements Crudable
 
     /**
      * Wrapper to persist and flush an entity in one call.
+     *
+     * @param mixed $entity
      */
     public function update(&$entity): void
     {
@@ -61,6 +66,8 @@ class CrudService implements Crudable
 
     /**
      * Wrapper to delete and flush an entity in one call.
+     *
+     * @param mixed $entity
      */
     public function delete($entity): void
     {
@@ -95,15 +102,14 @@ class CrudService implements Crudable
         return $success;
     }
 
-
     public function deleteDataset(Dataset $dataset): bool
     {
         try {
             if ($this->filesystem->has($dataset->getStorageName())) {
                 $this->filesystem->delete($dataset->getStorageName());
             }
-            if ($this->filesystem->has("matrix/".$dataset->getId().".csv")) {
-                $this->filesystem->delete("matrix/".$dataset->getId().".csv");
+            if ($this->filesystem->has('matrix/'.$dataset->getId().'.csv')) {
+                $this->filesystem->delete('matrix/'.$dataset->getId().'.csv');
             }
             if ($dataset->getCodebook() != null) {
                 foreach ($dataset->getCodebook() as $var) {
@@ -123,17 +129,17 @@ class CrudService implements Crudable
     public function saveDatasetMatrix(array $matrix, string $datasetId): bool
     {
         try {
-            $tmp = new SplTempFileObject();
+            $tmp = new \SplTempFileObject();
             foreach ($matrix as $record) {
                 $tmp->fputcsv($record);
             }
             $reader = Reader::createFromFileObject($tmp);
-            if ($this->filesystem->has("matrix/$datasetId.csv")) {
-                $success = $this->filesystem->update("matrix/$datasetId.csv", $reader->toString());
+            if ($this->filesystem->has("matrix/{$datasetId}.csv")) {
+                $success = $this->filesystem->update("matrix/{$datasetId}.csv", $reader->toString());
             } else {
-                $success = $this->filesystem->write("matrix/$datasetId.csv", $reader->toString());
+                $success = $this->filesystem->write("matrix/{$datasetId}.csv", $reader->toString());
             }
-        } catch (FileExistsException | FileNotFoundException | Exception) {
+        } catch (FileExistsException|FileNotFoundException|Exception) {
             $success = false;
         }
 

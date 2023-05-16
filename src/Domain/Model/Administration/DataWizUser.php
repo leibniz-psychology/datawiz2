@@ -4,7 +4,6 @@ namespace App\Domain\Model\Administration;
 
 use App\Domain\Access\Administration\DataWizUserRepository;
 use App\Domain\Definition\UserRoles;
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
@@ -30,11 +29,10 @@ class DataWizUser implements UserInterface
     private ?string $lastname = null;
 
     #[ORM\Column()]
-    private ?DateTime $dateRegistered = null;
+    private ?\DateTime $dateRegistered = null;
 
     #[ORM\Column()]
-    private ?DateTime $lastLogin = null;
-
+    private ?\DateTime $lastLogin = null;
 
     public function getId(): Uuid
     {
@@ -94,31 +92,28 @@ class DataWizUser implements UserInterface
         $this->lastname = $lastname;
     }
 
-
     public function getUserIdentifier(): string
     {
         return $this->getId();
     }
 
-    public function getDateRegistered(): DateTime
+    public function getDateRegistered(): \DateTime
     {
         return $this->dateRegistered;
     }
 
-    public function setDateRegistered(DateTime $dateRegistered): void
+    public function setDateRegistered(\DateTime $dateRegistered): void
     {
         $this->dateRegistered = $dateRegistered;
     }
 
-    public function getLastLogin(): DateTime
+    public function getLastLogin(): \DateTime
     {
         return $this->lastLogin;
     }
 
-    public function setLastLogin(DateTime $lastLogin): void
+    public function setLastLogin(\DateTime $lastLogin): void
     {
         $this->lastLogin = $lastLogin;
     }
-
-
 }

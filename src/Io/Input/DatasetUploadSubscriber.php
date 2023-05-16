@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Io\Input;
-
 
 use App\Domain\Model\Filemanagement\Dataset;
 use App\Domain\Model\Study\Experiment;
@@ -17,7 +15,6 @@ class DatasetUploadSubscriber implements EventSubscriberInterface
     {
     }
 
-
     public static function getSubscribedEvents(): array
     {
         return [
@@ -28,7 +25,7 @@ class DatasetUploadSubscriber implements EventSubscriberInterface
     public function onDatasetUpload(PostUploadEvent $event)
     {
         $experiment = $this->em->getRepository(Experiment::class)->find($event->getRequest()->get('studyId'));
-        if (null !== $event->getFile()) {
+        if ($event->getFile() !== null) {
             $dataset = Dataset::createDataset(
                 $event->getRequest()->get('originalFilename'),
                 $event->getFile()->getBasename(),
@@ -39,7 +36,7 @@ class DatasetUploadSubscriber implements EventSubscriberInterface
             $this->em->persist($dataset);
             $this->em->flush();
             $response = $event->getResponse();
-            $response->addToOffset(['fileId' => $dataset->getId(), 'fileType' => $event->getFile()->getExtension()], ["flySystem"]);
+            $response->addToOffset(['fileId' => $dataset->getId(), 'fileType' => $event->getFile()->getExtension()], ['flySystem']);
         }
     }
 }

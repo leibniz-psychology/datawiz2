@@ -16,13 +16,11 @@ class ModerationController extends AbstractController
     {
     }
 
-
     #[Route(path: '/moderation/dashboard', name: 'moderation_dashboard')]
     public function dashboard(): Response
     {
-        $this->logger->debug("AdministrationController::dashboard: Enter");
+        $this->logger->debug('AdministrationController::dashboard: Enter');
 
         return $this->render('Pages/Administration/moderation/dashboard.html.twig');
     }
-
 }

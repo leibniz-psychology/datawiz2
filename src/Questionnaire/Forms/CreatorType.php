@@ -23,7 +23,7 @@ class CreatorType extends AbstractType
                 'attr' => [
                     'class' => 'MetaData-TextInput',
                 ],
-                'row_attr' => ['class' => 'Creator-Detail Creator-Detail_given']
+                'row_attr' => ['class' => 'Creator-Detail Creator-Detail_given'],
             ])
             ->add('familyName', TextType::class, [
                 'required' => false,
@@ -32,7 +32,7 @@ class CreatorType extends AbstractType
                 'attr' => [
                     'class' => 'MetaData-TextInput',
                 ],
-                'row_attr' => ['class' => 'Creator-Detail Creator-Detail_family']
+                'row_attr' => ['class' => 'Creator-Detail Creator-Detail_family'],
             ])
             ->add('email', EmailType::class, [
                 'required' => false,
@@ -41,7 +41,7 @@ class CreatorType extends AbstractType
                 'attr' => [
                     'class' => 'MetaData-TextInput',
                 ],
-                'row_attr' => ['class' => 'Creator-Detail Creator-Detail_email']
+                'row_attr' => ['class' => 'Creator-Detail Creator-Detail_email'],
             ])
             ->add('orcid', TextType::class, [
                 'required' => false,
@@ -50,7 +50,7 @@ class CreatorType extends AbstractType
                 'attr' => [
                     'class' => 'MetaData-TextInput',
                 ],
-                'row_attr' => ['class' => 'Creator-Detail Creator-Detail_orcid']
+                'row_attr' => ['class' => 'Creator-Detail Creator-Detail_orcid'],
             ])
             ->add('affiliation', TextType::class, [
                 'required' => false,
@@ -69,9 +69,9 @@ class CreatorType extends AbstractType
                 'required' => false,
                 'label_attr' => ['class' => 'MetaData-Label !px-4 !mt-0'],
                 'attr' => ['class' => 'MetaData-Widget MetaData-Widget_collection'],
-                'entry_type'   => ChoiceType::class,
-                'delete_empty' => fn(String $role = null) => empty($role),
-                'entry_options'  => [
+                'entry_type' => ChoiceType::class,
+                'delete_empty' => fn (string $role = null) => empty($role),
+                'entry_options' => [
                     'placeholder' => 'input.creator.credit.choices.placeholder',
                     'required' => true,
                     'label' => false,

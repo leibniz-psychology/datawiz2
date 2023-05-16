@@ -17,6 +17,12 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 #[ORM\Entity]
 class TheoryMetaDataGroup extends UuidEntity implements Questionable, Reviewable
 {
+    /**
+     * One Theory section has One Experiment.
+     */
+    #[ORM\OneToOne(inversedBy: 'theoryMetaDataGroup')]
+    protected ?Experiment $experiment = null;
+
     #[ORM\Column(type: 'text', length: 1500, nullable: true)]
     #[SerializedName('objective')]
     #[Groups(['study'])]
@@ -27,26 +33,18 @@ class TheoryMetaDataGroup extends UuidEntity implements Questionable, Reviewable
     #[Groups(['study'])]
     private ?string $hypothesis = null;
 
-
-    /**
-     * One Theory section has One Experiment.
-     */
-    #[ORM\OneToOne(inversedBy: 'theoryMetaDataGroup')]
-    protected ?Experiment $experiment = null;
-
-
     public function getReviewCollection(): array
     {
         return [
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::OBJECTIVES,
                 [$this->getObjective()],
-                null != ReviewDataDictionary::OBJECTIVES['errorLevel'] && ReviewValidator::validateSingleValue($this->getObjective())
+                ReviewDataDictionary::OBJECTIVES['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getObjective())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::HYPOTHESIS,
                 [$this->getHypothesis()],
-                null != ReviewDataDictionary::HYPOTHESIS['errorLevel'] && ReviewValidator::validateSingleValue($this->getHypothesis())
+                ReviewDataDictionary::HYPOTHESIS['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getHypothesis())
             ),
         ];
     }
@@ -85,6 +83,4 @@ class TheoryMetaDataGroup extends UuidEntity implements Questionable, Reviewable
     {
         $this->experiment = $experiment;
     }
-
-
 }

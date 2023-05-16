@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\View\Controller;
 
 use App\Crud\Crudable;
@@ -20,9 +19,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- * @package App\View\Controller
- */
 #[Route(path: '/filemanagement', name: 'File-')]
 #[IsGranted('ROLE_USER')]
 class FileManagementController extends AbstractController
@@ -31,30 +27,29 @@ class FileManagementController extends AbstractController
     {
     }
 
-
     #[Route(path: '/preview/sav/{fileId}', name: 'preview-sav')]
     public function previewSavAction(string $fileId): JsonResponse
     {
-        $this->logger->debug("Enter FileManagementController::previewSavAction with [FileId: $fileId]");
+        $this->logger->debug("Enter FileManagementController::previewSavAction with [FileId: {$fileId}]");
         $dataset = $this->em->find(Dataset::class, $fileId);
         $data = null;
         if ($dataset) {
             $data = $this->savImportable->savToArray($dataset);
         }
 
-        return new JsonResponse($data ?? [], null != $data ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
+        return new JsonResponse($data ?? [], $data != null ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     #[Route(path: '/submit/sav/{fileId}', name: 'submit-sav')]
     public function submitSavAction(string $fileId): JsonResponse
     {
-        $this->logger->debug("Enter FileManagementController::previewSavAction with [FileId: $fileId]");
+        $this->logger->debug("Enter FileManagementController::previewSavAction with [FileId: {$fileId}]");
         $dataset = $this->em->find(Dataset::class, $fileId);
         $data = null;
         if ($dataset) {
             $data = $this->savImportable->savToArray($dataset);
         }
-        if (isset($dataset) && isset($data) && !empty($data)) {
+        if (isset($dataset, $data) && !empty($data)) {
             if ($data && is_iterable($data) && key_exists('codebook', $data)) {
                 foreach ($data['codebook'] as $var) {
                     $matrixHeader[] = $var['name'];
@@ -77,15 +72,15 @@ class FileManagementController extends AbstractController
             }
         }
 
-        return new JsonResponse($data ?? [], null != $data ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
+        return new JsonResponse($data ?? [], $data != null ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     #[Route(path: '/preview/csv/{fileId}', name: 'preview-csv')]
     public function previewCsvAction(string $fileId, Request $request): JsonResponse
     {
-        $this->logger->debug("Enter FileManagementController::previewCSVAction with [FileId: $fileId]");
-        $delimiter = $request->get('dataset-import-delimiter') ?? ",";
-        $escape = $request->get('dataset-import-escape') ?? "double";
+        $this->logger->debug("Enter FileManagementController::previewCSVAction with [FileId: {$fileId}]");
+        $delimiter = $request->get('dataset-import-delimiter') ?? ',';
+        $escape = $request->get('dataset-import-escape') ?? 'double';
         $headerRows = filter_var($request->get('dataset-import-header-rows'), FILTER_VALIDATE_INT) ?? 0;
         $file = $this->em->find(Dataset::class, $fileId);
         $data = null;
@@ -99,9 +94,9 @@ class FileManagementController extends AbstractController
     #[Route(path: '/submit/csv/{fileId}', name: 'submit-csv')]
     public function submitCSVAction(string $fileId, Request $request): JsonResponse
     {
-        $this->logger->debug("Enter FileManagementController::submitCSVAction with [FileId: $fileId]");
-        $delimiter = $request->get('dataset-import-delimiter') ?? ",";
-        $escape = $request->get('dataset-import-escape') ?? "double";
+        $this->logger->debug("Enter FileManagementController::submitCSVAction with [FileId: {$fileId}]");
+        $delimiter = $request->get('dataset-import-delimiter') ?? ',';
+        $escape = $request->get('dataset-import-escape') ?? 'double';
         $remove = $request->get('dataset-import-remove') ?? null;
         $headerRows = filter_var($request->get('dataset-import-header-rows'), FILTER_VALIDATE_INT) ?? 0;
         $dataset = $this->em->find(Dataset::class, $fileId);
@@ -109,7 +104,7 @@ class FileManagementController extends AbstractController
         $error = null;
         if ($dataset) {
             if ($remove) {
-                $error = $this->crud->deleteDataset($dataset) ? false : "error.import.csv.codebook.delete";
+                $error = $this->crud->deleteDataset($dataset) ? false : 'error.import.csv.codebook.delete';
             } else {
                 $data = $this->csvImportable->csvToArray($dataset->getStorageName(), $delimiter, $escape, $headerRows);
                 if ($data && key_exists('header', $data) && is_iterable($data['header']) && sizeof($data['header']) > 0) {
@@ -121,36 +116,36 @@ class FileManagementController extends AbstractController
                 } elseif ($data && key_exists('records', $data) && is_iterable($data['records']) && sizeof($data['records']) > 0) {
                     $varId = 1;
                     foreach ($data['records'][0] as $ignored) {
-                        $this->em->persist(DatasetVariables::createNew($dataset, $varId, "var_$varId"));
-                        $varId++;
+                        $this->em->persist(DatasetVariables::createNew($dataset, $varId, "var_{$varId}"));
+                        ++$varId;
                     }
                     $this->em->flush();
                 } else {
-                    $error = "error.import.csv.codebook.empty";
+                    $error = 'error.import.csv.codebook.empty';
                 }
-                if (null == $error && $data && key_exists('records', $data) && is_iterable($data['records']) && sizeof($data['records']) > 0) {
+                if ($error == null && $data && key_exists('records', $data) && is_iterable($data['records']) && sizeof($data['records']) > 0) {
                     $this->crud->saveDatasetMatrix($data['records'], $dataset->getId());
                 } else {
-                    $error = "error.import.csv.matrix.empty";
+                    $error = 'error.import.csv.matrix.empty';
                 }
             }
         } else {
-            $error = "error.import.csv.dataset.empty";
+            $error = 'error.import.csv.dataset.empty';
         }
-        if (null != $error && !$remove) {
+        if ($error != null && !$remove) {
             $this->crud->deleteDataset($dataset);
         }
 
         return new JsonResponse(
-            null != $error ? $error : $data,
-            null != $error ? Response::HTTP_UNPROCESSABLE_ENTITY : Response::HTTP_OK
+            $error != null ? $error : $data,
+            $error != null ? Response::HTTP_UNPROCESSABLE_ENTITY : Response::HTTP_OK
         );
     }
 
     #[Route(path: '/{uuid}/delete/dataset', name: 'delete_dataset')]
     public function deleteDatasetAction(string $uuid): RedirectResponse
     {
-        $this->logger->debug("Enter FileManagementController::deleteMaterialAction with [UUID: $uuid]");
+        $this->logger->debug("Enter FileManagementController::deleteMaterialAction with [UUID: {$uuid}]");
         $dataset = $this->em->find(Dataset::class, $uuid);
         $experimentId = $dataset->getExperiment()->getId();
         $this->crud->deleteDataset($dataset);
@@ -158,11 +153,10 @@ class FileManagementController extends AbstractController
         return $this->redirectToRoute('Study-datasets', ['uuid' => $experimentId]);
     }
 
-
     #[Route(path: '/{uuid}/delete/material', name: 'delete_material')]
     public function deleteMaterialAction(string $uuid): RedirectResponse
     {
-        $this->logger->debug("Enter FileManagementController::deleteMaterialAction with [UUID: $uuid]");
+        $this->logger->debug("Enter FileManagementController::deleteMaterialAction with [UUID: {$uuid}]");
         $material = $this->em->find(AdditionalMaterial::class, $uuid);
         $experimentId = $material->getExperiment()->getId();
         $this->crud->deleteMaterial($material);
@@ -173,7 +167,7 @@ class FileManagementController extends AbstractController
     #[Route(path: '/{uuid}/update/description', name: 'update_description', methods: ['POST'])]
     public function updateDescriptionAction(string $uuid, Request $request): JsonResponse
     {
-        $this->logger->debug("Enter FileManagementController::updateDescriptionAction with [UUID: $uuid]");
+        $this->logger->debug("Enter FileManagementController::updateDescriptionAction with [UUID: {$uuid}]");
         $entity = $this->em->find(AdditionalMaterial::class, $uuid);
         $success = false;
         if ($entity == null) {
@@ -190,11 +184,10 @@ class FileManagementController extends AbstractController
         return new JsonResponse(['success' => $success], $success ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-
     #[Route(path: '/{uuid}/details', name: 'details')]
     public function materialDetailsAction(string $uuid, Request $request): Response
     {
-        $this->logger->debug("Enter FileManagementController::materialDetailsAction with [UUID: $uuid]");
+        $this->logger->debug("Enter FileManagementController::materialDetailsAction with [UUID: {$uuid}]");
         $entityAtChange = $this->em->find(AdditionalMaterial::class, $uuid);
         $experiment = $entityAtChange->getExperiment();
         $form = $this->questionnaire->askAndHandle(

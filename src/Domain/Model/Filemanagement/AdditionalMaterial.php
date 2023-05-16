@@ -1,14 +1,11 @@
 <?php
 
-
 namespace App\Domain\Model\Filemanagement;
-
 
 use App\Domain\Model\Administration\UuidEntity;
 use App\Domain\Model\Study\Experiment;
 use App\Questionnaire\Forms\FileDescriptionType;
 use App\Questionnaire\Questionable;
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
@@ -17,25 +14,6 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 #[ORM\Entity]
 class AdditionalMaterial extends UuidEntity implements Questionable
 {
-
-    static public function createMaterial(
-        string $atUploadName,
-        string $renamedFilename,
-        int $fileSize,
-        string $mimetype,
-        Experiment $experiment
-    ): AdditionalMaterial {
-        $file = new AdditionalMaterial();
-        $file->setOriginalName($atUploadName);
-        $file->setStorageName($renamedFilename);
-        $file->setOriginalSize($fileSize);
-        $file->setExperiment($experiment);
-        $file->setDateUploaded(new DateTime());
-        $file->setOriginalMimetype($mimetype);
-
-        return $file;
-    }
-
     #[ORM\Column(length: 256)]
     #[SerializedName('original_name')]
     #[Groups(['material'])]
@@ -49,7 +27,7 @@ class AdditionalMaterial extends UuidEntity implements Questionable
     #[ORM\Column()]
     #[SerializedName('uploaded')]
     #[Groups(['material'])]
-    private ?DateTime $dateUploaded = null;
+    private ?\DateTime $dateUploaded = null;
 
     #[ORM\Column()]
     #[SerializedName('original_size')]
@@ -66,6 +44,24 @@ class AdditionalMaterial extends UuidEntity implements Questionable
 
     #[ORM\ManyToOne(inversedBy: 'additionalMaterials')]
     private ?Experiment $experiment = null;
+
+    public static function createMaterial(
+        string $atUploadName,
+        string $renamedFilename,
+        int $fileSize,
+        string $mimetype,
+        Experiment $experiment
+    ): AdditionalMaterial {
+        $file = new AdditionalMaterial();
+        $file->setOriginalName($atUploadName);
+        $file->setStorageName($renamedFilename);
+        $file->setOriginalSize($fileSize);
+        $file->setExperiment($experiment);
+        $file->setDateUploaded(new \DateTime());
+        $file->setOriginalMimetype($mimetype);
+
+        return $file;
+    }
 
     public function getOriginalName(): string
     {
@@ -87,12 +83,12 @@ class AdditionalMaterial extends UuidEntity implements Questionable
         $this->originalMimetype = $originalMimetype;
     }
 
-    public function getDateUploaded(): ?DateTime
+    public function getDateUploaded(): ?\DateTime
     {
         return $this->dateUploaded;
     }
 
-    public function setDateUploaded(?DateTime $dateUploaded): void
+    public function setDateUploaded(?\DateTime $dateUploaded): void
     {
         $this->dateUploaded = $dateUploaded;
     }
@@ -127,7 +123,6 @@ class AdditionalMaterial extends UuidEntity implements Questionable
         $this->description = $description;
     }
 
-
     public function getExperiment(): Experiment
     {
         return $this->experiment;
@@ -138,7 +133,6 @@ class AdditionalMaterial extends UuidEntity implements Questionable
         $this->experiment = $experiment;
         $experiment->addAdditionalMaterials($this);
     }
-
 
     public function getFormTypeForEntity(): string
     {

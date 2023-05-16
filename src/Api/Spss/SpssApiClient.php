@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Api\Spss;
-
 
 use App\Api\ApiClientService;
 use App\Domain\Model\Filemanagement\Dataset;
@@ -13,7 +11,6 @@ use Symfony\Component\Mime\Part\DataPart;
 
 class SpssApiClient
 {
-
     /**
      * SpssApiClient constructor.
      */
@@ -22,15 +19,13 @@ class SpssApiClient
         private readonly ApiClientService $clientService,
         private readonly LoggerInterface $logger,
         private readonly string $spss_uri
-    )
-    {
+    ) {
     }
-
 
     public function savToArray(?Dataset $dataset)
     {
         $result = null;
-        if (null != $dataset) {
+        if ($dataset != null) {
             try {
                 $fileContent = $this->assetsFilesystem->read($dataset->getStorageName());
                 $result = $this->clientService->POST(
@@ -46,6 +41,4 @@ class SpssApiClient
 
         return $result;
     }
-
-
 }

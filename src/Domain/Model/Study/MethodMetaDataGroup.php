@@ -17,6 +17,12 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 #[ORM\Entity]
 class MethodMetaDataGroup extends UuidEntity implements Questionable, Reviewable
 {
+    /**
+     * One basic Information section has One Experiment.
+     */
+    #[ORM\OneToOne(inversedBy: 'methodMetaDataGroup')]
+    protected ?Experiment $experiment = null;
+
     #[ORM\Column(type: 'text', length: 1500, nullable: true)]
     #[SerializedName('research_design')]
     #[Groups(['study'])]
@@ -47,7 +53,6 @@ class MethodMetaDataGroup extends UuidEntity implements Questionable, Reviewable
     #[Groups(['study'])]
     private ?string $setting_location = null;
 
-
     #[ORM\Column(type: 'text', length: 1500, nullable: true)]
     #[SerializedName('manipulations')]
     #[Groups(['experimental'])]
@@ -68,68 +73,62 @@ class MethodMetaDataGroup extends UuidEntity implements Questionable, Reviewable
     #[Groups(['experimental'])]
     private ?string $other_control_operations = null;
 
-    /**
-     * One basic Information section has One Experiment.
-     */
-    #[ORM\OneToOne(inversedBy: 'methodMetaDataGroup')]
-    protected ?Experiment $experiment = null;
-
     public function getReviewCollection(): array
     {
         return [
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::DESIGN,
                 [$this->getResearchDesign()],
-                null != ReviewDataDictionary::DESIGN['errorLevel'] && ReviewValidator::validateSingleValue($this->getResearchDesign())
+                ReviewDataDictionary::DESIGN['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getResearchDesign())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::EXPERIMENTAL,
                 [$this->getExperimentalDetails()],
-                null != ReviewDataDictionary::EXPERIMENTAL['errorLevel'] && ReviewValidator::validateSingleValue($this->getExperimentalDetails()),
-                "Experimental" === $this->getResearchDesign()
+                ReviewDataDictionary::EXPERIMENTAL['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getExperimentalDetails()),
+                $this->getResearchDesign() === 'Experimental'
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::NON_EXPERIMENTAL,
                 [$this->getNonExperimentalDetails()],
-                null != ReviewDataDictionary::NON_EXPERIMENTAL['errorLevel'] && ReviewValidator::validateSingleValue($this->getNonExperimentalDetails()),
-                "Non-experimental" === $this->getResearchDesign()
+                ReviewDataDictionary::NON_EXPERIMENTAL['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getNonExperimentalDetails()),
+                $this->getResearchDesign() === 'Non-experimental'
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::OBSERVABLE_TYPE,
                 [$this->getObservationalType()],
-                null != ReviewDataDictionary::OBSERVABLE_TYPE['errorLevel'] && ReviewValidator::validateSingleValue($this->getObservationalType()),
-                "Non-experimental" === $this->getResearchDesign() && "Observational study" === $this->getNonExperimentalDetails()
+                ReviewDataDictionary::OBSERVABLE_TYPE['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getObservationalType()),
+                $this->getResearchDesign() === 'Non-experimental' && $this->getNonExperimentalDetails() === 'Observational study'
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::SETTING,
                 [$this->getSetting()],
-                null != ReviewDataDictionary::SETTING['errorLevel'] && ReviewValidator::validateSingleValue($this->getSetting())
+                ReviewDataDictionary::SETTING['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getSetting())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::SETTING_LOCATION,
                 [$this->getSettingLocation()],
-                null != ReviewDataDictionary::SETTING_LOCATION['errorLevel'] && ReviewValidator::validateSingleValue($this->getSettingLocation()),
-                'Real-life setting' === $this->getSetting() || 'Natural setting' === $this->getSetting()
+                ReviewDataDictionary::SETTING_LOCATION['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getSettingLocation()),
+                $this->getSetting() === 'Real-life setting' || $this->getSetting() === 'Natural setting'
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::MANIPULATIONS,
                 [$this->getManipulations()],
-                null != ReviewDataDictionary::MANIPULATIONS['errorLevel'] && ReviewValidator::validateSingleValue($this->getManipulations()),
-                "Experimental" === $this->getResearchDesign()
+                ReviewDataDictionary::MANIPULATIONS['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getManipulations()),
+                $this->getResearchDesign() === 'Experimental'
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::EXPERIMENTAL_DESIGN,
                 [$this->getExperimentalDesign()],
-                null != ReviewDataDictionary::EXPERIMENTAL_DESIGN['errorLevel'] && ReviewValidator::validateSingleValue($this->getExperimentalDesign()),
-                "Experimental" === $this->getResearchDesign()
+                ReviewDataDictionary::EXPERIMENTAL_DESIGN['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getExperimentalDesign()),
+                $this->getResearchDesign() === 'Experimental'
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::CONTROL_OPS,
-                ["Other" !== $this->getControlOperations() ? $this->getControlOperations() : $this->getOtherControlOperations()],
-                null != ReviewDataDictionary::CONTROL_OPS['errorLevel'] &&
-                ("Other" !== $this->getControlOperations() && ReviewValidator::validateSingleValue($this->getControlOperations())) ||
-                ("Other" === $this->getControlOperations() && ReviewValidator::validateSingleValue($this->getOtherControlOperations())),
-                "Experimental" === $this->getResearchDesign()
+                [$this->getControlOperations() !== 'Other' ? $this->getControlOperations() : $this->getOtherControlOperations()],
+                ReviewDataDictionary::CONTROL_OPS['errorLevel'] != null
+                && ($this->getControlOperations() !== 'Other' && ReviewValidator::validateSingleValue($this->getControlOperations()))
+                || ($this->getControlOperations() === 'Other' && ReviewValidator::validateSingleValue($this->getOtherControlOperations())),
+                $this->getResearchDesign() === 'Experimental'
             ),
         ];
     }

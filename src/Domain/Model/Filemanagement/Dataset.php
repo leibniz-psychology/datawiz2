@@ -1,12 +1,9 @@
 <?php
 
-
 namespace App\Domain\Model\Filemanagement;
-
 
 use App\Domain\Model\Administration\UuidEntity;
 use App\Domain\Model\Study\Experiment;
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,12 +13,6 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 #[ORM\Entity]
 class Dataset extends UuidEntity
 {
-
-    public function __construct()
-    {
-        $this->codebook = new ArrayCollection();
-    }
-
     #[ORM\ManyToOne(inversedBy: 'originalDatasets')]
     private ?Experiment $experiment = null;
 
@@ -38,7 +29,7 @@ class Dataset extends UuidEntity
     #[ORM\Column()]
     #[SerializedName('uploaded')]
     #[Groups(['dataset'])]
-    private ?DateTime $dateUploaded = null;
+    private ?\DateTime $dateUploaded = null;
 
     #[ORM\Column()]
     #[SerializedName('original_size')]
@@ -58,15 +49,19 @@ class Dataset extends UuidEntity
     #[Groups(['codebook'])]
     private Collection $codebook;
 
+    public function __construct()
+    {
+        $this->codebook = new ArrayCollection();
+    }
 
-    static public function createDataset(string $atUploadName, string $renamedFilename, int $fileSize, string $mimetype, Experiment $experiment): Dataset
+    public static function createDataset(string $atUploadName, string $renamedFilename, int $fileSize, string $mimetype, Experiment $experiment): Dataset
     {
         $file = new Dataset();
         $file->setOriginalName($atUploadName);
         $file->setStorageName($renamedFilename);
         $file->setOriginalSize($fileSize);
         $file->setExperiment($experiment);
-        $file->setDateUploaded(new DateTime());
+        $file->setDateUploaded(new \DateTime());
         $file->setOriginalMimetype($mimetype);
 
         return $file;
@@ -103,13 +98,12 @@ class Dataset extends UuidEntity
         $this->originalMimetype = $originalMimetype;
     }
 
-
-    public function getDateUploaded(): ?DateTime
+    public function getDateUploaded(): ?\DateTime
     {
         return $this->dateUploaded;
     }
 
-    public function setDateUploaded(?DateTime $dateUploaded): void
+    public function setDateUploaded(?\DateTime $dateUploaded): void
     {
         $this->dateUploaded = $dateUploaded;
     }
@@ -144,7 +138,6 @@ class Dataset extends UuidEntity
         $this->description = $description;
     }
 
-
     public function getCodebook(): Collection
     {
         return $this->codebook;
@@ -154,6 +147,4 @@ class Dataset extends UuidEntity
     {
         $this->codebook = $codebook;
     }
-
-
 }

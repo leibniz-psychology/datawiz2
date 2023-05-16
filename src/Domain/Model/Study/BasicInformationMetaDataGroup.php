@@ -55,17 +55,17 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, 
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::TITLE,
                 [$this->getTitle()],
-                null != ReviewDataDictionary::TITLE['errorLevel'] && ReviewValidator::validateSingleValue($this->getTitle())
+                ReviewDataDictionary::TITLE['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getTitle())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::DESCRIPTION,
                 [$this->getDescription()],
-                null != ReviewDataDictionary::DESCRIPTION['errorLevel'] && ReviewValidator::validateSingleValue($this->getDescription())
+                ReviewDataDictionary::DESCRIPTION['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getDescription())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::RELATED_PUBS,
                 $this->getRelatedPublications(),
-                null != ReviewDataDictionary::RELATED_PUBS['errorLevel'] && ReviewValidator::validateArrayValues($this->getRelatedPublications())
+                ReviewDataDictionary::RELATED_PUBS['errorLevel'] != null && ReviewValidator::validateArrayValues($this->getRelatedPublications())
             ),
         ];
     }
@@ -97,7 +97,7 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, 
 
     public function setRelatedPublications(?array $related_publications): void
     {
-        $this->related_publications = null == $related_publications ? null : array_values($related_publications);
+        $this->related_publications = $related_publications == null ? null : array_values($related_publications);
     }
 
     public function getExperiment(): Experiment

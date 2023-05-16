@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\View\Controller;
-
 
 use App\Domain\Model\Codebook\DatasetVariables;
 use App\Domain\Model\Filemanagement\Dataset;
@@ -21,9 +19,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- * @package App\View\Controller
- */
 #[Route(path: '/codebook', name: 'codebook_')]
 #[IsGranted('ROLE_USER')]
 class CodebookController extends AbstractController
@@ -31,7 +26,6 @@ class CodebookController extends AbstractController
     public function __construct(protected EntityManagerInterface $em, protected LoggerInterface $logger, private readonly Filesystem $filesystem)
     {
     }
-
 
     #[Route(path: '/{uuid}', name: 'index')]
     public function codebookIndexAction(string $uuid): Response
@@ -44,9 +38,9 @@ class CodebookController extends AbstractController
     #[Route(path: '/{uuid}/data', name: 'dataupdate')]
     public function performUpdateAction(string $uuid, Request $request): JsonResponse
     {
-        $this->logger->debug("Enter CodebookController::performUpdateAction with [UUID: $uuid]");
+        $this->logger->debug("Enter CodebookController::performUpdateAction with [UUID: {$uuid}]");
         $dataset = $this->em->getRepository(Dataset::class)->find($uuid);
-        if ($dataset && $request->isMethod("POST")) {
+        if ($dataset && $request->isMethod('POST')) {
             $postedData = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
             $this->saveCodebookVariables($postedData);
         }
@@ -58,7 +52,7 @@ class CodebookController extends AbstractController
     #[Route(path: '/{uuid}/measures', name: 'measures')]
     public function createViewMeasuresAction(string $uuid): JsonResponse
     {
-        $this->logger->debug("Enter CodebookController::createViewMeasuresAction with [UUID: $uuid]");
+        $this->logger->debug("Enter CodebookController::createViewMeasuresAction with [UUID: {$uuid}]");
         $dataset = $this->em->getRepository(Dataset::class)->find($uuid);
         $viewMeasures = [];
         if ($dataset) {
@@ -66,7 +60,7 @@ class CodebookController extends AbstractController
             if ($measures && $measures->getMeasures() && sizeof($measures->getMeasures()) > 0) {
                 $viewMeasures = [];
                 foreach ($measures->getMeasures() as $measure) {
-                    if ($measure && "" != $measure) {
+                    if ($measure && $measure != '') {
                         $viewMeasures['measures'][] = $measure;
                     }
                 }
@@ -81,7 +75,7 @@ class CodebookController extends AbstractController
     {
         $size = $request->get('size') ?? 0;
         $page = $request->get('page') ?? 1;
-        $this->logger->debug("Enter CodebookController::datasetMatrixAction with [UUID: $uuid]");
+        $this->logger->debug("Enter CodebookController::datasetMatrixAction with [UUID: {$uuid}]");
         $dataset = $this->em->getRepository(Dataset::class)->find($uuid);
         $response = null;
         if ($dataset) {
@@ -89,35 +83,35 @@ class CodebookController extends AbstractController
                 $response['header'][] = $var->getName();
             }
         }
-        if ($this->filesystem->has("matrix/".$uuid.".csv")) {
+        if ($this->filesystem->has('matrix/'.$uuid.'.csv')) {
             try {
-                $file = Reader::createFromString($this->filesystem->read("matrix/".$uuid.".csv"));
+                $file = Reader::createFromString($this->filesystem->read('matrix/'.$uuid.'.csv'));
                 if ($file->count() != 0) {
-                    if (0 == $size) {
+                    if ($size == 0) {
                         $response['content'] = $file;
                         $response['pagination']['max_items'] = $file->count();
                         $response['pagination']['items'] = $file->count();
                         $response['pagination']['current_page'] = 1;
                         $response['pagination']['max_pages'] = 1;
                     } else {
-                        $min = 0 != $page ? ($page - 1) * $size : 0;
+                        $min = $page != 0 ? ($page - 1) * $size : 0;
                         $max = $min + $size;
-                        for ($count = $min; $count < $max; $count++) {
+                        for ($count = $min; $count < $max; ++$count) {
                             $response['content'][] = $file->fetchOne($count);
                         }
                         $response['pagination']['max_items'] = $file->count();
                         $response['pagination']['items'] = $size;
                         $response['pagination']['current_page'] = $page;
-                        $response['pagination']['max_pages'] = ceil(0 != $file->count() ? ($file->count() / $size) : 0);
+                        $response['pagination']['max_pages'] = ceil($file->count() != 0 ? ($file->count() / $size) : 0);
                     }
                 } else {
                     $response['error'] = 'error.dataset.matrix.empty';
                 }
             } catch (UnableToReadFile $e) {
-                $this->logger->critical("UnableToReadFile in CodebookController::createViewMeasuresAction [UUID: $uuid] Exception: ".$e->getMessage());
+                $this->logger->critical("UnableToReadFile in CodebookController::createViewMeasuresAction [UUID: {$uuid}] Exception: ".$e->getMessage());
                 $response['error'] = 'error.dataset.matrix.notFound';
             } catch (UnableToProcessCsv $e) {
-                $this->logger->critical("UnableToProcessCsv in CodebookController::createViewMeasuresAction [UUID: $uuid] Exception: ".$e->getMessage());
+                $this->logger->critical("UnableToProcessCsv in CodebookController::createViewMeasuresAction [UUID: {$uuid}] Exception: ".$e->getMessage());
                 $response['error'] = 'error.dataset.matrix.unprocessable';
             }
         }
@@ -135,24 +129,24 @@ class CodebookController extends AbstractController
             $jsonCodebook = [];
             foreach ($codebook as $var) {
                 $jsonCodebook['variables'][] = [
-                    "id" => $var->getVarId(),
-                    "name" => $var->getName() ?? "",
-                    "label" => $var->getLabel() ?? "",
-                    "itemText" => $var->getItemText() ?? "",
-                    "values" => $var->getValues() ?? [
-                            [
-                                "name" => "",
-                                "label" => "",
-                            ],
+                    'id' => $var->getVarId(),
+                    'name' => $var->getName() ?? '',
+                    'label' => $var->getLabel() ?? '',
+                    'itemText' => $var->getItemText() ?? '',
+                    'values' => $var->getValues() ?? [
+                        [
+                            'name' => '',
+                            'label' => '',
                         ],
-                    "missings" => $var->getMissings() ?? [
-                            [
-                                "name" => "",
-                                "label" => "",
-                            ],
+                    ],
+                    'missings' => $var->getMissings() ?? [
+                        [
+                            'name' => '',
+                            'label' => '',
                         ],
-                    "measure" => $var->getMeasure() ?? "",
-                    "var_db_id" => $var->getId(),
+                    ],
+                    'measure' => $var->getMeasure() ?? '',
+                    'var_db_id' => $var->getId(),
                 ];
             }
         }
@@ -164,16 +158,16 @@ class CodebookController extends AbstractController
     {
         if ($arr && is_iterable($arr) && key_exists('variables', $arr) && !empty($arr['variables']) && is_iterable($arr['variables'])) {
             foreach ($arr['variables'] as $variable) {
-                if (key_exists("var_db_id", $variable)) {
-                    $values = $variable["values"] ? $this->setMissingArrayFields(array_values(array_filter($variable["values"]))) : null;
-                    $missings = $variable["missings"] ? $this->setMissingArrayFields(array_values(array_filter($variable["missings"]))) : null;
-                    $var = $this->em->getRepository(DatasetVariables::class)->find($variable["var_db_id"]);
-                    $var->setName($variable["name"] ?? $var->getName());
-                    $var->setLabel($variable["label"] ?? null);
-                    $var->setItemText($variable["itemText"] ?? null);
-                    $var->setValues(null != $values && 0 != sizeof($values) ? $values : null);
-                    $var->setMissings(null != $missings && 0 != sizeof($missings) ? $missings : null);
-                    $var->setMeasure($variable["measure"] ?? null);
+                if (key_exists('var_db_id', $variable)) {
+                    $values = $variable['values'] ? $this->setMissingArrayFields(array_values(array_filter($variable['values']))) : null;
+                    $missings = $variable['missings'] ? $this->setMissingArrayFields(array_values(array_filter($variable['missings']))) : null;
+                    $var = $this->em->getRepository(DatasetVariables::class)->find($variable['var_db_id']);
+                    $var->setName($variable['name'] ?? $var->getName());
+                    $var->setLabel($variable['label'] ?? null);
+                    $var->setItemText($variable['itemText'] ?? null);
+                    $var->setValues($values != null && sizeof($values) != 0 ? $values : null);
+                    $var->setMissings($missings != null && sizeof($missings) != 0 ? $missings : null);
+                    $var->setMeasure($variable['measure'] ?? null);
                     $this->em->persist($var);
                     $this->em->flush();
                 }
@@ -183,7 +177,7 @@ class CodebookController extends AbstractController
 
     private function setMissingArrayFields(?array $arr): ?array
     {
-        if (null != $arr) {
+        if ($arr != null) {
             foreach ($arr as &$item) {
                 if (key_exists('name', $item) && !key_exists('label', $item)) {
                     $item['label'] = '';
@@ -196,5 +190,4 @@ class CodebookController extends AbstractController
 
         return $arr;
     }
-
 }

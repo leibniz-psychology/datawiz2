@@ -17,6 +17,11 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 #[ORM\Entity]
 class SampleMetaDataGroup extends UuidEntity implements Questionable, Reviewable
 {
+    /**
+     * One Sample section has One Experiment.
+     */
+    #[ORM\OneToOne(inversedBy: 'sampleMetaDataGroup')]
+    protected ?Experiment $experiment = null;
 
     #[ORM\Column(type: 'text', length: 1500, nullable: true)]
     #[SerializedName('participants')]
@@ -58,51 +63,45 @@ class SampleMetaDataGroup extends UuidEntity implements Questionable, Reviewable
     #[Groups(['study'])]
     private ?string $power_analysis = null;
 
-    /**
-     * One Sample section has One Experiment.
-     */
-    #[ORM\OneToOne(inversedBy: 'sampleMetaDataGroup')]
-    protected ?Experiment $experiment = null;
-
     public function getReviewCollection(): array
     {
         return [
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::PARTICIPANTS,
                 [$this->getParticipants()],
-                null != ReviewDataDictionary::PARTICIPANTS['errorLevel'] && ReviewValidator::validateSingleValue($this->getParticipants())
+                ReviewDataDictionary::PARTICIPANTS['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getParticipants())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::POPULATION,
                 $this->getPopulation(),
-                null != ReviewDataDictionary::POPULATION['errorLevel'] && ReviewValidator::validateArrayValues($this->getPopulation())
+                ReviewDataDictionary::POPULATION['errorLevel'] != null && ReviewValidator::validateArrayValues($this->getPopulation())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::INCLUSION,
                 $this->getInclusionCriteria(),
-                null != ReviewDataDictionary::INCLUSION['errorLevel'] && ReviewValidator::validateArrayValues($this->getInclusionCriteria())
+                ReviewDataDictionary::INCLUSION['errorLevel'] != null && ReviewValidator::validateArrayValues($this->getInclusionCriteria())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::EXCLUSION,
                 $this->getExclusionCriteria(),
-                null != ReviewDataDictionary::EXCLUSION['errorLevel'] && ReviewValidator::validateArrayValues($this->getExclusionCriteria())
+                ReviewDataDictionary::EXCLUSION['errorLevel'] != null && ReviewValidator::validateArrayValues($this->getExclusionCriteria())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::SAMPLING,
-                ["Other" !== $this->getSamplingMethod() ? $this->getSamplingMethod() : $this->getOtherSamplingMethod()],
-                null != ReviewDataDictionary::SAMPLING['errorLevel'] &&
-                ("Other" !== $this->getSamplingMethod() && ReviewValidator::validateSingleValue($this->getSamplingMethod())) ||
-                ("Other" === $this->getSamplingMethod() && ReviewValidator::validateSingleValue($this->getOtherSamplingMethod()))
+                [$this->getSamplingMethod() !== 'Other' ? $this->getSamplingMethod() : $this->getOtherSamplingMethod()],
+                ReviewDataDictionary::SAMPLING['errorLevel'] != null
+                && ($this->getSamplingMethod() !== 'Other' && ReviewValidator::validateSingleValue($this->getSamplingMethod()))
+                || ($this->getSamplingMethod() === 'Other' && ReviewValidator::validateSingleValue($this->getOtherSamplingMethod()))
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::SAMPLE_SIZE,
                 [$this->getSampleSize()],
-                null != ReviewDataDictionary::SAMPLE_SIZE['errorLevel'] && ReviewValidator::validateSingleValue($this->getSampleSize())
+                ReviewDataDictionary::SAMPLE_SIZE['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getSampleSize())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::POWER_ANALYSIS,
                 [$this->getPowerAnalysis()],
-                null != ReviewDataDictionary::POWER_ANALYSIS['errorLevel'] && ReviewValidator::validateSingleValue($this->getPowerAnalysis())
+                ReviewDataDictionary::POWER_ANALYSIS['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getPowerAnalysis())
             ),
         ];
     }
@@ -129,7 +128,7 @@ class SampleMetaDataGroup extends UuidEntity implements Questionable, Reviewable
 
     public function setInclusionCriteria(?array $inclusion_criteria): void
     {
-        $this->inclusion_criteria = null == $inclusion_criteria ? null : array_values($inclusion_criteria);
+        $this->inclusion_criteria = $inclusion_criteria == null ? null : array_values($inclusion_criteria);
     }
 
     public function getExclusionCriteria(): ?array
@@ -139,7 +138,7 @@ class SampleMetaDataGroup extends UuidEntity implements Questionable, Reviewable
 
     public function setExclusionCriteria(?array $exclusion_criteria): void
     {
-        $this->exclusion_criteria = null == $exclusion_criteria ? null : array_values($exclusion_criteria);
+        $this->exclusion_criteria = $exclusion_criteria == null ? null : array_values($exclusion_criteria);
     }
 
     public function getPopulation(): ?array
@@ -149,7 +148,7 @@ class SampleMetaDataGroup extends UuidEntity implements Questionable, Reviewable
 
     public function setPopulation(?array $population): void
     {
-        $this->population = null == $population ? null : array_values($population);
+        $this->population = $population == null ? null : array_values($population);
     }
 
     public function getSamplingMethod(): ?string

@@ -13,7 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MethodType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -29,9 +28,9 @@ class MethodType extends AbstractType
                 'label' => 'input.setting.label',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => ['class' => 'p-1'],
-                'choice_attr' => fn() => ['class' => 'RadioButton-Input'],
+                'choice_attr' => fn () => ['class' => 'RadioButton-Input'],
             ])
-            ->add("settingLocation", TextareaType::class, [
+            ->add('settingLocation', TextareaType::class, [
                 'required' => false,
                 'label' => 'input.setting.location.label',
                 'label_attr' => ['class' => 'MetaData-Label'],
@@ -55,11 +54,11 @@ class MethodType extends AbstractType
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'help_attr' => ['class' => 'px-6 pt-1'],
                 'attr' => ['class' => 'p-1'],
-                'choice_attr' => fn() => [
+                'choice_attr' => fn () => [
                     'class' => 'RadioButton-Input',
                 ],
             ])
-            ->add("experimentalDetails", ChoiceType::class, [
+            ->add('experimentalDetails', ChoiceType::class, [
                 'required' => false,
                 'placeholder' => false,
                 'choices' => [
@@ -72,11 +71,11 @@ class MethodType extends AbstractType
                 'label_attr' => ['class' => 'MetaData-Label !pl-0'],
                 'label_html' => true,
                 'attr' => ['class' => 'p-1'],
-                'choice_attr' => fn() => [
+                'choice_attr' => fn () => [
                     'class' => 'RadioButton-Input',
                 ],
             ])
-            ->add("nonExperimentalDetails", ChoiceType::class, [
+            ->add('nonExperimentalDetails', ChoiceType::class, [
                 'required' => false,
                 'placeholder' => false,
                 'choices' => [
@@ -91,11 +90,11 @@ class MethodType extends AbstractType
                 'label_attr' => ['class' => 'MetaData-Label !pl-0'],
                 'label_html' => true,
                 'attr' => ['class' => 'p-1'],
-                'choice_attr' => fn() => [
+                'choice_attr' => fn () => [
                     'class' => 'RadioButton-Input',
                 ],
             ])
-            ->add("observationalType", ChoiceType::class, [
+            ->add('observationalType', ChoiceType::class, [
                 'required' => false,
                 'placeholder' => 'input.design.details.observationalType.placeholder',
                 'choices' => [
@@ -144,12 +143,12 @@ class MethodType extends AbstractType
                 'label' => 'input.control-operations.label',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => ['class' => 'p-1'],
-                'choice_attr' => fn() => ['class' => 'RadioButton-Input'],
+                'choice_attr' => fn () => ['class' => 'RadioButton-Input'],
             ])
-            ->add("otherControlOperations", TextareaType::class, [
+            ->add('otherControlOperations', TextareaType::class, [
                 'required' => false,
                 'label' => 'input.control-operations.other.label',
-                'attr' => ['class' => 'p-1', 'rows' => '4',],
+                'attr' => ['class' => 'p-1', 'rows' => '4'],
             ])
             ->add('saveAndPrevious', SubmitType::class)
             ->add('saveAndNext', SubmitType::class)

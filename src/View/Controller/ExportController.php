@@ -2,7 +2,6 @@
 
 namespace App\View\Controller;
 
-
 use App\Domain\Model\Filemanagement\AdditionalMaterial;
 use App\Domain\Model\Filemanagement\Dataset;
 use App\Domain\Model\Study\Experiment;
@@ -26,12 +25,10 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
-use ZipArchive;
 
 #[IsGranted('ROLE_USER')]
 class ExportController extends AbstractController
 {
-
     private readonly Serializer $serializer;
 
     public function __construct(private readonly LoggerInterface $logger, private readonly EntityManagerInterface $em, private readonly Filesystem $filesystem)
@@ -44,31 +41,30 @@ class ExportController extends AbstractController
         );
     }
 
-
     #[Route(path: '/export/{uuid}', name: 'export_index', methods: ['GET'])]
     public function exportIndex(string $uuid): Response
     {
-        $this->logger->debug("Enter ExportController::exportAction(GET) for UUID: $uuid");
+        $this->logger->debug("Enter ExportController::exportAction(GET) for UUID: {$uuid}");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
 
-        return $this->render('Pages/Export/export.html.twig', ['export_error' => null, "experiment" => $experiment]);
+        return $this->render('Pages/Export/export.html.twig', ['export_error' => null, 'experiment' => $experiment]);
     }
 
     #[Route(path: '/export/{uuid}', name: 'export_action', methods: ['POST'])]
     public function exportAction(Request $request, string $uuid): Response
     {
-        $this->logger->debug("Enter ExportController::exportAction(POST) for UUID: $uuid");
+        $this->logger->debug("Enter ExportController::exportAction(POST) for UUID: {$uuid}");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
         $exportFormat = $request->get('exportFormat');
         $exportDataset = $request->get('exportDataset');
         $exportMaterial = $request->get('exportMaterial');
         if ($experiment) {
-            $zip = new ZipArchive();
+            $zip = new \ZipArchive();
             $zipError = false;
             $zipName = sys_get_temp_dir().'/'.$this->sanitizeFilename($experiment->getSettingsMetaDataGroup()->getShortName()).'.zip';
-            if ($zip->open($zipName, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+            if ($zip->open($zipName, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === true) {
                 $experiment->getOriginalDatasets()->clear();
-                if (null !== $exportDataset && 0 != sizeof($exportDataset)) {
+                if ($exportDataset !== null && sizeof($exportDataset) != 0) {
                     foreach ($exportDataset as $dataset) {
                         $experiment->addOriginalDatasets($this->em->getRepository(Dataset::class)->find($dataset));
                     }
@@ -76,14 +72,14 @@ class ExportController extends AbstractController
                 }
 
                 $experiment->getAdditionalMaterials()->clear();
-                if (null !== $exportMaterial && 0 != sizeof($exportMaterial)) {
+                if ($exportMaterial !== null && sizeof($exportMaterial) != 0) {
                     foreach ($exportMaterial as $material) {
                         $experiment->addAdditionalMaterials($this->em->getRepository(AdditionalMaterial::class)->find($material));
                     }
                     $zipError = $this->appendMaterialToZip($experiment, $zip) ?: $zipError;
                 }
 
-                if ('study' === $request->get('exportStudy')) {
+                if ($request->get('exportStudy') === 'study') {
                     $zipError = $this->appendStudyToZip($experiment, $exportFormat, $zip) ?: $zipError;
                 }
 
@@ -99,35 +95,35 @@ class ExportController extends AbstractController
                         ]
                     );
                 } else {
-                    $this->logger->warning("ExportController::exportAction(POST): Error during creating ZIP file: Zip file is empty or corrupt");
+                    $this->logger->warning('ExportController::exportAction(POST): Error during creating ZIP file: Zip file is empty or corrupt');
                     $zip->addFromString('empty.txt', 'No file exported!');
                     $zip->close();
                     if ($zipError) {
-                        $exportError = "error.export.zip.create";
+                        $exportError = 'error.export.zip.create';
                     } else {
-                        $exportError = "error.export.zip.empty";
+                        $exportError = 'error.export.zip.empty';
                     }
                 }
                 unlink($zipName);
             } else {
-                $this->logger->critical("ExportController::exportAction(POST): Error during creating ZIP file: Could not create temp file for export");
-                $exportError = "error.export.zip.tempFile";
+                $this->logger->critical('ExportController::exportAction(POST): Error during creating ZIP file: Could not create temp file for export');
+                $exportError = 'error.export.zip.tempFile';
             }
         } else {
-            $this->logger->critical("ExportController::exportAction(POST): Error during getting experiment: Experiment == null");
-            $exportError = "error.experiment.empty";
+            $this->logger->critical('ExportController::exportAction(POST): Error during getting experiment: Experiment == null');
+            $exportError = 'error.experiment.empty';
         }
 
-        return $response ?? $this->render('Pages/Export/export.html.twig', ['export_error' => $exportError ?? null, "experiment" => $experiment]);
+        return $response ?? $this->render('Pages/Export/export.html.twig', ['export_error' => $exportError ?? null, 'experiment' => $experiment]);
     }
 
     /**
      * @return bool Error:True on failure, False on success
      */
-    private function appendStudyToZip(Experiment $experiment, string $format, ZipArchive &$zip): bool
+    private function appendStudyToZip(Experiment $experiment, string $format, \ZipArchive &$zip): bool
     {
-        $design = "Experimental" === $experiment->getMethodMetaDataGroup()->getResearchDesign(
-        ) ? 'experimental' : ("Non-experimental" === $experiment->getMethodMetaDataGroup()->getResearchDesign() ? 'non_experimental' : null);
+        $design = $experiment->getMethodMetaDataGroup()->getResearchDesign(
+        ) === 'Experimental' ? 'experimental' : ($experiment->getMethodMetaDataGroup()->getResearchDesign() === 'Non-experimental' ? 'non_experimental' : null);
 
         $json = $this->serializer->serialize(
             $experiment,
@@ -147,7 +143,7 @@ class ExportController extends AbstractController
     /**
      * @return bool Error:True on failure, False on success
      */
-    private function appendDatasetToZip(Experiment $experiment, string $format, ZipArchive &$zip): bool
+    private function appendDatasetToZip(Experiment $experiment, string $format, \ZipArchive &$zip): bool
     {
         $error = false;
         foreach ($experiment->getOriginalDatasets() as $dataset) {
@@ -160,7 +156,7 @@ class ExportController extends AbstractController
             try {
                 if ($this->filesystem->has($dataset->getStorageName())) {
                     $error = $zip->addFromString(
-                        "$folder/original_".$dataset->getOriginalName(),
+                        "{$folder}/original_".$dataset->getOriginalName(),
                         $this->filesystem->read($dataset->getStorageName())
                     ) ? $error : true;
                 }
@@ -168,7 +164,7 @@ class ExportController extends AbstractController
                     $matrix = $this->filesystem->read("matrix/{$dataset->getId()}.csv");
                     if ($matrix) {
                         $matrix = $this->buildCSVHeader($dataset->getCodebook()).$matrix;
-                        $error = $zip->addFromString("$folder/datamatrix.csv", $matrix) ? $error : true;
+                        $error = $zip->addFromString("{$folder}/datamatrix.csv", $matrix) ? $error : true;
                     }
                 }
             } catch (UnableToReadFile $e) {
@@ -176,7 +172,7 @@ class ExportController extends AbstractController
                 $error = true;
             }
             $error = $zip->addFromString(
-                "$folder/codebook.$format",
+                "{$folder}/codebook.{$format}",
                 $this->serializer->serialize(
                     $dataset->getCodebook(),
                     $format,
@@ -197,7 +193,7 @@ class ExportController extends AbstractController
         return $error;
     }
 
-    private function appendMaterialToZip(Experiment $experiment, ZipArchive &$zip): mixed
+    private function appendMaterialToZip(Experiment $experiment, \ZipArchive &$zip): mixed
     {
         $error = false;
         foreach ($experiment->getAdditionalMaterials() as $material) {
@@ -224,14 +220,13 @@ class ExportController extends AbstractController
             $header[] = $var->getName();
         }
 
-        return implode(",", $header).PHP_EOL;
+        return implode(',', $header).PHP_EOL;
     }
 
     private function sanitizeFilename(?string $name): ?string
     {
-        $chars = [" ", '"', "'", "&", "/", "\\", "?", "#", "<", ">", ".", ","];
+        $chars = [' ', '"', "'", '&', '/', '\\', '?', '#', '<', '>', '.', ','];
 
-        return null != $name ? strtolower(trim(str_replace($chars, '_', $name))) : 'unnamed';
+        return $name != null ? strtolower(trim(str_replace($chars, '_', $name))) : 'unnamed';
     }
-
 }

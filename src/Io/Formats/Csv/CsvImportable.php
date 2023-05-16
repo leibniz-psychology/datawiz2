@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Io\Formats\Csv;
-
 
 use League\Csv\Exception;
 use League\Csv\Reader;
@@ -22,15 +20,15 @@ class CsvImportable
         try {
             $fileContent = $this->assetsFilesystem->read($fileId);
             $csv = Reader::createFromString($fileContent);
-            if (0 < $headerRows) {
+            if ($headerRows > 0) {
                 $csv->setHeaderOffset($headerRows - 1);
             }
             $csv->setDelimiter($delimiter == 't' ? "\t" : $delimiter);
             switch ($escape) {
-                case "double":
-                    $csv->setEscape("\"");
+                case 'double':
+                    $csv->setEscape('"');
                     break;
-                case "single":
+                case 'single':
                     $csv->setEscape("'");
                     break;
             }
@@ -42,7 +40,7 @@ class CsvImportable
                     break;
                 }
                 $result['records'][] = $record;
-                $count++;
+                ++$count;
             }
         } catch (UnableToReadFile $e) {
             $this->logger->error("CsvImportable::csvToArray FileNotFoundException thrown: {$e->getMessage()}");

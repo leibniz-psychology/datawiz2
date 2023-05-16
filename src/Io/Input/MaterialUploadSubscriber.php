@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Io\Input;
-
 
 use App\Domain\Model\Filemanagement\AdditionalMaterial;
 use App\Domain\Model\Study\Experiment;
@@ -25,7 +23,7 @@ class MaterialUploadSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * Every time a file is uploaded we want to save the metadata about this file
+     * Every time a file is uploaded we want to save the metadata about this file.
      */
     public function onMaterialPostUpload(PostUploadEvent $event)
     {

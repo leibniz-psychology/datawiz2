@@ -5,7 +5,6 @@ namespace App\Security\Authentication;
 use App\Crud\Crudable;
 use App\Domain\Definition\UserRoles;
 use App\Domain\Model\Administration\DataWizUser;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\OAuth2Authenticator;
@@ -30,8 +29,7 @@ class OauthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
         private readonly Crudable $crud,
         private readonly UrlGeneratorInterface $urlGenerator,
         private readonly EntityManagerInterface $entityManager,
-    )
-    {
+    ) {
     }
 
     public function authenticate(Request $request): SelfValidatingPassport
@@ -40,7 +38,7 @@ class OauthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
         $accessToken = $this->fetchAccessToken($client);
 
         return new SelfValidatingPassport(
-            new UserBadge($accessToken->getToken(), function() use ($accessToken, $client) {
+            new UserBadge($accessToken->getToken(), function () use ($accessToken, $client) {
                 $keycloakUser = $client->fetchUserFromToken($accessToken);
 
                 $user = null;
@@ -54,7 +52,7 @@ class OauthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
                         $user = new DataWizUser();
                         $user->setId(new Uuid($keycloakUser->getId()));
                         $user->setRoles([UserRoles::USER]);
-                        $user->setDateRegistered(new DateTime());
+                        $user->setDateRegistered(new \DateTime());
                     }
                     if (key_exists('email', $kcArray)) {
                         $user->setEmail($kcArray['email']);
@@ -65,7 +63,7 @@ class OauthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
                     if (key_exists('family_name', $kcArray)) {
                         $user->setLastname($kcArray['family_name']);
                     }
-                    $user->setLastLogin(new DateTime());
+                    $user->setLastLogin(new \DateTime());
                     $this->crud->update($user);
                 }
 

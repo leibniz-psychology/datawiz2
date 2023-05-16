@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Api;
-
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Mime\Part\Multipart\FormDataPart;
@@ -30,10 +28,10 @@ class ApiClientService
                     'query' => $params,
                 ]
             );
-            if ($response && 200 == $response->getStatusCode()) {
+            if ($response && $response->getStatusCode() == 200) {
                 $content = json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
             }
-        } catch (TransportExceptionInterface | ClientExceptionInterface | RedirectionExceptionInterface | ServerExceptionInterface $e) {
+        } catch (TransportExceptionInterface|ClientExceptionInterface|RedirectionExceptionInterface|ServerExceptionInterface $e) {
             $this->logger->error("HttpClientService::GET - Exception thrown: {$e->getMessage()}");
         }
 
@@ -54,15 +52,13 @@ class ApiClientService
                     'body' => $formData->bodyToIterable(),
                 ]
             );
-            if ($response && 200 == $response->getStatusCode()) {
+            if ($response && $response->getStatusCode() == 200) {
                 $content = json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
             }
-        } catch (TransportExceptionInterface | ClientExceptionInterface | RedirectionExceptionInterface | ServerExceptionInterface $e) {
+        } catch (TransportExceptionInterface|ClientExceptionInterface|RedirectionExceptionInterface|ServerExceptionInterface $e) {
             $this->logger->error("HttpClientService::POST - Exception thrown: {$e->getMessage()}");
         }
 
         return $content;
     }
-
-
 }

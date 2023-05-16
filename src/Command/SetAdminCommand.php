@@ -18,7 +18,6 @@ class SetAdminCommand extends Command
         parent::__construct();
     }
 
-
     protected function configure(): void
     {
         $this
@@ -32,12 +31,12 @@ class SetAdminCommand extends Command
         $email = $input->getArgument('email');
         $role = $input->getArgument('role');
         $output->writeln([
-                             "============================================================",
-                             "execute pax:add-user-role with email: $email and role: $role",
-                         ]);
+            '============================================================',
+            "execute pax:add-user-role with email: {$email} and role: {$role}",
+        ]);
         $user = $this->em->getRepository(DataWizUser::class)->findOneBy(['email' => $email]);
         if ($user !== null && ($role === 'ROLE_ADMIN' || $role === 'ROLE_MODERATOR')) {
-            $output->writeln(["user with email: ".$user->getEmail().' found uuid: '.$user->getId()]);
+            $output->writeln(['user with email: '.$user->getEmail().' found uuid: '.$user->getId()]);
             $roles = $user->getRoles();
             if (!in_array($role, $roles)) {
                 $roles[] = $role;
@@ -45,9 +44,9 @@ class SetAdminCommand extends Command
                 $this->em->persist($user);
                 $this->em->flush();
                 $output->writeln([
-                                     "Role set",
-                                     "============================================================",
-                                 ]);
+                    'Role set',
+                    '============================================================',
+                ]);
 
                 return Command::SUCCESS;
             }

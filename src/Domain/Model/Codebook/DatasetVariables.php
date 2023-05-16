@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Domain\Model\Codebook;
-
 
 use App\Domain\Model\Administration\UuidEntity;
 use App\Domain\Model\Filemanagement\Dataset;
@@ -13,33 +11,6 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 #[ORM\Entity]
 class DatasetVariables extends UuidEntity
 {
-
-    public static function createNew(
-        Dataset $dataset,
-        int $varId,
-        string $name,
-        ?string $label = null,
-        ?string $itemText = null,
-        ?array $values = null,
-        ?array $missings = null,
-        ?string $measure = null
-
-    ): DatasetVariables {
-        $dv = new DatasetVariables();
-        $dv->setDataset($dataset);
-        $dv->setVarId($varId);
-        $dv->setName($name);
-        $dv->setLabel($label);
-        $dv->setItemText($itemText);
-        $dv->setValues($values);
-        $dv->setMissings($missings);
-        $dv->setValues($values);
-        $dv->setMeasure($measure);
-
-        return $dv;
-    }
-
-
     #[ORM\Column()]
     private int $varId;
 
@@ -77,6 +48,29 @@ class DatasetVariables extends UuidEntity
     #[ORM\JoinColumn(name: 'dataset_id', referencedColumnName: 'id')]
     private ?Dataset $dataset = null;
 
+    public static function createNew(
+        Dataset $dataset,
+        int $varId,
+        string $name,
+        ?string $label = null,
+        ?string $itemText = null,
+        ?array $values = null,
+        ?array $missings = null,
+        ?string $measure = null
+    ): DatasetVariables {
+        $dv = new DatasetVariables();
+        $dv->setDataset($dataset);
+        $dv->setVarId($varId);
+        $dv->setName($name);
+        $dv->setLabel($label);
+        $dv->setItemText($itemText);
+        $dv->setValues($values);
+        $dv->setMissings($missings);
+        $dv->setValues($values);
+        $dv->setMeasure($measure);
+
+        return $dv;
+    }
 
     public function getDataset(): Dataset
     {
@@ -157,6 +151,4 @@ class DatasetVariables extends UuidEntity
     {
         $this->measure = $measure;
     }
-
-
 }

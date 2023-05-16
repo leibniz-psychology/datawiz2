@@ -18,7 +18,7 @@ class SampleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add("participants", TextareaType::class, [
+            ->add('participants', TextareaType::class, [
                 'required' => false,
                 'label' => 'input.participants.label',
                 'label_attr' => ['class' => 'MetaData-Label'],
@@ -97,9 +97,9 @@ class SampleType extends AbstractType
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'label_html' => true,
                 'attr' => ['class' => 'p-1'],
-                'choice_attr' => fn() => ['class' => 'RadioButton-Input'],
+                'choice_attr' => fn () => ['class' => 'RadioButton-Input'],
             ])
-            ->add("otherSamplingMethod", TextareaType::class, [
+            ->add('otherSamplingMethod', TextareaType::class, [
                 'required' => false,
                 'label' => 'input.sampling.other.label',
             ])

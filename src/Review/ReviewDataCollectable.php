@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Review;
-
 
 final class ReviewDataCollectable
 {
@@ -65,7 +63,6 @@ final class ReviewDataCollectable
     {
         $this->errorType = $errorType;
     }
-
 
     public static function createFrom(array $reviewData, ?array $dataValue, bool $valid = false, bool $displayCondition = true): ReviewDataCollectable
     {

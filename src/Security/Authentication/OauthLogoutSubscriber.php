@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Security\Authentication;
-
 
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -36,9 +34,7 @@ class OauthLogoutSubscriber implements EventSubscriberInterface
     {
         $provider = $this->clientRegistry->getClient('keycloak');
         $targetUrl = $this->urlGenerator->generate('dashboard', [], UrlGeneratorInterface::ABSOLUTE_URL);
-        $logout = $provider->getOAuth2Provider()->getLogoutUrl(["redirect_uri" => $targetUrl]);
+        $logout = $provider->getOAuth2Provider()->getLogoutUrl(['redirect_uri' => $targetUrl]);
         $event->setResponse(new RedirectResponse($logout));
     }
-
-
 }

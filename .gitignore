@@ -295,3 +295,7 @@ yarn-error.log
 /cypress.env.json
 /cypress/videos/
 /k8s-secrets.sh
+
+###> friendsofphp/php-cs-fixer ###
+.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###

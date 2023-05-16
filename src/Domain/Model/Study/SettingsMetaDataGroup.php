@@ -14,14 +14,14 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 class SettingsMetaDataGroup extends UuidEntity implements Questionable
 {
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $shortName = null;
-
     /**
      * One Settings section has One Experiment.
      */
     #[ORM\OneToOne(inversedBy: 'settingsMetaDataGroup')]
     protected ?Experiment $experiment = null;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $shortName = null;
 
     public function getFormTypeForEntity(): string
     {
@@ -47,6 +47,4 @@ class SettingsMetaDataGroup extends UuidEntity implements Questionable
     {
         $this->experiment = $experiment;
     }
-
-
 }

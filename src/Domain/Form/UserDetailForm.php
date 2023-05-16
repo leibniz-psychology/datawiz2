@@ -23,7 +23,7 @@ class UserDetailForm extends AbstractType
                 'required' => true,
                 'expanded' => false,
                 'multiple' => false,
-                'choice_label' => fn($choice) => 'roles.'.$choice,
+                'choice_label' => fn ($choice) => 'roles.'.$choice,
                 'row_attr' => [
                     'class' => 'pt-8',
                 ],
@@ -38,15 +38,16 @@ class UserDetailForm extends AbstractType
             $builder->get('roles')
                 ->addModelTransformer(
                     new CallbackTransformer(
-                        fn($rolesArray) => count($rolesArray) ? $rolesArray[0] : null,
-                        fn($rolesString) => array_filter([$rolesString])
+                        fn ($rolesArray) => count($rolesArray) ? $rolesArray[0] : null,
+                        fn ($rolesString) => array_filter([$rolesString])
                     )
                 );
         }
 
         $builder
             ->add(
-                'email', TextType::class,
+                'email',
+                TextType::class,
                 [
                     'label' => 'input.creator.email',
                     'attr' => [
@@ -60,17 +61,19 @@ class UserDetailForm extends AbstractType
                 ]
             )
             ->add(
-                'firstname', TextType::class,
+                'firstname',
+                TextType::class,
                 [
                     'label' => 'input.creator.name.given',
                     'attr' => [
                         'class' => 'MetaData-TextInput',
                         'rows' => '3',
                         'readonly' => true,
-                    ]
+                    ],
                 ]
             )->add(
-                'lastname', TextType::class,
+                'lastname',
+                TextType::class,
                 [
                     'label' => 'input.creator.name.family',
                     'attr' => [
@@ -84,12 +87,12 @@ class UserDetailForm extends AbstractType
                 ]
             )
             ->add(
-                'save', SubmitType::class,
+                'save',
+                SubmitType::class,
                 [
-                    'attr' =>
-                        [
-                            'class' => 'MetaData-SubmitButton Button Button_primary Button_primary_act Button_standalone',
-                        ],
+                    'attr' => [
+                        'class' => 'MetaData-SubmitButton Button Button_primary Button_primary_act Button_standalone',
+                    ],
                     'label' => 'generic.save-changes',
                 ]
             );

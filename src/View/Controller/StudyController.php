@@ -9,7 +9,6 @@ use App\Domain\Model\Administration\DataWizUser;
 use App\Domain\Model\Study\CreatorMetaDataGroup;
 use App\Domain\Model\Study\Experiment;
 use App\Questionnaire\Questionnairable;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,11 +27,10 @@ class StudyController extends AbstractController
     {
     }
 
-
     #[Route(path: '/', name: 'overview')]
     public function overviewAction(): Response
     {
-        $this->logger->debug("Enter StudyController::overviewAction");
+        $this->logger->debug('Enter StudyController::overviewAction');
 
         return $this->render('Pages/Study/overview.html.twig', [
             'all_experiments' => $this->em->getRepository(Experiment::class)->findBy(['owner' => $this->getUser()]),
@@ -45,12 +43,12 @@ class StudyController extends AbstractController
     #[Route(path: '/new', name: 'new')]
     public function newAction(Questionnairable $questionnaire, Request $request): Response
     {
-        $this->logger->debug("Enter StudyController::newAction");
+        $this->logger->debug('Enter StudyController::newAction');
         $newExperiment = Experiment::createNewExperiment($this->em->getRepository(DataWizUser::class)->find($this->security->getUser()));
         $form = $questionnaire->askAndHandle($newExperiment->getSettingsMetaDataGroup(), 'create', $request);
 
         if ($this->questionnaire->isSubmittedAndValid($form)) {
-            $newExperiment->setDateCreated(new DateTime());
+            $newExperiment->setDateCreated(new \DateTime());
             $newExperiment->setDateSubmitted(null);
             $newExperiment->setState(States::STATE_STUDY_NONE);
             $this->em->persist($newExperiment);
@@ -68,7 +66,7 @@ class StudyController extends AbstractController
     #[Route(path: '/{uuid}/settings', name: 'settings')]
     public function settingsAction(string $uuid, Request $request): Response
     {
-        $this->logger->debug("Enter StudyController::settingsAction with [UUID: $uuid]");
+        $this->logger->debug("Enter StudyController::settingsAction with [UUID: {$uuid}]");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
 
         if (!$this->_checkAccess($experiment)) {
@@ -94,7 +92,7 @@ class StudyController extends AbstractController
     #[Route(path: '/{uuid}/documentation', name: 'documentation')]
     public function documentationAction(string $uuid, Request $request): Response
     {
-        $this->logger->debug("Enter StudyController::documentationAction with [UUID: $uuid]");
+        $this->logger->debug("Enter StudyController::documentationAction with [UUID: {$uuid}]");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
 
         if (!$this->_checkAccess($experiment)) {
@@ -154,7 +152,7 @@ class StudyController extends AbstractController
     #[Route(path: '/{uuid}/theory', name: 'theory')]
     public function theoryAction(string $uuid, Request $request): Response
     {
-        $this->logger->debug("Enter StudyController::theoryAction with [UUID: $uuid]");
+        $this->logger->debug("Enter StudyController::theoryAction with [UUID: {$uuid}]");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
 
         if (!$this->_checkAccess($experiment)) {
@@ -191,7 +189,7 @@ class StudyController extends AbstractController
     #[Route(path: '/{uuid}/sample', name: 'sample')]
     public function sampleAction(string $uuid, Request $request): Response
     {
-        $this->logger->debug("Enter StudyController::sampleAction with [UUID: $uuid]");
+        $this->logger->debug("Enter StudyController::sampleAction with [UUID: {$uuid}]");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
 
         if (!$this->_checkAccess($experiment)) {
@@ -233,7 +231,7 @@ class StudyController extends AbstractController
     #[Route(path: '/{uuid}/measure', name: 'measure')]
     public function measureAction(string $uuid, Request $request): Response
     {
-        $this->logger->debug("Enter StudyController::measureAction with [UUID: $uuid]");
+        $this->logger->debug("Enter StudyController::measureAction with [UUID: {$uuid}]");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
 
         if (!$this->_checkAccess($experiment)) {
@@ -274,7 +272,7 @@ class StudyController extends AbstractController
     #[Route(path: '/{uuid}/method', name: 'method')]
     public function methodAction(string $uuid, Request $request): Response
     {
-        $this->logger->debug("Enter StudyController::methodAction with [UUID: $uuid]");
+        $this->logger->debug("Enter StudyController::methodAction with [UUID: {$uuid}]");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
 
         if (!$this->_checkAccess($experiment)) {
@@ -308,7 +306,7 @@ class StudyController extends AbstractController
     #[Route(path: '/{uuid}/materials', name: 'materials')]
     public function materialsAction(string $uuid): Response
     {
-        $this->logger->debug("Enter StudyController::materialsAction with [UUID: $uuid]");
+        $this->logger->debug("Enter StudyController::materialsAction with [UUID: {$uuid}]");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
 
         if (!$this->_checkAccess($experiment)) {
@@ -323,7 +321,7 @@ class StudyController extends AbstractController
     #[Route(path: '/{uuid}/datasets', name: 'datasets')]
     public function datasetsAction(string $uuid): Response
     {
-        $this->logger->debug("Enter StudyController::datasetsAction with [UUID: $uuid]");
+        $this->logger->debug("Enter StudyController::datasetsAction with [UUID: {$uuid}]");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
 
         if (!$this->_checkAccess($experiment)) {
@@ -338,7 +336,7 @@ class StudyController extends AbstractController
     #[Route(path: '/{uuid}/introduction', name: 'introduction')]
     public function introductionAction(string $uuid): Response
     {
-        $this->logger->debug("Enter StudyController::introductionAction with [UUID: $uuid]");
+        $this->logger->debug("Enter StudyController::introductionAction with [UUID: {$uuid}]");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
 
         if (!$this->_checkAccess($experiment)) {
@@ -353,7 +351,7 @@ class StudyController extends AbstractController
     #[Route(path: '/{uuid}/delete', name: 'delete')]
     public function deleteAction(string $uuid): Response
     {
-        $this->logger->debug("Enter StudyController::deleteAction with [UUID: $uuid]");
+        $this->logger->debug("Enter StudyController::deleteAction with [UUID: {$uuid}]");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
 
         if (!$this->_checkAccess($experiment)) {
@@ -367,13 +365,12 @@ class StudyController extends AbstractController
 
     private function _prepareEmptyArray(?array $array): array
     {
-        if (null === $array || 0 >= sizeof($array)) {
-            $array = [""];
+        if ($array === null || sizeof($array) <= 0) {
+            $array = [''];
         }
 
         return $array;
     }
-
 
     /**
      * @noinspection PhpPossiblePolymorphicInvocationInspection

@@ -8,7 +8,6 @@ use App\Domain\Model\Administration\DataWizUser;
 use App\Domain\Model\Administration\UuidEntity;
 use App\Domain\Model\Filemanagement\AdditionalMaterial;
 use App\Domain\Model\Filemanagement\Dataset;
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -18,13 +17,6 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 #[ORM\Entity(repositoryClass: ExperimentRepository::class)]
 class Experiment extends UuidEntity
 {
-
-    public function __construct()
-    {
-        $this->additionalMaterials = new ArrayCollection();
-        $this->originalDatasets = new ArrayCollection();
-    }
-
     /**
      * One Experiment has One basic Information section.
      */
@@ -87,20 +79,26 @@ class Experiment extends UuidEntity
     private ?DataWizUser $owner = null;
 
     #[ORM\Column()]
-    private ?DateTime $dateCreated = null;
+    private ?\DateTime $dateCreated = null;
 
     #[ORM\Column(nullable: true)]
-    private ?DateTime $dateSubmitted = null;
+    private ?\DateTime $dateSubmitted = null;
 
     #[ORM\Column()]
     private int $state = States::STATE_STUDY_NONE;
+
+    public function __construct()
+    {
+        $this->additionalMaterials = new ArrayCollection();
+        $this->originalDatasets = new ArrayCollection();
+    }
 
     public function getOwner(): DataWizUser
     {
         return $this->owner;
     }
 
-    private function setOwner(DataWizUser $owner): void
+    public function setOwner(DataWizUser $owner): void
     {
         $this->owner = $owner;
     }
@@ -178,7 +176,7 @@ class Experiment extends UuidEntity
 
     public function addAdditionalMaterials(?AdditionalMaterial $additionalMaterials): void
     {
-        if (null != $additionalMaterials) {
+        if ($additionalMaterials != null) {
             $this->additionalMaterials->add($additionalMaterials);
         }
     }
@@ -193,22 +191,22 @@ class Experiment extends UuidEntity
         return $this->originalDatasets;
     }
 
-    public function getDateCreated(): DateTime
+    public function getDateCreated(): \DateTime
     {
         return $this->dateCreated;
     }
 
-    public function setDateCreated(DateTime $dateCreated): void
+    public function setDateCreated(\DateTime $dateCreated): void
     {
         $this->dateCreated = $dateCreated;
     }
 
-    public function getDateSubmitted(): ?DateTime
+    public function getDateSubmitted(): ?\DateTime
     {
         return $this->dateSubmitted;
     }
 
-    public function setDateSubmitted(?DateTime $dateSubmitted): void
+    public function setDateSubmitted(?\DateTime $dateSubmitted): void
     {
         $this->dateSubmitted = $dateSubmitted;
     }
@@ -223,10 +221,9 @@ class Experiment extends UuidEntity
         $this->state = $state;
     }
 
-
     public function addOriginalDatasets(?Dataset $originalDatasets): void
     {
-        if (null != $originalDatasets) {
+        if ($originalDatasets != null) {
             $this->originalDatasets->add($originalDatasets);
         }
     }
@@ -249,6 +246,4 @@ class Experiment extends UuidEntity
 
         return $newExperiment;
     }
-
-
 }

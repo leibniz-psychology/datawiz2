@@ -16,6 +16,9 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 #[ORM\Entity]
 class CreatorMetaDataGroup extends UuidEntity implements Questionable, Reviewable
 {
+    #[ORM\ManyToOne(inversedBy: 'creators')]
+    #[ORM\JoinColumn(name: 'basic_id', referencedColumnName: 'id')]
+    protected ?BasicInformationMetaDataGroup $basicInformation = null;
     #[ORM\Column(type: 'text', length: 100, nullable: true)]
     #[SerializedName('given_name')]
     #[Groups('study')]
@@ -46,10 +49,6 @@ class CreatorMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
     #[Groups('study')]
     private ?array $creditRoles = null;
 
-    #[ORM\ManyToOne(inversedBy: 'creators')]
-    #[ORM\JoinColumn(name: 'basic_id', referencedColumnName: 'id')]
-    protected ?BasicInformationMetaDataGroup $basicInformation = null;
-
     public function getFormTypeForEntity(): string
     {
         return CreatorMetaDataGroup::class;
@@ -61,32 +60,32 @@ class CreatorMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::CREATOR_GIVEN,
                 [$this->getGivenName()],
-                null != ReviewDataDictionary::CREATOR_GIVEN['errorLevel'] && ReviewValidator::validateSingleValue($this->getGivenName())
+                ReviewDataDictionary::CREATOR_GIVEN['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getGivenName())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::CREATOR_FAMILY,
                 [$this->getFamilyName()],
-                null != ReviewDataDictionary::CREATOR_FAMILY['errorLevel'] && ReviewValidator::validateSingleValue($this->getFamilyName())
+                ReviewDataDictionary::CREATOR_FAMILY['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getFamilyName())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::CREATOR_EMAIL,
                 [$this->getEmail()],
-                null != ReviewDataDictionary::CREATOR_EMAIL['errorLevel'] && ReviewValidator::validateSingleValue($this->getEmail())
+                ReviewDataDictionary::CREATOR_EMAIL['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getEmail())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::CREATOR_ORCID,
                 [$this->getOrcid()],
-                null != ReviewDataDictionary::CREATOR_ORCID['errorLevel'] && ReviewValidator::validateSingleValue($this->getOrcid())
+                ReviewDataDictionary::CREATOR_ORCID['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getOrcid())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::CREATOR_AFFILIATION,
                 [$this->getAffiliation()],
-                null != ReviewDataDictionary::CREATOR_AFFILIATION['errorLevel'] && ReviewValidator::validateSingleValue($this->getAffiliation())
+                ReviewDataDictionary::CREATOR_AFFILIATION['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getAffiliation())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::CREATOR_ROLES,
                 $this->getCreditRoles(),
-                null != ReviewDataDictionary::CREATOR_ROLES['errorLevel'] && ReviewValidator::validateArrayValues($this->getCreditRoles())
+                ReviewDataDictionary::CREATOR_ROLES['errorLevel'] != null && ReviewValidator::validateArrayValues($this->getCreditRoles())
             ),
         ];
     }
@@ -148,7 +147,7 @@ class CreatorMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
 
     public function getCreditRoles(): ?array
     {
-        if (null === $this->creditRoles) {
+        if ($this->creditRoles === null) {
             $this->creditRoles = [''];
         }
 
@@ -157,7 +156,7 @@ class CreatorMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
 
     public function setCreditRoles(?array $creditRoles): void
     {
-        $this->creditRoles = null == $creditRoles ? null : array_values($creditRoles);
+        $this->creditRoles = $creditRoles == null ? null : array_values($creditRoles);
     }
 
     public function getBasicInformation(): BasicInformationMetaDataGroup
@@ -169,6 +168,4 @@ class CreatorMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
     {
         $this->basicInformation = $basicInformation;
     }
-
-
 }

@@ -1,20 +1,12 @@
 <?php
 
-
 namespace App\View\Controller;
 
-
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- *
- * Class OauthController
- * @package App\View\Controller
- */
 #[Route(path: '/security', name: 'Security-', condition: "'%kernel.environment%' in ['dev', 'prod']")]
 class OauthController extends AbstractController
 {
@@ -37,5 +29,4 @@ class OauthController extends AbstractController
     public function logoutAction()
     {
     }
-
 }

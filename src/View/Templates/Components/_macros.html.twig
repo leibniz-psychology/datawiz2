@@ -8,7 +8,6 @@
 
 {% macro sectionHelp(sectionIdentifier) %}
     <div class="w-full Help-Text Help-Text_section markdown">
-        {# {{ source("Help/#{sectionIdentifier}/_section.md")|markdown_to_html }} #}
         {{ "#{sectionIdentifier}.section"|trans({},'help_markdown')|raw|markdown_to_html }}
     </div>
 {% endmacro %}
@@ -22,7 +21,6 @@
             <span class="mr-2">{{ helpTitle|trans }}</span>
         </summary>
         <div class="pb-8 markdown Details-SlideOut">
-            {# {{ source("Help/#{sectionIdentifier}/#{formIdentifier}.md")|markdown_to_html }} #}
             {{ "#{sectionIdentifier}.#{formIdentifier}"|trans({},'help_markdown')|raw|markdown_to_html }}
         </div>
     </details>
@@ -37,7 +35,6 @@
             </span>
         </summary>
         <div class="pb-4 markdown">
-            {# {{ source("Help/codebook/#{helpID}.md")|markdown_to_html }} #}
             {{ "codebook.#{helpID}"|trans({},'help_markdown')|raw|markdown_to_html }}
         </div>
     </details>

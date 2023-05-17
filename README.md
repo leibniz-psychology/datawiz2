@@ -26,11 +26,19 @@ For those who want to use `windows`, please consider running __Windows Subsystem
 While there is no intention to maintain any `windows` specific configuration from our side,
 you are still welcome to contribute and maintain those changes.
 
-## Development requirements
+## Development setup
 
 To start developing you will need a local installation of
 `php`, `composer`, `nodejs (and yarn)`, `make`, `core utils`, `awk` and the `symfony cli`.
 Please consider our recommended versions, if you encounter any problems running a development instance of DataWiz.
+
+### Githooks
+
+To enable the custom project githooks run:
+
+```shell
+git config core.hooksPath .githooks
+```
 
 ## Deployment
 

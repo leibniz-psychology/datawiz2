@@ -1,0 +1,91 @@
+{% extends "layouts/threeColumn.html.twig" %}
+{% from "components/_macros.html.twig" import helpButton %}
+{% from "components/_macros.html.twig" import sectionHelp %}
+{% from "components/_macros.html.twig" import formHelp %}
+
+{% macro sectionTitle(titleText) %}
+    <h2 class="mx-6 text-xl font-bold border-b text-zpid-purple border-zpid-purple">{{ titleText }}</h2>
+{% endmacro %}
+
+{% set isPartOfStudyDocumentation = true %}
+{% set isStudyDescriptionSubItem = false %}
+
+{% block title %}
+    {{ "title.review.title"|trans }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="MetaDataGroup-Title">
+        {{ "title.review.title"|trans }}
+    </h2>
+    <p class="mx-6 mt-3 max-w-prose">
+        {{ "title.review.description"|trans }}
+    </p>
+    <article>
+        <section class="mt-8">
+            {{ _self.sectionTitle("title.basic.title"|trans) }}
+            {% for reviewItem in basicInfoReview %}
+                {% include 'components/_reviewValue.html.twig' with {item: reviewItem, route: 'Study-documentation' } %}
+            {% endfor %}
+            <div class="mt-5">
+                <h2 class="mx-6 text-xl font-bold text-zpid-purple-700">{{ "input.creator.legend"|trans }}</h2>
+                {% for reviewCreator in basicCreatorInfoReview %}
+                    {% for reviewItem in reviewCreator.reviewCollection %}
+                        {% include 'components/_reviewValue.html.twig' with {item: reviewItem, route: 'Study-documentation'} %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </section>
+        <section class="mt-8">
+            {{ _self.sectionTitle("title.theroies.title"|trans) }}
+            {% for reviewItem in theoryReview %}
+                {% include 'components/_reviewValue.html.twig' with {item: reviewItem, route: 'Study-theory'} %}
+            {% endfor %}
+        </section>
+        <section class="mt-8">
+            {{ _self.sectionTitle("title.method.title"|trans) }}
+            {% for reviewItem in methodReview %}
+                {% include 'components/_reviewValue.html.twig' with {item: reviewItem, route: 'Study-method'} %}
+            {% endfor %}
+        </section>
+        <section class="mt-8">
+            {{ _self.sectionTitle("title.measures.title"|trans) }}
+            {% for reviewItem in measureReview %}
+                {% include 'components/_reviewValue.html.twig' with {item: reviewItem, route: 'Study-measure'} %}
+            {% endfor %}
+        </section>
+        <section class="mt-8">
+            {{ _self.sectionTitle("title.samples.title"|trans) }}
+            {% for reviewItem in sampleReview %}
+                {% include 'components/_reviewValue.html.twig' with {item: reviewItem, route: 'Study-sample'} %}
+            {% endfor %}
+        </section>
+        {# TODO Add list of datasets #}
+        {# <section class="mt-8">
+            {{ _self.sectionTitle("title.dataset.title"|trans) }}
+            <div class="mx-6 mt-2 italic">
+                List of datasets goes here
+            </div>
+        </section> #}
+        {# TODO Add list of materials #}
+        {# <section class="mt-8">
+            {{ _self.sectionTitle("title.material.title"|trans) }}
+            <div class="mx-6 mt-2 italic">
+                List of materials goes here
+            </div>
+        </section> #}
+    </article>
+
+    {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
+        request: app.request,
+        prevUrl: 'Study-materials',
+        prevTitle: 'title.material.title-short'|trans,
+        nextUrl: 'export_index',
+        nextTitle: 'title.export.title-short'|trans,
+        form: null
+    })) }}
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("review") }}
+{% endblock %}

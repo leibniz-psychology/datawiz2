@@ -21,6 +21,6 @@ class ModerationController extends AbstractController
     {
         $this->logger->debug('AdministrationController::dashboard: Enter');
 
-        return $this->render('Pages/Administration/moderation/dashboard.html.twig');
+        return $this->render('pages/administration/moderation/dashboard.html.twig');
     }
 }

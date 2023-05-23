@@ -1,0 +1,52 @@
+{% extends "layouts/base.html.twig" %}
+
+{% block title %}
+    DataWiz DevLogin
+{% endblock %}
+
+{% block body %}
+    <div class="col-span-full xl:col-start-3 xl:col-end-11">
+        <main class="mt-12">
+            <form method="post">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+
+                {% if app.user %}
+                    <div class="mb-3">
+                        You are logged in as {{ app.user.username }}, <a
+                                href="{{ path('Study-overview') }}">Overview</a>
+                    </div>
+                {% endif %}
+
+                <h2 class="text-2xl font-semibold">
+                    Please sign in
+                </h2>
+                <label for="inputEmail" class="block mt-4">Email address</label>
+                <input type="text" value="{{ last_username }}" name="email" id="inputEmail" class="form-control"
+                       placeholder="" required autofocus>
+                <label for="inputPassword" class="block">Password</label>
+                <input type="password"
+                       name="password"
+                       id="inputPassword"
+                       class="form-control"
+                       placeholder=""
+                       required/>
+                <input type="hidden"
+                       name="_csrf_token"
+                       value="{{ csrf_token("authenticate") }}"/>
+
+                <button class="block mt-2" type="submit">Sign in</button>
+            </form>
+
+            <h3 class="mt-4 text-lg font-semibold">
+                Choose one of the following email addresses for this demo
+            </h3>
+            <ul>
+                {% for user in all_users %}
+                    <li>{{ user.email }}</li>
+                {% endfor %}
+            </ul>
+        </main>
+    </div>
+{% endblock %}

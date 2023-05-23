@@ -1,0 +1,132 @@
+{% extends "layouts/threeColumn.html.twig" %}
+{% from "components/_macros.html.twig" import bytesToSize %}
+{% from "components/_macros.html.twig" import editDescription %}
+{% from "components/_macros.html.twig" import helpButton %}
+{% from "components/_macros.html.twig" import sectionHelp %}
+{% from "components/_macros.html.twig" import formHelp %}
+{% from "components/_macros.html.twig" import dropzoneTemplate %}
+
+{% set isPartOfStudyDocumentation = true %}
+
+{% block title %}
+    {{ "title.material.title"|trans }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="MetaDataGroup-Title">
+        {{ "title.material.title"|trans }}
+    </h2>
+    {{ include("components/_infoBridge.html.twig",{value: experiment.id}) }}
+    <div class="mt-6">
+        <form action="{{ oneup_uploader_endpoint("materials") }}"
+              class="mx-6 border-2 !border-dashed border-mono-500 dropzone"
+              id="datawiz-dropzone">
+            {{ dropzoneTemplate() }}
+        </form>
+    </div>
+    <div class="mt-6 MetaData-Title">
+        <legend class="MetaData-Legend">
+            {{ "title.material.h3"|trans }}
+        </legend>
+        {{ helpButton("my_materials") }}
+    </div>
+    {% if (experiment.additionalMaterials|length) > 0 %}
+        <ul class="mx-6">
+            {% for material in experiment.additionalMaterials %}
+                <li class="pt-3 pb-4 mt-2 first:mt-0 bg-mono-100">
+                    <div class="bg-mono-100" x-data="modal()" @keydown.window.escape="hide()">
+                        <h4 class="flex justify-between mx-4">
+                            <span class="text-lg font-semibold font-">
+                                {{ material.originalName }}
+                            </span>
+                            <button class="flex items-center self-start ml-2 Button Button_tertiary Button_tertiary_danger Button_standalone"
+                                    @click="show()">
+                                {# Icon: mi:delete #}
+                                <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
+                                     xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                                     width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                    <g fill="none">
+                                        <path d="M7 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2h4a1 1 0 1 1 0 2h-1.069l-.867 12.142A2 2 0 0 1 17.069 22H6.93a2 2 0 0 1-1.995-1.858L4.07 8H3a1 1 0 0 1 0-2h4V4zm2 2h6V4H9v2zM6.074 8l.857 12H17.07l.857-12H6.074zM10 10a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1zm4 0a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1z"
+                                              fill="currentColor"/>
+                                    </g>
+                                </svg>
+                                {{ "generic.delete"|trans }}
+                            </button>
+                        </h4>
+
+                        <!-- Modal confirming delete action -->
+                        <div class="Modal-Overlay" x-bind="overlay" x-cloak>
+                            <div class="Modal-Dialog" @click.outside="hide()">
+
+                                <div class="Modal-Header">
+                                    <div class="Modal-Title">
+                                        {{ "title.dataset.deleteModal.title"|trans }}
+                                    </div>
+                                    <button class="Modal-Button_close" @click="hide()" type="button">
+                                        {# Icon: mdi:close #}
+                                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
+                                             xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                                             style="vertical-align: -0.125em;" width="1em" height="1em"
+                                             preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                            <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z"
+                                                  fill="currentColor"/>
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <div class="Modal-Body">
+                                    {{ "title.material.deleteModal.body"|trans({'#materialName#':"<span class='font-semibold'>" ~ material.originalName ~ "</span>"})|raw }}
+                                </div>
+
+                                <div class="Modal-Footer">
+                                    <button class="Button Button_primary Button_primary_danger Button_standalone"
+                                            type="button"
+                                            @click="window.location.href='{{ path('File-delete_material', { "uuid": material.id }) }}'"
+                                    >
+                                        {{ "title.material.deleteModal.confirm"|trans }}
+                                    </button>
+                                    <button class="ml-2 Button Button_tertiary Button_tertiary_act Button_standalone"
+                                            type="button" x-ref="focusFirst"
+                                            @click="hide()">
+                                        {{ "generic.cancel"|trans }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mx-4 mt-1">
+                            <span class="font-semibold">{{ "title.dataset.details.date"|trans }}</span><span
+                                    class="ml-1">{{ material.dateUploaded|date }}</span>
+                            <span class="font-semibold">{{ "title.dataset.details.size"|trans }}</span><span
+                                    class="ml-1">{{ bytesToSize(material.originalSize) }}</span>
+                        </div>
+
+                        {{ editDescription(material, loop.index, path('File-update_description', { 'uuid': material.id })) }}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="mx-6">
+            {{ "title.material.empty"|trans }}
+        </p>
+    {% endif %}
+
+    {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
+        request: app.request,
+        prevUrl: 'Study-datasets',
+        prevTitle: 'title.dataset.title-short'|trans,
+        nextUrl: 'Study-review',
+        nextTitle: 'title.review.title'|trans,
+        form: null
+    })) }}
+
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("materials") }}
+{% endblock %}
+
+{% block help_for_metadata %}
+    {{ formHelp("materials", "my_materials", "title.material.h3") }}
+{% endblock %}

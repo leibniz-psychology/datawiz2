@@ -437,7 +437,7 @@ codebook:
       to: 'Copy to'
       select-vars: 'Select variables'
   help:
-    title: 'Codebook editor help'
+    title: 'codebook editor help'
     close: 'Close help'
   nav:
     matrix: 'View data matrix'

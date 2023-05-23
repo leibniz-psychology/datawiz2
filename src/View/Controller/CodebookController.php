@@ -30,7 +30,7 @@ class CodebookController extends AbstractController
     #[Route(path: '/{uuid}', name: 'index')]
     public function codebookIndexAction(string $uuid): Response
     {
-        return $this->render('Pages/Codebook/index.html.twig', [
+        return $this->render('pages/codebook/index.html.twig', [
             'codebook' => $this->em->getRepository(Dataset::class)->find($uuid),
         ]);
     }

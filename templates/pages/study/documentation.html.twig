@@ -1,0 +1,100 @@
+{% extends "layouts/threeColumn.html.twig" %}
+{% from "components/_macros.html.twig" import helpButton %}
+{% from "components/_macros.html.twig" import sectionHelp %}
+{% from "components/_macros.html.twig" import formHelp %}
+
+{% set isPartOfStudyDocumentation = true %}
+{% set isStudyDescriptionSubItem = true %}
+
+{% block title %}
+    {{ "title.basic.title"|trans }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="MetaDataGroup-Title">
+        {{ "title.basic.title"|trans }}
+    </h2>
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    <fieldset>
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend" id="{{ 'input.title.legend'|trans|slug }}">
+                {{ "input.title.legend"|trans }}
+            </legend>
+            {{ helpButton("title") }}
+        </div>
+        {{ form_label(form.title) }}
+        {{ form_errors(form.title) }}
+        <div class="MetaData-Widget">
+            {{ form_widget(form.title) }}
+        </div>
+    </fieldset>
+
+    <fieldset class="mt-8">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend" id="{{ 'input.description.legend'|trans|slug }}">
+                {{ "input.description.legend"|trans }}
+            </legend>
+            {{ helpButton("description") }}
+        </div>
+        {{ form_label(form.description) }}
+        {{ form_errors(form.description) }}
+        <div class="MetaData-Widget">
+            {{ form_widget(form.description) }}
+        </div>
+    </fieldset>
+
+    <fieldset class="mt-8">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend" id="{{ 'input.relatedPubs.legend'|trans|slug }}">
+                {{ "input.relatedPubs.legend"|trans }}
+            </legend>
+            {{ helpButton("related_publications") }}
+        </div>
+        {% include "components/_collectionWidget.html.twig" with
+            {
+                collection: form.related_publications,
+                id: 'related-publications-fields-list',
+                addTxt: 'input.relatedPubs.add',
+                removeTxt: 'generic.remove',
+            } %}
+    </fieldset>
+
+    <fieldset class="mt-8">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend" id="{{ 'input.creator.legend'|trans|slug }}">
+                {{ "input.creator.legend"|trans }}
+            </legend>
+            {{ helpButton("creator") }}
+        </div>
+        {% include "components/_creatorsWidget.html.twig" with
+            {
+                collection: form.creators,
+                id: 'creators-fields-list',
+                addTxt: 'input.creator.add',
+                removeTxt: 'input.creator.remove',
+            } %}
+    </fieldset>
+
+    {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
+        request: app.request,
+        prevUrl: 'Study-introduction',
+        prevTitle: 'title.introduction.title'|trans,
+        nextTitle: 'title.theroies.title',
+        form: form
+    })) }}
+
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("basic") }}
+{% endblock %}
+
+{% block help_for_metadata %}
+    {{ formHelp("basic", "title", "input.title.legend") }}
+    {{ formHelp("basic", "description", "input.description.legend") }}
+    {{ formHelp("basic", "related_publications", "input.relatedPubs.legend") }}
+    {{ formHelp("basic", "creator", "input.creator.legend") }}
+{% endblock %}

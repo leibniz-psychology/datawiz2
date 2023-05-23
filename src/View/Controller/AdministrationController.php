@@ -28,7 +28,7 @@ class AdministrationController extends AbstractController
         $this->logger->debug('AdministrationController::listUser: Enter');
 
         return $this->render(
-            'Pages/Administration/admin/user.html.twig',
+            'pages/administration/admin/user.html.twig',
             [
                 'user' => $this->em->getRepository(DataWizUser::class)->findAll(),
             ]
@@ -50,7 +50,7 @@ class AdministrationController extends AbstractController
             return $this->redirectToRoute('admin_user');
         }
 
-        return $this->render('Pages/Administration/admin/user_profile.html.twig', [
+        return $this->render('pages/administration/admin/user_profile.html.twig', [
             'adminEdit' => true,
             'userForm' => $form,
         ]);
@@ -62,7 +62,7 @@ class AdministrationController extends AbstractController
         $this->logger->debug('AdministrationController::listStudies: Enter');
 
         return $this->render(
-            'Pages/Administration/admin/studies.html.twig',
+            'pages/administration/admin/studies.html.twig',
             [
                 'studies' => $this->em->getRepository(Experiment::class)->findAll(),
                 'backPath' => $this->generateUrl('moderation_dashboard'),
@@ -76,7 +76,7 @@ class AdministrationController extends AbstractController
         $this->logger->debug('AdministrationController::listStudies: Enter');
 
         return $this->render(
-            'Pages/Administration/admin/studies.html.twig',
+            'pages/administration/admin/studies.html.twig',
             [
                 'studies' => $this->em->getRepository(Experiment::class)->findBy(['owner' => $this->em->getRepository(DataWizUser::class)->find($uid)]),
                 'backPath' => $this->generateUrl('admin_user'),

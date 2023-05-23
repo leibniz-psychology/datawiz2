@@ -5,7 +5,7 @@ module.exports = {
   mode: "layers",
   layers: ["components", "utilities"],
   content: [
-    "./src/View/Templates/**/*.html.twig",
+    "./templates/**/*.html.twig",
     "./src/Questionnaire/Forms/**/*.php",
     "./src/View/Assets/Scripts/**/*.js",
     "./translations/help_markdown.en.yaml",

@@ -1,0 +1,66 @@
+{% extends "layouts/threeColumn.html.twig" %}
+{% from "components/_macros.html.twig" import helpButton %}
+{% from "components/_macros.html.twig" import sectionHelp %}
+{% from "components/_macros.html.twig" import formHelp %}
+
+{% set isPartOfStudyDocumentation = true %}
+{% set isStudyDescriptionSubItem = true %}
+
+{% block title %}
+    {{ "title.theroies.title"|trans }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="MetaDataGroup-Title">
+        {{ "title.theroies.title"|trans }}
+    </h2>
+
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    <fieldset>
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend" id="{{ 'input.objective.legend'|trans|slug }}">
+                {{ "input.objective.legend"|trans }}
+            </legend>
+            {{ helpButton("objective") }}
+        </div>
+        {{ form_label(form.objective) }}
+        {{ form_errors(form.objective) }}
+        <div class="MetaData-Widget">
+            {{ form_widget(form.objective) }}
+        </div>
+    </fieldset>
+
+    <fieldset class="mt-8">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend" id="{{ 'input.hypothesis.legend'|trans|slug }}">
+                {{ "input.hypothesis.legend"|trans }}
+            </legend>
+            {{ helpButton("hypothesis") }}
+        </div>
+        {{ form_label(form.hypothesis) }}
+        {{ form_errors(form.hypothesis) }}
+        <div class="MetaData-Widget">
+            {{ form_widget(form.hypothesis) }}
+        </div>
+    </fieldset>
+
+    {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
+        request: app.request,
+        prevTitle: 'title.basic.title',
+        nextTitle: 'title.method.title',
+        form: form
+    })) }}
+
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("theory") }}
+{% endblock %}
+
+{% block help_for_metadata %}
+    {{ formHelp("theory", "objective", "input.objective.legend") }}
+    {{ formHelp("theory", "hypothesis", "input.hypothesis.legend") }}
+{% endblock %}

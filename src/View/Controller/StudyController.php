@@ -32,7 +32,7 @@ class StudyController extends AbstractController
     {
         $this->logger->debug('Enter StudyController::overviewAction');
 
-        return $this->render('Pages/Study/overview.html.twig', [
+        return $this->render('pages/study/overview.html.twig', [
             'all_experiments' => $this->em->getRepository(Experiment::class)->findBy(['owner' => $this->getUser()]),
         ]);
     }
@@ -57,7 +57,7 @@ class StudyController extends AbstractController
             return $this->redirectToRoute('Study-introduction', ['uuid' => $newExperiment->getId()]);
         }
 
-        return $this->render('Pages/Study/new.html.twig', [
+        return $this->render('pages/study/new.html.twig', [
             'form' => $form,
             'experiment' => $newExperiment,
         ]);
@@ -80,7 +80,7 @@ class StudyController extends AbstractController
             $this->em->flush();
         }
 
-        return $this->render('Pages/Study/settings.html.twig', [
+        return $this->render('pages/study/settings.html.twig', [
             'form' => $form,
             'experiment' => $experiment,
         ]);
@@ -140,7 +140,7 @@ class StudyController extends AbstractController
             return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
         }
 
-        return $this->render('Pages/Study/documentation.html.twig', [
+        return $this->render('pages/study/documentation.html.twig', [
             'form' => $form,
             'experiment' => $experiment,
         ]);
@@ -177,7 +177,7 @@ class StudyController extends AbstractController
             }
         }
 
-        return $this->render('Pages/Study/theory.html.twig', [
+        return $this->render('pages/study/theory.html.twig', [
             'form' => $form,
             'experiment' => $experiment,
         ]);
@@ -219,7 +219,7 @@ class StudyController extends AbstractController
             }
         }
 
-        return $this->render('Pages/Study/sample.html.twig', [
+        return $this->render('pages/study/sample.html.twig', [
             'form' => $form,
             'experiment' => $experiment,
         ]);
@@ -260,7 +260,7 @@ class StudyController extends AbstractController
             }
         }
 
-        return $this->render('Pages/Study/measure.html.twig', [
+        return $this->render('pages/study/measure.html.twig', [
             'form' => $form,
             'experiment' => $experiment,
         ]);
@@ -297,7 +297,7 @@ class StudyController extends AbstractController
             }
         }
 
-        return $this->render('Pages/Study/method.html.twig', [
+        return $this->render('pages/study/method.html.twig', [
             'form' => $form,
             'experiment' => $experiment,
         ]);
@@ -313,7 +313,7 @@ class StudyController extends AbstractController
             return $this->redirectToRoute('dashboard');
         }
 
-        return $this->render('Pages/Study/materials.html.twig', [
+        return $this->render('pages/study/materials.html.twig', [
             'experiment' => $experiment,
         ]);
     }
@@ -328,7 +328,7 @@ class StudyController extends AbstractController
             return $this->redirectToRoute('dashboard');
         }
 
-        return $this->render('Pages/Study/datasets.html.twig', [
+        return $this->render('pages/study/datasets.html.twig', [
             'experiment' => $experiment,
         ]);
     }
@@ -343,7 +343,7 @@ class StudyController extends AbstractController
             return $this->redirectToRoute('dashboard');
         }
 
-        return $this->render('Pages/Study/introduction.html.twig', [
+        return $this->render('pages/study/introduction.html.twig', [
             'experiment' => $experiment,
         ]);
     }

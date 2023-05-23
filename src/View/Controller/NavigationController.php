@@ -19,7 +19,7 @@ class NavigationController extends AbstractController
     {
         $uuid = $request->get('uuid'); // magic string refer to the name of your slug :)
 
-        return $this->render('Components/_navigationSidebar.html.twig', [
+        return $this->render('components/_navigationSidebar.html.twig', [
             'experiment' => $this->getEntityAtChange($uuid),
         ]);
     }
@@ -34,7 +34,7 @@ class NavigationController extends AbstractController
     ): Response {
         $uuid = $request->get('uuid'); // still a magic strings
 
-        return $this->render('Components/_navigationSavebar.html.twig', [
+        return $this->render('components/_navigationSavebar.html.twig', [
             'experiment' => $this->getEntityAtChange($uuid),
             'prevUrl' => $prevUrl ? $this->generateUrl($prevUrl, ['uuid' => $uuid]) : null,
             'prevTitle' => $prevTitle,

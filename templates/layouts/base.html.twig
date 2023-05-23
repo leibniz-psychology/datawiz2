@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    {#{% include "layouts/_favico.html.twig" %}#}
+    <link rel="apple-touch-icon" sizes="180x180" href="https://www.lifp.de/assets/images/favicon/public/apple-touch-icon.png?v=KmzOLrkgP7">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://www.lifp.de/assets/images/favicon/public/favicon-32x32.png?v=KmzOLrkgP7">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://www.lifp.de/assets/images/favicon/public/android-chrome-192x192.png?v=KmzOLrkgP7">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://www.lifp.de/assets/images/favicon/public/favicon-16x16.png?v=KmzOLrkgP7">
+    <link rel="manifest" href="https://www.lifp.de/assets/images/favicon/public/site.webmanifest?v=KmzOLrkgP7">
+    <link rel="mask-icon" href="https://www.lifp.de/assets/images/favicon/public/safari-pinned-tab.svg?v=KmzOLrkgP7" color="#362071">
+    <link rel="stylesheet" href="https://www.lifp.de/assets/fonts/montserrat/v14/montserrat.css"
+          integrity="sha384-huIeh0g8CSRBF0g1U054I7XB6WHivNbm71z2CX2YwdHieViUaaXJa6sYG64qaLrj" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.lifp.de/assets/fonts/zillaslab/v5/zillaslab.css"
+          integrity="sha384-7ef9jneSa7xv8ZK5QCf0jvN5ZNDb34dSJDeibxgGOwAbwbIPdcCABsJvysw145U9" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.lifp.de/assets/fonts/opensans/v27/opensans.css"
+          integrity="sha384-6mlAu6d3pWYzEzCK+euwbG9tyz9Vo22/kWdXqwpjvBlrhGtG7XHufA6riiO5ClKE" crossorigin="anonymous">
+    <title>
+        {% if block("title") is defined %}
+            {{ block("title") }} - DataWiz
+        {% else %}
+            DataWiz - Research data management made easy!
+        {% endif %}
+    </title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags("app") }}
+    {% endblock %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags("app") }}
+    {% endblock %}
+</head>
+<body>
+{% block header %}
+    <div class="bg-gradient-to-r from-[#240d46] to-zpid-purple-700">
+        <header class="flex w-full max-w-screen-xl mx-auto border-b bg-mono-50 h-14 border-mono-300">
+            <a class="flex flex-row items-center pl-8 pr-6 font-serif text-3xl text-white bg-zpid-blue" href="/">
+                <span class="font-semibold">Data</span>Wiz<span
+                        class="self-start px-1.5 mt-1 font-sans text-xs italic font-medium bg-white border rounded-md text-zpid-blue-800">beta</span>
+            </a>
+            <div class="flex w-full pl-6 pr-8">
+                {{ include("components/_navigationHeader.html.twig") }}
+                {{ include("components/_userProfileReference.html.twig") }}
+            </div>
+        </header>
+    </div>
+{% endblock %}
+{% block body %}{% endblock %}
+{{ include("components/_footer.html.twig") }}
+</body>
+</html>

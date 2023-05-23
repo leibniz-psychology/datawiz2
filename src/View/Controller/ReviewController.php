@@ -26,7 +26,7 @@ class ReviewController extends AbstractController
             return $this->redirectToRoute('dashboard');
         }
 
-        return $this->render('Pages/Review/index.html.twig', [
+        return $this->render('pages/review/index.html.twig', [
             'experiment' => $experiment,
             'experimentName' => $experiment->getSettingsMetaDataGroup()->getShortName(),
             'basicInfoReview' => $experiment->getBasicInformationMetaDataGroup()->getReviewCollection(),

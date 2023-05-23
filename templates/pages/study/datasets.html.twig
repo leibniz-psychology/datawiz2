@@ -1,0 +1,286 @@
+{% extends "layouts/threeColumn.html.twig" %}
+{% from "components/_macros.html.twig" import bytesToSize %}
+{% from "components/_macros.html.twig" import editDescription %}
+{% from "components/_macros.html.twig" import helpButton %}
+{% from "components/_macros.html.twig" import sectionHelp %}
+{% from "components/_macros.html.twig" import formHelp %}
+{% from "components/_macros.html.twig" import dropzoneTemplate %}
+
+{% set isPartOfStudyDocumentation = true %}
+
+{% block title %}
+    {{ "title.dataset.title"|trans }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="MetaDataGroup-Title">
+        {{ "title.dataset.title"|trans }}
+    </h2>
+    {{ include("components/_infoBridge.html.twig",{value: experiment.id}) }}
+    <div class="mt-6">
+        <form action="{{ oneup_uploader_endpoint("datasets") }}" data-experiment-id="{{ experiment.id }}"
+              class="mx-6 border-2 !border-dashed border-mono-500 dropzone" id="datawiz-dropzone"
+              data-preview-csv="{{ path("File-preview-csv",{"fileId": " "}) }}"
+              data-submit-csv="{{ path("File-submit-csv",{"fileId": " "}) }}"
+              data-preview-sav="{{ path("File-preview-sav",{"fileId": " "}) }}"
+              data-submit-sav="{{ path("File-submit-sav",{"fileId": " "}) }}"
+        >
+            {{ dropzoneTemplate() }}
+            <input type="hidden" id="dataset-import-data" name="dataset-import-data" value=""/>
+        </form>
+    </div>
+    <div class="mt-6 MetaData-Title">
+        <legend class="MetaData-Legend">
+            {{ "title.dataset.h3"|trans }}
+        </legend>
+        {{ helpButton("my_datasets") }}
+    </div>
+    {% if experiment.originalDatasets|length > 0 %}
+        <ul class="mx-6">
+            {% for dataset in experiment.originalDatasets %}
+                <li class="pt-3 pb-4 mt-2 first:mt-0 bg-mono-100">
+                    <div class="bg-mono-100" x-data="modal()" @keydown.window.escape="hide()">
+                        <h4 class="flex justify-between mx-4">
+                        <span class="text-lg font-semibold text-zpid-purple-700">
+                            {{ dataset.originalName }}
+                        </span>
+                            <button class="flex items-center self-start ml-2 Button Button_tertiary Button_tertiary_danger Button_standalone"
+                                    @click="show()">
+                                {# Icon: mi:delete #}
+                                <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
+                                     xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                                     width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                    <g fill="none">
+                                        <path d="M7 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2h4a1 1 0 1 1 0 2h-1.069l-.867 12.142A2 2 0 0 1 17.069 22H6.93a2 2 0 0 1-1.995-1.858L4.07 8H3a1 1 0 0 1 0-2h4V4zm2 2h6V4H9v2zM6.074 8l.857 12H17.07l.857-12H6.074zM10 10a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1zm4 0a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1z"
+                                              fill="currentColor"/>
+                                    </g>
+                                </svg>
+                                {{ "generic.delete"|trans }}
+                            </button>
+                        </h4>
+
+                        <!-- Modal confirming delete action -->
+                        <div class="Modal-Overlay" x-bind="overlay" x-cloak>
+                            <div class="Modal-Dialog" @click.outside="hide()">
+
+                                <div class="Modal-Header">
+                                    <div class="Modal-Title">
+                                        {{ "title.dataset.deleteModal.title"|trans }}
+                                    </div>
+                                    <button class="Modal-Button_close" @click="hide()" type="button">
+                                        {# Icon: mdi:close #}
+                                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
+                                             xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                                             style="vertical-align: -0.125em;" width="1em" height="1em"
+                                             preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                            <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z"
+                                                  fill="currentColor"/>
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <div class="Modal-Body">
+                                    {{ "title.dataset.deleteModal.body"|trans({'#datasetName#':"<span class='font-semibold'>" ~ dataset.originalName ~ "</span>"})|raw }}
+                                </div>
+
+                                <div class="Modal-Footer">
+                                    <button class="Button Button_primary Button_primary_danger Button_standalone"
+                                            type="button"
+                                            @click="window.location.href='{{ path('File-delete_dataset', { "uuid": dataset.id }) }}'"
+                                    >
+                                        {{ "title.dataset.deleteModal.confirm"|trans }}
+                                    </button>
+                                    <button class="ml-2 Button Button_tertiary Button_tertiary_act Button_standalone"
+                                            type="button" x-ref="focusFirst" @click="hide()">
+                                        {{ "generic.cancel"|trans }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mx-4 mt-1">
+                            <span class="font-semibold">{{ "title.dataset.details.date"|trans }}</span><span
+                                    class="ml-1">{{ dataset.dateUploaded|date }}</span>
+                            <span class="font-semibold">{{ "title.dataset.details.size"|trans }}</span><span
+                                    class="ml-1">{{ bytesToSize(dataset.originalSize) }}</span>
+                        </div>
+
+                        {{ editDescription(dataset, loop.index, path('File-update_description', { 'uuid': dataset.id })) }}
+
+                        <div class="flex mx-4 mt-4">
+                            {# <a href="#" role="button"
+                           class="flex items-center Button Button_secondary Button_secondary_go Button_standalone">
+                            <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
+                                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 aria-hidden="true" role="img" style="vertical-align: -0.125em;" width="1em"
+                                 height="1em"
+                                 preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                <path d="M17 16.88c.56 0 1 .44 1 1s-.44 1-1 1s-1-.45-1-1s.44-1 1-1m0-3c2.73 0 5.06 1.66 6 4c-.94 2.34-3.27 4-6 4s-5.06-1.66-6-4c.94-2.34 3.27-4 6-4m0 1.5a2.5 2.5 0 0 0 0 5a2.5 2.5 0 0 0 0-5M18 3H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5.42c-.16-.32-.3-.66-.42-1c.12-.34.26-.68.42-1H4v-4h6v2.97c.55-.86 1.23-1.6 2-2.21V13h1.15c1.16-.64 2.47-1 3.85-1c1.06 0 2.07.21 3 .59V5c0-1.1-.9-2-2-2m-8 8H4V7h6v4m8 0h-6V7h6v4z"
+                                      fill="currentColor"/>
+                            </svg>
+                            {{ "link.view.dataset"|trans }}
+                        </a> #}
+                            <a href="{{ path('codebook_index', {uuid: dataset.id}) }}"
+                               class="flex items-center Button Button_secondary Button_secondary_go Button_standalone">
+                                {# Icon: mi:table-edit #}
+                                <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
+                                     xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     aria-hidden="true" role="img" style="vertical-align: -0.125em;" width="1em"
+                                     height="1em"
+                                     preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                    <path d="M21.7 13.35l-1 1l-2.05-2.05l1-1c.21-.22.56-.22.77 0l1.28 1.28c.22.21.22.56 0 .77M12 18.94l6.07-6.06l2.05 2.05L14.06 21H12v-2.06M4 2h14a2 2 0 0 1 2 2v4.17L16.17 12H12v4.17L10.17 18H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2m0 4v4h6V6H4m8 0v4h6V6h-6m-8 6v4h6v-4H4z"
+                                          fill="currentColor"/>
+                                </svg>
+                                {{ "link.edit.codebook"|trans }}
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="mx-6">
+            {{ "title.dataset.empty"|trans }}
+        </p>
+    {% endif %}
+    <!-- Modal -->
+    <div class="fixed inset-0 items-center justify-center hidden overflow-x-hidden overflow-y-auto outline-none focus:outline-none z-[999]"
+         id="modal-dataset-import" x-data="">
+        <div class="relative w-auto max-w-6xl mx-auto my-6">
+            <!--content-->
+            <div class="relative flex flex-col w-full bg-white border-0 rounded-lg shadow-lg outline-none focus:outline-none">
+                <!--header-->
+                <div class="flex items-start justify-between p-5 border-b border-gray-200 border-solid rounded-t">
+                    <h3 class="text-3xl font-semibold">
+                        Import dataset
+                    </h3>
+                    <button class="Modal-Button_close" type="button" @keydown.window.escape="$refs.cancelUpload.click()"
+                            @click="$refs.cancelUpload.click()" title="Cancel import">
+                        {# Icon: mdi:close #}
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
+                             xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                             style="vertical-align: -0.125em;" width="1em" height="1em"
+                             preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                            <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z"
+                                  fill="currentColor"/>
+                        </svg>
+                    </button>
+                </div>
+                <!--body-->
+                <div class="relative flex-auto p-6">
+                    <h4 class="text-xl font-semibold">Settings</h4>
+                    <form id="dataset-import-form"
+                          data-preview-url="{{ path("File-preview-csv",{"fileId": " "}) }}"
+                          data-submit-url="{{ path("File-submit-csv",{"fileId": " "}) }}">
+                        <input type="hidden" id="dataset-file-id" name="dataset-file-id" value="">
+                        <div class="flex items-baseline">
+                            <label for="dataset-import-delimiter">Columns are separated by</label>
+                            <select id="dataset-import-delimiter" name="dataset-import-delimiter"
+                                    class="inline-block px-1 py-1 mt-1 bg-white border border-gray-400 rounded-md shadow-sm focus:outline-none ml-1.5">
+                                <option value="," selected>Commas (CSV)</option>
+                                <option value="t">Tabs (TSV)</option>
+                                <option value=";">Semicolons</option>
+                            </select>
+                        </div>
+                        <div class="flex items-baseline">
+                            <label for="dataset-import-escape">Escape character to enclose cells containing column
+                                separators</label>
+                            <select id="dataset-import-escape" name="dataset-import-escape"
+                                    class="inline-block px-1 py-1 mt-1 ml-1.5 bg-white border border-gray-400 rounded-md shadow-sm focus:outline-none">
+                                <option value="none" selected>none</option>
+                                <option value="double">" (double quotes)</option>
+                                <option value="single">' (single quotes)</option>
+                            </select>
+                        </div>
+                        <div x-data="{ useHeader: true}" class="mt-0.5">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="dataset-import-header-rows" name="dataset-import-header-rows"
+                                       value="1" x-model="useHeader" class="w-4 h-4 mr-2">
+                                <label class="block" for="dataset-import-header-rows">First line is the column
+                                    header</label>
+                            </div>
+                        </div>
+                    </form>
+                    <h4 class="mt-6 text-xl font-semibold">Preview</h4>
+                    <div>Only the first few rows and columns are shown</div>
+                    <div class="mt-2 overflow-x-scroll max-h-[50vh]">
+                        <template x-if="$store.import.codebook">
+                            <table class="border-separate table-fixed" style="border-spacing: 0">
+                                <thead>
+                                <template x-if="$store.import.codebook.header">
+                                    <tr>
+                                        <template x-for="item in $store.import.codebook.header.slice(0,20)">
+                                            <th scope="col"
+                                                class="px-3 py-2 text-sm font-semibold text-left text-gray-700 bg-gray-200 border-t border-b border-l border-r border-b-gray-400 border-t-gray-400 border-l-gray-300 border-r-gray-300"
+                                                x-text="item">
+                                            </th>
+                                        </template>
+                                    </tr>
+                                </template>
+                                <template
+                                        x-if="$store.import.codebook.header && $store.import.codebook.header.length === 0 && $store.import.codebook.records">
+                                    <tr>
+                                        <template
+                                                x-for="(record, index) in Object.values($store.import.codebook.records[0]).slice(0,20)">
+                                            <th scope="col"
+                                                class="px-3 py-2 text-sm italic font-semibold text-left text-gray-700 bg-gray-200 border-t border-b border-l border-r border-b-gray-400 border-t-gray-400 border-l-gray-300 border-r-gray-300"
+                                                x-text="`var_${index}`">
+                                            </th>
+                                        </template>
+                                    </tr>
+                                </template>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-400">
+                                <template x-if="$store.import.codebook.records">
+                                    <template x-for="records in $store.import.codebook.records">
+                                        <tr class="even:bg-gray-50 TableRow">
+                                            <template x-for="record in Object.values(records).slice(0,20)">
+                                                <td class="py-2 pl-3 pr-1 text-sm text-gray-700 truncate border border-gray-100 max-w-[20rem]"
+                                                    x-text="record">
+                                                </td>
+                                            </template>
+                                        </tr>
+                                    </template>
+                                </template>
+                                </tbody>
+                            </table>
+                        </template>
+                    </div>
+                </div>
+                <!--footer-->
+                <div class="flex items-center justify-end p-6 border-t border-gray-200 border-solid rounded-b">
+                    <button
+                            class="Button Button_primary Button_primary_act Button_standalone"
+                            type="button"
+                            id="dataset-import-submit">
+                        Import dataset
+                    </button>
+                    <button
+                            class="ml-2 Button Button_tertiary Button_tertiary_act Button_standalone"
+                            type="button"
+                            id="dataset-import-cancel" x-ref="cancelUpload">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fixed inset-0 z-40 hidden bg-black opacity-25" id="modal-dataset-import-backdrop"></div>
+
+    {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
+        request: app.request,
+        prevUrl: 'Study-sample',
+        prevTitle: 'title.samples.title'|trans,
+        nextUrl: 'Study-materials',
+        nextTitle: 'title.material.title-short'|trans,
+        form: null
+    })) }}
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("datasets") }}
+{% endblock %}
+
+{% block help_for_metadata %}
+    {{ formHelp("datasets", "my_datasets", "title.dataset.h3") }}
+{% endblock %}

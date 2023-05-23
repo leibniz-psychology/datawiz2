@@ -1,0 +1,111 @@
+{% extends "layouts/threeColumn.html.twig" %}
+{% from "components/_macros.html.twig" import helpButton %}
+{% from "components/_macros.html.twig" import sectionHelp %}
+{% from "components/_macros.html.twig" import formHelp %}
+
+{% set isPartOfStudyDocumentation = true %}
+{% set isStudyDescriptionSubItem = false %}
+
+{% block title %}
+    {{ "title.export.export"|trans }}
+{% endblock %}
+{% block content %}
+    <h2 class="MetaDataGroup-Title">
+        {{ "title.export.title"|trans }}
+    </h2>
+    <p class="mx-6 mt-8 max-w-prose">
+        {{ "title.export.description"|trans }}
+    </p>
+    {# TODO: export error includes a messages.xx.yaml string if an error occurred during export #}
+    {# {{ dump(export_error) }} #}
+    {% if experiment is null %}
+        {# TODO: error view if exp. == null #}
+    {% else %}
+        <form action="{{ path('export_action', {uuid: experiment.id}) }}" method="POST">
+
+            {# Input hidden because we always want to include the study documentation #}
+            <div class="hidden mx-6 mt-4">
+                <input type="hidden" name="exportStudy" id="exportStudy" value="study">
+                <label for="exportStudy">Include study documentation</label>
+            </div>
+
+            <fieldset>
+                <div class="MetaData-Title">
+                    <legend class="MetaData-Legend">
+                        {{ "title.export.format.title"|trans }}
+                    </legend>
+                </div>
+                <div class="MetaData-Label">{{ "title.export.format.description"|trans }}</div>
+                <div class="mt-1 MetaData-Widget">
+                    <input id="exportAsJson" type="radio" name="exportFormat" value="json" checked>
+                    <label for="exportAsJson">{{ "title.export.format.json"|trans }}</label>
+                    <input id="exportAsXml" type="radio" name="exportFormat" value="xml">
+                    <label for="exportAsXml">{{ "title.export.format.xml"|trans }}</label>
+                </div>
+            </fieldset>
+
+            <fieldset class="mt-4">
+                <div class="MetaData-Title">
+                    <legend class="MetaData-Legend">
+                        {{ "title.export.datasets.title"|trans }}
+                    </legend>
+                </div>
+                {% if experiment.originalDatasets|length > 0 %}
+                    <div class="MetaData-Widget">
+                        {% for dataset in experiment.originalDatasets %}
+                            <div class="flex items-center">
+                                <input id="dataset_{{ dataset.id }}" type="checkbox" name="exportDataset[]"
+                                       value="{{ dataset.id }}" checked>
+                                <label for="dataset_{{ dataset.id }}" class="ml-2">{{ dataset.originalName }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="italic MetaData-Label">{{ "title.export.datasets.empty"|trans }}</div>
+                {% endif %}
+            </fieldset>
+
+            <fieldset class="mt-4">
+                <div class="MetaData-Title">
+                    <legend class="MetaData-Legend">
+                        {{ "title.export.materials.title"|trans }}
+                    </legend>
+                </div>
+                {% if experiment.additionalMaterials|length > 0 %}
+                    <div class="MetaData-Label">{{ "title.export.materials.description"|trans }}</div>
+                    <div class="MetaData-Widget">
+                        {% for material in experiment.additionalMaterials %}
+                            <div class="flex items-center">
+                                <input id="material_{{ material.id }}" type="checkbox" name="exportMaterial[]"
+                                       value="{{ material.id }}" checked>
+                                <label for="material_{{ material.id }}" class="ml-2">{{ material.originalName }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="italic MetaData-Label">{{ "title.export.materials.empty"|trans }}</div>
+                {% endif %}
+
+            </fieldset>
+
+            <div class="mx-6 mt-4">
+                <button type="submit"
+                        class="Button Button_primary Button_primary_act Button_standalone">{{ "title.export.export"|trans }}</button>
+            </div>
+        </form>
+    {% endif %}
+
+
+    {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
+        request: app.request,
+        prevUrl: 'Study-review',
+        prevTitle: 'title.review.title'|trans,
+        nextUrl: null,
+        nextTitle: null,
+        form: null
+    })) }}
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("export") }}
+{% endblock %}

@@ -201,7 +201,7 @@ class FileManagementController extends AbstractController
         }
 
         return $this->render(
-            'Pages/FileManagement/materialDetails.html.twig',
+            'pages/fileManagement/materialDetails.html.twig',
             [
                 'form' => $form,
                 'file' => $entityAtChange,

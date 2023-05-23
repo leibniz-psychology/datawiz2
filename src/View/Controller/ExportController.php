@@ -47,7 +47,7 @@ class ExportController extends AbstractController
         $this->logger->debug("Enter ExportController::exportAction(GET) for UUID: {$uuid}");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
 
-        return $this->render('Pages/Export/export.html.twig', ['export_error' => null, 'experiment' => $experiment]);
+        return $this->render('pages/export/export.html.twig', ['export_error' => null, 'experiment' => $experiment]);
     }
 
     #[Route(path: '/export/{uuid}', name: 'export_action', methods: ['POST'])]
@@ -114,7 +114,7 @@ class ExportController extends AbstractController
             $exportError = 'error.experiment.empty';
         }
 
-        return $response ?? $this->render('Pages/Export/export.html.twig', ['export_error' => $exportError ?? null, 'experiment' => $experiment]);
+        return $response ?? $this->render('pages/export/export.html.twig', ['export_error' => $exportError ?? null, 'experiment' => $experiment]);
     }
 
     /**

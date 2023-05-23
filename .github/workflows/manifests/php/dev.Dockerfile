@@ -1,13 +1,17 @@
-FROM composer:latest AS composer
+FROM composer:lts AS composer
 
 
 FROM node:18-alpine AS builder
 COPY . /build
-RUN apk add --update python3 make g++ \
+RUN apk add --no-cache \
+    python3 \
+    make \
+    g++ \
     && rm -rf /var/cache/apk/* \
-    && yarn global add node-gyp \
-    && cd /build \
-    && yarn install \
+    && yarn global add node-gyp
+
+WORKDIR /build
+RUN yarn install \
     && yarn dev
 
 
@@ -15,9 +19,9 @@ FROM php:8.2-fpm-alpine
 
 ENV APP_ENV=dev
 
-RUN apk add --update --no-cache --virtual .build-dependencies $PHPIZE_DEPS \
+RUN apk add --no-cache --virtual .build-dependencies ${PHPIZE_DEPS} \
     && apk add --no-cache linux-headers \
-    && apk add --update --no-cache php-intl icu-dev zlib-dev zip libzip-dev \
+    && apk add --no-cache php-intl icu-dev zlib-dev zip libzip-dev \
     && pecl install apcu \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
@@ -33,14 +37,14 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY .github/workflows/manifests/php/conf/*.ini /usr/local/etc/php/conf.d/
 COPY .github/workflows/manifests/php/conf/www.* /usr/local/etc/php-fpm.d/
 
-RUN cd /build \
-    && mkdir -p var/cache \
+WORKDIR /build
+RUN mkdir -p var/cache \
     && mkdir -p var/uploads \
     && mkdir -p var/log \
 	&& composer install\
     && chown -R www-data:www-data /build
 
-CMD cd /build \
+CMD ["sh", "-c", "cd /build \
     && php bin/console doctrine:database:create --if-not-exists --no-interaction \
     && php bin/console doctrine:migrations:migrate --no-interaction \
-    && php-fpm
+    && php-fpm"]

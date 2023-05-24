@@ -46,7 +46,7 @@
                 removeTxt: 'generic.remove',
             } %}
     </fieldset>
-    {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
+    {{ render(controller('App\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
         prevTitle: 'title.method.title',
         nextTitle: 'title.samples.title',

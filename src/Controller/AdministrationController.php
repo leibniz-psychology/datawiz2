@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Controller;
+namespace App\Controller;
 
 use App\Domain\Form\UserDetailForm;
 use App\Domain\Model\Administration\DataWizUser;

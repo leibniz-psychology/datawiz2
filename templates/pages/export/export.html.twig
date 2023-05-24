@@ -96,7 +96,7 @@
     {% endif %}
 
 
-    {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
+    {{ render(controller('App\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
         prevUrl: 'Study-review',
         prevTitle: 'title.review.title'|trans,

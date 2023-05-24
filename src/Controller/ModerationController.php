@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Controller;
+namespace App\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;

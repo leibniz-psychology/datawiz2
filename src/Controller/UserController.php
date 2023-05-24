@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Controller;
+namespace App\Controller;
 
 use App\Domain\Definition\UserRoles;
 use Psr\Log\LoggerInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Controller;
+namespace App\Controller;
 
 use App\Crud\Crudable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

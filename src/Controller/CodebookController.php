@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Controller;
+namespace App\Controller;
 
 use App\Domain\Model\Codebook\DatasetVariables;
 use App\Domain\Model\Filemanagement\Dataset;

@@ -267,7 +267,7 @@
     </div>
     <div class="fixed inset-0 z-40 hidden bg-black opacity-25" id="modal-dataset-import-backdrop"></div>
 
-    {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
+    {{ render(controller('App\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
         prevUrl: 'Study-sample',
         prevTitle: 'title.samples.title'|trans,

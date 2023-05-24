@@ -29,7 +29,7 @@
         {{ "title.introduction.start.steps" | trans | markdown_to_html }}
     </div>
 
-    {{ render(controller('App\\View\\Controller\\NavigationController::savebarNavigationAction', {
+    {{ render(controller('App\\Controller\\NavigationController::savebarNavigationAction', {
         request: app.request,
         prevUrl: null,
         prevTitle: null,

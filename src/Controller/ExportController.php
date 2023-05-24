@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Controller;
+namespace App\Controller;
 
 use App\Domain\Model\Filemanagement\AdditionalMaterial;
 use App\Domain\Model\Filemanagement\Dataset;

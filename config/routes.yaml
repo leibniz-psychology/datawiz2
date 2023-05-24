@@ -1,5 +1,5 @@
 controllers:
-  resource: ../src/View/Controller/
+  resource: ../src/Controller/
   type: annotation
 
 

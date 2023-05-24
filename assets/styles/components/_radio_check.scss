@@ -48,7 +48,7 @@
 .CheckBox-Input:checked + .CheckBox-Label::before {
   /* prettier-ignore */
   background:
-    url("../Images/checkmark.svg"
+    url("../images/checkmark.svg"
     param(--color theme("colors.zpid-blue.500"))
     param(--strokeWidth 10))
     left center no-repeat;
@@ -59,7 +59,7 @@
 .RadioButton-Input:checked + .RadioButton-Label::before {
   /* prettier-ignore */
   background:
-    url("../Images/radiobutton.svg"
+    url("../images/radiobutton.svg"
     param(--color theme("colors.zpid-blue.500")))
     left center no-repeat;
 
@@ -77,7 +77,7 @@
 .RadioButton-Input:not(:checked):hover + .RadioButton-Label::before {
   /* prettier-ignore */
   background:
-    url("../Images/radiobutton.svg"
+    url("../images/radiobutton.svg"
     param(--color theme("colors.zpid-blue.100")))
     left center no-repeat;
 

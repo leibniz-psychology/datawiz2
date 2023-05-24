@@ -6,9 +6,14 @@
  */
 
 // any CSS you import will output into a single Style file (app.Style in this case)
-import "../Styles/app.scss";
+import "./styles/app.scss";
 
-import "../Images/leibniz_psychology.svg";
-import "../Images/rdm_teaser.jpg";
+import './bootstrap';
+
 
 import "./alpine";
+
+import "./images/leibniz_psychology_small.svg";
+
+import './tables'
+import './dropzone'

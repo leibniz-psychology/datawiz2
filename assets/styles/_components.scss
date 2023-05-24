@@ -43,7 +43,7 @@
     // TODO edit svg to accept parameters
     /* prettier-ignore */
     background:
-      url("../Images/fluent:add-20-regular.svg"
+      url("../images/fluent:add-20-regular.svg"
       param(--color theme("colors.white")))
       left center no-repeat;
     content: "";
@@ -67,7 +67,7 @@
     align-self: center;
     /* prettier-ignore */
     background:
-      url("../Images/ic:outline-save.svg"
+      url("../images/ic:outline-save.svg"
       param(--color theme("colors.white")))
       left center no-repeat;
     content: "";
@@ -81,7 +81,7 @@
     align-self: center;
     /* prettier-ignore */
     background:
-      url("../Images/ic:sharp-arrow-back.svg"
+      url("../images/ic:sharp-arrow-back.svg"
       param(--color theme("colors.zpid-purple.500")))
       left center no-repeat;
     content: "";
@@ -95,7 +95,7 @@
     align-self: center;
     /* prettier-ignore */
     background:
-      url("../Images/ic:sharp-arrow-forward.svg"
+      url("../images/ic:sharp-arrow-forward.svg"
       param(--color theme("colors.zpid-purple.500")))
       left center no-repeat;
     content: "";

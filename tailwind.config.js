@@ -7,7 +7,7 @@ module.exports = {
   content: [
     "./templates/**/*.html.twig",
     "./src/Questionnaire/Forms/**/*.php",
-    "./src/View/Assets/Scripts/**/*.js",
+    "./assets/**/*.js",
     "./translations/help_markdown.en.yaml",
   ],
   theme: {
@@ -78,7 +78,7 @@ module.exports = {
         xl: "1440px",
       },
       backgroundImage: {
-        "header-cyan": "url('../Images/header_cyan.jpg')",
+        "header-cyan": "url('/assets/images/header_cyan.jpg')",
       },
     },
   },

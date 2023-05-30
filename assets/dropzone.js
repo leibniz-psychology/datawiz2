@@ -15,9 +15,12 @@ Dropzone.options.datawizDropzone = {
         });
 
         this.on("success", function (file, responseText) {
-            if (
-                responseText["flySystem"] &&
-                responseText["flySystem"][0]["fileType"] === "csv"
+            if (responseText["flySystem"] && (
+                    responseText["flySystem"][0]["fileType"].toLowerCase() === "csv" ||
+                    responseText["flySystem"][0]["fileType"].toLowerCase() === "tsv" ||
+                    responseText["flySystem"][0]["fileType"].toLowerCase() === "tab" ||
+                    responseText["flySystem"][0]["fileType"].toLowerCase() === "txt"
+                )
             ) {
                 handleCSVFile(file, responseText);
             } else if (
@@ -47,13 +50,13 @@ function handleCSVFile(file, responseText) {
     }
 
     const previewUrl =
-        this.element
+        document.querySelector("#datawiz-dropzone")
             .getAttribute("data-preview-csv")
             .trim()
             .replace("%20", "") +
         encodeURI(responseText["flySystem"][0]["fileId"]);
     const submitUrl =
-        this.element
+        document.querySelector("#datawiz-dropzone")
             .getAttribute("data-submit-csv")
             .trim()
             .replace("%20", "") +
@@ -89,30 +92,23 @@ function handleCSVFile(file, responseText) {
 }
 
 function handleSAVFile(file, responseText) {
-    const previewSavUrl =
-        this.element
-            .getAttribute("data-preview-sav")
-            .trim()
-            .replace("%20", "") +
-        encodeURI(responseText["flySystem"][0]["fileId"]);
     const submitSavUrl =
-        this.element
+        document.querySelector("#datawiz-dropzone")
             .getAttribute("data-submit-sav")
             .trim()
             .replace("%20", "") +
         encodeURI(responseText["flySystem"][0]["fileId"]);
-    //GET(previewSavUrl, this.element, submitSavUrl);
-    POST(submitSavUrl, this.element, false, true);
+    POST(submitSavUrl,  null, false, true);
 }
 
 function POST(url, form, importPreview = false, reloadPage = false) {
     fetch(url, {
         method: "POST",
-        body: new FormData(form),
+        body: form !== null ? new FormData(form) : new FormData(),
     })
         .then(function (response) {
             if (response.ok) return response.json();
-            else throw new Error("Hell no! What happened?");
+            else throw new Error("Could not upload file:" + url);
         })
         .then((data) => {
             if (importPreview === true) {
@@ -121,23 +117,6 @@ function POST(url, form, importPreview = false, reloadPage = false) {
             if (reloadPage) {
                 location.reload();
             }
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-}
-
-function GET(url, form, submitUrl) {
-    fetch(url, {
-        method: "GET",
-    })
-        .then(function (response) {
-            if (response.ok) return response.json();
-            else throw new Error("Hell no! What happened?");
-        })
-        .then((data) => {
-            form.querySelector("#dataset-import-data").value = JSON.stringify(data);
-            POST(submitUrl, form);
         })
         .catch((error) => {
             console.log(error);

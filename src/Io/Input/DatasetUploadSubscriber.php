@@ -5,6 +5,7 @@ namespace App\Io\Input;
 use App\Domain\Model\Filemanagement\Dataset;
 use App\Domain\Model\Study\Experiment;
 use Doctrine\ORM\EntityManagerInterface;
+use League\Flysystem\UnableToRetrieveMetadata;
 use Oneup\UploaderBundle\Event\PostUploadEvent;
 use Oneup\UploaderBundle\UploadEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -24,19 +25,28 @@ class DatasetUploadSubscriber implements EventSubscriberInterface
 
     public function onDatasetUpload(PostUploadEvent $event)
     {
-        $experiment = $this->em->getRepository(Experiment::class)->find($event->getRequest()->get('studyId'));
-        if ($event->getFile() !== null) {
-            $dataset = Dataset::createDataset(
-                $event->getRequest()->get('originalFilename'),
-                $event->getFile()->getBasename(),
-                $event->getFile()->getSize(),
-                $event->getFile()->getMimeType(),
-                $experiment
-            );
-            $this->em->persist($dataset);
-            $this->em->flush();
-            $response = $event->getResponse();
-            $response->addToOffset(['fileId' => $dataset->getId(), 'fileType' => $event->getFile()->getExtension()], ['flySystem']);
+        if ($event->getFile() == null) {
+            return;
         }
+
+        $experiment = $this->em->getRepository(Experiment::class)->find($event->getRequest()->get('studyId'));
+        try {
+            $mimeType = $event->getFile()->getMimeType();
+        } catch (UnableToRetrieveMetadata) {
+            // .sav mimetypes cannot be detected by the oneup flysystem, so we get the mimetype from the request
+            $mimeType = $event->getRequest()->files->get('file')->getClientMimeType();
+        }
+
+        $dataset = Dataset::createDataset(
+            $event->getRequest()->get('originalFilename'),
+            $event->getFile()->getBasename(),
+            $event->getFile()->getSize(),
+            $mimeType,
+            $experiment
+        );
+        $this->em->persist($dataset);
+        $this->em->flush();
+        $response = $event->getResponse();
+        $response->addToOffset(['fileId' => $dataset->getId(), 'fileType' => $event->getFile()->getExtension()], ['flySystem']);
     }
 }

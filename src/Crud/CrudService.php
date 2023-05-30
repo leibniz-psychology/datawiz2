@@ -8,9 +8,9 @@ use App\Domain\Model\Study\Experiment;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Exception;
 use League\Csv\Reader;
-use League\Flysystem\FileExistsException;
-use League\Flysystem\FileNotFoundException;
 use League\Flysystem\Filesystem;
+use League\Flysystem\FilesystemException;
+use League\Flysystem\UnableToReadFile;
 
 class CrudService implements Crudable
 {
@@ -95,7 +95,7 @@ class CrudService implements Crudable
             $this->em->remove($material);
             $this->em->flush();
             $success = true;
-        } catch (FileNotFoundException) {
+        } catch (UnableToReadFile) {
             $success = false;
         }
 
@@ -119,7 +119,7 @@ class CrudService implements Crudable
             $this->em->remove($dataset);
             $this->em->flush();
             $success = true;
-        } catch (FileNotFoundException) {
+        } catch (UnableToReadFile) {
             $success = false;
         }
 
@@ -134,12 +134,9 @@ class CrudService implements Crudable
                 $tmp->fputcsv($record);
             }
             $reader = Reader::createFromFileObject($tmp);
-            if ($this->filesystem->has("matrix/{$datasetId}.csv")) {
-                $success = $this->filesystem->update("matrix/{$datasetId}.csv", $reader->toString());
-            } else {
-                $success = $this->filesystem->write("matrix/{$datasetId}.csv", $reader->toString());
-            }
-        } catch (FileExistsException|FileNotFoundException|Exception) {
+            $this->filesystem->write("matrix/{$datasetId}.csv", $reader->toString());
+            $success = true;
+        } catch (FilesystemException|Exception) {
             $success = false;
         }
 

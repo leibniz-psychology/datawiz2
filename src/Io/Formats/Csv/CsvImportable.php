@@ -4,21 +4,24 @@ namespace App\Io\Formats\Csv;
 
 use League\Csv\Exception;
 use League\Csv\Reader;
+use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\UnableToReadFile;
 use Psr\Log\LoggerInterface;
 
-class CsvImportable
+readonly class CsvImportable
 {
-    public function __construct(private readonly FilesystemOperator $assetsFilesystem, private readonly LoggerInterface $logger)
-    {
+    public function __construct(
+        private FilesystemOperator $datasetFilesystem,
+        private LoggerInterface $logger
+    ) {
     }
 
     public function csvToArray(string $fileId, string $delimiter, string $escape, int $headerRows, int $resultSize = 0): ?array
     {
         $result = null;
         try {
-            $fileContent = $this->assetsFilesystem->read($fileId);
+            $fileContent = $this->datasetFilesystem->read($fileId);
             $csv = Reader::createFromString($fileContent);
             if ($headerRows > 0) {
                 $csv->setHeaderOffset($headerRows - 1);
@@ -43,9 +46,11 @@ class CsvImportable
                 ++$count;
             }
         } catch (UnableToReadFile $e) {
-            $this->logger->error("CsvImportable::csvToArray FileNotFoundException thrown: {$e->getMessage()}");
+            $this->logger->error("CsvImportable::csvToArray Unable to read file: {$e->getMessage()}");
         } catch (Exception $e) {
             $this->logger->error("CsvImportable::csvToArray CSV Reader Exception thrown: {$e->getMessage()}");
+        } catch (FilesystemException $e) {
+            $this->logger->error("CsvImportable::csvToArray FilesystemException: {$e->getMessage()}");
         }
 
         return $result;

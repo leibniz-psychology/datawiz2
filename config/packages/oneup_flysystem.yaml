@@ -4,7 +4,23 @@ oneup_flysystem:
         default_adapter:
             local:
                 location: '%kernel.project_dir%/var/uploads'
+        dataset_adapter:
+            local:
+                location: '%kernel.project_dir%/var/uploads/datasets'
+        material_adapter:
+            local:
+                location: '%kernel.project_dir%/var/uploads/materials'
+        matrix_adapter:
+            local:
+                location: '%kernel.project_dir%/var/uploads/matrix'
+
     filesystems:
-        assets:
+        default:
             adapter: default_adapter
             alias: League\Flysystem\Filesystem
+        dataset:
+            adapter: dataset_adapter
+        material:
+            adapter: material_adapter
+        matrix:
+            adapter: matrix_adapter

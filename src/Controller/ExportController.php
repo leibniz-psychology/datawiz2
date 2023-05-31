@@ -7,7 +7,7 @@ use App\Domain\Model\Filemanagement\Dataset;
 use App\Domain\Model\Study\Experiment;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
-use League\Flysystem\Filesystem;
+use League\Flysystem\FilesystemOperator;
 use League\Flysystem\UnableToReadFile;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,7 +31,7 @@ class ExportController extends AbstractController
 {
     private readonly Serializer $serializer;
 
-    public function __construct(private readonly LoggerInterface $logger, private readonly EntityManagerInterface $em, private readonly Filesystem $filesystem)
+    public function __construct(private readonly LoggerInterface $logger, private readonly EntityManagerInterface $em, private readonly FilesystemOperator $datasetFilesystem, private readonly FilesystemOperator $matrixFilesystem, private readonly FilesystemOperator $materialFilesystem)
     {
         $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader());
         $metadataAwareNameConverter = new MetadataAwareNameConverter($classMetadataFactory);
@@ -154,14 +154,14 @@ class ExportController extends AbstractController
             $folder = 'datasets/'.$this->sanitizeFilename($folderName);
             $error = $zip->addEmptyDir($folder) ? $error : true;
             try {
-                if ($this->filesystem->has($dataset->getStorageName())) {
+                if ($this->datasetFilesystem->has($dataset->getStorageName())) {
                     $error = $zip->addFromString(
                         "{$folder}/original_".$dataset->getOriginalName(),
-                        $this->filesystem->read($dataset->getStorageName())
+                        $this->datasetFilesystem->read($dataset->getStorageName())
                     ) ? $error : true;
                 }
-                if ($this->filesystem->has("matrix/{$dataset->getId()}.csv")) {
-                    $matrix = $this->filesystem->read("matrix/{$dataset->getId()}.csv");
+                if ($this->matrixFilesystem->has("{$dataset->getId()}.csv")) {
+                    $matrix = $this->matrixFilesystem->read("{$dataset->getId()}.csv");
                     if ($matrix) {
                         $matrix = $this->buildCSVHeader($dataset->getCodebook()).$matrix;
                         $error = $zip->addFromString("{$folder}/datamatrix.csv", $matrix) ? $error : true;
@@ -197,11 +197,11 @@ class ExportController extends AbstractController
     {
         $error = false;
         foreach ($experiment->getAdditionalMaterials() as $material) {
-            if ($this->filesystem->has($material->getStorageName())) {
+            if ($this->materialFilesystem->has($material->getStorageName())) {
                 try {
                     $error = $zip->addFromString(
                         "material/{$material->getOriginalName()}",
-                        $this->filesystem->read($material->getStorageName())
+                        $this->materialFilesystem->read($material->getStorageName())
                     ) ? $error : true;
                 } catch (UnableToReadFile $e) {
                     $this->logger->error("ExportController::appendMaterialToZip: Error read file from filesystem: {$e->getMessage()}");

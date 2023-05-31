@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
 use League\Csv\UnableToProcessCsv;
-use League\Flysystem\Filesystem;
+use League\Flysystem\FilesystemOperator;
 use League\Flysystem\UnableToReadFile;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,7 +23,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class CodebookController extends AbstractController
 {
-    public function __construct(protected EntityManagerInterface $em, protected LoggerInterface $logger, private readonly Filesystem $filesystem)
+    public function __construct(protected EntityManagerInterface $em, protected LoggerInterface $logger, private readonly FilesystemOperator $matrixFilesystem)
     {
     }
 
@@ -83,9 +83,9 @@ class CodebookController extends AbstractController
                 $response['header'][] = $var->getName();
             }
         }
-        if ($this->filesystem->has('matrix/'.$uuid.'.csv')) {
+        if ($this->matrixFilesystem->has($uuid.'.csv')) {
             try {
-                $file = Reader::createFromString($this->filesystem->read('matrix/'.$uuid.'.csv'));
+                $file = Reader::createFromString($this->matrixFilesystem->read($uuid.'.csv'));
                 if ($file->count() != 0) {
                     if ($size == 0) {
                         $response['content'] = $file;

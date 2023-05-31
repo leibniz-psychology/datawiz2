@@ -5,12 +5,12 @@ oneup_uploader:
             frontend: dropzone
             storage:
                 type: flysystem
-                filesystem: oneup_flysystem.assets_filesystem # see oneup_flysystem.yaml
+                filesystem: oneup_flysystem.material_filesystem # see oneup_flysystem.yaml
         datasets: # this endpoint will handle the datasets (spss, csv, tsv)
             frontend: dropzone
             storage:
                 type: flysystem
-                filesystem: oneup_flysystem.assets_filesystem #see oneup_flysystem.yaml
+                filesystem: oneup_flysystem.dataset_filesystem #see oneup_flysystem.yaml
             allowed_mimetypes:
                 text/csv: ['csv']
                 text/tab-separated-values: ['tsv', 'tab']

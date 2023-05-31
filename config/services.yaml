@@ -40,9 +40,9 @@ services:
     app.api.spss:
         class: App\Api\Spss\SpssApiClient
         arguments:
-            - '@oneup_flysystem.assets_filesystem'
+            - '@oneup_flysystem.dataset_filesystem'
 
     io.format.csv.import:
         class: App\Io\Formats\Csv\CsvImportable
         arguments:
-            - '@oneup_flysystem.assets_filesystem'
+            - '@oneup_flysystem.dataset_filesystem'

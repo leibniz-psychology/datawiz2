@@ -8,14 +8,20 @@ use App\Domain\Model\Study\Experiment;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Exception;
 use League\Csv\Reader;
-use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemException;
+use League\Flysystem\FilesystemOperator;
 use League\Flysystem\UnableToReadFile;
+use Psr\Log\LoggerInterface;
 
-class CrudService implements Crudable
+readonly class CrudService implements Crudable
 {
-    public function __construct(private readonly Filesystem $filesystem, private readonly EntityManagerInterface $em)
-    {
+    public function __construct(
+        private FilesystemOperator $matrixFilesystem,
+        private FilesystemOperator $datasetFilesystem,
+        private FilesystemOperator $materialFilesystem,
+        private EntityManagerInterface $em,
+        private LoggerInterface $logger
+    ) {
     }
 
     /**
@@ -89,13 +95,17 @@ class CrudService implements Crudable
     public function deleteMaterial(AdditionalMaterial $material): bool
     {
         try {
-            if ($this->filesystem->has($material->getStorageName())) {
-                $this->filesystem->delete($material->getStorageName());
+            if ($this->materialFilesystem->has($material->getStorageName())) {
+                $this->materialFilesystem->delete($material->getStorageName());
             }
             $this->em->remove($material);
             $this->em->flush();
             $success = true;
-        } catch (UnableToReadFile) {
+        } catch (UnableToReadFile $e) {
+            $this->logger->error("CrudService::deleteMaterial Unable to read file: {$e->getMessage()}");
+            $success = false;
+        } catch (FilesystemException $e) {
+            $this->logger->error("CrudService::deleteMaterial FilesystemException: {$e->getMessage()}");
             $success = false;
         }
 
@@ -105,11 +115,11 @@ class CrudService implements Crudable
     public function deleteDataset(Dataset $dataset): bool
     {
         try {
-            if ($this->filesystem->has($dataset->getStorageName())) {
-                $this->filesystem->delete($dataset->getStorageName());
+            if ($this->datasetFilesystem->has($dataset->getStorageName())) {
+                $this->datasetFilesystem->delete($dataset->getStorageName());
             }
-            if ($this->filesystem->has('matrix/'.$dataset->getId().'.csv')) {
-                $this->filesystem->delete('matrix/'.$dataset->getId().'.csv');
+            if ($this->matrixFilesystem->has($dataset->getId().'.csv')) {
+                $this->matrixFilesystem->delete($dataset->getId().'.csv');
             }
             if ($dataset->getCodebook() != null) {
                 foreach ($dataset->getCodebook() as $var) {
@@ -119,7 +129,11 @@ class CrudService implements Crudable
             $this->em->remove($dataset);
             $this->em->flush();
             $success = true;
-        } catch (UnableToReadFile) {
+        } catch (UnableToReadFile $e) {
+            $this->logger->error("CrudService::deleteDataset Unable to read file: {$e->getMessage()}");
+            $success = false;
+        } catch (FilesystemException $e) {
+            $this->logger->error("CrudService::deleteDataset FilesystemException: {$e->getMessage()}");
             $success = false;
         }
 
@@ -134,9 +148,13 @@ class CrudService implements Crudable
                 $tmp->fputcsv($record);
             }
             $reader = Reader::createFromFileObject($tmp);
-            $this->filesystem->write("matrix/{$datasetId}.csv", $reader->toString());
+            $this->matrixFilesystem->write("{$datasetId}.csv", $reader->toString());
             $success = true;
-        } catch (FilesystemException|Exception) {
+        } catch (FilesystemException $e) {
+            $this->logger->error("CrudService::saveDatasetMatrix FilesystemException: {$e->getMessage()}");
+            $success = false;
+        } catch (Exception $e) {
+            $this->logger->error("CrudService::saveDatasetMatrix Exception thrown: {$e->getMessage()}");
             $success = false;
         }
 

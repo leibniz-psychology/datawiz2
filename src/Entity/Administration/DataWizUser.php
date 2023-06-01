@@ -2,7 +2,7 @@
 
 namespace App\Entity\Administration;
 
-use App\Domain\Definition\UserRoles;
+use App\Entity\Constant\UserRoles;
 use App\Repository\DataWizUserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;

@@ -18,10 +18,7 @@ services:
         exclude:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
-            - '../src/Migrations/'
-            - '../src/Tests/'
             - '../src/Kernel.php'
-            - '../src/Domain/Definition' # not services but input for the Entity
 
 
     App\Api\Spss\SpssApiClient:

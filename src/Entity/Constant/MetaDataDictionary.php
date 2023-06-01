@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Definition;
+namespace App\Entity\Constant;
 
 final class MetaDataDictionary
 {

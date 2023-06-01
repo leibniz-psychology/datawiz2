@@ -2,8 +2,8 @@
 
 namespace App\Entity\Study;
 
-use App\Domain\Definition\ReviewDataDictionary;
 use App\Entity\Administration\UuidEntity;
+use App\Entity\Constant\ReviewDataDictionary;
 use App\Questionnaire\Questionable;
 use App\Review\Reviewable;
 use App\Review\ReviewDataCollectable;

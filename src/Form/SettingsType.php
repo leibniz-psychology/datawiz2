@@ -7,7 +7,7 @@
 
 namespace App\Form;
 
-use App\Domain\Definition\MetaDataDictionary;
+use App\Entity\Constant\MetaDataDictionary;
 use App\Entity\Study\SettingsMetaDataGroup;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

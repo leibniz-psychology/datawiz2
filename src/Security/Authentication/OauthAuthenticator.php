@@ -3,8 +3,8 @@
 namespace App\Security\Authentication;
 
 use App\Crud\Crudable;
-use App\Domain\Definition\UserRoles;
 use App\Entity\Administration\DataWizUser;
+use App\Entity\Constant\UserRoles;
 use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\OAuth2Authenticator;

@@ -2,8 +2,8 @@
 
 namespace App\Form;
 
-use App\Domain\Definition\UserRoles;
 use App\Entity\Administration\DataWizUser;
+use App\Entity\Constant\UserRoles;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

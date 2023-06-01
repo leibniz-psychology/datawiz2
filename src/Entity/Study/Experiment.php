@@ -2,9 +2,9 @@
 
 namespace App\Entity\Study;
 
-use App\Domain\Definition\States;
 use App\Entity\Administration\DataWizUser;
 use App\Entity\Administration\UuidEntity;
+use App\Entity\Constant\States;
 use App\Entity\FileManagement\AdditionalMaterial;
 use App\Entity\FileManagement\Dataset;
 use App\Repository\ExperimentRepository;

@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Domain\Definition\UserRoles;
+use App\Entity\Constant\UserRoles;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

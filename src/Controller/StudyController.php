@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Crud\Crudable;
-use App\Domain\Definition\States;
-use App\Domain\Definition\UserRoles;
 use App\Entity\Administration\DataWizUser;
+use App\Entity\Constant\States;
+use App\Entity\Constant\UserRoles;
 use App\Entity\Study\CreatorMetaDataGroup;
 use App\Entity\Study\Experiment;
 use App\Questionnaire\Questionnairable;

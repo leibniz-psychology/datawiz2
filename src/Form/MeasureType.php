@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Domain\Definition\MetaDataDictionary;
+use App\Entity\Constant\MetaDataDictionary;
 use App\Entity\Study\MeasureMetaDataGroup;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;

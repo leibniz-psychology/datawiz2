@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Io\Formats\Sav;
+namespace App\Service\Io\Formats;
 
-use App\Api\Spss\SpssApiClient;
 use App\Entity\FileManagement\Dataset;
+use App\Service\Api\SpssApiClient;
 use Psr\Log\LoggerInterface;
 
 class SavImportable

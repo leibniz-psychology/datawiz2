@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Review;
+namespace App\Service\Review;
 
 final class ReviewDataCollectable
 {

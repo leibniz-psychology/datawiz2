@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use App\Crud\Crudable;
 use App\Entity\Codebook\DatasetVariables;
 use App\Entity\FileManagement\AdditionalMaterial;
 use App\Entity\FileManagement\Dataset;
-use App\Io\Formats\Csv\CsvImportable;
-use App\Io\Formats\Sav\SavImportable;
-use App\Questionnaire\Questionnairable;
+use App\Service\Crud\Crudable;
+use App\Service\Io\Formats\CsvImportable;
+use App\Service\Io\Formats\SavImportable;
+use App\Service\Questionnaire\Questionnairable;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

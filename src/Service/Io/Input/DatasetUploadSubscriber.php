@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Io\Input;
+namespace App\Service\Io\Input;
 
 use App\Entity\FileManagement\Dataset;
 use App\Entity\Study\Experiment;

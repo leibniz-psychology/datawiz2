@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Questionnaire;
+namespace App\Service\Questionnaire;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;

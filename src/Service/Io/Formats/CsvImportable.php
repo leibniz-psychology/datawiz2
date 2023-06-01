@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Io\Formats\Csv;
+namespace App\Service\Io\Formats;
 
 use League\Csv\Exception;
 use League\Csv\Reader;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Api;
+namespace App\Service\Api;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Mime\Part\Multipart\FormDataPart;

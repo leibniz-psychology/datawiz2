@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Questionnaire;
+namespace App\Service\Questionnaire;
 
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormFactoryInterface;

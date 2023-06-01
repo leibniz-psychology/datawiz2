@@ -5,7 +5,7 @@ namespace App\Entity\FileManagement;
 use App\Entity\Administration\UuidEntity;
 use App\Entity\Study\Experiment;
 use App\Form\FileDescriptionType;
-use App\Questionnaire\Questionable;
+use App\Service\Questionnaire\Questionable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;

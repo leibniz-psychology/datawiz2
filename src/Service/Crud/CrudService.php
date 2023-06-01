@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Crud;
+namespace App\Service\Crud;
 
 use App\Entity\FileManagement\AdditionalMaterial;
 use App\Entity\FileManagement\Dataset;

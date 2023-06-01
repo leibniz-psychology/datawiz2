@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Crud\Crudable;
+use App\Service\Crud\Crudable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 

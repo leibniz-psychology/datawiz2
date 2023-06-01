@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Api\Spss;
+namespace App\Service\Api;
 
-use App\Api\ApiClientService;
 use App\Entity\FileManagement\Dataset;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;

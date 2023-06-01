@@ -21,7 +21,7 @@ services:
             - '../src/Kernel.php'
 
 
-    App\Api\Spss\SpssApiClient:
+    App\Service\Api\SpssApiClient:
         arguments:
             $spss_uri: '%env(SPSS_API_URI)%'
 
@@ -33,11 +33,11 @@ services:
         class: 'App\Twig\CommonMarkdown'
 
     app.api.spss:
-        class: App\Api\Spss\SpssApiClient
+        class: App\Service\Api\SpssApiClient
         arguments:
             - '@oneup_flysystem.dataset_filesystem'
 
     io.format.csv.import:
-        class: App\Io\Formats\Csv\CsvImportable
+        class: App\Service\Io\Formats\CsvImportable
         arguments:
             - '@oneup_flysystem.dataset_filesystem'

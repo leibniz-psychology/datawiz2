@@ -5,7 +5,7 @@
  * means one entire form page within the application.
  */
 
-namespace App\Questionnaire\Forms;
+namespace App\Form;
 
 use App\Domain\Definition\MetaDataDictionary;
 use App\Entity\Study\SettingsMetaDataGroup;

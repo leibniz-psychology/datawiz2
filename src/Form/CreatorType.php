@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Questionnaire\Forms;
+namespace App\Form;
 
 use App\Entity\Study\CreatorMetaDataGroup;
 use Symfony\Component\Form\AbstractType;

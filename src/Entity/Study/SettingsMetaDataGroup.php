@@ -6,7 +6,7 @@
 namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
-use App\Questionnaire\Forms\SettingsType;
+use App\Form\SettingsType;
 use App\Questionnaire\Questionable;
 use Doctrine\ORM\Mapping as ORM;
 

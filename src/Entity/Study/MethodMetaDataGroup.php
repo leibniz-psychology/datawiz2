@@ -4,7 +4,7 @@ namespace App\Entity\Study;
 
 use App\Domain\Definition\ReviewDataDictionary;
 use App\Entity\Administration\UuidEntity;
-use App\Questionnaire\Forms\MethodType;
+use App\Form\MethodType;
 use App\Questionnaire\Questionable;
 use App\Review\Reviewable;
 use App\Review\ReviewDataCollectable;

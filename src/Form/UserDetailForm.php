@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Form;
+namespace App\Form;
 
 use App\Domain\Definition\UserRoles;
 use App\Entity\Administration\DataWizUser;

@@ -1,81 +1,40 @@
 <?php
 
-namespace App\Questionnaire\Forms;
+namespace App\Form;
 
 use App\Domain\Definition\MetaDataDictionary;
-use App\Entity\Study\BasicInformationMetaDataGroup;
+use App\Entity\Study\TheoryMetaDataGroup;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BasicInformationType extends AbstractType
+class TheoryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add(MetaDataDictionary::TITLE, TextareaType::class, [
+            ->add(MetaDataDictionary::OBJECTIVE, TextareaType::class, [
                 'required' => false,
-                'label' => 'input.title.label',
+                'label' => 'input.objective.label',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
                     'class' => 'MetaData-TextInput',
-                    'rows' => '3',
+                    'rows' => '6',
                 ],
             ])
-            ->add(MetaDataDictionary::DESCRIPTION, TextareaType::class, [
+            ->add(MetaDataDictionary::HYPOTHESIS, TextareaType::class, [
                 'required' => false,
-                'label' => 'input.description.label',
+                'label' => 'input.hypothesis.label',
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
                     'class' => 'MetaData-TextInput',
-                    'rows' => '14',
+                    'rows' => '6',
                 ],
             ])
-            ->add(MetaDataDictionary::RELATED_PUBS, CollectionType::class, [
-                'required' => false,
-                'entry_type' => TextareaType::class,
-                'entry_options' => [
-                    'label' => false,
-                    'attr' => [
-                        'class' => 'w-full',
-                        'rows' => '4',
-                    ],
-                ],
-                'allow_add' => true,
-                'prototype' => true,
-                'allow_delete' => true,
-                'label' => 'input.relatedPubs.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
-                'label_html' => true,
-                'attr' => [
-                    'class' => 'MetaData-Widget MetaData-Widget_collection',
-                ],
-            ])
-            ->add(MetaDataDictionary::CREATORS, CollectionType::class, [
-                'entry_type' => CreatorType::class,
-                'entry_options' => [
-                    'label' => false,
-                    'attr' => [
-                        'x-data' => '',
-                        'x-on:keydown.enter.prevent' => '',
-                        'class' => 'Creator-Details',
-                    ],
-                ],
-                'allow_add' => true,
-                'prototype' => true,
-                'allow_delete' => true,
-                'label' => 'input.creator.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
-                'attr' => [
-                    'class' => 'MetaData-Widget MetaData-Widget_collection',
-                ],
-            ])
-            ->add('saveAndNext', SubmitType::class, [
-                'label' => 'title.theroies.title',
-            ])
+            ->add('saveAndPrevious', SubmitType::class)
+            ->add('saveAndNext', SubmitType::class)
             ->add('saveAndIntroduction', SubmitType::class, [
                 'label' => 'input.hidden',
                 'attr' => [
@@ -146,10 +105,6 @@ class BasicInformationType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(
-            [
-                'data_class' => BasicInformationMetaDataGroup::class,
-            ]
-        );
+        $resolver->setDefaults(['data_class' => TheoryMetaDataGroup::class]);
     }
 }

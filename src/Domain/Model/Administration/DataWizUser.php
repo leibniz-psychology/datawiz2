@@ -2,8 +2,8 @@
 
 namespace App\Domain\Model\Administration;
 
-use App\Domain\Access\Administration\DataWizUserRepository;
 use App\Domain\Definition\UserRoles;
+use App\Repository\DataWizUserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;

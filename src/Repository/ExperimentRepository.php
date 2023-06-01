@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Access\Study;
+namespace App\Repository;
 
 use App\Domain\Model\Study\Experiment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

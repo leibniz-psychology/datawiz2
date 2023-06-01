@@ -2,12 +2,12 @@
 
 namespace App\Domain\Model\Study;
 
-use App\Domain\Access\Study\ExperimentRepository;
 use App\Domain\Definition\States;
 use App\Domain\Model\Administration\DataWizUser;
 use App\Domain\Model\Administration\UuidEntity;
 use App\Domain\Model\Filemanagement\AdditionalMaterial;
 use App\Domain\Model\Filemanagement\Dataset;
+use App\Repository\ExperimentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;

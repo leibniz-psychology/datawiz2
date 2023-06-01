@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Access\Administration;
+namespace App\Repository;
 
 use App\Domain\Model\Administration\DataWizUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

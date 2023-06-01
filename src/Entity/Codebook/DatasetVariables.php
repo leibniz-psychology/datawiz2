@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Domain\Model\Codebook;
+namespace App\Entity\Codebook;
 
-use App\Domain\Model\Administration\UuidEntity;
-use App\Domain\Model\Filemanagement\Dataset;
+use App\Entity\Administration\UuidEntity;
+use App\Entity\FileManagement\Dataset;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;

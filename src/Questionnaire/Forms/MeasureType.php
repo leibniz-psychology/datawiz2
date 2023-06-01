@@ -3,7 +3,7 @@
 namespace App\Questionnaire\Forms;
 
 use App\Domain\Definition\MetaDataDictionary;
-use App\Domain\Model\Study\MeasureMetaDataGroup;
+use App\Entity\Study\MeasureMetaDataGroup;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

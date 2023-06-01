@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Domain\Definition\UserRoles;
-use App\Domain\Model\Study\Experiment;
+use App\Entity\Study\Experiment;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

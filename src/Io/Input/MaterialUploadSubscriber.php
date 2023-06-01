@@ -2,8 +2,8 @@
 
 namespace App\Io\Input;
 
-use App\Domain\Model\Filemanagement\AdditionalMaterial;
-use App\Domain\Model\Study\Experiment;
+use App\Entity\FileManagement\AdditionalMaterial;
+use App\Entity\Study\Experiment;
 use Doctrine\ORM\EntityManagerInterface;
 use Oneup\UploaderBundle\Event\PostUploadEvent;
 use Oneup\UploaderBundle\UploadEvents;

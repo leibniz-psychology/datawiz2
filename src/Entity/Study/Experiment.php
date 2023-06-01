@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Domain\Model\Study;
+namespace App\Entity\Study;
 
 use App\Domain\Definition\States;
-use App\Domain\Model\Administration\DataWizUser;
-use App\Domain\Model\Administration\UuidEntity;
-use App\Domain\Model\Filemanagement\AdditionalMaterial;
-use App\Domain\Model\Filemanagement\Dataset;
+use App\Entity\Administration\DataWizUser;
+use App\Entity\Administration\UuidEntity;
+use App\Entity\FileManagement\AdditionalMaterial;
+use App\Entity\FileManagement\Dataset;
 use App\Repository\ExperimentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -65,12 +65,12 @@ class Experiment extends UuidEntity
     #[ORM\OneToOne(mappedBy: 'experiment', cascade: ['persist', 'remove'])]
     private ?SettingsMetaDataGroup $settingsMetaDataGroup = null;
 
-    #[ORM\OneToMany(mappedBy: 'experiment', targetEntity: 'App\Domain\Model\Filemanagement\Dataset', cascade: ['persist'])]
+    #[ORM\OneToMany(mappedBy: 'experiment', targetEntity: 'App\Entity\FileManagement\Dataset', cascade: ['persist'])]
     #[SerializedName('datasets')]
     #[Groups(['dataset'])]
     private Collection $originalDatasets;
 
-    #[ORM\OneToMany(mappedBy: 'experiment', targetEntity: 'App\Domain\Model\Filemanagement\AdditionalMaterial', cascade: ['persist'])]
+    #[ORM\OneToMany(mappedBy: 'experiment', targetEntity: 'App\Entity\FileManagement\AdditionalMaterial', cascade: ['persist'])]
     #[SerializedName('material')]
     #[Groups(['material'])]
     private Collection $additionalMaterials;

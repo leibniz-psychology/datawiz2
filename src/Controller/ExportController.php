@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Domain\Model\Filemanagement\AdditionalMaterial;
-use App\Domain\Model\Filemanagement\Dataset;
-use App\Domain\Model\Study\Experiment;
+use App\Entity\FileManagement\AdditionalMaterial;
+use App\Entity\FileManagement\Dataset;
+use App\Entity\Study\Experiment;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemOperator;

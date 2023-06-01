@@ -3,7 +3,7 @@
 namespace App\Questionnaire\Forms;
 
 use App\Domain\Definition\MetaDataDictionary;
-use App\Domain\Model\Filemanagement\AdditionalMaterial;
+use App\Entity\FileManagement\AdditionalMaterial;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;

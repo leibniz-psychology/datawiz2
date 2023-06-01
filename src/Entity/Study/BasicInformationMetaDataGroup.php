@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Domain\Model\Study;
+namespace App\Entity\Study;
 
 use App\Domain\Definition\ReviewDataDictionary;
-use App\Domain\Model\Administration\UuidEntity;
+use App\Entity\Administration\UuidEntity;
 use App\Questionnaire\Forms\BasicInformationType;
 use App\Questionnaire\Questionable;
 use App\Review\Reviewable;
@@ -41,7 +41,7 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, 
 
     #[SerializedName('creators')]
     #[Groups('study')]
-    #[ORM\OneToMany(mappedBy: 'basicInformation', targetEntity: 'App\Domain\Model\Study\CreatorMetaDataGroup')]
+    #[ORM\OneToMany(mappedBy: 'basicInformation', targetEntity: 'App\Entity\Study\CreatorMetaDataGroup')]
     private ?Collection $creators = null;
 
     public function getFormTypeForEntity(): string

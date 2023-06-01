@@ -3,7 +3,7 @@
 namespace App\Domain\Form;
 
 use App\Domain\Definition\UserRoles;
-use App\Domain\Model\Administration\DataWizUser;
+use App\Entity\Administration\DataWizUser;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

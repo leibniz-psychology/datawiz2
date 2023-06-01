@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Domain\Model\Codebook\DatasetVariables;
-use App\Domain\Model\Filemanagement\Dataset;
-use App\Domain\Model\Study\MeasureMetaDataGroup;
+use App\Entity\Codebook\DatasetVariables;
+use App\Entity\FileManagement\Dataset;
+use App\Entity\Study\MeasureMetaDataGroup;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;

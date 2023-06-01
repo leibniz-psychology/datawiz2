@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Domain\Model\Administration\DataWizUser;
+use App\Entity\Administration\DataWizUser;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;

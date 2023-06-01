@@ -2,7 +2,7 @@
 
 namespace App\Questionnaire\Forms;
 
-use App\Domain\Model\Study\CreatorMetaDataGroup;
+use App\Entity\Study\CreatorMetaDataGroup;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;

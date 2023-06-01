@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Domain\Model\Administration\DataWizUser;
+use App\Entity\Administration\DataWizUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
@@ -26,7 +26,7 @@ class DataWizUserRepository extends ServiceEntityRepository implements UserLoade
 
         return $entityManager->createQuery(
             'SELECT u
-                FROM App\Domain\Model\Administration\DataWizUser u
+                FROM App\Entity\Administration\DataWizUser u
                 WHERE u.id = :query
                 OR u.email = :query'
         )

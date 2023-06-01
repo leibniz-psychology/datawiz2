@@ -1,62 +1,58 @@
 <?php
 
-namespace App\Domain\Model\Filemanagement;
+namespace App\Entity\FileManagement;
 
-use App\Domain\Model\Administration\UuidEntity;
-use App\Domain\Model\Study\Experiment;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Administration\UuidEntity;
+use App\Entity\Study\Experiment;
+use App\Questionnaire\Forms\FileDescriptionType;
+use App\Questionnaire\Questionable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
+#[ORM\Table(name: 'material')]
 #[ORM\Entity]
-class Dataset extends UuidEntity
+class AdditionalMaterial extends UuidEntity implements Questionable
 {
-    #[ORM\ManyToOne(inversedBy: 'originalDatasets')]
-    private ?Experiment $experiment = null;
-
     #[ORM\Column(length: 256)]
     #[SerializedName('original_name')]
-    #[Groups(['dataset'])]
+    #[Groups(['material'])]
     private ?string $originalName = null;
 
     #[ORM\Column(length: 256)]
     #[SerializedName('original_mimetype')]
-    #[Groups(['dataset'])]
+    #[Groups(['material'])]
     private ?string $originalMimetype = null;
 
     #[ORM\Column()]
     #[SerializedName('uploaded')]
-    #[Groups(['dataset'])]
+    #[Groups(['material'])]
     private ?\DateTime $dateUploaded = null;
 
     #[ORM\Column()]
     #[SerializedName('original_size')]
-    #[Groups(['dataset'])]
+    #[Groups(['material'])]
     private ?int $originalSize = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[SerializedName('description')]
+    #[Groups(['material'])]
+    private ?string $description = null;
 
     #[ORM\Column(length: 256)]
     private ?string $storageName = null;
 
-    #[ORM\Column(type: 'text', nullable: true)]
-    #[SerializedName('description')]
-    #[Groups(['dataset'])]
-    private ?string $description = null;
+    #[ORM\ManyToOne(inversedBy: 'additionalMaterials')]
+    private ?Experiment $experiment = null;
 
-    #[ORM\OneToMany(mappedBy: 'dataset', targetEntity: 'App\Domain\Model\Codebook\DatasetVariables')]
-    #[SerializedName('codebook')]
-    #[Groups(['codebook'])]
-    private Collection $codebook;
-
-    public function __construct()
-    {
-        $this->codebook = new ArrayCollection();
-    }
-
-    public static function createDataset(string $atUploadName, string $renamedFilename, int $fileSize, string $mimetype, Experiment $experiment): Dataset
-    {
-        $file = new Dataset();
+    public static function createMaterial(
+        string $atUploadName,
+        string $renamedFilename,
+        int $fileSize,
+        string $mimetype,
+        Experiment $experiment
+    ): AdditionalMaterial {
+        $file = new AdditionalMaterial();
         $file->setOriginalName($atUploadName);
         $file->setStorageName($renamedFilename);
         $file->setOriginalSize($fileSize);
@@ -65,17 +61,6 @@ class Dataset extends UuidEntity
         $file->setOriginalMimetype($mimetype);
 
         return $file;
-    }
-
-    public function getExperiment(): Experiment
-    {
-        return $this->experiment;
-    }
-
-    public function setExperiment(Experiment $experiment): void
-    {
-        $this->experiment = $experiment;
-        $experiment->addOriginalDatasets($this);
     }
 
     public function getOriginalName(): string
@@ -123,7 +108,7 @@ class Dataset extends UuidEntity
         return $this->storageName;
     }
 
-    public function setStorageName(mixed $storageName): void
+    public function setStorageName(string $storageName): void
     {
         $this->storageName = $storageName;
     }
@@ -138,13 +123,19 @@ class Dataset extends UuidEntity
         $this->description = $description;
     }
 
-    public function getCodebook(): Collection
+    public function getExperiment(): Experiment
     {
-        return $this->codebook;
+        return $this->experiment;
     }
 
-    public function setCodebook(Collection $codebook): void
+    public function setExperiment(Experiment $experiment): void
     {
-        $this->codebook = $codebook;
+        $this->experiment = $experiment;
+        $experiment->addAdditionalMaterials($this);
+    }
+
+    public function getFormTypeForEntity(): string
+    {
+        return FileDescriptionType::class;
     }
 }

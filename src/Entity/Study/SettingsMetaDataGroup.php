@@ -3,9 +3,9 @@
  * This class provides the short name metadata.
  */
 
-namespace App\Domain\Model\Study;
+namespace App\Entity\Study;
 
-use App\Domain\Model\Administration\UuidEntity;
+use App\Entity\Administration\UuidEntity;
 use App\Questionnaire\Forms\SettingsType;
 use App\Questionnaire\Questionable;
 use Doctrine\ORM\Mapping as ORM;

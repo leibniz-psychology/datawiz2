@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Domain\Form\UserDetailForm;
-use App\Domain\Model\Administration\DataWizUser;
-use App\Domain\Model\Study\Experiment;
+use App\Entity\Administration\DataWizUser;
+use App\Entity\Study\Experiment;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

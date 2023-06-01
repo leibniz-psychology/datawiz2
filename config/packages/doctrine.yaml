@@ -13,8 +13,8 @@ doctrine:
         mappings:
             App:
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Domain/Model'
-                prefix: 'App\Domain\Model'
+                dir: '%kernel.project_dir%/src/Entity'
+                prefix: 'App\Entity'
                 alias: App
         filters:
             ownership: App\Security\Authorization\OwnershipFilter

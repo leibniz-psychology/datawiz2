@@ -3,7 +3,7 @@
 namespace App\Api\Spss;
 
 use App\Api\ApiClientService;
-use App\Domain\Model\Filemanagement\Dataset;
+use App\Entity\FileManagement\Dataset;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\UnableToReadFile;

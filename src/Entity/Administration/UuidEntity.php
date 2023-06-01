@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Model\Administration;
+namespace App\Entity\Administration;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;

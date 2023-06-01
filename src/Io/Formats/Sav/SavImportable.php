@@ -3,7 +3,7 @@
 namespace App\Io\Formats\Sav;
 
 use App\Api\Spss\SpssApiClient;
-use App\Domain\Model\Filemanagement\Dataset;
+use App\Entity\FileManagement\Dataset;
 use Psr\Log\LoggerInterface;
 
 class SavImportable

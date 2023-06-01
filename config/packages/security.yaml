@@ -6,7 +6,7 @@ security:
     providers:
         users:
             entity:
-                class: 'App\Domain\Model\Administration\DataWizUser'
+                class: 'App\Entity\Administration\DataWizUser'
     firewalls:
         main:
             lazy: true

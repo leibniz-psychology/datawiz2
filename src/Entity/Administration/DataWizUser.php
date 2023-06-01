@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Model\Administration;
+namespace App\Entity\Administration;
 
 use App\Domain\Definition\UserRoles;
 use App\Repository\DataWizUserRepository;

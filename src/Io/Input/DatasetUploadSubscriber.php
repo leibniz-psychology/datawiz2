@@ -2,8 +2,8 @@
 
 namespace App\Io\Input;
 
-use App\Domain\Model\Filemanagement\Dataset;
-use App\Domain\Model\Study\Experiment;
+use App\Entity\FileManagement\Dataset;
+use App\Entity\Study\Experiment;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\UnableToRetrieveMetadata;
 use Oneup\UploaderBundle\Event\PostUploadEvent;

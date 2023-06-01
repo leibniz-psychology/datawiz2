@@ -21,9 +21,7 @@ services:
             - '../src/Migrations/'
             - '../src/Tests/'
             - '../src/Kernel.php'
-            - '../src/Domain/Model' # our Entity/ folder
-            - '../src/Domain/Definition' # not services but input for the Model
-            - '../src/Domain/State/Migrations' # our Migrations/ folder
+            - '../src/Domain/Definition' # not services but input for the Entity
 
 
     App\Api\Spss\SpssApiClient:

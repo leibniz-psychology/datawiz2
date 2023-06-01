@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Crud\Crudable;
-use App\Domain\Model\Codebook\DatasetVariables;
-use App\Domain\Model\Filemanagement\AdditionalMaterial;
-use App\Domain\Model\Filemanagement\Dataset;
+use App\Entity\Codebook\DatasetVariables;
+use App\Entity\FileManagement\AdditionalMaterial;
+use App\Entity\FileManagement\Dataset;
 use App\Io\Formats\Csv\CsvImportable;
 use App\Io\Formats\Sav\SavImportable;
 use App\Questionnaire\Questionnairable;

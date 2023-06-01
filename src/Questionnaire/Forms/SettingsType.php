@@ -8,7 +8,7 @@
 namespace App\Questionnaire\Forms;
 
 use App\Domain\Definition\MetaDataDictionary;
-use App\Domain\Model\Study\SettingsMetaDataGroup;
+use App\Entity\Study\SettingsMetaDataGroup;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;

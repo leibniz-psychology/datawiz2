@@ -7,5 +7,5 @@ interface Reviewable
     /**
      * @return ReviewDataCollectable[]
      */
-    public function getReviewCollection();
+    public function getReviewCollection(): array;
 }

@@ -26,12 +26,12 @@ class Dataset extends UuidEntity
     #[Groups(['dataset'])]
     private ?string $originalMimetype = null;
 
-    #[ORM\Column()]
+    #[ORM\Column]
     #[SerializedName('uploaded')]
     #[Groups(['dataset'])]
     private ?\DateTime $dateUploaded = null;
 
-    #[ORM\Column()]
+    #[ORM\Column]
     #[SerializedName('original_size')]
     #[Groups(['dataset'])]
     private ?int $originalSize = null;

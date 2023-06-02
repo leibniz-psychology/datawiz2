@@ -22,8 +22,13 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class FileManagementController extends AbstractController
 {
-    public function __construct(private readonly Crudable $crud, private readonly CsvImportable $csvImportable, private readonly SavImportable $savImportable, private readonly EntityManagerInterface $em, private readonly LoggerInterface $logger)
-    {
+    public function __construct(
+        private readonly Crudable $crud,
+        private readonly CsvImportable $csvImportable,
+        private readonly SavImportable $savImportable,
+        private readonly EntityManagerInterface $em,
+        private readonly LoggerInterface $logger
+    ) {
     }
 
     #[Route(path: '/preview/sav/{fileId}', name: 'preview-sav')]
@@ -49,9 +54,8 @@ class FileManagementController extends AbstractController
             $data = $this->savImportable->savToArray($dataset);
         }
         if (isset($dataset, $data) && !empty($data)) {
-            if ($data && is_iterable($data) && key_exists('codebook', $data)) {
+            if (is_iterable($data) && key_exists('codebook', $data)) {
                 foreach ($data['codebook'] as $var) {
-                    $matrixHeader[] = $var['name'];
                     $this->em->persist(
                         DatasetVariables::createNew(
                             $dataset,

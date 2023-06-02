@@ -6,10 +6,12 @@ use App\Entity\FileManagement\Dataset;
 use App\Service\Api\SpssApiClient;
 use Psr\Log\LoggerInterface;
 
-class SavImportable
+readonly class SavImportable
 {
-    public function __construct(private readonly SpssApiClient $spssApiClient, private readonly LoggerInterface $logger)
-    {
+    public function __construct(
+        private SpssApiClient $spssApiClient,
+        private LoggerInterface $logger
+    ) {
     }
 
     public function savToArray(Dataset $dataset): array

@@ -4,9 +4,9 @@ namespace App\Twig;
 
 use Twig\Extra\Markdown\MarkdownInterface;
 
-class ErusevMarkdown implements MarkdownInterface
+readonly class ErusevMarkdown implements MarkdownInterface
 {
-    private readonly \ParsedownExtra $converter;
+    private \ParsedownExtra $converter;
 
     public function __construct()
     {

@@ -75,16 +75,16 @@ class Experiment extends UuidEntity
     #[Groups(['material'])]
     private Collection $additionalMaterials;
 
-    #[ORM\ManyToOne()]
+    #[ORM\ManyToOne]
     private ?DataWizUser $owner = null;
 
-    #[ORM\Column()]
+    #[ORM\Column]
     private ?\DateTime $dateCreated = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTime $dateSubmitted = null;
 
-    #[ORM\Column()]
+    #[ORM\Column]
     private int $state = States::STATE_STUDY_NONE;
 
     public function __construct()

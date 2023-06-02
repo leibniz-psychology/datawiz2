@@ -11,7 +11,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 #[ORM\Entity]
 class DatasetVariables extends UuidEntity
 {
-    #[ORM\Column()]
+    #[ORM\Column]
     private int $varId;
 
     #[ORM\Column(length: 250)]

@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,8 +11,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_REVIEWER')]
 class ModerationController extends AbstractController
 {
-    public function __construct(private readonly EntityManagerInterface $em, private readonly LoggerInterface $logger)
-    {
+    public function __construct(
+        private readonly LoggerInterface $logger
+    ) {
     }
 
     #[Route(path: '/moderation/dashboard', name: 'moderation_dashboard')]

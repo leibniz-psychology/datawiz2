@@ -58,7 +58,6 @@ class CodebookController extends AbstractController
         if ($dataset) {
             $measures = $this->em->getRepository(MeasureMetaDataGroup::class)->findOneBy(['experiment' => $dataset->getExperiment()]);
             if ($measures && $measures->getMeasures() && sizeof($measures->getMeasures()) > 0) {
-                $viewMeasures = [];
                 foreach ($measures->getMeasures() as $measure) {
                     if ($measure && $measure != '') {
                         $viewMeasures['measures'][] = $measure;
@@ -156,7 +155,7 @@ class CodebookController extends AbstractController
 
     private function saveCodebookVariables(array $arr)
     {
-        if ($arr && is_iterable($arr) && key_exists('variables', $arr) && !empty($arr['variables']) && is_iterable($arr['variables'])) {
+        if ($arr && key_exists('variables', $arr) && !empty($arr['variables']) && is_iterable($arr['variables'])) {
             foreach ($arr['variables'] as $variable) {
                 if (key_exists('var_db_id', $variable)) {
                     $values = $variable['values'] ? $this->setMissingArrayFields(array_values(array_filter($variable['values']))) : null;

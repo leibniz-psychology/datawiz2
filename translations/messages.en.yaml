@@ -262,8 +262,8 @@ input:
         label: 'Further describe the <span class="font-semibold">non-experimental
           design</span> of your study'
         choices:
-          observational-study: "<span>Observational study</span><span>You observed\
-            \ people's behavior without experimental manipulation</span>"
+          observational-study: '<span>Observational study</span><span>You observed
+             people''s behavior without experimental manipulation</span>'
           survey-research: '<span>Survey research</span><span>You collected information
             from a sample of individuals through their responses to questions</span>'
           correlational-research: '<span>Correlational research</span><span>You measured

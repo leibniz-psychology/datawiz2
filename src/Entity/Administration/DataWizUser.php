@@ -28,10 +28,10 @@ class DataWizUser implements UserInterface
     #[ORM\Column(nullable: true)]
     private ?string $lastname = null;
 
-    #[ORM\Column()]
+    #[ORM\Column]
     private ?\DateTime $dateRegistered = null;
 
-    #[ORM\Column()]
+    #[ORM\Column]
     private ?\DateTime $lastLogin = null;
 
     public function getId(): Uuid

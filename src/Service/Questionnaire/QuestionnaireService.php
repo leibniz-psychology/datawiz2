@@ -7,10 +7,11 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class QuestionnaireService implements Questionnairable
+readonly class QuestionnaireService implements Questionnairable
 {
-    public function __construct(private readonly FormFactoryInterface $formBuilder)
-    {
+    public function __construct(
+        private FormFactoryInterface $formBuilder
+    ) {
     }
 
     public function formFromEntity(Questionable $entity, string $buttonLabel): ?FormInterface

@@ -24,12 +24,12 @@ class AdditionalMaterial extends UuidEntity implements Questionable
     #[Groups(['material'])]
     private ?string $originalMimetype = null;
 
-    #[ORM\Column()]
+    #[ORM\Column]
     #[SerializedName('uploaded')]
     #[Groups(['material'])]
     private ?\DateTime $dateUploaded = null;
 
-    #[ORM\Column()]
+    #[ORM\Column]
     #[SerializedName('original_size')]
     #[Groups(['material'])]
     private ?int $originalSize = null;

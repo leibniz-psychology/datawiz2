@@ -10,6 +10,6 @@ return $config->setRules([
     'yoda_style' => ['equal' => false, 'identical' => false, 'less_and_greater' => false],
     'blank_line_before_statement' => false,
     'multiline_whitespace_before_semicolons' => false,
-    ])
+])
     ->setFinder($finder)
 ;

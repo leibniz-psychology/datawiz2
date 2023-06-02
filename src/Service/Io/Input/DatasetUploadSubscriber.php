@@ -10,10 +10,11 @@ use Oneup\UploaderBundle\Event\PostUploadEvent;
 use Oneup\UploaderBundle\UploadEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class DatasetUploadSubscriber implements EventSubscriberInterface
+readonly class DatasetUploadSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly EntityManagerInterface $em)
-    {
+    public function __construct(
+        private EntityManagerInterface $em
+    ) {
     }
 
     public static function getSubscribedEvents(): array

@@ -10,10 +10,12 @@ use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class ApiClientService
+readonly class ApiClientService
 {
-    public function __construct(private readonly HttpClientInterface $client, private readonly LoggerInterface $logger)
-    {
+    public function __construct(
+        private HttpClientInterface $client,
+        private LoggerInterface $logger
+    ) {
     }
 
     public function GET(string $uri, array $params): ?array
@@ -28,7 +30,7 @@ class ApiClientService
                     'query' => $params,
                 ]
             );
-            if ($response && $response->getStatusCode() == 200) {
+            if ($response->getStatusCode() == 200) {
                 $content = json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
             }
         } catch (TransportExceptionInterface|ClientExceptionInterface|RedirectionExceptionInterface|ServerExceptionInterface $e) {
@@ -52,7 +54,7 @@ class ApiClientService
                     'body' => $formData->bodyToIterable(),
                 ]
             );
-            if ($response && $response->getStatusCode() == 200) {
+            if ($response->getStatusCode() == 200) {
                 $content = json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
             }
         } catch (TransportExceptionInterface|ClientExceptionInterface|RedirectionExceptionInterface|ServerExceptionInterface $e) {

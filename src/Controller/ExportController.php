@@ -31,8 +31,13 @@ class ExportController extends AbstractController
 {
     private readonly Serializer $serializer;
 
-    public function __construct(private readonly LoggerInterface $logger, private readonly EntityManagerInterface $em, private readonly FilesystemOperator $datasetFilesystem, private readonly FilesystemOperator $matrixFilesystem, private readonly FilesystemOperator $materialFilesystem)
-    {
+    public function __construct(
+        private readonly LoggerInterface $logger,
+        private readonly EntityManagerInterface $em,
+        private readonly FilesystemOperator $datasetFilesystem,
+        private readonly FilesystemOperator $matrixFilesystem,
+        private readonly FilesystemOperator $materialFilesystem
+    ) {
         $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader());
         $metadataAwareNameConverter = new MetadataAwareNameConverter($classMetadataFactory);
         $this->serializer = new Serializer(
@@ -120,7 +125,7 @@ class ExportController extends AbstractController
     /**
      * @return bool Error:True on failure, False on success
      */
-    private function appendStudyToZip(Experiment $experiment, string $format, \ZipArchive &$zip): bool
+    private function appendStudyToZip(Experiment $experiment, string $format, \ZipArchive $zip): bool
     {
         $design = $experiment->getMethodMetaDataGroup()->getResearchDesign(
         ) === 'Experimental' ? 'experimental' : ($experiment->getMethodMetaDataGroup()->getResearchDesign() === 'Non-experimental' ? 'non_experimental' : null);
@@ -143,7 +148,7 @@ class ExportController extends AbstractController
     /**
      * @return bool Error:True on failure, False on success
      */
-    private function appendDatasetToZip(Experiment $experiment, string $format, \ZipArchive &$zip): bool
+    private function appendDatasetToZip(Experiment $experiment, string $format, \ZipArchive $zip): bool
     {
         $error = false;
         foreach ($experiment->getOriginalDatasets() as $dataset) {
@@ -193,7 +198,7 @@ class ExportController extends AbstractController
         return $error;
     }
 
-    private function appendMaterialToZip(Experiment $experiment, \ZipArchive &$zip): mixed
+    private function appendMaterialToZip(Experiment $experiment, \ZipArchive $zip): mixed
     {
         $error = false;
         foreach ($experiment->getAdditionalMaterials() as $material) {

@@ -8,7 +8,6 @@ use App\Entity\FileManagement\Dataset;
 use App\Service\Crud\Crudable;
 use App\Service\Io\Formats\CsvImportable;
 use App\Service\Io\Formats\SavImportable;
-use App\Service\Questionnaire\Questionnairable;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,7 +22,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class FileManagementController extends AbstractController
 {
-    public function __construct(private readonly Crudable $crud, private readonly Questionnairable $questionnaire, private readonly CsvImportable $csvImportable, private readonly SavImportable $savImportable, private readonly EntityManagerInterface $em, private readonly LoggerInterface $logger)
+    public function __construct(private readonly Crudable $crud, private readonly CsvImportable $csvImportable, private readonly SavImportable $savImportable, private readonly EntityManagerInterface $em, private readonly LoggerInterface $logger)
     {
     }
 
@@ -182,31 +181,5 @@ class FileManagementController extends AbstractController
         }
 
         return new JsonResponse(['success' => $success], $success ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
-    }
-
-    #[Route(path: '/{uuid}/details', name: 'details')]
-    public function materialDetailsAction(string $uuid, Request $request): Response
-    {
-        $this->logger->debug("Enter FileManagementController::materialDetailsAction with [UUID: {$uuid}]");
-        $entityAtChange = $this->em->find(AdditionalMaterial::class, $uuid);
-        $experiment = $entityAtChange->getExperiment();
-        $form = $this->questionnaire->askAndHandle(
-            $entityAtChange,
-            'save',
-            $request
-        );
-        if ($this->questionnaire->isSubmittedAndValid($form)) {
-            $this->em->persist($entityAtChange);
-            $this->em->flush();
-        }
-
-        return $this->render(
-            'pages/fileManagement/materialDetails.html.twig',
-            [
-                'form' => $form,
-                'file' => $entityAtChange,
-                'experiment' => $experiment,
-            ]
-        );
     }
 }

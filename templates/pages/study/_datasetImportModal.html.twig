@@ -1,0 +1,115 @@
+<div class="fixed inset-0 items-center justify-center hidden overflow-x-hidden overflow-y-auto outline-none focus:outline-none z-[999]"
+     id="modal-dataset-import" x-data="">
+    <div class="relative w-auto max-w-6xl mx-auto my-6">
+        <!--content-->
+        <div class="relative flex flex-col w-full bg-white border-0 rounded-lg shadow-lg outline-none focus:outline-none">
+            <!--header-->
+            <div class="flex items-start justify-between p-5 border-b border-gray-200 border-solid rounded-t">
+                <h3 class="text-3xl font-semibold">
+                    Import dataset
+                </h3>
+                <button class="Modal-Button_close" type="button" @keydown.window.escape="$refs.cancelUpload.click()"
+                        @click="$refs.cancelUpload.click()" title="Cancel import">
+                    {{ include('components/icons/close.svg') }}
+                </button>
+            </div>
+            <!--body-->
+            <div class="relative flex-auto p-6">
+                <h4 class="text-xl font-semibold">Settings</h4>
+                <form id="dataset-import-form"
+                      data-preview-url="{{ path("File-preview-csv",{"fileId": " "}) }}"
+                      data-submit-url="{{ path("File-submit-csv",{"fileId": " "}) }}">
+                    <input type="hidden" id="dataset-file-id" name="dataset-file-id" value="">
+                    <div class="flex items-baseline">
+                        <label for="dataset-import-delimiter">Columns are separated by</label>
+                        <select id="dataset-import-delimiter" name="dataset-import-delimiter"
+                                class="inline-block px-1 py-1 mt-1 bg-white border border-gray-400 rounded-md shadow-sm focus:outline-none ml-1.5">
+                            <option value="," selected>Commas (CSV)</option>
+                            <option value="t">Tabs (TSV)</option>
+                            <option value=";">Semicolons</option>
+                        </select>
+                    </div>
+                    <div class="flex items-baseline">
+                        <label for="dataset-import-escape">Escape character to enclose cells containing column
+                            separators</label>
+                        <select id="dataset-import-escape" name="dataset-import-escape"
+                                class="inline-block px-1 py-1 mt-1 ml-1.5 bg-white border border-gray-400 rounded-md shadow-sm focus:outline-none">
+                            <option value="none" selected>none</option>
+                            <option value="double">" (double quotes)</option>
+                            <option value="single">' (single quotes)</option>
+                        </select>
+                    </div>
+                    <div x-data="{ useHeader: true}" class="mt-0.5">
+                        <div class="flex items-center">
+                            <input type="checkbox" id="dataset-import-header-rows" name="dataset-import-header-rows"
+                                   value="1" x-model="useHeader" class="w-4 h-4 mr-2">
+                            <label class="block" for="dataset-import-header-rows">First line is the column
+                                header</label>
+                        </div>
+                    </div>
+                </form>
+                <h4 class="mt-6 text-xl font-semibold">Preview</h4>
+                <div>Only the first few rows and columns are shown</div>
+                <div class="mt-2 overflow-x-scroll max-h-[50vh]">
+                    <template x-if="$store.import.codebook">
+                        <table class="border-separate table-fixed" style="border-spacing: 0">
+                            <thead>
+                            <template x-if="$store.import.codebook.header">
+                                <tr>
+                                    <template x-for="item in $store.import.codebook.header.slice(0,20)">
+                                        <th scope="col"
+                                            class="px-3 py-2 text-sm font-semibold text-left text-gray-700 bg-gray-200 border-t border-b border-l border-r border-b-gray-400 border-t-gray-400 border-l-gray-300 border-r-gray-300"
+                                            x-text="item">
+                                        </th>
+                                    </template>
+                                </tr>
+                            </template>
+                            <template
+                                    x-if="$store.import.codebook.header && $store.import.codebook.header.length === 0 && $store.import.codebook.records">
+                                <tr>
+                                    <template
+                                            x-for="(record, index) in Object.values($store.import.codebook.records[0]).slice(0,20)">
+                                        <th scope="col"
+                                            class="px-3 py-2 text-sm italic font-semibold text-left text-gray-700 bg-gray-200 border-t border-b border-l border-r border-b-gray-400 border-t-gray-400 border-l-gray-300 border-r-gray-300"
+                                            x-text="`var_${index}`">
+                                        </th>
+                                    </template>
+                                </tr>
+                            </template>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-400">
+                            <template x-if="$store.import.codebook.records">
+                                <template x-for="records in $store.import.codebook.records">
+                                    <tr class="even:bg-gray-50 TableRow">
+                                        <template x-for="record in Object.values(records).slice(0,20)">
+                                            <td class="py-2 pl-3 pr-1 text-sm text-gray-700 truncate border border-gray-100 max-w-[20rem]"
+                                                x-text="record">
+                                            </td>
+                                        </template>
+                                    </tr>
+                                </template>
+                            </template>
+                            </tbody>
+                        </table>
+                    </template>
+                </div>
+            </div>
+            <!--footer-->
+            <div class="flex items-center justify-end p-6 border-t border-gray-200 border-solid rounded-b">
+                <button
+                        class="Button Button_primary Button_primary_act Button_standalone"
+                        type="button"
+                        id="dataset-import-submit">
+                    Import dataset
+                </button>
+                <button
+                        class="ml-2 Button Button_tertiary Button_tertiary_act Button_standalone"
+                        type="button"
+                        id="dataset-import-cancel" x-ref="cancelUpload">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="fixed inset-0 z-40 hidden bg-black opacity-25" id="modal-dataset-import-backdrop"></div>

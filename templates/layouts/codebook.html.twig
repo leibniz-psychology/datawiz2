@@ -41,12 +41,7 @@
             <a href="{{ path('Study-datasets', {uuid: codebook.experiment.id}) }}"
                class="inline-flex items-center flex-shrink-0 ml-2 Button Button_primary Button_primary_go Button_standalone"
                @click="save()">
-                {# Icon: ic:sharp-arrow-back #}
-                <svg class="w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                     aria-hidden="true" role="img" style="vertical-align: -0.125em;" width="1em" height="1em"
-                     preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8l8 8l1.41-1.41L7.83 13H20v-2z" fill="currentColor"/>
-                </svg>
+                {{ include('components/icons/sharp-arrow-back.svg') }}
                 {{ "codebook.nav.goback"|trans }}
             </a>
             <button class="flex-shrink-0 h-full px-2 ml-6 border-t-4 border-b-4 border-transparent focus:ring-inset hover:border-b-zpid-blue"
@@ -60,14 +55,7 @@
                 {{ "codebook.nav.codebook"|trans }}
             </button>
             <div class="ml-12">
-                {# Icon: mdi:table #}
-                <svg class="w-5 h-5 text-zpid-purple" xmlns="http://www.w3.org/2000/svg"
-                     xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
-                     style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet"
-                     viewBox="0 0 24 24">
-                    <path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2m0 4v4h6V8H5m8 0v4h6V8h-6m-8 6v4h6v-4H5m8 0v4h6v-4h-6z"
-                          fill="currentColor"/>
-                </svg>
+                {{ include('components/icons/table.svg') }}
             </div>
             <span class="w-full ml-0.5 mr-6 overflow-x-hidden font-semibold text-zpid-purple whitespace-nowrap overflow-ellipsis">
                 {{ codebook.originalName }}
@@ -76,31 +64,14 @@
             <div class="flex justify-end mr-2" x-show="$store.codebook.activeTab === 'matrix' && matrix.length !== 0"
                  x-cloak>
                 <div class="flex items-center" x-show="reloadingMatrix" x-cloak>
-                    {# Icon: gg:spinner #}
-                    <svg class="w-6 h-6 mr-3 animate-spin" xmlns="http://www.w3.org/2000/svg"
-                         xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
-                         style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet"
-                         viewBox="0 0 24 24">
-                        <g fill="none">
-                            <path opacity=".2" fill-rule="evenodd" clip-rule="evenodd"
-                                  d="M12 19a7 7 0 1 0 0-14a7 7 0 0 0 0 14zm0 3c5.523 0 10-4.477 10-10S17.523 2 12 2S2 6.477 2 12s4.477 10 10 10z"
-                                  fill="currentColor"/>
-                            <path d="M2 12C2 6.477 6.477 2 12 2v3a7 7 0 0 0-7 7H2z" fill="currentColor"/>
-                        </g>
-                    </svg>
+                    {{ include('components/icons/spinner.svg') }}
                 </div>
                 <div class="flex items-center flex-shrink-0 bg-white">
                     <button class="flex items-center px-2 py-0.5 bg-white border border-gray-300 rounded-tl rounded-bl text-mono-900 shadow-sm"
                             @click="if (!isPageStart()) {reloadingMatrix = true; showPage--}"
                             @click.debounce.500ms="if (reloadingMatrix) loadMatrix();"
                             title="{{ "codebook.matrix.previous"|trans }}">
-                        {# Icon: carbon:caret-left #}
-                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
-                             xmlns:xlink="http://www.w3.org/1999/xlink"
-                             aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet"
-                             viewBox="0 0 32 32">
-                            <path d="M20 24l-10-8l10-8z" fill="currentColor"/>
-                        </svg>
+                        {{ include('components/icons/caret-left.svg') }}
                     </button>
                     <div x-text="`${(showPage - 1) * maxEntries + 1}-${Math.min(showPage * maxEntries, entries)} {{ "generic.of"|trans }} ${entries}`"
                          class="border-t border-b py-0.5 text-center min-w-[17ch]">
@@ -109,13 +80,7 @@
                             @click="if (!isPageEnd()) {reloadingMatrix = true; showPage++}"
                             @click.debounce.500ms="if (reloadingMatrix) loadMatrix();"
                             title="{{ 'codebook.matrix.next'|trans }}">
-                        {# Icon: carbon:caret-right #}
-                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
-                             xmlns:xlink="http://www.w3.org/1999/xlink"
-                             aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet"
-                             viewBox="0 0 32 32">
-                            <path d="M12 8l10 8l-10 8z" fill="currentColor"/>
-                        </svg>
+                        {{ include('components/icons/caret-right.svg') }}
                     </button>
                     <span class="ml-6">
                         <select x-model="maxEntries"
@@ -143,15 +108,7 @@
                     <button aria-label="{{ "generic.clear-search"|trans }}"
                             class="absolute top-0 bottom-0 right-0 flex items-center w-6 p-0 my-1 mr-2 bg-transparent border-none rounded-none shadow-none hover:bg-transparent"
                             @click="$store.codebook.filterText = ''" x-show="$store.codebook.filterText !== ''" x-cloak>
-                        {# Icon: mdi:close #}
-                        <svg class="inline-flex w-5 h-5 mx-auto text-gray-800 fill-current"
-                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                             aria-hidden="true" role="img" style="vertical-align: -0.125em;" width="1em" height="1em"
-                             preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                            <title>{{ "generic.clear-search"|trans }}</title>
-                            <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z"
-                                  fill="currentColor"/>
-                        </svg>
+                        {{ include('components/icons/close.svg') }}
                     </button>
                 </div>
                 <button class="flex-shrink-0 Button Button_secondary Button_secondary_act Button_standalone"
@@ -162,14 +119,7 @@
                 </button>
                 <button class="flex items-center flex-shrink-0 Button Button_primary Button_primary_act Button_standalone"
                         @click="save()" type="button">
-                    {# Icon: ri:save-3-fill #}
-                    <svg class="w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg"
-                         xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
-                         style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet"
-                         viewBox="0 0 24 24">
-                        <path d="M4 3h14l2.707 2.707a1 1 0 0 1 .293.707V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm3 1v5h9V4H7zm-1 8v7h12v-7H6zm7-7h2v3h-2V5z"
-                              fill="currentColor"/>
-                    </svg>
+                    {{ include('components/icons/save.svg') }}
                     {{ "generic.save"|trans }}
                 </button>
             </div>

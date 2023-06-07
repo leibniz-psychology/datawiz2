@@ -46,15 +46,7 @@
                         </span>
                             <button class="flex items-center self-start ml-2 Button Button_tertiary Button_tertiary_danger Button_standalone"
                                     @click="show()">
-                                {# Icon: mi:delete #}
-                                <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
-                                     xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
-                                     width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                    <g fill="none">
-                                        <path d="M7 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2h4a1 1 0 1 1 0 2h-1.069l-.867 12.142A2 2 0 0 1 17.069 22H6.93a2 2 0 0 1-1.995-1.858L4.07 8H3a1 1 0 0 1 0-2h4V4zm2 2h6V4H9v2zM6.074 8l.857 12H17.07l.857-12H6.074zM10 10a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1zm4 0a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1z"
-                                              fill="currentColor"/>
-                                    </g>
-                                </svg>
+                                {{ include('components/icons/delete.svg') }}
                                 {{ "generic.delete"|trans }}
                             </button>
                         </h4>
@@ -68,14 +60,7 @@
                                         {{ "title.dataset.deleteModal.title"|trans }}
                                     </div>
                                     <button class="Modal-Button_close" @click="hide()" type="button">
-                                        {# Icon: mdi:close #}
-                                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
-                                             xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
-                                             style="vertical-align: -0.125em;" width="1em" height="1em"
-                                             preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                            <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z"
-                                                  fill="currentColor"/>
-                                        </svg>
+                                        {{ include('components/icons/close.svg') }}
                                     </button>
                                 </div>
 
@@ -108,29 +93,9 @@
                         {{ editDescription(dataset, loop.index, path('File-update_description', { 'uuid': dataset.id })) }}
 
                         <div class="flex mx-4 mt-4">
-                            {# <a href="#" role="button"
-                           class="flex items-center Button Button_secondary Button_secondary_go Button_standalone">
-                            <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
-                                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                                 aria-hidden="true" role="img" style="vertical-align: -0.125em;" width="1em"
-                                 height="1em"
-                                 preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                <path d="M17 16.88c.56 0 1 .44 1 1s-.44 1-1 1s-1-.45-1-1s.44-1 1-1m0-3c2.73 0 5.06 1.66 6 4c-.94 2.34-3.27 4-6 4s-5.06-1.66-6-4c.94-2.34 3.27-4 6-4m0 1.5a2.5 2.5 0 0 0 0 5a2.5 2.5 0 0 0 0-5M18 3H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5.42c-.16-.32-.3-.66-.42-1c.12-.34.26-.68.42-1H4v-4h6v2.97c.55-.86 1.23-1.6 2-2.21V13h1.15c1.16-.64 2.47-1 3.85-1c1.06 0 2.07.21 3 .59V5c0-1.1-.9-2-2-2m-8 8H4V7h6v4m8 0h-6V7h6v4z"
-                                      fill="currentColor"/>
-                            </svg>
-                            {{ "link.view.dataset"|trans }}
-                        </a> #}
                             <a href="{{ path('codebook_index', {uuid: dataset.id}) }}"
                                class="flex items-center Button Button_secondary Button_secondary_go Button_standalone">
-                                {# Icon: mi:table-edit #}
-                                <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg"
-                                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                                     aria-hidden="true" role="img" style="vertical-align: -0.125em;" width="1em"
-                                     height="1em"
-                                     preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                    <path d="M21.7 13.35l-1 1l-2.05-2.05l1-1c.21-.22.56-.22.77 0l1.28 1.28c.22.21.22.56 0 .77M12 18.94l6.07-6.06l2.05 2.05L14.06 21H12v-2.06M4 2h14a2 2 0 0 1 2 2v4.17L16.17 12H12v4.17L10.17 18H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2m0 4v4h6V6H4m8 0v4h6V6h-6m-8 6v4h6v-4H4z"
-                                          fill="currentColor"/>
-                                </svg>
+                                {{ include('components/icons/table-edit.svg') }}
                                 {{ "link.edit.codebook"|trans }}
                             </a>
                         </div>
@@ -156,14 +121,7 @@
                     </h3>
                     <button class="Modal-Button_close" type="button" @keydown.window.escape="$refs.cancelUpload.click()"
                             @click="$refs.cancelUpload.click()" title="Cancel import">
-                        {# Icon: mdi:close #}
-                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
-                             xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
-                             style="vertical-align: -0.125em;" width="1em" height="1em"
-                             preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                            <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z"
-                                  fill="currentColor"/>
-                        </svg>
+                        {{ include('components/icons/close.svg') }}
                     </button>
                 </div>
                 <!--body-->

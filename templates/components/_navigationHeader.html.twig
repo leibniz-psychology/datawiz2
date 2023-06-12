@@ -1,7 +1,7 @@
 {% if app.user %}
     <div class="flex h-full mr-auto">
         <a href="{{ path("dashboard") }}"
-           class="flex items-center ring-inset px-3 pt-1 h-full text-base border-b-4 border-transparent hover:border-zpid-blue
+           class="ring-inset px-3 pt-1 h-full text-base border-b-4 border-transparent hover:border-zpid-blue Button_icon
             {{- app.request.pathinfo == path("dashboard") ? ' border-zpid-blue font-semibold' -}}">
             {{ include('components/icons/view-grid.svg') }}
             {{ "title.dashboard.title"|trans }}

@@ -39,7 +39,7 @@
     {% block header %}
         <header class="sticky top-0 z-10 flex items-center border-b h-14 border-mono-300 col-span-full bg-mono-50">
             <a href="{{ path('Study-datasets', {uuid: codebook.experiment.id}) }}"
-               class="inline-flex items-center flex-shrink-0 ml-2 Button Button_primary Button_primary_go Button_standalone"
+               class="inline-flex items-center flex-shrink-0 ml-2 Button Button_primary Button_primary_go Button_standalone Button_icon"
                @click="save()">
                 {{ include('components/icons/sharp-arrow-back.svg') }}
                 {{ "codebook.nav.goback"|trans }}
@@ -111,13 +111,13 @@
                         {{ include('components/icons/close.svg') }}
                     </button>
                 </div>
-                <button class="flex-shrink-0 Button Button_secondary Button_secondary_act Button_standalone"
+                <button class="flex-shrink-0 Button Button_secondary Button_secondary_act Button_standalone Button_icon"
                         type="button"
                         @click="$store.codebookSettings.showHelp.sideBar = !$store.codebookSettings.showHelp.sideBar">
                     <span class="inline-block w-4 h-4 text-xs border rounded-full border-mono-500">?</span>
                     {{ "generic.help"|trans }}
                 </button>
-                <button class="flex items-center flex-shrink-0 Button Button_primary Button_primary_act Button_standalone"
+                <button class="flex items-center flex-shrink-0 Button Button_primary Button_primary_act Button_standalone Button_icon"
                         @click="save()" type="button">
                     {{ include('components/icons/save.svg') }}
                     {{ "generic.save"|trans }}

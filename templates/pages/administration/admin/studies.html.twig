@@ -67,8 +67,9 @@
             </table>
             <div class="flex pt-8 justify-between">
                 <div>
-                    <a class="flex items-center underline justify-self-start Button Button_tertiary Button_tertiary_go Button_standalone MetaData-SubmitButton_previous"
+                    <a class="underline Button Button_tertiary Button_tertiary_go Button_standalone Button_icon"
                        href="{{ backPath }}">
+                        {{ include('components/icons/sharp-arrow-back.svg') }}
                         {{ 'link.back'|trans }}
                     </a>
                 </div>

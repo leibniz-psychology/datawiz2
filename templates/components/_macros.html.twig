@@ -1,5 +1,5 @@
 {% macro helpButton(formIdentifier) %}
-    <button class="MetaData-HelpButton" type="button"
+    <button class="Button-help" type="button"
             x-on:click="showHelp('details_{{ formIdentifier }}')"
             :class="$store.app.helpSelected === 'details_{{ formIdentifier }}' && '!bg-zpid-blue'"
             x-data="helpButton()">?
@@ -174,7 +174,7 @@
 
 {% macro dropzoneTemplate() %}
     <div class="dz-message " data-dz-message>
-        <button class="inline-flex items-center Button Button_primary Button_primary_act Button_standalone"
+        <button class="Button Button_primary Button_primary_act Button_standalone Button_icon m-auto"
                 type="button">
             {{ include('components/icons/open-in-browser.svg') }}
             {{ "title.dataset.upload.button"|trans }}

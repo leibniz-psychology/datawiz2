@@ -33,29 +33,8 @@
   @apply w-full;
 }
 
-.MetaData-AddButton {
-  @apply flex;
-
-  &::before {
-    @apply w-[1.125rem] h-[1.125rem] mr-1;
-
-    align-self: center;
-    // TODO edit svg to accept parameters
-    /* prettier-ignore */
-    background:
-      url("../images/fluent:add-20-regular.svg"
-      param(--color theme("colors.white")))
-      left center no-repeat;
-    content: "";
-  }
-}
-
 .MetaData-RemoveButton {
   @apply px-2 py-0.5 ml-1 border border-mono-500 bg-white hover:bg-mono-100 rounded-xl;
-}
-
-.MetaData-HelpButton {
-  @apply inline-flex items-center justify-center flex-shrink-0 w-6 h-6 text-lg font-bold text-white rounded-full shadow-lg bg-zpid-purple-700 hover:bg-zpid-purple-500;
 }
 
 .MetaData-SubmitButton {

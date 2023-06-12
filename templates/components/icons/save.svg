@@ -1,9 +1,6 @@
-<!-- ri:save-3-fill -->
-<!-- https://icon-sets.iconify.design/ri/save-3-fill/ -->
-<svg class="w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg"
-     xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
-     style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet"
-     viewBox="0 0 24 24">
-    <path d="M4 3h14l2.707 2.707a1 1 0 0 1 .293.707V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm3 1v5h9V4H7zm-1 8v7h12v-7H6zm7-7h2v3h-2V5z"
-          fill="currentColor"/>
+<!-- ic:outline-save -->
+<!-- https://icon-sets.iconify.design/ic/outline-save/ -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
+     preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M17 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm2 16H5V5h11.17L19 7.83V19zm-7-7c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3zM6 6h9v4H6z"/>
 </svg>

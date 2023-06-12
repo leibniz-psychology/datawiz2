@@ -8,8 +8,9 @@
 
 <div class="WizNavBar" {{ stimulus_controller('detect-sticky-element') }}>
     {% if options.prevUrl is defined and options.prevUrl is not null %}
-        <a class="flex items-center self-center underline justify-self-start Button Button_tertiary Button_tertiary_go Button_standalone MetaData-SubmitButton_previous"
+        <a class="underline justify-self-start Button Button_tertiary Button_tertiary_go Button_standalone Button_icon"
            href="{{ options.prevUrl }}">
+            {{ include('components/icons/sharp-arrow-back.svg') }}
             {{ options.prevTitle }}
         </a>
     {% elseif options.prevTitle is defined and options.prevTitle is not null %}
@@ -31,9 +32,10 @@
     {% endif %}
 
     {% if options.nextUrl is defined and options.nextUrl is not null %}
-        <a class="flex items-center self-center underline justify-self-end Button Button_tertiary Button_tertiary_go Button_standalone MetaData-SubmitButton_next"
+        <a class="underline justify-self-end Button Button_tertiary Button_tertiary_go Button_standalone Button_icon"
            href="{{ options.nextUrl }}" role="button">
             {{ options.nextTitle }}
+            {{ include('components/icons/sharp-arrow-forward.svg') }}
         </a>
     {% elseif options.nextTitle is defined and options.nextTitle is not null %}
         {{ form_widget(form.saveAndNext, {

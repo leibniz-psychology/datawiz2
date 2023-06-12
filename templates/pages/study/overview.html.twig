@@ -44,14 +44,14 @@
                             </div>
 
                             <div class="relative inline-flex items-center ml-4">
-                                <label for="filter" class="absolute top-0 bottom-0 left-0 flex items-center">
+                                <label for="filter" class="absolute top-0 bottom-0 left-0 flex items-center text-xl ml-2 mx-auto">
                                     {{ include('components/icons/magnify.svg') }}
                                 </label>
                                 <input placeholder="{{ "title.overview.list.filter.placeholder"|trans }}"
                                        x-model="filterText" id="filter"
-                                       class="pl-8 !pr-7 !py-[0.1875rem] border rounded-full border-mono-500 search">
+                                       class="pl-8 pr-8 !py-[0.1875rem] border rounded-full border-mono-500 search">
                                 <button aria-label="{{ "generic.clear-search"|trans }}"
-                                        class="absolute top-0 bottom-0 right-0 flex items-center w-6 p-0 my-1 mr-2 bg-transparent border-none rounded-none shadow-none hover:bg-transparent"
+                                        class="absolute top-0 bottom-0 right-0 flex items-center w-6 p-0 my-1 ml-1 mr-2 bg-transparent border-none rounded-none shadow-none hover:bg-transparent text-xl"
                                         @click="clear()" x-show="filterText !== ''" x-cloak>
                                     {{ include('components/icons/close.svg') }}
                                 </button>

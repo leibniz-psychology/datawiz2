@@ -20,7 +20,9 @@
                                     <input type="checkbox" name="" id="">
                                 </th> #}
                             <th scope="col" class="CodeBookHead-Cell">
-                                {{ include('components/icons/table-eye.svg') }}
+                                <span class="text-xl text-zpid-purple">
+                                    {{ include('components/icons/table-eye.svg') }}
+                                </span>
                             </th>
                             <th scope="col" class="CodeBookHead-Cell w-[15%]">
                                 {{ "codebook.var-props.name"|trans }}
@@ -174,12 +176,12 @@
                 </span>
                 <span class="flex items-center">
                     <button title="{{ 'codebook.var-props.previous'|trans }}"
-                            class="flex items-center px-2 py-0.5 bg-white border border-gray-300 rounded-tl rounded-bl text-mono-900 shadow-sm ring-inset"
+                            class="flex items-center px-2 py-0.5 bg-white border border-gray-300 rounded-tl rounded-bl text-mono-900 shadow-sm ring-inset text-2xl"
                             @click="$store.codebook.currentVariableID = $store.codebook.getPreviousVariableID(); $scroll(`#variable_${$store.codebook.currentVariableID}`, {behavior: 'smooth', offset: 160})">
                     {{ include('components/icons/caret-left.svg') }}
                     </button>
                     <button title="{{ 'codebook.var-props.next'|trans }}"
-                            class="flex items-center px-2 py-0.5 bg-white border border-gray-300 rounded-tr-md rounded-br-md text-mono-900 shadow-sm ring-inset"
+                            class="flex items-center px-2 py-0.5 bg-white border border-gray-300 rounded-tr-md rounded-br-md text-mono-900 shadow-sm ring-inset text-2xl"
                             @click="$store.codebook.currentVariableID = $store.codebook.getNextVariableID(); $scroll(`#variable_${$store.codebook.currentVariableID}`, {behavior: 'smooth', offset: 160})">
                     {{ include('components/icons/caret-right.svg') }}
                     </button>
@@ -250,7 +252,7 @@
             <div class="relative">
                 <h2 class="py-3 pl-4 pr-2 text-xl font-medium text-zpid-purple-700">{{ "codebook.help.title"|trans }}</h2>
                 <div class="absolute top-3 right-2">
-                    <button class="flex items-center justify-center p-1 border-none rounded-full shadow-none bg-mono-100 hover:bg-mono-300"
+                    <button class="flex items-center justify-center p-1 border-none rounded-full shadow-none bg-mono-100 hover:bg-mono-300 text-xl"
                             x-on:click="$store.codebookSettings.showHelp.sideBar = false"
                             title="{{ 'codebook.help.close'|trans }}">
                         {{ include('components/icons/close.svg') }}
@@ -307,7 +309,9 @@
             x-if="(matrix.length === 0) || ($store.codebook.variables.length === 0)">
         <main class="flex h-full content col-span-full">
             <div class="flex items-center justify-center w-full mt-48 text-2xl col-span-full">
-                {{ include('components/icons/spinner.svg') }}
+                <span class="mr-0.5 animate-spin">
+                    {{ include('components/icons/spinner.svg') }}
+                </span>
                 <span class="">{{ "generic.loading"|trans }}</span>
             </div>
         </main>

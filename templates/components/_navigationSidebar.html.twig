@@ -105,7 +105,7 @@
                class="StudyNav-NavItem StudyNav-NavItem_settings
                 {{- route_name == 'Study-settings' ? ' StudyNav-NavItem_active StudyNav-NavItem_settings_active' -}}"
                {%- if needs_saving -%}@click.prevent="document.querySelector('.Button_saveAndSettings').click()"{%- endif -%}>
-                {{ include('components/icons/round-settings.svg') }}
+                {{ include('components/icons/settings.svg') }}
                 {{ "title.settings.title"|trans }}
             </a>
         </li>

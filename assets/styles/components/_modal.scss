@@ -16,6 +16,9 @@
 
 .Modal-Button_close {
   @apply w-auto p-0 m-0 border-0 rounded-none shadow-none hover:bg-transparent;
+  svg {
+    @apply inline-flex w-5 h-5 mx-auto text-gray-800 fill-current;
+  }
 }
 
 .Modal-Body {

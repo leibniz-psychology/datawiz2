@@ -10,7 +10,7 @@
     {% if options.prevUrl is defined and options.prevUrl is not null %}
         <a class="underline justify-self-start Button_tertiary_go Button_standalone"
            href="{{ options.prevUrl }}">
-            {{ include('components/icons/sharp-arrow-back.svg') }}
+            {{ include('components/icons/arrow-left.svg') }}
             {{ options.prevTitle }}
         </a>
     {% elseif options.prevTitle is defined and options.prevTitle is not null %}
@@ -35,7 +35,7 @@
         <a class="underline justify-self-end Button_tertiary_go Button_standalone"
            href="{{ options.nextUrl }}" role="button">
             {{ options.nextTitle }}
-            {{ include('components/icons/sharp-arrow-forward.svg') }}
+            {{ include('components/icons/arrow-right.svg') }}
         </a>
     {% elseif options.nextTitle is defined and options.nextTitle is not null %}
         {{ form_widget(form.saveAndNext, {

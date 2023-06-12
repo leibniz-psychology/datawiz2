@@ -1,8 +1,6 @@
-<!-- carbon:caret-left -->
 <!-- https://icon-sets.iconify.design/carbon/caret-left/ -->
-<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
-     xmlns:xlink="http://www.w3.org/1999/xlink"
-     aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet"
-     viewBox="0 0 32 32">
-    <path d="M20 24l-10-8l10-8z" fill="currentColor"/>
+<svg xmlns="http://www.w3.org/2000/svg"
+     aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
+    <path d="M20 24l-10-8l10-8z"
+          fill="currentColor"/>
 </svg>

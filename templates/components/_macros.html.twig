@@ -81,7 +81,7 @@
         <div class="mt-2">
             <button class="Button_secondary_act Button_fieldSize"
                     @click="{{ options.labels }}.push({name: '', label: ''}); $nextTick(() => {document.querySelector(`.CodeInput_${type}_${ {{ options.labels }}.length - 1}`).focus()})">
-                {{ include('components/icons/add-regular.svg') }}
+                {{ include('components/icons/add.svg') }}
                 {{ options.addText }}</button>
         </div>
     </div>

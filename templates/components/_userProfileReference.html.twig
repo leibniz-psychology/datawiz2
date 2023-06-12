@@ -2,14 +2,14 @@
     <div class="flex items-center justify-end h-full ml-auto">
         {% if app.user %}
             <a href="{{ path("Security-logout") }}"
-               class="flex items-center flex-shrink-0 h-full px-3 pt-1 ml-6 text-base border-b-4 border-transparent ring-inset hover:border-zpid-blue"
+               class="Button_navigation border-transparent"
                title="{{ 'link.user.logout'|trans({'#userEmail#':app.user.email}) }}">
                 {{ include('components/icons/logout.svg') }}
                 {{ "link.user.logout-short"|trans }}
             </a>
         {% else %}
             <a href="{{ path("Security-login") }}"
-               class="flex items-center flex-shrink-0 h-full px-3 pt-1 text-base border-b-4 border-transparent ring-inset hover:border-zpid-blue">
+               class="Button_navigation border-transparent">
                 {{ include('components/icons/login.svg') }}
                 {{ "link.user.login"|trans }}
             </a>

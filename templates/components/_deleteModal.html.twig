@@ -15,13 +15,13 @@
         </div>
 
         <div class="Modal-Footer">
-            <button class="Button Button_primary Button_primary_danger Button_standalone"
+            <button class="Button_primary_danger Button_standalone"
                     type="button"
                     @click="window.location.href='{{ url }}'"
             >
                 {{ confirm|trans }}
             </button>
-            <button class="ml-2 Button Button_tertiary Button_tertiary_act Button_standalone"
+            <button class="ml-2 Button_tertiary_act Button_standalone"
                     type="button" x-ref="focusFirst"
                     @click="hide()">
                 {{ "generic.cancel"|trans }}

@@ -1,9 +1,9 @@
 {% extends "layouts/base.html.twig" %}
 
 {% block body %}
-    <div class="max-w-screen-xl pl-2 mx-auto">
+    <div class="max-w-screen-xl pl-2 mx-auto flex">
         <a href="{{ path("Study-overview") }}"
-           class="inline-flex items-center mt-2 underline Button Button_tertiary Button_tertiary_go Button_standalone">
+           class="mt-2 underline Button_tertiary_go Button_standalone justify-self-start">
             {{ include('components/icons/sharp-arrow-back.svg') }}
             {{ "title.overview.list.header"|trans }}
         </a>

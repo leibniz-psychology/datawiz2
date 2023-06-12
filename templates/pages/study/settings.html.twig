@@ -41,7 +41,7 @@
             }) }}
             {{ form_widget(form.submit, {
                 'attr': {
-                    'class': 'Button Button_primary Button_primary_act Button_standalone mt-1 md:mt-0 md:ml-2',
+                    'class': 'Button_primary_act Button_standalone mt-1 md:mt-0 md:ml-2',
                 },
                 'label': "generic.rename"
             }) }}
@@ -65,7 +65,7 @@
                 <div class="mt-2">
                     {{ "input.danger-zone.delete.description"|trans }}
                 </div>
-                <button class="inline-flex items-center self-start mt-4 Button Button_secondary Button_secondary_danger Button_standalone"
+                <button class="self-start mt-4 Button_secondary_danger Button_standalone"
                         @click="show()" type="button">
                     {{ include('components/icons/delete.svg') }}
                     {{ "input.danger-zone.delete.action"|trans }}

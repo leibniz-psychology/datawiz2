@@ -44,7 +44,7 @@
                         <span class="text-lg font-semibold text-zpid-purple-700">
                             {{ dataset.originalName }}
                         </span>
-                            <button class="flex items-center self-start ml-2 Button Button_tertiary Button_tertiary_danger Button_standalone"
+                            <button class="self-start ml-2 Button_tertiary_danger Button_standalone"
                                     @click="show()">
                                 {{ include('components/icons/delete.svg') }}
                                 {{ "generic.delete"|trans }}
@@ -71,7 +71,7 @@
 
                         <div class="flex mx-4 mt-4">
                             <a href="{{ path('codebook_index', {uuid: dataset.id}) }}"
-                               class="flex items-center Button Button_secondary Button_secondary_go Button_standalone">
+                               class="Button_secondary_go Button_standalone">
                                 {{ include('components/icons/table-edit.svg') }}
                                 {{ "link.edit.codebook"|trans }}
                             </a>

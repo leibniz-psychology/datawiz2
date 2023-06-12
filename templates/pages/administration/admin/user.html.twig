@@ -51,11 +51,11 @@
                             </td>
                             <td>
                                 <div class="grid justify-items-stretch">
-                                    <a class="Button Button_secondary Button_secondary_go Button_standalone text-center mb-3"
+                                    <a class="Button_secondary_go Button_standalone text-center mb-3"
                                        href="{{ path("admin_user_studies", {uid: u.id}) }}" type="button">
                                         {{ "title.admin.dashboard.user.studies"|trans }}
                                     </a>
-                                    <a class="Button Button_primary Button_primary_go Button_standalone text-center"
+                                    <a class="Button_primary_go Button_standalone text-center"
                                        href="{{ path("admin_user_edit", {uid: u.id}) }}" type="button">
                                         {{ "title.admin.dashboard.user.edit"|trans }}
                                     </a>
@@ -67,7 +67,7 @@
                 </table>
                 <div class="flex pt-8 justify-between">
                     <div>
-                        <a class="underline Button Button_tertiary Button_tertiary_go Button_standalone Button_icon"
+                        <a class="underline Button_tertiary_go Button_standalone"
                            href="{{ path('moderation_dashboard') }}">
                             {{ include('components/icons/sharp-arrow-back.svg') }}
                             {{ 'link.back'|trans }}

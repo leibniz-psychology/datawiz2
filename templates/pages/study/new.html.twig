@@ -7,9 +7,9 @@
 {% endblock %}
 
 {% block body %}
-    <div class="max-w-screen-xl pl-4 mx-auto">
+    <div class="max-w-screen-xl pl-4 mx-auto flex">
         <a href="{{ path("Study-overview") }}"
-           class="inline-flex items-center mt-2 underline Button Button_tertiary Button_tertiary_go Button_standalone">
+           class="mt-2 underline Button_tertiary_go Button_standalone justify-self-start">
             {{ include('components/icons/sharp-arrow-back.svg') }}
             {{ "title.overview.list.header"|trans }}
         </a>
@@ -44,7 +44,7 @@
         {{ form_widget(form.submit, {
             'label': 'title.new.create',
             'attr': {
-                'class': 'Button Button_primary Button_primary_act Button_standalone mt-4',
+                'class': 'Button_primary_act Button_standalone mt-4',
             }
         }) }}
 

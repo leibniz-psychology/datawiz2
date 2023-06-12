@@ -39,17 +39,17 @@
     {% block header %}
         <header class="sticky top-0 z-10 flex items-center border-b h-14 border-mono-300 col-span-full bg-mono-50">
             <a href="{{ path('Study-datasets', {uuid: codebook.experiment.id}) }}"
-               class="inline-flex items-center flex-shrink-0 ml-2 Button Button_primary Button_primary_go Button_standalone Button_icon"
+               class="flex-shrink-0 ml-2 Button_primary_go Button_standalone"
                @click="save()">
                 {{ include('components/icons/sharp-arrow-back.svg') }}
                 {{ "codebook.nav.goback"|trans }}
             </a>
-            <button class="flex-shrink-0 h-full px-2 ml-6 border-t-4 border-b-4 border-transparent focus:ring-inset hover:border-b-zpid-blue"
+            <button class="ml-4 flex-shrink-0 Button_navigation border-transparent"
                     :class="$store.codebook.activeTab === 'matrix' ? 'border-b-zpid-blue font-semibold' : ''"
                     @click="$store.codebook.activeTab = 'matrix'; loadMatrix()">
                 {{ "codebook.nav.matrix"|trans }}
             </button>
-            <button class="flex-shrink-0 h-full px-2 ml-4 border-t-4 border-b-4 border-transparent focus:ring-inset hover:border-b-zpid-blue"
+            <button class="ml-4 flex-shrink-0 Button_navigation border-transparent"
                     @click="$store.codebook.activeTab = 'codebook'"
                     :class="$store.codebook.activeTab === 'codebook' ? 'border-b-zpid-blue font-semibold' : ''">
                 {{ "codebook.nav.codebook"|trans }}
@@ -111,13 +111,13 @@
                         {{ include('components/icons/close.svg') }}
                     </button>
                 </div>
-                <button class="flex-shrink-0 Button Button_secondary Button_secondary_act Button_standalone Button_icon"
+                <button class="Button_secondary_act Button_standalone"
                         type="button"
                         @click="$store.codebookSettings.showHelp.sideBar = !$store.codebookSettings.showHelp.sideBar">
                     <span class="inline-block w-4 h-4 text-xs border rounded-full border-mono-500">?</span>
                     {{ "generic.help"|trans }}
                 </button>
-                <button class="flex items-center flex-shrink-0 Button Button_primary Button_primary_act Button_standalone Button_icon"
+                <button class="Button_primary_act Button_standalone"
                         @click="save()" type="button">
                     {{ include('components/icons/save.svg') }}
                     {{ "generic.save"|trans }}

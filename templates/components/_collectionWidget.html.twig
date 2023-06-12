@@ -13,7 +13,7 @@
     </ul>
 
     <button type="button"
-            class="mt-2 Button_icon Button Button_secondary Button_secondary_act Button_fieldSize"
+            class="mt-2 Button_secondary_act Button_fieldSize"
             {{ stimulus_action('collection-widget', 'addItemToCollection') }}>
         {{ include('components/icons/add-regular.svg') }}
         {{ addTxt|trans }}
@@ -30,7 +30,7 @@
 {% macro removeButton(removeTxt, condensed) %}
     {% if condensed is defined and (condensed == true) %}
         <button type="button"
-                class="!rounded-l-none Button Button_tertiary Button_tertiary_danger Button_fieldSize"
+                class="!rounded-l-none Button_tertiary_danger Button_fieldSize"
                 {{ stimulus_action('collection-widget', 'removeItemFromCollection') }}
                 title="{{ removeTxt|trans }}">
             {{ include('components/icons/delete.svg') }}
@@ -38,7 +38,7 @@
     {% else %}
         <button type="button"
                 {{ stimulus_action('collection-widget', 'removeItemFromCollection') }}
-                class="ml-1 Button Button_tertiary Button_tertiary_danger Button_fieldSize">
+                class="ml-1 Button_tertiary_danger Button_fieldSize">
             {{ removeTxt|trans }}
         </button>
     {% endif %}

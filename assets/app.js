@@ -13,7 +13,5 @@ import './bootstrap';
 
 import "./alpine";
 
-import "./images/leibniz_psychology_small.svg";
-
 import './tables'
 import './dropzone'

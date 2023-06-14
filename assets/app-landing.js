@@ -8,7 +8,4 @@
 // any CSS you import will output into a single Style file (app.Style in this case)
 import "./styles/app.scss";
 
-import "./images/leibniz_psychology.svg";
-import "./images/rdm_teaser.jpg";
-
 import "./alpine";

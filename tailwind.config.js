@@ -78,7 +78,7 @@ module.exports = {
         xl: "1440px",
       },
       backgroundImage: {
-        "header-cyan": "url('/assets/images/header_cyan.jpg')",
+        "header-cyan": "url('/public/images/header_cyan.jpg')",
       },
     },
   },

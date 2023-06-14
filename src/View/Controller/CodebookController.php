@@ -11,48 +11,29 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
 use League\Csv\UnableToProcessCsv;
-use League\Flysystem\FileNotFoundException;
 use League\Flysystem\Filesystem;
+use League\Flysystem\UnableToReadFile;
 use Psr\Log\LoggerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
- * @Route("/codebook", name="codebook_")
- * @IsGranted("ROLE_USER")
- *
- * Class CodebookController
  * @package App\View\Controller
  */
+#[Route(path: '/codebook', name: 'codebook_')]
+#[IsGranted('ROLE_USER')]
 class CodebookController extends AbstractController
 {
-    protected EntityManagerInterface $em;
-    protected LoggerInterface $logger;
-    private Filesystem $filesystem;
-
-    /**
-     * @param EntityManagerInterface $em
-     * @param LoggerInterface $logger
-     * @param Filesystem $filesystem
-     */
-    public function __construct(EntityManagerInterface $em, LoggerInterface $logger, Filesystem $filesystem)
+    public function __construct(protected EntityManagerInterface $em, protected LoggerInterface $logger, private readonly Filesystem $filesystem)
     {
-        $this->em = $em;
-        $this->logger = $logger;
-        $this->filesystem = $filesystem;
     }
 
 
-    /**
-     * @Route("/{uuid}", name="index")
-     *
-     * @param string $uuid
-     * @return Response
-     */
+    #[Route(path: '/{uuid}', name: 'index')]
     public function codebookIndexAction(string $uuid): Response
     {
         return $this->render('Pages/Codebook/index.html.twig', [
@@ -60,19 +41,13 @@ class CodebookController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{uuid}/data", name="dataupdate")
-     *
-     * @param string $uuid
-     * @param Request $request
-     * @return JsonResponse
-     */
+    #[Route(path: '/{uuid}/data', name: 'dataupdate')]
     public function performUpdateAction(string $uuid, Request $request): JsonResponse
     {
         $this->logger->debug("Enter CodebookController::performUpdateAction with [UUID: $uuid]");
         $dataset = $this->em->getRepository(Dataset::class)->find($uuid);
         if ($dataset && $request->isMethod("POST")) {
-            $postedData = json_decode($request->getContent(), true);
+            $postedData = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
             $this->saveCodebookVariables($postedData);
         }
         $jsonCodebook = $this->codebookCollectionToJsonArray($dataset->getCodebook());
@@ -80,12 +55,7 @@ class CodebookController extends AbstractController
         return new JsonResponse($jsonCodebook, $jsonCodebook != null && sizeof($jsonCodebook) > 0 ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);
     }
 
-    /**
-     * @Route("/{uuid}/measures", name="measures")
-     *
-     * @param string $uuid
-     * @return JsonResponse
-     */
+    #[Route(path: '/{uuid}/measures', name: 'measures')]
     public function createViewMeasuresAction(string $uuid): JsonResponse
     {
         $this->logger->debug("Enter CodebookController::createViewMeasuresAction with [UUID: $uuid]");
@@ -106,12 +76,7 @@ class CodebookController extends AbstractController
         return new JsonResponse($viewMeasures, key_exists('measures', $viewMeasures) ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);
     }
 
-    /**
-     * @Route("/{uuid}/matrix", name="matrix")
-     *
-     * @param string $uuid
-     * @return JsonResponse
-     */
+    #[Route(path: '/{uuid}/matrix', name: 'matrix')]
     public function datasetMatrixAction(Request $request, string $uuid): JsonResponse
     {
         $size = $request->get('size') ?? 0;
@@ -148,8 +113,8 @@ class CodebookController extends AbstractController
                 } else {
                     $response['error'] = 'error.dataset.matrix.empty';
                 }
-            } catch (FileNotFoundException $e) {
-                $this->logger->critical("FileNotFoundException in CodebookController::createViewMeasuresAction [UUID: $uuid] Exception: ".$e->getMessage());
+            } catch (UnableToReadFile $e) {
+                $this->logger->critical("UnableToReadFile in CodebookController::createViewMeasuresAction [UUID: $uuid] Exception: ".$e->getMessage());
                 $response['error'] = 'error.dataset.matrix.notFound';
             } catch (UnableToProcessCsv $e) {
                 $this->logger->critical("UnableToProcessCsv in CodebookController::createViewMeasuresAction [UUID: $uuid] Exception: ".$e->getMessage());
@@ -163,10 +128,6 @@ class CodebookController extends AbstractController
         );
     }
 
-    /**
-     * @param Collection|null $codebook
-     * @return null|array
-     */
     private function codebookCollectionToJsonArray(?Collection $codebook): ?array
     {
         $jsonCodebook = null;
@@ -199,9 +160,6 @@ class CodebookController extends AbstractController
         return $jsonCodebook;
     }
 
-    /**
-     * @param array $arr
-     */
     private function saveCodebookVariables(array $arr)
     {
         if ($arr && is_iterable($arr) && key_exists('variables', $arr) && !empty($arr['variables']) && is_iterable($arr['variables'])) {

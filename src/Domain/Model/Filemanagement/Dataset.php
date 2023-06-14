@@ -13,9 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
-/**
- * @ORM\Entity()
- */
+#[ORM\Entity]
 class Dataset extends UuidEntity
 {
 
@@ -24,56 +22,40 @@ class Dataset extends UuidEntity
         $this->codebook = new ArrayCollection();
     }
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Domain\Model\Study\Experiment", inversedBy="originalDatasets")
-     */
-    private Experiment $experiment;
+    #[ORM\ManyToOne(inversedBy: 'originalDatasets')]
+    private ?Experiment $experiment = null;
 
-    /**
-     * @ORM\Column(type="string", length=256)
-     * @SerializedName("original_name")
-     * @Groups({"dataset"})
-     */
-    private string $originalName;
+    #[ORM\Column(length: 256)]
+    #[SerializedName('original_name')]
+    #[Groups(['dataset'])]
+    private ?string $originalName = null;
 
-    /**
-     * @ORM\Column(type="string", length=256)
-     * @SerializedName("original_mimetype")
-     * @Groups({"dataset"})
-     */
-    private string $originalMimetype;
+    #[ORM\Column(length: 256)]
+    #[SerializedName('original_mimetype')]
+    #[Groups(['dataset'])]
+    private ?string $originalMimetype = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @SerializedName("uploaded")
-     * @Groups({"dataset"})
-     */
+    #[ORM\Column()]
+    #[SerializedName('uploaded')]
+    #[Groups(['dataset'])]
     private ?DateTime $dateUploaded = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @SerializedName("original_size")
-     * @Groups({"dataset"})
-     */
-    private int $originalSize = 0;
+    #[ORM\Column()]
+    #[SerializedName('original_size')]
+    #[Groups(['dataset'])]
+    private ?int $originalSize = null;
 
-    /**
-     * @ORM\Column(type="string", length=256)
-     */
-    private string $storageName;
+    #[ORM\Column(length: 256)]
+    private ?string $storageName = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @SerializedName("description")
-     * @Groups({"dataset"})
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[SerializedName('description')]
+    #[Groups(['dataset'])]
     private ?string $description = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Domain\Model\Codebook\DatasetVariables", mappedBy="dataset")
-     * @SerializedName("codebook")
-     * @Groups({"codebook"})
-     */
+    #[ORM\OneToMany(mappedBy: 'dataset', targetEntity: 'App\Domain\Model\Codebook\DatasetVariables')]
+    #[SerializedName('codebook')]
+    #[Groups(['codebook'])]
     private Collection $codebook;
 
 
@@ -101,115 +83,73 @@ class Dataset extends UuidEntity
         $experiment->addOriginalDatasets($this);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getOriginalName()
+    public function getOriginalName(): string
     {
         return $this->originalName;
     }
 
-    /**
-     * @param mixed $originalName
-     */
-    public function setOriginalName($originalName): void
+    public function setOriginalName(string $originalName): void
     {
         $this->originalName = $originalName;
     }
 
-    /**
-     * @return string
-     */
     public function getOriginalMimetype(): string
     {
         return $this->originalMimetype;
     }
 
-    /**
-     * @param string $originalMimetype
-     */
     public function setOriginalMimetype(string $originalMimetype): void
     {
         $this->originalMimetype = $originalMimetype;
     }
 
 
-    /**
-     * @return DateTime|null
-     */
     public function getDateUploaded(): ?DateTime
     {
         return $this->dateUploaded;
     }
 
-    /**
-     * @param DateTime|null $dateUploaded
-     */
     public function setDateUploaded(?DateTime $dateUploaded): void
     {
         $this->dateUploaded = $dateUploaded;
     }
 
-    /**
-     * @return int
-     */
     public function getOriginalSize(): int
     {
         return $this->originalSize;
     }
 
-    /**
-     * @param int $originalSize
-     */
     public function setOriginalSize(int $originalSize): void
     {
         $this->originalSize = $originalSize;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getStorageName()
+    public function getStorageName(): string
     {
         return $this->storageName;
     }
 
-    /**
-     * @param mixed $storageName
-     */
-    public function setStorageName($storageName): void
+    public function setStorageName(mixed $storageName): void
     {
         $this->storageName = $storageName;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @param string|null $description
-     */
     public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
 
 
-    /**
-     * @return Collection
-     */
     public function getCodebook(): Collection
     {
         return $this->codebook;
     }
 
-    /**
-     * @param Collection $codebook
-     */
     public function setCodebook(Collection $codebook): void
     {
         $this->codebook = $codebook;

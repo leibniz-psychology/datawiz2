@@ -7,39 +7,24 @@ use App\Domain\Model\Administration\DataWizUser;
 use App\Domain\Model\Study\Experiment;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- * @IsGranted("ROLE_ADMIN")
- */
+#[IsGranted('ROLE_ADMIN')]
 class AdministrationController extends AbstractController
 {
-    private EntityManagerInterface $em;
-    private LoggerInterface $logger;
-
-    /**
-     * @param EntityManagerInterface $em
-     * @param LoggerInterface $logger
-     */
-    public function __construct(EntityManagerInterface $em, LoggerInterface $logger)
+    public function __construct(
+        private readonly EntityManagerInterface $em,
+        private readonly LoggerInterface $logger
+    )
     {
-        $this->em = $em;
-        $this->logger = $logger;
     }
 
 
-    /**
-     * @Route(
-     *     "/admin/user",
-     *     name="admin_user"
-     * )
-     *
-     * @return Response
-     */
+    #[Route(path: '/admin/user', name: 'admin_user')]
     public function listUser(): Response
     {
         $this->logger->debug("AdministrationController::listUser: Enter");
@@ -52,16 +37,7 @@ class AdministrationController extends AbstractController
         );
     }
 
-    /**
-     * @Route(
-     *     "/admin/user/{uid}",
-     *      name="admin_user_edit"
-     * )
-     *
-     * @param Request $request
-     * @param string $uid
-     * @return Response
-     */
+    #[Route(path: '/admin/user/{uid}', name: 'admin_user_edit')]
     public function editUserDetails(Request $request, string $uid): Response
     {
         $this->logger->debug("AdministrationController::editUserDetails: Enter with uuid: $uid");
@@ -78,18 +54,11 @@ class AdministrationController extends AbstractController
 
         return $this->render("Pages/Administration/admin/user_profile.html.twig", [
             'adminEdit' => true,
-            'userForm' => $form->createView(),
+            'userForm' => $form,
         ]);
     }
 
-    /**
-     * @Route(
-     *     "/admin/studies",
-     *     name="admin_studies"
-     * )
-     *
-     * @return Response
-     */
+    #[Route(path: '/admin/studies', name: 'admin_studies')]
     public function listStudies(): Response
     {
         $this->logger->debug("AdministrationController::listStudies: Enter");
@@ -103,15 +72,7 @@ class AdministrationController extends AbstractController
         );
     }
 
-    /**
-     * @Route(
-     *     "/admin/user/{uid}/studies",
-     *     name="admin_user_studies"
-     * )
-     *
-     * @param string $uid
-     * @return Response
-     */
+    #[Route(path: '/admin/user/{uid}/studies', name: 'admin_user_studies')]
     public function listStudiesForUser(string $uid): Response
     {
         $this->logger->debug("AdministrationController::listStudies: Enter");

@@ -13,37 +13,27 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
-/**
- * @ORM\Entity()
- * @ORM\Table(name="experiment_measure")
- */
+#[ORM\Table(name: 'experiment_measure')]
+#[ORM\Entity]
 class MeasureMetaDataGroup extends UuidEntity implements Questionable, Reviewable
 {
 
-    /**
-     * @ORM\Column(type="array", length=1500, nullable=true)
-     * @SerializedName("measures")
-     * @Groups({"study"})
-     */
+    #[ORM\Column(length: 1500, nullable: true)]
+    #[SerializedName('measures')]
+    #[Groups(['study'])]
     private ?array $measures = null;
 
-    /**
-     * @ORM\Column(type="array", length=1500, nullable=true)
-     * @SerializedName("apparatus")
-     * @Groups({"study"})
-     */
+    #[ORM\Column(length: 1500, nullable: true)]
+    #[SerializedName('apparatus')]
+    #[Groups(['study'])]
     private ?array $apparatus = null;
 
     /**
      * One basic Information section has One Experiment.
-     *
-     * @ORM\OneToOne(targetEntity="App\Domain\Model\Study\Experiment", inversedBy="measureMetaDataGroup")
      */
-    protected Experiment $experiment;
+    #[ORM\OneToOne(inversedBy: 'measureMetaDataGroup')]
+    protected ?Experiment $experiment = null;
 
-    /**
-     * @return array
-     */
     public function getReviewCollection(): array
     {
         return [
@@ -60,57 +50,36 @@ class MeasureMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getFormTypeForEntity(): string
     {
         return MeasureType::class;
     }
 
-    /**
-     * @return array|null
-     */
     public function getMeasures(): ?array
     {
         return $this->measures;
     }
 
-    /**
-     * @param array|null $measures
-     */
     public function setMeasures(?array $measures): void
     {
         $this->measures = null == $measures ? null : array_values($measures);
     }
 
-    /**
-     * @return array|null
-     */
     public function getApparatus(): ?array
     {
         return $this->apparatus;
     }
 
-    /**
-     * @param array|null $apparatus
-     */
     public function setApparatus(?array $apparatus): void
     {
         $this->apparatus = null == $apparatus ? null : array_values($apparatus);
     }
 
-    /**
-     * @return Experiment
-     */
     public function getExperiment(): Experiment
     {
         return $this->experiment;
     }
 
-    /**
-     * @param Experiment $experiment
-     */
     public function setExperiment(Experiment $experiment): void
     {
         $this->experiment = $experiment;

@@ -5,39 +5,39 @@ namespace App\Domain\Definition;
 final class MetaDataDictionary
 {
     // SettingsMetaData
-    const SHORTNAME = 'shortName';
+    public const SHORTNAME = 'shortName';
 
     // BasicInformationMetaData
-    const TITLE = 'title';
-    const CREATORS = 'creators';
-    const CONTACT = 'contact';
-    const DESCRIPTION = 'description';
-    const RELATED_PUBS = 'related_publications';
+    public const TITLE = 'title';
+    public const CREATORS = 'creators';
+    public const CONTACT = 'contact';
+    public const DESCRIPTION = 'description';
+    public const RELATED_PUBS = 'related_publications';
 
     // SampleMetaData
-    const INCLUSION_CRITERIA = 'inclusion_criteria';
-    const EXCLUSION_CRITERIA = 'exclusion_criteria';
-    const POPULATION = 'population';
-    const SAMPLING_METHOD = 'sampling_method';
-    const SAMPLE_SIZE = 'sample_size';
-    const POWER_ANALYSIS = 'power_analysis';
+    public const INCLUSION_CRITERIA = 'inclusion_criteria';
+    public const EXCLUSION_CRITERIA = 'exclusion_criteria';
+    public const POPULATION = 'population';
+    public const SAMPLING_METHOD = 'sampling_method';
+    public const SAMPLE_SIZE = 'sample_size';
+    public const POWER_ANALYSIS = 'power_analysis';
 
     // TheoryMetaData
-    const OBJECTIVE = 'objective';
-    const HYPOTHESIS = 'hypothesis';
+    public const OBJECTIVE = 'objective';
+    public const HYPOTHESIS = 'hypothesis';
 
     // MeasureMetaData
-    const MEASURES = 'measures';
-    const APPARATUS = 'apparatus';
+    public const MEASURES = 'measures';
+    public const APPARATUS = 'apparatus';
 
     // MethodMetaData
-    const SETTING = 'setting';
-    const RESEARCH_DESIGN = 'research_design';
-    const MANIPULATIONS = 'manipulations';
-    const ASSIGNMENT = 'assignment';
-    const EXPERIMENTAL_DESIGN = 'experimental_design';
-    const CONTROL_OPERATIONS = 'control_operations';
+    public const SETTING = 'setting';
+    public const RESEARCH_DESIGN = 'research_design';
+    public const MANIPULATIONS = 'manipulations';
+    public const ASSIGNMENT = 'assignment';
+    public const EXPERIMENTAL_DESIGN = 'experimental_design';
+    public const CONTROL_OPERATIONS = 'control_operations';
 
     // Filemanagement
-    const FILE_DESCRIPTION = 'file_description';
+    public const FILE_DESCRIPTION = 'file_description';
 }

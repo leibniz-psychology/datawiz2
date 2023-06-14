@@ -23,9 +23,7 @@ class UserDetailForm extends AbstractType
                 'required' => true,
                 'expanded' => false,
                 'multiple' => false,
-                'choice_label' => function ($choice) {
-                    return 'roles.'.$choice;
-                },
+                'choice_label' => fn($choice) => 'roles.'.$choice,
                 'row_attr' => [
                     'class' => 'pt-8',
                 ],
@@ -40,12 +38,8 @@ class UserDetailForm extends AbstractType
             $builder->get('roles')
                 ->addModelTransformer(
                     new CallbackTransformer(
-                        function ($rolesArray) {
-                            return count($rolesArray) ? $rolesArray[0] : null;
-                        },
-                        function ($rolesString) {
-                            return array_filter([$rolesString]);
-                        }
+                        fn($rolesArray) => count($rolesArray) ? $rolesArray[0] : null,
+                        fn($rolesString) => array_filter([$rolesString])
                     )
                 );
         }

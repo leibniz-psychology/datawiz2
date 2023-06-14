@@ -6,17 +6,16 @@ namespace App\View\Controller;
 use App\Domain\Model\Filemanagement\AdditionalMaterial;
 use App\Domain\Model\Filemanagement\Dataset;
 use App\Domain\Model\Study\Experiment;
-use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
-use League\Flysystem\FileNotFoundException;
 use League\Flysystem\Filesystem;
+use League\Flysystem\UnableToReadFile;
 use Psr\Log\LoggerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\Encoder\CsvEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -29,28 +28,15 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use ZipArchive;
 
-/**
- * @IsGranted("ROLE_USER")
- */
+#[IsGranted('ROLE_USER')]
 class ExportController extends AbstractController
 {
 
-    private LoggerInterface $logger;
-    private EntityManagerInterface $em;
-    private Serializer $serializer;
-    private Filesystem $filesystem;
+    private readonly Serializer $serializer;
 
-    /**
-     * @param LoggerInterface $logger
-     * @param EntityManagerInterface $em
-     * @param Filesystem $filesystem
-     */
-    public function __construct(LoggerInterface $logger, EntityManagerInterface $em, Filesystem $filesystem)
+    public function __construct(private readonly LoggerInterface $logger, private readonly EntityManagerInterface $em, private readonly Filesystem $filesystem)
     {
-        $this->logger = $logger;
-        $this->em = $em;
-        $this->filesystem = $filesystem;
-        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader());
         $metadataAwareNameConverter = new MetadataAwareNameConverter($classMetadataFactory);
         $this->serializer = new Serializer(
             [new DateTimeNormalizer(), new ObjectNormalizer($classMetadataFactory, $metadataAwareNameConverter)],
@@ -59,12 +45,7 @@ class ExportController extends AbstractController
     }
 
 
-    /**
-     * @Route("/export/{uuid}", name="export_index", methods={"GET"})
-     *
-     * @param string $uuid
-     * @return Response
-     */
+    #[Route(path: '/export/{uuid}', name: 'export_index', methods: ['GET'])]
     public function exportIndex(string $uuid): Response
     {
         $this->logger->debug("Enter ExportController::exportAction(GET) for UUID: $uuid");
@@ -73,13 +54,7 @@ class ExportController extends AbstractController
         return $this->render('Pages/Export/export.html.twig', ['export_error' => null, "experiment" => $experiment]);
     }
 
-    /**
-     * @Route("/export/{uuid}", name="export_action", methods={"POST"})
-     *
-     * @param Request $request
-     * @param string $uuid
-     * @return Response
-     */
+    #[Route(path: '/export/{uuid}', name: 'export_action', methods: ['POST'])]
     public function exportAction(Request $request, string $uuid): Response
     {
         $this->logger->debug("Enter ExportController::exportAction(POST) for UUID: $uuid");
@@ -147,9 +122,6 @@ class ExportController extends AbstractController
     }
 
     /**
-     * @param Experiment $experiment
-     * @param string $format
-     * @param ZipArchive $zip
      * @return bool Error:True on failure, False on success
      */
     private function appendStudyToZip(Experiment $experiment, string $format, ZipArchive &$zip): bool
@@ -173,9 +145,6 @@ class ExportController extends AbstractController
     }
 
     /**
-     * @param Experiment $experiment
-     * @param string $format
-     * @param ZipArchive $zip
      * @return bool Error:True on failure, False on success
      */
     private function appendDatasetToZip(Experiment $experiment, string $format, ZipArchive &$zip): bool
@@ -183,8 +152,8 @@ class ExportController extends AbstractController
         $error = false;
         foreach ($experiment->getOriginalDatasets() as $dataset) {
             $folderName = $dataset->getOriginalName();
-            if (str_contains($folderName, '.')) {
-                $folderName = explode('.', $folderName)[0];
+            if (str_contains((string) $folderName, '.')) {
+                $folderName = explode('.', (string) $folderName)[0];
             }
             $folder = 'datasets/'.$this->sanitizeFilename($folderName);
             $error = $zip->addEmptyDir($folder) ? $error : true;
@@ -202,7 +171,7 @@ class ExportController extends AbstractController
                         $error = $zip->addFromString("$folder/datamatrix.csv", $matrix) ? $error : true;
                     }
                 }
-            } catch (FileNotFoundException $e) {
+            } catch (UnableToReadFile $e) {
                 $this->logger->error("ExportController::appendDatasetToZip: Error read file from filesystem: {$e->getMessage()}");
                 $error = true;
             }
@@ -228,12 +197,7 @@ class ExportController extends AbstractController
         return $error;
     }
 
-    /**
-     * @param Experiment $experiment
-     * @param ZipArchive $zip
-     * @return bool|mixed
-     */
-    private function appendMaterialToZip(Experiment $experiment, ZipArchive &$zip): bool
+    private function appendMaterialToZip(Experiment $experiment, ZipArchive &$zip): mixed
     {
         $error = false;
         foreach ($experiment->getAdditionalMaterials() as $material) {
@@ -243,7 +207,7 @@ class ExportController extends AbstractController
                         "material/{$material->getOriginalName()}",
                         $this->filesystem->read($material->getStorageName())
                     ) ? $error : true;
-                } catch (FileNotFoundException $e) {
+                } catch (UnableToReadFile $e) {
                     $this->logger->error("ExportController::appendMaterialToZip: Error read file from filesystem: {$e->getMessage()}");
                     $error = true;
                 }
@@ -253,10 +217,6 @@ class ExportController extends AbstractController
         return $error;
     }
 
-    /**
-     * @param Collection $codebook
-     * @return string
-     */
     private function buildCSVHeader(Collection $codebook): string
     {
         $header = [];
@@ -267,13 +227,9 @@ class ExportController extends AbstractController
         return implode(",", $header).PHP_EOL;
     }
 
-    /**
-     * @param string|null $name
-     * @return string|null
-     */
     private function sanitizeFilename(?string $name): ?string
     {
-        $chars = array(" ", '"', "'", "&", "/", "\\", "?", "#", "<", ">", ".", ",");
+        $chars = [" ", '"', "'", "&", "/", "\\", "?", "#", "<", ">", ".", ","];
 
         return null != $name ? strtolower(trim(str_replace($chars, '_', $name))) : 'unnamed';
     }

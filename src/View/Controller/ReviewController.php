@@ -7,33 +7,20 @@ namespace App\View\Controller;
 use App\Domain\Definition\UserRoles;
 use App\Domain\Model\Study\Experiment;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- * @IsGranted("ROLE_USER")
- */
+#[IsGranted('ROLE_USER')]
 class ReviewController extends AbstractController
 {
-    private EntityManagerInterface $em;
-
-    /**
-     * @param EntityManagerInterface $em
-     */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private readonly EntityManagerInterface $em)
     {
-        $this->em = $em;
     }
 
 
-    /**
-     * @Route("review/{uuid}", name="Study-review")
-     *
-     * @param string $uuid
-     * @return Response
-     */
+    #[Route(path: 'review/{uuid}', name: 'Study-review')]
     public function reviewAction(string $uuid): Response
     {
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);

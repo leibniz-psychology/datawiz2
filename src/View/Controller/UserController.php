@@ -5,7 +5,6 @@ namespace App\View\Controller;
 use App\Domain\Definition\UserRoles;
 use Exception;
 use Psr\Log\LoggerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -13,37 +12,22 @@ use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- * @IsGranted("ROLE_USER")
- */
+#[IsGranted('ROLE_USER')]
 class UserController extends AbstractController
 {
 
 
-    private LoggerInterface $logger;
-    private KernelInterface $kernel;
-
-    /**
-     * @param LoggerInterface $logger
-     * @param KernelInterface $kernel
-     */
-    public function __construct(LoggerInterface $logger, KernelInterface $kernel)
+    public function __construct(private readonly LoggerInterface $logger, private readonly KernelInterface $kernel)
     {
-        $this->logger = $logger;
-        $this->kernel = $kernel;
     }
 
 
     /**
-     * @Route(
-     *     "/admin/install",
-     *     name="dw_install"
-     * )
-     *
-     * @return Response
      * @throws Exception
      */
+    #[Route(path: '/admin/install', name: 'dw_install')]
     public function installDW(): Response
     {
         $this->logger->debug("UserController::installDW: Enter");

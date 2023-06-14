@@ -9,17 +9,8 @@ use Psr\Log\LoggerInterface;
 class SavImportable
 {
 
-    private SpssApiClient $spssApiClient;
-    private LoggerInterface $logger;
-
-    /**
-     * @param SpssApiClient $spssApiClient
-     * @param LoggerInterface $logger
-     */
-    public function __construct(SpssApiClient $spssApiClient, LoggerInterface $logger)
+    public function __construct(private readonly SpssApiClient $spssApiClient, private readonly LoggerInterface $logger)
     {
-        $this->spssApiClient = $spssApiClient;
-        $this->logger = $logger;
     }
 
 

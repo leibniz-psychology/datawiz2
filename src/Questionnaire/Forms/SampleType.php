@@ -97,9 +97,7 @@ class SampleType extends AbstractType
                 'label_attr' => ['class' => 'MetaData-Label'],
                 'label_html' => true,
                 'attr' => ['class' => 'p-1'],
-                'choice_attr' => function () {
-                    return ['class' => 'RadioButton-Input'];
-                },
+                'choice_attr' => fn() => ['class' => 'RadioButton-Input'],
             ])
             ->add("otherSamplingMethod", TextareaType::class, [
                 'required' => false,

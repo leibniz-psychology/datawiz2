@@ -7,7 +7,7 @@ use Twig\Extra\Markdown\MarkdownInterface;
 
 class ErusevMarkdown implements MarkdownInterface
 {
-    private ParsedownExtra $converter;
+    private readonly ParsedownExtra $converter;
 
     public function __construct()
     {

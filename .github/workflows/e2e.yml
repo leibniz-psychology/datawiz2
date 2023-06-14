@@ -1,0 +1,98 @@
+name: Cypress e2e test
+
+on: [ workflow_call ]
+
+env:
+  DATABASE_URL: mysql://root:root@127.0.0.1:3306/dashboard?serverVersion=8.0
+  TRUSTED_PROXIES: ${{ secrets.TRUSTED_PROXIES }}
+  APP_ENV: dev
+  APP_SECRET: ${{ secrets.APP_SECRET }}
+  OAUTH_KEYCLOAK_CLIENT_ID: ${{ secrets.OAUTH_KEYCLOAK_CLIENT_ID }}
+  OAUTH_KEYCLOAK_CLIENT_SECRET: ${{ secrets.OAUTH_KEYCLOAK_CLIENT_SECRET }}
+  OAUTH_KEYCLOAK_AUTH_SERVER_URL: ${{ secrets.OAUTH_KEYCLOAK_AUTH_SERVER_URL }}
+  OAUTH_KEYCLOAK_REALM: ${{ secrets.OAUTH_KEYCLOAK_REALM }}
+  CYPRESS_BASE_URL: https://localhost:8000
+  CYPRESS_kcRedirectUri: https://localhost:8000
+  CYPRESS_kcRoot: ${{ secrets.CYPRESS_KEYCLOAK_URL }}
+  CYPRESS_kcRealm: ${{ secrets.OAUTH_KEYCLOAK_REALM }}
+  CYPRESS_kcClient: ${{ secrets.OAUTH_KEYCLOAK_CLIENT_ID }}
+  CYPRESS_username: ${{ secrets.CYPRESS_username }}
+  CYPRESS_password: ${{ secrets.CYPRESS_password }}
+  CYPRESS_loginPath: /security/login
+  CYPRESS_logoutPath: /security/logout
+
+jobs:
+  e2e:
+    name: Run e2e tests (PHP ${{ matrix.php-versions }})
+    runs-on: ubuntu-latest
+    services:
+      database:
+        image: mysql:latest
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    strategy:
+      fail-fast: true
+      matrix:
+        php-versions: [ '8.2' ]
+    steps:
+      - name: Install Symfony CLI
+        run: wget https://get.symfony.com/cli/installer -O - | bash
+
+      - name: Install missing libs
+        run: |          
+          curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+          echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections
+          sudo apt update -y
+          sudo apt-get install -y -q nodejs libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb libsodium-dev build-essential
+          sudo npm install -g yarn
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup PHP, extensions and composer with shivammathur/setup-php
+        uses: shivammathur/setup-php@verbose
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: mbstring, xml, ctype, iconv, intl, dom, filter, gd, iconv, json, pdo, mysql
+        env:
+          runner: self-hosted
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      - name: Install composer dependencies
+        if: steps.composer-cache.outputs.cache-hit != 'true'
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Install Yarn dependencies
+        run: yarn install
+
+      - name: Encore generate dev build
+        run: yarn dev
+
+      - name: Make Migrations
+        run: |
+          php bin/console doctrine:database:create --if-not-exists
+          php bin/console doctrine:migrations:migrate --no-interaction
+
+      - name: Start Server
+        run: |
+          /home/runner/.symfony5/bin/symfony server:ca:install
+          /home/runner/.symfony5/bin/symfony serve -d
+
+      - name: Run Cypress
+        run: npx cypress run -b electron --headless
+
+

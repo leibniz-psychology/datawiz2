@@ -10,23 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
-/**
- * @ORM\Entity()
- */
+#[ORM\Entity]
 class DatasetVariables extends UuidEntity
 {
 
-    /**
-     * @param Dataset $dataset
-     * @param int $varId
-     * @param string $name
-     * @param string|null $label
-     * @param string|null $itemText
-     * @param array|null $values
-     * @param array|null $missings
-     * @param string|null $measure
-     * @return DatasetVariables
-     */
     public static function createNew(
         Dataset $dataset,
         int $varId,
@@ -53,183 +40,119 @@ class DatasetVariables extends UuidEntity
     }
 
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column()]
     private int $varId;
 
-    /**
-     * @ORM\Column(type="string", length=250)
-     * @SerializedName("name")
-     * @Groups({"codebook"})
-     */
+    #[ORM\Column(length: 250)]
+    #[SerializedName('name')]
+    #[Groups(['codebook'])]
     private string $name;
 
-    /**
-     * @ORM\Column(type="string", length=500, nullable=true)
-     * @SerializedName("label")
-     * @Groups({"codebook"})
-     */
+    #[ORM\Column(length: 500, nullable: true)]
+    #[SerializedName('label')]
+    #[Groups(['codebook'])]
     private ?string $label = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @SerializedName("item_text")
-     * @Groups({"codebook"})
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[SerializedName('item_text')]
+    #[Groups(['codebook'])]
     private ?string $itemText = null;
 
-    /**
-     * @ORM\Column(type="array", nullable=true, name="val_label")
-     * @SerializedName("value_label")
-     * @Groups({"codebook"})
-     */
+    #[ORM\Column(name: 'val_label', nullable: true)]
+    #[SerializedName('value_label')]
+    #[Groups(['codebook'])]
     private ?array $values = null;
 
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     * @SerializedName("missings")
-     * @Groups({"codebook"})
-     */
+    #[ORM\Column(nullable: true)]
+    #[SerializedName('missings')]
+    #[Groups(['codebook'])]
     private ?array $missings = null;
 
-    /**
-     * @ORM\Column(type="string", length=250, nullable=true)
-     * @SerializedName("measure")
-     * @Groups({"codebook"})
-     */
+    #[ORM\Column(length: 250, nullable: true)]
+    #[SerializedName('measure')]
+    #[Groups(['codebook'])]
     private ?string $measure = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Domain\Model\Filemanagement\Dataset", inversedBy="codebook")
-     * @ORM\JoinColumn(name="dataset_id", referencedColumnName="id")
-     */
-    private Dataset $dataset;
+    #[ORM\ManyToOne(inversedBy: 'codebook')]
+    #[ORM\JoinColumn(name: 'dataset_id', referencedColumnName: 'id')]
+    private ?Dataset $dataset = null;
 
 
-    /**
-     * @return Dataset
-     */
     public function getDataset(): Dataset
     {
         return $this->dataset;
     }
 
-    /**
-     * @param Dataset $dataset
-     */
     public function setDataset(Dataset $dataset): void
     {
         $this->dataset = $dataset;
     }
 
-    /**
-     * @return int
-     */
     public function getVarId(): int
     {
         return $this->varId;
     }
 
-    /**
-     * @param int $varId
-     */
     public function setVarId(int $varId): void
     {
         $this->varId = $varId;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
     public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return string|null
-     */
     public function getLabel(): ?string
     {
         return $this->label;
     }
 
-    /**
-     * @param string|null $label
-     */
     public function setLabel(?string $label): void
     {
         $this->label = $label;
     }
 
-    /**
-     * @return string|null
-     */
     public function getItemText(): ?string
     {
         return $this->itemText;
     }
 
-    /**
-     * @param string|null $itemText
-     */
     public function setItemText(?string $itemText): void
     {
         $this->itemText = $itemText;
     }
 
-    /**
-     * @return array|null
-     */
     public function getValues(): ?array
     {
         return $this->values;
     }
 
-    /**
-     * @param array|null $values
-     */
     public function setValues(?array $values): void
     {
         $this->values = $values;
     }
 
-    /**
-     * @return array|null
-     */
     public function getMissings(): ?array
     {
         return $this->missings;
     }
 
-    /**
-     * @param array|null $missings
-     */
     public function setMissings(?array $missings): void
     {
         $this->missings = $missings;
     }
 
-    /**
-     * @return string|null
-     */
     public function getMeasure(): ?string
     {
         return $this->measure;
     }
 
-    /**
-     * @param string|null $measure
-     */
     public function setMeasure(?string $measure): void
     {
         $this->measure = $measure;

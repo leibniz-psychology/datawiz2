@@ -12,61 +12,27 @@ use App\Io\Formats\Sav\SavImportable;
 use App\Questionnaire\Questionnairable;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
- * @Route("/filemanagement", name="File-")
- * @IsGranted("ROLE_USER")
- *
- * Class FileManagementController
  * @package App\View\Controller
  */
+#[Route(path: '/filemanagement', name: 'File-')]
+#[IsGranted('ROLE_USER')]
 class FileManagementController extends AbstractController
 {
-    private Crudable $crud;
-    private Questionnairable $questionnaire;
-    private CsvImportable $csvImportable;
-    private SavImportable $savImportable;
-    private EntityManagerInterface $em;
-    private LoggerInterface $logger;
-
-    /**
-     * @param Crudable $crud
-     * @param Questionnairable $questionnaire
-     * @param CsvImportable $csvImportable
-     * @param SavImportable $savImportable
-     * @param EntityManagerInterface $em
-     * @param LoggerInterface $logger
-     */
-    public function __construct(
-        Crudable $crud,
-        Questionnairable $questionnaire,
-        CsvImportable $csvImportable,
-        SavImportable $savImportable,
-        EntityManagerInterface $em,
-        LoggerInterface $logger
-    ) {
-        $this->crud = $crud;
-        $this->questionnaire = $questionnaire;
-        $this->csvImportable = $csvImportable;
-        $this->savImportable = $savImportable;
-        $this->em = $em;
-        $this->logger = $logger;
+    public function __construct(private readonly Crudable $crud, private readonly Questionnairable $questionnaire, private readonly CsvImportable $csvImportable, private readonly SavImportable $savImportable, private readonly EntityManagerInterface $em, private readonly LoggerInterface $logger)
+    {
     }
 
 
-    /**
-     * @Route("/preview/sav/{fileId}", name="preview-sav")
-     *
-     * @param string $fileId
-     * @return JsonResponse
-     */
+    #[Route(path: '/preview/sav/{fileId}', name: 'preview-sav')]
     public function previewSavAction(string $fileId): JsonResponse
     {
         $this->logger->debug("Enter FileManagementController::previewSavAction with [FileId: $fileId]");
@@ -79,14 +45,8 @@ class FileManagementController extends AbstractController
         return new JsonResponse($data ?? [], null != $data ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    /**
-     * @Route("/submit/sav/{fileId}", name="submit-sav")
-     *
-     * @param string $fileId
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function submitSavAction(string $fileId, Request $request): JsonResponse
+    #[Route(path: '/submit/sav/{fileId}', name: 'submit-sav')]
+    public function submitSavAction(string $fileId): JsonResponse
     {
         $this->logger->debug("Enter FileManagementController::previewSavAction with [FileId: $fileId]");
         $dataset = $this->em->find(Dataset::class, $fileId);
@@ -120,13 +80,7 @@ class FileManagementController extends AbstractController
         return new JsonResponse($data ?? [], null != $data ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    /**
-     * @Route("/preview/csv/{fileId}", name="preview-csv")
-     *
-     * @param string $fileId
-     * @param Request $request
-     * @return JsonResponse
-     */
+    #[Route(path: '/preview/csv/{fileId}', name: 'preview-csv')]
     public function previewCsvAction(string $fileId, Request $request): JsonResponse
     {
         $this->logger->debug("Enter FileManagementController::previewCSVAction with [FileId: $fileId]");
@@ -142,13 +96,7 @@ class FileManagementController extends AbstractController
         return new JsonResponse($data, $data ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    /**
-     * @Route("/submit/csv/{fileId}", name="submit-csv")
-     *
-     * @param string $fileId
-     * @param Request $request
-     * @return JsonResponse
-     */
+    #[Route(path: '/submit/csv/{fileId}', name: 'submit-csv')]
     public function submitCSVAction(string $fileId, Request $request): JsonResponse
     {
         $this->logger->debug("Enter FileManagementController::submitCSVAction with [FileId: $fileId]");
@@ -199,13 +147,8 @@ class FileManagementController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/{uuid}/delete/dataset", name="delete_dataset")
-     *
-     * @param string $uuid
-     * @return RedirectResponse|Response
-     */
-    public function deleteDatasetAction(string $uuid)
+    #[Route(path: '/{uuid}/delete/dataset', name: 'delete_dataset')]
+    public function deleteDatasetAction(string $uuid): RedirectResponse
     {
         $this->logger->debug("Enter FileManagementController::deleteMaterialAction with [UUID: $uuid]");
         $dataset = $this->em->find(Dataset::class, $uuid);
@@ -216,14 +159,8 @@ class FileManagementController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{uuid}/delete/material", name="delete_material")
-     *
-     * @param string $uuid
-     * @param Request $request
-     * @return RedirectResponse
-     */
-    public function deleteMaterialAction(string $uuid, Request $request): RedirectResponse
+    #[Route(path: '/{uuid}/delete/material', name: 'delete_material')]
+    public function deleteMaterialAction(string $uuid): RedirectResponse
     {
         $this->logger->debug("Enter FileManagementController::deleteMaterialAction with [UUID: $uuid]");
         $material = $this->em->find(AdditionalMaterial::class, $uuid);
@@ -233,13 +170,7 @@ class FileManagementController extends AbstractController
         return $this->redirectToRoute('Study-materials', ['uuid' => $experimentId]);
     }
 
-    /**
-     * @Route("/{uuid}/update/description", name="update_description", methods={"POST"})
-     *
-     * @param string $uuid
-     * @param Request $request
-     * @return JsonResponse
-     */
+    #[Route(path: '/{uuid}/update/description', name: 'update_description', methods: ['POST'])]
     public function updateDescriptionAction(string $uuid, Request $request): JsonResponse
     {
         $this->logger->debug("Enter FileManagementController::updateDescriptionAction with [UUID: $uuid]");
@@ -260,13 +191,7 @@ class FileManagementController extends AbstractController
     }
 
 
-    /**
-     * @Route("/{uuid}/details", name="details")
-     *
-     * @param string $uuid
-     * @param Request $request
-     * @return Response
-     */
+    #[Route(path: '/{uuid}/details', name: 'details')]
     public function materialDetailsAction(string $uuid, Request $request): Response
     {
         $this->logger->debug("Enter FileManagementController::materialDetailsAction with [UUID: $uuid]");
@@ -285,7 +210,7 @@ class FileManagementController extends AbstractController
         return $this->render(
             'Pages/FileManagement/materialDetails.html.twig',
             [
-                'form' => $form->createView(),
+                'form' => $form,
                 'file' => $entityAtChange,
                 'experiment' => $experiment,
             ]

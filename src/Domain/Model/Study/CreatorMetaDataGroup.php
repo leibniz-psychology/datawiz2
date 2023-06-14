@@ -12,71 +12,49 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="experiment_basic_creators")
- */
+#[ORM\Table(name: 'experiment_basic_creators')]
+#[ORM\Entity]
 class CreatorMetaDataGroup extends UuidEntity implements Questionable, Reviewable
 {
-    /**
-     * @ORM\Column(type="text", length=100, nullable=true)
-     * @SerializedName("given_name")
-     * @Groups("study")
-     */
+    #[ORM\Column(type: 'text', length: 100, nullable: true)]
+    #[SerializedName('given_name')]
+    #[Groups('study')]
     private ?string $givenName = null;
 
-    /**
-     * @ORM\Column(type="text", length=100, nullable=true)
-     * @SerializedName("family_name")
-     * @Groups("study")
-     */
+    #[ORM\Column(type: 'text', length: 100, nullable: true)]
+    #[SerializedName('family_name')]
+    #[Groups('study')]
     private ?string $familyName = null;
 
-    /**
-     * @ORM\Column(type="text", length=250, nullable=true)
-     * @SerializedName("email")
-     * @Groups("study")
-     */
+    #[ORM\Column(type: 'text', length: 250, nullable: true)]
+    #[SerializedName('email')]
+    #[Groups('study')]
     private ?string $email = null;
 
-    /**
-     * @ORM\Column(type="text", length=250, nullable=true)
-     * @SerializedName("orcid")
-     * @Groups("study")
-     */
+    #[ORM\Column(type: 'text', length: 250, nullable: true)]
+    #[SerializedName('orcid')]
+    #[Groups('study')]
     private ?string $orcid = null;
 
-    /**
-     * @ORM\Column(type="text", length=1500, nullable=true)
-     * @SerializedName("affiliation")
-     * @Groups("study")
-     */
+    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[SerializedName('affiliation')]
+    #[Groups('study')]
     private ?string $affiliation = null;
 
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     * @SerializedName("roles")
-     * @Groups("study")
-     */
+    #[ORM\Column(nullable: true)]
+    #[SerializedName('roles')]
+    #[Groups('study')]
     private ?array $creditRoles = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Domain\Model\Study\BasicInformationMetaDataGroup", inversedBy="creators")
-     * @ORM\JoinColumn(name="basic_id", referencedColumnName="id")
-     */
-    protected BasicInformationMetaDataGroup $basicInformation;
+    #[ORM\ManyToOne(inversedBy: 'creators')]
+    #[ORM\JoinColumn(name: 'basic_id', referencedColumnName: 'id')]
+    protected ?BasicInformationMetaDataGroup $basicInformation = null;
 
-    /**
-     * @return string
-     */
     public function getFormTypeForEntity(): string
     {
         return CreatorMetaDataGroup::class;
     }
 
-    /**
-     * @return array
-     */
     public function getReviewCollection(): array
     {
         return [
@@ -118,117 +96,75 @@ class CreatorMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
         return empty($this->getFamilyName()) && empty($this->getGivenName()) && empty($this->getEmail());
     }
 
-    /**
-     * @return string|null
-     */
     public function getGivenName(): ?string
     {
         return $this->givenName;
     }
 
-    /**
-     * @param string|null $givenName
-     */
     public function setGivenName(?string $givenName): void
     {
         $this->givenName = $givenName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getFamilyName(): ?string
     {
         return $this->familyName;
     }
 
-    /**
-     * @param string|null $familyName
-     */
     public function setFamilyName(?string $familyName): void
     {
         $this->familyName = $familyName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @param string|null $email
-     */
     public function setEmail(?string $email): void
     {
         $this->email = $email;
     }
 
-    /**
-     * @return string|null
-     */
     public function getOrcid(): ?string
     {
         return $this->orcid;
     }
 
-    /**
-     * @param string|null $orcid
-     */
     public function setOrcid(?string $orcid): void
     {
         $this->orcid = $orcid;
     }
 
-    /**
-     * @return string|null
-     */
     public function getAffiliation(): ?string
     {
         return $this->affiliation;
     }
 
-    /**
-     * @param string|null $affiliation
-     */
     public function setAffiliation(?string $affiliation): void
     {
         $this->affiliation = $affiliation;
     }
 
-    /**
-     * @return null|array
-     */
     public function getCreditRoles(): ?array
     {
         if (null === $this->creditRoles) {
-            $this->creditRoles = array('');
+            $this->creditRoles = [''];
         }
 
         return $this->creditRoles;
     }
 
-    /**
-     * @param array|null $creditRoles
-     */
     public function setCreditRoles(?array $creditRoles): void
     {
         $this->creditRoles = null == $creditRoles ? null : array_values($creditRoles);
     }
 
-    /**
-     * @return BasicInformationMetaDataGroup
-     */
     public function getBasicInformation(): BasicInformationMetaDataGroup
     {
         return $this->basicInformation;
     }
 
-    /**
-     * @param BasicInformationMetaDataGroup $basicInformation
-     */
     public function setBasicInformation(BasicInformationMetaDataGroup $basicInformation): void
     {
         $this->basicInformation = $basicInformation;

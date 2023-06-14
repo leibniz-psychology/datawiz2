@@ -4,9 +4,9 @@ namespace App\Domain\Definition;
 
 class UserRoles
 {
-    const USER = "ROLE_USER";
-    const REVIEWER = "ROLE_REVIEWER";
-    const ADMINISTRATOR = "ROLE_ADMIN";
+    final public const USER = "ROLE_USER";
+    final public const REVIEWER = "ROLE_REVIEWER";
+    final public const ADMINISTRATOR = "ROLE_ADMIN";
 
     public static function getAll(bool $withUserRole = true): array
     {

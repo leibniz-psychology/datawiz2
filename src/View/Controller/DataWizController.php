@@ -8,13 +8,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 abstract class DataWizController extends AbstractController
 {
-    protected Crudable $crud;
-    protected UrlGeneratorInterface $urlGenerator;
-
-    public function __construct(Crudable $crud, UrlGeneratorInterface $urlGenerator)
+    public function __construct(protected Crudable $crud, protected UrlGeneratorInterface $urlGenerator)
     {
-        $this->crud = $crud;
-        $this->urlGenerator = $urlGenerator;
     }
 
     abstract protected function getEntityAtChange(string $uuid, string $className);

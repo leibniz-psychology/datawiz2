@@ -4,38 +4,20 @@ namespace App\View\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- * @IsGranted("ROLE_REVIEWER")
- */
+#[IsGranted('ROLE_REVIEWER')]
 class ModerationController extends AbstractController
 {
-    private EntityManagerInterface $em;
-    private LoggerInterface $logger;
-
-    /**
-     * @param EntityManagerInterface $em
-     * @param LoggerInterface $logger
-     */
-    public function __construct(EntityManagerInterface $em, LoggerInterface $logger)
+    public function __construct(private readonly EntityManagerInterface $em, private readonly LoggerInterface $logger)
     {
-        $this->em = $em;
-        $this->logger = $logger;
     }
 
 
-    /**
-     * @Route(
-     *     "/moderation/dashboard",
-     *      name="moderation_dashboard"
-     * )
-     *
-     * @return Response
-     */
+    #[Route(path: '/moderation/dashboard', name: 'moderation_dashboard')]
     public function dashboard(): Response
     {
         $this->logger->debug("AdministrationController::dashboard: Enter");

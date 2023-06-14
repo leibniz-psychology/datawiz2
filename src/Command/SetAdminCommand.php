@@ -4,21 +4,18 @@ namespace App\Command;
 
 use App\Domain\Model\Administration\DataWizUser;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand('dw:add-user-role')]
 class SetAdminCommand extends Command
 {
-    protected static $defaultName = 'dw:add-user-role';
-    private EntityManagerInterface $em;
-
-
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private readonly EntityManagerInterface $em)
     {
         parent::__construct();
-        $this->em = $em;
     }
 
 

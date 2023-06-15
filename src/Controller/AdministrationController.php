@@ -22,7 +22,7 @@ class AdministrationController extends AbstractController
     ) {
     }
 
-    #[Route(path: '/admin/user', name: 'admin_user')]
+    #[Route(path: '/admin/user', name: 'admin_user', methods: ['GET'])]
     public function listUser(): Response
     {
         $this->logger->debug('AdministrationController::listUser: Enter');
@@ -35,7 +35,7 @@ class AdministrationController extends AbstractController
         );
     }
 
-    #[Route(path: '/admin/user/{uid}', name: 'admin_user_edit')]
+    #[Route(path: '/admin/user/{uid}', name: 'admin_user_edit', methods: ['GET'])]
     public function editUserDetails(Request $request, string $uid): Response
     {
         $this->logger->debug("AdministrationController::editUserDetails: Enter with uuid: {$uid}");
@@ -56,7 +56,7 @@ class AdministrationController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/admin/studies', name: 'admin_studies')]
+    #[Route(path: '/admin/studies', name: 'admin_studies', methods: ['GET'])]
     public function listStudies(): Response
     {
         $this->logger->debug('AdministrationController::listStudies: Enter');
@@ -70,7 +70,7 @@ class AdministrationController extends AbstractController
         );
     }
 
-    #[Route(path: '/admin/user/{uid}/studies', name: 'admin_user_studies')]
+    #[Route(path: '/admin/user/{uid}/studies', name: 'admin_user_studies', methods: ['GET'])]
     public function listStudiesForUser(string $uid): Response
     {
         $this->logger->debug('AdministrationController::listStudies: Enter');

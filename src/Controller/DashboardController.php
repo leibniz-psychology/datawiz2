@@ -9,13 +9,13 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class DashboardController extends AbstractController
 {
-    #[Route(path: '/', name: 'landing')]
+    #[Route(path: '/', name: 'landing', methods: ['GET'])]
     public function landingAction(): Response
     {
         return $this->render('pages/administration/landing.html.twig');
     }
 
-    #[Route(path: '/dashboard', name: 'dashboard')]
+    #[Route(path: '/dashboard', name: 'dashboard', methods: ['GET'])]
     #[IsGranted('ROLE_USER')]
     public function dashboardAction(): Response
     {

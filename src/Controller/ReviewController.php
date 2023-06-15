@@ -17,7 +17,7 @@ class ReviewController extends AbstractController
     {
     }
 
-    #[Route(path: 'review/{uuid}', name: 'Study-review')]
+    #[Route(path: 'review/{uuid}', name: 'Study-review', methods: ['GET'])]
     public function reviewAction(string $uuid): Response
     {
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);

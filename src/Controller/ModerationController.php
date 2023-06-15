@@ -16,7 +16,7 @@ class ModerationController extends AbstractController
     ) {
     }
 
-    #[Route(path: '/moderation/dashboard', name: 'moderation_dashboard')]
+    #[Route(path: '/moderation/dashboard', name: 'moderation_dashboard', methods: ['GET'])]
     public function dashboard(): Response
     {
         $this->logger->debug('AdministrationController::dashboard: Enter');

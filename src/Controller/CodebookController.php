@@ -27,7 +27,7 @@ class CodebookController extends AbstractController
     {
     }
 
-    #[Route(path: '/{uuid}', name: 'index')]
+    #[Route(path: '/{uuid}', name: 'index', methods: ['GET'])]
     public function codebookIndexAction(string $uuid): Response
     {
         return $this->render('pages/codebook/index.html.twig', [
@@ -35,7 +35,7 @@ class CodebookController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{uuid}/data', name: 'dataupdate')]
+    #[Route(path: '/{uuid}/data', name: 'dataupdate', methods: ['GET', 'POST'])]
     public function performUpdateAction(string $uuid, Request $request): JsonResponse
     {
         $this->logger->debug("Enter CodebookController::performUpdateAction with [UUID: {$uuid}]");
@@ -49,7 +49,7 @@ class CodebookController extends AbstractController
         return new JsonResponse($jsonCodebook, $jsonCodebook != null && sizeof($jsonCodebook) > 0 ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);
     }
 
-    #[Route(path: '/{uuid}/measures', name: 'measures')]
+    #[Route(path: '/{uuid}/measures', name: 'measures', methods: ['GET'])]
     public function createViewMeasuresAction(string $uuid): JsonResponse
     {
         $this->logger->debug("Enter CodebookController::createViewMeasuresAction with [UUID: {$uuid}]");
@@ -69,7 +69,7 @@ class CodebookController extends AbstractController
         return new JsonResponse($viewMeasures, key_exists('measures', $viewMeasures) ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);
     }
 
-    #[Route(path: '/{uuid}/matrix', name: 'matrix')]
+    #[Route(path: '/{uuid}/matrix', name: 'matrix', methods: ['GET'])]
     public function datasetMatrixAction(Request $request, string $uuid): JsonResponse
     {
         $size = $request->get('size') ?? 0;

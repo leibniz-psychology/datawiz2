@@ -23,7 +23,7 @@ class UserController extends AbstractController
     /**
      * @throws \Exception
      */
-    #[Route(path: '/admin/install', name: 'dw_install')]
+    #[Route(path: '/admin/install', name: 'dw_install', methods: ['GET'])]
     public function installDW(): Response
     {
         $this->logger->debug('UserController::installDW: Enter');

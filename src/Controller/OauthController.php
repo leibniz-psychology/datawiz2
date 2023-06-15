@@ -14,19 +14,19 @@ class OauthController extends AbstractController
     {
     }
 
-    #[Route(path: '/login', name: 'login')]
+    #[Route(path: '/login', name: 'login', methods: ['GET'])]
     public function loginAction(): RedirectResponse
     {
         return $this->clientRegistry->getClient('keycloak')->redirect(['openid'], []);
     }
 
-    #[Route(path: '/logout', name: 'logout')]
-    public function loginCheckAction(ClientRegistry $clientRegistry)
+    #[Route(path: '/logout', name: 'logout', methods: ['GET'])]
+    public function logoutAction(ClientRegistry $clientRegistry)
     {
     }
 
-    #[Route(path: '/login/check', name: 'check')]
-    public function logoutAction()
+    #[Route(path: '/login/check', name: 'check', methods: ['GET'])]
+    public function loginCheckAction()
     {
     }
 }

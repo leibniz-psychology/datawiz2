@@ -39,54 +39,6 @@ Alpine.data("fileManagement", () => ({
   },
 }));
 
-Alpine.data("modal", () => ({
-  showModal: false,
-
-  show() {
-    this.showModal = true;
-    this.setFocus();
-  },
-  hide() {
-    this.showModal = false;
-  },
-  setFocus() {
-    if (this.$refs.focusFirst) {
-      this.$nextTick(() => {
-        this.$refs.focusFirst.focus();
-      });
-    }
-  },
-  overlay: {
-    ["x-show"]() {
-      return this.showModal;
-    },
-    ["x-bind:x-ref"]() {
-      return "overlay";
-    },
-    ["x-trap.inert.noscroll"]() {
-      return this.showModal;
-    },
-    ["x-transition:enter"]() {
-      return "transition ease-out duration-300";
-    },
-    ["x-transition:enter-start"]() {
-      return "opacity-0";
-    },
-    ["x-transition:enter-end"]() {
-      return "opacity-100";
-    },
-    ["x-transition:leave"]() {
-      return "transition ease-in duration-300";
-    },
-    ["x-transition:leave-start"]() {
-      return "opacity-100";
-    },
-    ["x-transition:leave-end"]() {
-      return "opacity-0";
-    },
-  },
-}));
-
 const listOptions = {
   valueNames: ["ExperimentName", "ExperimentTitle"],
   searchDelay: 250,

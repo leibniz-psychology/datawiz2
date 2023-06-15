@@ -65,22 +65,26 @@
                 <div class="mt-2">
                     {{ "input.danger-zone.delete.description"|trans }}
                 </div>
-                <button class="self-start mt-4 Button_secondary_danger Button_standalone"
-                        @click="show()" type="button">
-                    {{ include('components/icons/delete.svg') }}
-                    {{ "input.danger-zone.delete.action"|trans }}
-                </button>
+
+                <div {{ stimulus_controller('modal', {
+                    'onSubmit': 'navigateToUrl',
+                    'url': path('Study-delete', { "uuid": experiment.id })
+                }) }}>
+                    {{ include('components/_deleteModal.html.twig', {
+                        'title': "title.dataset.deleteModal.title",
+                        'description': 'title.settings.deleteModal.body',
+                        'confirm': 'title.settings.deleteModal.confirm',
+                        'name': experiment.settingsMetaDataGroup.shortName,
+                    }) }}
+
+                    <button class="self-start mt-4 Button_secondary_danger Button_standalone"
+                            {{ stimulus_action('modal', 'openModal') }}>
+                        {{ include('components/icons/delete.svg') }}
+                        {{ "input.danger-zone.delete.action"|trans }}
+                    </button>
+                </div>
             </div>
         </div>
-
-        <!-- Modal confirming delete action -->
-        {{ include('components/_deleteModal.html.twig', {
-            'title': "title.dataset.deleteModal.title",
-            'description': 'title.settings.deleteModal.body',
-            'confirm': 'title.settings.deleteModal.confirm',
-            'name': experiment.settingsMetaDataGroup.shortName,
-            'url': path('Study-delete', { "uuid": experiment.id })
-        }) }}
     </fieldset>
 
     {{ form_end(form) }}

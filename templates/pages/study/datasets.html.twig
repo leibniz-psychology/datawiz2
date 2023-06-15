@@ -39,32 +39,36 @@
         <ul class="mx-6">
             {% for dataset in experiment.originalDatasets %}
                 <li class="pt-3 pb-4 mt-2 first:mt-0 bg-mono-100">
-                    <div class="bg-mono-100" x-data="modal()" @keydown.window.escape="hide()">
+                    <div class="bg-mono-100">
                         <h4 class="flex justify-between mx-4">
-                        <span class="text-lg font-semibold text-zpid-purple-700">
-                            {{ dataset.originalName }}
-                        </span>
-                            <button class="self-start ml-2 Button_tertiary_danger Button_standalone"
-                                    @click="show()">
-                                {{ include('components/icons/delete.svg') }}
-                                {{ "generic.delete"|trans }}
-                            </button>
+                            <span class="text-lg font-semibold text-zpid-purple-700">
+                                {{ dataset.originalName }}
+                            </span>
+
+                            <div {{ stimulus_controller('modal', {
+                                'onSubmit': 'postToUrl',
+                                'url': path('File-delete_dataset', { "uuid": dataset.id })
+                            }) }}>
+                                {{ include('components/_deleteModal.html.twig', {
+                                    'title': "title.dataset.deleteModal.title",
+                                    'description': 'title.dataset.deleteModal.body',
+                                    'confirm': 'title.dataset.deleteModal.confirm',
+                                    'name': dataset.originalName
+                                }) }}
+
+                                <button class="self-start ml-2 Button_tertiary_danger Button_standalone" {{ stimulus_action('modal', 'openModal') }}>
+                                    {{ include('components/icons/delete.svg') }}
+                                    {{ "generic.delete"|trans }}
+                                </button>
+                            </div>
                         </h4>
 
-                        <!-- Modal confirming delete action -->
-                        {{ include('components/_deleteModal.html.twig', {
-                            'title': "title.dataset.deleteModal.title",
-                            'description': 'title.dataset.deleteModal.body',
-                            'confirm': 'title.dataset.deleteModal.confirm',
-                            'name': dataset.originalName,
-                            'url': path('File-delete_dataset', { "uuid": dataset.id })
-                        }) }}
+                        <div class="mx-4 my-1">
+                            <span class="font-semibold">{{ "title.dataset.details.date"|trans }}</span>
+                            <span class="ml-1">{{ dataset.dateUploaded|date }}</span>
 
-                        <div class="mx-4 mt-1">
-                            <span class="font-semibold">{{ "title.dataset.details.date"|trans }}</span><span
-                                    class="ml-1">{{ dataset.dateUploaded|date }}</span>
-                            <span class="font-semibold">{{ "title.dataset.details.size"|trans }}</span><span
-                                    class="ml-1">{{ bytesToSize(dataset.originalSize) }}</span>
+                            <span class="font-semibold">{{ "title.dataset.details.size"|trans }}</span>
+                            <span class="ml-1">{{ bytesToSize(dataset.originalSize) }}</span>
                         </div>
 
                         {{ editDescription(dataset, loop.index, path('File-update_description', { 'uuid': dataset.id })) }}

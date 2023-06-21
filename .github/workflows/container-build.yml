@@ -9,7 +9,7 @@ on:
         required: true
       build-stage:
         type: string
-        description: 'Type: dev/stg/prod'
+        description: 'Type: dev/prod'
         required: true
         default: dev
 

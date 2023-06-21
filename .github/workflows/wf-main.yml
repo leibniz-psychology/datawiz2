@@ -9,20 +9,11 @@ jobs:
     uses: ./.github/workflows/e2e.yml
     secrets: inherit
 
-  call-container-build-workflow-dev:
+  call-container-build-workflow:
     needs:
       - call-e2e-workflow
     uses: ./.github/workflows/container-build.yml
     with:
-      container-tag: latest-dev
-      build-stage: dev
-    secrets: inherit
-
-  call-container-build-workflow-stg:
-    needs:
-      - call-e2e-workflow
-    uses: ./.github/workflows/container-build.yml
-    with:
-      container-tag: latest-stg
-      build-stage: stg
+      container-tag: latest
+      build-stage: prod
     secrets: inherit

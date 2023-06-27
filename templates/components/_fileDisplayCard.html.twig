@@ -1,0 +1,79 @@
+{% macro fileDisplayCard(file, type, loopIndex) %}
+    {% from "components/_macros.html.twig" import bytesToSize %}
+    <li class="pt-3 pb-4 mt-2 first:mt-0 bg-mono-100">
+        <div class="bg-mono-100">
+            <h4 class="flex justify-between mx-4">
+                <span class="text-lg font-semibold text-zpid-purple-700">
+                    {{ file.originalName }}
+                </span>
+
+                <div {{ stimulus_controller('modal', {
+                    'onSubmit': 'postToUrl',
+                    'url': path('File-delete_' ~ type, { "uuid": file.id })
+                }) }}>
+                    {{ include('components/_deleteModal.html.twig', {
+                        'title': "title.dataset.deleteModal.title",
+                        'description': 'title.' ~ type ~ '.deleteModal.body',
+                        'confirm': 'title.' ~ type ~ '.deleteModal.confirm',
+                        'name': file.originalName
+                    }) }}
+
+                    <button class="self-start ml-2 Button_tertiary_danger Button_standalone" {{ stimulus_action('modal', 'openModal') }}>
+                        {{ include('components/icons/delete.svg') }}
+                        {{ "generic.delete"|trans }}
+                    </button>
+                </div>
+            </h4>
+
+            <div class="mx-4 my-1">
+                <span class="font-semibold">{{ "title.dataset.details.date"|trans }}</span>
+                <span class="ml-1">{{ file.dateUploaded|date }}</span>
+
+                <span class="font-semibold">{{ "title.dataset.details.size"|trans }}</span>
+                <span class="ml-1">{{ bytesToSize(file.originalSize) }}</span>
+            </div>
+
+            {{ _self.editDescription(file, loopIndex, path('File-update_description', { 'uuid': file.id })) }}
+
+            {% if type == 'dataset' %}
+                <div class="flex mx-4 mt-4">
+                    <a href="{{ path('codebook_index', {uuid: file.id}) }}"
+                       class="Button_secondary_go Button_standalone">
+                        {{ include('components/icons/table-edit.svg') }}
+                        {{ "link.edit.codebook"|trans }}
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </li>
+{% endmacro %}
+
+
+{% macro editDescription(file, loopIndex, updateURL) %}
+    <div class="mx-4" x-data="{...fileManagement()}" x-init="descriptionText = '{{ file.description }}'">
+        <label class="inline-block font-semibold" for="file-desc-{{ loopIndex }}"
+               x-show="showInput || descriptionText !== ''" x-cloak>{{ "generic.description"|trans }}</label>
+        <button @click="showInput = true; focusInput('#file-desc-{{ loopIndex }}');" type="button"
+                x-text="descriptionText === '' ? '{{ "title.dataset.description.add"|trans }}' : '{{ "title.dataset.description.edit"|trans }}'"
+                x-show="!showInput" x-cloak class="Button_secondary_act Button_fieldSize">
+            {% if file.description %}
+                {{ "title.dataset.description.edit"|trans }}
+            {% else %}
+                {{ "title.dataset.description.add"|trans }}
+            {% endif %}
+        </button>
+        <div x-show="!showInput && descriptionText !== ''" class="p-1 border rounded-sm bg-mono-200"
+             x-text="descriptionText" x-cloak>{{ file.description }}</div>
+
+        <div x-show="showInput" x-cloak>
+            <textarea x-ref="descriptionInput" rows="3" id="file-desc-{{ loopIndex }}" name="file-desc-{{ loopIndex }}"
+                      class="w-full file-desc-textarea">{{ file.description }}</textarea>
+            <div class="">
+                <button class="Button_secondary_act Button_fieldSize"
+                        @click="saveDescription(`{{ updateURL }}`, $refs.descriptionInput.value); descriptionText = $refs.descriptionInput.value; showInput = false">{{ "generic.save-changes"|trans }}</button>
+                <button class="Button_tertiary_act Button_fieldSize"
+                        @click="showInput = false">{{ "generic.cancel"|trans }}</button>
+            </div>
+        </div>
+    </div>
+{% endmacro %}

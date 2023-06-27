@@ -144,35 +144,6 @@
     {% endif %}
 {% endmacro %}
 
-{% macro editDescription(file, loopIndex, updateURL) %}
-    <div class="mx-4" x-data="{...fileManagement()}" x-init="descriptionText = '{{ file.description }}'">
-        <label class="inline-block font-semibold" for="file-desc-{{ loopIndex }}"
-               x-show="showInput || descriptionText !== ''" x-cloak>{{ "generic.description"|trans }}</label>
-        <button @click="showInput = true; focusInput('#file-desc-{{ loopIndex }}');" type="button"
-                x-text="descriptionText === '' ? '{{ "title.dataset.description.add"|trans }}' : '{{ "title.dataset.description.edit"|trans }}'"
-                x-show="!showInput" x-cloak class="Button_secondary_act Button_fieldSize">
-            {% if file.description %}
-                {{ "title.dataset.description.edit"|trans }}
-            {% else %}
-                {{ "title.dataset.description.add"|trans }}
-            {% endif %}
-        </button>
-        <div x-show="!showInput && descriptionText !== ''" class="p-1 border rounded-sm bg-mono-200"
-             x-text="descriptionText" x-cloak>{{ file.description }}</div>
-
-        <div x-show="showInput" x-cloak>
-            <textarea x-ref="descriptionInput" rows="3" id="file-desc-{{ loopIndex }}" name="file-desc-{{ loopIndex }}"
-                      class="w-full file-desc-textarea">{{ file.description }}</textarea>
-            <div class="">
-                <button class="Button_secondary_act Button_fieldSize"
-                        @click="saveDescription(`{{ updateURL }}`, $refs.descriptionInput.value); descriptionText = $refs.descriptionInput.value; showInput = false">{{ "generic.save-changes"|trans }}</button>
-                <button class="Button_tertiary_act Button_fieldSize"
-                        @click="showInput = false">{{ "generic.cancel"|trans }}</button>
-            </div>
-        </div>
-    </div>
-{% endmacro %}
-
 {% macro dropzoneTemplate() %}
     <div class="dz-message " data-dz-message>
         <button class="Button_primary_act Button_standalone m-auto"

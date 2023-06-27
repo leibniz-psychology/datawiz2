@@ -1,10 +1,9 @@
 {% extends "layouts/threeColumn.html.twig" %}
-{% from "components/_macros.html.twig" import bytesToSize %}
-{% from "components/_macros.html.twig" import editDescription %}
 {% from "components/_macros.html.twig" import helpButton %}
 {% from "components/_macros.html.twig" import sectionHelp %}
 {% from "components/_macros.html.twig" import formHelp %}
 {% from "components/_macros.html.twig" import dropzoneTemplate %}
+{% from "components/_fileDisplayCard.html.twig" import fileDisplayCard %}
 
 {% set isPartOfStudyDocumentation = true %}
 
@@ -33,42 +32,7 @@
     {% if (experiment.additionalMaterials|length) > 0 %}
         <ul class="mx-6">
             {% for material in experiment.additionalMaterials %}
-                <li class="pt-3 pb-4 mt-2 first:mt-0 bg-mono-100">
-                    <div class="bg-mono-100">
-                        <h4 class="flex justify-between mx-4">
-                            <span class="text-lg font-semibold font-">
-                                {{ material.originalName }}
-                            </span>
-
-                            <div {{ stimulus_controller('modal', {
-                                'onSubmit': 'postToUrl',
-                                'url': path('File-delete_material', { "uuid": material.id })
-                            }) }}>
-                                {{ include('components/_deleteModal.html.twig', {
-                                    'title': "title.dataset.deleteModal.title",
-                                    'description': 'title.material.deleteModal.body',
-                                    'confirm': 'title.material.deleteModal.confirm',
-                                    'name': material.originalName
-                                }) }}
-
-                                <button class="self-start ml-2 Button_tertiary_danger Button_standalone" {{ stimulus_action('modal', 'openModal') }}>
-                                    {{ include('components/icons/delete.svg') }}
-                                    {{ "generic.delete"|trans }}
-                                </button>
-                            </div>
-                        </h4>
-
-                        <div class="mx-4 my-1">
-                            <span class="font-semibold">{{ "title.dataset.details.date"|trans }}</span>
-                            <span class="ml-1">{{ material.dateUploaded|date }}</span>
-
-                            <span class="font-semibold">{{ "title.dataset.details.size"|trans }}</span>
-                            <span class="ml-1">{{ bytesToSize(material.originalSize) }}</span>
-                        </div>
-
-                        {{ editDescription(material, loop.index, path('File-update_description', { 'uuid': material.id })) }}
-                    </div>
-                </li>
+                    {{ fileDisplayCard(material, 'material', loop.index) }}
             {% endfor %}
         </ul>
     {% else %}

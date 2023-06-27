@@ -1,10 +1,9 @@
 {% extends "layouts/threeColumn.html.twig" %}
-{% from "components/_macros.html.twig" import bytesToSize %}
-{% from "components/_macros.html.twig" import editDescription %}
 {% from "components/_macros.html.twig" import helpButton %}
 {% from "components/_macros.html.twig" import sectionHelp %}
 {% from "components/_macros.html.twig" import formHelp %}
 {% from "components/_macros.html.twig" import dropzoneTemplate %}
+{% from "components/_fileDisplayCard.html.twig" import fileDisplayCard %}
 
 {% set isPartOfStudyDocumentation = true %}
 
@@ -38,50 +37,7 @@
     {% if experiment.originalDatasets|length > 0 %}
         <ul class="mx-6">
             {% for dataset in experiment.originalDatasets %}
-                <li class="pt-3 pb-4 mt-2 first:mt-0 bg-mono-100">
-                    <div class="bg-mono-100">
-                        <h4 class="flex justify-between mx-4">
-                            <span class="text-lg font-semibold text-zpid-purple-700">
-                                {{ dataset.originalName }}
-                            </span>
-
-                            <div {{ stimulus_controller('modal', {
-                                'onSubmit': 'postToUrl',
-                                'url': path('File-delete_dataset', { "uuid": dataset.id })
-                            }) }}>
-                                {{ include('components/_deleteModal.html.twig', {
-                                    'title': "title.dataset.deleteModal.title",
-                                    'description': 'title.dataset.deleteModal.body',
-                                    'confirm': 'title.dataset.deleteModal.confirm',
-                                    'name': dataset.originalName
-                                }) }}
-
-                                <button class="self-start ml-2 Button_tertiary_danger Button_standalone" {{ stimulus_action('modal', 'openModal') }}>
-                                    {{ include('components/icons/delete.svg') }}
-                                    {{ "generic.delete"|trans }}
-                                </button>
-                            </div>
-                        </h4>
-
-                        <div class="mx-4 my-1">
-                            <span class="font-semibold">{{ "title.dataset.details.date"|trans }}</span>
-                            <span class="ml-1">{{ dataset.dateUploaded|date }}</span>
-
-                            <span class="font-semibold">{{ "title.dataset.details.size"|trans }}</span>
-                            <span class="ml-1">{{ bytesToSize(dataset.originalSize) }}</span>
-                        </div>
-
-                        {{ editDescription(dataset, loop.index, path('File-update_description', { 'uuid': dataset.id })) }}
-
-                        <div class="flex mx-4 mt-4">
-                            <a href="{{ path('codebook_index', {uuid: dataset.id}) }}"
-                               class="Button_secondary_go Button_standalone">
-                                {{ include('components/icons/table-edit.svg') }}
-                                {{ "link.edit.codebook"|trans }}
-                            </a>
-                        </div>
-                    </div>
-                </li>
+                    {{ fileDisplayCard(dataset, 'dataset', loop.index) }}
             {% endfor %}
         </ul>
     {% else %}

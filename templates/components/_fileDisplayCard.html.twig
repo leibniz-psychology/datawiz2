@@ -29,7 +29,7 @@
                 <span class="font-semibold">{{ "title.dataset.details.date"|trans }}</span>
                 <span class="ml-1">{{ file.dateUploaded|date }}</span>
 
-                <span class="font-semibold">{{ "title.dataset.details.size"|trans }}</span>
+                <span class="ml-2 font-semibold">{{ "title.dataset.details.size"|trans }}</span>
                 <span class="ml-1">{{ bytesToSize(file.originalSize) }}</span>
             </div>
 
@@ -52,34 +52,33 @@
 {% macro editDescription(file, loopIndex, updateURL) %}
     <div class="mx-4" {{ stimulus_controller('text-edit', {url: updateURL, text: file.description}) }}>
         {% if file.description %}
-            <label class="inline-block font-semibold" for="file-desc-{{ loopIndex }}">
-                {{ "generic.description"|trans }}
-            </label>
+            <p class="p-1 border rounded-sm bg-mono-200 mt-2" {{ stimulus_target('text-edit', 'displayArea') }}>{{ file.description }}</p>
         {% endif %}
 
         <span {{ stimulus_target('text-edit', 'displayArea') }}>
-            <button type="button" class="Button_secondary_act Button_fieldSize" {{ stimulus_action('text-edit', 'edit') }}>
-                {% if file.description %}
+            {% if file.description %}
+                <button type="button" class="Button_secondary_act Button_fieldSize mt-2" {{ stimulus_action('text-edit', 'edit') }}>
+                    {{ include('components/icons/edit.svg') }}
                     {{ "title.dataset.description.edit"|trans }}
-                {% else %}
+                </button>
+            {% else %}
+                <button type="button" class="Button_secondary_act Button_fieldSize mt-2" {{ stimulus_action('text-edit', 'edit') }}>
+                    {{ include('components/icons/add.svg') }}
                     {{ "title.dataset.description.add"|trans }}
-                {% endif %}
-            </button>
+                </button>
+            {% endif %}
         </span>
-
-        {% if file.description %}
-            <p class="p-1 border rounded-sm bg-mono-200" {{ stimulus_target('text-edit', 'displayArea') }}>{{ file.description }}</p>
-        {% endif %}
 
         <div class="hidden" {{ stimulus_target('text-edit', 'inputArea') }}>
             <textarea rows="3" id="file-desc-{{ loopIndex }}" name="file-desc-{{ loopIndex }}"
                       {{ stimulus_target('text-edit', 'input') }}
-                      class="w-full file-desc-textarea">{{ file.description }}</textarea>
-            <div class="">
-                <button class="Button_secondary_act Button_fieldSize" {{ stimulus_action('text-edit', 'submit') }}>
+                      class="w-full file-desc-textarea mt-2">{{ file.description }}</textarea>
+            <div class="flex flex-row mt-2">
+                <button class="Button_primary_act Button_fieldSize" {{ stimulus_action('text-edit', 'submit') }}>
+                    {{ include('components/icons/save.svg') }}
                     {{ "generic.save-changes"|trans }}
                 </button>
-                <button class="Button_tertiary_act Button_fieldSize" {{ stimulus_action('text-edit', 'cancel') }}>
+                <button class="Button_tertiary_danger Button_fieldSize" {{ stimulus_action('text-edit', 'cancel') }}>
                     {{ "generic.cancel"|trans }}
                 </button>
             </div>

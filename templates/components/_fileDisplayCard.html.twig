@@ -51,25 +51,25 @@
 
 {% macro editDescription(file, loopIndex, updateURL) %}
     <div class="mx-4" {{ stimulus_controller('text-edit', {url: updateURL, text: file.description}) }}>
-        <label class="inline-block font-semibold" for="file-desc-{{ loopIndex }}" {{ stimulus_target('text-edit', 'hideWhenEmpty') }}>
-            {{ "generic.description"|trans }}
-        </label>
-        <div {{ stimulus_target('text-edit', 'displayArea') }}>
-            <button type="button" class="Button_secondary_act Button_fieldSize hidden"
-                    {{ stimulus_action('text-edit', 'edit') }}>
-                <span {{ stimulus_target('text-edit', 'showWhenEmpty') }}>
-                    {{ "title.dataset.description.add"|trans }}
-                </span>
-                <span class="hidden" {{ stimulus_target('text-edit', 'hideWhenEmpty') }}>
-                    {{ "title.dataset.description.edit"|trans }}
-                </span>
-            </button>
+        {% if file.description %}
+            <label class="inline-block font-semibold" for="file-desc-{{ loopIndex }}">
+                {{ "generic.description"|trans }}
+            </label>
+        {% endif %}
 
-            <p class="p-1 border rounded-sm bg-mono-200 hidden"
-                    {{ stimulus_target('text-edit', 'display') }}>
-                {{ file.description }}
-            </p>
-        </div>
+        <span {{ stimulus_target('text-edit', 'displayArea') }}>
+            <button type="button" class="Button_secondary_act Button_fieldSize" {{ stimulus_action('text-edit', 'edit') }}>
+                {% if file.description %}
+                    {{ "title.dataset.description.edit"|trans }}
+                {% else %}
+                    {{ "title.dataset.description.add"|trans }}
+                {% endif %}
+            </button>
+        </span>
+
+        {% if file.description %}
+            <p class="p-1 border rounded-sm bg-mono-200" {{ stimulus_target('text-edit', 'displayArea') }}>{{ file.description }}</p>
+        {% endif %}
 
         <div class="hidden" {{ stimulus_target('text-edit', 'inputArea') }}>
             <textarea rows="3" id="file-desc-{{ loopIndex }}" name="file-desc-{{ loopIndex }}"

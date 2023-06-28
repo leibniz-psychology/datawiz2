@@ -1,14 +1,10 @@
 import { Controller } from '@hotwired/stimulus';
 import axios from 'axios';
 export default class extends Controller {
-    static targets = [ "displayArea", "display", "inputArea", "input", "hideWhenEmpty", "showWhenEmpty"]
+    static targets = [ "displayArea", "inputArea", "input"]
     static values = {
         url: String,
         text: String,
-    }
-
-    connect() {
-        this.showElementsAccordingToText(this.textValue);
     }
 
     edit(event) {
@@ -38,48 +34,24 @@ export default class extends Controller {
         }
 
         this.toggleEditMode();
-        this.inputTarget.value = this.displayTarget.innerHTML;
+        this.inputTarget.value = this.textValue;
     }
 
     postToUrl(url, value) {
         axios.post(url, value).then((data) => {
-            this.addTextToDisplay(value);
-            this.showElementsAccordingToText(value);
             console.log(data);
+            location.reload();
         }).catch((error) => {
             throw new Error("text-edit-controller: Could not save text: " + error);
         });
     }
 
     toggleEditMode() {
-        this.displayAreaTarget.classList.toggle('hidden');
-        this.inputAreaTarget.classList.toggle('hidden');
+        this.displayAreaTargets.forEach(item => {
+            item.classList.toggle('hidden');
+        });
+        this.inputAreaTargets.forEach(item => {
+            item.classList.toggle('hidden');
+        });
     }
-
-    addTextToDisplay(text) {
-        if (text !== null && text !== undefined) {
-            this.displayTarget.innerHTML = text;
-        }
-    }
-
-    showElementsAccordingToText(text) {
-        if (text.length === 0) {
-            this.hideWhenEmptyTargets.forEach(item => {
-                item.classList.add('hidden');
-            });
-            this.showWhenEmptyTargets.forEach(item => {
-                item.classList.remove('hidden');
-            });
-            this.displayTarget.classList.add('hidden');
-        } else {
-            this.hideWhenEmptyTargets.forEach(item => {
-                item.classList.remove('hidden');
-            });
-            this.showWhenEmptyTargets.forEach(item => {
-                item.classList.add('hidden');
-            });
-            this.displayTarget.classList.remove('hidden');
-        }
-    }
-
 }

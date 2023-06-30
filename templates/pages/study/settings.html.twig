@@ -1,0 +1,95 @@
+{% from "components/_macros.html.twig" import sectionHelp %}
+
+{% extends "layouts/threeColumn.html.twig" %}
+
+{% set isPartOfStudyDocumentation = true %}
+
+{% block title %}
+    {{ "title.settings.title"|trans }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="MetaDataGroup-Title">
+        {{ "title.settings.title"|trans }}
+    </h2>
+
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    <fieldset>
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                {{ "input.documentation-name.legend"|trans }}
+            </legend>
+
+        </div>
+        <div class="MetaData-Label">
+            {{ form_label(form.shortName, null, {
+                'label': 'input.documentation-name.label',
+                'label_attr': {
+                    'class': 'block max-w-prose'
+                },
+            }) }}
+        </div>
+        {{ form_errors(form.shortName) }}
+        <div class="mt-1 md:items-center md:flex MetaData-Widget">
+            {{ form_widget(form.shortName, {
+                'attr': {
+                    'class': 'w-full md:w-3/4',
+                    'x-init': '$el.focus()',
+                }
+            }) }}
+            {{ form_widget(form.submit, {
+                'attr': {
+                    'class': 'Button_primary_act Button_standalone mt-1 md:mt-0 md:ml-2',
+                },
+                'label': "generic.rename"
+            }) }}
+        </div>
+    </fieldset>
+
+
+    <fieldset class="pb-8 mt-[6.25rem]" x-data="modal()" @keydown.window.escape="hide()">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                {{ "input.danger-zone.legend"|trans }}
+            </legend>
+            {# {{ helpButton("title") }} #}
+        </div>
+        <div class="MetaData-Label">
+            {{ "input.danger-zone.label"|trans }}
+        </div>
+        <div class="!p-4 mx-6 border border-red-500 rounded MetaData-Widget mt-2">
+            <h4 class="text-lg font-semibold">{{ "input.danger-zone.delete.title"|trans }}</h4>
+            <div class="">
+                <div class="mt-2">
+                    {{ "input.danger-zone.delete.description"|trans }}
+                </div>
+
+                <div {{ stimulus_controller('modal', {
+                    'onSubmit': 'navigateToUrl',
+                    'url': path('Study-delete', { "uuid": experiment.id })
+                }) }}>
+                    {{ include('components/_deleteModal.html.twig', {
+                        'title': "title.dataset.deleteModal.title",
+                        'description': 'title.settings.deleteModal.body',
+                        'confirm': 'title.settings.deleteModal.confirm',
+                        'name': experiment.settingsMetaDataGroup.shortName,
+                    }) }}
+
+                    <button class="self-start mt-4 Button_secondary_danger Button_standalone"
+                            {{ stimulus_action('modal', 'openModal') }}>
+                        {{ include('components/icons/delete.svg') }}
+                        {{ "input.danger-zone.delete.action"|trans }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("settings") }}
+{% endblock %}

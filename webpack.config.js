@@ -24,12 +24,11 @@ Encore
    * Each entry will result in one JavaScript file (e.g. app.Scripts)
    * and one CSS file (e.g. app.Style) if your JavaScript imports CSS.
    */
-  .addEntry("app", "./src/View/Assets/Scripts/app.js")
-  .addEntry("codebook", "./src/View/Assets/Scripts/app-codebook.js")
-  .addEntry("landing", "./src/View/Assets/Scripts/app-landing.js")
-  //.addEntry('page2', './src/View/Assets/Scripts/page2.Scripts')
+  .addEntry("app", "./assets/app.js")
+  .addEntry("codebook", "./assets/app-codebook.js")
+  .addEntry("landing", "./assets/app-landing.js")
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
-    .enableStimulusBridge('./src/View/Assets/Scripts/controllers.json')
+    .enableStimulusBridge('./assets/controllers.json')
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()
@@ -107,5 +106,5 @@ Encore
 
 // uncomment if you use API Platform Admin (composer req api-admin)
 //.enableReactPreset()
-//.addEntry('admin', './Assets/Scripts/admin.Scripts')
+//.addEntry('admin', './assets/admin.Scripts')
 module.exports = Encore.getWebpackConfig();

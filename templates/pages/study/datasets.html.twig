@@ -1,0 +1,68 @@
+{% extends "layouts/threeColumn.html.twig" %}
+{% from "components/_macros.html.twig" import helpButton %}
+{% from "components/_macros.html.twig" import sectionHelp %}
+{% from "components/_macros.html.twig" import formHelp %}
+{% from "components/_macros.html.twig" import dropzoneTemplate %}
+{% from "components/_fileDisplayCard.html.twig" import fileDisplayCard %}
+
+{% set isPartOfStudyDocumentation = true %}
+
+{% block title %}
+    {{ "title.dataset.title"|trans }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="MetaDataGroup-Title">
+        {{ "title.dataset.title"|trans }}
+    </h2>
+    {{ include("components/_infoBridge.html.twig",{value: experiment.id}) }}
+    <div class="mt-6">
+        <form action="{{ oneup_uploader_endpoint("datasets") }}" data-experiment-id="{{ experiment.id }}"
+              class="mx-6 border-2 !border-dashed border-mono-500 dropzone" id="datawiz-dropzone"
+              data-preview-csv="{{ path("File-preview-csv",{"fileId": " "}) }}"
+              data-submit-csv="{{ path("File-submit-csv",{"fileId": " "}) }}"
+              data-preview-sav="{{ path("File-preview-sav",{"fileId": " "}) }}"
+              data-submit-sav="{{ path("File-submit-sav",{"fileId": " "}) }}"
+        >
+            {{ dropzoneTemplate() }}
+            <input type="hidden" id="dataset-import-data" name="dataset-import-data" value=""/>
+        </form>
+    </div>
+    <div class="mt-6 MetaData-Title">
+        <legend class="MetaData-Legend">
+            {{ "title.dataset.h3"|trans }}
+        </legend>
+        {{ helpButton("my_datasets") }}
+    </div>
+    {% if experiment.originalDatasets|length > 0 %}
+        <ul class="mx-6">
+            {% for dataset in experiment.originalDatasets %}
+                    {{ fileDisplayCard(dataset, 'dataset', loop.index) }}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="mx-6">
+            {{ "title.dataset.empty"|trans }}
+        </p>
+    {% endif %}
+
+    <!-- Modal for importing a dataset -->
+    {{ include('pages/study/_datasetImportModal.html.twig') }}
+
+    {{ render(controller('App\\Controller\\NavigationController::savebarNavigationAction', {
+        request: app.request,
+        prevUrl: 'Study-sample',
+        prevTitle: 'title.samples.title'|trans,
+        nextUrl: 'Study-materials',
+        nextTitle: 'title.material.title-short'|trans,
+        form: null
+    })) }}
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("datasets") }}
+{% endblock %}
+
+{% block help_for_metadata %}
+    {{ formHelp("datasets", "my_datasets", "title.dataset.h3") }}
+{% endblock %}

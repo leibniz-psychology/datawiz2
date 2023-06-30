@@ -1,0 +1,80 @@
+{% extends "layouts/base.html.twig" %}
+
+{% block title %}
+    {{ "title.admin.dashboard.user.open"|trans }}
+{% endblock %}
+
+
+{% block body %}
+    <main class="max-w-screen-xl mx-auto mt-12 min-h-[calc(100%-15.5rem)] mb-12 flex flex-col">
+        <h2 class="flex items-center mx-8 text-3xl font-bold text-zpid-purple-700">
+            {{ "title.admin.dashboard.user.title"|trans }}
+        </h2>
+        <div class="flex mt-4">
+            <div class="relative flex flex-col w-full px-8 pt-6 pb-8 ml-8 mr-8 border border-gray-300 rounded-md bg-gray-50">
+                <table class="data-table text-sm pt-6 stripe">
+                    <thead>
+                    <tr>
+                        <th class="text-left">
+                            {{ "title.admin.dashboard.user.name"|trans }}
+                        </th>
+                        <th class="text-left">
+                            {{ "title.admin.dashboard.user.email"|trans }}
+                        </th>
+                        <th class="text-left">
+                            {{ "title.admin.dashboard.user.registered"|trans }}
+                        </th>
+                        <th class="text-left">
+                            {{ "title.admin.dashboard.user.last"|trans }}
+                        </th>
+                        <th class="text-left">
+                            {{ "title.admin.dashboard.user.roles"|trans }}
+                        </th>
+                        <th class="text-left">
+                            {{ 'title.admin.dashboard.user.action'|trans }}
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for u in user %}
+                        <tr>
+                            <td>{{ u.lastname }},&nbsp;{{ u.firstname }}</td>
+                            <td>{{ u.email }}</td>
+                            <td>{{ u.dateRegistered|date('Y-m-d H:i:s') }}</td>
+                            <td>{{ u.lastLogin|date('Y-m-d H:i:s') }}</td>
+                            <td>
+                                {% for role in u.roles %}
+                                    {% if role != 'ROLE_USER' %}
+                                        <div>{{ "roles.#{role}"|trans }}</div>
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <div class="grid justify-items-stretch">
+                                    <a class="Button_secondary_go Button_standalone text-center mb-3"
+                                       href="{{ path("admin_user_studies", {uid: u.id}) }}" type="button">
+                                        {{ "title.admin.dashboard.user.studies"|trans }}
+                                    </a>
+                                    <a class="Button_primary_go Button_standalone text-center"
+                                       href="{{ path("admin_user_edit", {uid: u.id}) }}" type="button">
+                                        {{ "title.admin.dashboard.user.edit"|trans }}
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div class="flex pt-8 justify-between">
+                    <div>
+                        <a class="underline Button_tertiary_go Button_standalone"
+                           href="{{ path('moderation_dashboard') }}">
+                            {{ include('components/icons/arrow-left.svg') }}
+                            {{ 'link.back'|trans }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

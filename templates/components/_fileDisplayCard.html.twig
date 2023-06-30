@@ -1,0 +1,87 @@
+{% macro fileDisplayCard(file, type, loopIndex) %}
+    {% from "components/_macros.html.twig" import bytesToSize %}
+    <li class="pt-3 pb-4 mt-2 first:mt-0 bg-mono-100">
+        <div class="bg-mono-100">
+            <h4 class="flex justify-between mx-4">
+                <span title="{{ file.originalName }}" class="text-lg font-semibold text-zpid-purple-700 whitespace-nowrap overflow-ellipsis overflow-hidden">
+                    {{ file.originalName }}
+                </span>
+
+                <div {{ stimulus_controller('modal', {
+                    'onSubmit': 'postToUrl',
+                    'url': path('File-delete_' ~ type, { "uuid": file.id })
+                }) }}>
+                    {{ include('components/_deleteModal.html.twig', {
+                        'title': "title.dataset.deleteModal.title",
+                        'description': 'title.' ~ type ~ '.deleteModal.body',
+                        'confirm': 'title.' ~ type ~ '.deleteModal.confirm',
+                        'name': file.originalName
+                    }) }}
+
+                    <button class="self-start ml-2 Button_tertiary_danger Button_standalone" {{ stimulus_action('modal', 'openModal') }}>
+                        {{ include('components/icons/delete.svg') }}
+                        {{ "generic.delete"|trans }}
+                    </button>
+                </div>
+            </h4>
+
+            <div class="mx-4 my-1">
+                <span class="font-semibold">{{ "title.dataset.details.date"|trans }}</span>
+                <span class="ml-1">{{ file.dateUploaded|date }}</span>
+
+                <span class="ml-2 font-semibold">{{ "title.dataset.details.size"|trans }}</span>
+                <span class="ml-1">{{ bytesToSize(file.originalSize) }}</span>
+            </div>
+
+            {{ _self.editDescription(file, loopIndex, path('File-update_description', { 'uuid': file.id })) }}
+
+            {% if type == 'dataset' %}
+                <div class="flex mx-4 mt-4">
+                    <a href="{{ path('codebook_index', {uuid: file.id}) }}"
+                       class="Button_secondary_go Button_standalone">
+                        {{ include('components/icons/table-edit.svg') }}
+                        {{ "link.edit.codebook"|trans }}
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </li>
+{% endmacro %}
+
+
+{% macro editDescription(file, loopIndex, updateURL) %}
+    <div class="mx-4" {{ stimulus_controller('text-edit', {url: updateURL, text: file.description}) }}>
+        {% if file.description %}
+            <p class="p-1 border rounded-sm bg-mono-200 mt-2" {{ stimulus_target('text-edit', 'displayArea') }}>{{ file.description }}</p>
+        {% endif %}
+
+        <span {{ stimulus_target('text-edit', 'displayArea') }}>
+            {% if file.description %}
+                <button type="button" class="Button_secondary_act Button_fieldSize mt-2" {{ stimulus_action('text-edit', 'edit') }}>
+                    {{ include('components/icons/edit.svg') }}
+                    {{ "title.dataset.description.edit"|trans }}
+                </button>
+            {% else %}
+                <button type="button" class="Button_secondary_act Button_fieldSize mt-2" {{ stimulus_action('text-edit', 'edit') }}>
+                    {{ include('components/icons/add.svg') }}
+                    {{ "title.dataset.description.add"|trans }}
+                </button>
+            {% endif %}
+        </span>
+
+        <div class="hidden" {{ stimulus_target('text-edit', 'inputArea') }}>
+            <textarea rows="3" id="file-desc-{{ loopIndex }}" name="file-desc-{{ loopIndex }}"
+                      {{ stimulus_target('text-edit', 'input') }}
+                      class="w-full file-desc-textarea mt-2">{{ file.description }}</textarea>
+            <div class="flex flex-row mt-2">
+                <button class="Button_primary_act Button_fieldSize" {{ stimulus_action('text-edit', 'submit') }}>
+                    {{ include('components/icons/save.svg') }}
+                    {{ "generic.save-changes"|trans }}
+                </button>
+                <button class="Button_tertiary_danger Button_fieldSize" {{ stimulus_action('text-edit', 'cancel') }}>
+                    {{ "generic.cancel"|trans }}
+                </button>
+            </div>
+        </div>
+    </div>
+{% endmacro %}

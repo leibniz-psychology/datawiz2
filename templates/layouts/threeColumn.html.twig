@@ -1,0 +1,44 @@
+{% extends "layouts/base.html.twig" %}
+
+{% block body %}
+    <div class="max-w-screen-xl pl-2 mx-auto flex">
+        <a href="{{ path("Study-overview") }}"
+           class="mt-2 underline Button_tertiary_go Button_standalone justify-self-start">
+            {{ include('components/icons/arrow-left.svg') }}
+            {{ "title.overview.list.header"|trans }}
+        </a>
+    </div>
+    <div class="flex max-w-screen-xl mx-auto mt-2 bg-white gap-x-4 gap-y-1 min-h-[calc(100%-15.75rem)] mb-12">
+        <div class="w-[21%]">
+            <div class="sticky top-0 overflow-hidden border rounded-lg shadow-sm">
+                {{ render(controller('App\\Controller\\NavigationController::sidebarNavigationAction', {request: app.request })) }}
+            </div>
+        </div>
+
+        <div class="w-[49%]">
+            <section class="border rounded-lg shadow-sm bg-mono-50">
+                {% block content %}
+                {% endblock %}
+            </section>
+        </div>
+
+        <div class="w-[30%]">
+            <aside class="sticky top-0 overflow-hidden border rounded-lg shadow-sm bg-white scrollbar scrollbar-thumb-gray-400 scrollbar-thin scrollbar-track-gray-100 max-h-[calc(100vh)] overflow-y-auto">
+                {% block help_for_section %}
+                    <div class="w-full Help-Text Help-Text_section markdown">
+                        <h1>
+                            Help for this section
+                        </h1>
+                        <p>
+                            Help! Anybody?
+                        </p>
+                    </div>
+                {% endblock %}
+                <div>
+                    {% block help_for_metadata %}
+                    {% endblock %}
+                </div>
+            </aside>
+        </div>
+    </div>
+{% endblock %}

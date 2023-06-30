@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    {% include "layouts/_favico.html.twig" %}
+    <title>
+        {% if block("title") is defined %}
+            {{ block("title") }} - {{ "product.name"|trans }}
+        {% else %}
+            {{ "product.name"|trans }} - {{ "product.tagline"|trans }}
+        {% endif %}
+    </title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags("app") }}
+        {{ encore_entry_link_tags("codebook") }}
+    {% endblock %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags("codebook") }}
+    {% endblock %}
+</head>
+<body>
+<div class="grid grid-cols-12 bg-white SiteContainer"
+     x-data="{...codebook(), url: '{{ path('codebook_dataupdate', {uuid: codebook.id}) }}', id: '{{ codebook.id }}', measuresURL: '{{ path('codebook_measures', {uuid: codebook.id}) }}', matrixURL: '{{ path('codebook_matrix', {uuid: codebook.id}) }}' }"
+     x-init="loadMatrix()">
+    {% block header %}
+        <header class="sticky top-0 z-10 flex items-center border-b h-14 border-mono-300 col-span-full bg-mono-50">
+            <a href="{{ path('Study-datasets', {uuid: codebook.experiment.id}) }}"
+               class="flex-shrink-0 ml-2 Button_primary_go Button_standalone"
+               @click="save()">
+                {{ include('components/icons/arrow-left.svg') }}
+                {{ "codebook.nav.goback"|trans }}
+            </a>
+            <button class="ml-4 flex-shrink-0 Button_navigation border-transparent"
+                    :class="$store.codebook.activeTab === 'matrix' ? 'border-b-zpid-blue font-semibold' : ''"
+                    @click="$store.codebook.activeTab = 'matrix'; loadMatrix()">
+                {{ "codebook.nav.matrix"|trans }}
+            </button>
+            <button class="ml-4 flex-shrink-0 Button_navigation border-transparent"
+                    @click="$store.codebook.activeTab = 'codebook'"
+                    :class="$store.codebook.activeTab === 'codebook' ? 'border-b-zpid-blue font-semibold' : ''">
+                {{ "codebook.nav.codebook"|trans }}
+            </button>
+            <div class="ml-12 text-xl text-zpid-purple">
+                {{ include('components/icons/table.svg') }}
+            </div>
+            <span class="w-full ml-0.5 mr-6 overflow-x-hidden font-semibold text-zpid-purple whitespace-nowrap overflow-ellipsis">
+                {{ codebook.originalName }}
+            </span>
+
+            <div class="flex justify-end mr-2" x-show="$store.codebook.activeTab === 'matrix' && matrix.length !== 0"
+                 x-cloak>
+                <div class="flex items-center mr-3 animate-spin text-2xl" x-show="reloadingMatrix" x-cloak>
+                    {{ include('components/icons/spinner.svg') }}
+                </div>
+                <div class="flex items-center flex-shrink-0 bg-white">
+                    <button class="flex items-center px-2 py-0.5 bg-white border border-gray-300 rounded-tl rounded-bl text-mono-900 shadow-sm text-2xl"
+                            @click="if (!isPageStart()) {reloadingMatrix = true; showPage--}"
+                            @click.debounce.500ms="if (reloadingMatrix) loadMatrix();"
+                            title="{{ "codebook.matrix.previous"|trans }}">
+                        {{ include('components/icons/caret-left.svg') }}
+                    </button>
+                    <div x-text="`${(showPage - 1) * maxEntries + 1}-${Math.min(showPage * maxEntries, entries)} {{ "generic.of"|trans }} ${entries}`"
+                         class="border-t border-b py-0.5 text-center min-w-[17ch]">
+                    </div>
+                    <button class="flex items-center px-2 py-0.5 bg-white border border-gray-300 rounded-tr-md rounded-br-md text-mono-900 shadow-sm text-2xl"
+                            @click="if (!isPageEnd()) {reloadingMatrix = true; showPage++}"
+                            @click.debounce.500ms="if (reloadingMatrix) loadMatrix();"
+                            title="{{ 'codebook.matrix.next'|trans }}">
+                        {{ include('components/icons/caret-right.svg') }}
+                    </button>
+                    <span class="ml-6">
+                        <select x-model="maxEntries"
+                                class="inline-block px-1 py-0.5 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none"
+                                @change="showPage = 1; reloadingMatrix = true; loadMatrix()">
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        {{ "codebook.matrix.items"|trans }}
+                    </span>
+                </div>
+            </div>
+            <div class="flex items-center justify-end mr-2 gap-x-2" x-show="$store.codebook.activeTab === 'codebook'"
+                 x-cloak>
+                <div class="relative" @keyup.escape="$store.codebook.filterText = ''">
+                    <input x-data="{tooltip: '{{ 'codebook.search.tooltip'|trans }}'}" type="text" name=""
+                           id="filter"
+                           placeholder="{{ 'codebook.search.placeholder'|trans }}"
+                           x-model.debounce="$store.codebook.filterText"
+                           class="!pl-8 !pr-7 !py-[0.1875rem] border rounded-full border-mono-500 SearchInput"
+                           x-tooltip.on.focus.theme.light-border="tooltip"
+                           @keyup="tooltip = null" @blur="tooltip = '{{ 'codebook.search.tooltip'|trans }}'">
+
+                    <button aria-label="{{ "generic.clear-search"|trans }}"
+                            class="absolute top-0 bottom-0 right-0 flex items-center w-6 p-0 my-1 mr-2 bg-transparent border-none rounded-none shadow-none hover:bg-transparent text-xl"
+                            @click="$store.codebook.filterText = ''" x-show="$store.codebook.filterText !== ''" x-cloak>
+                        {{ include('components/icons/close.svg') }}
+                    </button>
+                </div>
+                <button class="Button_secondary_act Button_standalone"
+                        type="button"
+                        @click="$store.codebookSettings.showHelp.sideBar = !$store.codebookSettings.showHelp.sideBar">
+                    <span class="inline-block w-4 h-4 text-xs border rounded-full border-mono-500">?</span>
+                    {{ "generic.help"|trans }}
+                </button>
+                <button class="Button_primary_act Button_standalone"
+                        @click="save()" type="button">
+                    {{ include('components/icons/save.svg') }}
+                    {{ "generic.save"|trans }}
+                </button>
+            </div>
+        </header>
+    {% endblock %}
+    {% block body %}{% endblock %}
+    {# {{ include("components/_footer.html.twig") }} #}
+</div>
+</body>
+</html>

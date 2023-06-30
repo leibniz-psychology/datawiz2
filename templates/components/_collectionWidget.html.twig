@@ -1,0 +1,45 @@
+{{ form_label(collection) }}
+{{ form_errors(collection) }}
+<div class="MetaData-Widget MetaData-Widget_collection{% if partOfCollection is defined and (partOfCollection == true) %} !px-4{% endif %}"
+        {{ stimulus_controller('collection-widget', {
+            counter: collection|length,
+            widgetPrototype: _self.widget(collection.vars.prototype, removeTxt, condensed|default(false)),
+        }) }}>
+
+    <ul id="{{ id }}" {{ stimulus_target('collection-widget', 'list') }} class="{% if listClass is defined %}{{ listClass }}{% endif %}">
+        {% for item in collection %}
+            {{ _self.widget(item, removeTxt, condensed|default(false)) }}
+        {% endfor %}
+    </ul>
+
+    <button type="button"
+            class="mt-2 Button_secondary_act Button_fieldSize"
+            {{ stimulus_action('collection-widget', 'addItemToCollection') }}>
+        {{ include('components/icons/add.svg') }}
+        {{ addTxt|trans }}
+    </button>
+</div>
+
+{% macro widget(item, removeTxt, condensed) %}
+    <li class="flex mt-2 {% if condensed is defined and (condensed == true) %}items-center{% else %}items-start{% endif %}">
+        {{ form_widget(item) }}
+        {{ _self.removeButton(removeTxt, condensed) }}
+    </li>
+{% endmacro %}
+
+{% macro removeButton(removeTxt, condensed) %}
+    {% if condensed is defined and (condensed == true) %}
+        <button type="button"
+                class="!rounded-l-none Button_tertiary_danger Button_fieldSize"
+                {{ stimulus_action('collection-widget', 'removeItemFromCollection') }}
+                title="{{ removeTxt|trans }}">
+            {{ include('components/icons/delete.svg') }}
+        </button>
+    {% else %}
+        <button type="button"
+                {{ stimulus_action('collection-widget', 'removeItemFromCollection') }}
+                class="ml-1 Button_tertiary_danger Button_fieldSize">
+            {{ removeTxt|trans }}
+        </button>
+    {% endif %}
+{% endmacro %}

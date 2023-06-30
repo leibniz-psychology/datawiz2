@@ -1,0 +1,36 @@
+{% if app.user %}
+    <div class="flex h-full mr-auto">
+        <a href="{{ path("dashboard") }}"
+           class="Button_navigation border-transparent
+            {{- app.request.pathinfo == path("dashboard") ? ' border-zpid-blue font-semibold' -}}">
+            {{ include('components/icons/view-grid.svg') }}
+            {{ "title.dashboard.title"|trans }}
+        </a>
+
+        <a href="{{ path("Study-overview") }}"
+           class="ml-4 Button_navigation border-transparent
+            {{- isPartOfStudyDocumentation|default(false) ? ' border-zpid-blue font-semibold' -}}">
+            <div>
+                {{ "title.dashboard.modules.documentation.title"|trans }}
+            </div>
+        </a>
+        {% if is_granted("ROLE_REVIEWER") %}
+            {# <a href="{{ path("admin_dashboard") }}"
+               class="flex items-center ring-inset h-full px-3 ml-4 text-base pt-1 border-b-4 border-transparent hover:border-zpid-blue
+            #}{# {{- app.request.pathinfo == path("admin_dashboard") ? ' border-zpid-blue font-semibold' -}} #}{# ">
+                <div>
+                    {{ "title.reviewer.dashboard.title"|trans }}
+                </div>
+            </a> #}
+        {% endif %}
+        {% if is_granted("ROLE_REVIEWER") %}
+            <a href="{{ path("moderation_dashboard") }}"
+               class="ml-4 Button_navigation border-transparent
+                {{- app.request.pathinfo starts with '/moderation' or app.request.pathinfo starts with '/admin' ? ' border-zpid-blue font-semibold' -}}">
+                <div>
+                    {{ "title.admin.dashboard.title.panel"|trans }}
+                </div>
+            </a>
+        {% endif %}
+    </div>
+{% endif %}

@@ -18,15 +18,10 @@ services:
         exclude:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
-            - '../src/Migrations/'
-            - '../src/Tests/'
             - '../src/Kernel.php'
-            - '../src/Domain/Model' # our Entity/ folder
-            - '../src/Domain/Definition' # not services but input for the Model
-            - '../src/Domain/State/Migrations' # our Migrations/ folder
 
 
-    App\Api\Spss\SpssApiClient:
+    App\Service\Api\SpssApiClient:
         arguments:
             $spss_uri: '%env(SPSS_API_URI)%'
 
@@ -35,14 +30,14 @@ services:
 
     # use custom markdown parser that can be extended with markdown extra features
     twig.markdown.default:
-        class: 'App\View\Templates\Twig\CommonMarkdown'
+        class: 'App\Twig\CommonMarkdown'
 
     app.api.spss:
-        class: App\Api\Spss\SpssApiClient
+        class: App\Service\Api\SpssApiClient
         arguments:
-            - '@oneup_flysystem.assets_filesystem'
+            - '@oneup_flysystem.dataset_filesystem'
 
     io.format.csv.import:
-        class: App\Io\Formats\Csv\CsvImportable
+        class: App\Service\Io\Formats\CsvImportable
         arguments:
-            - '@oneup_flysystem.assets_filesystem'
+            - '@oneup_flysystem.dataset_filesystem'

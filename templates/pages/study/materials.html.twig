@@ -1,0 +1,61 @@
+{% extends "layouts/threeColumn.html.twig" %}
+{% from "components/_macros.html.twig" import helpButton %}
+{% from "components/_macros.html.twig" import sectionHelp %}
+{% from "components/_macros.html.twig" import formHelp %}
+{% from "components/_macros.html.twig" import dropzoneTemplate %}
+{% from "components/_fileDisplayCard.html.twig" import fileDisplayCard %}
+
+{% set isPartOfStudyDocumentation = true %}
+
+{% block title %}
+    {{ "title.material.title"|trans }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="MetaDataGroup-Title">
+        {{ "title.material.title"|trans }}
+    </h2>
+    {{ include("components/_infoBridge.html.twig",{value: experiment.id}) }}
+    <div class="mt-6">
+        <form action="{{ oneup_uploader_endpoint("materials") }}"
+              class="mx-6 border-2 !border-dashed border-mono-500 dropzone"
+              id="datawiz-dropzone">
+            {{ dropzoneTemplate() }}
+        </form>
+    </div>
+    <div class="mt-6 MetaData-Title">
+        <legend class="MetaData-Legend">
+            {{ "title.material.h3"|trans }}
+        </legend>
+        {{ helpButton("my_materials") }}
+    </div>
+    {% if (experiment.additionalMaterials|length) > 0 %}
+        <ul class="mx-6">
+            {% for material in experiment.additionalMaterials %}
+                    {{ fileDisplayCard(material, 'material', loop.index) }}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="mx-6">
+            {{ "title.material.empty"|trans }}
+        </p>
+    {% endif %}
+
+    {{ render(controller('App\\Controller\\NavigationController::savebarNavigationAction', {
+        request: app.request,
+        prevUrl: 'Study-datasets',
+        prevTitle: 'title.dataset.title-short'|trans,
+        nextUrl: 'Study-review',
+        nextTitle: 'title.review.title'|trans,
+        form: null
+    })) }}
+
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("materials") }}
+{% endblock %}
+
+{% block help_for_metadata %}
+    {{ formHelp("materials", "my_materials", "title.material.h3") }}
+{% endblock %}

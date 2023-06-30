@@ -1,0 +1,33 @@
+{% extends "layouts/base.html.twig" %}
+
+{% block title %}
+    {{ "title.admin.dashboard.user.edit"|trans }}
+{% endblock %}
+
+
+{% block body %}
+    <main class="max-w-screen-xl mx-auto mt-12 min-h-[calc(100%-15.5rem)] mb-12 flex flex-col ">
+        <div class="flex mt-4 justify-center">
+            <div class="relative flex flex-col w-1/2 px-8 pt-6 pb-8 ml-8 mr-8 border border-gray-300 rounded-md bg-gray-50">
+                {{ form_start(userForm) }}
+                {{ form_row(userForm.firstname) }}
+                {{ form_row(userForm.lastname) }}
+                {{ form_row(userForm.email) }}
+                <div>
+                    {{ form_row(userForm.roles) }}
+                </div>
+                <div class="flex pt-8 justify-between">
+                    <div>
+                        <a class="underline Button_tertiary_go Button_standalone"
+                           href="{{ path('admin_user') }}">
+                            {{ include('components/icons/arrow-left.svg') }}
+                            Back to user overview
+                        </a>
+                    </div>
+                    <div>{{ form_row(userForm.save) }}</div>
+                </div>
+                {{ form_end(userForm) }}
+            </div>
+        </div>
+    </main>
+{% endblock %}

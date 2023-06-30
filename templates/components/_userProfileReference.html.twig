@@ -1,0 +1,18 @@
+{% if app.environment != "test" %}
+    <div class="flex items-center justify-end h-full ml-auto">
+        {% if app.user %}
+            <a href="{{ path("Security-logout") }}"
+               class="Button_navigation border-transparent"
+               title="{{ 'link.user.logout'|trans({'#userEmail#':app.user.email}) }}">
+                {{ include('components/icons/logout.svg') }}
+                {{ "link.user.logout-short"|trans }}
+            </a>
+        {% else %}
+            <a href="{{ path("Security-login") }}"
+               class="Button_navigation border-transparent">
+                {{ include('components/icons/login.svg') }}
+                {{ "link.user.login"|trans }}
+            </a>
+        {% endif %}
+    </div>
+{% endif %}

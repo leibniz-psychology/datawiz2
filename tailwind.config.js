@@ -5,9 +5,9 @@ module.exports = {
   mode: "layers",
   layers: ["components", "utilities"],
   content: [
-    "./src/View/Templates/**/*.html.twig",
+    "./templates/**/*.html.twig",
     "./src/Questionnaire/Forms/**/*.php",
-    "./src/View/Assets/Scripts/**/*.js",
+    "./assets/**/*.js",
     "./translations/help_markdown.en.yaml",
   ],
   theme: {
@@ -78,7 +78,7 @@ module.exports = {
         xl: "1440px",
       },
       backgroundImage: {
-        "header-cyan": "url('../Images/header_cyan.jpg')",
+        "header-cyan": "url('/public/images/header_cyan.jpg')",
       },
     },
   },

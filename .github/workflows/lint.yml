@@ -1,0 +1,138 @@
+---
+name: Lint
+
+on:
+  workflow_call:
+
+env:
+  fail-fast: true
+
+permissions:
+  contents: read
+
+jobs:
+  lint-commit-message:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Print versions
+        run: |
+          git --version
+          node --version
+          yarn --version
+          npx commitlint --version
+
+      - name: Install commitlint
+        run: |
+          yarn add conventional-changelog-conventionalcommits
+          yarn add commitlint@latest
+
+      - name: Validate current commit (last commit) with commitlint
+        if: github.event_name == 'push'
+        run: npx commitlint --from HEAD~1 --to HEAD --verbose
+
+      - name: Validate PR commits with commitlint
+        if: github.event_name == 'pull_request'
+        run: npx commitlint --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }} --verbose
+
+
+  lint-files:
+    name: lint and style
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-version: [ '8.2' ]
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Lint readme file
+        uses: DavidAnson/markdownlint-cli2-action@v9
+        with:
+          globs: |
+            **/*.md
+            #node_modules
+            #vendor
+            #tools
+
+      - name: PHP CS Fixer
+        uses: docker://oskarstark/php-cs-fixer-ga
+        with:
+          args: --config=.php-cs-fixer.php --dry-run --diff --verbose
+
+      - name: "Install PHP with extensions"
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          tools: composer:v2
+
+      - name: "Set composer cache directory"
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: "Cache composer"
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-${{ matrix.php-version }}-composer-${{ hashFiles('composer.lock') }}
+          restore-keys: ${{ runner.os }}-${{ matrix.php-version }}-composer-
+
+      - name: "Composer install"
+        run: composer install --no-interaction --no-progress
+
+      - name: Install PHPUnit
+        id: install
+        run: vendor/bin/simple-phpunit install
+
+      - name: Lint YAML files
+        if: always() && steps.install.outcome == 'success'
+        run: ./bin/console lint:yaml .github/workflows config/ translations/ --parse-tags
+
+      - name: Lint Twig templates
+        if: always() && steps.install.outcome == 'success'
+        run: ./bin/console lint:twig
+
+      - name: Lint Parameters and Services
+        if: always() && steps.install.outcome == 'success'
+        run: ./bin/console lint:container --no-debug
+
+      - name: Lint Doctrine entities
+        if: always() && steps.install.outcome == 'success'
+        run: ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction
+
+      - name: Lint Composer config
+        if: always() && steps.install.outcome == 'success'
+        run: composer validate --strict
+
+
+  lint-dockerfile:
+    name: Lint Dockerfiles
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Collect lint results for dockerfile
+        uses: hadolint/hadolint-action@v3.0.0
+        with:
+          dockerfile: ".github/**/*.Dockerfile"
+          recursive: true
+          output-file: hadolint.validation
+          format: tty
+          no-fail: true
+
+      - name: Print hadolint output
+        run: cat hadolint.validation
+
+      - name: Lint dockerfile (fail on error)
+        uses: hadolint/hadolint-action@v3.0.0
+        with:
+          dockerfile: ".github/**/*.Dockerfile"
+          recursive: true
+          output-file: hadolint.validation
+          format: tty
+          no-fail: false

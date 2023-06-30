@@ -1,0 +1,99 @@
+.Button {
+  @apply border border-transparent rounded-md;
+  @apply Button_with_icon;
+}
+
+.Button_standalone {
+  @apply px-4 py-[0.3125rem];
+}
+
+.Button_fieldSize {
+  @apply px-3 py-[0.1875rem];
+}
+
+.Button_primary {
+  @apply Button;
+  @apply text-white shadow hover:shadow-md;
+}
+
+.Button_secondary {
+  @apply Button;
+  @apply shadow-sm hover:shadow;
+}
+
+.Button_tertiary {
+  @apply Button;
+  @apply hover:shadow-sm;
+}
+
+.Button_primary_act {
+  @apply Button_primary;
+  @apply bg-zpid-green border-zpid-green-600 hover:bg-zpid-green-600 hover:border-zpid-green-600;
+}
+
+.Button_secondary_act {
+  @apply Button_secondary;
+  @apply hover:border-zpid-green border-mono-400 text-mono-800 bg-mono-50 hover:bg-zpid-green-50;
+}
+
+.Button_tertiary_act {
+  @apply Button_tertiary;
+  @apply text-mono-800 hover:bg-zpid-green-50;
+}
+
+.Button_primary_go {
+  @apply Button_primary;
+  @apply bg-zpid-purple-700 border-zpid-purple-700 hover:border-zpid-purple-500 hover:bg-zpid-purple-500;
+}
+
+.Button_secondary_go {
+  @apply Button_secondary;
+  @apply border-zpid-purple-700 text-zpid-purple-500 bg-mono-50 hover:bg-zpid-purple-50;
+}
+
+.Button_tertiary_go {
+  @apply Button_tertiary;
+  @apply text-zpid-purple-500 hover:bg-zpid-purple-50;
+}
+
+.Button_primary_danger {
+  @apply Button_primary;
+  @apply bg-red-700 border-red-700 hover:bg-red-600 hover:border-red-600;
+}
+
+.Button_secondary_danger {
+  @apply Button_secondary;
+  @apply text-red-800 border-red-700 bg-red-50;
+}
+
+.Button_tertiary_danger {
+  @apply Button_tertiary;
+  @apply text-red-700 hover:bg-red-50;
+}
+
+.Button-help {
+  @apply inline-flex items-center justify-center flex-shrink-0 w-6 h-6 text-lg font-bold text-white rounded-full shadow-lg bg-zpid-purple-700 hover:bg-zpid-purple-500;
+}
+
+.Button_dropdown {
+  @apply Button;
+  @apply px-1 ml-1 bg-white border rounded-md hover:bg-mono-100;
+}
+
+.Button_icon {
+  @apply inline-flex items-center text-mono-400 hover:text-zpid-blue
+}
+
+.Button_navigation {
+  @apply Button_with_icon;
+  @apply ring-inset px-3 pt-1 h-full text-base border-b-4 hover:border-zpid-blue;
+}
+
+.Button_with_icon {
+  @apply flex items-center;
+  gap: 0.5rem;
+  justify-content: space-evenly;
+  svg {
+    @apply flex-shrink-0 w-5 h-5;
+  }
+}

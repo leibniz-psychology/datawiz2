@@ -1,0 +1,49 @@
+{% extends "layouts/threeColumn.html.twig" %}
+{% from "components/_macros.html.twig" import helpButton %}
+{% from "components/_macros.html.twig" import sectionHelp %}
+{% from "components/_macros.html.twig" import formHelp %}
+
+{% macro startButton(startUrl) %}
+    <a href="{{ startUrl }}"
+       class="table mx-auto mt-6 mb-10 !no-underline Button_primary_go Button_standalone">Start
+        with step 1</a>
+{% endmacro %}
+
+{% set isPartOfStudyDocumentation = true %}
+
+{% block title %}
+    {{ "title.introduction.title"|trans }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="MetaDataGroup-Title">
+        {{ "title.introduction.title"|trans }}
+    </h2>
+
+    <div class="MetaData-Widget markdown">
+        {{ "title.introduction.start.intro"
+        | trans({
+            '#helpBtn#':helpButton('help_intro'),
+            '#startBtn#':_self.startButton(path('Study-documentation', {uuid: experiment.id}))})
+        | markdown_to_html }}
+        {{ "title.introduction.start.steps" | trans | markdown_to_html }}
+    </div>
+
+    {{ render(controller('App\\Controller\\NavigationController::savebarNavigationAction', {
+        request: app.request,
+        prevUrl: null,
+        prevTitle: null,
+        nextUrl: 'Study-documentation',
+        nextTitle: 'Step 1: ' ~ 'title.describe-study.title'|trans,
+        form: null
+    })) }}
+
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("study_introduction") }}
+{% endblock %}
+
+{% block help_for_metadata %}
+    {{ formHelp("study_introduction", "help_intro", "title.introduction.h3_2") }}
+{% endblock %}

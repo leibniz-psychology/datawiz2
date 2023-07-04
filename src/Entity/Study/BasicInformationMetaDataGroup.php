@@ -28,7 +28,7 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, 
     #[Groups(['study'])]
     private ?string $description = null;
 
-    #[ORM\Column(length: 1500, nullable: true)]
+    #[ORM\Column(type: 'json', length: 1500, nullable: true)]
     #[SerializedName('related_publications')]
     #[Groups('study')]
     private ?array $related_publications = null;

@@ -28,17 +28,17 @@ class SampleMetaDataGroup extends UuidEntity implements Questionable, Reviewable
     #[Groups(['study'])]
     private ?string $participants = null;
 
-    #[ORM\Column(length: 1500, nullable: true)]
+    #[ORM\Column(type: 'json', length: 1500, nullable: true)]
     #[SerializedName('inclusion_criteria')]
     #[Groups(['study'])]
     private ?array $inclusion_criteria = null;
 
-    #[ORM\Column(length: 1500, nullable: true)]
+    #[ORM\Column(type: 'json', length: 1500, nullable: true)]
     #[SerializedName('exclusion_criteria')]
     #[Groups(['study'])]
     private ?array $exclusion_criteria = null;
 
-    #[ORM\Column(length: 1500, nullable: true)]
+    #[ORM\Column(type: 'json', length: 1500, nullable: true)]
     #[SerializedName('population')]
     #[Groups(['study'])]
     private ?array $population = null;

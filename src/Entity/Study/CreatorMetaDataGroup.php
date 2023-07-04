@@ -44,7 +44,7 @@ class CreatorMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
     #[Groups('study')]
     private ?string $affiliation = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(type: 'json', nullable: true)]
     #[SerializedName('roles')]
     #[Groups('study')]
     private ?array $creditRoles = null;

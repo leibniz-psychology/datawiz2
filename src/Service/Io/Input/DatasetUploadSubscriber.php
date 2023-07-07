@@ -7,6 +7,7 @@ use App\Entity\Study\Experiment;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\UnableToRetrieveMetadata;
 use Oneup\UploaderBundle\Event\PostUploadEvent;
+use Oneup\UploaderBundle\Uploader\Response\AbstractResponse;
 use Oneup\UploaderBundle\UploadEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -24,7 +25,7 @@ readonly class DatasetUploadSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onDatasetUpload(PostUploadEvent $event)
+    public function onDatasetUpload(PostUploadEvent $event): void
     {
         if ($event->getFile() == null) {
             return;
@@ -48,6 +49,9 @@ readonly class DatasetUploadSubscriber implements EventSubscriberInterface
         $this->em->persist($dataset);
         $this->em->flush();
         $response = $event->getResponse();
+        if (!$response instanceof AbstractResponse) {
+            throw new \Error('The event response is not an instance of AbstractResponse!');
+        }
         $response->addToOffset(['fileId' => $dataset->getId(), 'fileType' => $event->getFile()->getExtension()], ['flySystem']);
     }
 }

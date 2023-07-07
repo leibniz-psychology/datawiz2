@@ -69,39 +69,38 @@ class SampleMetaDataGroup extends UuidEntity implements Questionable, Reviewable
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::PARTICIPANTS,
                 [$this->getParticipants()],
-                ReviewDataDictionary::PARTICIPANTS['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getParticipants())
+                ReviewValidator::validateSingleValue($this->getParticipants())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::POPULATION,
                 $this->getPopulation(),
-                ReviewDataDictionary::POPULATION['errorLevel'] != null && ReviewValidator::validateArrayValues($this->getPopulation())
+                ReviewValidator::validateArrayValues($this->getPopulation())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::INCLUSION,
                 $this->getInclusionCriteria(),
-                ReviewDataDictionary::INCLUSION['errorLevel'] != null && ReviewValidator::validateArrayValues($this->getInclusionCriteria())
+                ReviewValidator::validateArrayValues($this->getInclusionCriteria())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::EXCLUSION,
                 $this->getExclusionCriteria(),
-                ReviewDataDictionary::EXCLUSION['errorLevel'] != null && ReviewValidator::validateArrayValues($this->getExclusionCriteria())
+                ReviewValidator::validateArrayValues($this->getExclusionCriteria())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::SAMPLING,
                 [$this->getSamplingMethod() !== 'Other' ? $this->getSamplingMethod() : $this->getOtherSamplingMethod()],
-                ReviewDataDictionary::SAMPLING['errorLevel'] != null
-                && ($this->getSamplingMethod() !== 'Other' && ReviewValidator::validateSingleValue($this->getSamplingMethod()))
+                ($this->getSamplingMethod() !== 'Other' && ReviewValidator::validateSingleValue($this->getSamplingMethod()))
                 || ($this->getSamplingMethod() === 'Other' && ReviewValidator::validateSingleValue($this->getOtherSamplingMethod()))
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::SAMPLE_SIZE,
                 [$this->getSampleSize()],
-                ReviewDataDictionary::SAMPLE_SIZE['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getSampleSize())
+                ReviewValidator::validateSingleValue($this->getSampleSize())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::POWER_ANALYSIS,
                 [$this->getPowerAnalysis()],
-                ReviewDataDictionary::POWER_ANALYSIS['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getPowerAnalysis())
+                ReviewValidator::validateSingleValue($this->getPowerAnalysis())
             ),
         ];
     }

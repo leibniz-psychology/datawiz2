@@ -39,12 +39,12 @@ class TheoryMetaDataGroup extends UuidEntity implements Questionable, Reviewable
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::OBJECTIVES,
                 [$this->getObjective()],
-                ReviewDataDictionary::OBJECTIVES['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getObjective())
+                ReviewValidator::validateSingleValue($this->getObjective())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::HYPOTHESIS,
                 [$this->getHypothesis()],
-                ReviewDataDictionary::HYPOTHESIS['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getHypothesis())
+                ReviewValidator::validateSingleValue($this->getHypothesis())
             ),
         ];
     }

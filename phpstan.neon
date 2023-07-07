@@ -1,8 +1,9 @@
 parameters:
-    level: 2
+    level: 4
     paths:
         - bin/
         - config/
         - public/
         - src/
         - tests/
+    treatPhpDocTypesAsCertain: false

@@ -55,17 +55,17 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, 
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::TITLE,
                 [$this->getTitle()],
-                ReviewDataDictionary::TITLE['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getTitle())
+                ReviewValidator::validateSingleValue($this->getTitle())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::DESCRIPTION,
                 [$this->getDescription()],
-                ReviewDataDictionary::DESCRIPTION['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getDescription())
+                ReviewValidator::validateSingleValue($this->getDescription())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::RELATED_PUBS,
                 $this->getRelatedPublications(),
-                ReviewDataDictionary::RELATED_PUBS['errorLevel'] != null && ReviewValidator::validateArrayValues($this->getRelatedPublications())
+                ReviewValidator::validateArrayValues($this->getRelatedPublications())
             ),
         ];
     }

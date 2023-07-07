@@ -39,12 +39,12 @@ class MeasureMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::MEASURES,
                 $this->getMeasures(),
-                ReviewDataDictionary::MEASURES['errorLevel'] != null && ReviewValidator::validateArrayValues($this->getMeasures())
+                ReviewValidator::validateArrayValues($this->getMeasures())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::APPARATUS,
                 $this->getApparatus(),
-                ReviewDataDictionary::APPARATUS['errorLevel'] != null && ReviewValidator::validateArrayValues($this->getApparatus())
+                ReviewValidator::validateArrayValues($this->getApparatus())
             ),
         ];
     }

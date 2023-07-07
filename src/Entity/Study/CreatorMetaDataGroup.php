@@ -60,32 +60,32 @@ class CreatorMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::CREATOR_GIVEN,
                 [$this->getGivenName()],
-                ReviewDataDictionary::CREATOR_GIVEN['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getGivenName())
+                ReviewValidator::validateSingleValue($this->getGivenName())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::CREATOR_FAMILY,
                 [$this->getFamilyName()],
-                ReviewDataDictionary::CREATOR_FAMILY['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getFamilyName())
+                ReviewValidator::validateSingleValue($this->getFamilyName())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::CREATOR_EMAIL,
                 [$this->getEmail()],
-                ReviewDataDictionary::CREATOR_EMAIL['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getEmail())
+                ReviewValidator::validateSingleValue($this->getEmail())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::CREATOR_ORCID,
                 [$this->getOrcid()],
-                ReviewDataDictionary::CREATOR_ORCID['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getOrcid())
+                ReviewValidator::validateSingleValue($this->getOrcid())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::CREATOR_AFFILIATION,
                 [$this->getAffiliation()],
-                ReviewDataDictionary::CREATOR_AFFILIATION['errorLevel'] != null && ReviewValidator::validateSingleValue($this->getAffiliation())
+                ReviewValidator::validateSingleValue($this->getAffiliation())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::CREATOR_ROLES,
                 $this->getCreditRoles(),
-                ReviewDataDictionary::CREATOR_ROLES['errorLevel'] != null && ReviewValidator::validateArrayValues($this->getCreditRoles())
+                ReviewValidator::validateArrayValues($this->getCreditRoles())
             ),
         ];
     }

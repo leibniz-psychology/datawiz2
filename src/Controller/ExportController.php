@@ -265,7 +265,7 @@ class ExportController extends AbstractController
         return implode(',', $header).PHP_EOL;
     }
 
-    private function sanitizeFilename(?string $name): ?string
+    private function sanitizeFilename(?string $name): string
     {
         $chars = [' ', '"', "'", '&', '/', '\\', '?', '#', '<', '>', '.', ','];
 

@@ -29,12 +29,12 @@ class DatasetVariables extends UuidEntity
     #[Groups(['codebook'])]
     private ?string $itemText = null;
 
-    #[ORM\Column(name: 'val_label', nullable: true)]
+    #[ORM\Column(name: 'val_label', type: 'json', nullable: true)]
     #[SerializedName('value_label')]
     #[Groups(['codebook'])]
     private ?array $values = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(type: 'json', nullable: true)]
     #[SerializedName('missings')]
     #[Groups(['codebook'])]
     private ?array $missings = null;

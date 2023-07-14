@@ -164,22 +164,22 @@ readonly class CrudService implements Crudable
     public function deleteStudy(Experiment $experiment): bool
     {
         $success = true;
-        if ($datasets = $experiment->getOriginalDatasets()) {
-            foreach ($datasets as $dataset) {
-                if (!$this->deleteDataset($dataset)) {
-                    $success = false;
-                    break;
-                }
+        $datasets = $experiment->getOriginalDatasets();
+        foreach ($datasets as $dataset) {
+            if (!$this->deleteDataset($dataset)) {
+                $success = false;
+                break;
             }
         }
-        if ($material = $experiment->getAdditionalMaterials()) {
-            foreach ($material as $mat) {
-                if (!$this->deleteMaterial($mat)) {
-                    $success = false;
-                    break;
-                }
+
+        $material = $experiment->getAdditionalMaterials();
+        foreach ($material as $mat) {
+            if (!$this->deleteMaterial($mat)) {
+                $success = false;
+                break;
             }
         }
+
         if ($creators = $experiment->getBasicInformationMetaDataGroup()->getCreators()) {
             foreach ($creators as $creator) {
                 $this->em->remove($creator);

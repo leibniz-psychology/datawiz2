@@ -35,7 +35,7 @@ class AdministrationController extends AbstractController
         );
     }
 
-    #[Route(path: '/admin/user/{uid}', name: 'admin_user_edit', methods: ['GET'])]
+    #[Route(path: '/admin/user/{uid}', name: 'admin_user_edit', methods: ['GET', 'POST'])]
     public function editUserDetails(Request $request, string $uid): Response
     {
         $this->logger->debug("AdministrationController::editUserDetails: Enter with uuid: {$uid}");

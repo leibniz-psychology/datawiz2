@@ -31,13 +31,13 @@ class UserController extends AbstractController
         $application->setAutoExit(false);
         $command = new ArrayInput([
             'command' => 'dw:add-user-role',
-            'email' => 'boelter@uni-trier.de',
+            'email' => 'jb@leibniz-psychology.org',
             'role' => UserRoles::ADMINISTRATOR,
         ]);
         $application->run($command, new NullOutput());
         $command = new ArrayInput([
             'command' => 'dw:add-user-role',
-            'email' => 'rb@leibniz-psychology.org',
+            'email' => 'kb@leibniz-psychology.org',
             'role' => UserRoles::ADMINISTRATOR,
         ]);
         $application->run($command, new NullOutput());

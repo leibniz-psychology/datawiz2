@@ -3,6 +3,7 @@
 namespace App\Security\Authentication;
 
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
+use Stevenmaguire\OAuth2\Client\Provider\Keycloak;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -32,11 +33,14 @@ readonly class OauthLogoutSubscriber implements EventSubscriberInterface
     /**
      * This function handles the Keycloak logout event!
      */
-    public function onLogoutEvent(LogoutEvent $event)
+    public function onLogoutEvent(LogoutEvent $event): void
     {
-        $provider = $this->clientRegistry->getClient('keycloak');
+        $provider = $this->clientRegistry->getClient('keycloak')->getOAuth2Provider();
+        if (!$provider instanceof Keycloak) {
+            throw new \Error('The authentication provider is not an instance of Keycloak!');
+        }
         $targetUrl = $this->urlGenerator->generate('dashboard', [], UrlGeneratorInterface::ABSOLUTE_URL);
-        $logout = $provider->getOAuth2Provider()->getLogoutUrl(['redirect_uri' => $targetUrl]);
+        $logout = $provider->getLogoutUrl(['redirect_uri' => $targetUrl]);
         $event->setResponse(new RedirectResponse($logout));
     }
 }

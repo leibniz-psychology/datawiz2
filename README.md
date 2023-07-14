@@ -52,6 +52,12 @@ If you still wish to deploy DataWiz yourself, please contact our IT-Service depa
 available resources.
 Consider before your deployment, that we offer a production instance free of charge under our product portfolio.
 
+### Moderation
+
+To enable the moderation for yourself, add your email address in `src/Controller/UserController.php`.
+Afterwards, log into Datawiz as a normal user and navigate to `<url>/admin/install` in your browser.
+You should now have admin rights.
+
 ## How to get help?
 
 If you are new to the codebase, there are multiple resources provided for you

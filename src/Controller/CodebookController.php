@@ -9,8 +9,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
 use League\Csv\UnableToProcessCsv;
+use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
-use League\Flysystem\UnableToReadFile;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -82,43 +82,46 @@ class CodebookController extends AbstractController
                 $response['header'][] = $var->getName();
             }
         }
-        if ($this->matrixFilesystem->has($uuid.'.csv')) {
-            try {
-                $file = Reader::createFromString($this->matrixFilesystem->read($uuid.'.csv'));
-                if ($file->count() != 0) {
-                    if ($size == 0) {
-                        $response['content'] = $file;
-                        $response['pagination']['max_items'] = $file->count();
-                        $response['pagination']['items'] = $file->count();
-                        $response['pagination']['current_page'] = 1;
-                        $response['pagination']['max_pages'] = 1;
-                    } else {
-                        $min = $page != 0 ? ($page - 1) * $size : 0;
-                        $max = $min + $size;
-                        for ($count = $min; $count < $max; ++$count) {
-                            $response['content'][] = $file->fetchOne($count);
-                        }
-                        $response['pagination']['max_items'] = $file->count();
-                        $response['pagination']['items'] = $size;
-                        $response['pagination']['current_page'] = $page;
-                        $response['pagination']['max_pages'] = ceil($file->count() != 0 ? ($file->count() / $size) : 0);
-                    }
-                } else {
-                    $response['error'] = 'error.dataset.matrix.empty';
-                }
-            } catch (UnableToReadFile $e) {
-                $this->logger->critical("UnableToReadFile in CodebookController::createViewMeasuresAction [UUID: {$uuid}] Exception: ".$e->getMessage());
-                $response['error'] = 'error.dataset.matrix.notFound';
-            } catch (UnableToProcessCsv $e) {
-                $this->logger->critical("UnableToProcessCsv in CodebookController::createViewMeasuresAction [UUID: {$uuid}] Exception: ".$e->getMessage());
-                $response['error'] = 'error.dataset.matrix.unprocessable';
+
+        try {
+            if (!$this->matrixFilesystem->has($uuid.'.csv')) {
+                return new JsonResponse($response, Response::HTTP_OK);
             }
+
+            $file = Reader::createFromString($this->matrixFilesystem->read($uuid.'.csv'));
+            if ($file->count() === 0) {
+                $response['error'] = 'error.dataset.matrix.empty';
+                return new JsonResponse($response, Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
+            if ($size == 0) {
+                $response['content'] = $file;
+                $response['pagination']['max_items'] = $file->count();
+                $response['pagination']['items'] = $file->count();
+                $response['pagination']['current_page'] = 1;
+                $response['pagination']['max_pages'] = 1;
+            } else {
+                $min = $page != 0 ? ($page - 1) * $size : 0;
+                $max = $min + $size;
+                for ($count = $min; $count < $max; ++$count) {
+                    $response['content'][] = $file->fetchOne($count);
+                }
+                $response['pagination']['max_items'] = $file->count();
+                $response['pagination']['items'] = $size;
+                $response['pagination']['current_page'] = $page;
+                $response['pagination']['max_pages'] = ceil($file->count() / $size);
+            }
+        } catch (FilesystemException $e) {
+            $this->logger->critical("FileSystemException in CodebookController::createViewMeasuresAction [UUID: {$uuid}] Exception: ".$e->getMessage());
+            $response['error'] = 'error.dataset.matrix.notFound';
+            return new JsonResponse($response, Response::HTTP_UNPROCESSABLE_ENTITY);
+        } catch (UnableToProcessCsv $e) {
+            $this->logger->critical("UnableToProcessCsv in CodebookController::createViewMeasuresAction [UUID: {$uuid}] Exception: ".$e->getMessage());
+            $response['error'] = 'error.dataset.matrix.unprocessable';
+            return new JsonResponse($response, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        return new JsonResponse(
-            $response,
-            key_exists('error', $response) && !empty($response['error']) ? Response::HTTP_UNPROCESSABLE_ENTITY : Response::HTTP_OK
-        );
+        return new JsonResponse($response, Response::HTTP_OK);
     }
 
     private function codebookCollectionToJsonArray(?Collection $codebook): ?array

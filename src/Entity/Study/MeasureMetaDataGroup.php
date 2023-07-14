@@ -23,12 +23,12 @@ class MeasureMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
     #[ORM\OneToOne(inversedBy: 'measureMetaDataGroup')]
     protected ?Experiment $experiment = null;
 
-    #[ORM\Column(length: 1500, nullable: true)]
+    #[ORM\Column(type: 'json', length: 1500, nullable: true)]
     #[SerializedName('measures')]
     #[Groups(['study'])]
     private ?array $measures = null;
 
-    #[ORM\Column(length: 1500, nullable: true)]
+    #[ORM\Column(type: 'json', length: 1500, nullable: true)]
     #[SerializedName('apparatus')]
     #[Groups(['study'])]
     private ?array $apparatus = null;
@@ -39,12 +39,12 @@ class MeasureMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::MEASURES,
                 $this->getMeasures(),
-                ReviewDataDictionary::MEASURES['errorLevel'] != null && ReviewValidator::validateArrayValues($this->getMeasures())
+                ReviewValidator::validateArrayValues($this->getMeasures())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::APPARATUS,
                 $this->getApparatus(),
-                ReviewDataDictionary::APPARATUS['errorLevel'] != null && ReviewValidator::validateArrayValues($this->getApparatus())
+                ReviewValidator::validateArrayValues($this->getApparatus())
             ),
         ];
     }

@@ -6,10 +6,10 @@ oneup_flysystem:
                 location: '%kernel.project_dir%/var/uploads'
         dataset_adapter:
             local:
-                location: '%kernel.project_dir%/var/uploads/datasets'
+                location: '%kernel.project_dir%/var/uploads'
         material_adapter:
             local:
-                location: '%kernel.project_dir%/var/uploads/materials'
+                location: '%kernel.project_dir%/var/uploads'
         matrix_adapter:
             local:
                 location: '%kernel.project_dir%/var/uploads/matrix'
@@ -24,3 +24,20 @@ oneup_flysystem:
             adapter: material_adapter
         matrix:
             adapter: matrix_adapter
+
+when@dev:
+    # choose different folders for every adapter to ensure that adapters are used properly during development
+    oneup_flysystem:
+        adapters:
+            default_adapter:
+                local:
+                    location: '%kernel.project_dir%/var/uploads'
+            dataset_adapter:
+                local:
+                    location: '%kernel.project_dir%/var/uploads/datasets'
+            material_adapter:
+                local:
+                    location: '%kernel.project_dir%/var/uploads/materials'
+            matrix_adapter:
+                local:
+                    location: '%kernel.project_dir%/var/uploads/matrix'

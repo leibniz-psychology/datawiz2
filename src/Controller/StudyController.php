@@ -9,11 +9,13 @@ use App\Entity\Study\CreatorMetaDataGroup;
 use App\Entity\Study\Experiment;
 use App\Service\Crud\Crudable;
 use App\Service\Questionnaire\Questionnairable;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,9 +45,6 @@ class StudyController extends AbstractController
         ]);
     }
 
-    /**
-     * @noinspection PhpPossiblePolymorphicInvocationInspection
-     */
     #[Route(path: '/new', name: 'new', methods: ['GET', 'POST'])]
     public function newAction(Questionnairable $questionnaire, Request $request): Response
     {
@@ -92,9 +91,6 @@ class StudyController extends AbstractController
         ]);
     }
 
-    /**
-     * @noinspection PhpPossiblePolymorphicInvocationInspection
-     */
     #[Route(path: '/{uuid}/documentation', name: 'documentation', methods: ['GET', 'POST'])]
     public function documentationAction(string $uuid, Request $request): Response
     {
@@ -111,50 +107,48 @@ class StudyController extends AbstractController
         }
         $basicInformation->setRelatedPublications($this->_prepareEmptyArray($basicInformation->getRelatedPublications()));
         $form = $this->questionnaire->askAndHandle($basicInformation, 'save', $request);
-        if ($this->questionnaire->isSubmittedAndValid($form)) {
-            $formData = $form->getData();
-            $currentCreators = $this->em->getRepository(CreatorMetaDataGroup::class)->findBy(['basicInformation' => $basicInformation]);
-            if (is_iterable($currentCreators)) {
-                foreach ($currentCreators as $currentCreator) {
-                    $this->em->remove($currentCreator);
-                }
-            }
-            if ($form->getData()->getCreators() !== null && is_iterable($form->getData()->getCreators())) {
-                foreach ($formData->getCreators() as $creator) {
-                    if (!$creator->isEmpty()) {
-                        $creator->setCreditRoles(array_values(array_unique($creator->getCreditRoles())));
-                        $creator->setBasicInformation($basicInformation);
-                        $this->em->persist($creator);
-                    } else {
-                        $form->getData()->getCreators()->removeElement($creator);
-                    }
-                }
-            }
-            $formData->setRelatedPublications(array_filter($formData->getRelatedPublications()));
-            $this->em->persist($formData);
-            $this->em->flush();
 
-            switch (true) {
-                case $form->get('saveAndNext')->isClicked():
-                    return $this->redirectToRoute('Study-theory', ['uuid' => $uuid]);
-                default:
-                    if ($response = $this->_routeButtonClicks($form, $uuid)) {
-                        return $response;
-                    }
-            }
-
-            return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
+        if (!$this->questionnaire->isSubmittedAndValid($form)) {
+            return $this->render('pages/study/documentation.html.twig', [
+                'form' => $form,
+                'experiment' => $experiment,
+            ]);
         }
 
-        return $this->render('pages/study/documentation.html.twig', [
-            'form' => $form,
-            'experiment' => $experiment,
-        ]);
+        $formData = $form->getData();
+        $currentCreators = $this->em->getRepository(CreatorMetaDataGroup::class)->findBy(['basicInformation' => $basicInformation]);
+        if (is_iterable($currentCreators)) {
+            foreach ($currentCreators as $currentCreator) {
+                $this->em->remove($currentCreator);
+            }
+        }
+        $newCreators = $formData->getCreators();
+        if (!$form->getData()->getCreators() instanceof Collection) {
+            throw new \Error('Creators is not a collection');
+        }
+        if (is_iterable($newCreators)) {
+            foreach ($newCreators as $creator) {
+                if (!$creator->isEmpty()) {
+                    $creator->setCreditRoles(array_values(array_unique($creator->getCreditRoles())));
+                    $creator->setBasicInformation($basicInformation);
+                    $this->em->persist($creator);
+                } else {
+                    $form->getData()->getCreators()->removeElement($creator);
+                }
+            }
+        }
+        $formData->setRelatedPublications(array_filter($formData->getRelatedPublications()));
+        $this->em->persist($formData);
+        $this->em->flush();
+
+        $navigationResponse = $this->handleNavigation($form, $uuid, null, 'Study-theory');
+        if ($navigationResponse !== null) {
+            return $navigationResponse;
+        }
+
+        return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
     }
 
-    /**
-     * @noinspection PhpPossiblePolymorphicInvocationInspection
-     */
     #[Route(path: '/{uuid}/theory', name: 'theory', methods: ['GET', 'POST'])]
     public function theoryAction(string $uuid, Request $request): Response
     {
@@ -171,15 +165,9 @@ class StudyController extends AbstractController
             $this->em->persist($experiment);
             $this->em->flush();
 
-            switch (true) {
-                case $form->get('saveAndPrevious')->isClicked():
-                    return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
-                case $form->get('saveAndNext')->isClicked():
-                    return $this->redirectToRoute('Study-method', ['uuid' => $uuid]);
-                default:
-                    if ($response = $this->_routeButtonClicks($form, $uuid)) {
-                        return $response;
-                    }
+            $navigationResponse = $this->handleNavigation($form, $uuid, 'Study-documentation', 'Study-method');
+            if ($navigationResponse !== null) {
+                return $navigationResponse;
             }
         }
 
@@ -189,9 +177,6 @@ class StudyController extends AbstractController
         ]);
     }
 
-    /**
-     * @noinspection PhpPossiblePolymorphicInvocationInspection
-     */
     #[Route(path: '/{uuid}/sample', name: 'sample', methods: ['GET', 'POST'])]
     public function sampleAction(string $uuid, Request $request): Response
     {
@@ -215,13 +200,9 @@ class StudyController extends AbstractController
             $this->em->persist($formData);
             $this->em->flush();
 
-            switch (true) {
-                case $form->get('saveAndPrevious')->isClicked():
-                    return $this->redirectToRoute('Study-measure', ['uuid' => $uuid]);
-                default:
-                    if ($response = $this->_routeButtonClicks($form, $uuid)) {
-                        return $response;
-                    }
+            $navigationResponse = $this->handleNavigation($form, $uuid, 'Study-measure', null);
+            if ($navigationResponse !== null) {
+                return $navigationResponse;
             }
         }
 
@@ -231,9 +212,6 @@ class StudyController extends AbstractController
         ]);
     }
 
-    /**
-     * @noinspection PhpPossiblePolymorphicInvocationInspection
-     */
     #[Route(path: '/{uuid}/measure', name: 'measure', methods: ['GET', 'POST'])]
     public function measureAction(string $uuid, Request $request): Response
     {
@@ -254,15 +232,9 @@ class StudyController extends AbstractController
             $this->em->persist($formData);
             $this->em->flush();
 
-            switch (true) {
-                case $form->get('saveAndPrevious')->isClicked():
-                    return $this->redirectToRoute('Study-method', ['uuid' => $uuid]);
-                case $form->get('saveAndNext')->isClicked():
-                    return $this->redirectToRoute('Study-sample', ['uuid' => $uuid]);
-                default:
-                    if ($response = $this->_routeButtonClicks($form, $uuid)) {
-                        return $response;
-                    }
+            $navigationResponse = $this->handleNavigation($form, $uuid, 'Study-method', 'Study-sample');
+            if ($navigationResponse !== null) {
+                return $navigationResponse;
             }
         }
 
@@ -272,9 +244,6 @@ class StudyController extends AbstractController
         ]);
     }
 
-    /**
-     * @noinspection PhpPossiblePolymorphicInvocationInspection
-     */
     #[Route(path: '/{uuid}/method', name: 'method', methods: ['GET', 'POST'])]
     public function methodAction(string $uuid, Request $request): Response
     {
@@ -291,15 +260,9 @@ class StudyController extends AbstractController
             $this->em->persist($experiment);
             $this->em->flush();
 
-            switch (true) {
-                case $form->get('saveAndPrevious')->isClicked():
-                    return $this->redirectToRoute('Study-theory', ['uuid' => $uuid]);
-                case $form->get('saveAndNext')->isClicked():
-                    return $this->redirectToRoute('Study-measure', ['uuid' => $uuid]);
-                default:
-                    if ($response = $this->_routeButtonClicks($form, $uuid)) {
-                        return $response;
-                    }
+            $navigationResponse = $this->handleNavigation($form, $uuid, 'Study-theory', 'Study-measure');
+            if ($navigationResponse !== null) {
+                return $navigationResponse;
             }
         }
 
@@ -378,29 +341,66 @@ class StudyController extends AbstractController
         return $array;
     }
 
-    /**
-     * @noinspection PhpPossiblePolymorphicInvocationInspection
-     */
     private function _routeButtonClicks(FormInterface $form, string $uuid): ?RedirectResponse
     {
-        return match (true) {
-            $form->get('saveAndIntroduction')->isClicked() => $this->redirectToRoute('Study-introduction', ['uuid' => $uuid]),
-            $form->get('saveAndDocumentation')->isClicked() => $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]),
-            $form->get('saveAndTheory')->isClicked() => $this->redirectToRoute('Study-theory', ['uuid' => $uuid]),
-            $form->get('saveAndMethod')->isClicked() => $this->redirectToRoute('Study-method', ['uuid' => $uuid]),
-            $form->get('saveAndMeasure')->isClicked() => $this->redirectToRoute('Study-measure', ['uuid' => $uuid]),
-            $form->get('saveAndSample')->isClicked() => $this->redirectToRoute('Study-sample', ['uuid' => $uuid]),
-            $form->get('saveAndDatasets')->isClicked() => $this->redirectToRoute('Study-datasets', ['uuid' => $uuid]),
-            $form->get('saveAndMaterials')->isClicked() => $this->redirectToRoute('Study-materials', ['uuid' => $uuid]),
-            $form->get('saveAndReview')->isClicked() => $this->redirectToRoute('Study-review', ['uuid' => $uuid]),
-            $form->get('saveAndExport')->isClicked() => $this->redirectToRoute('export_index', ['uuid' => $uuid]),
-            $form->get('saveAndSettings')->isClicked() => $this->redirectToRoute('Study-settings', ['uuid' => $uuid]),
-            default => null,
-        };
+        $sections = [
+            ['saveAndIntroduction', 'Study-introduction'],
+            ['saveAndDocumentation', 'Study-documentation'],
+            ['saveAndTheory', 'Study-theory'],
+            ['saveAndMethod', 'Study-method'],
+            ['saveAndMeasure', 'Study-measure'],
+            ['saveAndSample', 'Study-sample'],
+            ['saveAndDatasets', 'Study-datasets'],
+            ['saveAndMaterials', 'Study-materials'],
+            ['saveAndReview', 'Study-review'],
+            ['saveAndExport', 'Study-export'],
+            ['saveAndSettings', 'Study-settings'],
+        ];
+
+        foreach ($sections as $section) {
+            $navigationButton = $form->get($section[0]);
+            if (!$navigationButton instanceof SubmitButton) {
+                throw new \Error("Navigation button {$section[0]} is not a SubmitButton");
+            }
+            if ($navigationButton->isClicked()) {
+                return $this->redirectToRoute($section[1], ['uuid' => $uuid]);
+            }
+        }
+
+        return null;
     }
 
     private function _checkAccess(Experiment $experiment): bool
     {
         return $this->isGranted(UserRoles::ADMINISTRATOR) || $experiment->getOwner() === $this->getUser();
+    }
+
+    private function handleNavigation(FormInterface $form, string $uuid, ?string $prev, ?string $next): ?RedirectResponse
+    {
+        if ($prev !== null) {
+            $prevButton = $form->get('saveAndPrevious');
+            if (!$prevButton instanceof SubmitButton) {
+                throw new \Error('Cannot find "previous" navigation button');
+            }
+            if ($prevButton->isClicked()) {
+                return $this->redirectToRoute($prev, ['uuid' => $uuid]);
+            }
+        }
+
+        if ($next !== null) {
+            $nextButton = $form->get('saveAndNext');
+            if (!$nextButton instanceof SubmitButton) {
+                throw new \Error('Cannot find "next" navigation button');
+            }
+            if ($nextButton->isClicked()) {
+                return $this->redirectToRoute($next, ['uuid' => $uuid]);
+            }
+        }
+
+        if ($response = $this->_routeButtonClicks($form, $uuid)) {
+            return $response;
+        }
+
+        return null;
     }
 }

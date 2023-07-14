@@ -5,7 +5,6 @@ namespace App\Security\Authentication;
 use App\Entity\Administration\DataWizUser;
 use App\Entity\Constant\UserRoles;
 use App\Service\Crud\Crudable;
-use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\OAuth2Authenticator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -28,7 +27,6 @@ class OauthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
         private readonly ClientRegistry $clientRegistry,
         private readonly Crudable $crud,
         private readonly UrlGeneratorInterface $urlGenerator,
-        private readonly EntityManagerInterface $entityManager,
     ) {
     }
 
@@ -40,13 +38,9 @@ class OauthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
         return new SelfValidatingPassport(
             new UserBadge($accessToken->getToken(), function () use ($accessToken, $client) {
                 $keycloakUser = $client->fetchUserFromToken($accessToken);
+                $user = $this->crud->readById(DataWizUser::class, $keycloakUser->getId());
+                $kcArray = $keycloakUser->toArray();
 
-                $user = null;
-                $kcArray = null;
-                if ($keycloakUser) {
-                    $user = $this->crud->readById(DataWizUser::class, $keycloakUser->getId());
-                    $kcArray = $keycloakUser->toArray();
-                }
                 if (is_iterable($kcArray)) {
                     if ($user === null) {
                         $user = new DataWizUser();
@@ -89,7 +83,7 @@ class OauthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
         return new Response($message, Response::HTTP_FORBIDDEN);
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $firewallName): RedirectResponse
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): RedirectResponse
     {
         // Redirect to previous selected route
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {

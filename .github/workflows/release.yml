@@ -1,0 +1,48 @@
+name: Release version
+
+permissions:
+  contents: write
+  issues: write
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    outputs:
+      app_version: ${{ steps.step1.outputs.app_version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install @semantic-release/changelog @semantic-release/git @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/exec @semantic-release/git semantic-release/release-notes-generator
+
+      - name: Release
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get the last tag via git and store in var
+        id: step1
+        run: |
+          APP_VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))
+          echo "${APP_VERSION}"
+          echo "app_version=${APP_VERSION}" >> ${GITHUB_OUTPUT}
+
+  call-container-build-workflow:
+    needs:
+      - release
+    uses: ./.github/workflows/container-build.yml
+    with:
+      container-tag: ${{ needs.release.outputs.app_version }}
+      build-stage: prod
+    secrets: inherit

@@ -52,7 +52,7 @@ set -e
 
 echo ""
 echo "Lint Markdown..."
-yarn markdownlint-cli2 '**/*.md' '#node_modules' '#vendor' '#tools'
+yarn markdownlint-cli2 '**/*.md' '#node_modules' '#vendor' '#tools' '#CHANGELOG.md'
 
 echo ""
 echo "Lint PHP Files..."

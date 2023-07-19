@@ -58,6 +58,7 @@ jobs:
             #node_modules
             #vendor
             #tools
+            #CHANGELOG.md
 
       - name: PHP CS Fixer
         uses: docker://oskarstark/php-cs-fixer-ga

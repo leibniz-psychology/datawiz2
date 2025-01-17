@@ -27,8 +27,7 @@ class OauthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
         private readonly ClientRegistry $clientRegistry,
         private readonly Crudable $crud,
         private readonly UrlGeneratorInterface $urlGenerator,
-    ) {
-    }
+    ) {}
 
     public function authenticate(Request $request): SelfValidatingPassport
     {
@@ -66,7 +65,7 @@ class OauthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
         );
     }
 
-    public function start(Request $request, AuthenticationException $authException = null): RedirectResponse
+    public function start(Request $request, ?AuthenticationException $authException = null): RedirectResponse
     {
         return new RedirectResponse('/', Response::HTTP_TEMPORARY_REDIRECT);
     }

@@ -32,12 +32,9 @@ final class ToolInfo implements ToolInfoInterface
     /**
      * @var null|array{name: string, version: string, dist: array{reference?: string}}
      */
-    private $composerInstallationDetails;
+    private ?array $composerInstallationDetails = null;
 
-    /**
-     * @var null|bool
-     */
-    private $isInstalledByComposer;
+    private ?bool $isInstalledByComposer = null;
 
     public function getComposerInstallationDetails(): array
     {
@@ -46,7 +43,7 @@ final class ToolInfo implements ToolInfoInterface
         }
 
         if (null === $this->composerInstallationDetails) {
-            $composerInstalled = json_decode(file_get_contents($this->getComposerInstalledFile()), true);
+            $composerInstalled = json_decode(file_get_contents($this->getComposerInstalledFile()), true, 512, JSON_THROW_ON_ERROR);
 
             $packages = $composerInstalled['packages'] ?? $composerInstalled;
 
@@ -98,9 +95,18 @@ final class ToolInfo implements ToolInfoInterface
         return $this->isInstalledByComposer;
     }
 
+    /**
+     * Determines if the tool is run inside our pre-built Docker image.
+     * The `/fixer/` path comes from our Dockerfile, tool is installed there and added to global PATH via symlinked binary.
+     */
+    public function isRunInsideDocker(): bool
+    {
+        return str_starts_with(__FILE__, '/fixer/') && is_file('/.dockerenv');
+    }
+
     public function getPharDownloadUri(string $version): string
     {
-        return sprintf(
+        return \sprintf(
             'https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/releases/download/%s/php-cs-fixer.phar',
             $version
         );

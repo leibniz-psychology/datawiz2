@@ -21,6 +21,7 @@ use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Preg;
+use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Tokens;
 
 /**
@@ -30,9 +31,6 @@ final class NoMultipleStatementsPerLineFixer extends AbstractFixer implements Wh
 {
     use Indentation;
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -44,24 +42,19 @@ final class NoMultipleStatementsPerLineFixer extends AbstractFixer implements Wh
     /**
      * {@inheritdoc}
      *
-     * Must run after ControlStructureBracesFixer, NoEmptyStatementFixer.
+     * Must run before BracesPositionFixer, CurlyBracesPositionFixer.
+     * Must run after ControlStructureBracesFixer, NoEmptyStatementFixer, YieldFromArrayToYieldsFixer.
      */
     public function getPriority(): int
     {
         return -1;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(';');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         for ($index = 1, $max = \count($tokens) - 1; $index < $max; ++$index) {
@@ -69,6 +62,15 @@ final class NoMultipleStatementsPerLineFixer extends AbstractFixer implements Wh
                 $index = $tokens->findBlockEnd(
                     Tokens::BLOCK_TYPE_PARENTHESIS_BRACE,
                     $tokens->getNextTokenOfKind($index, ['('])
+                );
+
+                continue;
+            }
+
+            if ($tokens[$index]->isGivenKind(CT::T_PROPERTY_HOOK_BRACE_OPEN)) {
+                $index = $tokens->findBlockEnd(
+                    Tokens::BLOCK_TYPE_PROPERTY_HOOK,
+                    $index
                 );
 
                 continue;
@@ -82,7 +84,7 @@ final class NoMultipleStatementsPerLineFixer extends AbstractFixer implements Wh
                 $token = $tokens[$nextIndex];
 
                 if ($token->isWhitespace() || $token->isComment()) {
-                    if (1 === Preg::match('/\R/', $token->getContent())) {
+                    if (Preg::match('/\R/', $token->getContent())) {
                         break;
                     }
 

@@ -14,8 +14,7 @@ readonly class CsvImportable
     public function __construct(
         private FilesystemOperator $datasetFilesystem,
         private LoggerInterface $logger
-    ) {
-    }
+    ) {}
 
     public function csvToArray(string $fileId, string $delimiter, string $escape, int $headerRows, int $resultSize = 0): ?array
     {

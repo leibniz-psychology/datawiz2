@@ -28,21 +28,15 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 final class PhpdocNoEmptyReturnFixer extends AbstractFixer
 {
-    /**
-     * {@inheritdoc}
-     */
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_DOC_COMMENT);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            '`@return void` and `@return null` annotations should be omitted from PHPDoc.',
+            '`@return void` and `@return null` annotations must be removed from PHPDoc.',
             [
                 new CodeSample(
                     '<?php
@@ -75,9 +69,6 @@ function foo() {}
         return 4;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         foreach ($tokens as $index => $token) {

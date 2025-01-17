@@ -28,8 +28,7 @@ class FileManagementController extends AbstractController
         private readonly SavImportable $savImportable,
         private readonly EntityManagerInterface $em,
         private readonly LoggerInterface $logger
-    ) {
-    }
+    ) {}
 
     #[Route(path: '/preview/sav/{fileId}', name: 'preview-sav', methods: ['POST'])]
     public function previewSavAction(string $fileId): JsonResponse

@@ -52,7 +52,7 @@ abstract class AbstractTypeTransformer extends AbstractTransformer
     {
         // return types and non-capturing catches
         $typeColonIndex = $tokens->getTokenNotOfKindSibling($index, -1, self::TYPE_TOKENS);
-        if ($tokens[$typeColonIndex]->isGivenKind([T_CATCH, CT::T_TYPE_COLON])) {
+        if ($tokens[$typeColonIndex]->isGivenKind([T_CATCH, CT::T_TYPE_COLON, T_CONST])) {
             return true;
         }
 
@@ -69,7 +69,17 @@ abstract class AbstractTypeTransformer extends AbstractTransformer
 
         $beforeVariableIndex = $tokens->getPrevMeaningfulToken($afterTypeIndex);
         if ($tokens[$beforeVariableIndex]->equals('&')) {
-            $prevIndex = $tokens->getPrevTokenOfKind($index, ['{', '}', ';', [T_FN], [T_FUNCTION]]);
+            $prevIndex = $tokens->getPrevTokenOfKind(
+                $index,
+                [
+                    '{',
+                    '}',
+                    ';',
+                    [T_CLOSE_TAG],
+                    [T_FN],
+                    [T_FUNCTION],
+                ],
+            );
 
             return null !== $prevIndex && $tokens[$prevIndex]->isGivenKind([T_FN, T_FUNCTION]);
         }

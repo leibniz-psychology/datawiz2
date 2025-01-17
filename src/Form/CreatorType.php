@@ -70,7 +70,7 @@ class CreatorType extends AbstractType
                 'label_attr' => ['class' => 'MetaData-Label !px-4 !mt-0'],
                 'attr' => ['class' => 'MetaData-Widget MetaData-Widget_collection'],
                 'entry_type' => ChoiceType::class,
-                'delete_empty' => fn (string $role = null) => empty($role),
+                'delete_empty' => fn (?string $role = null) => empty($role),
                 'entry_options' => [
                     'placeholder' => 'input.creator.credit.choices.placeholder',
                     'required' => true,

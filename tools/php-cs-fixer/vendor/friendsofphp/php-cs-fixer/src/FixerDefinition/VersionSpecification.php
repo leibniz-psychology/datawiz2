@@ -16,6 +16,8 @@ namespace PhpCsFixer\FixerDefinition;
 
 /**
  * @author Andreas Möller <am@localheinz.com>
+ *
+ * @readonly
  */
 final class VersionSpecification implements VersionSpecificationInterface
 {
@@ -59,9 +61,6 @@ final class VersionSpecification implements VersionSpecificationInterface
         $this->maximum = $maximum;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isSatisfiedBy(int $version): bool
     {
         if (null !== $this->minimum && $version < $this->minimum) {

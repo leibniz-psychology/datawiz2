@@ -19,7 +19,6 @@ use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Analyzer\ArgumentsAnalyzer;
-use PhpCsFixer\Tokenizer\Analyzer\NamespacesAnalyzer;
 use PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -35,7 +34,8 @@ final class DateTimeCreateFromFormatCallFixer extends AbstractFixer
             ],
             "Consider this code:
     `DateTime::createFromFormat('Y-m-d', '2022-02-11')`.
-    What value will be returned? '2022-02-11 00:00:00.0'? No, actual return value has 'H:i:s' section like '2022-02-11 16:55:37.0'.
+    What value will be returned? '2022-02-11 00:00:00.0'?
+    No, actual return value has 'H:i:s' section like '2022-02-11 16:55:37.0'.
     Change 'Y-m-d' to '!Y-m-d', return value will be '2022-02-11 00:00:00.0'.
     So, adding `!` to format string will make return value more intuitive.",
             'Risky when depending on the actual timings being used even when not explicit set in format.'
@@ -65,10 +65,9 @@ final class DateTimeCreateFromFormatCallFixer extends AbstractFixer
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         $argumentsAnalyzer = new ArgumentsAnalyzer();
-        $namespacesAnalyzer = new NamespacesAnalyzer();
         $namespaceUsesAnalyzer = new NamespaceUsesAnalyzer();
 
-        foreach ($namespacesAnalyzer->getDeclarations($tokens) as $namespace) {
+        foreach ($tokens->getNamespaceDeclarations() as $namespace) {
             $scopeStartIndex = $namespace->getScopeStartIndex();
             $useDeclarations = $namespaceUsesAnalyzer->getDeclarationsInNamespace($tokens, $namespace);
 
@@ -89,7 +88,7 @@ final class DateTimeCreateFromFormatCallFixer extends AbstractFixer
 
                 $classNameIndex = $tokens->getPrevMeaningfulToken($index);
 
-                if (!$tokens[$classNameIndex]->equalsAny([[T_STRING, 'DateTime'], [T_STRING, 'DateTimeImmutable']], false)) {
+                if (!$tokens[$classNameIndex]->equalsAny([[T_STRING, \DateTime::class], [T_STRING, \DateTimeImmutable::class]], false)) {
                     continue;
                 }
 

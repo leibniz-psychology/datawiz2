@@ -14,8 +14,6 @@ declare(strict_types=1);
 
 namespace PhpCsFixer\Doctrine\Annotation;
 
-use Doctrine\Common\Annotations\DocLexer;
-use Doctrine\Common\Lexer\Token as LexerToken;
 use PhpCsFixer\Preg;
 use PhpCsFixer\Tokenizer\Token as PhpToken;
 
@@ -29,7 +27,7 @@ use PhpCsFixer\Tokenizer\Token as PhpToken;
 final class Tokens extends \SplFixedArray
 {
     /**
-     * @param string[] $ignoredTags
+     * @param list<string> $ignoredTags
      *
      * @throws \InvalidArgumentException
      */
@@ -60,27 +58,27 @@ final class Tokens extends \SplFixedArray
             $nbScannedTokensToUse = 0;
             $nbScopes = 0;
             while (null !== $token = $lexer->peek()) {
-                if (0 === $index && !$token->isA(DocLexer::T_AT)) {
+                if (0 === $index && !$token->isType(DocLexer::T_AT)) {
                     break;
                 }
 
                 if (1 === $index) {
-                    if (!$token->isA(DocLexer::T_IDENTIFIER) || \in_array($token->value, $ignoredTags, true)) {
+                    if (!$token->isType(DocLexer::T_IDENTIFIER) || \in_array($token->getContent(), $ignoredTags, true)) {
                         break;
                     }
 
                     $nbScannedTokensToUse = 2;
                 }
 
-                if ($index >= 2 && 0 === $nbScopes && !$token->isA(DocLexer::T_NONE, DocLexer::T_OPEN_PARENTHESIS)) {
+                if ($index >= 2 && 0 === $nbScopes && !$token->isType([DocLexer::T_NONE, DocLexer::T_OPEN_PARENTHESIS])) {
                     break;
                 }
 
                 $scannedTokens[] = $token;
 
-                if ($token->isA(DocLexer::T_OPEN_PARENTHESIS)) {
+                if ($token->isType(DocLexer::T_OPEN_PARENTHESIS)) {
                     ++$nbScopes;
-                } elseif ($token->isA(DocLexer::T_CLOSE_PARENTHESIS)) {
+                } elseif ($token->isType(DocLexer::T_CLOSE_PARENTHESIS)) {
                     if (0 === --$nbScopes) {
                         $nbScannedTokensToUse = \count($scannedTokens);
 
@@ -102,16 +100,16 @@ final class Tokens extends \SplFixedArray
                 }
 
                 $lastTokenEndIndex = 0;
-                foreach (\array_slice($scannedTokens, 0, $nbScannedTokensToUse) as $token) {
-                    if ($token->isA(DocLexer::T_STRING)) {
-                        $token = new LexerToken(
-                            '"'.str_replace('"', '""', $token->value).'"',
-                            $token->type,
-                            $token->position
-                        );
-                    }
+                foreach (\array_slice($scannedTokens, 0, $nbScannedTokensToUse) as $scannedToken) {
+                    $token = $scannedToken->isType(DocLexer::T_STRING)
+                        ? new Token(
+                            $scannedToken->getType(),
+                            '"'.str_replace('"', '""', $scannedToken->getContent()).'"',
+                            $scannedToken->getPosition()
+                        )
+                        : $scannedToken;
 
-                    $missingTextLength = $token->position - $lastTokenEndIndex;
+                    $missingTextLength = $token->getPosition() - $lastTokenEndIndex;
                     if ($missingTextLength > 0) {
                         $tokens[] = new Token(DocLexer::T_NONE, substr(
                             $content,
@@ -120,11 +118,11 @@ final class Tokens extends \SplFixedArray
                         ));
                     }
 
-                    $tokens[] = new Token($token->type, $token->value);
-                    $lastTokenEndIndex = $token->position + \strlen($token->value);
+                    $tokens[] = new Token($token->getType(), $token->getContent());
+                    $lastTokenEndIndex = $token->getPosition() + \strlen($token->getContent());
                 }
 
-                $currentPosition = $ignoredTextPosition = $nextAtPosition + $token->position + \strlen($token->value);
+                $currentPosition = $ignoredTextPosition = $nextAtPosition + $token->getPosition() + \strlen($token->getContent());
             } else {
                 $currentPosition = $nextAtPosition + 1;
             }
@@ -140,8 +138,8 @@ final class Tokens extends \SplFixedArray
     /**
      * Create token collection from array.
      *
-     * @param Token[] $array       the array to import
-     * @param ?bool   $saveIndices save the numeric indices used in the original array, default is yes
+     * @param array<int, Token> $array       the array to import
+     * @param ?bool             $saveIndices save the numeric indices used in the original array, default is yes
      */
     public static function fromArray($array, $saveIndices = null): self
     {
@@ -248,7 +246,7 @@ final class Tokens extends \SplFixedArray
     public function offsetSet($index, $token): void
     {
         if (null === $token) {
-            throw new \InvalidArgumentException('Token must be an instance of PhpCsFixer\\Doctrine\\Annotation\\Token, "null" given.');
+            throw new \InvalidArgumentException('Token must be an instance of PhpCsFixer\Doctrine\Annotation\Token, "null" given.');
         }
 
         if (!$token instanceof Token) {
@@ -258,21 +256,21 @@ final class Tokens extends \SplFixedArray
                 $type = \get_class($token);
             }
 
-            throw new \InvalidArgumentException(sprintf('Token must be an instance of PhpCsFixer\\Doctrine\\Annotation\\Token, "%s" given.', $type));
+            throw new \InvalidArgumentException(\sprintf('Token must be an instance of PhpCsFixer\Doctrine\Annotation\Token, "%s" given.', $type));
         }
 
         parent::offsetSet($index, $token);
     }
 
     /**
-     * {@inheritdoc}
+     * @param mixed $index
      *
      * @throws \OutOfBoundsException
      */
     public function offsetUnset($index): void
     {
         if (!isset($this[$index])) {
-            throw new \OutOfBoundsException(sprintf('Index "%s" is invalid or does not exist.', $index));
+            throw new \OutOfBoundsException(\sprintf('Index "%s" is invalid or does not exist.', $index));
         }
 
         $max = \count($this) - 1;

@@ -21,8 +21,7 @@ readonly class CrudService implements Crudable
         private FilesystemOperator $materialFilesystem,
         private EntityManagerInterface $em,
         private LoggerInterface $logger
-    ) {
-    }
+    ) {}
 
     /**
      * Wrapper for find from EntityManager.

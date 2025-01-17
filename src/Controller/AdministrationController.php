@@ -19,8 +19,7 @@ class AdministrationController extends AbstractController
     public function __construct(
         private readonly EntityManagerInterface $em,
         private readonly LoggerInterface $logger
-    ) {
-    }
+    ) {}
 
     #[Route(path: '/admin/user', name: 'admin_user', methods: ['GET'])]
     public function listUser(): Response

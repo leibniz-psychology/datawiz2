@@ -13,8 +13,7 @@ class ModerationController extends AbstractController
 {
     public function __construct(
         private readonly LoggerInterface $logger
-    ) {
-    }
+    ) {}
 
     #[Route(path: '/moderation/dashboard', name: 'moderation_dashboard', methods: ['GET'])]
     public function dashboard(): Response

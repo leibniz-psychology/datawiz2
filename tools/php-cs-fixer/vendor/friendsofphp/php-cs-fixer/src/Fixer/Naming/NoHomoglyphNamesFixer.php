@@ -48,7 +48,7 @@ final class NoHomoglyphNamesFixer extends AbstractFixer
      *
      * @var array<string, string>
      */
-    private static array $replacements = [
+    private const REPLACEMENTS = [
         'O' => '0',
         '０' => '0',
         'I' => '1',
@@ -193,9 +193,6 @@ final class NoHomoglyphNamesFixer extends AbstractFixer
         'ｚ' => 'z',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -206,25 +203,16 @@ final class NoHomoglyphNamesFixer extends AbstractFixer
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isRisky(): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAnyTokenKindsFound([T_VARIABLE, T_STRING]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         foreach ($tokens as $index => $token) {
@@ -232,11 +220,9 @@ final class NoHomoglyphNamesFixer extends AbstractFixer
                 continue;
             }
 
-            $replaced = Preg::replaceCallback('/[^[:ascii:]]/u', static function (array $matches): string {
-                return self::$replacements[$matches[0]] ?? $matches[0];
-            }, $token->getContent(), -1, $count);
+            $replaced = Preg::replaceCallback('/[^[:ascii:]]/u', static fn (array $matches): string => self::REPLACEMENTS[$matches[0]] ?? $matches[0], $token->getContent(), -1, $count);
 
-            if ($count) {
+            if ($count > 0) {
                 $tokens->offsetSet($index, new Token([$token->getId(), $replaced]));
             }
         }

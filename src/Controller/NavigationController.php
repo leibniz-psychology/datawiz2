@@ -11,9 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class NavigationController extends AbstractController
 {
-    public function __construct(private readonly EntityManagerInterface $em)
-    {
-    }
+    public function __construct(private readonly EntityManagerInterface $em) {}
 
     public function sidebarNavigationAction(Request $request): Response
     {

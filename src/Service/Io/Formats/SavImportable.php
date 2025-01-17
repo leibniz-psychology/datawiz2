@@ -11,8 +11,7 @@ readonly class SavImportable
     public function __construct(
         private SpssApiClient $spssApiClient,
         private LoggerInterface $logger
-    ) {
-    }
+    ) {}
 
     public function savToArray(Dataset $dataset): array
     {

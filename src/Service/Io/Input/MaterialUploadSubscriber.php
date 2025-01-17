@@ -13,8 +13,7 @@ readonly class MaterialUploadSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private EntityManagerInterface $em
-    ) {
-    }
+    ) {}
 
     public static function getSubscribedEvents(): array
     {

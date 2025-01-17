@@ -27,25 +27,15 @@ use Symfony\Component\Process\Process;
 #[AsCommand(name: 'completion', description: 'Dump the shell completion script')]
 final class DumpCompletionCommand extends Command
 {
-    /**
-     * @deprecated since Symfony 6.1
-     */
-    protected static $defaultName = 'completion';
-
-    /**
-     * @deprecated since Symfony 6.1
-     */
-    protected static $defaultDescription = 'Dump the shell completion script';
-
     private array $supportedShells;
 
-    protected function configure()
+    protected function configure(): void
     {
         $fullCommand = $_SERVER['PHP_SELF'];
         $commandName = basename($fullCommand);
         $fullCommand = @realpath($fullCommand) ?: $fullCommand;
 
-        $shell = $this->guessShell();
+        $shell = self::guessShell();
         [$rcFile, $completionFile] = match ($shell) {
             'fish' => ['~/.config/fish/config.fish', "/etc/fish/completions/$commandName.fish"],
             'zsh' => ['~/.zshrc', '$fpath[1]/_'.$commandName],
@@ -96,7 +86,7 @@ EOH
         if ($input->getOption('debug')) {
             $this->tailDebugLog($commandName, $output);
 
-            return self::SUCCESS;
+            return 0;
         }
 
         $shell = $input->getArgument('shell') ?? self::guessShell();
@@ -108,17 +98,17 @@ EOH
                 $output = $output->getErrorOutput();
             }
             if ($shell) {
-                $output->writeln(sprintf('<error>Detected shell "%s", which is not supported by Symfony shell completion (supported shells: "%s").</>', $shell, implode('", "', $supportedShells)));
+                $output->writeln(\sprintf('<error>Detected shell "%s", which is not supported by Symfony shell completion (supported shells: "%s").</>', $shell, implode('", "', $supportedShells)));
             } else {
-                $output->writeln(sprintf('<error>Shell not detected, Symfony shell completion only supports "%s").</>', implode('", "', $supportedShells)));
+                $output->writeln(\sprintf('<error>Shell not detected, Symfony shell completion only supports "%s").</>', implode('", "', $supportedShells)));
             }
 
-            return self::INVALID;
+            return 2;
         }
 
         $output->write(str_replace(['{{ COMMAND_NAME }}', '{{ VERSION }}'], [$commandName, CompleteCommand::COMPLETION_API_VERSION], file_get_contents($completionFile)));
 
-        return self::SUCCESS;
+        return 0;
     }
 
     private static function guessShell(): string

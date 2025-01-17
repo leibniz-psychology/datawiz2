@@ -27,9 +27,6 @@ use PhpCsFixer\Tokenizer\TokensAnalyzer;
  */
 final class NoPhp4ConstructorFixer extends AbstractFixer
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
@@ -59,25 +56,16 @@ class Foo
         return 75;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isTokenKindFound(T_CLASS);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isRisky(): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens): void
     {
         $tokensAnalyzer = new TokensAnalyzer($tokens);
@@ -118,6 +106,7 @@ class Foo
                                 ++$i;
                             }
                         }
+
                         // and continue checking the classes that might follow
                         continue;
                     }
@@ -150,7 +139,7 @@ class Foo
             return; // no PHP4-constructor!
         }
 
-        if (!empty($php4['modifiers'][T_ABSTRACT]) || !empty($php4['modifiers'][T_STATIC])) {
+        if (isset($php4['modifiers'][T_ABSTRACT]) || isset($php4['modifiers'][T_STATIC])) {
             return; // PHP4 constructor can't be abstract or static
         }
 
@@ -301,7 +290,7 @@ class Foo
      * @param int    $startIndex function/method start index
      * @param int    $bodyIndex  function/method body index
      *
-     * @return array an array containing the sequence and case sensitiveness [ 0 => $seq, 1 => $case ]
+     * @return array{list<list<array{int, string}|int|string>>, array{3: false}}
      */
     private function getWrapperMethodSequence(Tokens $tokens, string $method, int $startIndex, int $bodyIndex): array
     {

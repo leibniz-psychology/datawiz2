@@ -32,8 +32,7 @@ class StudyController extends AbstractController
         private readonly EntityManagerInterface $em,
         private readonly LoggerInterface $logger,
         private readonly Crudable $crud
-    ) {
-    }
+    ) {}
 
     #[Route(path: '/', name: 'overview', methods: ['GET'])]
     public function overviewAction(): Response

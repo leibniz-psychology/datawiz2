@@ -14,7 +14,7 @@ class DataWizUser implements UserInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
-    private UUid $id;
+    private Uuid $id;
 
     #[ORM\Column(type: 'simple_array')]
     private array $roles;

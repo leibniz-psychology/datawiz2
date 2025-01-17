@@ -13,9 +13,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class ReviewController extends AbstractController
 {
-    public function __construct(private readonly EntityManagerInterface $em)
-    {
-    }
+    public function __construct(private readonly EntityManagerInterface $em) {}
 
     #[Route(path: 'review/{uuid}', name: 'Study-review', methods: ['GET'])]
     public function reviewAction(string $uuid): Response

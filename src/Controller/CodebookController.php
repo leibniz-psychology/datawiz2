@@ -23,9 +23,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class CodebookController extends AbstractController
 {
-    public function __construct(protected EntityManagerInterface $em, protected LoggerInterface $logger, private readonly FilesystemOperator $matrixFilesystem)
-    {
-    }
+    public function __construct(protected EntityManagerInterface $em, protected LoggerInterface $logger, private readonly FilesystemOperator $matrixFilesystem) {}
 
     #[Route(path: '/{uuid}', name: 'index', methods: ['GET'])]
     public function codebookIndexAction(string $uuid): Response

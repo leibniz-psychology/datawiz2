@@ -14,12 +14,15 @@ declare(strict_types=1);
 
 namespace PhpCsFixer\Documentation;
 
-use PhpCsFixer\Console\Command\HelpCommand;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Preg;
+use PhpCsFixer\RuleSet\DeprecatedRuleSetDescriptionInterface;
 use PhpCsFixer\RuleSet\RuleSetDescriptionInterface;
+use PhpCsFixer\Utils;
 
 /**
+ * @readonly
+ *
  * @internal
  */
 final class RuleSetDocumentationGenerator
@@ -32,7 +35,7 @@ final class RuleSetDocumentationGenerator
     }
 
     /**
-     * @param FixerInterface[] $fixers
+     * @param list<FixerInterface> $fixers
      */
     public function generateRuleSetsDocumentation(RuleSetDescriptionInterface $definition, array $fixers): string
     {
@@ -46,8 +49,52 @@ final class RuleSetDocumentationGenerator
         $titleLine = str_repeat('=', \strlen($title));
         $doc = "{$titleLine}\n{$title}\n{$titleLine}\n\n".$definition->getDescription();
 
+        $warnings = [];
+        if ($definition instanceof DeprecatedRuleSetDescriptionInterface) {
+            $deprecationDescription = <<<'RST'
+
+                This rule set is deprecated and will be removed in the next major version
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                RST;
+            $alternatives = $definition->getSuccessorsNames();
+
+            if (0 !== \count($alternatives)) {
+                $deprecationDescription .= RstUtils::toRst(
+                    \sprintf(
+                        "\n\nYou should use %s instead.",
+                        Utils::naturalLanguageJoinWithBackticks($alternatives)
+                    ),
+                    0
+                );
+            } else {
+                $deprecationDescription .= 'No replacement available.';
+            }
+
+            $warnings[] = $deprecationDescription;
+        }
+
         if ($definition->isRisky()) {
-            $doc .= ' This set contains rules that are risky.';
+            $warnings[] = <<<'RST'
+
+                This set contains rules that are risky
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+                Using this rule set may lead to changes in your code's logic and behaviour. Use it with caution and review changes before incorporating them into your code base.
+                RST;
+        }
+
+        if ([] !== $warnings) {
+            $warningsHeader = 1 === \count($warnings) ? 'Warning' : 'Warnings';
+
+            $warningsHeaderLine = str_repeat('-', \strlen($warningsHeader));
+            $doc .= "\n\n".implode(
+                "\n",
+                [
+                    $warningsHeader,
+                    $warningsHeaderLine,
+                    ...$warnings,
+                ]
+            );
         }
 
         $rules = $definition->getRules();
@@ -76,7 +123,7 @@ final class RuleSetDocumentationGenerator
                     }
 
                     if (!\is_bool($config)) {
-                        $doc .= "\n  config:\n  ``".HelpCommand::toString($config).'``';
+                        $doc .= " with config:\n\n  ``".Utils::toString($config)."``\n";
                     }
                 }
             };
@@ -96,18 +143,30 @@ final class RuleSetDocumentationGenerator
     }
 
     /**
-     * @param array<string, string> $setDefinitions
+     * @param array<string, RuleSetDescriptionInterface> $setDefinitions
      */
     public function generateRuleSetsDocumentationIndex(array $setDefinitions): string
     {
         $documentation = <<<'RST'
-===========================
-List of Available Rule sets
-===========================
-RST;
-        foreach ($setDefinitions as $name => $path) {
+            ===========================
+            List of Available Rule sets
+            ===========================
+            RST;
+
+        foreach ($setDefinitions as $path => $definition) {
             $path = substr($path, strrpos($path, '/'));
-            $documentation .= "\n- `{$name} <.{$path}>`_";
+
+            $attributes = [];
+
+            if ($definition instanceof DeprecatedRuleSetDescriptionInterface) {
+                $attributes[] = 'deprecated';
+            }
+
+            $attributes = 0 === \count($attributes)
+                ? ''
+                : ' *('.implode(', ', $attributes).')*';
+
+            $documentation .= "\n- `{$definition->getName()} <.{$path}>`_{$attributes}";
         }
 
         return $documentation."\n";

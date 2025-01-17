@@ -10,9 +10,7 @@ final class ReviewDataCollectable
     private ?string $errorMessage = null;
     private ?string $errorType = null;
 
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     public function getDataName(): string
     {

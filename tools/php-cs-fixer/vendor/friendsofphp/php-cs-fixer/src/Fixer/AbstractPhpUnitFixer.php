@@ -18,6 +18,9 @@ use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\DocBlock\Line;
 use PhpCsFixer\Indicator\PhpUnitTestCaseIndicator;
+use PhpCsFixer\Tokenizer\Analyzer\AttributeAnalyzer;
+use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
+use PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer;
 use PhpCsFixer\Tokenizer\Analyzer\WhitespacesAnalyzer;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
@@ -28,10 +31,7 @@ use PhpCsFixer\Tokenizer\Tokens;
  */
 abstract class AbstractPhpUnitFixer extends AbstractFixer
 {
-    /**
-     * {@inheritdoc}
-     */
-    final public function isCandidate(Tokens $tokens): bool
+    public function isCandidate(Tokens $tokens): bool
     {
         return $tokens->isAllTokenKindsFound([T_CLASS, T_STRING]);
     }
@@ -71,22 +71,26 @@ abstract class AbstractPhpUnitFixer extends AbstractFixer
     }
 
     /**
-     * @param array<string> $preventingAnnotations
+     * @param list<string>       $preventingAnnotations
+     * @param list<class-string> $preventingAttributes
      */
-    final protected function ensureIsDockBlockWithAnnotation(
+    final protected function ensureIsDocBlockWithAnnotation(
         Tokens $tokens,
         int $index,
         string $annotation,
-        bool $addWithEmptyLineBeforePhpdoc,
-        bool $addWithEmptyLineBeforeAnnotation,
-        array $preventingAnnotations
+        array $preventingAnnotations,
+        array $preventingAttributes
     ): void {
         $docBlockIndex = $this->getDocBlockIndex($tokens, $index);
 
+        if (self::isPreventedByAttribute($tokens, $index, $preventingAttributes)) {
+            return;
+        }
+
         if ($this->isPHPDoc($tokens, $docBlockIndex)) {
-            $this->updateDocBlockIfNeeded($tokens, $docBlockIndex, $annotation, $addWithEmptyLineBeforeAnnotation, $preventingAnnotations);
+            $this->updateDocBlockIfNeeded($tokens, $docBlockIndex, $annotation, $preventingAnnotations);
         } else {
-            $this->createDocBlock($tokens, $docBlockIndex, $annotation, $addWithEmptyLineBeforePhpdoc);
+            $this->createDocBlock($tokens, $docBlockIndex, $annotation);
         }
     }
 
@@ -95,7 +99,53 @@ abstract class AbstractPhpUnitFixer extends AbstractFixer
         return $tokens[$index]->isGivenKind(T_DOC_COMMENT);
     }
 
-    private function createDocBlock(Tokens $tokens, int $docBlockIndex, string $annotation, bool $addWithEmptyLineBeforePhpdoc): void
+    /**
+     * @return iterable<array{
+     *     index: int,
+     *     loweredName: string,
+     *     openBraceIndex: int,
+     *     closeBraceIndex: int,
+     * }>
+     */
+    protected function getPreviousAssertCall(Tokens $tokens, int $startIndex, int $endIndex): iterable
+    {
+        $functionsAnalyzer = new FunctionsAnalyzer();
+
+        for ($index = $endIndex; $index > $startIndex; --$index) {
+            $index = $tokens->getPrevTokenOfKind($index, [[T_STRING]]);
+
+            if (null === $index) {
+                return;
+            }
+
+            // test if "assert" something call
+            $loweredContent = strtolower($tokens[$index]->getContent());
+
+            if (!str_starts_with($loweredContent, 'assert')) {
+                continue;
+            }
+
+            // test candidate for simple calls like: ([\]+'some fixable call'(...))
+            $openBraceIndex = $tokens->getNextMeaningfulToken($index);
+
+            if (!$tokens[$openBraceIndex]->equals('(')) {
+                continue;
+            }
+
+            if (!$functionsAnalyzer->isTheSameClassCall($tokens, $index)) {
+                continue;
+            }
+
+            yield [
+                'index' => $index,
+                'loweredName' => $loweredContent,
+                'openBraceIndex' => $openBraceIndex,
+                'closeBraceIndex' => $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $openBraceIndex),
+            ];
+        }
+    }
+
+    private function createDocBlock(Tokens $tokens, int $docBlockIndex, string $annotation): void
     {
         $lineEnd = $this->whitespacesConfig->getLineEnding();
         $originalIndent = WhitespacesAnalyzer::detectIndent($tokens, $tokens->getNextNonWhitespace($docBlockIndex));
@@ -106,7 +156,7 @@ abstract class AbstractPhpUnitFixer extends AbstractFixer
         $index = $tokens->getNextMeaningfulToken($docBlockIndex);
         $tokens->insertAt($index, $toInsert);
 
-        if ($addWithEmptyLineBeforePhpdoc && !$tokens[$index - 1]->isGivenKind(T_WHITESPACE)) {
+        if (!$tokens[$index - 1]->isGivenKind(T_WHITESPACE)) {
             $extraNewLines = $this->whitespacesConfig->getLineEnding();
 
             if (!$tokens[$index - 1]->isGivenKind(T_OPEN_TAG)) {
@@ -120,13 +170,12 @@ abstract class AbstractPhpUnitFixer extends AbstractFixer
     }
 
     /**
-     * @param array<string> $preventingAnnotations
+     * @param list<string> $preventingAnnotations
      */
     private function updateDocBlockIfNeeded(
         Tokens $tokens,
         int $docBlockIndex,
         string $annotation,
-        bool $addWithEmptyLineBeforeAnnotation,
         array $preventingAnnotations
     ): void {
         $doc = new DocBlock($tokens[$docBlockIndex]->getContent());
@@ -136,22 +185,79 @@ abstract class AbstractPhpUnitFixer extends AbstractFixer
             }
         }
         $doc = $this->makeDocBlockMultiLineIfNeeded($doc, $tokens, $docBlockIndex, $annotation);
-        $lines = $this->addInternalAnnotation($doc, $tokens, $docBlockIndex, $annotation, $addWithEmptyLineBeforeAnnotation);
+
+        $lines = $this->addInternalAnnotation($doc, $tokens, $docBlockIndex, $annotation);
         $lines = implode('', $lines);
 
         $tokens[$docBlockIndex] = new Token([T_DOC_COMMENT, $lines]);
     }
 
     /**
-     * @return array<Line>
+     * @param list<class-string> $preventingAttributes
      */
-    private function addInternalAnnotation(DocBlock $docBlock, Tokens $tokens, int $docBlockIndex, string $annotation, bool $addWithEmptyLineBeforeAnnotation): array
+    private static function isPreventedByAttribute(Tokens $tokens, int $index, array $preventingAttributes): bool
+    {
+        if ([] === $preventingAttributes) {
+            return false;
+        }
+
+        $modifiers = [T_FINAL];
+        if (\defined('T_READONLY')) { // @TODO: drop condition when PHP 8.2+ is required
+            $modifiers[] = T_READONLY;
+        }
+
+        do {
+            $index = $tokens->getPrevMeaningfulToken($index);
+        } while ($tokens[$index]->isGivenKind($modifiers));
+        if (!$tokens[$index]->isGivenKind(CT::T_ATTRIBUTE_CLOSE)) {
+            return false;
+        }
+        $index = $tokens->findBlockStart(Tokens::BLOCK_TYPE_ATTRIBUTE, $index);
+
+        foreach (AttributeAnalyzer::collect($tokens, $index) as $attributeAnalysis) {
+            foreach ($attributeAnalysis->getAttributes() as $attribute) {
+                if (\in_array(ltrim(self::getFullyQualifiedName($tokens, $attribute['name']), '\\'), $preventingAttributes, true)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private static function getFullyQualifiedName(Tokens $tokens, string $name): string
+    {
+        $name = strtolower($name);
+
+        $names = [];
+        foreach ((new NamespaceUsesAnalyzer())->getDeclarationsFromTokens($tokens) as $namespaceUseAnalysis) {
+            $names[strtolower($namespaceUseAnalysis->getShortName())] = strtolower($namespaceUseAnalysis->getFullName());
+        }
+
+        foreach ($names as $shortName => $fullName) {
+            if ($name === $shortName) {
+                return $fullName;
+            }
+
+            if (!str_starts_with($name, $shortName.'\\')) {
+                continue;
+            }
+
+            return $fullName.substr($name, \strlen($shortName));
+        }
+
+        return $name;
+    }
+
+    /**
+     * @return list<Line>
+     */
+    private function addInternalAnnotation(DocBlock $docBlock, Tokens $tokens, int $docBlockIndex, string $annotation): array
     {
         $lines = $docBlock->getLines();
         $originalIndent = WhitespacesAnalyzer::detectIndent($tokens, $docBlockIndex);
         $lineEnd = $this->whitespacesConfig->getLineEnding();
-        $extraLine = $addWithEmptyLineBeforeAnnotation ? $lineEnd.$originalIndent.' *' : '';
-        array_splice($lines, -1, 0, $originalIndent.' *'.$extraLine.' @'.$annotation.$lineEnd);
+        array_splice($lines, -1, 0, $originalIndent.' * @'.$annotation.$lineEnd);
 
         return $lines;
     }
@@ -159,7 +265,7 @@ abstract class AbstractPhpUnitFixer extends AbstractFixer
     private function makeDocBlockMultiLineIfNeeded(DocBlock $doc, Tokens $tokens, int $docBlockIndex, string $annotation): DocBlock
     {
         $lines = $doc->getLines();
-        if (1 === \count($lines) && empty($doc->getAnnotationsOfType($annotation))) {
+        if (1 === \count($lines) && [] === $doc->getAnnotationsOfType($annotation)) {
             $indent = WhitespacesAnalyzer::detectIndent($tokens, $tokens->getNextNonWhitespace($docBlockIndex));
             $doc->makeMultiLine($indent, $this->whitespacesConfig->getLineEnding());
 

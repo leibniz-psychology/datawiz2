@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This class provides the short name metadata.
  */

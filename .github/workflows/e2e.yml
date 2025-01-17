@@ -36,7 +36,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php-versions: [ '8.2' ]
+        php-versions: [ '8.3' ]
     steps:
       - name: Install Symfony CLI
         run: wget https://get.symfony.com/cli/installer -O - | bash

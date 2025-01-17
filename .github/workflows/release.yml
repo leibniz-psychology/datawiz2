@@ -16,12 +16,12 @@ jobs:
       app_version: ${{ steps.step1.outputs.app_version }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Nodejs
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 23
 
       - name: Install dependencies
         run: npm install @semantic-release/changelog @semantic-release/git @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/exec @semantic-release/git semantic-release/release-notes-generator

@@ -1,7 +1,7 @@
 FROM composer:lts AS composer
 
 
-FROM node:18-alpine AS builder
+FROM node:23-alpine AS builder
 COPY . /build
 RUN apk add --no-cache \
     python3 \
@@ -15,7 +15,7 @@ RUN yarn install \
     && yarn dev
 
 
-FROM php:8.2-fpm-alpine
+FROM php:8.3-fpm-alpine
 
 ENV APP_ENV=dev
 

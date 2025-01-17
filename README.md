@@ -3,7 +3,7 @@
 ![Symfony Version](https://img.shields.io/badge/Symfony-^6.4-success?logo=symfony&style=flat-square)
 ![PHP Version](https://img.shields.io/badge/Php-^8.3-informational?logo=PHP&style=flat-square&logoColor=white)
 ![Composer Version](https://img.shields.io/badge/Composer-^2.7-informational?logo=Composer&style=flat-square&logoColor=white)
-![Nodejs Version](https://img.shields.io/badge/Nodejs-18_LTS-informational?logo=node.js&style=flat-square&logoColor=white)
+![Nodejs Version](https://img.shields.io/badge/Nodejs-23_LTS-informational?logo=node.js&style=flat-square&logoColor=white)
 ![MariaDB Version](https://img.shields.io/badge/MariaDB-10.11-informational?logo=mariadb&style=flat-square&logoColor=white)
 [![DataWiz 2 Build](https://github.com/leibniz-psychology/datawiz2/actions/workflows/wf-main.yml/badge.svg?branch=master)](https://github.com/leibniz-psychology/datawiz2/actions/workflows/wf-main.yml)
 [![Übersetzungsstatus](http://weblate.zpid.de/widgets/datawiz/-/datawiz-2/svg-badge.svg)](http://weblate.zpid.de/engage/datawiz/)

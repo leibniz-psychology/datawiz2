@@ -44,7 +44,7 @@ class CodebookController extends AbstractController
         }
         $jsonCodebook = $this->codebookCollectionToJsonArray($dataset->getCodebook());
 
-        return new JsonResponse($jsonCodebook, $jsonCodebook != null && sizeof($jsonCodebook) > 0 ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);
+        return new JsonResponse($jsonCodebook, $jsonCodebook != null ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);
     }
 
     #[Route(path: '/{uuid}/measures', name: 'measures', methods: ['GET'])]
@@ -55,7 +55,7 @@ class CodebookController extends AbstractController
         $viewMeasures = [];
         if ($dataset) {
             $measures = $this->em->getRepository(MeasureMetaDataGroup::class)->findOneBy(['experiment' => $dataset->getExperiment()]);
-            if ($measures && $measures->getMeasures() && sizeof($measures->getMeasures()) > 0) {
+            if ($measures && $measures->getMeasures()) {
                 foreach ($measures->getMeasures() as $measure) {
                     if ($measure && $measure != '') {
                         $viewMeasures['measures'][] = $measure;
@@ -165,8 +165,8 @@ class CodebookController extends AbstractController
                     $var->setName($variable['name'] ?? $var->getName());
                     $var->setLabel($variable['label'] ?? null);
                     $var->setItemText($variable['itemText'] ?? null);
-                    $var->setValues($values != null && sizeof($values) != 0 ? $values : null);
-                    $var->setMissings($missings != null && sizeof($missings) != 0 ? $missings : null);
+                    $var->setValues($values != null ? $values : null);
+                    $var->setMissings($missings != null ? $missings : null);
                     $var->setMeasure($variable['measure'] ?? null);
                     $this->em->persist($var);
                     $this->em->flush();

@@ -83,7 +83,10 @@ class FileManagementController extends AbstractController
         $this->logger->debug("Enter FileManagementController::previewCSVAction with [FileId: {$fileId}]");
         $delimiter = $request->get('dataset-import-delimiter') ?? ',';
         $escape = $request->get('dataset-import-escape') ?? 'double';
-        $headerRows = filter_var($request->get('dataset-import-header-rows'), FILTER_VALIDATE_INT) ?? 0;
+        $headerRows = filter_var($request->get('dataset-import-header-rows'), FILTER_VALIDATE_INT);
+        if (!$headerRows) {
+            $headerRows = 0;
+        }
         $file = $this->em->find(Dataset::class, $fileId);
         $data = null;
         if ($file) {
@@ -100,7 +103,10 @@ class FileManagementController extends AbstractController
         $delimiter = $request->get('dataset-import-delimiter') ?? ',';
         $escape = $request->get('dataset-import-escape') ?? 'double';
         $remove = $request->get('dataset-import-remove') ?? null;
-        $headerRows = filter_var($request->get('dataset-import-header-rows'), FILTER_VALIDATE_INT) ?? 0;
+        $headerRows = filter_var($request->get('dataset-import-header-rows'), FILTER_VALIDATE_INT);
+        if (!$headerRows) {
+            $headerRows = 0;
+        }
         $dataset = $this->em->find(Dataset::class, $fileId);
         $data = null;
         $error = null;

@@ -57,7 +57,7 @@ yarn markdownlint-cli2 '**/*.md' '#node_modules' '#vendor' '#tools' '#CHANGELOG.
 echo ""
 echo "Lint PHP Files..."
 
-PHP_CS_FIXER="tools/php-cs-fixer/vendor/bin/php-cs-fixer"
+PHP_CS_FIXER="vendor/bin/php-cs-fixer"
 HAS_PHP_CS_FIXER=false
 
 if [ -x $PHP_CS_FIXER ]; then
@@ -71,7 +71,7 @@ if $HAS_PHP_CS_FIXER; then
 		  echo "No php files found in commit."
 	else
 		  echo ${FILES}
-		  $PHP_CS_FIXER fix --config .php-cs-fixer.php --verbose ${FILES} --diff
+		  $PHP_CS_FIXER fix --config .php-cs-fixer.dist.php --verbose ${FILES} --diff
 		  git add ${FILES}
 	fi
 else
@@ -80,8 +80,7 @@ else
     echo ""
     echo "   composer install"
     echo "or"
-    echo "   mkdir -p tools/php-cs-fixer"
-    echo "   composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer"
+    echo "   composer require friendsofphp/php-cs-fixer"
     echo ""
     exit 1
 fi

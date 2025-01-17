@@ -63,7 +63,7 @@ jobs:
       - name: PHP CS Fixer
         uses: docker://oskarstark/php-cs-fixer-ga
         with:
-          args: --config=.php-cs-fixer.php --dry-run --diff --verbose
+          args: --config=.php-cs-fixer.dist.php --dry-run --diff --verbose
 
       - name: "Install PHP with extensions"
         uses: shivammathur/setup-php@v2

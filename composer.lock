@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "19944536361c8ce097be783ab1c80fee",
+    "content-hash": "2ff84dfbace72d3926d25dcbcf06a455",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -2848,46 +2848,44 @@
         },
         {
             "name": "oneup/uploader-bundle",
-            "version": "4.0.1",
+            "version": "5.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/1up-lab/OneupUploaderBundle.git",
-                "reference": "34d22041d40ff45f87de56cd617a580d48cbdd8c"
+                "reference": "470b11eeee82946fbf93d5944c63749bcdf65f6f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/1up-lab/OneupUploaderBundle/zipball/34d22041d40ff45f87de56cd617a580d48cbdd8c",
-                "reference": "34d22041d40ff45f87de56cd617a580d48cbdd8c",
+                "url": "https://api.github.com/repos/1up-lab/OneupUploaderBundle/zipball/470b11eeee82946fbf93d5944c63749bcdf65f6f",
+                "reference": "470b11eeee82946fbf93d5944c63749bcdf65f6f",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.4 || ^8.0",
-                "symfony/asset": "^4.4 || ^5.4 || ^6.0",
+                "php": "^8.0",
+                "symfony/asset": "^5.4 || ^6.0 || ^7.0",
                 "symfony/event-dispatcher-contracts": "^1.0 || ^2.0 || ^3.0",
-                "symfony/finder": "^4.4 || ^5.4 || ^6.0",
-                "symfony/framework-bundle": "^4.4 || ^5.4 || ^6.0",
-                "symfony/mime": "^4.4 || ^5.4 || ^6.0",
-                "symfony/templating": "^4.4 || ^5.4 || ^6.0",
-                "symfony/translation": "^4.4 || ^5.4 || ^6.0",
+                "symfony/finder": "^5.4 || ^6.0 || ^7.0",
+                "symfony/framework-bundle": "^5.4 || ^6.0 || ^7.0",
+                "symfony/mime": "^5.4 || ^6.0 || ^7.0",
+                "symfony/translation": "^5.4 || ^6.0 || ^7.0",
                 "symfony/translation-contracts": "^1.0 || ^2.0 || ^3.0",
-                "symfony/yaml": "^4.4 || ^5.4 || ^6.0",
+                "symfony/yaml": "^5.4 || ^6.0 || ^7.0",
                 "twig/twig": "^2.4 || ^3.0"
             },
             "require-dev": {
                 "amazonwebservices/aws-sdk-for-php": "1.5.*",
                 "doctrine/common": "^2.12 || ^3.0",
                 "doctrine/doctrine-bundle": "^2.4",
-                "friendsofphp/php-cs-fixer": "^2.16",
+                "friendsofphp/php-cs-fixer": "^3.40",
                 "knplabs/gaufrette": "^0.9",
                 "m2mtech/flysystem-stream-wrapper": "^1.0",
                 "oneup/flysystem-bundle": "^4.1",
-                "phpstan/phpstan": "^0.12.10",
+                "phpstan/phpstan": "^1.8",
                 "phpunit/phpunit": "^9.5",
-                "sensio/framework-extra-bundle": "^5.0 || ^6.0",
-                "symfony/browser-kit": "^4.4 || ^5.4 || ^6.0",
-                "symfony/phpunit-bridge": "^5.4",
-                "symfony/security-bundle": "^4.4 || ^5.4 || ^6.0",
-                "symfony/var-dumper": "^4.4 || ^5.4 || ^6.0",
+                "symfony/browser-kit": "^5.4 || ^6.0 || ^7.0",
+                "symfony/phpunit-bridge": "^6.0.17 || ^7.0",
+                "symfony/security-bundle": "^5.4 || ^6.0 || ^7.0",
+                "symfony/var-dumper": "^5.4 || ^6.0 || ^7.0",
                 "twistor/flysystem-stream-wrapper": "^1.0"
             },
             "suggest": {
@@ -2936,9 +2934,9 @@
             ],
             "support": {
                 "issues": "https://github.com/1up-lab/OneupUploaderBundle/issues",
-                "source": "https://github.com/1up-lab/OneupUploaderBundle/tree/4.0.1"
+                "source": "https://github.com/1up-lab/OneupUploaderBundle/tree/5.0.1"
             },
-            "time": "2022-07-25T07:51:47+00:00"
+            "time": "2024-04-04T06:57:10+00:00"
         },
         {
             "name": "psr/cache",
@@ -7975,72 +7973,6 @@
                 }
             ],
             "time": "2024-11-13T13:31:12+00:00"
-        },
-        {
-            "name": "symfony/templating",
-            "version": "v6.4.13",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/templating.git",
-                "reference": "e27b6ea8d737cb0dfd41b2f5f055c9ed677afa33"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/templating/zipball/e27b6ea8d737cb0dfd41b2f5f055c9ed677afa33",
-                "reference": "e27b6ea8d737cb0dfd41b2f5f055c9ed677afa33",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.1",
-                "symfony/deprecation-contracts": "^2.5|^3",
-                "symfony/polyfill-ctype": "~1.8"
-            },
-            "require-dev": {
-                "psr/log": "^1|^2|^3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Templating\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Provides all the tools needed to build any kind of template system",
-            "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/symfony/templating/tree/v6.4.13"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2024-10-25T15:07:50+00:00"
         },
         {
             "name": "symfony/translation",

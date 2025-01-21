@@ -465,9 +465,6 @@
     "symfony/string": {
         "version": "v5.2.3"
     },
-    "symfony/templating": {
-        "version": "v5.2.4"
-    },
     "symfony/translation": {
         "version": "6.4",
         "recipe": {

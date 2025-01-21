@@ -57,9 +57,10 @@ class DataWizUser implements UserInterface
         $this->roles = $roles;
     }
 
-    public function eraseCredentials(): null
+    public function eraseCredentials(): void
     {
-        return null;
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function getEmail(): ?string

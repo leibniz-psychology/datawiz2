@@ -31,7 +31,7 @@ class FileManagementController extends AbstractController
     ) {}
 
     #[Route(path: '/preview/sav/{fileId}', name: 'preview-sav', methods: ['POST'])]
-    public function previewSavAction(string $fileId): JsonResponse
+    public function previewSav(string $fileId): JsonResponse
     {
         $this->logger->debug("Enter FileManagementController::previewSavAction with [FileId: {$fileId}]");
         $dataset = $this->em->find(Dataset::class, $fileId);
@@ -44,7 +44,7 @@ class FileManagementController extends AbstractController
     }
 
     #[Route(path: '/submit/sav/{fileId}', name: 'submit-sav', methods: ['POST'])]
-    public function submitSavAction(string $fileId): JsonResponse
+    public function submitSav(string $fileId): JsonResponse
     {
         $this->logger->debug("Enter FileManagementController::previewSavAction with [FileId: {$fileId}]");
         $dataset = $this->em->find(Dataset::class, $fileId);
@@ -82,7 +82,7 @@ class FileManagementController extends AbstractController
     }
 
     #[Route(path: '/preview/csv/{fileId}', name: 'preview-csv', methods: ['POST'])]
-    public function previewCsvAction(string $fileId, Request $request): JsonResponse
+    public function previewCsv(string $fileId, Request $request): JsonResponse
     {
         $this->logger->debug("Enter FileManagementController::previewCSVAction with [FileId: {$fileId}]");
         $delimiter = $request->get('dataset-import-delimiter') ?? ',';
@@ -101,7 +101,7 @@ class FileManagementController extends AbstractController
     }
 
     #[Route(path: '/submit/csv/{fileId}', name: 'submit-csv', methods: ['POST'])]
-    public function submitCSVAction(string $fileId, Request $request): JsonResponse
+    public function submitCSV(string $fileId, Request $request): JsonResponse
     {
         $this->logger->debug("Enter FileManagementController::submitCSVAction with [FileId: {$fileId}]");
         $delimiter = $request->get('dataset-import-delimiter') ?? ',';
@@ -155,7 +155,7 @@ class FileManagementController extends AbstractController
     }
 
     #[Route(path: '/{uuid}/delete/dataset', name: 'delete_dataset', methods: ['POST'])]
-    public function deleteDatasetAction(string $uuid): RedirectResponse
+    public function deleteDataset(string $uuid): RedirectResponse
     {
         $this->logger->debug("Enter FileManagementController::deleteMaterialAction with [UUID: {$uuid}]");
         $dataset = $this->em->find(Dataset::class, $uuid);
@@ -166,7 +166,7 @@ class FileManagementController extends AbstractController
     }
 
     #[Route(path: '/{uuid}/delete/material', name: 'delete_material', methods: ['POST'])]
-    public function deleteMaterialAction(string $uuid): RedirectResponse
+    public function deleteMaterial(string $uuid): RedirectResponse
     {
         $this->logger->debug("Enter FileManagementController::deleteMaterialAction with [UUID: {$uuid}]");
         $material = $this->em->find(AdditionalMaterial::class, $uuid);
@@ -177,7 +177,7 @@ class FileManagementController extends AbstractController
     }
 
     #[Route(path: '/{uuid}/update/description', name: 'update_description', methods: ['POST'])]
-    public function updateDescriptionAction(string $uuid, Request $request): JsonResponse
+    public function updateDescription(string $uuid, Request $request): JsonResponse
     {
         $this->logger->debug("Enter FileManagementController::updateDescriptionAction with [UUID: {$uuid}]");
         $entity = $this->em->find(AdditionalMaterial::class, $uuid);

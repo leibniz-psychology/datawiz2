@@ -16,7 +16,7 @@ class ReviewController extends AbstractController
     public function __construct(private readonly EntityManagerInterface $em) {}
 
     #[Route(path: 'review/{uuid}', name: 'Study-review', methods: ['GET'])]
-    public function reviewAction(string $uuid): Response
+    public function review(string $uuid): Response
     {
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
 

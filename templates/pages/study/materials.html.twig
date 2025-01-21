@@ -41,7 +41,7 @@
         </p>
     {% endif %}
 
-    {{ render(controller('App\\Controller\\NavigationController::savebarNavigationAction', {
+    {{ render(controller('App\\Controller\\NavigationController::savebarNavigation', {
         request: app.request,
         prevUrl: 'Study-datasets',
         prevTitle: 'title.dataset.title-short'|trans,

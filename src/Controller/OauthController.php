@@ -13,14 +13,14 @@ class OauthController extends AbstractController
     public function __construct(private readonly ClientRegistry $clientRegistry) {}
 
     #[Route(path: '/login', name: 'login', methods: ['GET'])]
-    public function loginAction(): RedirectResponse
+    public function login(): RedirectResponse
     {
         return $this->clientRegistry->getClient('keycloak')->redirect(['openid'], []);
     }
 
     #[Route(path: '/logout', name: 'logout', methods: ['GET'])]
-    public function logoutAction(ClientRegistry $clientRegistry) {}
+    public function logout(ClientRegistry $clientRegistry) {}
 
     #[Route(path: '/login/check', name: 'check', methods: ['GET'])]
-    public function loginCheckAction() {}
+    public function loginCheck() {}
 }

@@ -13,7 +13,7 @@ class NavigationController extends AbstractController
 {
     public function __construct(private readonly EntityManagerInterface $em) {}
 
-    public function sidebarNavigationAction(Request $request): Response
+    public function sidebarNavigation(Request $request): Response
     {
         $uuid = $request->get('uuid'); // magic string refer to the name of your slug :)
 
@@ -22,7 +22,7 @@ class NavigationController extends AbstractController
         ]);
     }
 
-    public function savebarNavigationAction(
+    public function savebarNavigation(
         Request $request,
         ?string $prevUrl,
         ?string $prevTitle,

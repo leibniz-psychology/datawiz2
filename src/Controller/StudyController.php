@@ -35,7 +35,7 @@ class StudyController extends AbstractController
     ) {}
 
     #[Route(path: '/', name: 'overview', methods: ['GET'])]
-    public function overviewAction(): Response
+    public function overview(): Response
     {
         $this->logger->debug('Enter StudyController::overviewAction');
 
@@ -45,7 +45,7 @@ class StudyController extends AbstractController
     }
 
     #[Route(path: '/new', name: 'new', methods: ['GET', 'POST'])]
-    public function newAction(Questionnairable $questionnaire, Request $request): Response
+    public function new(Questionnairable $questionnaire, Request $request): Response
     {
         $this->logger->debug('Enter StudyController::newAction');
         $newExperiment = Experiment::createNewExperiment($this->em->getRepository(DataWizUser::class)->find($this->security->getUser()));
@@ -68,7 +68,7 @@ class StudyController extends AbstractController
     }
 
     #[Route(path: '/{uuid}/settings', name: 'settings', methods: ['GET'])]
-    public function settingsAction(string $uuid, Request $request): Response
+    public function settings(string $uuid, Request $request): Response
     {
         $this->logger->debug("Enter StudyController::settingsAction with [UUID: {$uuid}]");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
@@ -91,7 +91,7 @@ class StudyController extends AbstractController
     }
 
     #[Route(path: '/{uuid}/documentation', name: 'documentation', methods: ['GET', 'POST'])]
-    public function documentationAction(string $uuid, Request $request): Response
+    public function documentation(string $uuid, Request $request): Response
     {
         $this->logger->debug("Enter StudyController::documentationAction with [UUID: {$uuid}]");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
@@ -149,7 +149,7 @@ class StudyController extends AbstractController
     }
 
     #[Route(path: '/{uuid}/theory', name: 'theory', methods: ['GET', 'POST'])]
-    public function theoryAction(string $uuid, Request $request): Response
+    public function theory(string $uuid, Request $request): Response
     {
         $this->logger->debug("Enter StudyController::theoryAction with [UUID: {$uuid}]");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
@@ -177,7 +177,7 @@ class StudyController extends AbstractController
     }
 
     #[Route(path: '/{uuid}/sample', name: 'sample', methods: ['GET', 'POST'])]
-    public function sampleAction(string $uuid, Request $request): Response
+    public function sample(string $uuid, Request $request): Response
     {
         $this->logger->debug("Enter StudyController::sampleAction with [UUID: {$uuid}]");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
@@ -212,7 +212,7 @@ class StudyController extends AbstractController
     }
 
     #[Route(path: '/{uuid}/measure', name: 'measure', methods: ['GET', 'POST'])]
-    public function measureAction(string $uuid, Request $request): Response
+    public function measure(string $uuid, Request $request): Response
     {
         $this->logger->debug("Enter StudyController::measureAction with [UUID: {$uuid}]");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
@@ -244,7 +244,7 @@ class StudyController extends AbstractController
     }
 
     #[Route(path: '/{uuid}/method', name: 'method', methods: ['GET', 'POST'])]
-    public function methodAction(string $uuid, Request $request): Response
+    public function method(string $uuid, Request $request): Response
     {
         $this->logger->debug("Enter StudyController::methodAction with [UUID: {$uuid}]");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
@@ -272,7 +272,7 @@ class StudyController extends AbstractController
     }
 
     #[Route(path: '/{uuid}/materials', name: 'materials', methods: ['GET'])]
-    public function materialsAction(string $uuid): Response
+    public function materials(string $uuid): Response
     {
         $this->logger->debug("Enter StudyController::materialsAction with [UUID: {$uuid}]");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
@@ -287,7 +287,7 @@ class StudyController extends AbstractController
     }
 
     #[Route(path: '/{uuid}/datasets', name: 'datasets', methods: ['GET'])]
-    public function datasetsAction(string $uuid): Response
+    public function datasets(string $uuid): Response
     {
         $this->logger->debug("Enter StudyController::datasetsAction with [UUID: {$uuid}]");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
@@ -302,7 +302,7 @@ class StudyController extends AbstractController
     }
 
     #[Route(path: '/{uuid}/introduction', name: 'introduction', methods: ['GET'])]
-    public function introductionAction(string $uuid): Response
+    public function introduction(string $uuid): Response
     {
         $this->logger->debug("Enter StudyController::introductionAction with [UUID: {$uuid}]");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
@@ -317,7 +317,7 @@ class StudyController extends AbstractController
     }
 
     #[Route(path: '/{uuid}/delete', name: 'delete', methods: ['GET'])]
-    public function deleteAction(string $uuid): Response
+    public function delete(string $uuid): Response
     {
         $this->logger->debug("Enter StudyController::deleteAction with [UUID: {$uuid}]");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);

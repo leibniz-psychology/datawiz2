@@ -57,7 +57,7 @@ class ExportController extends AbstractController
     }
 
     #[Route(path: '/export/{uuid}', name: 'export_action', methods: ['POST'])]
-    public function exportAction(Request $request, string $uuid): Response
+    public function export(Request $request, string $uuid): Response
     {
         $this->logger->debug("Enter ExportController::exportAction(POST) for UUID: {$uuid}");
         $experiment = $this->em->getRepository(Experiment::class)->find($uuid);

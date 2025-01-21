@@ -26,7 +26,7 @@ class CodebookController extends AbstractController
     public function __construct(protected EntityManagerInterface $em, protected LoggerInterface $logger, private readonly FilesystemOperator $matrixFilesystem) {}
 
     #[Route(path: '/{uuid}', name: 'index', methods: ['GET'])]
-    public function codebookIndexAction(string $uuid): Response
+    public function codebookIndex(string $uuid): Response
     {
         return $this->render('pages/codebook/index.html.twig', [
             'codebook' => $this->em->getRepository(Dataset::class)->find($uuid),
@@ -34,7 +34,7 @@ class CodebookController extends AbstractController
     }
 
     #[Route(path: '/{uuid}/data', name: 'dataupdate', methods: ['GET', 'POST'])]
-    public function performUpdateAction(string $uuid, Request $request): JsonResponse
+    public function performUpdate(string $uuid, Request $request): JsonResponse
     {
         $this->logger->debug("Enter CodebookController::performUpdateAction with [UUID: {$uuid}]");
         $dataset = $this->em->getRepository(Dataset::class)->find($uuid);
@@ -48,7 +48,7 @@ class CodebookController extends AbstractController
     }
 
     #[Route(path: '/{uuid}/measures', name: 'measures', methods: ['GET'])]
-    public function createViewMeasuresAction(string $uuid): JsonResponse
+    public function createViewMeasures(string $uuid): JsonResponse
     {
         $this->logger->debug("Enter CodebookController::createViewMeasuresAction with [UUID: {$uuid}]");
         $dataset = $this->em->getRepository(Dataset::class)->find($uuid);
@@ -68,7 +68,7 @@ class CodebookController extends AbstractController
     }
 
     #[Route(path: '/{uuid}/matrix', name: 'matrix', methods: ['GET'])]
-    public function datasetMatrixAction(Request $request, string $uuid): JsonResponse
+    public function datasetMatrix(Request $request, string $uuid): JsonResponse
     {
         $size = $request->get('size') ?? 0;
         $page = $request->get('page') ?? 1;

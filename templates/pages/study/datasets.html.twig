@@ -49,7 +49,7 @@
     <!-- Modal for importing a dataset -->
     {{ include('pages/study/_datasetImportModal.html.twig') }}
 
-    {{ render(controller('App\\Controller\\NavigationController::savebarNavigationAction', {
+    {{ render(controller('App\\Controller\\NavigationController::savebarNavigation', {
         request: app.request,
         prevUrl: 'Study-sample',
         prevTitle: 'title.samples.title'|trans,

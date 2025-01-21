@@ -352,7 +352,7 @@ class StudyController extends AbstractController
             ['saveAndDatasets', 'Study-datasets'],
             ['saveAndMaterials', 'Study-materials'],
             ['saveAndReview', 'Study-review'],
-            ['saveAndExport', 'Study-export'],
+            ['saveAndExport', 'export_index'],
             ['saveAndSettings', 'Study-settings'],
         ];
 

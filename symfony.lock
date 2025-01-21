@@ -11,9 +11,6 @@
     "doctrine/collections": {
         "version": "1.6.7"
     },
-    "doctrine/common": {
-        "version": "2.13.3"
-    },
     "doctrine/dbal": {
         "version": "2.10.2"
     },
@@ -387,9 +384,6 @@
         "version": "v1.18.0"
     },
     "symfony/polyfill-mbstring": {
-        "version": "v1.17.1"
-    },
-    "symfony/polyfill-php72": {
         "version": "v1.17.1"
     },
     "symfony/polyfill-php80": {

@@ -24,6 +24,8 @@ doctrine:
                 alias: App
         filters:
             ownership: App\Security\Authorization\OwnershipFilter
+        controller_resolver:
+            auto_mapping: false
 
 when@test:
     doctrine:

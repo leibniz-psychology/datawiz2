@@ -19,6 +19,10 @@ framework:
 
     trusted_proxies: '%env(TRUSTED_PROXIES)%'
 
+    uid:
+        default_uuid_version: 7
+        time_based_uuid_version: 7
+
 when@test:
     framework:
         test: true

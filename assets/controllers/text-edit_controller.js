@@ -1,5 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
-import axios from 'axios';
+
 export default class extends Controller {
     static targets = [ "displayArea", "inputArea", "input"]
     static values = {
@@ -37,13 +37,14 @@ export default class extends Controller {
         this.inputTarget.value = this.textValue;
     }
 
-    postToUrl(url, value) {
-        axios.post(url, value).then((data) => {
+    async postToUrl(url, value) {
+        try {
+            const data = await fetch(url, { method: 'POST', body: value });
             console.log(data);
             location.reload();
-        }).catch((error) => {
+        } catch (error) {
             throw new Error("text-edit-controller: Could not save text: " + error);
-        });
+        }
     }
 
     toggleEditMode() {

@@ -20,7 +20,7 @@ use Symfony\Component\Serializer\Encoder\CsvEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
 use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
@@ -39,7 +39,7 @@ class ExportController extends AbstractController
         private readonly FilesystemOperator $matrixFilesystem,
         private readonly FilesystemOperator $materialFilesystem
     ) {
-        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader());
+        $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
         $metadataAwareNameConverter = new MetadataAwareNameConverter($classMetadataFactory);
         $this->serializer = new Serializer(
             [new DateTimeNormalizer(), new ObjectNormalizer($classMetadataFactory, $metadataAwareNameConverter)],

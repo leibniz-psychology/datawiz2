@@ -116,11 +116,11 @@ class StudyController extends AbstractController
 
         $formData = $form->getData();
         $currentCreators = $this->em->getRepository(CreatorMetaDataGroup::class)->findBy(['basicInformation' => $basicInformation]);
-        if (is_iterable($currentCreators)) {
-            foreach ($currentCreators as $currentCreator) {
-                $this->em->remove($currentCreator);
-            }
+
+        foreach ($currentCreators as $currentCreator) {
+            $this->em->remove($currentCreator);
         }
+
         $newCreators = $formData->getCreators();
         if (!$form->getData()->getCreators() instanceof Collection) {
             throw new \Error('Creators is not a collection');

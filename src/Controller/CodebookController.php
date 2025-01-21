@@ -125,7 +125,7 @@ class CodebookController extends AbstractController
     private function codebookCollectionToJsonArray(?Collection $codebook): ?array
     {
         $jsonCodebook = null;
-        if ($codebook && is_iterable($codebook)) {
+        if ($codebook) {
             $jsonCodebook = [];
             foreach ($codebook as $var) {
                 $jsonCodebook['variables'][] = [

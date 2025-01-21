@@ -49,32 +49,36 @@ class FileManagementController extends AbstractController
         $this->logger->debug("Enter FileManagementController::previewSavAction with [FileId: {$fileId}]");
         $dataset = $this->em->find(Dataset::class, $fileId);
         $data = null;
+
         if ($dataset) {
             $data = $this->savImportable->savToArray($dataset);
         }
-        if (isset($dataset, $data) && !empty($data)) {
-            if (is_iterable($data) && key_exists('codebook', $data)) {
-                foreach ($data['codebook'] as $var) {
-                    $this->em->persist(
-                        DatasetVariables::createNew(
-                            $dataset,
-                            $var['id'],
-                            $var['name'],
-                            $var['label'],
-                            $var['itemText'],
-                            $var['values'],
-                            $var['missings'],
-                        )
-                    );
-                }
-                $this->em->flush();
-                if (key_exists('records', $data)) {
-                    $this->crud->saveDatasetMatrix($data['records'], $dataset->getId());
-                }
+
+        if (!isset($dataset) or empty($data)) {
+            return new JsonResponse([], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        if (key_exists('codebook', $data)) {
+            foreach ($data['codebook'] as $var) {
+                $this->em->persist(
+                    DatasetVariables::createNew(
+                        $dataset,
+                        $var['id'],
+                        $var['name'],
+                        $var['label'],
+                        $var['itemText'],
+                        $var['values'],
+                        $var['missings'],
+                    )
+                );
+            }
+            $this->em->flush();
+            if (key_exists('records', $data)) {
+                $this->crud->saveDatasetMatrix($data['records'], $dataset->getId());
             }
         }
 
-        return new JsonResponse($data ?? [], $data != null ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
+        return new JsonResponse($data, Response::HTTP_OK);
     }
 
     #[Route(path: '/preview/csv/{fileId}', name: 'preview-csv', methods: ['POST'])]

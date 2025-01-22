@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Dto\ExportDto;
 use App\Entity\FileManagement\AdditionalMaterial;
 use App\Entity\FileManagement\Dataset;
 use App\Entity\Study\Experiment;
@@ -12,8 +13,8 @@ use League\Flysystem\FilesystemOperator;
 use League\Flysystem\UnableToReadFile;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\Encoder\CsvEncoder;
@@ -56,12 +57,9 @@ class ExportController extends AbstractController
     }
 
     #[Route(path: '/export/{id}', name: 'export_action', methods: ['POST'])]
-    public function export(Request $request, Experiment $experiment): Response
+    public function export(Experiment $experiment, #[MapRequestPayload] ExportDto $export): Response
     {
         $this->logger->debug("Enter ExportController::exportAction(POST) for UUID: {$experiment->getId()}");
-        $exportFormat = $request->get('exportFormat');
-        $exportDataset = $request->get('exportDataset');
-        $exportMaterial = $request->get('exportMaterial');
 
         $zip = new \ZipArchive();
         $zipName = sys_get_temp_dir().'/'.$this->sanitizeFilename($experiment->getSettingsMetaDataGroup()->getShortName()).'.zip';
@@ -74,24 +72,22 @@ class ExportController extends AbstractController
 
         $success = false;
         $experiment->getOriginalDatasets()->clear();
-        if ($exportDataset !== null && sizeof($exportDataset) != 0) {
-            foreach ($exportDataset as $dataset) {
+        if ($export->datasets !== null && sizeof($export->datasets) != 0) {
+            foreach ($export->datasets as $dataset) {
                 $experiment->addOriginalDatasets($this->em->getRepository(Dataset::class)->find($dataset));
             }
-            $success = $this->appendDatasetsToZip($experiment, $exportFormat, $zip);
+            $success = $this->appendDatasetsToZip($experiment, $export->format, $zip);
         }
 
         $experiment->getAdditionalMaterials()->clear();
-        if ($exportMaterial !== null && sizeof($exportMaterial) != 0) {
-            foreach ($exportMaterial as $material) {
+        if ($export->materials !== null && sizeof($export->materials) != 0) {
+            foreach ($export->materials as $material) {
                 $experiment->addAdditionalMaterials($this->em->getRepository(AdditionalMaterial::class)->find($material));
             }
             $success = $this->appendMaterialToZip($experiment, $zip) && $success;
         }
 
-        if ($request->get('exportStudy') === 'study') {
-            $success = $this->appendStudyToZip($experiment, $exportFormat, $zip) && $success;
-        }
+        $success = $this->appendStudyToZip($experiment, $export->format, $zip) && $success;
 
         if (!$success || $zip->numFiles == 0) {
             $this->logger->warning('ExportController::exportAction(POST): Error during creating ZIP file: Zip file is empty or corrupt');

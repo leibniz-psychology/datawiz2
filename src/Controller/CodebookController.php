@@ -16,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -68,10 +69,8 @@ class CodebookController extends AbstractController
     }
 
     #[Route(path: '/{id}/matrix', name: 'matrix', methods: ['GET'])]
-    public function datasetMatrix(Request $request, Dataset $dataset): JsonResponse
+    public function datasetMatrix(Dataset $dataset, #[MapQueryParameter()] int $size = 0, #[MapQueryParameter] int $page = 1): JsonResponse
     {
-        $size = $request->get('size') ?? 0;
-        $page = $request->get('page') ?? 1;
         $this->logger->debug("Enter CodebookController::datasetMatrixAction with [UUID: {$dataset->getId()}]");
         $response = null;
 

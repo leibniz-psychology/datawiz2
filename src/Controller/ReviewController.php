@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Constant\UserRoles;
 use App\Entity\Study\Experiment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,9 +14,7 @@ class ReviewController extends AbstractController
     #[Route(path: 'review/{id}', name: 'Study-review', methods: ['GET'])]
     public function review(Experiment $experiment): Response
     {
-        if (!$this->_checkAccess($experiment)) {
-            return $this->redirectToRoute('dashboard');
-        }
+        $this->denyAccessUnlessGranted('REVIEW', $experiment);
 
         return $this->render('pages/review/index.html.twig', [
             'experiment' => $experiment,
@@ -29,10 +26,5 @@ class ReviewController extends AbstractController
             'measureReview' => $experiment->getMeasureMetaDataGroup()->getReviewCollection(),
             'sampleReview' => $experiment->getSampleMetaDataGroup()->getReviewCollection(),
         ]);
-    }
-
-    private function _checkAccess(Experiment $experiment): bool
-    {
-        return $this->isGranted(UserRoles::REVIEWER) || $experiment->getOwner() === $this->getUser();
     }
 }

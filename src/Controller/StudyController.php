@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Administration\DataWizUser;
 use App\Entity\Constant\States;
-use App\Entity\Constant\UserRoles;
 use App\Entity\Study\CreatorMetaDataGroup;
 use App\Entity\Study\Experiment;
 use App\Service\Crud\Crudable;
@@ -72,9 +71,7 @@ class StudyController extends AbstractController
     {
         $this->logger->debug("Enter StudyController::settingsAction with [UUID: {$experiment->getId()}]");
 
-        if (!$this->_checkAccess($experiment)) {
-            return $this->redirectToRoute('dashboard');
-        }
+        $this->denyAccessUnlessGranted('EDIT', $experiment);
 
         $form = $this->questionnaire->askAndHandle($experiment->getSettingsMetaDataGroup(), 'save', $request);
 
@@ -94,9 +91,7 @@ class StudyController extends AbstractController
     {
         $this->logger->debug("Enter StudyController::documentationAction with [UUID: {$experiment->getId()}]");
 
-        if (!$this->_checkAccess($experiment)) {
-            return $this->redirectToRoute('dashboard');
-        }
+        $this->denyAccessUnlessGranted('EDIT', $experiment);
 
         $basicInformation = $experiment->getBasicInformationMetaDataGroup();
         if (sizeof($basicInformation->getCreators()) == 0) {
@@ -151,9 +146,7 @@ class StudyController extends AbstractController
     {
         $this->logger->debug("Enter StudyController::theoryAction with [UUID: {$experiment->getId()}]");
 
-        if (!$this->_checkAccess($experiment)) {
-            return $this->redirectToRoute('dashboard');
-        }
+        $this->denyAccessUnlessGranted('EDIT', $experiment);
 
         $form = $this->questionnaire->askAndHandle($experiment->getTheoryMetaDataGroup(), 'save', $request);
 
@@ -178,9 +171,7 @@ class StudyController extends AbstractController
     {
         $this->logger->debug("Enter StudyController::sampleAction with [UUID: {$experiment->getId()}]");
 
-        if (!$this->_checkAccess($experiment)) {
-            return $this->redirectToRoute('dashboard');
-        }
+        $this->denyAccessUnlessGranted('EDIT', $experiment);
 
         $sampleGroup = $experiment->getSampleMetaDataGroup();
         $sampleGroup->setPopulation($this->_prepareEmptyArray($sampleGroup->getPopulation()));
@@ -212,9 +203,7 @@ class StudyController extends AbstractController
     {
         $this->logger->debug("Enter StudyController::measureAction with [UUID: {$experiment->getId()}]");
 
-        if (!$this->_checkAccess($experiment)) {
-            return $this->redirectToRoute('dashboard');
-        }
+        $this->denyAccessUnlessGranted('EDIT', $experiment);
 
         $experiment->getMeasureMetaDataGroup()->setMeasures($this->_prepareEmptyArray($experiment->getMeasureMetaDataGroup()->getMeasures()));
         $experiment->getMeasureMetaDataGroup()->setApparatus($this->_prepareEmptyArray($experiment->getMeasureMetaDataGroup()->getApparatus()));
@@ -243,9 +232,7 @@ class StudyController extends AbstractController
     {
         $this->logger->debug("Enter StudyController::methodAction with [UUID: {$experiment->getId()}]");
 
-        if (!$this->_checkAccess($experiment)) {
-            return $this->redirectToRoute('dashboard');
-        }
+        $this->denyAccessUnlessGranted('EDIT', $experiment);
 
         $form = $this->questionnaire->askAndHandle($experiment->getMethodMetaDataGroup(), 'save', $request);
 
@@ -270,9 +257,7 @@ class StudyController extends AbstractController
     {
         $this->logger->debug("Enter StudyController::materialsAction with [UUID: {$experiment->getId()}]");
 
-        if (!$this->_checkAccess($experiment)) {
-            return $this->redirectToRoute('dashboard');
-        }
+        $this->denyAccessUnlessGranted('EDIT', $experiment);
 
         return $this->render('pages/study/materials.html.twig', [
             'experiment' => $experiment,
@@ -284,9 +269,7 @@ class StudyController extends AbstractController
     {
         $this->logger->debug("Enter StudyController::datasetsAction with [UUID: {$experiment->getId()}]");
 
-        if (!$this->_checkAccess($experiment)) {
-            return $this->redirectToRoute('dashboard');
-        }
+        $this->denyAccessUnlessGranted('EDIT', $experiment);
 
         return $this->render('pages/study/datasets.html.twig', [
             'experiment' => $experiment,
@@ -298,9 +281,7 @@ class StudyController extends AbstractController
     {
         $this->logger->debug("Enter StudyController::introductionAction with [UUID: {$experiment->getId()}]");
 
-        if (!$this->_checkAccess($experiment)) {
-            return $this->redirectToRoute('dashboard');
-        }
+        $this->denyAccessUnlessGranted('EDIT', $experiment);
 
         return $this->render('pages/study/introduction.html.twig', [
             'experiment' => $experiment,
@@ -312,9 +293,7 @@ class StudyController extends AbstractController
     {
         $this->logger->debug("Enter StudyController::deleteAction with [UUID: {$experiment->getId()}]");
 
-        if (!$this->_checkAccess($experiment)) {
-            return $this->redirectToRoute('dashboard');
-        }
+        $this->denyAccessUnlessGranted('EDIT', $experiment);
 
         $this->crud->deleteStudy($experiment);
 
@@ -357,11 +336,6 @@ class StudyController extends AbstractController
         }
 
         return null;
-    }
-
-    private function _checkAccess(Experiment $experiment): bool
-    {
-        return $this->isGranted(UserRoles::ADMINISTRATOR) || $experiment->getOwner() === $this->getUser();
     }
 
     private function handleNavigation(FormInterface $form, string $id, ?string $prev, ?string $next): ?RedirectResponse

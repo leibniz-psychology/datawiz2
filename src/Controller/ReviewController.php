@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Constant\UserRoles;
 use App\Entity\Study\Experiment;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -13,13 +12,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class ReviewController extends AbstractController
 {
-    public function __construct(private readonly EntityManagerInterface $em) {}
-
-    #[Route(path: 'review/{uuid}', name: 'Study-review', methods: ['GET'])]
-    public function review(string $uuid): Response
+    #[Route(path: 'review/{id}', name: 'Study-review', methods: ['GET'])]
+    public function review(Experiment $experiment): Response
     {
-        $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
-
         if (!$this->_checkAccess($experiment)) {
             return $this->redirectToRoute('dashboard');
         }

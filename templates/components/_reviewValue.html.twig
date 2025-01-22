@@ -1,6 +1,6 @@
 {% if item.displayCondition %}
     {% if route is defined and route is not null %}
-        {% set editUrl = path(route, {uuid: experiment.id}) %}
+        {% set editUrl = path(route, {id: experiment.id}) %}
         {% set editUrl = editUrl ~ '/#' ~ item.dataName|trans|slug %}
     {% endif %}
 

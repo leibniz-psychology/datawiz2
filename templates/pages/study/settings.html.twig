@@ -68,7 +68,7 @@
 
                 <div {{ stimulus_controller('modal', {
                     'onSubmit': 'navigateToUrl',
-                    'url': path('Study-delete', { "uuid": experiment.id })
+                    'url': path('Study-delete', { "id": experiment.id })
                 }) }}>
                     {{ include('components/_deleteModal.html.twig', {
                         'title': "title.dataset.deleteModal.title",

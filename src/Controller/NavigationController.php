@@ -15,10 +15,10 @@ class NavigationController extends AbstractController
 
     public function sidebarNavigation(Request $request): Response
     {
-        $uuid = $request->get('uuid'); // magic string refer to the name of your slug :)
+        $id = $request->get('id'); // magic string refer to the name of your slug :)
 
         return $this->render('components/_navigationSidebar.html.twig', [
-            'experiment' => $this->getEntityAtChange($uuid),
+            'experiment' => $this->getEntityAtChange($id),
         ]);
     }
 
@@ -30,20 +30,20 @@ class NavigationController extends AbstractController
         ?string $nextTitle,
         ?FormView $form
     ): Response {
-        $uuid = $request->get('uuid'); // still a magic strings
+        $id = $request->get('id'); // still a magic strings
 
         return $this->render('components/_navigationSavebar.html.twig', [
-            'experiment' => $this->getEntityAtChange($uuid),
-            'prevUrl' => $prevUrl ? $this->generateUrl($prevUrl, ['uuid' => $uuid]) : null,
+            'experiment' => $this->getEntityAtChange($id),
+            'prevUrl' => $prevUrl ? $this->generateUrl($prevUrl, ['id' => $id]) : null,
             'prevTitle' => $prevTitle,
-            'nextUrl' => $nextUrl ? $this->generateUrl($nextUrl, ['uuid' => $uuid]) : null,
+            'nextUrl' => $nextUrl ? $this->generateUrl($nextUrl, ['id' => $id]) : null,
             'nextTitle' => $nextTitle,
             'form' => $form,
         ]);
     }
 
-    protected function getEntityAtChange(string $uuid, string $className = Experiment::class)
+    protected function getEntityAtChange(string $id, string $className = Experiment::class)
     {
-        return $this->em->getRepository($className)->find($uuid);
+        return $this->em->getRepository($className)->find($id);
     }
 }

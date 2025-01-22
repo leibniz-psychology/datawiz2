@@ -21,7 +21,7 @@
     {% if experiment is null %}
         {# TODO: error view if exp. == null #}
     {% else %}
-        <form action="{{ path('export_action', {uuid: experiment.id}) }}" method="POST">
+        <form action="{{ path('export_action', {id: experiment.id}) }}" method="POST">
 
             {# Input hidden because we always want to include the study documentation #}
             <div class="hidden mx-6 mt-4">

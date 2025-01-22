@@ -47,28 +47,21 @@ class ExportController extends AbstractController
         );
     }
 
-    #[Route(path: '/export/{uuid}', name: 'export_index', methods: ['GET'])]
-    public function exportIndex(string $uuid): Response
+    #[Route(path: '/export/{id}', name: 'export_index', methods: ['GET'])]
+    public function exportIndex(Experiment $experiment): Response
     {
-        $this->logger->debug("Enter ExportController::exportAction(GET) for UUID: {$uuid}");
-        $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
+        $this->logger->debug("Enter ExportController::exportAction(GET) for UUID: {$experiment->getId()}");
 
         return $this->render('pages/export/export.html.twig', ['export_error' => null, 'experiment' => $experiment]);
     }
 
-    #[Route(path: '/export/{uuid}', name: 'export_action', methods: ['POST'])]
-    public function export(Request $request, string $uuid): Response
+    #[Route(path: '/export/{id}', name: 'export_action', methods: ['POST'])]
+    public function export(Request $request, Experiment $experiment): Response
     {
-        $this->logger->debug("Enter ExportController::exportAction(POST) for UUID: {$uuid}");
-        $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
+        $this->logger->debug("Enter ExportController::exportAction(POST) for UUID: {$experiment->getId()}");
         $exportFormat = $request->get('exportFormat');
         $exportDataset = $request->get('exportDataset');
         $exportMaterial = $request->get('exportMaterial');
-
-        if (!$experiment) {
-            $this->logger->critical('ExportController::exportAction(POST): Error during getting experiment: Experiment == null');
-            return $this->render('pages/export/export.html.twig', ['export_error' => 'error.experiment.empty', 'experiment' => null]);
-        }
 
         $zip = new \ZipArchive();
         $zipName = sys_get_temp_dir().'/'.$this->sanitizeFilename($experiment->getSettingsMetaDataGroup()->getShortName()).'.zip';

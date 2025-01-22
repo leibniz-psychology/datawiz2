@@ -64,7 +64,7 @@
                                 <div class="grid grid-cols-6">
                                     <h4 class="text-2xl font-semibold text-zpid-purple-700 col-span-full">
                                         <a class="underline ExperimentName"
-                                           href="{{ path('Study-documentation', {uuid: experiment.id}) }}">
+                                           href="{{ path('Study-documentation', {id: experiment.id}) }}">
                                             {{ experiment.settingsMetaDataGroup.shortName }}
                                         </a>
                                     </h4>
@@ -74,7 +74,7 @@
                                     </div>
                                     <div class="col-span-full">
                                         <a class="font-semibold underline"
-                                           href="{{ path('Study-datasets', {uuid: experiment.id}) }}">{{ "title.overview.list.datasets"|trans ~ ":" }}</a>
+                                           href="{{ path('Study-datasets', {id: experiment.id}) }}">{{ "title.overview.list.datasets"|trans ~ ":" }}</a>
                                         {% if experiment.originalDatasets|length > 0 %}
                                             {% for dataset in experiment.originalDatasets %}
                                                 {{ dataset.originalName }}
@@ -83,7 +83,7 @@
                                     </div>
                                     <div class="col-span-full">
                                         <a class="font-semibold underline"
-                                           href="{{ path('Study-materials', {uuid: experiment.id}) }}">{{ "title.overview.list.materials"|trans ~ ":" }}</a>
+                                           href="{{ path('Study-materials', {id: experiment.id}) }}">{{ "title.overview.list.materials"|trans ~ ":" }}</a>
                                         {% if experiment.additionalMaterials|length > 0 %}
                                             {% for material in experiment.additionalMaterials %}
                                                 {{ material.originalName }}
@@ -100,7 +100,7 @@
                                     </div> #}
                                     {# TODO Remove delete link in final version #}
                                     {# <div class="col-span-full">
-                                        <a href="{{ path('Study-delete', {uuid: experiment.id}) }}">{{ "generic.delete"|trans }}</a>
+                                        <a href="{{ path('Study-delete', {id: experiment.id}) }}">{{ "generic.delete"|trans }}</a>
                                     </div> #}
                                 </div>
                             </li>

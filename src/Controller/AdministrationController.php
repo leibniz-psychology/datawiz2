@@ -34,12 +34,11 @@ class AdministrationController extends AbstractController
         );
     }
 
-    #[Route(path: '/admin/user/{uid}', name: 'admin_user_edit', methods: ['GET', 'POST'])]
-    public function editUserDetails(Request $request, string $uid): Response
+    #[Route(path: '/admin/user/{id}', name: 'admin_user_edit', methods: ['GET', 'POST'])]
+    public function editUserDetails(DataWizUser $user, Request $request): Response
     {
-        $this->logger->debug("AdministrationController::editUserDetails: Enter with uuid: {$uid}");
+        $this->logger->debug("AdministrationController::editUserDetails: Enter with uuid: {$user->getId()}");
 
-        $user = $this->em->getRepository(DataWizUser::class)->find($uid);
         $form = $this->createForm(UserDetailForm::class, $user, ['allow_edit_roles' => true]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -69,15 +68,15 @@ class AdministrationController extends AbstractController
         );
     }
 
-    #[Route(path: '/admin/user/{uid}/studies', name: 'admin_user_studies', methods: ['GET'])]
-    public function listStudiesForUser(string $uid): Response
+    #[Route(path: '/admin/user/{id}/studies', name: 'admin_user_studies', methods: ['GET'])]
+    public function listStudiesForUser(DataWizUser $owner): Response
     {
         $this->logger->debug('AdministrationController::listStudies: Enter');
 
         return $this->render(
             'pages/administration/admin/studies.html.twig',
             [
-                'studies' => $this->em->getRepository(Experiment::class)->findBy(['owner' => $this->em->getRepository(DataWizUser::class)->find($uid)]),
+                'studies' => $this->em->getRepository(Experiment::class)->findBy(['owner' => $owner]),
                 'backPath' => $this->generateUrl('admin_user'),
             ]
         );

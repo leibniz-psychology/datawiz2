@@ -9,7 +9,7 @@
 
                 <div {{ stimulus_controller('modal', {
                     'onSubmit': 'postToUrl',
-                    'url': path('File-delete_' ~ type, { "uuid": file.id })
+                    'url': path('File-delete_' ~ type, { id: file.id })
                 }) }}>
                     {{ include('components/_deleteModal.html.twig', {
                         'title': "title.dataset.deleteModal.title",
@@ -33,11 +33,11 @@
                 <span class="ml-1">{{ bytesToSize(file.originalSize) }}</span>
             </div>
 
-            {{ _self.editDescription(file, loopIndex, path('File-update_description', { 'uuid': file.id })) }}
+            {{ _self.editDescription(file, loopIndex, path('File-update_description', { id: file.id })) }}
 
             {% if type == 'dataset' %}
                 <div class="flex mx-4 mt-4">
-                    <a href="{{ path('codebook_index', {uuid: file.id}) }}"
+                    <a href="{{ path('codebook_index', {id: file.id}) }}"
                        class="Button_secondary_go Button_standalone">
                         {{ include('components/icons/table-edit.svg') }}
                         {{ "link.edit.codebook"|trans }}

@@ -30,33 +30,21 @@ class FileManagementController extends AbstractController
         private readonly LoggerInterface $logger
     ) {}
 
-    #[Route(path: '/preview/sav/{fileId}', name: 'preview-sav', methods: ['POST'])]
-    public function previewSav(string $fileId): JsonResponse
+    #[Route(path: '/preview/sav/{id}', name: 'preview-sav', methods: ['POST'])]
+    public function previewSav(Dataset $dataset): JsonResponse
     {
-        $this->logger->debug("Enter FileManagementController::previewSavAction with [FileId: {$fileId}]");
-        $dataset = $this->em->find(Dataset::class, $fileId);
-        $data = null;
-        if ($dataset) {
-            $data = $this->savImportable->savToArray($dataset);
-        }
+        $this->logger->debug("Enter FileManagementController::previewSavAction with [FileId: {$dataset->getId()}]");
+        $data = $this->savImportable->savToArray($dataset);
 
-        return new JsonResponse($data ?? [], $data != null ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
+        return new JsonResponse($data, Response::HTTP_OK);
     }
 
-    #[Route(path: '/submit/sav/{fileId}', name: 'submit-sav', methods: ['POST'])]
-    public function submitSav(string $fileId): JsonResponse
+    #[Route(path: '/submit/sav/{id}', name: 'submit-sav', methods: ['POST'])]
+    public function submitSav(Dataset $dataset): JsonResponse
     {
-        $this->logger->debug("Enter FileManagementController::previewSavAction with [FileId: {$fileId}]");
-        $dataset = $this->em->find(Dataset::class, $fileId);
-        $data = null;
+        $this->logger->debug("Enter FileManagementController::previewSavAction with [FileId: {$dataset->getId()}]");
 
-        if ($dataset) {
-            $data = $this->savImportable->savToArray($dataset);
-        }
-
-        if (!isset($dataset) or empty($data)) {
-            return new JsonResponse([], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
+        $data = $this->savImportable->savToArray($dataset);
 
         if (key_exists('codebook', $data)) {
             foreach ($data['codebook'] as $var) {
@@ -81,29 +69,29 @@ class FileManagementController extends AbstractController
         return new JsonResponse($data, Response::HTTP_OK);
     }
 
-    #[Route(path: '/preview/csv/{fileId}', name: 'preview-csv', methods: ['POST'])]
-    public function previewCsv(string $fileId, Request $request): JsonResponse
+    #[Route(path: '/preview/csv/{id}', name: 'preview-csv', methods: ['POST'])]
+    public function previewCsv(Dataset $dataset, Request $request): JsonResponse
     {
-        $this->logger->debug("Enter FileManagementController::previewCSVAction with [FileId: {$fileId}]");
+        $this->logger->debug("Enter FileManagementController::previewCSVAction with [FileId: {$dataset->getId()}]");
         $delimiter = $request->get('dataset-import-delimiter') ?? ',';
         $escape = $request->get('dataset-import-escape') ?? 'double';
         $headerRows = filter_var($request->get('dataset-import-header-rows'), FILTER_VALIDATE_INT);
         if (!$headerRows) {
             $headerRows = 0;
         }
-        $file = $this->em->find(Dataset::class, $fileId);
-        $data = null;
-        if ($file) {
-            $data = $this->csvImportable->csvToArray($file->getStorageName(), $delimiter, $escape, $headerRows, 5);
+
+        $data = $this->csvImportable->csvToArray($dataset->getStorageName(), $delimiter, $escape, $headerRows, 5);
+        if ($data === null) {
+            return new JsonResponse(null, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        return new JsonResponse($data, $data ? Response::HTTP_OK : Response::HTTP_UNPROCESSABLE_ENTITY);
+        return new JsonResponse($data, Response::HTTP_OK);
     }
 
-    #[Route(path: '/submit/csv/{fileId}', name: 'submit-csv', methods: ['POST'])]
-    public function submitCSV(string $fileId, Request $request): JsonResponse
+    #[Route(path: '/submit/csv/{id}', name: 'submit-csv', methods: ['POST'])]
+    public function submitCSV(Dataset $dataset, Request $request): JsonResponse
     {
-        $this->logger->debug("Enter FileManagementController::submitCSVAction with [FileId: {$fileId}]");
+        $this->logger->debug("Enter FileManagementController::submitCSVAction with [FileId: {$dataset->getId()}]");
         $delimiter = $request->get('dataset-import-delimiter') ?? ',';
         $escape = $request->get('dataset-import-escape') ?? 'double';
         $remove = $request->get('dataset-import-remove') ?? null;
@@ -111,39 +99,35 @@ class FileManagementController extends AbstractController
         if (!$headerRows) {
             $headerRows = 0;
         }
-        $dataset = $this->em->find(Dataset::class, $fileId);
         $data = null;
         $error = null;
-        if ($dataset) {
-            if ($remove) {
-                $error = $this->crud->deleteDataset($dataset) ? false : 'error.import.csv.codebook.delete';
-            } else {
-                $data = $this->csvImportable->csvToArray($dataset->getStorageName(), $delimiter, $escape, $headerRows);
-                if ($data && key_exists('header', $data) && is_iterable($data['header']) && sizeof($data['header']) > 0) {
-                    $varId = 1;
-                    foreach ($data['header'] as $var) {
-                        $this->em->persist(DatasetVariables::createNew($dataset, $varId++, $var));
-                    }
-                    $this->em->flush();
-                } elseif ($data && key_exists('records', $data) && is_iterable($data['records']) && sizeof($data['records']) > 0) {
-                    $varId = 1;
-                    foreach ($data['records'][0] as $ignored) {
-                        $this->em->persist(DatasetVariables::createNew($dataset, $varId, "var_{$varId}"));
-                        ++$varId;
-                    }
-                    $this->em->flush();
-                } else {
-                    $error = 'error.import.csv.codebook.empty';
-                }
-                if ($error == null && $data && key_exists('records', $data) && is_iterable($data['records']) && sizeof($data['records']) > 0) {
-                    $this->crud->saveDatasetMatrix($data['records'], $dataset->getId());
-                } else {
-                    $error = 'error.import.csv.matrix.empty';
-                }
-            }
+        if ($remove) {
+            $error = $this->crud->deleteDataset($dataset) ? false : 'error.import.csv.codebook.delete';
         } else {
-            $error = 'error.import.csv.dataset.empty';
+            $data = $this->csvImportable->csvToArray($dataset->getStorageName(), $delimiter, $escape, $headerRows);
+            if ($data && key_exists('header', $data) && is_iterable($data['header']) && sizeof($data['header']) > 0) {
+                $varId = 1;
+                foreach ($data['header'] as $var) {
+                    $this->em->persist(DatasetVariables::createNew($dataset, $varId++, $var));
+                }
+                $this->em->flush();
+            } elseif ($data && key_exists('records', $data) && is_iterable($data['records']) && sizeof($data['records']) > 0) {
+                $varId = 1;
+                foreach ($data['records'][0] as $ignored) {
+                    $this->em->persist(DatasetVariables::createNew($dataset, $varId, "var_{$varId}"));
+                    ++$varId;
+                }
+                $this->em->flush();
+            } else {
+                $error = 'error.import.csv.codebook.empty';
+            }
+            if ($error == null && $data && key_exists('records', $data) && is_iterable($data['records']) && sizeof($data['records']) > 0) {
+                $this->crud->saveDatasetMatrix($data['records'], $dataset->getId());
+            } else {
+                $error = 'error.import.csv.matrix.empty';
+            }
         }
+
         if ($error != null && !$remove) {
             $this->crud->deleteDataset($dataset);
         }
@@ -154,36 +138,34 @@ class FileManagementController extends AbstractController
         );
     }
 
-    #[Route(path: '/{uuid}/delete/dataset', name: 'delete_dataset', methods: ['POST'])]
-    public function deleteDataset(string $uuid): RedirectResponse
+    #[Route(path: '/{id}/delete/dataset', name: 'delete_dataset', methods: ['POST'])]
+    public function deleteDataset(Dataset $dataset): RedirectResponse
     {
-        $this->logger->debug("Enter FileManagementController::deleteMaterialAction with [UUID: {$uuid}]");
-        $dataset = $this->em->find(Dataset::class, $uuid);
+        $this->logger->debug("Enter FileManagementController::deleteMaterialAction with [UUID: {$dataset->getId()}]");
         $experimentId = $dataset->getExperiment()->getId();
         $this->crud->deleteDataset($dataset);
 
-        return $this->redirectToRoute('Study-datasets', ['uuid' => $experimentId]);
+        return $this->redirectToRoute('Study-datasets', ['id' => $experimentId]);
     }
 
-    #[Route(path: '/{uuid}/delete/material', name: 'delete_material', methods: ['POST'])]
-    public function deleteMaterial(string $uuid): RedirectResponse
+    #[Route(path: '/{id}/delete/material', name: 'delete_material', methods: ['POST'])]
+    public function deleteMaterial(AdditionalMaterial $material): RedirectResponse
     {
-        $this->logger->debug("Enter FileManagementController::deleteMaterialAction with [UUID: {$uuid}]");
-        $material = $this->em->find(AdditionalMaterial::class, $uuid);
+        $this->logger->debug("Enter FileManagementController::deleteMaterialAction with [UUID: {$material->getId()}]");
         $experimentId = $material->getExperiment()->getId();
         $this->crud->deleteMaterial($material);
 
-        return $this->redirectToRoute('Study-materials', ['uuid' => $experimentId]);
+        return $this->redirectToRoute('Study-materials', ['id' => $experimentId]);
     }
 
-    #[Route(path: '/{uuid}/update/description', name: 'update_description', methods: ['POST'])]
-    public function updateDescription(string $uuid, Request $request): JsonResponse
+    #[Route(path: '/{id}/update/description', name: 'update_description', methods: ['POST'])]
+    public function updateDescription(string $id, Request $request): JsonResponse
     {
-        $this->logger->debug("Enter FileManagementController::updateDescriptionAction with [UUID: {$uuid}]");
-        $entity = $this->em->find(AdditionalMaterial::class, $uuid);
+        $this->logger->debug("Enter FileManagementController::updateDescriptionAction with [UUID: {$id}]");
+        $entity = $this->em->find(AdditionalMaterial::class, $id);
         $success = false;
         if ($entity == null) {
-            $entity = $this->em->find(Dataset::class, $uuid);
+            $entity = $this->em->find(Dataset::class, $id);
         }
         if ($entity) {
             $description = $request->getContent();

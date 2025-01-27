@@ -41,7 +41,6 @@
         "symfony/var-dumper": "7.2.*",
         "symfony/web-link": "7.2.*",
         "symfony/web-profiler-bundle": "7.2.*",
-        "symfony/webpack-encore-bundle": "^2.2.0",
         "symfony/yaml": "7.2.*",
         "twig/extra-bundle": "^v3.18.0",
         "twig/markdown-extra": "^v3.18.0",

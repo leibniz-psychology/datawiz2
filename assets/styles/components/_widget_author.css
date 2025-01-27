@@ -1,4 +1,4 @@
-@import 'buttons';
+@import '_buttons.css';
 
 .Creator-Details {
   @apply md:grid md:w-full md:grid-cols-2 md:gap-x-2;
@@ -33,7 +33,7 @@
 
 .Creator-RemoveButton {
   @apply flex items-center float-right;
-  @apply border-l border-b border-t-0 border-r-0 rounded-tl-none rounded-br-none border-mono-400 #{!important};
+  @apply border-l border-b border-t-0 border-r-0 rounded-tl-none rounded-br-none border-mono-400;
   @apply Button_tertiary_danger;
   @apply Button_fieldSize
 }

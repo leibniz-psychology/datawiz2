@@ -13,7 +13,7 @@
 }
 
 .Help-Text blockquote p {
-  @apply px-0 font-sans text-sm bg-transparent #{!important};
+  @apply px-0 font-sans text-sm bg-transparent;
 }
 
 .Help-Text_section {
@@ -21,7 +21,7 @@
 
   h1 {
     @apply pt-3.5 pb-[1.125rem] bg-mono-100 text-zpid-purple;
-    // @apply text-xl #{!important};
+    /* @apply text-xl #{!important};*/
   }
 }
 
@@ -48,11 +48,11 @@
 details.Help-Text > summary {
   @apply flex items-center overflow-hidden break-all;
 
-  // &::before {
-  //   @apply flex items-center justify-center w-4 h-4 p-2 mr-3 text-sm font-semibold border rounded-full border-zpid-purple;
+  /* &::before {
+     @apply flex items-center justify-center w-4 h-4 p-2 mr-3 text-sm font-semibold border rounded-full border-zpid-purple;
 
-  //   content: "?";
-  // }
+     content: "?";
+  }*/
 
   &::after {
     @apply flex items-center justify-center w-4 h-4 ml-auto text-3xl transition rotate-90;
@@ -62,14 +62,14 @@ details.Help-Text > summary {
 }
 
 details.Help-Text {
-  // @apply bg-gray-50;
+  /* @apply bg-gray-50; */
 
   &[open] > summary {
     @apply bg-gradient-to-b from-gray-100 to-white;
 
-    // &::before {
-    //   @apply text-white border-transparent bg-zpid-blue;
-    // }
+    /* &::before {
+       @apply text-white border-transparent bg-zpid-blue;
+    }*/
 
     &::after {
       @apply transition transform -rotate-90 -translate-x-1.5;

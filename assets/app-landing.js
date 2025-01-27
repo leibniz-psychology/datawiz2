@@ -6,6 +6,6 @@
  */
 
 // any CSS you import will output into a single Style file (app.Style in this case)
-import "./styles/app.scss";
+import "./styles/app.css";
 
-import "./alpine";
+import "./alpine.js";

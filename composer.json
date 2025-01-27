@@ -19,6 +19,7 @@
         "oneup/flysystem-bundle": "^4.12.3",
         "oneup/uploader-bundle": "^5.0.1",
         "stevenmaguire/oauth2-keycloak": "^5.1.0",
+        "symfony/asset-mapper": "7.2.*",
         "symfony/console": "7.2.*",
         "symfony/debug-bundle": "7.2.*",
         "symfony/dotenv": "7.2.*",
@@ -42,6 +43,7 @@
         "symfony/web-link": "7.2.*",
         "symfony/web-profiler-bundle": "7.2.*",
         "symfony/yaml": "7.2.*",
+        "symfonycasts/tailwind-bundle": "^0.7.1",
         "twig/extra-bundle": "^v3.18.0",
         "twig/markdown-extra": "^v3.18.0",
         "twig/string-extra": "^v3.18.0",
@@ -85,7 +87,8 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+            "assets:install %PUBLIC_DIR%": "symfony-cmd",
+            "importmap:install": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"

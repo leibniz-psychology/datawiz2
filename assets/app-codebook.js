@@ -1,7 +1,7 @@
 import "tippy.js/dist/tippy.css";
 import "tippy.js/themes/light-border.css";
 
-import "./styles/codebook.scss";
+import "./styles/codebook.css";
 
 import Alpine from "alpinejs";
 import Tooltip from "@ryangjchandler/alpine-tooltip";

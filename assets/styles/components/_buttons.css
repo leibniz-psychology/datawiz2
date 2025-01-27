@@ -93,7 +93,7 @@
   @apply flex items-center;
   gap: 0.5rem;
   justify-content: space-evenly;
-  svg {
-    @apply flex-shrink-0 w-5 h-5;
-  }
+}
+.Button_with_icon svg {
+  @apply flex-shrink-0 w-5 h-5;
 }

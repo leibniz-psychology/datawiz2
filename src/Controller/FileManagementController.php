@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Codebook\DatasetVariables;
+use App\Entity\Dto\CsvConfigDto;
 use App\Entity\FileManagement\AdditionalMaterial;
 use App\Entity\FileManagement\Dataset;
 use App\Service\Crud\Crudable;
@@ -15,6 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -70,17 +72,11 @@ class FileManagementController extends AbstractController
     }
 
     #[Route(path: '/preview/csv/{id}', name: 'preview-csv', methods: ['POST'])]
-    public function previewCsv(Dataset $dataset, Request $request): JsonResponse
+    public function previewCsv(Dataset $dataset, #[MapRequestPayload] CsvConfigDto $csvConfig): JsonResponse
     {
         $this->logger->debug("Enter FileManagementController::previewCSVAction with [FileId: {$dataset->getId()}]");
-        $delimiter = $request->get('dataset-import-delimiter') ?? ',';
-        $escape = $request->get('dataset-import-escape') ?? 'double';
-        $headerRows = filter_var($request->get('dataset-import-header-rows'), FILTER_VALIDATE_INT);
-        if (!$headerRows) {
-            $headerRows = 0;
-        }
 
-        $data = $this->csvImportable->csvToArray($dataset->getStorageName(), $delimiter, $escape, $headerRows, 5);
+        $data = $this->csvImportable->csvToArray($dataset->getStorageName(), $csvConfig->datasetImportDelimiter, $csvConfig->datasetImportEscape, $csvConfig->datasetImportHeaderRows, 5);
         if ($data === null) {
             return new JsonResponse(null, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
@@ -89,22 +85,16 @@ class FileManagementController extends AbstractController
     }
 
     #[Route(path: '/submit/csv/{id}', name: 'submit-csv', methods: ['POST'])]
-    public function submitCSV(Dataset $dataset, Request $request): JsonResponse
+    public function submitCSV(Dataset $dataset, #[MapRequestPayload] CsvConfigDto $csvConfig): JsonResponse
     {
         $this->logger->debug("Enter FileManagementController::submitCSVAction with [FileId: {$dataset->getId()}]");
-        $delimiter = $request->get('dataset-import-delimiter') ?? ',';
-        $escape = $request->get('dataset-import-escape') ?? 'double';
-        $remove = $request->get('dataset-import-remove') ?? null;
-        $headerRows = filter_var($request->get('dataset-import-header-rows'), FILTER_VALIDATE_INT);
-        if (!$headerRows) {
-            $headerRows = 0;
-        }
+
         $data = null;
         $error = null;
-        if ($remove) {
+        if ($csvConfig->datasetImportRemove) {
             $error = $this->crud->deleteDataset($dataset) ? false : 'error.import.csv.codebook.delete';
         } else {
-            $data = $this->csvImportable->csvToArray($dataset->getStorageName(), $delimiter, $escape, $headerRows);
+            $data = $this->csvImportable->csvToArray($dataset->getStorageName(), $csvConfig->datasetImportDelimiter, $csvConfig->datasetImportEscape, $csvConfig->datasetImportHeaderRows);
             if ($data && key_exists('header', $data) && is_iterable($data['header']) && sizeof($data['header']) > 0) {
                 $varId = 1;
                 foreach ($data['header'] as $var) {
@@ -128,7 +118,7 @@ class FileManagementController extends AbstractController
             }
         }
 
-        if ($error != null && !$remove) {
+        if ($error != null && !$csvConfig->datasetImportRemove) {
             $this->crud->deleteDataset($dataset);
         }
 

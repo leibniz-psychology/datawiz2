@@ -43,7 +43,7 @@ class CodebookController extends AbstractController
     {
         $this->logger->debug("Enter CodebookController::performUpdateAction with [UUID: {$dataset->getId()}]");
         if ($request->isMethod('POST')) {
-            $postedData = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
+            $postedData = $request->getPayload()->all();
             $this->saveCodebookVariables($postedData);
         }
         $jsonCodebook = $this->codebookCollectionToJsonArray($dataset->getCodebook());

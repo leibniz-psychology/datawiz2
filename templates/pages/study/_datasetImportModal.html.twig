@@ -21,8 +21,8 @@
                       data-submit-url="{{ path("File-submit-csv",{"id": " "}) }}">
                     <input type="hidden" id="dataset-file-id" name="dataset-file-id" value="">
                     <div class="flex items-baseline">
-                        <label for="dataset-import-delimiter">Columns are separated by</label>
-                        <select id="dataset-import-delimiter" name="dataset-import-delimiter"
+                        <label for="datasetImportDelimiter">Columns are separated by</label>
+                        <select id="datasetImportDelimiter" name="datasetImportDelimiter"
                                 class="inline-block px-1 py-1 mt-1 bg-white border border-gray-400 rounded-md shadow-sm focus:outline-none ml-1.5">
                             <option value="," selected>Commas (CSV)</option>
                             <option value="t">Tabs (TSV)</option>
@@ -30,9 +30,9 @@
                         </select>
                     </div>
                     <div class="flex items-baseline">
-                        <label for="dataset-import-escape">Escape character to enclose cells containing column
+                        <label for="datasetImportEscape">Escape character to enclose cells containing column
                             separators</label>
-                        <select id="dataset-import-escape" name="dataset-import-escape"
+                        <select id="datasetImportEscape" name="datasetImportEscape"
                                 class="inline-block px-1 py-1 mt-1 ml-1.5 bg-white border border-gray-400 rounded-md shadow-sm focus:outline-none">
                             <option value="none" selected>none</option>
                             <option value="double">" (double quotes)</option>
@@ -41,9 +41,9 @@
                     </div>
                     <div x-data="{ useHeader: true}" class="mt-0.5">
                         <div class="flex items-center">
-                            <input type="checkbox" id="dataset-import-header-rows" name="dataset-import-header-rows"
+                            <input type="checkbox" id="datasetImportHeaderRows" name="datasetImportHeaderRows"
                                    value="1" x-model="useHeader" class="w-4 h-4 mr-2">
-                            <label class="block" for="dataset-import-header-rows">First line is the column
+                            <label class="block" for="datasetImportHeaderRows">First line is the column
                                 header</label>
                         </div>
                     </div>

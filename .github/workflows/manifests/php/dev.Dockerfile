@@ -11,8 +11,6 @@ RUN apk add --no-cache \
     && yarn global add node-gyp
 
 WORKDIR /build
-RUN yarn install \
-    && yarn dev
 
 
 FROM php:8.3-fpm-alpine
@@ -43,6 +41,9 @@ RUN mkdir -p var/cache \
     && mkdir -p var/log \
 	&& composer install\
     && chown -R www-data:www-data /build
+
+RUN php bin/console tailwind:build --minify \
+    && php bin/console asset-map:compile
 
 CMD ["sh", "-c", "cd /build \
     && php bin/console doctrine:database:create --if-not-exists --no-interaction \

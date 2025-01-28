@@ -95,7 +95,7 @@ class DataWizUser implements UserInterface
 
     public function getUserIdentifier(): string
     {
-        return $this->getId();
+        return $this->getId()->toString();
     }
 
     public function getDateRegistered(): \DateTime

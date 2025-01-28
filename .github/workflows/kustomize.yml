@@ -1,0 +1,53 @@
+---
+name: Kustomize
+
+on:
+  workflow_call:
+    inputs:
+      k8s-path:
+        type: string
+        description: 'Type: dev/stg/prod'
+        required: true
+
+jobs:
+  kustomize:
+    name: kustomize
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      APP: datawiz2
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+        with:
+          repository: leibniz-psychology/k8s-argocd-datawiz2-config
+          ref: main
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          persist-credentials: true
+          # path: config
+
+      - name: Setup Kustomize
+        uses: imranismail/setup-kustomize@v1
+        with:
+          kustomize-version: "3.6.1"
+
+      - name: Switch out image tag
+        run: |
+          cd ${{ inputs.k8s-path }}
+          kustomize edit set image crzpiddev.azurecr.io/${{ env.APP }}_php_fpm:${{ github.sha }}
+          kustomize edit set image crzpiddev.azurecr.io/${{ env.APP }}_spss:${{ github.sha }}
+          kustomize edit set image crzpiddev.azurecr.io/${{ env.APP }}_nginx:${{ github.sha }}
+          cat kustomization.yaml
+
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "tag(${{ inputs.k8s-path }}): update "${{ github.sha }}""
+      - name: Git push
+        uses: ad-m/github-push-action@master
+        with:
+          repository: leibniz-psychology/k8s-argocd-datawiz2-config
+          ssh: true
+          branch: main

@@ -24,3 +24,11 @@ jobs:
       container-tag: latest-dev
       build-stage: dev
     secrets: inherit
+
+  call-kustomize-workflow:
+    needs:
+      - call-container-build-workflow
+    uses: ./.github/workflows/kustomize.yml
+    with:
+      k8s-path: dev
+    secrets: inherit

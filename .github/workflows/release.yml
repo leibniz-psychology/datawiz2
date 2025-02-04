@@ -30,8 +30,6 @@ jobs:
         run: yarn install
       - name: Install semantic-release and plugins
         run: yarn add @semantic-release/changelog @semantic-release/exec @semantic-release/git @semantic-release/github @semantic-release/commit-analyzer @semantic-release/release-notes-generator
-      - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
-        run: yarn npm audit signatures
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -24,12 +24,12 @@
         {{ "title.introduction.start.intro"
         | trans({
             '#helpBtn#':helpButton('help_intro'),
-            '#startBtn#':_self.startButton(path('Study-documentation', {uuid: experiment.id}))})
+            '#startBtn#':_self.startButton(path('Study-documentation', {id: experiment.id}))})
         | markdown_to_html }}
         {{ "title.introduction.start.steps" | trans | markdown_to_html }}
     </div>
 
-    {{ render(controller('App\\Controller\\NavigationController::savebarNavigationAction', {
+    {{ render(controller('App\\Controller\\NavigationController::savebarNavigation', {
         request: app.request,
         prevUrl: null,
         prevTitle: null,

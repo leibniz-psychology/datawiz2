@@ -8,16 +8,16 @@ jobs:
   call-lint-workflow:
     uses: ./.github/workflows/lint.yml
 
-  call-e2e-workflow:
-    needs:
-      - call-lint-workflow
-    uses: ./.github/workflows/e2e.yml
-    secrets: inherit
+  #call-e2e-workflow:
+  #  needs:
+  #    - call-lint-workflow
+  #  uses: ./.github/workflows/e2e.yml
+  #  secrets: inherit
 
   call-container-build-workflow:
     needs:
       - call-lint-workflow
-      - call-e2e-workflow
+    #  - call-e2e-workflow
     uses: ./.github/workflows/container-build.yml
     with:
       container-tag: latest

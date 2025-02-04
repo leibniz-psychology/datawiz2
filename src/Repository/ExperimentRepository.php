@@ -19,7 +19,7 @@ class ExperimentRepository extends ServiceEntityRepository
         parent::__construct($registry, Experiment::class);
     }
 
-    public function findByBasicMetadata(array $orderBy = null, $limit = null, $offset = null)
+    public function findByBasicMetadata(?array $orderBy = null, $limit = null, $offset = null)
     {
         $qb = $this->createQueryBuilder('e');
         if (is_iterable($orderBy) && sizeof($orderBy) > 1) {

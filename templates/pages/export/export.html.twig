@@ -21,13 +21,7 @@
     {% if experiment is null %}
         {# TODO: error view if exp. == null #}
     {% else %}
-        <form action="{{ path('export_action', {uuid: experiment.id}) }}" method="POST">
-
-            {# Input hidden because we always want to include the study documentation #}
-            <div class="hidden mx-6 mt-4">
-                <input type="hidden" name="exportStudy" id="exportStudy" value="study">
-                <label for="exportStudy">Include study documentation</label>
-            </div>
+        <form action="{{ path('export_action', {id: experiment.id}) }}" method="POST">
 
             <fieldset>
                 <div class="MetaData-Title">
@@ -37,9 +31,9 @@
                 </div>
                 <div class="MetaData-Label">{{ "title.export.format.description"|trans }}</div>
                 <div class="mt-1 MetaData-Widget">
-                    <input id="exportAsJson" type="radio" name="exportFormat" value="json" checked>
+                    <input id="exportAsJson" type="radio" name="format" value="json" checked>
                     <label for="exportAsJson">{{ "title.export.format.json"|trans }}</label>
-                    <input id="exportAsXml" type="radio" name="exportFormat" value="xml">
+                    <input id="exportAsXml" type="radio" name="format" value="xml">
                     <label for="exportAsXml">{{ "title.export.format.xml"|trans }}</label>
                 </div>
             </fieldset>
@@ -54,7 +48,7 @@
                     <div class="MetaData-Widget">
                         {% for dataset in experiment.originalDatasets %}
                             <div class="flex items-center">
-                                <input id="dataset_{{ dataset.id }}" type="checkbox" name="exportDataset[]"
+                                <input id="dataset_{{ dataset.id }}" type="checkbox" name="datasets[]"
                                        value="{{ dataset.id }}" checked>
                                 <label for="dataset_{{ dataset.id }}" class="ml-2">{{ dataset.originalName }}</label>
                             </div>
@@ -76,7 +70,7 @@
                     <div class="MetaData-Widget">
                         {% for material in experiment.additionalMaterials %}
                             <div class="flex items-center">
-                                <input id="material_{{ material.id }}" type="checkbox" name="exportMaterial[]"
+                                <input id="material_{{ material.id }}" type="checkbox" name="materials[]"
                                        value="{{ material.id }}" checked>
                                 <label for="material_{{ material.id }}" class="ml-2">{{ material.originalName }}</label>
                             </div>
@@ -96,7 +90,7 @@
     {% endif %}
 
 
-    {{ render(controller('App\\Controller\\NavigationController::savebarNavigationAction', {
+    {{ render(controller('App\\Controller\\NavigationController::savebarNavigation', {
         request: app.request,
         prevUrl: 'Study-review',
         prevTitle: 'title.review.title'|trans,

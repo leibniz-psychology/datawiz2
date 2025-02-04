@@ -1,17 +1,9 @@
-/*
- * Welcome to your app's main JavaScript file!
- *
- * We recommend including the built version of this JavaScript file
- * (and its CSS file) in your base layout (base.html.twig).
- */
+import "./styles/app.css";
 
-// any CSS you import will output into a single Style file (app.Style in this case)
-import "./styles/app.scss";
-
-import './bootstrap';
+import './bootstrap.js';
 
 
-import "./alpine";
+import "./alpine.js";
 
-import './tables'
-import './dropzone'
+import './tables.js'
+import './dropzone.js'

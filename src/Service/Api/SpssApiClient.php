@@ -19,10 +19,9 @@ readonly class SpssApiClient
         private ApiClientService $clientService,
         private LoggerInterface $logger,
         private string $spss_uri
-    ) {
-    }
+    ) {}
 
-    public function savToArray(?Dataset $dataset): array|null
+    public function savToArray(?Dataset $dataset): ?array
     {
         if ($dataset === null) {
             return null;

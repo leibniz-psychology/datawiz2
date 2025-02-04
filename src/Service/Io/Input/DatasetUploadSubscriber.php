@@ -15,8 +15,7 @@ readonly class DatasetUploadSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private EntityManagerInterface $em
-    ) {
-    }
+    ) {}
 
     public static function getSubscribedEvents(): array
     {

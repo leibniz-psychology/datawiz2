@@ -1,93 +1,11 @@
 {
   "devDependencies": {
-    "@a2lix/symfony-collection": "^0.6.1",
-    "@alpine-collective/toolkit-scroll": "^1.0.0",
-    "@alpinejs/focus": "^3.12.0",
-    "@babel/core": "^7.17.0",
-    "@babel/preset-env": "^7.16.0",
-    "@commitlint/cli": "^17.6.3",
-    "@commitlint/config-conventional": "^17.6.3",
-    "@hotwired/stimulus": "^3.0.0",
-    "@ryangjchandler/alpine-tooltip": "^1.2.0",
-    "@symfony/stimulus-bridge": "^3.2.0",
-    "@symfony/webpack-encore": "^4.0.0",
-    "alpinejs": "^3.12.0",
-    "autoprefixer": "^10.4.0",
-    "axios": "^1.4.0",
-    "core-js": "^3.23.0",
-    "cross-env": "^7.0.3",
-    "cypress": "^12.11.0",
-    "cypress-wait-until": "^1.7.2",
-    "dropzone": "^5.9.3",
-    "fibers": "^5.0.0",
-    "list.js": "^2.3.1",
-    "markdownlint-cli2": "^0.7.1",
-    "postcss": "^8.3.11",
-    "postcss-loader": "^7.3.0",
-    "postcss-scss": "^4.0.2",
-    "postcss-svg": "^3.0.0",
-    "prettier": "^2.4.1",
-    "regenerator-runtime": "^0.13.9",
-    "rimraf": "^5.0.0",
-    "sass": "^1.43.4",
-    "sass-loader": "^13.2.2",
-    "stylelint": "^14.16.1",
-    "stylelint-config-idiomatic-order": "^9.0.0",
-    "stylelint-config-prettier": "^9.0.5",
-    "stylelint-config-standard": "^29.0.0",
-    "stylelint-scss": "^5.0.1",
-    "tailwind-scrollbar": "^3.0.0",
-    "tailwindcss": "^3.3.2",
-    "tippy.js": "^6.3.7",
-    "webpack": "^5.74.0",
-    "webpack-cli": "^5.0.2",
-    "webpack-notifier": "^1.15.0"
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "markdownlint-cli2": "^0.17.2",
+    "stylelint": "^16.13.2"
   },
   "license": "MIT",
   "private": true,
-  "scripts": {
-    "dev-server": "cross-env NODE_ENV=development encore dev-server",
-    "dev": "encore dev",
-    "watch": "encore dev --watch",
-    "build": "cross-env NODE_ENV=production encore production --progress"
-  },
-  "stylelint": {
-    "overrides": [
-      {
-        "files": [
-          "**/*.scss"
-        ],
-        "customSyntax": "postcss-scss"
-      }
-    ],
-    "plugins": [
-      "stylelint-scss"
-    ],
-    "extends": [
-      "stylelint-config-idiomatic-order",
-      "stylelint-config-standard",
-      "stylelint-config-prettier"
-    ],
-    "rules": {
-      "at-rule-no-unknown": [
-        true,
-        {
-          "ignoreAtRules": [
-            "apply",
-            "responsive",
-            "screen",
-            "tailwind",
-            "variants",
-            "layer"
-          ]
-        }
-      ],
-      "comment-empty-line-before": null,
-      "selector-class-pattern": null
-    }
-  },
-  "dependencies": {
-    "datatables.net": "^1.11.5",
-    "datatables.net-dt": "^1.11.5"
-  }
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

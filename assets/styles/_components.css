@@ -1,0 +1,106 @@
+@import "components/_radio_check.css";
+@import "components/_buttons.css";
+@import "components/_navigation.css";
+@import "components/_modal.css";
+@import "components/_widget_author.css";
+@import "components/_sidebar_help.css";
+
+.MetaDataGroup-Title {
+  @apply px-6 pt-4 pb-4 text-2xl font-semibold rounded-lg bg-mono-100 text-zpid-purple-700;
+}
+
+.MetaData-Title {
+  @apply flex justify-between w-full px-6 pt-3 pb-3 text-xl font-semibold bg-gradient-to-b from-mono-100 to-mono-50 text-zpid-purple-700;
+
+  scroll-margin-top: 6rem;
+}
+
+.MetaData-Label {
+  @apply block px-6 mt-1 leading-snug max-w-prose;
+}
+
+.MetaData-Widget {
+  @apply px-6 pt-1;
+}
+
+.MetaData-Widget_collection > div {
+  @apply flex mt-0.5 items-baseline;
+}
+
+.MetaData-TextInput,
+.MetaData-Widget_collection > div input,
+.MetaData-Widget_collection > div textarea {
+  @apply w-full;
+}
+
+.MetaData-RemoveButton {
+  @apply px-2 py-0.5 ml-1 border border-mono-500 bg-white hover:bg-mono-100 rounded-xl;
+}
+
+.MetaData-SubmitButton {
+  @apply flex self-center justify-self-center;
+
+  &::before {
+    @apply w-[1.125rem] h-[1.125rem] mr-1;
+
+    align-self: center;
+    background: left center no-repeat url("../images/ic:outline-save.svg");
+    content: "";
+  }
+}
+
+.MetaData-SubmitButton_previous {
+  &::before {
+    @apply w-[1.125rem] h-[1.125rem] mr-1;
+
+    align-self: center;
+    background: left center no-repeat url("../images/ic:sharp-arrow-back.svg");
+    content: "";
+  }
+}
+
+.MetaData-SubmitButton_next {
+  &::after {
+    @apply w-[1.125rem] h-[1.125rem] ml-1;
+
+    align-self: center;
+    background: left center no-repeat url("../images/ic:sharp-arrow-forward.svg");
+    content: "";
+  }
+}
+
+.WizNavBar {
+  @apply sticky z-10 grid grid-flow-col px-2 py-2 mt-4 transition duration-75 border-t rounded-b-lg auto-cols-fr -bottom-px border-mono-500 bg-mono-100;
+}
+
+.WizNavBar_isSticky {
+  @apply border-l border-r rounded-b-none bg-opacity-90;
+
+  box-shadow: 0 -5px 30px -10px rgb(175 175 175);
+}
+
+.ReviewItem-Highlight {
+  @apply relative;
+
+  &::before {
+    @apply left-0 top-0 bottom-0 absolute inline-block w-3.5 -ml-3.5 overflow-hidden whitespace-nowrap;
+  }
+}
+
+.ReviewItem-Highlight_mandatory {
+  /* @apply bg-gradient-to-t from-transparent via-pink-50 to-transparent;*/
+
+  &::before {
+    @apply font-bold text-pink-500;
+
+    content: "!";
+  }
+}
+
+.ReviewItem-Highlight_recommended {
+  /* @apply bg-gradient-to-t from-transparent via-[#edfbff] to-transparent;*/
+
+  &::before {
+    content: "!";
+  }
+}

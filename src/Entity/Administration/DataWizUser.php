@@ -14,7 +14,7 @@ class DataWizUser implements UserInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
-    private UUid $id;
+    private Uuid $id;
 
     #[ORM\Column(type: 'simple_array')]
     private array $roles;
@@ -57,9 +57,10 @@ class DataWizUser implements UserInterface
         $this->roles = $roles;
     }
 
-    public function eraseCredentials(): null
+    public function eraseCredentials(): void
     {
-        return null;
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function getEmail(): ?string
@@ -94,7 +95,7 @@ class DataWizUser implements UserInterface
 
     public function getUserIdentifier(): string
     {
-        return $this->getId();
+        return $this->getId()->toString();
     }
 
     public function getDateRegistered(): \DateTime

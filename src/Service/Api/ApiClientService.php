@@ -15,8 +15,7 @@ readonly class ApiClientService
     public function __construct(
         private HttpClientInterface $client,
         private LoggerInterface $logger
-    ) {
-    }
+    ) {}
 
     public function GET(string $uri, array $params): ?array
     {
@@ -33,7 +32,7 @@ readonly class ApiClientService
             if ($response->getStatusCode() == 200) {
                 $content = json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
             }
-        } catch (TransportExceptionInterface|ClientExceptionInterface|RedirectionExceptionInterface|ServerExceptionInterface $e) {
+        } catch (ClientExceptionInterface|RedirectionExceptionInterface|ServerExceptionInterface|TransportExceptionInterface $e) {
             $this->logger->error("HttpClientService::GET - Exception thrown: {$e->getMessage()}");
         }
 
@@ -57,7 +56,7 @@ readonly class ApiClientService
             if ($response->getStatusCode() == 200) {
                 $content = json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
             }
-        } catch (TransportExceptionInterface|ClientExceptionInterface|RedirectionExceptionInterface|ServerExceptionInterface $e) {
+        } catch (ClientExceptionInterface|RedirectionExceptionInterface|ServerExceptionInterface|TransportExceptionInterface $e) {
             $this->logger->error("HttpClientService::POST - Exception thrown: {$e->getMessage()}");
         }
 

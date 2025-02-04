@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Administration\DataWizUser;
 use App\Entity\Constant\States;
-use App\Entity\Constant\UserRoles;
 use App\Entity\Study\CreatorMetaDataGroup;
 use App\Entity\Study\Experiment;
 use App\Service\Crud\Crudable;
@@ -19,7 +18,7 @@ use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/studies', name: 'Study-')]
@@ -32,11 +31,10 @@ class StudyController extends AbstractController
         private readonly EntityManagerInterface $em,
         private readonly LoggerInterface $logger,
         private readonly Crudable $crud
-    ) {
-    }
+    ) {}
 
     #[Route(path: '/', name: 'overview', methods: ['GET'])]
-    public function overviewAction(): Response
+    public function overview(): Response
     {
         $this->logger->debug('Enter StudyController::overviewAction');
 
@@ -46,7 +44,7 @@ class StudyController extends AbstractController
     }
 
     #[Route(path: '/new', name: 'new', methods: ['GET', 'POST'])]
-    public function newAction(Questionnairable $questionnaire, Request $request): Response
+    public function new(Questionnairable $questionnaire, Request $request): Response
     {
         $this->logger->debug('Enter StudyController::newAction');
         $newExperiment = Experiment::createNewExperiment($this->em->getRepository(DataWizUser::class)->find($this->security->getUser()));
@@ -59,7 +57,7 @@ class StudyController extends AbstractController
             $this->em->persist($newExperiment);
             $this->em->flush();
 
-            return $this->redirectToRoute('Study-introduction', ['uuid' => $newExperiment->getId()]);
+            return $this->redirectToRoute('Study-introduction', ['id' => $newExperiment->getId()]);
         }
 
         return $this->render('pages/study/new.html.twig', [
@@ -68,15 +66,12 @@ class StudyController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{uuid}/settings', name: 'settings', methods: ['GET'])]
-    public function settingsAction(string $uuid, Request $request): Response
+    #[Route(path: '/{id}/settings', name: 'settings', methods: ['GET'])]
+    public function settings(Experiment $experiment, Request $request): Response
     {
-        $this->logger->debug("Enter StudyController::settingsAction with [UUID: {$uuid}]");
-        $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
+        $this->logger->debug("Enter StudyController::settingsAction with [UUID: {$experiment->getId()}]");
 
-        if (!$this->_checkAccess($experiment)) {
-            return $this->redirectToRoute('dashboard');
-        }
+        $this->denyAccessUnlessGranted('EDIT', $experiment);
 
         $form = $this->questionnaire->askAndHandle($experiment->getSettingsMetaDataGroup(), 'save', $request);
 
@@ -91,15 +86,12 @@ class StudyController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{uuid}/documentation', name: 'documentation', methods: ['GET', 'POST'])]
-    public function documentationAction(string $uuid, Request $request): Response
+    #[Route(path: '/{id}/documentation', name: 'documentation', methods: ['GET', 'POST'])]
+    public function documentation(Experiment $experiment, Request $request): Response
     {
-        $this->logger->debug("Enter StudyController::documentationAction with [UUID: {$uuid}]");
-        $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
+        $this->logger->debug("Enter StudyController::documentationAction with [UUID: {$experiment->getId()}]");
 
-        if (!$this->_checkAccess($experiment)) {
-            return $this->redirectToRoute('dashboard');
-        }
+        $this->denyAccessUnlessGranted('EDIT', $experiment);
 
         $basicInformation = $experiment->getBasicInformationMetaDataGroup();
         if (sizeof($basicInformation->getCreators()) == 0) {
@@ -117,11 +109,11 @@ class StudyController extends AbstractController
 
         $formData = $form->getData();
         $currentCreators = $this->em->getRepository(CreatorMetaDataGroup::class)->findBy(['basicInformation' => $basicInformation]);
-        if (is_iterable($currentCreators)) {
-            foreach ($currentCreators as $currentCreator) {
-                $this->em->remove($currentCreator);
-            }
+
+        foreach ($currentCreators as $currentCreator) {
+            $this->em->remove($currentCreator);
         }
+
         $newCreators = $formData->getCreators();
         if (!$form->getData()->getCreators() instanceof Collection) {
             throw new \Error('Creators is not a collection');
@@ -141,23 +133,20 @@ class StudyController extends AbstractController
         $this->em->persist($formData);
         $this->em->flush();
 
-        $navigationResponse = $this->handleNavigation($form, $uuid, null, 'Study-theory');
+        $navigationResponse = $this->handleNavigation($form, $experiment->getId(), null, 'Study-theory');
         if ($navigationResponse !== null) {
             return $navigationResponse;
         }
 
-        return $this->redirectToRoute('Study-documentation', ['uuid' => $uuid]);
+        return $this->redirectToRoute('Study-documentation', ['id' => $experiment->getId()]);
     }
 
-    #[Route(path: '/{uuid}/theory', name: 'theory', methods: ['GET', 'POST'])]
-    public function theoryAction(string $uuid, Request $request): Response
+    #[Route(path: '/{id}/theory', name: 'theory', methods: ['GET', 'POST'])]
+    public function theory(Experiment $experiment, Request $request): Response
     {
-        $this->logger->debug("Enter StudyController::theoryAction with [UUID: {$uuid}]");
-        $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
+        $this->logger->debug("Enter StudyController::theoryAction with [UUID: {$experiment->getId()}]");
 
-        if (!$this->_checkAccess($experiment)) {
-            return $this->redirectToRoute('dashboard');
-        }
+        $this->denyAccessUnlessGranted('EDIT', $experiment);
 
         $form = $this->questionnaire->askAndHandle($experiment->getTheoryMetaDataGroup(), 'save', $request);
 
@@ -165,7 +154,7 @@ class StudyController extends AbstractController
             $this->em->persist($experiment);
             $this->em->flush();
 
-            $navigationResponse = $this->handleNavigation($form, $uuid, 'Study-documentation', 'Study-method');
+            $navigationResponse = $this->handleNavigation($form, $experiment->getId(), 'Study-documentation', 'Study-method');
             if ($navigationResponse !== null) {
                 return $navigationResponse;
             }
@@ -177,15 +166,12 @@ class StudyController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{uuid}/sample', name: 'sample', methods: ['GET', 'POST'])]
-    public function sampleAction(string $uuid, Request $request): Response
+    #[Route(path: '/{id}/sample', name: 'sample', methods: ['GET', 'POST'])]
+    public function sample(Experiment $experiment, Request $request): Response
     {
-        $this->logger->debug("Enter StudyController::sampleAction with [UUID: {$uuid}]");
-        $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
+        $this->logger->debug("Enter StudyController::sampleAction with [UUID: {$experiment->getId()}]");
 
-        if (!$this->_checkAccess($experiment)) {
-            return $this->redirectToRoute('dashboard');
-        }
+        $this->denyAccessUnlessGranted('EDIT', $experiment);
 
         $sampleGroup = $experiment->getSampleMetaDataGroup();
         $sampleGroup->setPopulation($this->_prepareEmptyArray($sampleGroup->getPopulation()));
@@ -200,7 +186,7 @@ class StudyController extends AbstractController
             $this->em->persist($formData);
             $this->em->flush();
 
-            $navigationResponse = $this->handleNavigation($form, $uuid, 'Study-measure', null);
+            $navigationResponse = $this->handleNavigation($form, $experiment->getId(), 'Study-measure', null);
             if ($navigationResponse !== null) {
                 return $navigationResponse;
             }
@@ -212,15 +198,12 @@ class StudyController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{uuid}/measure', name: 'measure', methods: ['GET', 'POST'])]
-    public function measureAction(string $uuid, Request $request): Response
+    #[Route(path: '/{id}/measure', name: 'measure', methods: ['GET', 'POST'])]
+    public function measure(Experiment $experiment, Request $request): Response
     {
-        $this->logger->debug("Enter StudyController::measureAction with [UUID: {$uuid}]");
-        $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
+        $this->logger->debug("Enter StudyController::measureAction with [UUID: {$experiment->getId()}]");
 
-        if (!$this->_checkAccess($experiment)) {
-            return $this->redirectToRoute('dashboard');
-        }
+        $this->denyAccessUnlessGranted('EDIT', $experiment);
 
         $experiment->getMeasureMetaDataGroup()->setMeasures($this->_prepareEmptyArray($experiment->getMeasureMetaDataGroup()->getMeasures()));
         $experiment->getMeasureMetaDataGroup()->setApparatus($this->_prepareEmptyArray($experiment->getMeasureMetaDataGroup()->getApparatus()));
@@ -232,7 +215,7 @@ class StudyController extends AbstractController
             $this->em->persist($formData);
             $this->em->flush();
 
-            $navigationResponse = $this->handleNavigation($form, $uuid, 'Study-method', 'Study-sample');
+            $navigationResponse = $this->handleNavigation($form, $experiment->getId(), 'Study-method', 'Study-sample');
             if ($navigationResponse !== null) {
                 return $navigationResponse;
             }
@@ -244,15 +227,12 @@ class StudyController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{uuid}/method', name: 'method', methods: ['GET', 'POST'])]
-    public function methodAction(string $uuid, Request $request): Response
+    #[Route(path: '/{id}/method', name: 'method', methods: ['GET', 'POST'])]
+    public function method(Experiment $experiment, Request $request): Response
     {
-        $this->logger->debug("Enter StudyController::methodAction with [UUID: {$uuid}]");
-        $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
+        $this->logger->debug("Enter StudyController::methodAction with [UUID: {$experiment->getId()}]");
 
-        if (!$this->_checkAccess($experiment)) {
-            return $this->redirectToRoute('dashboard');
-        }
+        $this->denyAccessUnlessGranted('EDIT', $experiment);
 
         $form = $this->questionnaire->askAndHandle($experiment->getMethodMetaDataGroup(), 'save', $request);
 
@@ -260,7 +240,7 @@ class StudyController extends AbstractController
             $this->em->persist($experiment);
             $this->em->flush();
 
-            $navigationResponse = $this->handleNavigation($form, $uuid, 'Study-theory', 'Study-measure');
+            $navigationResponse = $this->handleNavigation($form, $experiment->getId(), 'Study-theory', 'Study-measure');
             if ($navigationResponse !== null) {
                 return $navigationResponse;
             }
@@ -272,60 +252,48 @@ class StudyController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{uuid}/materials', name: 'materials', methods: ['GET'])]
-    public function materialsAction(string $uuid): Response
+    #[Route(path: '/{id}/materials', name: 'materials', methods: ['GET'])]
+    public function materials(Experiment $experiment): Response
     {
-        $this->logger->debug("Enter StudyController::materialsAction with [UUID: {$uuid}]");
-        $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
+        $this->logger->debug("Enter StudyController::materialsAction with [UUID: {$experiment->getId()}]");
 
-        if (!$this->_checkAccess($experiment)) {
-            return $this->redirectToRoute('dashboard');
-        }
+        $this->denyAccessUnlessGranted('EDIT', $experiment);
 
         return $this->render('pages/study/materials.html.twig', [
             'experiment' => $experiment,
         ]);
     }
 
-    #[Route(path: '/{uuid}/datasets', name: 'datasets', methods: ['GET'])]
-    public function datasetsAction(string $uuid): Response
+    #[Route(path: '/{id}/datasets', name: 'datasets', methods: ['GET'])]
+    public function datasets(Experiment $experiment): Response
     {
-        $this->logger->debug("Enter StudyController::datasetsAction with [UUID: {$uuid}]");
-        $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
+        $this->logger->debug("Enter StudyController::datasetsAction with [UUID: {$experiment->getId()}]");
 
-        if (!$this->_checkAccess($experiment)) {
-            return $this->redirectToRoute('dashboard');
-        }
+        $this->denyAccessUnlessGranted('EDIT', $experiment);
 
         return $this->render('pages/study/datasets.html.twig', [
             'experiment' => $experiment,
         ]);
     }
 
-    #[Route(path: '/{uuid}/introduction', name: 'introduction', methods: ['GET'])]
-    public function introductionAction(string $uuid): Response
+    #[Route(path: '/{id}/introduction', name: 'introduction', methods: ['GET'])]
+    public function introduction(Experiment $experiment): Response
     {
-        $this->logger->debug("Enter StudyController::introductionAction with [UUID: {$uuid}]");
-        $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
+        $this->logger->debug("Enter StudyController::introductionAction with [UUID: {$experiment->getId()}]");
 
-        if (!$this->_checkAccess($experiment)) {
-            return $this->redirectToRoute('dashboard');
-        }
+        $this->denyAccessUnlessGranted('EDIT', $experiment);
 
         return $this->render('pages/study/introduction.html.twig', [
             'experiment' => $experiment,
         ]);
     }
 
-    #[Route(path: '/{uuid}/delete', name: 'delete', methods: ['GET'])]
-    public function deleteAction(string $uuid): Response
+    #[Route(path: '/{id}/delete', name: 'delete', methods: ['GET'])]
+    public function delete(Experiment $experiment): Response
     {
-        $this->logger->debug("Enter StudyController::deleteAction with [UUID: {$uuid}]");
-        $experiment = $this->em->getRepository(Experiment::class)->find($uuid);
+        $this->logger->debug("Enter StudyController::deleteAction with [UUID: {$experiment->getId()}]");
 
-        if (!$this->_checkAccess($experiment)) {
-            return $this->redirectToRoute('dashboard');
-        }
+        $this->denyAccessUnlessGranted('EDIT', $experiment);
 
         $this->crud->deleteStudy($experiment);
 
@@ -341,7 +309,7 @@ class StudyController extends AbstractController
         return $array;
     }
 
-    private function _routeButtonClicks(FormInterface $form, string $uuid): ?RedirectResponse
+    private function _routeButtonClicks(FormInterface $form, string $id): ?RedirectResponse
     {
         $sections = [
             ['saveAndIntroduction', 'Study-introduction'],
@@ -353,7 +321,7 @@ class StudyController extends AbstractController
             ['saveAndDatasets', 'Study-datasets'],
             ['saveAndMaterials', 'Study-materials'],
             ['saveAndReview', 'Study-review'],
-            ['saveAndExport', 'Study-export'],
+            ['saveAndExport', 'export_index'],
             ['saveAndSettings', 'Study-settings'],
         ];
 
@@ -363,19 +331,14 @@ class StudyController extends AbstractController
                 throw new \Error("Navigation button {$section[0]} is not a SubmitButton");
             }
             if ($navigationButton->isClicked()) {
-                return $this->redirectToRoute($section[1], ['uuid' => $uuid]);
+                return $this->redirectToRoute($section[1], ['id' => $id]);
             }
         }
 
         return null;
     }
 
-    private function _checkAccess(Experiment $experiment): bool
-    {
-        return $this->isGranted(UserRoles::ADMINISTRATOR) || $experiment->getOwner() === $this->getUser();
-    }
-
-    private function handleNavigation(FormInterface $form, string $uuid, ?string $prev, ?string $next): ?RedirectResponse
+    private function handleNavigation(FormInterface $form, string $id, ?string $prev, ?string $next): ?RedirectResponse
     {
         if ($prev !== null) {
             $prevButton = $form->get('saveAndPrevious');
@@ -383,7 +346,7 @@ class StudyController extends AbstractController
                 throw new \Error('Cannot find "previous" navigation button');
             }
             if ($prevButton->isClicked()) {
-                return $this->redirectToRoute($prev, ['uuid' => $uuid]);
+                return $this->redirectToRoute($prev, ['id' => $id]);
             }
         }
 
@@ -393,11 +356,11 @@ class StudyController extends AbstractController
                 throw new \Error('Cannot find "next" navigation button');
             }
             if ($nextButton->isClicked()) {
-                return $this->redirectToRoute($next, ['uuid' => $uuid]);
+                return $this->redirectToRoute($next, ['id' => $id]);
             }
         }
 
-        if ($response = $this->_routeButtonClicks($form, $uuid)) {
+        if ($response = $this->_routeButtonClicks($form, $id)) {
             return $response;
         }
 

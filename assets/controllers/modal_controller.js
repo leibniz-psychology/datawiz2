@@ -1,5 +1,4 @@
 import { Controller } from '@hotwired/stimulus';
-import axios from 'axios';
 
 export default class extends Controller {
     static targets = [ "modalOverlay" ]
@@ -53,12 +52,13 @@ export default class extends Controller {
         window.location.href = url;
     }
 
-    postToUrl(url) {
-        axios.post(url).then(() => {
+    async postToUrl(url) {
+        try {
+            await fetch(url, { method: 'POST' });
             location.reload();
-        }).catch((error) => {
+        } catch (error) {
             console.log(error);
-        });
+        }
     }
 
 }

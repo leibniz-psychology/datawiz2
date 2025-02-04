@@ -17,7 +17,7 @@ class CommonMarkdown implements MarkdownInterface
     private readonly Environment $environment;
     private readonly MarkdownConverter $converter;
 
-    public function __construct(MarkdownConverter $converter = null)
+    public function __construct(?MarkdownConverter $converter = null)
     {
         // Configure the Environment with all the CommonMark parsers/renderers
         $this->environment = new Environment($this->config);

@@ -27,8 +27,7 @@ class OauthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
         private readonly ClientRegistry $clientRegistry,
         private readonly Crudable $crud,
         private readonly UrlGeneratorInterface $urlGenerator,
-    ) {
-    }
+    ) {}
 
     public function authenticate(Request $request): SelfValidatingPassport
     {
@@ -41,32 +40,30 @@ class OauthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
                 $user = $this->crud->readById(DataWizUser::class, $keycloakUser->getId());
                 $kcArray = $keycloakUser->toArray();
 
-                if (is_iterable($kcArray)) {
-                    if ($user === null) {
-                        $user = new DataWizUser();
-                        $user->setId(new Uuid($keycloakUser->getId()));
-                        $user->setRoles([UserRoles::USER]);
-                        $user->setDateRegistered(new \DateTime());
-                    }
-                    if (key_exists('email', $kcArray)) {
-                        $user->setEmail($kcArray['email']);
-                    }
-                    if (key_exists('given_name', $kcArray)) {
-                        $user->setFirstname($kcArray['given_name']);
-                    }
-                    if (key_exists('family_name', $kcArray)) {
-                        $user->setLastname($kcArray['family_name']);
-                    }
-                    $user->setLastLogin(new \DateTime());
-                    $this->crud->update($user);
+                if ($user === null) {
+                    $user = new DataWizUser();
+                    $user->setId(new Uuid($keycloakUser->getId()));
+                    $user->setRoles([UserRoles::USER]);
+                    $user->setDateRegistered(new \DateTime());
                 }
+                if (key_exists('email', $kcArray)) {
+                    $user->setEmail($kcArray['email']);
+                }
+                if (key_exists('given_name', $kcArray)) {
+                    $user->setFirstname($kcArray['given_name']);
+                }
+                if (key_exists('family_name', $kcArray)) {
+                    $user->setLastname($kcArray['family_name']);
+                }
+                $user->setLastLogin(new \DateTime());
+                $this->crud->update($user);
 
                 return $user;
             })
         );
     }
 
-    public function start(Request $request, AuthenticationException $authException = null): RedirectResponse
+    public function start(Request $request, ?AuthenticationException $authException = null): RedirectResponse
     {
         return new RedirectResponse('/', Response::HTTP_TEMPORARY_REDIRECT);
     }

@@ -19,10 +19,10 @@
     <div class="mt-6">
         <form action="{{ oneup_uploader_endpoint("datasets") }}" data-experiment-id="{{ experiment.id }}"
               class="mx-6 border-2 !border-dashed border-mono-500 dropzone" id="datawiz-dropzone"
-              data-preview-csv="{{ path("File-preview-csv",{"fileId": " "}) }}"
-              data-submit-csv="{{ path("File-submit-csv",{"fileId": " "}) }}"
-              data-preview-sav="{{ path("File-preview-sav",{"fileId": " "}) }}"
-              data-submit-sav="{{ path("File-submit-sav",{"fileId": " "}) }}"
+              data-preview-csv="{{ path("File-preview-csv",{"id": " "}) }}"
+              data-submit-csv="{{ path("File-submit-csv",{"id": " "}) }}"
+              data-preview-sav="{{ path("File-preview-sav",{"id": " "}) }}"
+              data-submit-sav="{{ path("File-submit-sav",{"id": " "}) }}"
         >
             {{ dropzoneTemplate() }}
             <input type="hidden" id="dataset-import-data" name="dataset-import-data" value=""/>
@@ -49,7 +49,7 @@
     <!-- Modal for importing a dataset -->
     {{ include('pages/study/_datasetImportModal.html.twig') }}
 
-    {{ render(controller('App\\Controller\\NavigationController::savebarNavigationAction', {
+    {{ render(controller('App\\Controller\\NavigationController::savebarNavigation', {
         request: app.request,
         prevUrl: 'Study-sample',
         prevTitle: 'title.samples.title'|trans,

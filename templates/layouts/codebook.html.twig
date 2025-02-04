@@ -13,20 +13,20 @@
         {% endif %}
     </title>
     {% block stylesheets %}
-        {{ encore_entry_link_tags("app") }}
-        {{ encore_entry_link_tags("codebook") }}
+        <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('styles/codebook.css') }}">
     {% endblock %}
     {% block javascripts %}
-        {{ encore_entry_script_tags("codebook") }}
+        {% block importmap %}{{ importmap('codebook') }}{% endblock %}
     {% endblock %}
 </head>
 <body>
 <div class="grid grid-cols-12 bg-white SiteContainer"
-     x-data="{...codebook(), url: '{{ path('codebook_dataupdate', {uuid: codebook.id}) }}', id: '{{ codebook.id }}', measuresURL: '{{ path('codebook_measures', {uuid: codebook.id}) }}', matrixURL: '{{ path('codebook_matrix', {uuid: codebook.id}) }}' }"
+     x-data="{...codebook(), url: '{{ path('codebook_dataupdate', {id: codebook.id}) }}', id: '{{ codebook.id }}', measuresURL: '{{ path('codebook_measures', {id: codebook.id}) }}', matrixURL: '{{ path('codebook_matrix', {id: codebook.id}) }}' }"
      x-init="loadMatrix()">
     {% block header %}
         <header class="sticky top-0 z-10 flex items-center border-b h-14 border-mono-300 col-span-full bg-mono-50">
-            <a href="{{ path('Study-datasets', {uuid: codebook.experiment.id}) }}"
+            <a href="{{ path('Study-datasets', {id: codebook.experiment.id}) }}"
                class="flex-shrink-0 ml-2 Button_primary_go Button_standalone"
                @click="save()">
                 {{ include('components/icons/arrow-left.svg') }}

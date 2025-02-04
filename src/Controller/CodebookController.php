@@ -16,52 +16,51 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/codebook', name: 'codebook_')]
 #[IsGranted('ROLE_USER')]
 class CodebookController extends AbstractController
 {
-    public function __construct(protected EntityManagerInterface $em, protected LoggerInterface $logger, private readonly FilesystemOperator $matrixFilesystem)
-    {
-    }
+    public function __construct(
+        protected EntityManagerInterface $em,
+        protected LoggerInterface $logger,
+        private readonly FilesystemOperator $matrixFilesystem,
+    ) {}
 
-    #[Route(path: '/{uuid}', name: 'index', methods: ['GET'])]
-    public function codebookIndexAction(string $uuid): Response
+    #[Route(path: '/{id}', name: 'index', methods: ['GET'])]
+    public function codebookIndex(Dataset $dataset): Response
     {
         return $this->render('pages/codebook/index.html.twig', [
-            'codebook' => $this->em->getRepository(Dataset::class)->find($uuid),
+            'codebook' => $dataset,
         ]);
     }
 
-    #[Route(path: '/{uuid}/data', name: 'dataupdate', methods: ['GET', 'POST'])]
-    public function performUpdateAction(string $uuid, Request $request): JsonResponse
+    #[Route(path: '/{id}/data', name: 'dataupdate', methods: ['GET', 'POST'])]
+    public function performUpdate(Dataset $dataset, Request $request): JsonResponse
     {
-        $this->logger->debug("Enter CodebookController::performUpdateAction with [UUID: {$uuid}]");
-        $dataset = $this->em->getRepository(Dataset::class)->find($uuid);
-        if ($dataset && $request->isMethod('POST')) {
-            $postedData = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        $this->logger->debug("Enter CodebookController::performUpdateAction with [UUID: {$dataset->getId()}]");
+        if ($request->isMethod('POST')) {
+            $postedData = $request->getPayload()->all();
             $this->saveCodebookVariables($postedData);
         }
         $jsonCodebook = $this->codebookCollectionToJsonArray($dataset->getCodebook());
 
-        return new JsonResponse($jsonCodebook, $jsonCodebook != null && sizeof($jsonCodebook) > 0 ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);
+        return new JsonResponse($jsonCodebook, $jsonCodebook != null ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);
     }
 
-    #[Route(path: '/{uuid}/measures', name: 'measures', methods: ['GET'])]
-    public function createViewMeasuresAction(string $uuid): JsonResponse
+    #[Route(path: '/{id}/measures', name: 'measures', methods: ['GET'])]
+    public function createViewMeasures(Dataset $dataset): JsonResponse
     {
-        $this->logger->debug("Enter CodebookController::createViewMeasuresAction with [UUID: {$uuid}]");
-        $dataset = $this->em->getRepository(Dataset::class)->find($uuid);
+        $this->logger->debug("Enter CodebookController::createViewMeasuresAction with [UUID: {$dataset->getId()}]");
         $viewMeasures = [];
-        if ($dataset) {
-            $measures = $this->em->getRepository(MeasureMetaDataGroup::class)->findOneBy(['experiment' => $dataset->getExperiment()]);
-            if ($measures && $measures->getMeasures() && sizeof($measures->getMeasures()) > 0) {
-                foreach ($measures->getMeasures() as $measure) {
-                    if ($measure && $measure != '') {
-                        $viewMeasures['measures'][] = $measure;
-                    }
+        $measures = $this->em->getRepository(MeasureMetaDataGroup::class)->findOneBy(['experiment' => $dataset->getExperiment()]);
+        if ($measures && $measures->getMeasures()) {
+            foreach ($measures->getMeasures() as $measure) {
+                if ($measure && $measure != '') {
+                    $viewMeasures['measures'][] = $measure;
                 }
             }
         }
@@ -69,26 +68,22 @@ class CodebookController extends AbstractController
         return new JsonResponse($viewMeasures, key_exists('measures', $viewMeasures) ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);
     }
 
-    #[Route(path: '/{uuid}/matrix', name: 'matrix', methods: ['GET'])]
-    public function datasetMatrixAction(Request $request, string $uuid): JsonResponse
+    #[Route(path: '/{id}/matrix', name: 'matrix', methods: ['GET'])]
+    public function datasetMatrix(Dataset $dataset, #[MapQueryParameter()] int $size = 0, #[MapQueryParameter] int $page = 1): JsonResponse
     {
-        $size = $request->get('size') ?? 0;
-        $page = $request->get('page') ?? 1;
-        $this->logger->debug("Enter CodebookController::datasetMatrixAction with [UUID: {$uuid}]");
-        $dataset = $this->em->getRepository(Dataset::class)->find($uuid);
+        $this->logger->debug("Enter CodebookController::datasetMatrixAction with [UUID: {$dataset->getId()}]");
         $response = null;
-        if ($dataset) {
-            foreach ($dataset->getCodebook() as $var) {
-                $response['header'][] = $var->getName();
-            }
+
+        foreach ($dataset->getCodebook() as $var) {
+            $response['header'][] = $var->getName();
         }
 
         try {
-            if (!$this->matrixFilesystem->has($uuid.'.csv')) {
+            if (!$this->matrixFilesystem->has($dataset->getId().'.csv')) {
                 return new JsonResponse($response, Response::HTTP_OK);
             }
 
-            $file = Reader::createFromString($this->matrixFilesystem->read($uuid.'.csv'));
+            $file = Reader::createFromString($this->matrixFilesystem->read($dataset->getId().'.csv'));
             if ($file->count() === 0) {
                 $response['error'] = 'error.dataset.matrix.empty';
                 return new JsonResponse($response, Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -112,11 +107,11 @@ class CodebookController extends AbstractController
                 $response['pagination']['max_pages'] = ceil($file->count() / $size);
             }
         } catch (FilesystemException $e) {
-            $this->logger->critical("FileSystemException in CodebookController::createViewMeasuresAction [UUID: {$uuid}] Exception: ".$e->getMessage());
+            $this->logger->critical("FileSystemException in CodebookController::createViewMeasuresAction [UUID: {$dataset->getId()}] Exception: ".$e->getMessage());
             $response['error'] = 'error.dataset.matrix.notFound';
             return new JsonResponse($response, Response::HTTP_UNPROCESSABLE_ENTITY);
         } catch (UnableToProcessCsv $e) {
-            $this->logger->critical("UnableToProcessCsv in CodebookController::createViewMeasuresAction [UUID: {$uuid}] Exception: ".$e->getMessage());
+            $this->logger->critical("UnableToProcessCsv in CodebookController::createViewMeasuresAction [UUID: {$dataset->getId()}] Exception: ".$e->getMessage());
             $response['error'] = 'error.dataset.matrix.unprocessable';
             return new JsonResponse($response, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
@@ -127,7 +122,7 @@ class CodebookController extends AbstractController
     private function codebookCollectionToJsonArray(?Collection $codebook): ?array
     {
         $jsonCodebook = null;
-        if ($codebook && is_iterable($codebook)) {
+        if ($codebook) {
             $jsonCodebook = [];
             foreach ($codebook as $var) {
                 $jsonCodebook['variables'][] = [
@@ -167,8 +162,8 @@ class CodebookController extends AbstractController
                     $var->setName($variable['name'] ?? $var->getName());
                     $var->setLabel($variable['label'] ?? null);
                     $var->setItemText($variable['itemText'] ?? null);
-                    $var->setValues($values != null && sizeof($values) != 0 ? $values : null);
-                    $var->setMissings($missings != null && sizeof($missings) != 0 ? $missings : null);
+                    $var->setValues($values != null ? $values : null);
+                    $var->setMissings($missings != null ? $missings : null);
                     $var->setMeasure($variable['measure'] ?? null);
                     $this->em->persist($var);
                     $this->em->flush();

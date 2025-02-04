@@ -6,6 +6,7 @@ namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\DBAL\Types\ArrayType;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\JsonType;
 use Doctrine\Migrations\AbstractMigration;
@@ -80,12 +81,12 @@ final class Version20230428165114 extends AbstractMigration
         }
     }
 
-    private function convertArrayToJson(string $array): null|string
+    private function convertArrayToJson(string $array): ?string
     {
         $platform = $this->platform;
 
-        if (class_exists(\Doctrine\DBAL\Types\ArrayType::class)) {
-            $arrayType = new \Doctrine\DBAL\Types\ArrayType();
+        if (class_exists(ArrayType::class)) {
+            $arrayType = new ArrayType();
             try {
                 $array = $arrayType->convertToPHPValue($array, $platform);
             } catch (ConversionException $e) {

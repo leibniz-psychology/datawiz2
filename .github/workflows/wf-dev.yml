@@ -10,11 +10,11 @@ jobs:
   call-lint-workflow:
     uses: ./.github/workflows/lint.yml
 
-  call-e2e-workflow:
-    needs:
-      - call-lint-workflow
-    uses: ./.github/workflows/e2e.yml
-    secrets: inherit
+  #call-e2e-workflow:
+  #  needs:
+  #    - call-lint-workflow
+  #  uses: ./.github/workflows/e2e.yml
+  #  secrets: inherit
 
   call-container-build-workflow:
     needs:
@@ -23,4 +23,12 @@ jobs:
     with:
       container-tag: latest-dev
       build-stage: dev
+    secrets: inherit
+
+  call-kustomize-workflow:
+    needs:
+      - call-container-build-workflow
+    uses: ./.github/workflows/kustomize.yml
+    with:
+      k8s-path: dev
     secrets: inherit

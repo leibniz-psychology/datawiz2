@@ -36,6 +36,8 @@ Dropzone.options.datawizDropzone = {
     },
 };
 
+let datawizDropzone = new Dropzone("#datawiz-dropzone");
+
 function handleCSVFile(file, responseText) {
     const modal = document.querySelector("#modal-dataset-import");
     const backdrop = document.querySelector(
@@ -74,7 +76,7 @@ function handleCSVFile(file, responseText) {
     cancelBtn.addEventListener("click", function () {
         let input = document.createElement("input");
         input.setAttribute("type", "hidden");
-        input.setAttribute("name", "dataset-import-remove");
+        input.setAttribute("name", "datasetImportRemove");
         input.setAttribute("value", "true");
         form.append(input);
         console.log(form);

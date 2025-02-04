@@ -1,5 +1,14 @@
 # Datawiz2 Semantic Versioning Changelog
 
+## [2.0.1](https://github.com/leibniz-psychology/datawiz2/compare/v2.0.0...v2.0.1) (2025-02-04)
+
+
+### Bug Fixes
+
+* change broken link from study description to export ([48f562f](https://github.com/leibniz-psychology/datawiz2/commit/48f562f02a7102e286c1ffa8d4b35dbabfc0f2a5))
+* replace deprecated Route Annotation with Route Attribute ([21a1816](https://github.com/leibniz-psychology/datawiz2/commit/21a181609e0ea9b4187ec679bc45f571eda6029f))
+* return right type from DataWizUser getUserIdentifier ([4640ad7](https://github.com/leibniz-psychology/datawiz2/commit/4640ad78aabe565a4ff14fe1c6e3e12bfbea5b3b))
+
 # [2.0.0](https://github.com/leibniz-psychology/datawiz2/compare/v1.0.0...v2.0.0) (2023-07-19)
 
 

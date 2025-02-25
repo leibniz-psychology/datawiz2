@@ -12,6 +12,8 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    outputs:
+      app_version: ${{ steps.step1.outputs.app_version }}
     permissions:
       contents: write # to be able to publish a GitHub release
       issues: write # to be able to comment on released issues

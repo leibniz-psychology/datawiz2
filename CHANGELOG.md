@@ -1,5 +1,13 @@
 # Datawiz2 Semantic Versioning Changelog
 
+# [2.1.0](https://github.com/leibniz-psychology/datawiz2/compare/v2.0.1...v2.1.0) (2025-02-25)
+
+
+### Features
+
+* replace footer with collapsible footer ([7c2356f](https://github.com/leibniz-psychology/datawiz2/commit/7c2356fee9b0acf218a77e3beb2c7ba15e3c3c2a))
+* update header logo to use new corporate design ([f526b48](https://github.com/leibniz-psychology/datawiz2/commit/f526b4825126a730d9d6ef634ee85fd2bf69aca0))
+
 ## [2.0.1](https://github.com/leibniz-psychology/datawiz2/compare/v2.0.0...v2.0.1) (2025-02-04)
 
 

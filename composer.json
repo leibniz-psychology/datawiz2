@@ -30,7 +30,6 @@
         "symfony/http-client": "7.4.*",
         "symfony/maker-bundle": "^1.62.1",
         "symfony/monolog-bundle": "^v3.10.0",
-        "symfony/phpunit-bridge": "7.4.*",
         "symfony/runtime": "7.4.*",
         "symfony/security-bundle": "7.4.*",
         "symfony/serializer": "7.4.*",

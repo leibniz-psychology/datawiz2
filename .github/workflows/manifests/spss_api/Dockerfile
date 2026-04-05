@@ -1,4 +1,4 @@
-FROM openjdk:11
+FROM openjdk:27-ea-oracle
 
 COPY .github/workflows/manifests/libs/spss_lib/spss-1.0.0.RELEASE.jar app.jar
 COPY .github/workflows/manifests/libs/spss_lib/native /home/datawiz/spss_webservice/native/

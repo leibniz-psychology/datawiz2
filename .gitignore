@@ -299,3 +299,7 @@ phpunit.xml.dist
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+###> deptrac/deptrac ###
+/.deptrac.cache
+###< deptrac/deptrac ###

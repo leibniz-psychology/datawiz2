@@ -2,6 +2,18 @@
     "composer/package-versions-deprecated": {
         "version": "1.11.99.5"
     },
+    "deptrac/deptrac": {
+        "version": "4.6",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "3.0",
+            "ref": "05ab8813714080c7bc915cb10c780e6cfdbdb991"
+        },
+        "files": [
+            "deptrac.yaml"
+        ]
+    },
     "dflydev/dot-access-data": {
         "version": "v3.0.1"
     },

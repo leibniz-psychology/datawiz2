@@ -50,6 +50,7 @@
         "twig/twig": "^v3.18.0"
     },
     "require-dev": {
+        "deptrac/deptrac": "^4.6",
         "friendsofphp/php-cs-fixer": "^v3.65.0",
         "phpstan/phpstan": "^2.1.1",
         "rector/rector": "^2.0.7",

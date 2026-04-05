@@ -13,7 +13,7 @@ RUN apk add --no-cache \
 WORKDIR /build
 
 
-FROM php:8.3-fpm-alpine
+FROM php:8.4-fpm-alpine
 
 ENV APP_ENV=dev
 

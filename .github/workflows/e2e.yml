@@ -36,13 +36,13 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php-versions: [ '8.3' ]
+        php-versions: [ '8.4' ]
     steps:
       - name: Install Symfony CLI
         run: wget https://get.symfony.com/cli/installer -O - | bash
 
       - name: Install missing libs
-        run: |          
+        run: |
           curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
           echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections
           sudo apt update -y

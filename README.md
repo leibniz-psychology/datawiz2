@@ -1,7 +1,7 @@
 # DataWiz - Research Data Documentation Assistant
 
 ![Symfony Version](https://img.shields.io/badge/Symfony-^7.4-success?logo=symfony&style=flat-square)
-![PHP Version](https://img.shields.io/badge/Php-^8.3-informational?logo=PHP&style=flat-square&logoColor=white)
+![PHP Version](https://img.shields.io/badge/Php-^8.4-informational?logo=PHP&style=flat-square&logoColor=white)
 ![Composer Version](https://img.shields.io/badge/Composer-^2.7-informational?logo=Composer&style=flat-square&logoColor=white)
 ![Nodejs Version](https://img.shields.io/badge/Nodejs-23_LTS-informational?logo=node.js&style=flat-square&logoColor=white)
 ![MariaDB Version](https://img.shields.io/badge/MariaDB-10.11-informational?logo=mariadb&style=flat-square&logoColor=white)

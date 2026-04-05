@@ -57,7 +57,7 @@ yarn markdownlint-cli2 '**/*.md' '#node_modules' '#vendor' '#tools' '#CHANGELOG.
 echo ""
 echo "Lint PHP Files..."
 
-FILES=` git status --porcelain | grep -e '^[AM]\(.*\).php$' | cut -c 3- | sed 's/config\/bundles.php//' | sed 's/config\/references.php//' | xargs`
+FILES=` git status --porcelain | grep -e '^[AM]\(.*\).php$' | cut -c 3- | sed 's/config\/bundles.php//' | sed 's/config\/reference.php//' | xargs`
 if [ -z "$FILES" ]
   then
       echo "No php files found in commit."

@@ -18,7 +18,7 @@
         "league/csv": "^9.21.0",
         "oneup/flysystem-bundle": "^4.12.3",
         "oneup/uploader-bundle": "^5.0.1",
-        "stevenmaguire/oauth2-keycloak": "^5.1.0",
+        "stevenmaguire/oauth2-keycloak": "^6.1",
         "symfony/asset-mapper": "7.4.*",
         "symfony/console": "7.4.*",
         "symfony/debug-bundle": "7.4.*",

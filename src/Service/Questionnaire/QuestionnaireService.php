@@ -11,7 +11,8 @@ readonly class QuestionnaireService implements Questionnairable
 {
     public function __construct(
         private FormFactoryInterface $formBuilder
-    ) {}
+    ) {
+    }
 
     public function formFromEntity(Questionable $entity, string $buttonLabel): ?FormInterface
     {

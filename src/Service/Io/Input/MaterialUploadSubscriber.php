@@ -13,7 +13,8 @@ readonly class MaterialUploadSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private EntityManagerInterface $em
-    ) {}
+    ) {
+    }
 
     public static function getSubscribedEvents(): array
     {
@@ -27,9 +28,9 @@ readonly class MaterialUploadSubscriber implements EventSubscriberInterface
      */
     public function onMaterialPostUpload(PostUploadEvent $event)
     {
-        $experiment = $this->em->getRepository(Experiment::class)->find($event->getRequest()->get('studyId'));
+        $experiment = $this->em->getRepository(Experiment::class)->find($event->getRequest()->request->get('studyId'));
         $entity = AdditionalMaterial::createMaterial(
-            $event->getRequest()->get('originalFilename'),
+            $event->getRequest()->request->get('originalFilename'),
             $event->getFile()->getBasename(),
             $event->getFile()->getSize(),
             $event->getFile()->getMimeType(),

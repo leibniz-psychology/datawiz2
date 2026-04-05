@@ -15,7 +15,8 @@ readonly class ApiClientService
     public function __construct(
         private HttpClientInterface $client,
         private LoggerInterface $logger
-    ) {}
+    ) {
+    }
 
     public function GET(string $uri, array $params): ?array
     {

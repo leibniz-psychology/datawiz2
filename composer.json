@@ -42,7 +42,7 @@
         "symfony/web-link": "7.4.*",
         "symfony/web-profiler-bundle": "7.4.*",
         "symfony/yaml": "7.4.*",
-        "symfonycasts/tailwind-bundle": "^0.7.1",
+        "symfonycasts/tailwind-bundle": "^v0.12.0",
         "twig/extra-bundle": "^v3.18.0",
         "twig/markdown-extra": "^v3.18.0",
         "twig/string-extra": "^v3.18.0",

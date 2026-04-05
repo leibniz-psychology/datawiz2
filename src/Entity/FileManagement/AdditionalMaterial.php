@@ -7,8 +7,8 @@ use App\Entity\Study\Experiment;
 use App\Form\FileDescriptionType;
 use App\Service\Questionnaire\Questionable;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Table(name: 'material')]
 #[ORM\Entity]

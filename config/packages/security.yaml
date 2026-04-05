@@ -38,6 +38,13 @@ security:
 
 when@test:
     security:
+        firewalls:
+            main:
+                anonymous: true
+                guard:
+                    authenticators:
+                        - App\Security\Authentication\DevelopmentAuthenticator
+
         password_hashers:
             # Password hashers are resource-intensive by design to ensure security.
             # In tests, it's safe to reduce their cost to improve performance.

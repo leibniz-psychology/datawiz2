@@ -4,26 +4,24 @@ namespace App\Controller;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpClient\CachingHttpClient;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\HttpCache\Store;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class CoreController extends AbstractController
 {
-    private readonly CachingHttpClient $client;
-
     /**
      * CoreController constructor.
      */
     public function __construct(
         private readonly LoggerInterface $logger,
-        HttpClientInterface $client
+        private readonly HttpClientInterface $client,
+        private readonly CacheInterface $cache,
     ) {
-        $this->client = new CachingHttpClient($client, new Store('var/cache/http'));
     }
 
     #[Route(
@@ -34,20 +32,24 @@ class CoreController extends AbstractController
     )]
     public function getFooterFromAssets(Request $request): Response
     {
-        $content = null;
-        try {
-            $response = $this->client->request(
-                'GET',
-                'https://www.lifp.de/assets/collapsible-footer/index.php?framework=css&lang='.$request->getLocale()
-            );
-            $statusCode = $response->getStatusCode();
-            if ($statusCode == Response::HTTP_OK) {
-                $content = $response->getContent();
+        $content = $this->cache->get('app_microsite_footer', function (ItemInterface $item) use ($request): string {
+            $item->expiresAfter(24 * 60 * 60);
+            try {
+                $content = null;
+                $response = $this->client->request(
+                    'GET',
+                    'https://www.lifp.de/assets/collapsible-footer/index.php?framework=css&lang='.$request->getLocale()
+                );
+                $statusCode = $response->getStatusCode();
+                if ($statusCode == Response::HTTP_OK) {
+                    $content = $response->getContent();
+                }
+            } catch (ExceptionInterface $e) {
+                $this->logger->error($e->getMessage());
             }
-        } catch (ExceptionInterface $e) {
-            $this->logger->error($e->getMessage());
-            // do whatever you want to do!
-        }
+            return $content;
+        });
+
         return new Response(
             $content,
             Response::HTTP_OK,

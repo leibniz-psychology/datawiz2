@@ -305,12 +305,12 @@
         "version": "v4.4.19"
     },
     "symfony/framework-bundle": {
-        "version": "7.0",
+        "version": "7.2",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
-            "version": "7.0",
-            "ref": "6356c19b9ae08e7763e4ba2d9ae63043efc75db5"
+            "version": "7.2",
+            "ref": "7a5c4105e37c9af84f347c978681a575a6522fa2"
         },
         "files": [
             "config/packages/cache.yaml",

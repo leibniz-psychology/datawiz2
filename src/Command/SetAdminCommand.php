@@ -10,7 +10,9 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand('dw:add-user-role')]
+#[AsCommand('dw:add-user-role', help: <<<'TXT'
+This command allows you to add a role to a user
+TXT)]
 class SetAdminCommand extends Command
 {
     public function __construct(private readonly EntityManagerInterface $em)
@@ -21,7 +23,6 @@ class SetAdminCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setHelp('This command allows you to add a role to a user')
             ->addArgument('email', InputArgument::REQUIRED, 'The email of the user.')
             ->addArgument('role', InputArgument::REQUIRED, 'The new role of the user: e.g. ROLE_ADMIN, ROLE_MODERATOR');
     }

@@ -22,7 +22,7 @@ class ExperimentRepository extends ServiceEntityRepository
     public function findByBasicMetadata(?array $orderBy = null, $limit = null, $offset = null)
     {
         $qb = $this->createQueryBuilder('e');
-        if (is_iterable($orderBy) && sizeof($orderBy) > 1) {
+        if (is_iterable($orderBy) && count($orderBy) > 1) {
             switch ($orderBy[0]) {
                 case 'shortName':
                     $qb->join('e.settingsMetaDataGroup', 'es')

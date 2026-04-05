@@ -41,7 +41,7 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, 
 
     #[SerializedName('creators')]
     #[Groups('study')]
-    #[ORM\OneToMany(mappedBy: 'basicInformation', targetEntity: 'App\Entity\Study\CreatorMetaDataGroup')]
+    #[ORM\OneToMany(targetEntity: CreatorMetaDataGroup::class, mappedBy: 'basicInformation')]
     private ?Collection $creators = null;
 
     public function getFormTypeForEntity(): string

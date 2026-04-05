@@ -27,7 +27,8 @@ class OauthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
         private readonly ClientRegistry $clientRegistry,
         private readonly Crudable $crud,
         private readonly UrlGeneratorInterface $urlGenerator,
-    ) {}
+    ) {
+    }
 
     public function authenticate(Request $request): SelfValidatingPassport
     {
@@ -46,13 +47,13 @@ class OauthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
                     $user->setRoles([UserRoles::USER]);
                     $user->setDateRegistered(new \DateTime());
                 }
-                if (key_exists('email', $kcArray)) {
+                if (array_key_exists('email', $kcArray)) {
                     $user->setEmail($kcArray['email']);
                 }
-                if (key_exists('given_name', $kcArray)) {
+                if (array_key_exists('given_name', $kcArray)) {
                     $user->setFirstname($kcArray['given_name']);
                 }
-                if (key_exists('family_name', $kcArray)) {
+                if (array_key_exists('family_name', $kcArray)) {
                     $user->setLastname($kcArray['family_name']);
                 }
                 $user->setLastLogin(new \DateTime());

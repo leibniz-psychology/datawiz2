@@ -72,7 +72,7 @@ class ExportController extends AbstractController
 
         $success = false;
         $experiment->getOriginalDatasets()->clear();
-        if ($export->datasets !== null && sizeof($export->datasets) != 0) {
+        if ($export->datasets !== null && count($export->datasets) != 0) {
             foreach ($export->datasets as $dataset) {
                 $experiment->addOriginalDatasets($this->em->getRepository(Dataset::class)->find($dataset));
             }
@@ -80,7 +80,7 @@ class ExportController extends AbstractController
         }
 
         $experiment->getAdditionalMaterials()->clear();
-        if ($export->materials !== null && sizeof($export->materials) != 0) {
+        if ($export->materials !== null && count($export->materials) != 0) {
             foreach ($export->materials as $material) {
                 $experiment->addAdditionalMaterials($this->em->getRepository(AdditionalMaterial::class)->find($material));
             }

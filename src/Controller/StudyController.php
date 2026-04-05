@@ -31,7 +31,8 @@ class StudyController extends AbstractController
         private readonly EntityManagerInterface $em,
         private readonly LoggerInterface $logger,
         private readonly Crudable $crud
-    ) {}
+    ) {
+    }
 
     #[Route(path: '/', name: 'overview', methods: ['GET'])]
     public function overview(): Response
@@ -94,7 +95,7 @@ class StudyController extends AbstractController
         $this->denyAccessUnlessGranted('EDIT', $experiment);
 
         $basicInformation = $experiment->getBasicInformationMetaDataGroup();
-        if (sizeof($basicInformation->getCreators()) == 0) {
+        if (count($basicInformation->getCreators()) == 0) {
             $basicInformation->getCreators()->add(new CreatorMetaDataGroup());
         }
         $basicInformation->setRelatedPublications($this->_prepareEmptyArray($basicInformation->getRelatedPublications()));
@@ -302,7 +303,7 @@ class StudyController extends AbstractController
 
     private function _prepareEmptyArray(?array $array): array
     {
-        if ($array === null || sizeof($array) <= 0) {
+        if ($array === null || count($array) <= 0) {
             $array = [''];
         }
 

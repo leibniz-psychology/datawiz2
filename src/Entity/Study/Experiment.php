@@ -65,12 +65,12 @@ class Experiment extends UuidEntity
     #[ORM\OneToOne(mappedBy: 'experiment', cascade: ['persist', 'remove'])]
     private ?SettingsMetaDataGroup $settingsMetaDataGroup = null;
 
-    #[ORM\OneToMany(mappedBy: 'experiment', targetEntity: 'App\Entity\FileManagement\Dataset', cascade: ['persist'])]
+    #[ORM\OneToMany(targetEntity: Dataset::class, mappedBy: 'experiment', cascade: ['persist'])]
     #[SerializedName('datasets')]
     #[Groups(['dataset'])]
     private Collection $originalDatasets;
 
-    #[ORM\OneToMany(mappedBy: 'experiment', targetEntity: 'App\Entity\FileManagement\AdditionalMaterial', cascade: ['persist'])]
+    #[ORM\OneToMany(targetEntity: AdditionalMaterial::class, mappedBy: 'experiment', cascade: ['persist'])]
     #[SerializedName('material')]
     #[Groups(['material'])]
     private Collection $additionalMaterials;

@@ -8,14 +8,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 
 class NavigationController extends AbstractController
 {
-    public function __construct(private readonly EntityManagerInterface $em) {}
-
-    public function sidebarNavigation(Request $request): Response
+    public function __construct(private readonly EntityManagerInterface $em)
     {
-        $id = $request->get('id'); // magic string refer to the name of your slug :)
+    }
+
+    public function sidebarNavigation(#[MapRequestPayload] mixed $id, Request $request): Response
+    {
+        $id = $request->attributes->get('id'); // magic string refer to the name of your slug :)
 
         return $this->render('components/_navigationSidebar.html.twig', [
             'experiment' => $this->getEntityAtChange($id),
@@ -30,7 +33,7 @@ class NavigationController extends AbstractController
         ?string $nextTitle,
         ?FormView $form
     ): Response {
-        $id = $request->get('id'); // still a magic strings
+        $id = $request->attributes->get('id'); // still a magic strings
 
         return $this->render('components/_navigationSavebar.html.twig', [
             'experiment' => $this->getEntityAtChange($id),

@@ -214,9 +214,6 @@ fabric.properties
 /web/bundles/
 /web/uploads/
 
-# PHPUnit
-/app/phpunit.xml
-
 # Build data
 /build/
 
@@ -303,3 +300,8 @@ phpunit.xml.dist
 ###> deptrac/deptrac ###
 /.deptrac.cache
 ###< deptrac/deptrac ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+/.phpunit.cache/
+###< phpunit/phpunit ###

@@ -53,6 +53,7 @@
         "deptrac/deptrac": "^4.6",
         "friendsofphp/php-cs-fixer": "^v3.65.0",
         "phpstan/phpstan": "^2.1.1",
+        "phpunit/phpunit": "^13.1",
         "rector/rector": "^2.0.7",
         "symfony/browser-kit": "7.4.*",
         "symfony/css-selector": "7.4.*"

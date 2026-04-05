@@ -1,25 +1,23 @@
 name: Main Workflow
 
 on:
-  push:
-    branches: [ main ]
-
+    push:
+        branches: [ main ]
+    pull_request:
+        branches: [ main]
 jobs:
-  call-lint-workflow:
-    uses: ./.github/workflows/lint.yml
+    call-lint-workflow:
+        uses: ./.github/workflows/lint.yml
 
-  #call-e2e-workflow:
-  #  needs:
-  #    - call-lint-workflow
-  #  uses: ./.github/workflows/e2e.yml
-  #  secrets: inherit
+    call-test-workflow:
+        uses: ./.github/workflows/test.yml
 
-  call-container-build-workflow:
-    needs:
-      - call-lint-workflow
-    #  - call-e2e-workflow
-    uses: ./.github/workflows/container-build.yml
-    with:
-      container-tag: latest
-      build-stage: prod
-    secrets: inherit
+    call-container-build-workflow:
+        needs:
+            - call-lint-workflow
+            - call-test-workflow
+        uses: ./.github/workflows/container-build.yml
+        with:
+            container-tag: latest
+            build-stage: prod
+        secrets: inherit

@@ -39,6 +39,8 @@
         "symfony/translation": "8.0.*",
         "symfony/twig-bundle": "8.0.*",
         "symfony/uid": "8.0.*",
+        "symfony/ux-live-component": "^2.34",
+        "symfony/ux-twig-component": "^2.34",
         "symfony/var-dumper": "8.0.*",
         "symfony/web-link": "8.0.*",
         "symfony/web-profiler-bundle": "8.0.*",

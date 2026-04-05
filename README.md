@@ -16,7 +16,7 @@ More details of how to use DataWiz and how to contribute can be found at our hom
 
 This is the second iteration of the DataWiz application. \
 For today, you can't use this code in production and changes will occur. \
-You can find and test the latest version of Datawiz 2 (currently in beta) [here](https://datawiz2.dev.zpid.de/).
+You can find and test the latest version of Datawiz 2 (currently in beta) under [datawiz2.beta.zpid.org](https://datawiz2.beta.zpid.org/).
 
 ## Supported development environments
 

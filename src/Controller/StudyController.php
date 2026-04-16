@@ -4,11 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Administration\DataWizUser;
 use App\Entity\Constant\States;
-use App\Entity\Study\CreatorMetaDataGroup;
 use App\Entity\Study\Experiment;
 use App\Service\Crud\Crudable;
 use App\Service\Questionnaire\Questionnairable;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -87,59 +85,16 @@ class StudyController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{id}/documentation', name: 'documentation', methods: ['GET', 'POST'])]
-    public function documentation(Experiment $experiment, Request $request): Response
+    #[Route(path: '/{id}/documentation', name: 'documentation')]
+    public function documentation(Experiment $experiment): Response
     {
         $this->logger->debug("Enter StudyController::documentationAction with [UUID: {$experiment->getId()}]");
 
         $this->denyAccessUnlessGranted('EDIT', $experiment);
 
-        $basicInformation = $experiment->getBasicInformationMetaDataGroup();
-        if (count($basicInformation->getCreators()) == 0) {
-            $basicInformation->getCreators()->add(new CreatorMetaDataGroup());
-        }
-        $basicInformation->setRelatedPublications($this->_prepareEmptyArray($basicInformation->getRelatedPublications()));
-        $form = $this->questionnaire->askAndHandle($basicInformation, 'save', $request);
-
-        if (!$this->questionnaire->isSubmittedAndValid($form)) {
-            return $this->render('pages/study/documentation.html.twig', [
-                'form' => $form,
-                'experiment' => $experiment,
-            ]);
-        }
-
-        $formData = $form->getData();
-        $currentCreators = $this->em->getRepository(CreatorMetaDataGroup::class)->findBy(['basicInformation' => $basicInformation]);
-
-        foreach ($currentCreators as $currentCreator) {
-            $this->em->remove($currentCreator);
-        }
-
-        $newCreators = $formData->getCreators();
-        if (!$form->getData()->getCreators() instanceof Collection) {
-            throw new \Error('Creators is not a collection');
-        }
-        if (is_iterable($newCreators)) {
-            foreach ($newCreators as $creator) {
-                if (!$creator->isEmpty()) {
-                    $creator->setCreditRoles(array_values(array_unique($creator->getCreditRoles())));
-                    $creator->setBasicInformation($basicInformation);
-                    $this->em->persist($creator);
-                } else {
-                    $form->getData()->getCreators()->removeElement($creator);
-                }
-            }
-        }
-        $formData->setRelatedPublications(array_filter($formData->getRelatedPublications()));
-        $this->em->persist($formData);
-        $this->em->flush();
-
-        $navigationResponse = $this->handleNavigation($form, $experiment->getId(), null, 'Study-theory');
-        if ($navigationResponse !== null) {
-            return $navigationResponse;
-        }
-
-        return $this->redirectToRoute('Study-documentation', ['id' => $experiment->getId()]);
+        return $this->render('pages/study/documentation.html.twig', [
+            'experiment' => $experiment,
+        ]);
     }
 
     #[Route(path: '/{id}/theory', name: 'theory', methods: ['GET', 'POST'])]

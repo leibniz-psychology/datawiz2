@@ -1,0 +1,146 @@
+{% extends "twig_components/Form/_baseForm.html.twig" %}
+{% from "components/_macros.html.twig" import helpButton %}
+
+{% block form_content %}
+    <h2 class="MetaDataGroup-Title">
+        {{ "title.basic.title"|trans }}
+    </h2>
+
+    <div class="flex flex-col gap-6">
+        <fieldset>
+            <div class="MetaData-Title">
+                <legend class="MetaData-Legend" id="{{ 'input.title.legend'|trans|slug }}">
+                    {{ "input.title.legend"|trans }}
+                </legend>
+                {{ helpButton("title") }}
+            </div>
+            {{ form_label(form.title) }}
+            {{ form_errors(form.title) }}
+            <div class="MetaData-Widget">
+                {{ form_widget(form.title) }}
+            </div>
+        </fieldset>
+        <fieldset class="mt-8">
+            <div class="MetaData-Title">
+                <legend class="MetaData-Legend" id="{{ 'input.description.legend'|trans|slug }}">
+                    {{ "input.description.legend"|trans }}
+                </legend>
+                {{ helpButton("description") }}
+            </div>
+            {{ form_label(form.description) }}
+            {{ form_errors(form.description) }}
+            <div class="MetaData-Widget">
+                {{ form_widget(form.description) }}
+            </div>
+        </fieldset>
+
+        <fieldset class="mt-8">
+            <div class="MetaData-Title">
+                <legend class="MetaData-Legend" id="{{ 'input.relatedPubs.legend'|trans|slug }}">
+                    {{ "input.relatedPubs.legend"|trans }}
+                </legend>
+                {{ helpButton("related_publications") }}
+            </div>
+            <div class="MetaData-Widget MetaData-Widget_collection">
+                <ul>
+                    {% for key, related_publication in form.related_publications %}
+                        <li class="flex mt-2 items-start">
+                            {{ form_widget(related_publication) }}
+                            <button type="button"
+                                    data-action="live#action"
+                                    data-live-action-param="removeRelatedPublication"
+                                    data-live-index-param="{{ key }}"
+                                    class="ml-1 Button_tertiary_danger Button_fieldSize">
+                                {{ 'generic.remove'|trans }}
+                            </button>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <button type="button"
+                        class="mt-2 Button_secondary_act Button_fieldSize"
+                        data-action="live#action"
+                        data-live-action-param="addRelatedPublication">
+                    {{ include('components/icons/add.svg') }}
+                    {{ 'input.relatedPubs.add'|trans }}
+                </button>
+            </div>
+        </fieldset>
+
+        <fieldset class="mt-8">
+            <div class="MetaData-Title">
+                <legend class="MetaData-Legend" id="{{ 'input.creator.legend'|trans|slug }}">
+                    {{ "input.creator.legend"|trans }}
+                </legend>
+                {{ helpButton("creator") }}
+            </div>
+            <div class="MetaData-Widget MetaData-Widget_collection">
+                <ul>
+                    {% for key, creator in form.creators %}
+                        <li class='items-baseline pb-4 mt-2 border rounded border-mono-400 first:mt-0'>
+                            <button type="button"
+                                    data-action="live#action"
+                                    data-live-action-param="removeCreator"
+                                    data-live-index-param="{{ key }}"
+                                    class="Creator-RemoveButton">
+                                {{ 'input.creator.remove'|trans }}
+                            </button>
+
+                            <div class="Creator-Details">
+                                {{ form_row(creator.givenName) }}
+                                {{ form_row(creator.familyName) }}
+                                {{ form_row(creator.email) }}
+                                {{ form_row(creator.orcid) }}
+                                {{ form_row(creator.affiliation) }}
+                            </div>
+
+                            <div class="Creator-Detail Creator-Detail_roles">
+                                <div class="MetaData-Widget MetaData-Widget_collection !px-4">
+                                    <ul class="xl:grid xl:grid-cols-2 xl:gap-x-3">
+                                        {% for key2, credit_role in creator.creditRoles %}
+                                            <li class="flex mt-2 items-start">
+                                                {{ form_widget(credit_role) }}
+                                                <button type="button"
+                                                        class="!rounded-l-none Button_tertiary_danger Button_fieldSize"
+                                                        data-action="live#action"
+                                                        data-live-action-param="removeCreditRole"
+                                                        data-live-creatorindex-param="{{ key }}"
+                                                        data-live-roleindex-param="{{ key2 }}"
+                                                        title="{{ 'input.creator.credit.remove'|trans }}">
+                                                    {{ include('components/icons/delete.svg') }}
+                                                </button>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+
+                                    {% do creator.creditRoles.setRendered() %}
+
+                                    <button type="button"
+                                            class="mt-2 Button_secondary_act Button_fieldSize"
+                                            data-action="live#action"
+                                            data-live-creatorindex-param="{{ key }}"
+                                            data-live-action-param="addCreditRole">
+                                        {{ include('components/icons/add.svg') }}
+                                        {{ 'input.creator.credit.add'|trans }}
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <button type="button"
+                        class="mt-2 Button_secondary_act Button_fieldSize"
+                        data-action="live#action"
+                        data-live-action-param="addCreator">
+                    {{ include('components/icons/add.svg') }}
+                    {{ 'input.creator.add'|trans }}
+                </button>
+            </div>
+        </fieldset>
+    </div>
+
+    {{ form_rest(form) }}
+{% endblock %}
+
+

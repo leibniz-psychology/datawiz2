@@ -1,5 +1,5 @@
 .StudyNav-NavItem {
-  @apply block py-2 pl-7 pr-1.5 border-b bg-mono-50 ring-inset border-mono-300 hover:bg-zpid-blue-50;
+  @apply block w-full text-left py-2 pl-7 pr-1.5 border-b bg-mono-50 ring-inset border-mono-300 hover:bg-zpid-blue-50;
 }
 
 .StudyNav-NavItem_active {
@@ -19,7 +19,7 @@
 }
 
 .StudyNav-SubNavItem {
-  @apply block py-2 pl-7 pr-1.5 leading-tight ring-inset hover:bg-zpid-blue-50;
+  @apply block w-full text-left py-2 pl-7 pr-1.5 leading-tight ring-inset hover:bg-zpid-blue-50;
 }
 
 .StudyNav-SubNavItem_active {

@@ -1,0 +1,50 @@
+<div class="col-span-7" {{ attributes }}>
+    {{ form_start(form, {
+        attr: {
+            'onkeydown': 'if(event.key === "Enter") {event.preventDefault(); event.stopPropagation();}',
+            'data-action': 'live#action:prevent',
+            'data-live-action-param': 'save'
+        }
+    }) }}
+    <div class="grid grid-cols-7 gap-4">
+        <div class="col-span-2">
+            <div class="sticky top-0 overflow-hidden border rounded-lg shadow-sm">
+                {% include 'components/_navigationSidebar.html.twig' with {needs_saving: true, experiment: this.initialFormData.experiment} %}
+            </div>
+        </div>
+
+        <div class="col-span-5">
+            <section class="border rounded-lg shadow-sm bg-mono-50">
+                {% block form_content %}
+                {% endblock %}
+
+                <div class="WizNavBar">
+                    <button type="submit" class="underline justify-self-start Button_tertiary_go Button_standalone" type="submit" {% if this.prevForm == null %} {{ live_action('save', { route: 'Study-datasets' }) }} {% else %} {{ live_action('save', { route: this.prevForm.route }) }} {% endif %}>
+                        {{ include('components/icons/arrow-left.svg') }}
+                        {% if this.prevForm == null %}
+                            {{ 'title.introduction.title' | trans }}
+                        {% else %}
+                            {{ this.prevForm.title }}
+                        {% endif %}
+                    </button>
+
+                    {% if form is defined and form is not null %}
+                        <button class="MetaData-SubmitButton Button_primary_act Button_standalone" type="submit" {{ live_action('save') }}>
+                            {{ 'generic.save-changes' | trans }}
+                        </button>
+                    {% endif %}
+
+                    <button type="submit" class="underline justify-self-end Button_tertiary_go Button_standalone" type="submit" {% if this.nextForm == null %} {{ live_action('save', { route: 'Study-datasets' }) }} {% else %} {{ live_action('save', { route: this.nextForm.route }) }} {% endif %}>
+                        {% if this.prevForm == null %}
+                            {{ 'link.view.dataset' | trans }}
+                        {% else %}
+                            {{ this.nextForm.nextTitle }}
+                        {% endif %}
+                        {{ include('components/icons/arrow-right.svg') }}
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+    {{ form_end(form) }}
+</div>

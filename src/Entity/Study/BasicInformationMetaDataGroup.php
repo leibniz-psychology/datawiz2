@@ -9,6 +9,7 @@ use App\Service\Questionnaire\Questionable;
 use App\Service\Review\Reviewable;
 use App\Service\Review\ReviewDataCollectable;
 use App\Service\Review\ReviewValidator;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -41,8 +42,13 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, 
 
     #[SerializedName('creators')]
     #[Groups('study')]
-    #[ORM\OneToMany(targetEntity: CreatorMetaDataGroup::class, mappedBy: 'basicInformation')]
-    private ?Collection $creators = null;
+    #[ORM\OneToMany(targetEntity: CreatorMetaDataGroup::class, mappedBy: 'basicInformation', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $creators;
+
+    public function __construct()
+    {
+        $this->creators = new ArrayCollection();
+    }
 
     public function getFormTypeForEntity(): string
     {
@@ -115,8 +121,20 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, 
         return $this->creators;
     }
 
-    public function setCreators(?Collection $creators): void
+    public function addCreator(CreatorMetaDataGroup $creator): static
     {
-        $this->creators = $creators;
+        if (!$this->creators->contains($creator)) {
+            $this->creators->add($creator);
+            $creator->setBasicInformation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCreator(CreatorMetaDataGroup $creator): static
+    {
+        $this->creators->removeElement($creator);
+
+        return $this;
     }
 }

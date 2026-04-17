@@ -15,8 +15,17 @@
 
         <div class="col-span-5">
             <section class="border rounded-lg shadow-sm bg-mono-50">
-                {% block form_content %}
-                {% endblock %}
+                <h2 class="MetaDataGroup-Title">
+                    {% block title %}
+                        {{ "title.theories.title"|trans }}
+                    {% endblock %}
+                </h2>
+                <div class="flex flex-col gap-6">
+                    {% block form_content %}
+                    {% endblock %}
+
+                    {{ form_rest(form) }}
+                </div>
 
                 <div class="WizNavBar">
                     <button type="submit" class="underline justify-self-start Button_tertiary_go Button_standalone" type="submit" {% if this.prevForm == null %} {{ live_action('save', { route: 'Study-datasets' }) }} {% else %} {{ live_action('save', { route: this.prevForm.route }) }} {% endif %}>
@@ -24,7 +33,7 @@
                         {% if this.prevForm == null %}
                             {{ 'title.introduction.title' | trans }}
                         {% else %}
-                            {{ this.prevForm.title }}
+                            {{ this.prevForm.title | trans }}
                         {% endif %}
                     </button>
 
@@ -35,10 +44,10 @@
                     {% endif %}
 
                     <button type="submit" class="underline justify-self-end Button_tertiary_go Button_standalone" type="submit" {% if this.nextForm == null %} {{ live_action('save', { route: 'Study-datasets' }) }} {% else %} {{ live_action('save', { route: this.nextForm.route }) }} {% endif %}>
-                        {% if this.prevForm == null %}
+                        {% if this.nextForm == null %}
                             {{ 'link.view.dataset' | trans }}
                         {% else %}
-                            {{ this.nextForm.nextTitle }}
+                            {{ this.nextForm.title | trans }}
                         {% endif %}
                         {{ include('components/icons/arrow-right.svg') }}
                     </button>

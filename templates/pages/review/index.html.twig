@@ -37,7 +37,7 @@
             </div>
         </section>
         <section class="mt-8">
-            {{ _self.sectionTitle("title.theroies.title"|trans) }}
+            {{ _self.sectionTitle("title.theories.title"|trans) }}
             {% for reviewItem in theoryReview %}
                 {% include 'components/_reviewValue.html.twig' with {item: reviewItem, route: 'Study-theory'} %}
             {% endfor %}

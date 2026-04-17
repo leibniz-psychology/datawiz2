@@ -5,6 +5,7 @@ namespace App\Entity\Study;
 use App\Entity\Administration\UuidEntity;
 use App\Entity\Constant\ReviewDataDictionary;
 use App\Form\BasicInformationType;
+use App\Repository\BasicInformationRepository;
 use App\Service\Questionnaire\Questionable;
 use App\Service\Review\Reviewable;
 use App\Service\Review\ReviewDataCollectable;
@@ -16,7 +17,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Table(name: 'experiment_basic')]
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: BasicInformationRepository::class)]
 class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, Reviewable
 {
     #[ORM\Column(type: 'text', length: 255, nullable: true)]

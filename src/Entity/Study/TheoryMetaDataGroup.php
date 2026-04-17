@@ -5,6 +5,7 @@ namespace App\Entity\Study;
 use App\Entity\Administration\UuidEntity;
 use App\Entity\Constant\ReviewDataDictionary;
 use App\Form\TheoryType;
+use App\Repository\TheoryRepository;
 use App\Service\Questionnaire\Questionable;
 use App\Service\Review\Reviewable;
 use App\Service\Review\ReviewDataCollectable;
@@ -14,7 +15,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Table(name: 'experiment_theory')]
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: TheoryRepository::class)]
 class TheoryMetaDataGroup extends UuidEntity implements Questionable, Reviewable
 {
     /**

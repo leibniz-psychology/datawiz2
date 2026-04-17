@@ -68,13 +68,13 @@
                         <button {{ live_action('save', {route: 'Study-theory' })}}
                            class="StudyNav-SubNavItem
                             {{- route_name == 'Study-theory' ? ' StudyNav-SubNavItem_active' -}}">
-                            {{ "title.theroies.title"|trans }}
+                            {{ "title.theories.title"|trans }}
                         </button>
                     {%- else -%}
                         <a href="{{ path('Study-theory', {id: experiment.id}) }}"
                            class="StudyNav-SubNavItem
                             {{- route_name == 'Study-theory' ? ' StudyNav-SubNavItem_active' -}}">
-                            {{ "title.theroies.title"|trans }}
+                            {{ "title.theories.title"|trans }}
                         </a>
                     {%- endif -%}
                 </li>

@@ -104,20 +104,7 @@ class StudyController extends AbstractController
 
         $this->denyAccessUnlessGranted('EDIT', $experiment);
 
-        $form = $this->questionnaire->askAndHandle($experiment->getTheoryMetaDataGroup(), 'save', $request);
-
-        if ($this->questionnaire->isSubmittedAndValid($form)) {
-            $this->em->persist($experiment);
-            $this->em->flush();
-
-            $navigationResponse = $this->handleNavigation($form, $experiment->getId(), 'Study-documentation', 'Study-method');
-            if ($navigationResponse !== null) {
-                return $navigationResponse;
-            }
-        }
-
         return $this->render('pages/study/theory.html.twig', [
-            'form' => $form,
             'experiment' => $experiment,
         ]);
     }

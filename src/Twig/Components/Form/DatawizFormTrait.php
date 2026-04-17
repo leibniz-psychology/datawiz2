@@ -19,13 +19,13 @@ trait DatawizFormTrait
         [
             'type' => 'documentation',
             'route' => 'Study-documentation',
-            'title' => 'title.study.documentation',
+            'title' => 'title.basic.title',
             'translation' => 'study.form.general',
         ],
         [
-            'type' => 'goals',
+            'type' => 'theory',
             'route' => 'Study-theory',
-            'title' => 'title.study.theory',
+            'title' => 'title.theories.title',
             'translation' => 'study.form.general',
         ],
     ];

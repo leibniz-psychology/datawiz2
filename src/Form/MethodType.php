@@ -6,7 +6,6 @@ use App\Entity\Constant\MetaDataDictionary;
 use App\Entity\Study\MethodMetaDataGroup;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -149,74 +148,6 @@ class MethodType extends AbstractType
                 'required' => false,
                 'label' => 'input.control-operations.other.label',
                 'attr' => ['class' => 'p-1', 'rows' => '4'],
-            ])
-            ->add('saveAndPrevious', SubmitType::class)
-            ->add('saveAndNext', SubmitType::class)
-            ->add('saveAndIntroduction', SubmitType::class, [
-                'label' => 'input.hidden',
-                'attr' => [
-                    'class' => 'hidden Button_saveAndIntroduction',
-                ],
-            ])
-            ->add('saveAndDocumentation', SubmitType::class, [
-                'label' => 'input.hidden',
-                'attr' => [
-                    'class' => 'hidden Button_saveAndDocumentation',
-                ],
-            ])
-            ->add('saveAndTheory', SubmitType::class, [
-                'label' => 'input.hidden',
-                'attr' => [
-                    'class' => 'hidden Button_saveAndTheory',
-                ],
-            ])
-            ->add('saveAndMethod', SubmitType::class, [
-                'label' => 'input.hidden',
-                'attr' => [
-                    'class' => 'hidden Button_saveAndMethod',
-                ],
-            ])
-            ->add('saveAndMeasure', SubmitType::class, [
-                'label' => 'input.hidden',
-                'attr' => [
-                    'class' => 'hidden Button_saveAndMeasure',
-                ],
-            ])
-            ->add('saveAndSample', SubmitType::class, [
-                'label' => 'input.hidden',
-                'attr' => [
-                    'class' => 'hidden Button_saveAndSample',
-                ],
-            ])
-            ->add('saveAndDatasets', SubmitType::class, [
-                'label' => 'input.hidden',
-                'attr' => [
-                    'class' => 'hidden Button_saveAndDatasets',
-                ],
-            ])
-            ->add('saveAndMaterials', SubmitType::class, [
-                'label' => 'input.hidden',
-                'attr' => [
-                    'class' => 'hidden Button_saveAndMaterials',
-                ],
-            ])
-            ->add('saveAndReview', SubmitType::class, [
-                'label' => 'input.hidden',
-                'attr' => [
-                    'class' => 'hidden Button_saveAndReview',
-                ],
-            ])
-            ->add('saveAndExport', SubmitType::class, [
-                'label' => 'input.hidden',
-                'attr' => [
-                    'class' => 'hidden Button_saveAndExport',
-                ],
-            ])
-            ->add('saveAndSettings', SubmitType::class, [
-                'label' => 'input.hidden',
-                'attr' => [
-                    'class' => 'hidden Button_saveAndSettings',
-                ],
             ]);
     }
 

@@ -5,6 +5,7 @@ namespace App\Entity\Study;
 use App\Entity\Administration\UuidEntity;
 use App\Entity\Constant\ReviewDataDictionary;
 use App\Form\MethodType;
+use App\Repository\MethodRepository;
 use App\Service\Questionnaire\Questionable;
 use App\Service\Review\Reviewable;
 use App\Service\Review\ReviewDataCollectable;
@@ -14,7 +15,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Table(name: 'experiment_method')]
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: MethodRepository::class)]
 class MethodMetaDataGroup extends UuidEntity implements Questionable, Reviewable
 {
     /**

@@ -28,6 +28,24 @@ trait DatawizFormTrait
             'title' => 'title.theories.title',
             'translation' => 'study.form.general',
         ],
+        [
+            'type' => 'method',
+            'route' => 'Study-method',
+            'title' => 'title.method.title',
+            'translation' => 'study.form.general',
+        ],
+        [
+            'type' => 'measure',
+            'route' => 'Study-measure',
+            'title' => 'title.measures.title',
+            'translation' => 'study.form.general',
+        ],
+        [
+            'type' => 'sample',
+            'route' => 'Study-sample',
+            'title' => 'title.samples.title',
+            'translation' => 'study.form.general',
+        ],
     ];
 
     public function __construct(

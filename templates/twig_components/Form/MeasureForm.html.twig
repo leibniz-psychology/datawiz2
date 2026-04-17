@@ -1,0 +1,75 @@
+{% extends "twig_components/Form/_baseForm.html.twig" %}
+{% from "components/_macros.html.twig" import helpButton %}
+
+{% block title %}
+    {{ "title.theories.title"|trans }}
+{% endblock %}
+
+{% block form_content %}
+    <fieldset>
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend" id="{{ 'input.measures.legend'|trans|slug }}">
+                {{ "input.measures.legend"|trans }}
+            </legend>
+            {{ helpButton("measure") }}
+        </div>
+        <div class="MetaData-Widget MetaData-Widget_collection">
+            <ul>
+                {% for key, measure in form.measures %}
+                    <li class="flex mt-2 items-start">
+                        {{ form_widget(measure) }}
+                        <button type="button"
+                                data-action="live#action"
+                                data-live-action-param="removeMeasure"
+                                data-live-index-param="{{ key }}"
+                                class="ml-1 Button_tertiary_danger Button_fieldSize">
+                            {{ 'generic.remove'|trans }}
+                        </button>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <button type="button"
+                    class="mt-2 Button_secondary_act Button_fieldSize"
+                    data-action="live#action"
+                    data-live-action-param="addMeasure">
+                {{ include('components/icons/add.svg') }}
+                {{ 'input.measures.add'|trans }}
+            </button>
+        </div>
+    </fieldset>
+    <fieldset class="mt-8">
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend" id="{{ 'input.apparatus.legend'|trans|slug }}">
+                {{ "input.apparatus.legend"|trans }}
+            </legend>
+            {{ helpButton("apparatus") }}
+        </div>
+        <div class="MetaData-Widget MetaData-Widget_collection">
+            <ul>
+                {% for key, related_publication in form.apparatus %}
+                    <li class="flex mt-2 items-start">
+                        {{ form_widget(related_publication) }}
+                        <button type="button"
+                                data-action="live#action"
+                                data-live-action-param="removeApparatus"
+                                data-live-index-param="{{ key }}"
+                                class="ml-1 Button_tertiary_danger Button_fieldSize">
+                            {{ 'generic.remove'|trans }}
+                        </button>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <button type="button"
+                    class="mt-2 Button_secondary_act Button_fieldSize"
+                    data-action="live#action"
+                    data-live-action-param="addApparatus">
+                {{ include('components/icons/add.svg') }}
+                {{ 'input.apparatus.add'|trans }}
+            </button>
+        </div>
+    </fieldset>
+{% endblock %}
+
+

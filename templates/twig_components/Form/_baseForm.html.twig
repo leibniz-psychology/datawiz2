@@ -45,7 +45,7 @@
 
                     <button type="submit" class="underline justify-self-end Button_tertiary_go Button_standalone" type="submit" {% if this.nextForm == null %} {{ live_action('save', { route: 'Study-datasets' }) }} {% else %} {{ live_action('save', { route: this.nextForm.route }) }} {% endif %}>
                         {% if this.nextForm == null %}
-                            {{ 'link.view.dataset' | trans }}
+                            {{ 'title.dataset.title-short' | trans }}
                         {% else %}
                             {{ this.nextForm.title | trans }}
                         {% endif %}

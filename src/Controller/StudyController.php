@@ -11,9 +11,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\SubmitButton;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -116,27 +113,7 @@ class StudyController extends AbstractController
 
         $this->denyAccessUnlessGranted('EDIT', $experiment);
 
-        $sampleGroup = $experiment->getSampleMetaDataGroup();
-        $sampleGroup->setPopulation($this->_prepareEmptyArray($sampleGroup->getPopulation()));
-        $sampleGroup->setInclusionCriteria($this->_prepareEmptyArray($sampleGroup->getInclusionCriteria()));
-        $sampleGroup->setExclusionCriteria($this->_prepareEmptyArray($sampleGroup->getExclusionCriteria()));
-        $form = $this->questionnaire->askAndHandle($experiment->getSampleMetaDataGroup(), 'save', $request);
-        if ($this->questionnaire->isSubmittedAndValid($form)) {
-            $formData = $form->getData();
-            $formData->setPopulation(array_values($formData->getPopulation()));
-            $formData->setInclusionCriteria(array_values($formData->getInclusionCriteria()));
-            $formData->setExclusionCriteria(array_values($formData->getExclusionCriteria()));
-            $this->em->persist($formData);
-            $this->em->flush();
-
-            $navigationResponse = $this->handleNavigation($form, $experiment->getId(), 'Study-measure', null);
-            if ($navigationResponse !== null) {
-                return $navigationResponse;
-            }
-        }
-
         return $this->render('pages/study/sample.html.twig', [
-            'form' => $form,
             'experiment' => $experiment,
         ]);
     }
@@ -211,72 +188,5 @@ class StudyController extends AbstractController
         $this->crud->deleteStudy($experiment);
 
         return $this->redirectToRoute('Study-overview');
-    }
-
-    private function _prepareEmptyArray(?array $array): array
-    {
-        if ($array === null || count($array) <= 0) {
-            $array = [''];
-        }
-
-        return $array;
-    }
-
-    private function _routeButtonClicks(FormInterface $form, string $id): ?RedirectResponse
-    {
-        $sections = [
-            ['saveAndIntroduction', 'Study-introduction'],
-            ['saveAndDocumentation', 'Study-documentation'],
-            ['saveAndTheory', 'Study-theory'],
-            ['saveAndMethod', 'Study-method'],
-            ['saveAndMeasure', 'Study-measure'],
-            ['saveAndSample', 'Study-sample'],
-            ['saveAndDatasets', 'Study-datasets'],
-            ['saveAndMaterials', 'Study-materials'],
-            ['saveAndReview', 'Study-review'],
-            ['saveAndExport', 'export_index'],
-            ['saveAndSettings', 'Study-settings'],
-        ];
-
-        foreach ($sections as $section) {
-            $navigationButton = $form->get($section[0]);
-            if (!$navigationButton instanceof SubmitButton) {
-                throw new \Error("Navigation button {$section[0]} is not a SubmitButton");
-            }
-            if ($navigationButton->isClicked()) {
-                return $this->redirectToRoute($section[1], ['id' => $id]);
-            }
-        }
-
-        return null;
-    }
-
-    private function handleNavigation(FormInterface $form, string $id, ?string $prev, ?string $next): ?RedirectResponse
-    {
-        if ($prev !== null) {
-            $prevButton = $form->get('saveAndPrevious');
-            if (!$prevButton instanceof SubmitButton) {
-                throw new \Error('Cannot find "previous" navigation button');
-            }
-            if ($prevButton->isClicked()) {
-                return $this->redirectToRoute($prev, ['id' => $id]);
-            }
-        }
-
-        if ($next !== null) {
-            $nextButton = $form->get('saveAndNext');
-            if (!$nextButton instanceof SubmitButton) {
-                throw new \Error('Cannot find "next" navigation button');
-            }
-            if ($nextButton->isClicked()) {
-                return $this->redirectToRoute($next, ['id' => $id]);
-            }
-        }
-
-        if ($response = $this->_routeButtonClicks($form, $id)) {
-            return $response;
-        }
-
-        return null;
     }
 }

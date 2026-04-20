@@ -18,10 +18,6 @@ class FileDescriptionType extends AbstractType
                 'required' => false,
                 // 'label' => 'Objective',
                 'label' => 'Describe the content of the file.',
-                'label_attr' => ['class' => 'MetaData-Label'],
-                'attr' => [
-                    'class' => 'MetaData-TextInput',
-                ],
             ]);
     }
 

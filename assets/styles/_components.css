@@ -10,27 +10,9 @@
 }
 
 .MetaData-Title {
-  @apply flex justify-between w-full px-6 pt-3 pb-3 text-xl font-semibold bg-gradient-to-b from-mono-100 to-mono-50 text-zpid-purple-700;
+  @apply flex justify-between w-full pt-3 pb-3 text-xl font-semibold bg-gradient-to-b from-mono-100 to-mono-50 text-zpid-purple-700;
 
   scroll-margin-top: 6rem;
-}
-
-.MetaData-Label {
-  @apply block px-6 mt-1 leading-snug max-w-prose;
-}
-
-.MetaData-Widget {
-  @apply px-6 pt-1;
-}
-
-.MetaData-Widget_collection > div {
-  @apply flex mt-0.5 items-baseline;
-}
-
-.MetaData-TextInput,
-.MetaData-Widget_collection > div input,
-.MetaData-Widget_collection > div textarea {
-  @apply w-full;
 }
 
 .MetaData-RemoveButton {

@@ -20,9 +20,7 @@ class SampleType extends AbstractType
             ->add('participants', TextareaType::class, [
                 'required' => false,
                 'label' => 'input.participants.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'MetaData-TextInput',
                     'rows' => '3',
                 ],
             ])
@@ -31,54 +29,33 @@ class SampleType extends AbstractType
                 'entry_type' => TextType::class,
                 'entry_options' => [
                     'label' => false,
-                    'attr' => [
-                        'x-data' => '',
-                        'x-on:keydown.enter.prevent' => '',
-                        'class' => 'w-full',
-                    ],
                 ],
                 'allow_add' => true,
                 'prototype' => true,
                 'allow_delete' => true,
                 'label' => 'input.population.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
-                'attr' => ['class' => 'MetaData-Widget MetaData-Widget_collection'],
             ])
             ->add(MetaDataDictionary::INCLUSION_CRITERIA, CollectionType::class, [
                 'required' => false,
                 'entry_type' => TextType::class,
                 'entry_options' => [
                     'label' => false,
-                    'attr' => [
-                        'x-data' => '',
-                        'x-on:keydown.enter.prevent' => '',
-                        'class' => 'w-full',
-                    ],
                 ],
                 'allow_add' => true,
                 'prototype' => true,
                 'allow_delete' => true,
                 'label' => 'input.inclusion.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
-                'attr' => ['class' => 'MetaData-Widget MetaData-Widget_collection'],
             ])
             ->add(MetaDataDictionary::EXCLUSION_CRITERIA, CollectionType::class, [
                 'required' => false,
                 'entry_type' => TextType::class,
                 'entry_options' => [
                     'label' => false,
-                    'attr' => [
-                        'x-data' => '',
-                        'x-on:keydown.enter.prevent' => '',
-                        'class' => 'w-full',
-                    ],
                 ],
                 'allow_add' => true,
                 'prototype' => true,
                 'allow_delete' => true,
                 'label' => 'input.exclusion.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
-                'attr' => ['class' => 'MetaData-Widget MetaData-Widget_collection'],
             ])
             ->add(MetaDataDictionary::SAMPLING_METHOD, ChoiceType::class, [
                 'required' => false,
@@ -93,9 +70,7 @@ class SampleType extends AbstractType
                     'input.sampling.choices.quota' => 'Quota sampling',
                     'input.sampling.choices.other' => 'Other',
                 ],
-                'label_attr' => ['class' => 'MetaData-Label'],
                 'label_html' => true,
-                'attr' => ['class' => 'p-1'],
                 'choice_attr' => fn () => ['class' => 'RadioButton-Input'],
             ])
             ->add('otherSamplingMethod', TextareaType::class, [
@@ -105,14 +80,10 @@ class SampleType extends AbstractType
             ->add(MetaDataDictionary::SAMPLE_SIZE, TextareaType::class, [
                 'required' => false,
                 'label' => 'input.sample-size.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
-                'attr' => ['class' => 'MetaData-TextInput'],
             ])
             ->add(MetaDataDictionary::POWER_ANALYSIS, TextareaType::class, [
                 'required' => false,
                 'label' => 'input.power-analysis.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
-                'attr' => ['class' => 'MetaData-TextInput'],
             ]);
     }
 

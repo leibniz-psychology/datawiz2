@@ -23,10 +23,6 @@ class SettingsType extends AbstractType
             ->add(MetaDataDictionary::SHORTNAME, TextType::class, [
                 'required' => true,
                 'label' => 'input.documentation-name.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
-                'attr' => [
-                    'class' => 'MetaData-TextInput',
-                ],
                 'constraints' => [
                     new NotBlank(),
                 ],

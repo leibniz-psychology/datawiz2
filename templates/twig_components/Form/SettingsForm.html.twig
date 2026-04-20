@@ -7,13 +7,8 @@
         }
     }) }}
 
-    <fieldset>
-        <div class="MetaData-Title">
-            <legend class="MetaData-Legend">
-                {{ "input.documentation-name.legend"|trans }}
-            </legend>
-        </div>
-        <div class="MetaData-Label">
+    <twig:Form:FormCard title="{{ 'input.documentation-name.legend'|trans }}">
+        <div>
             {{ form_label(form.shortName, null, {
                 'label_attr': {
                     'class': 'block max-w-prose'
@@ -21,7 +16,7 @@
             }) }}
         </div>
         {{ form_errors(form.shortName) }}
-        <div class="mt-1 md:items-center md:flex MetaData-Widget">
+        <div class="mt-1 md:items-center md:flex">
             {{ form_widget(form.shortName, {
                 'attr': {
                     'class': 'w-full md:w-3/4',
@@ -31,7 +26,7 @@
                 {{ "generic.rename"|trans }}
             </button>
         </div>
-    </fieldset>
+    </twig:Form:FormCard>
 
     {{ form_rest(form) }}
 

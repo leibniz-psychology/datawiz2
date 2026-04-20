@@ -23,12 +23,9 @@
             {{ dropzoneTemplate() }}
         </form>
     </div>
-    <div class="mt-6 MetaData-Title">
-        <legend class="MetaData-Legend">
-            {{ "title.material.h3"|trans }}
-        </legend>
-        {{ helpButton("my_materials") }}
-    </div>
+
+    <twig:Form:FormCard class="mt-6" title="{{ 'title.material.h3'|trans }}" help="{{ "my_materials" }}"/>
+
     {% if (experiment.additionalMaterials|length) > 0 %}
         <ul class="mx-6">
             {% for material in experiment.additionalMaterials %}

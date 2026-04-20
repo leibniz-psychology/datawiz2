@@ -7,18 +7,8 @@
         }
     }) }}
 
-    <div class="mt-6">
-        {{ form_label(form.shortName, null, {
-            'label_attr': {
-                'class': 'block max-w-prose'
-            },
-        }) }}
-        {{ form_errors(form.shortName) }}
-        {{ form_widget(form.shortName, {
-            'attr': {
-                'class': 'w-full sm:w-1/2 block mt-1',
-            }
-        }) }}
+    <div class="mt-6 max-w-prose">
+        {{ form_row(form.shortName) }}
     </div>
 
     <button class="Button_primary_act Button_standalone mt-4">

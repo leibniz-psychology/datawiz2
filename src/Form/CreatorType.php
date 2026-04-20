@@ -19,67 +19,33 @@ class CreatorType extends AbstractType
             ->add('givenName', TextType::class, [
                 'required' => false,
                 'label' => 'input.creator.name.given',
-                // 'label_attr' => ['class' => 'MetaData-Label'],
-                'attr' => [
-                    'class' => 'MetaData-TextInput',
-                ],
-                'row_attr' => ['class' => 'Creator-Detail Creator-Detail_given'],
             ])
             ->add('familyName', TextType::class, [
                 'required' => false,
                 'label' => 'input.creator.name.family',
-                // 'label_attr' => ['class' => 'MetaData-Label'],
-                'attr' => [
-                    'class' => 'MetaData-TextInput',
-                ],
-                'row_attr' => ['class' => 'Creator-Detail Creator-Detail_family'],
             ])
             ->add('email', EmailType::class, [
                 'required' => false,
                 'label' => 'input.creator.email',
-                // 'label_attr' => ['class' => 'MetaData-Label'],
-                'attr' => [
-                    'class' => 'MetaData-TextInput',
-                ],
-                'row_attr' => ['class' => 'Creator-Detail Creator-Detail_email'],
             ])
             ->add('orcid', TextType::class, [
                 'required' => false,
                 'label' => 'input.creator.orcid',
-                // 'label_attr' => ['class' => 'MetaData-Label'],
-                'attr' => [
-                    'class' => 'MetaData-TextInput',
-                ],
-                'row_attr' => ['class' => 'Creator-Detail Creator-Detail_orcid'],
             ])
             ->add('affiliation', TextType::class, [
                 'required' => false,
                 'label' => 'input.creator.affiliation',
-                // 'label_attr' => ['class' => 'MetaData-Label'],
-                'attr' => [
-                    'class' => 'MetaData-TextInput',
-                ],
-                'row_attr' => ['class' => 'Creator-Detail Creator-Detail_affiliation'],
             ])->add('creditRoles', CollectionType::class, [
                 'prototype' => true,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'label' => 'input.creator.credit.label',
-                'label_html' => true,
                 'required' => false,
-                'label_attr' => ['class' => 'MetaData-Label !px-4 !mt-0'],
-                'attr' => ['class' => 'MetaData-Widget MetaData-Widget_collection'],
                 'entry_type' => ChoiceType::class,
                 'delete_empty' => fn (?string $role = null) => empty($role),
                 'entry_options' => [
                     'placeholder' => 'input.creator.credit.choices.placeholder',
                     'required' => true,
-                    'label' => false,
-                    'label_attr' => ['class' => 'MetaData-Label'],
-                    'label_html' => true,
-                    'attr' => [
-                        'class' => 'MetaData-SelectInput w-full',
-                    ],
                     'choices' => [
                         'input.creator.credit.choices.conceptualization' => 'Conceptualization',
                         'input.creator.credit.choices.dataCuration' => 'Data curation',

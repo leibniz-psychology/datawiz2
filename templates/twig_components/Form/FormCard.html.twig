@@ -1,0 +1,15 @@
+{% from "components/_macros.html.twig" import helpButton %}
+<fieldset {{ attributes.without('title').without('help') }}>
+    <div class="MetaData-Title px-6">
+        <legend class="MetaData-Legend" id="{{ 'input.title.legend'|trans|slug }}">
+            {{ title|trans }}
+        </legend>
+        {% if help is defined %}
+            {{ helpButton(help) }}
+        {% endif %}
+    </div>
+    <div class="px-6">
+        {% block content %}
+        {% endblock %}
+    </div>
+</fieldset>

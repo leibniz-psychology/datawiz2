@@ -21,7 +21,6 @@ class MeasureType extends AbstractType
                 'entry_options' => [
                     'label' => false,
                     'attr' => [
-                        'class' => 'w-full',
                         'rows' => '3',
                     ],
                 ],
@@ -29,8 +28,6 @@ class MeasureType extends AbstractType
                 'prototype' => true,
                 'allow_delete' => true,
                 'label' => 'input.measures.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
-                'attr' => ['class' => 'MetaData-Widget MetaData-Widget_collection'],
             ])
             ->add(MetaDataDictionary::APPARATUS, CollectionType::class, [
                 'required' => false,
@@ -38,7 +35,6 @@ class MeasureType extends AbstractType
                 'entry_options' => [
                     'label' => false,
                     'attr' => [
-                        'class' => 'w-full',
                         'rows' => '3',
                     ],
                 ],
@@ -46,8 +42,6 @@ class MeasureType extends AbstractType
                 'prototype' => true,
                 'allow_delete' => true,
                 'label' => 'input.apparatus.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
-                'attr' => ['class' => 'MetaData-Widget MetaData-Widget_collection'],
             ]);
     }
 

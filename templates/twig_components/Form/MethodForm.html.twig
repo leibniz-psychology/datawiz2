@@ -1,20 +1,15 @@
 {% extends "twig_components/Form/_baseForm.html.twig" %}
-{% from "components/_macros.html.twig" import helpButton %}
 
 {% block title %}
     {{ "title.theories.title"|trans }}
 {% endblock %}
 
+{% set experimentalDesign = (form.research_design.vars.value == form.research_design.vars.choices[0].value) %}
+
 {% block form_content %}
-    <fieldset>
-        <div class="MetaData-Title">
-            <legend class="MetaData-Legend" id="{{ 'input.design.legend'|trans|slug }}">
-                {{ "input.design.legend"|trans }}
-            </legend>
-            {{ helpButton("research_design") }}
-        </div>
+    <twig:Form:FormCard title="{{ 'input.design.legend'|trans }}" help="{{ "research_design" }}">
         {{ form_label(form.research_design) }}
-        <div class="MetaData-Widget">
+        <div class="mt-1">
             {{ form_errors(form.research_design) }}
             {%- for choice in form.research_design %}
                 {{ form_widget(choice) }}
@@ -25,8 +20,6 @@
                     'label_html': true,
                 }) }}
             {% endfor -%}
-
-            {% set experimentalDesign = (form.research_design.vars.value == form.research_design.vars.choices[0].value) %}
 
             {% if experimentalDesign %}
                 <div>
@@ -75,17 +68,11 @@
                 {% do form.experimentalDetails.setRendered %}
             {% endif %}
         </div>
-    </fieldset>
+    </twig:Form:FormCard>
 
-    <fieldset class="mt-8">
-        <div class="MetaData-Title">
-            <legend class="MetaData-Legend" id="{{ 'input.setting.legend'|trans|slug }}">
-                {{ "input.setting.legend"|trans }}
-            </legend>
-            {{ helpButton("setting") }}
-        </div>
+    <twig:Form:FormCard class="mt-8" title="{{ 'input.setting.legend'|trans }}" help="{{ "setting" }}">
         {{ form_label(form.setting) }}
-        <div class="MetaData-Widget">
+        <div class="mt-1">
             {{ form_errors(form.setting) }}
             {%- for choice in form.setting %}
                 {{ form_widget(choice) }}
@@ -97,45 +84,21 @@
                 }) }}
             {% endfor -%}
         </div>
-        {{ form_label(form.settingLocation, null, {
-            'label_attr': {'id': 'input.setting.location.legend'|trans|slug },
+        {{ form_row(form.settingLocation, {
+            'attr': {
+                'disabled': form.setting.vars.value == 'Artificial setting',
+            }
         }) }}
-        <div class="MetaData-Widget">
-            {{ form_errors(form.settingLocation) }}
-            {{ form_widget(form.settingLocation, {
-                'attr': {
-                    'disabled': form.setting.vars.value == 'Artificial setting',
-                }
-            }) }}
-        </div>
-    </fieldset>
+    </twig:Form:FormCard>
 
     {% if experimentalDesign %}
-        <fieldset class="mt-8">
-            <div class="MetaData-Title">
-                <legend class="MetaData-Legend" id="{{ 'input.manipulations.legend'|trans|slug }}">
-                    {{ "input.manipulations.legend"|trans }}
-                </legend>
-                {{ helpButton("manipulations") }}
-            </div>
-            {{ form_label(form.manipulations) }}
-            <div class="MetaData-Widget">
-                {{ form_errors(form.manipulations) }}
-                {{ form_widget(form.manipulations) }}
-            </div>
-        </fieldset>
+        <twig:Form:FormCard class="mt-8" title="{{ 'input.manipulations.legend'|trans }}" help="{{ "manipulations" }}">
+            {{ form_row(form.manipulations) }}
+        </twig:Form:FormCard>
 
-        <fieldset class="mt-8">
-            <div class="MetaData-Title">
-                <legend class="MetaData-Legend" id="{{ 'input.experimental-design.legend'|trans|slug }}">
-                    {{ "input.experimental-design.legend"|trans }}
-                </legend>
-                {{ helpButton("experimental_design") }}
-            </div>
-            {{ form_label(form.experimental_design, null, {
-                'label_attr': {'class': 'MetaData-Label'},
-            }) }}
-            <div class="MetaData-Widget">
+        <twig:Form:FormCard class="mt-8" title="{{ 'input.experimental-design.legend'|trans }}" help="{{ "experimental_design" }}">
+            {{ form_label(form.experimental_design)}}
+            <div class="mt-1">
                 {{ form_errors(form.experimental_design) }}
                 {%- for choice in form.experimental_design %}
                     {{ form_widget(choice, {
@@ -148,17 +111,11 @@
                     }) }}
                 {% endfor -%}
             </div>
-        </fieldset>
+        </twig:Form:FormCard>
 
-        <fieldset class="mt-8">
-            <div class="MetaData-Title">
-                <legend class="MetaData-Legend" id="{{ 'input.control-operations.legend'|trans|slug }}">
-                    {{ "input.control-operations.legend"|trans }}
-                </legend>
-                {{ helpButton("control_operations") }}
-            </div>
+        <twig:Form:FormCard class="mt-8" title="{{ 'input.control-operations.legend'|trans }}" help="{{ "control_operations" }}">
             {{ form_label(form.control_operations) }}
-            <div class="MetaData-Widget">
+            <div>
                 {{ form_errors(form.control_operations) }}
                 {%- for choice in form.control_operations %}
                     {{ form_widget(choice) }}
@@ -169,21 +126,12 @@
                     }) }}
                 {% endfor -%}
             </div>
-            {{ form_label(form.otherControlOperations, null, {
-                'label_attr': {
-                    'class': 'MetaData-Label ml-[1.375rem]',
+            {{ form_row(form.otherControlOperations, {
+                'attr': {
+                    'disabled': form.control_operations.vars.value != 'Other'
                 }
             }) }}
-            <div class="flex MetaData-Widget">
-                {{ form_errors(form.otherControlOperations) }}
-                {{ form_widget(form.otherControlOperations, {
-                    'attr': {
-                        'class': 'MetaData-TextInput disabled:opacity-50 ml-[1.375rem]',
-                        'disabled': form.control_operations.vars.value != 'Other'
-                    }
-                }) }}
-            </div>
-        </fieldset>
+        </twig:Form:FormCard>
     {% else %}
         {% do form.manipulations.setRendered %}
         {% do form.experimental_design.setRendered %}

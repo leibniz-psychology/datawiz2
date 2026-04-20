@@ -28,16 +28,13 @@
             <input type="hidden" id="dataset-import-data" name="dataset-import-data" value=""/>
         </form>
     </div>
-    <div class="mt-6 MetaData-Title">
-        <legend class="MetaData-Legend">
-            {{ "title.dataset.h3"|trans }}
-        </legend>
-        {{ helpButton("my_datasets") }}
-    </div>
+
+    <twig:Form:FormCard class="mt-8" title="{{ 'title.dataset.h3'|trans }}" help="{{ "my_datasets" }}"/>
+
     {% if experiment.originalDatasets|length > 0 %}
         <ul class="mx-6">
             {% for dataset in experiment.originalDatasets %}
-                    {{ fileDisplayCard(dataset, 'dataset', loop.index) }}
+                {{ fileDisplayCard(dataset, 'dataset', loop.index) }}
             {% endfor %}
         </ul>
     {% else %}

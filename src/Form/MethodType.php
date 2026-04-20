@@ -25,19 +25,14 @@ class MethodType extends AbstractType
                 ],
                 'expanded' => true,
                 'label' => 'input.setting.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => ['class' => 'p-1'],
                 'choice_attr' => fn () => ['class' => 'RadioButton-Input'],
             ])
             ->add('settingLocation', TextareaType::class, [
                 'required' => false,
                 'label' => 'input.setting.location.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'MetaData-TextInput disabled:opacity-50',
                     'rows' => '3',
-                    'x-data' => '',
-                    ':disabled' => '$store.app.settingType === `Artificial setting` || $store.app.settingType === undefined',
                 ],
             ])
             ->add(MetaDataDictionary::RESEARCH_DESIGN, ChoiceType::class, [
@@ -49,10 +44,6 @@ class MethodType extends AbstractType
                 ],
                 'expanded' => true,
                 'label' => 'input.design.label',
-                'help' => '',
-                'label_attr' => ['class' => 'MetaData-Label'],
-                'help_attr' => ['class' => 'px-6 pt-1'],
-                'attr' => ['class' => 'p-1'],
                 'choice_attr' => fn () => [
                     'class' => 'RadioButton-Input',
                 ],
@@ -67,9 +58,7 @@ class MethodType extends AbstractType
                 ],
                 'expanded' => true,
                 'label' => 'input.design.details.experimental.label',
-                'label_attr' => ['class' => 'MetaData-Label !pl-0'],
                 'label_html' => true,
-                'attr' => ['class' => 'p-1'],
                 'choice_attr' => fn () => [
                     'class' => 'RadioButton-Input',
                 ],
@@ -86,9 +75,7 @@ class MethodType extends AbstractType
                 ],
                 'expanded' => true,
                 'label' => 'input.design.details.non-experimental.label',
-                'label_attr' => ['class' => 'MetaData-Label !pl-0'],
                 'label_html' => true,
-                'attr' => ['class' => 'p-1'],
                 'choice_attr' => fn () => [
                     'class' => 'RadioButton-Input',
                 ],
@@ -102,14 +89,11 @@ class MethodType extends AbstractType
                     'input.design.details.observationalType.choices.cross-sectional-study' => 'Cross-sectional study',
                 ],
                 'label' => 'input.design.details.observationalType.label',
-                'attr' => ['class' => 'p-1'],
             ])
             ->add(MetaDataDictionary::MANIPULATIONS, TextareaType::class, [
                 'required' => false,
                 'label' => 'input.manipulations.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'MetaData-TextInput',
                     'rows' => '5',
                 ],
             ])
@@ -123,7 +107,6 @@ class MethodType extends AbstractType
                 ],
                 'expanded' => true,
                 'label' => 'input.experimental-design.label',
-                'attr' => ['class' => 'p-1'],
             ])
             ->add(MetaDataDictionary::CONTROL_OPERATIONS, ChoiceType::class, [
                 'required' => false,
@@ -140,14 +123,12 @@ class MethodType extends AbstractType
                 ],
                 'expanded' => true,
                 'label' => 'input.control-operations.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
-                'attr' => ['class' => 'p-1'],
                 'choice_attr' => fn () => ['class' => 'RadioButton-Input'],
             ])
             ->add('otherControlOperations', TextareaType::class, [
                 'required' => false,
                 'label' => 'input.control-operations.other.label',
-                'attr' => ['class' => 'p-1', 'rows' => '4'],
+                'attr' => ['rows' => '4'],
             ]);
     }
 

@@ -1,39 +1,27 @@
 {% extends "twig_components/Form/_baseForm.html.twig" %}
-{% from "components/_macros.html.twig" import helpButton %}
 
 {% block title %}
     {{ "title.measures.title"|trans }}
 {% endblock %}
 
 {% block form_content %}
-    <fieldset>
-        <div class="MetaData-Title">
-            <legend class="MetaData-Legend" id="{{ 'input.measures.legend'|trans|slug }}">
-                {{ "input.measures.legend"|trans }}
-            </legend>
-            {{ helpButton("measure") }}
-        </div>
+    <twig:Form:FormCard title="{{ 'input.measures.legend'|trans }}" help="{{ "measure" }}">
         <twig:Form:CollectionForm
             collection="{{ form.measures }}"
             add_action="addMeasure"
             remove_action="removeMeasure"
             add_label="{{ 'input.measures.add'|trans }}"
         />
-    </fieldset>
-    <fieldset class="mt-8">
-        <div class="MetaData-Title">
-            <legend class="MetaData-Legend" id="{{ 'input.apparatus.legend'|trans|slug }}">
-                {{ "input.apparatus.legend"|trans }}
-            </legend>
-            {{ helpButton("apparatus") }}
-        </div>
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" title="{{ 'input.apparatus.legend'|trans }}" help="{{ "apparatus" }}">
         <twig:Form:CollectionForm
             collection="{{ form.apparatus }}"
             add_action="addApparatus"
             remove_action="removeApparatus"
             add_label="{{ 'input.apparatus.add'|trans }}"
         />
-    </fieldset>
+    </twig:Form:FormCard>
 {% endblock %}
 
 

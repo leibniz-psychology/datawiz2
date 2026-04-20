@@ -17,18 +17,14 @@ class TheoryType extends AbstractType
             ->add(MetaDataDictionary::OBJECTIVE, TextareaType::class, [
                 'required' => false,
                 'label' => 'input.objective.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'MetaData-TextInput',
                     'rows' => '6',
                 ],
             ])
             ->add(MetaDataDictionary::HYPOTHESIS, TextareaType::class, [
                 'required' => false,
                 'label' => 'input.hypothesis.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'MetaData-TextInput',
                     'rows' => '6',
                 ],
             ]);

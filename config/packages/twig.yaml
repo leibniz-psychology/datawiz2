@@ -2,6 +2,7 @@ twig:
     file_name_pattern: '*.twig'
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    form_themes: ['tailwind_2_layout.html.twig', 'datawiz_form_theme.html.twig']
 
 when@test:
   twig:

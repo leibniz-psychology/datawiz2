@@ -1,38 +1,17 @@
 {% extends "twig_components/Form/_baseForm.html.twig" %}
-{% from "components/_macros.html.twig" import helpButton %}
 
 {% block title %}
     {{ "title.theories.title"|trans }}
 {% endblock %}
 
 {% block form_content %}
-    <fieldset>
-        <div class="MetaData-Title">
-            <legend class="MetaData-Legend" id="{{ 'input.objective.legend'|trans|slug }}">
-                {{ "input.objective.legend"|trans }}
-            </legend>
-            {{ helpButton("objective") }}
-        </div>
-        {{ form_label(form.objective) }}
-        {{ form_errors(form.objective) }}
-        <div class="MetaData-Widget">
-            {{ form_widget(form.objective) }}
-        </div>
-    </fieldset>
+    <twig:Form:FormCard title="{{ 'input.objective.legend'|trans }}" help="{{ "objective" }}">
+        {{ form_row(form.objective) }}
+    </twig:Form:FormCard>
 
-    <fieldset class="mt-8">
-        <div class="MetaData-Title">
-            <legend class="MetaData-Legend" id="{{ 'input.hypothesis.legend'|trans|slug }}">
-                {{ "input.hypothesis.legend"|trans }}
-            </legend>
-            {{ helpButton("hypothesis") }}
-        </div>
-        {{ form_label(form.hypothesis) }}
-        {{ form_errors(form.hypothesis) }}
-        <div class="MetaData-Widget">
-            {{ form_widget(form.hypothesis) }}
-        </div>
-    </fieldset>
+    <twig:Form:FormCard class="mt-8" title="{{ 'input.hypothesis.legend'|trans }}" help="{{ "hypothesis" }}">
+        {{ form_row(form.hypothesis) }}
+    </twig:Form:FormCard>
 {% endblock %}
 
 

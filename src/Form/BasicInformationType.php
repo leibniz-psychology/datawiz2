@@ -18,18 +18,14 @@ class BasicInformationType extends AbstractType
             ->add(MetaDataDictionary::TITLE, TextareaType::class, [
                 'required' => false,
                 'label' => 'input.title.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'MetaData-TextInput',
                     'rows' => '3',
                 ],
             ])
             ->add(MetaDataDictionary::DESCRIPTION, TextareaType::class, [
                 'required' => false,
                 'label' => 'input.description.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'MetaData-TextInput',
                     'rows' => '14',
                 ],
             ])
@@ -39,18 +35,13 @@ class BasicInformationType extends AbstractType
                 'entry_options' => [
                     'label' => false,
                     'attr' => [
-                        'class' => 'w-full',
                         'rows' => '4',
                     ],
                 ],
                 'allow_add' => true,
                 'allow_delete' => true,
                 'label' => 'input.relatedPubs.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
                 'label_html' => true,
-                'attr' => [
-                    'class' => 'MetaData-Widget MetaData-Widget_collection',
-                ],
             ])
             ->add(MetaDataDictionary::CREATORS, CollectionType::class, [
                 'entry_type' => CreatorType::class,
@@ -58,7 +49,6 @@ class BasicInformationType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false,
                 'label' => 'input.creator.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
             ]);
     }
 

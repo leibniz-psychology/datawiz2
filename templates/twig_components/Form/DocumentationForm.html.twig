@@ -40,30 +40,13 @@
             </legend>
             {{ helpButton("related_publications") }}
         </div>
-        <div class="MetaData-Widget MetaData-Widget_collection">
-            <ul>
-                {% for key, related_publication in form.related_publications %}
-                    <li class="flex mt-2 items-start">
-                        {{ form_widget(related_publication) }}
-                        <button type="button"
-                                data-action="live#action"
-                                data-live-action-param="removeRelatedPublication"
-                                data-live-index-param="{{ key }}"
-                                class="ml-1 Button_tertiary_danger Button_fieldSize">
-                            {{ 'generic.remove'|trans }}
-                        </button>
-                    </li>
-                {% endfor %}
-            </ul>
 
-            <button type="button"
-                    class="mt-2 Button_secondary_act Button_fieldSize"
-                    data-action="live#action"
-                    data-live-action-param="addRelatedPublication">
-                {{ include('components/icons/add.svg') }}
-                {{ 'input.relatedPubs.add'|trans }}
-            </button>
-        </div>
+        <twig:Form:CollectionForm
+            collection="{{ form.related_publications }}"
+            add_action="addRelatedPublication"
+            remove_action="removeRelatedPublication"
+            add_label="{{ 'input.relatedPubs.add'|trans }}"
+        />
     </fieldset>
 
     <fieldset class="mt-8">
@@ -73,6 +56,8 @@
             </legend>
             {{ helpButton("creator") }}
         </div>
+        {{ form_label(form.creators) }}
+        {{ form_errors(form.creators) }}
         <div class="MetaData-Widget MetaData-Widget_collection">
             <ul>
                 {% for key, creator in form.creators %}

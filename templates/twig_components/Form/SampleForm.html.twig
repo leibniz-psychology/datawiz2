@@ -27,30 +27,13 @@
             </legend>
             {{ helpButton("population") }}
         </div>
-        <div class="MetaData-Widget MetaData-Widget_collection">
-            <ul>
-                {% for key, population in form.population %}
-                    <li class="flex mt-2 items-start">
-                        {{ form_widget(population) }}
-                        <button type="button"
-                                data-action="live#action"
-                                data-live-action-param="removePopulation"
-                                data-live-index-param="{{ key }}"
-                                class="ml-1 Button_tertiary_danger Button_fieldSize">
-                            {{ 'generic.remove'|trans }}
-                        </button>
-                    </li>
-                {% endfor %}
-            </ul>
 
-            <button type="button"
-                    class="mt-2 Button_secondary_act Button_fieldSize"
-                    data-action="live#action"
-                    data-live-action-param="addPopulation">
-                {{ include('components/icons/add.svg') }}
-                {{ 'input.population.add'|trans }}
-            </button>
-        </div>
+        <twig:Form:CollectionForm
+            collection="{{ form.population }}"
+            add_action="addPopulation"
+            remove_action="removePopulation"
+            add_label="{{ 'input.population.add'|trans }}"
+        />
     </fieldset>
 
     <fieldset class="mt-8">
@@ -60,30 +43,13 @@
             </legend>
             {{ helpButton("inclusion_criteria") }}
         </div>
-        <div class="MetaData-Widget MetaData-Widget_collection">
-            <ul>
-                {% for key, inclusion_criteria in form.inclusion_criteria %}
-                    <li class="flex mt-2 items-start">
-                        {{ form_widget(inclusion_criteria) }}
-                        <button type="button"
-                                data-action="live#action"
-                                data-live-action-param="removeInclusion"
-                                data-live-index-param="{{ key }}"
-                                class="ml-1 Button_tertiary_danger Button_fieldSize">
-                            {{ 'generic.remove'|trans }}
-                        </button>
-                    </li>
-                {% endfor %}
-            </ul>
 
-            <button type="button"
-                    class="mt-2 Button_secondary_act Button_fieldSize"
-                    data-action="live#action"
-                    data-live-action-param="addInclusion">
-                {{ include('components/icons/add.svg') }}
-                {{ 'input.inclusion.add'|trans }}
-            </button>
-        </div>
+        <twig:Form:CollectionForm
+            collection="{{ form.inclusion_criteria }}"
+            add_action="addInclusion"
+            remove_action="removeInclusion"
+            add_label="{{ 'input.inclusion.add'|trans }}"
+        />
     </fieldset>
 
     <fieldset class="mt-8">
@@ -93,30 +59,13 @@
             </legend>
             {{ helpButton("exclusion_criteria") }}
         </div>
-        <div class="MetaData-Widget MetaData-Widget_collection">
-            <ul>
-                {% for key, exclusion_criteria in form.exclusion_criteria %}
-                    <li class="flex mt-2 items-start">
-                        {{ form_widget(exclusion_criteria) }}
-                        <button type="button"
-                                data-action="live#action"
-                                data-live-action-param="removeExclusion"
-                                data-live-index-param="{{ key }}"
-                                class="ml-1 Button_tertiary_danger Button_fieldSize">
-                            {{ 'generic.remove'|trans }}
-                        </button>
-                    </li>
-                {% endfor %}
-            </ul>
 
-            <button type="button"
-                    class="mt-2 Button_secondary_act Button_fieldSize"
-                    data-action="live#action"
-                    data-live-action-param="addExclusion">
-                {{ include('components/icons/add.svg') }}
-                {{ 'input.exclusion.add'|trans }}
-            </button>
-        </div>
+        <twig:Form:CollectionForm
+            collection="{{ form.exclusion_criteria }}"
+            add_action="addExclusion"
+            remove_action="removeExclusion"
+            add_label="{{ 'input.exclusion.add'|trans }}"
+        />
     </fieldset>
 
     <fieldset class="mt-8">

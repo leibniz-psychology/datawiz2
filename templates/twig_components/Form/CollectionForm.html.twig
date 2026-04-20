@@ -1,0 +1,28 @@
+{{ form_label(collection) }}
+{{ form_errors(collection) }}
+<div class="MetaData-Widget MetaData-Widget_collection">
+    <ul>
+        {% for key, item in collection %}
+            <li class="flex mt-2 items-start">
+                {{ form_widget(item) }}
+                <button type="button"
+                        data-action="live#action"
+                        data-live-action-param="{{ remove_action }}"
+                        data-live-index-param="{{ key }}"
+                        class="ml-1 Button_tertiary_danger Button_fieldSize">
+                    {{ remove_label is defined ? remove_label : 'generic.remove' |trans }}
+                </button>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <button type="button"
+            class="mt-2 Button_secondary_act Button_fieldSize"
+            data-action="live#action"
+            data-live-action-param="{{ add_action }}">
+        {{ include('components/icons/add.svg') }}
+        {{ add_label is defined ? add_label : 'generic.add'|trans }}
+    </button>
+
+    {% do collection.setRendered %}
+</div>

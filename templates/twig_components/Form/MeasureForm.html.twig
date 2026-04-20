@@ -13,30 +13,12 @@
             </legend>
             {{ helpButton("measure") }}
         </div>
-        <div class="MetaData-Widget MetaData-Widget_collection">
-            <ul>
-                {% for key, measure in form.measures %}
-                    <li class="flex mt-2 items-start">
-                        {{ form_widget(measure) }}
-                        <button type="button"
-                                data-action="live#action"
-                                data-live-action-param="removeMeasure"
-                                data-live-index-param="{{ key }}"
-                                class="ml-1 Button_tertiary_danger Button_fieldSize">
-                            {{ 'generic.remove'|trans }}
-                        </button>
-                    </li>
-                {% endfor %}
-            </ul>
-
-            <button type="button"
-                    class="mt-2 Button_secondary_act Button_fieldSize"
-                    data-action="live#action"
-                    data-live-action-param="addMeasure">
-                {{ include('components/icons/add.svg') }}
-                {{ 'input.measures.add'|trans }}
-            </button>
-        </div>
+        <twig:Form:CollectionForm
+            collection="{{ form.measures }}"
+            add_action="addMeasure"
+            remove_action="removeMeasure"
+            add_label="{{ 'input.measures.add'|trans }}"
+        />
     </fieldset>
     <fieldset class="mt-8">
         <div class="MetaData-Title">
@@ -45,30 +27,12 @@
             </legend>
             {{ helpButton("apparatus") }}
         </div>
-        <div class="MetaData-Widget MetaData-Widget_collection">
-            <ul>
-                {% for key, related_publication in form.apparatus %}
-                    <li class="flex mt-2 items-start">
-                        {{ form_widget(related_publication) }}
-                        <button type="button"
-                                data-action="live#action"
-                                data-live-action-param="removeApparatus"
-                                data-live-index-param="{{ key }}"
-                                class="ml-1 Button_tertiary_danger Button_fieldSize">
-                            {{ 'generic.remove'|trans }}
-                        </button>
-                    </li>
-                {% endfor %}
-            </ul>
-
-            <button type="button"
-                    class="mt-2 Button_secondary_act Button_fieldSize"
-                    data-action="live#action"
-                    data-live-action-param="addApparatus">
-                {{ include('components/icons/add.svg') }}
-                {{ 'input.apparatus.add'|trans }}
-            </button>
-        </div>
+        <twig:Form:CollectionForm
+            collection="{{ form.apparatus }}"
+            add_action="addApparatus"
+            remove_action="removeApparatus"
+            add_label="{{ 'input.apparatus.add'|trans }}"
+        />
     </fieldset>
 {% endblock %}
 

@@ -1,0 +1,39 @@
+<div {{ attributes }}>
+    {{ form_start(form, {
+        attr: {
+            'onkeydown': 'if(event.key === "Enter") {event.preventDefault(); event.stopPropagation();}',
+            'data-action': 'live#action:prevent',
+            'data-live-action-param': 'save'
+        }
+    }) }}
+
+    <fieldset>
+        <div class="MetaData-Title">
+            <legend class="MetaData-Legend">
+                {{ "input.documentation-name.legend"|trans }}
+            </legend>
+        </div>
+        <div class="MetaData-Label">
+            {{ form_label(form.shortName, null, {
+                'label_attr': {
+                    'class': 'block max-w-prose'
+                },
+            }) }}
+        </div>
+        {{ form_errors(form.shortName) }}
+        <div class="mt-1 md:items-center md:flex MetaData-Widget">
+            {{ form_widget(form.shortName, {
+                'attr': {
+                    'class': 'w-full md:w-3/4',
+                }
+            }) }}
+            <button class="Button_primary_act Button_standalone mt-1 md:mt-0 md:ml-2" {{ live_action('save') }}>
+                {{ "generic.rename"|trans }}
+            </button>
+        </div>
+    </fieldset>
+
+    {{ form_rest(form) }}
+
+    {{ form_end(form) }}
+</div>

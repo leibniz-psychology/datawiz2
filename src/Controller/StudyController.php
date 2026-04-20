@@ -62,22 +62,14 @@ class StudyController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{id}/settings', name: 'settings', methods: ['GET'])]
-    public function settings(Experiment $experiment, Request $request): Response
+    #[Route(path: '/{id}/settings', name: 'settings')]
+    public function settings(Experiment $experiment): Response
     {
         $this->logger->debug("Enter StudyController::settingsAction with [UUID: {$experiment->getId()}]");
 
         $this->denyAccessUnlessGranted('EDIT', $experiment);
 
-        $form = $this->questionnaire->askAndHandle($experiment->getSettingsMetaDataGroup(), 'save', $request);
-
-        if ($this->questionnaire->isSubmittedAndValid($form)) {
-            $this->em->persist($experiment);
-            $this->em->flush();
-        }
-
         return $this->render('pages/study/settings.html.twig', [
-            'form' => $form,
             'experiment' => $experiment,
         ]);
     }
@@ -94,8 +86,8 @@ class StudyController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{id}/theory', name: 'theory', methods: ['GET', 'POST'])]
-    public function theory(Experiment $experiment, Request $request): Response
+    #[Route(path: '/{id}/theory', name: 'theory')]
+    public function theory(Experiment $experiment): Response
     {
         $this->logger->debug("Enter StudyController::theoryAction with [UUID: {$experiment->getId()}]");
 
@@ -106,8 +98,8 @@ class StudyController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{id}/sample', name: 'sample', methods: ['GET', 'POST'])]
-    public function sample(Experiment $experiment, Request $request): Response
+    #[Route(path: '/{id}/sample', name: 'sample')]
+    public function sample(Experiment $experiment): Response
     {
         $this->logger->debug("Enter StudyController::sampleAction with [UUID: {$experiment->getId()}]");
 
@@ -118,8 +110,8 @@ class StudyController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{id}/measure', name: 'measure', methods: ['GET', 'POST'])]
-    public function measure(Experiment $experiment, Request $request): Response
+    #[Route(path: '/{id}/measure', name: 'measure')]
+    public function measure(Experiment $experiment): Response
     {
         $this->logger->debug("Enter StudyController::measureAction with [UUID: {$experiment->getId()}]");
 
@@ -130,8 +122,8 @@ class StudyController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{id}/method', name: 'method', methods: ['GET', 'POST'])]
-    public function method(Experiment $experiment, Request $request): Response
+    #[Route(path: '/{id}/method', name: 'method')]
+    public function method(Experiment $experiment): Response
     {
         $this->logger->debug("Enter StudyController::methodAction with [UUID: {$experiment->getId()}]");
 
@@ -142,7 +134,7 @@ class StudyController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{id}/materials', name: 'materials', methods: ['GET'])]
+    #[Route(path: '/{id}/materials', name: 'materials')]
     public function materials(Experiment $experiment): Response
     {
         $this->logger->debug("Enter StudyController::materialsAction with [UUID: {$experiment->getId()}]");
@@ -154,7 +146,7 @@ class StudyController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{id}/datasets', name: 'datasets', methods: ['GET'])]
+    #[Route(path: '/{id}/datasets', name: 'datasets')]
     public function datasets(Experiment $experiment): Response
     {
         $this->logger->debug("Enter StudyController::datasetsAction with [UUID: {$experiment->getId()}]");
@@ -166,7 +158,7 @@ class StudyController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{id}/introduction', name: 'introduction', methods: ['GET'])]
+    #[Route(path: '/{id}/introduction', name: 'introduction')]
     public function introduction(Experiment $experiment): Response
     {
         $this->logger->debug("Enter StudyController::introductionAction with [UUID: {$experiment->getId()}]");
@@ -178,7 +170,7 @@ class StudyController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{id}/delete', name: 'delete', methods: ['GET'])]
+    #[Route(path: '/{id}/delete', name: 'delete')]
     public function delete(Experiment $experiment): Response
     {
         $this->logger->debug("Enter StudyController::deleteAction with [UUID: {$experiment->getId()}]");

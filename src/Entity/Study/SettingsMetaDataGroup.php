@@ -8,11 +8,12 @@ namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
 use App\Form\SettingsType;
+use App\Repository\SettingsRepository;
 use App\Service\Questionnaire\Questionable;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'experiment_settings')]
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: SettingsRepository::class)]
 class SettingsMetaDataGroup extends UuidEntity implements Questionable
 {
     /**

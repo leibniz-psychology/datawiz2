@@ -13,41 +13,7 @@
         {{ "title.settings.title"|trans }}
     </h2>
 
-    {{ form_start(form) }}
-    {{ form_errors(form) }}
-
-    <fieldset>
-        <div class="MetaData-Title">
-            <legend class="MetaData-Legend">
-                {{ "input.documentation-name.legend"|trans }}
-            </legend>
-
-        </div>
-        <div class="MetaData-Label">
-            {{ form_label(form.shortName, null, {
-                'label': 'input.documentation-name.label',
-                'label_attr': {
-                    'class': 'block max-w-prose'
-                },
-            }) }}
-        </div>
-        {{ form_errors(form.shortName) }}
-        <div class="mt-1 md:items-center md:flex MetaData-Widget">
-            {{ form_widget(form.shortName, {
-                'attr': {
-                    'class': 'w-full md:w-3/4',
-                    'x-init': '$el.focus()',
-                }
-            }) }}
-            {{ form_widget(form.submit, {
-                'attr': {
-                    'class': 'Button_primary_act Button_standalone mt-1 md:mt-0 md:ml-2',
-                },
-                'label': "generic.rename"
-            }) }}
-        </div>
-    </fieldset>
-
+    <twig:Form:SettingsForm initialFormData="{{ experiment.settingsMetaDataGroup }}"/>
 
     <fieldset class="pb-8 mt-[6.25rem]" x-data="modal()" @keydown.window.escape="hide()">
         <div class="MetaData-Title">
@@ -86,8 +52,6 @@
             </div>
         </div>
     </fieldset>
-
-    {{ form_end(form) }}
 {% endblock %}
 
 {% block help_for_section %}

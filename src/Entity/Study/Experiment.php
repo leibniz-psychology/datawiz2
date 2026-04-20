@@ -11,6 +11,7 @@ use App\Repository\ExperimentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation\Timestampable;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
@@ -79,6 +80,7 @@ class Experiment extends UuidEntity
     private ?DataWizUser $owner = null;
 
     #[ORM\Column]
+    #[Timestampable(on: 'create')]
     private ?\DateTime $dateCreated = null;
 
     #[ORM\Column(nullable: true)]
@@ -231,19 +233,5 @@ class Experiment extends UuidEntity
     public function removeOriginalDatasets(Dataset $originalDatasets): void
     {
         $this->originalDatasets->removeElement($originalDatasets);
-    }
-
-    public static function createNewExperiment(DataWizUser $owner): Experiment
-    {
-        $newExperiment = new Experiment();
-        $newExperiment->setSettingsMetaDataGroup(new SettingsMetaDataGroup());
-        $newExperiment->setBasicInformationMetaDataGroup(new BasicInformationMetaDataGroup());
-        $newExperiment->setTheoryMetaDataGroup(new TheoryMetaDataGroup());
-        $newExperiment->setSampleMetaDataGroup(new SampleMetaDataGroup());
-        $newExperiment->setMeasureMetaDataGroup(new MeasureMetaDataGroup());
-        $newExperiment->setMethodMetaDataGroup(new MethodMetaDataGroup());
-        $newExperiment->setOwner($owner);
-
-        return $newExperiment;
     }
 }

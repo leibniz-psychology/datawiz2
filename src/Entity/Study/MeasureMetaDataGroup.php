@@ -4,9 +4,7 @@ namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
 use App\Entity\Constant\ReviewDataDictionary;
-use App\Form\MeasureType;
 use App\Repository\MeasureRepository;
-use App\Service\Questionnaire\Questionable;
 use App\Service\Review\Reviewable;
 use App\Service\Review\ReviewDataCollectable;
 use App\Service\Review\ReviewValidator;
@@ -16,12 +14,12 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Table(name: 'experiment_measure')]
 #[ORM\Entity(repositoryClass: MeasureRepository::class)]
-class MeasureMetaDataGroup extends UuidEntity implements Questionable, Reviewable
+class MeasureMetaDataGroup extends UuidEntity implements Reviewable
 {
     /**
      * One basic Information section has One Experiment.
      */
-    #[ORM\OneToOne(inversedBy: 'measureMetaDataGroup')]
+    #[ORM\OneToOne(inversedBy: 'measureMetaDataGroup', cascade: ['persist', 'remove'])]
     protected ?Experiment $experiment = null;
 
     #[ORM\Column(type: 'json', length: 1500, nullable: true)]
@@ -48,11 +46,6 @@ class MeasureMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
                 ReviewValidator::validateArrayValues($this->getApparatus())
             ),
         ];
-    }
-
-    public function getFormTypeForEntity(): string
-    {
-        return MeasureType::class;
     }
 
     public function getMeasures(): ?array

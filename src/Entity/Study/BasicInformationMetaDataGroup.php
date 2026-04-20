@@ -4,9 +4,7 @@ namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
 use App\Entity\Constant\ReviewDataDictionary;
-use App\Form\BasicInformationType;
 use App\Repository\BasicInformationRepository;
-use App\Service\Questionnaire\Questionable;
 use App\Service\Review\Reviewable;
 use App\Service\Review\ReviewDataCollectable;
 use App\Service\Review\ReviewValidator;
@@ -18,7 +16,7 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Table(name: 'experiment_basic')]
 #[ORM\Entity(repositoryClass: BasicInformationRepository::class)]
-class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, Reviewable
+class BasicInformationMetaDataGroup extends UuidEntity implements Reviewable
 {
     #[ORM\Column(type: 'text', length: 255, nullable: true)]
     #[SerializedName('title')]
@@ -38,7 +36,7 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, 
     /**
      * One basic Information section has One Experiment.
      */
-    #[ORM\OneToOne(inversedBy: 'basicInformationMetaDataGroup')]
+    #[ORM\OneToOne(inversedBy: 'basicInformationMetaDataGroup', cascade: ['persist', 'remove'])]
     private ?Experiment $experiment = null;
 
     #[SerializedName('creators')]
@@ -49,11 +47,6 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, 
     public function __construct()
     {
         $this->creators = new ArrayCollection();
-    }
-
-    public function getFormTypeForEntity(): string
-    {
-        return BasicInformationType::class;
     }
 
     public function getReviewCollection(): array

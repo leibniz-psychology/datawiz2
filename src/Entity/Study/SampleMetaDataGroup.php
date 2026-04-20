@@ -4,9 +4,7 @@ namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
 use App\Entity\Constant\ReviewDataDictionary;
-use App\Form\SampleType;
 use App\Repository\SampleRepository;
-use App\Service\Questionnaire\Questionable;
 use App\Service\Review\Reviewable;
 use App\Service\Review\ReviewDataCollectable;
 use App\Service\Review\ReviewValidator;
@@ -16,12 +14,12 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Table(name: 'experiment_sample')]
 #[ORM\Entity(repositoryClass: SampleRepository::class)]
-class SampleMetaDataGroup extends UuidEntity implements Questionable, Reviewable
+class SampleMetaDataGroup extends UuidEntity implements Reviewable
 {
     /**
      * One Sample section has One Experiment.
      */
-    #[ORM\OneToOne(inversedBy: 'sampleMetaDataGroup')]
+    #[ORM\OneToOne(inversedBy: 'sampleMetaDataGroup', cascade: ['persist', 'remove'])]
     protected ?Experiment $experiment = null;
 
     #[ORM\Column(type: 'text', length: 1500, nullable: true)]
@@ -104,11 +102,6 @@ class SampleMetaDataGroup extends UuidEntity implements Questionable, Reviewable
                 ReviewValidator::validateSingleValue($this->getPowerAnalysis())
             ),
         ];
-    }
-
-    public function getFormTypeForEntity(): string
-    {
-        return SampleType::class;
     }
 
     public function getParticipants(): ?string

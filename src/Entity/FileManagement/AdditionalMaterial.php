@@ -4,15 +4,13 @@ namespace App\Entity\FileManagement;
 
 use App\Entity\Administration\UuidEntity;
 use App\Entity\Study\Experiment;
-use App\Form\FileDescriptionType;
-use App\Service\Questionnaire\Questionable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Table(name: 'material')]
 #[ORM\Entity]
-class AdditionalMaterial extends UuidEntity implements Questionable
+class AdditionalMaterial extends UuidEntity
 {
     #[ORM\Column(length: 256)]
     #[SerializedName('original_name')]
@@ -132,10 +130,5 @@ class AdditionalMaterial extends UuidEntity implements Questionable
     {
         $this->experiment = $experiment;
         $experiment->addAdditionalMaterials($this);
-    }
-
-    public function getFormTypeForEntity(): string
-    {
-        return FileDescriptionType::class;
     }
 }

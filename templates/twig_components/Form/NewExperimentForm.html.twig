@@ -1,0 +1,31 @@
+<div {{ attributes }}>
+    {{ form_start(form, {
+        attr: {
+            'onkeydown': 'if(event.key === "Enter") {event.preventDefault(); event.stopPropagation();}',
+            'data-action': 'live#action:prevent',
+            'data-live-action-param': 'save'
+        }
+    }) }}
+
+    <div class="mt-6">
+        {{ form_label(form.shortName, null, {
+            'label_attr': {
+                'class': 'block max-w-prose'
+            },
+        }) }}
+        {{ form_errors(form.shortName) }}
+        {{ form_widget(form.shortName, {
+            'attr': {
+                'class': 'w-full sm:w-1/2 block mt-1',
+            }
+        }) }}
+    </div>
+
+    <button class="Button_primary_act Button_standalone mt-4">
+        {{ 'title.new.create' | trans }}
+    </button>
+
+    {{ form_rest(form) }}
+
+    {{ form_end(form) }}
+</div>

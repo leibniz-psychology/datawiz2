@@ -9,7 +9,7 @@
     <div class="grid grid-cols-7 gap-4">
         <div class="col-span-2">
             <div class="sticky top-0 overflow-hidden border rounded-lg shadow-sm">
-                {% include 'components/_navigationSidebar.html.twig' with {needs_saving: true, experiment: this.initialFormData.experiment} %}
+                <twig:Form:NavigationSidebar needs_saving="true" experiment="{{ this.initialFormData.experiment }}" form_type="{{ this.formType }}"/>
             </div>
         </div>
 

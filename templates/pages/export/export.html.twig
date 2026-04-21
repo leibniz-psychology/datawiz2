@@ -73,15 +73,10 @@
         </form>
     {% endif %}
 
-
-    {{ render(controller('App\\Controller\\NavigationController::savebarNavigation', {
-        request: app.request,
-        prevUrl: 'Study-review',
-        prevTitle: 'title.review.title'|trans,
-        nextUrl: null,
-        nextTitle: null,
-        form: null
-    })) }}
+    <twig:NavigationSavebar
+        prevUrl="{{ path('Study-review', {id: experiment.id}) }}"
+        prevTitle="{{ 'title.review.title'|trans }}"
+    />
 {% endblock %}
 
 {% block help_for_section %}

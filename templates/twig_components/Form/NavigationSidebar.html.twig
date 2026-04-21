@@ -8,8 +8,8 @@
     </span>
     {%- if needs_saving -%}
         <button {{ live_action('save', {route: 'Study-settings' })}}
-           class="Button_icon"
-           title="{{ "generic.edit"|trans }}">
+            class="Button_icon"
+            title="{{ "generic.edit"|trans }}">
             {{ include('components/icons/edit.svg') }}
         </button>
     {%- else -%}
@@ -26,7 +26,7 @@
         <li>
             {%- if needs_saving -%}
                 <button {{ live_action('save', {route: 'Study-introduction' })}}
-                   class="StudyNav-NavItem {{- route_name == 'Study-introduction' ? ' StudyNav-NavItem_active' -}}">{{ "title.introduction.title"|trans }}</button>
+                    class="StudyNav-NavItem {{- route_name == 'Study-introduction' ? ' StudyNav-NavItem_active' -}}">{{ "title.introduction.title"|trans }}</button>
             {% else %}
                 <a href="{{ path('Study-introduction', {id: experiment.id}) }}"
                    class="StudyNav-NavItem {{- route_name == 'Study-introduction' ? ' StudyNav-NavItem_active' -}}">{{ "title.introduction.title"|trans }}</a>
@@ -35,7 +35,7 @@
         <li>
             {%- if needs_saving -%}
                 <button {{ live_action('save', {route: 'Study-documentation' })}}
-                   class="StudyNav-NavItem
+                    class="StudyNav-NavItem
                     {{- needs_saving ?' StudyNav-NavItem_active StudyNav-NavItem_active_isParent' -}}">
                     1. {{ "title.describe-study.title"|trans }}
                 </button>
@@ -50,8 +50,8 @@
                 <li>
                     {%- if needs_saving -%}
                         <button {{ live_action('save', {route: 'Study-documentation' })}}
-                           class="StudyNav-SubNavItem
-                            {{- this.formType == 'documentation' ? ' StudyNav-SubNavItem_active' -}}">
+                            class="StudyNav-SubNavItem
+                            {{- form_type == 'documentation' ? ' StudyNav-SubNavItem_active' -}}">
                             {{ "title.basic.title"|trans }}
                         </button>
                     {%- else -%}
@@ -66,8 +66,8 @@
                 <li>
                     {%- if needs_saving -%}
                         <button {{ live_action('save', {route: 'Study-theory' })}}
-                           class="StudyNav-SubNavItem
-                            {{- this.formType == 'theory' ? ' StudyNav-SubNavItem_active' -}}">
+                            class="StudyNav-SubNavItem
+                            {{- form_type == 'theory' ? ' StudyNav-SubNavItem_active' -}}">
                             {{ "title.theories.title"|trans }}
                         </button>
                     {%- else -%}
@@ -81,8 +81,8 @@
                 <li>
                     {%- if needs_saving -%}
                         <button {{ live_action('save', {route: 'Study-method' })}}
-                           class="StudyNav-SubNavItem
-                            {{- this.formType == 'method' ? ' StudyNav-SubNavItem_active' -}}">
+                            class="StudyNav-SubNavItem
+                            {{- form_type == 'method' ? ' StudyNav-SubNavItem_active' -}}">
                             {{ "title.method.title"|trans }}
                         </button>
                     {%- else -%}
@@ -96,8 +96,8 @@
                 <li>
                     {%- if needs_saving -%}
                         <button {{ live_action('save', {route: 'Study-measure' })}}
-                           class="StudyNav-SubNavItem
-                            {{- this.formType == 'measure' ? ' StudyNav-SubNavItem_active' -}}">
+                            class="StudyNav-SubNavItem
+                            {{- form_type == 'measure' ? ' StudyNav-SubNavItem_active' -}}">
                             {{ "title.measures.title"|trans }}
                         </button>
                     {%- else -%}
@@ -111,8 +111,8 @@
                 <li>
                     {%- if needs_saving -%}
                         <button {{ live_action('save', {route: 'Study-sample' })}}
-                           class="StudyNav-SubNavItem
-                           {{- this.formType == 'sample' ? ' StudyNav-SubNavItem_active' -}}">
+                            class="StudyNav-SubNavItem
+                           {{- form_type == 'sample' ? ' StudyNav-SubNavItem_active' -}}">
                             {{ "title.samples.title"|trans }}
                         </button>
                     {%- else -%}
@@ -128,7 +128,7 @@
         <li>
             {%- if needs_saving -%}
                 <button {{ live_action('save', {route: 'Study-datasets' })}}
-                   class="StudyNav-NavItem {{- route_name == 'Study-datasets' ? ' StudyNav-NavItem_active' -}}">
+                    class="StudyNav-NavItem {{- route_name == 'Study-datasets' ? ' StudyNav-NavItem_active' -}}">
                     2. {{ "title.dataset.title"|trans }}</button>
             {%- else -%}
                 <a href="{{ path('Study-datasets', {id: experiment.id}) }}"
@@ -139,7 +139,7 @@
         <li>
             {%- if needs_saving -%}
                 <button {{ live_action('save', {route: 'Study-materials' })}}
-                   class="StudyNav-NavItem {{- route_name == 'Study-materials' ? ' StudyNav-NavItem_active' -}}">
+                    class="StudyNav-NavItem {{- route_name == 'Study-materials' ? ' StudyNav-NavItem_active' -}}">
                     3. {{ "title.material.title-short"|trans }}</button>
             {%- else -%}
                 <a href="{{ path('Study-materials', {id: experiment.id}) }}"
@@ -150,7 +150,7 @@
         <li>
             {%- if needs_saving -%}
                 <button {{ live_action('save', {route: 'Study-review' })}}
-                   class="StudyNav-NavItem {{- route_name == 'Study-review' ? ' StudyNav-NavItem_active' -}}">
+                    class="StudyNav-NavItem {{- route_name == 'Study-review' ? ' StudyNav-NavItem_active' -}}">
                     4. {{ "title.review.title"|trans }}</button>
             {%- else -%}
                 <a href="{{ path('Study-review', {id: experiment.id}) }}"
@@ -161,7 +161,7 @@
         <li>
             {%- if needs_saving -%}
                 <button {{ live_action('save', {route: 'export_index' })}}
-                   class="StudyNav-NavItem {{- route_name == 'export_index' ? ' StudyNav-NavItem_active' -}}">
+                    class="StudyNav-NavItem {{- route_name == 'export_index' ? ' StudyNav-NavItem_active' -}}">
                     5. {{ "title.export.title-short"|trans }}</button>
             {%- else -%}
                 <a href="{{ path('export_index', {id: experiment.id}) }}"
@@ -173,7 +173,7 @@
         <li>
             {%- if needs_saving -%}
                 <button {{ live_action('save', {route: 'Study-settings' })}}
-                   class="StudyNav-NavItem StudyNav-NavItem_settings
+                    class="StudyNav-NavItem StudyNav-NavItem_settings
                     {{- route_name == 'Study-settings' ? ' StudyNav-NavItem_active StudyNav-NavItem_settings_active' -}}">
                     {{ include('components/icons/settings.svg') }}
                     {{ "title.settings.title"|trans }}

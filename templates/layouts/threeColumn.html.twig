@@ -12,7 +12,7 @@
         {% block navigation_and_content %}
             <div class="col-span-2">
                 <div class="sticky top-0 overflow-hidden border rounded-lg shadow-sm">
-                    {% include 'components/_navigationSidebar.html.twig' with {request: app.request, experiment: experiment} %}
+                    <twig:Form:NavigationSidebar experiment="{{ experiment }}"/>
                 </div>
             </div>
 

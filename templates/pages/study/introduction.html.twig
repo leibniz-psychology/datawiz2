@@ -29,15 +29,10 @@
         {{ "title.introduction.start.steps" | trans | markdown_to_html }}
     </div>
 
-    {{ render(controller('App\\Controller\\NavigationController::savebarNavigation', {
-        request: app.request,
-        prevUrl: null,
-        prevTitle: null,
-        nextUrl: 'Study-documentation',
-        nextTitle: 'Step 1: ' ~ 'title.describe-study.title'|trans,
-        form: null
-    })) }}
-
+    <twig:NavigationSavebar
+        nextUrl="{{ path('Study-documentation', {id: experiment.id}) }}"
+        nextTitle="{{ 'Step 1: ' ~ 'title.describe-study.title'|trans }}"
+    />
 {% endblock %}
 
 {% block help_for_section %}

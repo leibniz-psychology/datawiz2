@@ -1,0 +1,17 @@
+<div class="WizNavBar" {{ stimulus_controller('detect-sticky-element') }}>
+    {% if prevUrl is defined and prevUrl is not null %}
+        <a class="underline justify-self-start Button_tertiary_go Button_standalone"
+           href="{{ prevUrl }}">
+            {{ include('components/icons/arrow-left.svg') }}
+            {{ prevTitle }}
+        </a>
+    {% endif %}
+
+    {% if nextUrl is defined and nextUrl is not null %}
+        <a class="underline justify-self-end Button_tertiary_go Button_standalone"
+           href="{{ nextUrl }}" role="button">
+            {{ nextTitle }}
+            {{ include('components/icons/arrow-right.svg') }}
+        </a>
+    {% endif %}
+</div>

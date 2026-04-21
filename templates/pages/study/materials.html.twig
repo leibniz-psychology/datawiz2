@@ -38,14 +38,12 @@
         </p>
     {% endif %}
 
-    {{ render(controller('App\\Controller\\NavigationController::savebarNavigation', {
-        request: app.request,
-        prevUrl: 'Study-datasets',
-        prevTitle: 'title.dataset.title-short'|trans,
-        nextUrl: 'Study-review',
-        nextTitle: 'title.review.title'|trans,
-        form: null
-    })) }}
+    <twig:NavigationSavebar
+        prevUrl="{{ path('Study-datasets', {id: experiment.id}) }}"
+        prevTitle="{{ 'title.dataset.title-short'|trans }}"
+        nextUrl="{{ path('Study-review', {id: experiment.id}) }}"
+        nextTitle="{{ 'title.review.title'|trans }}"
+    />
 
 {% endblock %}
 

@@ -76,14 +76,12 @@
         </section> #}
     </article>
 
-    {{ render(controller('App\\Controller\\NavigationController::savebarNavigation', {
-        request: app.request,
-        prevUrl: 'Study-materials',
-        prevTitle: 'title.material.title-short'|trans,
-        nextUrl: 'export_index',
-        nextTitle: 'title.export.title-short'|trans,
-        form: null
-    })) }}
+    <twig:NavigationSavebar
+        prevUrl="{{ path('Study-materials', {id: experiment.id}) }}"
+        prevTitle="{{ 'title.material.title-short'|trans }}"
+        nextUrl="{{ path('export_index', {id: experiment.id}) }}"
+        nextTitle="{{ 'title.export.title-short'|trans }}"
+    />
 {% endblock %}
 
 {% block help_for_section %}

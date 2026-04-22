@@ -29,6 +29,8 @@ RUN apk add --no-cache --virtual .build-dependencies ${PHPIZE_DEPS} \
 	&& docker-php-ext-install intl mysqli pdo pdo_mysql opcache zip \
 	&& docker-php-ext-enable apcu intl mysqli pdo pdo_mysql opcache xdebug zip
 
+# SPSS conversion script
+RUN apk add --no-cache build-base python3-dev py3-pip py3-pandas
 
 COPY --from=builder /build /build
 COPY --from=composer /usr/bin/composer /usr/bin/composer
@@ -36,6 +38,12 @@ COPY .github/workflows/manifests/php/conf/*.ini /usr/local/etc/php/conf.d/
 COPY .github/workflows/manifests/php/conf/www.* /usr/local/etc/php-fpm.d/
 
 WORKDIR /build
+
+# SPSS conversion script
+RUN python3 -m venv .venv
+ENV PATH="/build/.venv/bin:$PATH"
+RUN pip install pyreadstat spss-converter
+
 RUN mkdir -p var/cache \
     && mkdir -p var/uploads \
     && mkdir -p var/log \
@@ -45,7 +53,7 @@ RUN mkdir -p var/cache \
 RUN php bin/console tailwind:build --minify \
     && php bin/console asset-map:compile
 
-CMD ["sh", "-c", "cd /build \
+CMD cd /build \
     && php bin/console doctrine:database:create --if-not-exists --no-interaction \
     && php bin/console doctrine:migrations:migrate --no-interaction \
-    && php-fpm"]
+    && php-fpm

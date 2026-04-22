@@ -19,11 +19,6 @@ services:
     App\:
         resource: '../src/'
 
-
-    App\Service\Api\SpssApiClient:
-        arguments:
-            $spss_uri: '%env(SPSS_API_URI)%'
-
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
@@ -32,7 +27,7 @@ services:
         class: 'App\Twig\CommonMarkdown'
 
     app.api.spss:
-        class: App\Service\Api\SpssApiClient
+        class: App\Service\SpssClient
         arguments:
             - '@oneup_flysystem.dataset_filesystem'
 

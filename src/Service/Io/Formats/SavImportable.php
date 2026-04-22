@@ -3,13 +3,13 @@
 namespace App\Service\Io\Formats;
 
 use App\Entity\FileManagement\Dataset;
-use App\Service\Api\SpssApiClient;
+use App\Service\SpssClient;
 use Psr\Log\LoggerInterface;
 
 readonly class SavImportable
 {
     public function __construct(
-        private SpssApiClient $spssApiClient,
+        private SpssClient $spssApiClient,
         private LoggerInterface $logger
     ) {
     }

@@ -36,7 +36,6 @@ jobs:
         run: |
           cd ${{ inputs.k8s-path }}
           kustomize edit set image crzpiddev.azurecr.io/${{ env.APP }}_php_fpm:${{ github.sha }}
-          kustomize edit set image crzpiddev.azurecr.io/${{ env.APP }}_spss:${{ github.sha }}
           kustomize edit set image crzpiddev.azurecr.io/${{ env.APP }}_nginx:${{ github.sha }}
           cat kustomization.yaml
 

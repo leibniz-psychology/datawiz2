@@ -1,27 +1,27 @@
 .StudyNav-NavItem {
-  @apply block w-full text-left py-2 pl-7 pr-1.5 border-b bg-mono-50 ring-inset border-mono-300 hover:bg-zpid-blue-50;
+    @apply block w-full text-left py-2 pl-7 pr-1.5 border-b bg-stone-50 ring-inset border-stone-300 hover:bg-zpid-blue-50;
 }
 
 .StudyNav-NavItem_active {
-  @apply pl-6 font-semibold no-underline border-l-4 border-l-zpid-blue;
+    @apply pl-6 font-semibold no-underline border-l-4 border-l-zpid-blue;
 }
 
 .StudyNav-NavItem_settings {
-  @apply flex items-center pl-6 border-b-0;
+    @apply flex items-center pl-6 border-b-0;
 }
 
 .StudyNav-NavItem_settings_active {
-  @apply pl-5;
+    @apply pl-5;
 }
 
 .StudyNav-SubNav {
-  @apply py-3 border-b bg-mono-100 border-mono-300;
+    @apply py-3 border-b bg-stone-100 border-stone-300;
 }
 
 .StudyNav-SubNavItem {
-  @apply block w-full text-left py-2 pl-7 pr-1.5 leading-tight ring-inset hover:bg-zpid-blue-50;
+    @apply block w-full text-left py-2 pl-7 pr-1.5 leading-tight ring-inset hover:bg-zpid-blue-50;
 }
 
 .StudyNav-SubNavItem_active {
-  @apply font-semibold text-zpid-blue;
+    @apply font-semibold text-zpid-blue;
 }

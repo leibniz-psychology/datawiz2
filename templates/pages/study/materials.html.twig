@@ -18,7 +18,7 @@
     {{ include("components/_infoBridge.html.twig",{value: experiment.id}) }}
     <div class="mt-6">
         <form action="{{ oneup_uploader_endpoint("materials") }}"
-              class="mx-6 border-2 !border-dashed border-mono-500 dropzone"
+              class="mx-6 border-2 border-dashed! border-stone-500 dropzone"
               id="datawiz-dropzone">
             {{ dropzoneTemplate() }}
         </form>

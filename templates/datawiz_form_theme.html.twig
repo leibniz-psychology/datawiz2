@@ -6,7 +6,7 @@
 {%- endblock form_row -%}
 
 {%- block widget_attributes -%}
-    {%- set attr = attr|merge({ class: attr.class|default(widget_class|default('mt-1 w-full disabled:opacity-50')) ~ (errors|length ? ' ' ~ widget_errors_class|default('!border-red-700')) }) -%}
+    {%- set attr = attr|merge({ class: attr.class|default(widget_class|default('mt-1 w-full disabled:opacity-50')) ~ (errors|length ? ' ' ~ widget_errors_class|default('border-red-700!')) }) -%}
     {{- parent() -}}
 {%- endblock widget_attributes -%}
 
@@ -23,9 +23,14 @@
 {% endblock form_label_content %}
 
 {%- block form_help -%}
-    {%- set help_attr = help_attr|merge({ class: help_attr.class|default(help_class|default('mt-1 text-sm font-light text-slate-500 disabled:!text-slate-300')) }) -%}
+    {%- set help_attr = help_attr|merge({ class: help_attr.class|default(help_class|default('mt-1 text-sm font-light text-slate-500 disabled:text-slate-300!')) }) -%}
     {{- parent() -}}
 {%- endblock form_help -%}
+
+{%- block radio_widget -%}
+    {%- set widget_class = widget_class|default('mr-2 radio') -%}
+    {{- parent() -}}
+{%- endblock radio_widget -%}
 
 {%- block form_errors -%}
     {%- if errors|length > 0 -%}
@@ -39,13 +44,13 @@
 {%- endblock form_errors -%}
 
 {%- block choice_widget_expanded -%}
-    {%- set attr = attr|merge({ class: attr.class|default('mt-2 flex flex-col gap-2') }) -%}
+    {%- set attr = attr|merge({ class: attr.class|default('mt-2 flex flex-col') }) -%}
     <div {{ block('widget_container_attributes') }}>
         {%- for child in form %}
-        <div class="flex items-center">
+        <div class="flex items-start gap-2">
             {% set child_disabled = child.vars.attr.disabled is defined and child.vars.attr.disabled == true %}
             {{- form_widget(child) -}}
-            {{- form_label(child, null, { translation_domain: choice_translation_domain, label_attr: {'class': 'block text-sm [&_.required-star]:hidden' ~ (child_disabled ? ' ' ~ 'text-slate-300')} }) -}}
+            {{- form_label(child, null, { translation_domain: choice_translation_domain, label_attr: {'class': 'block [&_.required-star]:hidden' ~ (child_disabled ? ' ' ~ 'cursor-normal text-neutral-300')} }) -}}
         </div>
         {% endfor -%}
     </div>

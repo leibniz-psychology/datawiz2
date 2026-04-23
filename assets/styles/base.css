@@ -1,0 +1,33 @@
+@layer base {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-gray-200, currentColor);
+    }
+}
+
+html {
+    @apply w-full h-full;
+}
+
+body {
+    @apply w-full h-full;
+}
+
+input[type="password"],
+input[type="text"],
+input[type="email"],
+textarea {
+    @apply p-2 bg-white border placeholder-stone-500 border-stone-500;
+}
+
+*:focus {
+    @apply shadow-sm outline-none ring-3 ring-zpid-blue-600;
+}
+
+details > summary::marker {
+    display: none;
+    content: "";
+}

@@ -18,7 +18,7 @@
     {{ include("components/_infoBridge.html.twig",{value: experiment.id}) }}
     <div class="mt-6">
         <form action="{{ oneup_uploader_endpoint("datasets") }}" data-experiment-id="{{ experiment.id }}"
-              class="mx-6 border-2 !border-dashed border-mono-500 dropzone" id="datawiz-dropzone"
+              class="mx-6 border-2 border-dashed! border-stone-500 dropzone" id="datawiz-dropzone"
               data-preview-csv="{{ path("File-preview-csv",{"id": " "}) }}"
               data-submit-csv="{{ path("File-submit-csv",{"id": " "}) }}"
               data-preview-sav="{{ path("File-preview-sav",{"id": " "}) }}"

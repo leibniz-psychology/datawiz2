@@ -3,7 +3,7 @@
     {% set needs_saving = false %}
 {% endif %}
 
-<div class="py-[1.125rem] pl-6 pr-3 border-b bg-mono-100 border-mono-300">
+<div class="py-4.5 pl-6 pr-3 border-b bg-stone-100 border-stone-300">
     <span class="text-zpid-purple-700 text-xl font-bold break-all mr-0.5 leading-tight">{{ experiment.settingsMetaDataGroup.shortName }}
     </span>
     {%- if needs_saving -%}
@@ -169,7 +169,7 @@
                     5. {{ "title.export.title-short"|trans }}</a>
             {%- endif -%}
         </li>
-        {# <hr class="border border-mono-400" /> #}
+        {# <hr class="border border-stone-400" /> #}
         <li>
             {%- if needs_saving -%}
                 <button {{ live_action('save', {route: 'Study-settings' })}}

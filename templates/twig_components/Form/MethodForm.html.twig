@@ -52,13 +52,13 @@
                         {% if choice.vars.value == 'Observational study' %}
                             {{- form_label(form.observationalType, null, {
                                 'label_attr': {
-                                    'class': 'ml-[1.375rem] mt-1 block',
+                                    'class': 'ml-5.5 mt-1 block',
                                 }
                             }) -}}
                             {{- form_errors(form.observationalType) -}}
                             {{- form_widget(form.observationalType, {
                                 'attr': {
-                                    'class': 'ml-[1.375rem] disabled:opacity-50 p-1 mt-1 block',
+                                    'class': 'ml-5.5 disabled:opacity-50 p-1 mt-1 block',
                                     'disabled': not choice.vars.checked,
                                 }
                             }) -}}

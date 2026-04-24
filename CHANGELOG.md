@@ -1,5 +1,17 @@
 # Datawiz2 Semantic Versioning Changelog
 
+# [2.2.0](https://github.com/leibniz-psychology/datawiz2/compare/v2.1.0...v2.2.0) (2026-04-24)
+
+
+### Bug Fixes
+
+* remove deprecations ([1f6a158](https://github.com/leibniz-psychology/datawiz2/commit/1f6a158db83ef403e0d5256fff1ba8fac462e118))
+
+
+### Features
+
+* add form validation ([1d51e7f](https://github.com/leibniz-psychology/datawiz2/commit/1d51e7f71b37e315638b057c1f91ede3e678dea0))
+
 # [2.1.0](https://github.com/leibniz-psychology/datawiz2/compare/v2.0.1...v2.1.0) (2025-02-25)
 
 

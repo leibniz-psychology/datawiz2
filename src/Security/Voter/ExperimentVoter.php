@@ -7,6 +7,7 @@ use App\Entity\Constant\UserRoles;
 use App\Entity\Study\Experiment;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
@@ -14,10 +15,12 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  */
 final class ExperimentVoter extends Voter
 {
-    public const EDIT = 'EDIT';
-    public const REVIEW = 'REVIEW';
+    public const string EDIT = 'EDIT';
+    public const string REVIEW = 'REVIEW';
 
-    public function __construct(private readonly AccessDecisionManagerInterface $accessDecisionManager) {}
+    public function __construct(private readonly AccessDecisionManagerInterface $accessDecisionManager)
+    {
+    }
 
     protected function supports(string $attribute, mixed $subject): bool
     {
@@ -30,11 +33,12 @@ final class ExperimentVoter extends Voter
     /**
      * @throws \Exception
      */
-    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $vote = null): bool
     {
         $user = $token->getUser();
         // if the user is anonymous, do not grant access
         if (!$user instanceof DataWizUser) {
+            $vote?->addReason('The user is not logged in');
             return false;
         }
 

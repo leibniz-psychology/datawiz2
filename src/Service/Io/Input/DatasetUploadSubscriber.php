@@ -15,7 +15,8 @@ readonly class DatasetUploadSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private EntityManagerInterface $em
-    ) {}
+    ) {
+    }
 
     public static function getSubscribedEvents(): array
     {
@@ -30,7 +31,7 @@ readonly class DatasetUploadSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $experiment = $this->em->getRepository(Experiment::class)->find($event->getRequest()->get('studyId'));
+        $experiment = $this->em->getRepository(Experiment::class)->find($event->getRequest()->request->get('studyId'));
         try {
             $mimeType = $event->getFile()->getMimeType();
         } catch (UnableToRetrieveMetadata) {
@@ -39,7 +40,7 @@ readonly class DatasetUploadSubscriber implements EventSubscriberInterface
         }
 
         $dataset = Dataset::createDataset(
-            $event->getRequest()->get('originalFilename'),
+            $event->getRequest()->request->get('originalFilename'),
             $event->getFile()->getBasename(),
             $event->getFile()->getSize(),
             $mimeType,

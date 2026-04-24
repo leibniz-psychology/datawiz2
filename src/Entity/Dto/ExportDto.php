@@ -16,5 +16,6 @@ final readonly class ExportDto
          * @var null|string[]
          */
         public ?array $materials,
-    ) {}
+    ) {
+    }
 }

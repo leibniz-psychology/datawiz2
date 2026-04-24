@@ -18,7 +18,7 @@
     {{ include("components/_infoBridge.html.twig",{value: experiment.id}) }}
     <div class="mt-6">
         <form action="{{ oneup_uploader_endpoint("datasets") }}" data-experiment-id="{{ experiment.id }}"
-              class="mx-6 border-2 !border-dashed border-mono-500 dropzone" id="datawiz-dropzone"
+              class="mx-6 border-2 border-dashed! border-stone-500 dropzone" id="datawiz-dropzone"
               data-preview-csv="{{ path("File-preview-csv",{"id": " "}) }}"
               data-submit-csv="{{ path("File-submit-csv",{"id": " "}) }}"
               data-preview-sav="{{ path("File-preview-sav",{"id": " "}) }}"
@@ -28,16 +28,13 @@
             <input type="hidden" id="dataset-import-data" name="dataset-import-data" value=""/>
         </form>
     </div>
-    <div class="mt-6 MetaData-Title">
-        <legend class="MetaData-Legend">
-            {{ "title.dataset.h3"|trans }}
-        </legend>
-        {{ helpButton("my_datasets") }}
-    </div>
+
+    <twig:Form:FormCard class="mt-8" title="{{ 'title.dataset.h3'|trans }}" help="{{ "my_datasets" }}"/>
+
     {% if experiment.originalDatasets|length > 0 %}
         <ul class="mx-6">
             {% for dataset in experiment.originalDatasets %}
-                    {{ fileDisplayCard(dataset, 'dataset', loop.index) }}
+                {{ fileDisplayCard(dataset, 'dataset', loop.index) }}
             {% endfor %}
         </ul>
     {% else %}
@@ -49,14 +46,12 @@
     <!-- Modal for importing a dataset -->
     {{ include('pages/study/_datasetImportModal.html.twig') }}
 
-    {{ render(controller('App\\Controller\\NavigationController::savebarNavigation', {
-        request: app.request,
-        prevUrl: 'Study-sample',
-        prevTitle: 'title.samples.title'|trans,
-        nextUrl: 'Study-materials',
-        nextTitle: 'title.material.title-short'|trans,
-        form: null
-    })) }}
+    <twig:NavigationSavebar
+        prevUrl="{{ path('Study-sample', {id: experiment.id}) }}"
+        prevTitle="{{ 'title.samples.title'|trans }}"
+        nextUrl="{{ path('Study-materials', {id: experiment.id}) }}"
+        nextTitle="{{ 'title.material.title-short'|trans }}"
+    />
 {% endblock %}
 
 {% block help_for_section %}

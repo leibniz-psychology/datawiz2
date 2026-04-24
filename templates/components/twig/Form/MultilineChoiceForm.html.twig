@@ -1,0 +1,18 @@
+<div>
+    {{ form_label(form) }}
+    {{ form_errors(form) }}
+
+    <div class="flex flex-col gap-2 mt-1">
+        {%- for choice in form %}
+            <div class="flex">
+                {{ form_widget(choice) }}
+                {{ form_label(choice, null, {
+                    'label_attr': {'class': '[&_span]:block [&_span]:last:text-sm [&_span]:last:text-stone-600'},
+                    'label_html': true,
+                }) }}
+            </div>
+
+        {% endfor -%}
+    </div>
+
+</div>

@@ -20,38 +20,38 @@ return [
         'path' => './assets/app-codebook.js',
         'entrypoint' => true,
     ],
-    '@hotwired/stimulus' => [
-        'version' => '3.2.2',
-    ],
     '@symfony/stimulus-bundle' => [
         'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
     ],
+    '@hotwired/stimulus' => [
+        'version' => '3.2.2',
+    ],
     '@alpinejs/focus' => [
-        'version' => '3.14.8',
+        'version' => '3.15.11',
     ],
     '@alpine-collective/toolkit-scroll' => [
         'version' => '1.0.2',
     ],
     'alpinejs' => [
-        'version' => '3.14.8',
+        'version' => '3.15.11',
     ],
     'list.js' => [
         'version' => '2.3.1',
     ],
     'string-natural-compare' => [
-        'version' => '2.0.3',
+        'version' => '^2.0.2',
     ],
     'datatables.net' => [
-        'version' => '2.2.1',
+        'version' => '2.3.7',
     ],
     'jquery' => [
-        'version' => '3.7.1',
+        'version' => '4.0.0',
     ],
     'datatables.net-dt' => [
-        'version' => '2.2.1',
+        'version' => '2.3.7',
     ],
     'datatables.net-dt/css/dataTables.dataTables.min.css' => [
-        'version' => '2.2.1',
+        'version' => '2.3.7',
         'type' => 'css',
     ],
     'tippy.js' => [
@@ -72,16 +72,19 @@ return [
         'version' => '2.0.1',
     ],
     'axios' => [
-        'version' => '1.7.9',
+        'version' => '1.14.0',
     ],
     'dropzone' => [
-        'version' => '6.0.0-beta.1',
+        'version' => '6.0.0-beta.2',
     ],
     'just-extend' => [
-        'version' => '5.1.0',
+        'version' => '5.0.0',
     ],
     'dropzone/dist/dropzone.css' => [
-        'version' => '6.0.0-beta.1',
+        'version' => '6.0.0-beta.2',
         'type' => 'css',
+    ],
+    '@symfony/ux-live-component' => [
+        'path' => './vendor/symfony/ux-live-component/assets/dist/live_controller.js',
     ],
 ];

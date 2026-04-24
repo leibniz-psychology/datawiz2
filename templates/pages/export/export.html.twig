@@ -23,29 +23,19 @@
     {% else %}
         <form action="{{ path('export_action', {id: experiment.id}) }}" method="POST">
 
-            <fieldset>
-                <div class="MetaData-Title">
-                    <legend class="MetaData-Legend">
-                        {{ "title.export.format.title"|trans }}
-                    </legend>
-                </div>
-                <div class="MetaData-Label">{{ "title.export.format.description"|trans }}</div>
-                <div class="mt-1 MetaData-Widget">
+            <twig:Form:FormCard title="{{ 'title.export.format.title'|trans }}">
+                {{ "title.export.format.description"|trans }}
+                <div class="mt-1">
                     <input id="exportAsJson" type="radio" name="format" value="json" checked>
                     <label for="exportAsJson">{{ "title.export.format.json"|trans }}</label>
                     <input id="exportAsXml" type="radio" name="format" value="xml">
                     <label for="exportAsXml">{{ "title.export.format.xml"|trans }}</label>
                 </div>
-            </fieldset>
+            </twig:Form:FormCard>
 
-            <fieldset class="mt-4">
-                <div class="MetaData-Title">
-                    <legend class="MetaData-Legend">
-                        {{ "title.export.datasets.title"|trans }}
-                    </legend>
-                </div>
+            <twig:Form:FormCard class="mt-4" title="{{ 'title.export.datasets.title'|trans }}">
                 {% if experiment.originalDatasets|length > 0 %}
-                    <div class="MetaData-Widget">
+                    <div>
                         {% for dataset in experiment.originalDatasets %}
                             <div class="flex items-center">
                                 <input id="dataset_{{ dataset.id }}" type="checkbox" name="datasets[]"
@@ -55,19 +45,14 @@
                         {% endfor %}
                     </div>
                 {% else %}
-                    <div class="italic MetaData-Label">{{ "title.export.datasets.empty"|trans }}</div>
+                    <div class="italic">{{ "title.export.datasets.empty"|trans }}</div>
                 {% endif %}
-            </fieldset>
+            </twig:Form:FormCard>
 
-            <fieldset class="mt-4">
-                <div class="MetaData-Title">
-                    <legend class="MetaData-Legend">
-                        {{ "title.export.materials.title"|trans }}
-                    </legend>
-                </div>
+            <twig:Form:FormCard class="mt-4" title="{{ 'title.export.materials.title'|trans }}">
                 {% if experiment.additionalMaterials|length > 0 %}
-                    <div class="MetaData-Label">{{ "title.export.materials.description"|trans }}</div>
-                    <div class="MetaData-Widget">
+                    {{ "title.export.materials.description"|trans }}
+                    <div>
                         {% for material in experiment.additionalMaterials %}
                             <div class="flex items-center">
                                 <input id="material_{{ material.id }}" type="checkbox" name="materials[]"
@@ -77,10 +62,9 @@
                         {% endfor %}
                     </div>
                 {% else %}
-                    <div class="italic MetaData-Label">{{ "title.export.materials.empty"|trans }}</div>
+                    <div class="italic">{{ "title.export.materials.empty"|trans }}</div>
                 {% endif %}
-
-            </fieldset>
+            </twig:Form:FormCard>
 
             <div class="mx-6 mt-4">
                 <button type="submit"
@@ -89,15 +73,10 @@
         </form>
     {% endif %}
 
-
-    {{ render(controller('App\\Controller\\NavigationController::savebarNavigation', {
-        request: app.request,
-        prevUrl: 'Study-review',
-        prevTitle: 'title.review.title'|trans,
-        nextUrl: null,
-        nextTitle: null,
-        form: null
-    })) }}
+    <twig:NavigationSavebar
+        prevUrl="{{ path('Study-review', {id: experiment.id}) }}"
+        prevTitle="{{ 'title.review.title'|trans }}"
+    />
 {% endblock %}
 
 {% block help_for_section %}

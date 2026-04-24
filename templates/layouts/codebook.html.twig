@@ -25,7 +25,7 @@
      x-data="{...codebook(), url: '{{ path('codebook_dataupdate', {id: codebook.id}) }}', id: '{{ codebook.id }}', measuresURL: '{{ path('codebook_measures', {id: codebook.id}) }}', matrixURL: '{{ path('codebook_matrix', {id: codebook.id}) }}' }"
      x-init="loadMatrix()">
     {% block header %}
-        <header class="sticky top-0 z-10 flex items-center border-b h-14 border-mono-300 col-span-full bg-mono-50">
+        <header class="sticky top-0 z-10 flex items-center border-b h-14 border-stone-300 col-span-full bg-stone-50">
             <a href="{{ path('Study-datasets', {id: codebook.experiment.id}) }}"
                class="flex-shrink-0 ml-2 Button_primary_go Button_standalone"
                @click="save()">
@@ -45,7 +45,7 @@
             <div class="ml-12 text-xl text-zpid-purple">
                 {{ include('components/icons/table.svg') }}
             </div>
-            <span class="w-full ml-0.5 mr-6 overflow-x-hidden font-semibold text-zpid-purple whitespace-nowrap overflow-ellipsis">
+            <span class="w-full ml-0.5 mr-6 overflow-x-hidden font-semibold text-zpid-purple whitespace-nowrap text-ellipsis">
                 {{ codebook.originalName }}
             </span>
 
@@ -55,7 +55,7 @@
                     {{ include('components/icons/spinner.svg') }}
                 </div>
                 <div class="flex items-center flex-shrink-0 bg-white">
-                    <button class="flex items-center px-2 py-0.5 bg-white border border-gray-300 rounded-tl rounded-bl text-mono-900 shadow-sm text-2xl"
+                    <button class="flex items-center px-2 py-0.5 bg-white border border-gray-300 rounded-tl rounded-bl text-stone-900 shadow-sm text-2xl"
                             @click="if (!isPageStart()) {reloadingMatrix = true; showPage--}"
                             @click.debounce.500ms="if (reloadingMatrix) loadMatrix();"
                             title="{{ "codebook.matrix.previous"|trans }}">
@@ -64,7 +64,7 @@
                     <div x-text="`${(showPage - 1) * maxEntries + 1}-${Math.min(showPage * maxEntries, entries)} {{ "generic.of"|trans }} ${entries}`"
                          class="border-t border-b py-0.5 text-center min-w-[17ch]">
                     </div>
-                    <button class="flex items-center px-2 py-0.5 bg-white border border-gray-300 rounded-tr-md rounded-br-md text-mono-900 shadow-sm text-2xl"
+                    <button class="flex items-center px-2 py-0.5 bg-white border border-gray-300 rounded-tr-md rounded-br-md text-stone-900 shadow-sm text-2xl"
                             @click="if (!isPageEnd()) {reloadingMatrix = true; showPage++}"
                             @click.debounce.500ms="if (reloadingMatrix) loadMatrix();"
                             title="{{ 'codebook.matrix.next'|trans }}">
@@ -89,7 +89,7 @@
                            id="filter"
                            placeholder="{{ 'codebook.search.placeholder'|trans }}"
                            x-model.debounce="$store.codebook.filterText"
-                           class="!pl-8 !pr-7 !py-[0.1875rem] border rounded-full border-mono-500 SearchInput"
+                           class="pl-8! pr-7! py-0.75! border rounded-full border-stone-500 SearchInput"
                            x-tooltip.on.focus.theme.light-border="tooltip"
                            @keyup="tooltip = null" @blur="tooltip = '{{ 'codebook.search.tooltip'|trans }}'">
 
@@ -102,7 +102,7 @@
                 <button class="Button_secondary_act Button_standalone"
                         type="button"
                         @click="$store.codebookSettings.showHelp.sideBar = !$store.codebookSettings.showHelp.sideBar">
-                    <span class="inline-block w-4 h-4 text-xs border rounded-full border-mono-500">?</span>
+                    <span class="inline-block w-4 h-4 text-xs border rounded-full border-stone-500">?</span>
                     {{ "generic.help"|trans }}
                 </button>
                 <button class="Button_primary_act Button_standalone"

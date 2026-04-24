@@ -1,0 +1,27 @@
+{% extends "components/twig/Form/_baseForm.html.twig" %}
+
+{% block title %}
+    {{ "title.measures.title"|trans }}
+{% endblock %}
+
+{% block form_content %}
+    <twig:Form:FormCard title="{{ 'input.measures.legend'|trans }}" help="{{ "measure" }}">
+        <twig:Form:CollectionForm
+            collection="{{ form.measures }}"
+            add_action="addMeasure"
+            remove_action="removeMeasure"
+            add_label="{{ 'input.measures.add'|trans }}"
+        />
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" title="{{ 'input.apparatus.legend'|trans }}" help="{{ "apparatus" }}">
+        <twig:Form:CollectionForm
+            collection="{{ form.apparatus }}"
+            add_action="addApparatus"
+            remove_action="removeApparatus"
+            add_label="{{ 'input.apparatus.add'|trans }}"
+        />
+    </twig:Form:FormCard>
+{% endblock %}
+
+

@@ -6,7 +6,6 @@ use App\Entity\Constant\MetaDataDictionary;
 use App\Entity\Study\MethodMetaDataGroup;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,19 +25,12 @@ class MethodType extends AbstractType
                 ],
                 'expanded' => true,
                 'label' => 'input.setting.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
-                'attr' => ['class' => 'p-1'],
-                'choice_attr' => fn () => ['class' => 'RadioButton-Input'],
             ])
             ->add('settingLocation', TextareaType::class, [
                 'required' => false,
                 'label' => 'input.setting.location.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'MetaData-TextInput disabled:opacity-50',
                     'rows' => '3',
-                    'x-data' => '',
-                    ':disabled' => '$store.app.settingType === `Artificial setting` || $store.app.settingType === undefined',
                 ],
             ])
             ->add(MetaDataDictionary::RESEARCH_DESIGN, ChoiceType::class, [
@@ -50,13 +42,7 @@ class MethodType extends AbstractType
                 ],
                 'expanded' => true,
                 'label' => 'input.design.label',
-                'help' => '',
-                'label_attr' => ['class' => 'MetaData-Label'],
-                'help_attr' => ['class' => 'px-6 pt-1'],
-                'attr' => ['class' => 'p-1'],
-                'choice_attr' => fn () => [
-                    'class' => 'RadioButton-Input',
-                ],
+                'label_html' => true,
             ])
             ->add('experimentalDetails', ChoiceType::class, [
                 'required' => false,
@@ -68,12 +54,7 @@ class MethodType extends AbstractType
                 ],
                 'expanded' => true,
                 'label' => 'input.design.details.experimental.label',
-                'label_attr' => ['class' => 'MetaData-Label !pl-0'],
                 'label_html' => true,
-                'attr' => ['class' => 'p-1'],
-                'choice_attr' => fn () => [
-                    'class' => 'RadioButton-Input',
-                ],
             ])
             ->add('nonExperimentalDetails', ChoiceType::class, [
                 'required' => false,
@@ -87,12 +68,7 @@ class MethodType extends AbstractType
                 ],
                 'expanded' => true,
                 'label' => 'input.design.details.non-experimental.label',
-                'label_attr' => ['class' => 'MetaData-Label !pl-0'],
                 'label_html' => true,
-                'attr' => ['class' => 'p-1'],
-                'choice_attr' => fn () => [
-                    'class' => 'RadioButton-Input',
-                ],
             ])
             ->add('observationalType', ChoiceType::class, [
                 'required' => false,
@@ -103,14 +79,11 @@ class MethodType extends AbstractType
                     'input.design.details.observationalType.choices.cross-sectional-study' => 'Cross-sectional study',
                 ],
                 'label' => 'input.design.details.observationalType.label',
-                'attr' => ['class' => 'p-1'],
             ])
             ->add(MetaDataDictionary::MANIPULATIONS, TextareaType::class, [
                 'required' => false,
                 'label' => 'input.manipulations.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
                 'attr' => [
-                    'class' => 'MetaData-TextInput',
                     'rows' => '5',
                 ],
             ])
@@ -124,7 +97,6 @@ class MethodType extends AbstractType
                 ],
                 'expanded' => true,
                 'label' => 'input.experimental-design.label',
-                'attr' => ['class' => 'p-1'],
             ])
             ->add(MetaDataDictionary::CONTROL_OPERATIONS, ChoiceType::class, [
                 'required' => false,
@@ -141,82 +113,11 @@ class MethodType extends AbstractType
                 ],
                 'expanded' => true,
                 'label' => 'input.control-operations.label',
-                'label_attr' => ['class' => 'MetaData-Label'],
-                'attr' => ['class' => 'p-1'],
-                'choice_attr' => fn () => ['class' => 'RadioButton-Input'],
             ])
             ->add('otherControlOperations', TextareaType::class, [
                 'required' => false,
                 'label' => 'input.control-operations.other.label',
-                'attr' => ['class' => 'p-1', 'rows' => '4'],
-            ])
-            ->add('saveAndPrevious', SubmitType::class)
-            ->add('saveAndNext', SubmitType::class)
-            ->add('saveAndIntroduction', SubmitType::class, [
-                'label' => 'input.hidden',
-                'attr' => [
-                    'class' => 'hidden Button_saveAndIntroduction',
-                ],
-            ])
-            ->add('saveAndDocumentation', SubmitType::class, [
-                'label' => 'input.hidden',
-                'attr' => [
-                    'class' => 'hidden Button_saveAndDocumentation',
-                ],
-            ])
-            ->add('saveAndTheory', SubmitType::class, [
-                'label' => 'input.hidden',
-                'attr' => [
-                    'class' => 'hidden Button_saveAndTheory',
-                ],
-            ])
-            ->add('saveAndMethod', SubmitType::class, [
-                'label' => 'input.hidden',
-                'attr' => [
-                    'class' => 'hidden Button_saveAndMethod',
-                ],
-            ])
-            ->add('saveAndMeasure', SubmitType::class, [
-                'label' => 'input.hidden',
-                'attr' => [
-                    'class' => 'hidden Button_saveAndMeasure',
-                ],
-            ])
-            ->add('saveAndSample', SubmitType::class, [
-                'label' => 'input.hidden',
-                'attr' => [
-                    'class' => 'hidden Button_saveAndSample',
-                ],
-            ])
-            ->add('saveAndDatasets', SubmitType::class, [
-                'label' => 'input.hidden',
-                'attr' => [
-                    'class' => 'hidden Button_saveAndDatasets',
-                ],
-            ])
-            ->add('saveAndMaterials', SubmitType::class, [
-                'label' => 'input.hidden',
-                'attr' => [
-                    'class' => 'hidden Button_saveAndMaterials',
-                ],
-            ])
-            ->add('saveAndReview', SubmitType::class, [
-                'label' => 'input.hidden',
-                'attr' => [
-                    'class' => 'hidden Button_saveAndReview',
-                ],
-            ])
-            ->add('saveAndExport', SubmitType::class, [
-                'label' => 'input.hidden',
-                'attr' => [
-                    'class' => 'hidden Button_saveAndExport',
-                ],
-            ])
-            ->add('saveAndSettings', SubmitType::class, [
-                'label' => 'input.hidden',
-                'attr' => [
-                    'class' => 'hidden Button_saveAndSettings',
-                ],
+                'attr' => ['rows' => '4'],
             ]);
     }
 

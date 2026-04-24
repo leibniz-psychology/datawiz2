@@ -4,19 +4,19 @@ namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
 use App\Entity\Constant\ReviewDataDictionary;
-use App\Form\BasicInformationType;
-use App\Service\Questionnaire\Questionable;
+use App\Repository\BasicInformationRepository;
 use App\Service\Review\Reviewable;
 use App\Service\Review\ReviewDataCollectable;
 use App\Service\Review\ReviewValidator;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Table(name: 'experiment_basic')]
-#[ORM\Entity]
-class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, Reviewable
+#[ORM\Entity(repositoryClass: BasicInformationRepository::class)]
+class BasicInformationMetaDataGroup extends UuidEntity implements Reviewable
 {
     #[ORM\Column(type: 'text', length: 255, nullable: true)]
     #[SerializedName('title')]
@@ -36,17 +36,17 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, 
     /**
      * One basic Information section has One Experiment.
      */
-    #[ORM\OneToOne(inversedBy: 'basicInformationMetaDataGroup')]
+    #[ORM\OneToOne(inversedBy: 'basicInformationMetaDataGroup', cascade: ['persist', 'remove'])]
     private ?Experiment $experiment = null;
 
     #[SerializedName('creators')]
     #[Groups('study')]
-    #[ORM\OneToMany(mappedBy: 'basicInformation', targetEntity: 'App\Entity\Study\CreatorMetaDataGroup')]
-    private ?Collection $creators = null;
+    #[ORM\OneToMany(targetEntity: CreatorMetaDataGroup::class, mappedBy: 'basicInformation', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $creators;
 
-    public function getFormTypeForEntity(): string
+    public function __construct()
     {
-        return BasicInformationType::class;
+        $this->creators = new ArrayCollection();
     }
 
     public function getReviewCollection(): array
@@ -115,8 +115,20 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Questionable, 
         return $this->creators;
     }
 
-    public function setCreators(?Collection $creators): void
+    public function addCreator(CreatorMetaDataGroup $creator): static
     {
-        $this->creators = $creators;
+        if (!$this->creators->contains($creator)) {
+            $this->creators->add($creator);
+            $creator->setBasicInformation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCreator(CreatorMetaDataGroup $creator): static
+    {
+        $this->creators->removeElement($creator);
+
+        return $this;
     }
 }

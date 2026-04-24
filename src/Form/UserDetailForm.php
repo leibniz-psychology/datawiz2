@@ -51,7 +51,6 @@ class UserDetailForm extends AbstractType
                 [
                     'label' => 'input.creator.email',
                     'attr' => [
-                        'class' => 'MetaData-TextInput',
                         'rows' => '3',
                         'readonly' => true,
                     ],
@@ -66,7 +65,6 @@ class UserDetailForm extends AbstractType
                 [
                     'label' => 'input.creator.name.given',
                     'attr' => [
-                        'class' => 'MetaData-TextInput',
                         'rows' => '3',
                         'readonly' => true,
                     ],
@@ -77,7 +75,6 @@ class UserDetailForm extends AbstractType
                 [
                     'label' => 'input.creator.name.family',
                     'attr' => [
-                        'class' => 'MetaData-TextInput',
                         'rows' => '3',
                         'readonly' => true,
                     ],

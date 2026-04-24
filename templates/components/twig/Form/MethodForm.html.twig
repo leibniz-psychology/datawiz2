@@ -1,0 +1,102 @@
+{% extends "components/twig/Form/_baseForm.html.twig" %}
+
+{% block title %}
+    {{ "title.theories.title"|trans }}
+{% endblock %}
+
+{% set experimentalDesign = (form.research_design.vars.value == form.research_design.vars.choices[0].value) %}
+
+{% block form_content %}
+    <twig:Form:FormCard title="{{ 'input.design.legend'|trans }}" help="{{ "research_design" }}">
+        {{ form_label(form.research_design) }}
+        {{ form_errors(form.research_design) }}
+        <div class="mt-1 flex flex-col gap-2">
+            {%- for choice in form.research_design %}
+                <div class="w-full px-4 py-4 border rounded-lg border-stone-300 has-checked:bg-zpid-blue-50 flex items-start">
+                    {{ form_widget(choice) }}
+                    {{ form_label(choice, null, {
+                        label_attr: {
+                            class: 'm-0'
+                        }
+                    }) }}
+                </div>
+            {% endfor -%}
+        </div>
+
+
+        <div class="mt-3">
+            {% if experimentalDesign %}
+                <twig:Form:MultilineChoiceForm form="{{ form.experimentalDetails }}"/>
+
+                {% do form.nonExperimentalDetails.setRendered %}
+                {% do form.observationalType.setRendered %}
+            {% else %}
+                <div>
+                    {{ form_label(form.nonExperimentalDetails) }}
+                    {{ form_errors(form.nonExperimentalDetails) }}
+
+                    <div class="flex flex-col gap-2 mt-1">
+                        {%- for choice in form.nonExperimentalDetails %}
+                            <div class="flex">
+                                {{ form_widget(choice) }}
+                                {{ form_label(choice, null, {
+                                    'label_attr': {'class': '[&_span]:block [&_span]:last:text-sm [&_span]:last:text-stone-600'},
+                                    'label_html': true,
+                                }) }}
+                            </div>
+                            {% if choice.vars.value == 'Observational study' %}
+                                <div class="ml-6">
+                                    {{ form_row(form.observationalType, {
+                                        'attr': {
+                                            'disabled': not choice.vars.checked,
+                                        }
+                                    }) }}
+                                </div>
+                            {% endif %}
+                        {% endfor -%}
+                    </div>
+
+                </div>
+                {% do form.experimentalDetails.setRendered %}
+            {% endif %}
+        </div>
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" title="{{ 'input.setting.legend'|trans }}" help="{{ "setting" }}">
+        <twig:Form:MultilineChoiceForm form="{{ form.setting }}"/>
+
+        {{ form_row(form.settingLocation, {
+            'attr': {
+                'disabled': form.setting.vars.value == 'Artificial setting',
+            }
+        }) }}
+    </twig:Form:FormCard>
+
+    {% if experimentalDesign %}
+        <twig:Form:FormCard class="mt-8" title="{{ 'input.manipulations.legend'|trans }}" help="{{ "manipulations" }}">
+            {{ form_row(form.manipulations) }}
+        </twig:Form:FormCard>
+
+        <twig:Form:FormCard class="mt-8" title="{{ 'input.experimental-design.legend'|trans }}" help="{{ "experimental_design" }}">
+            <twig:Form:MultilineChoiceForm form="{{ form.experimental_design }}"/>
+        </twig:Form:FormCard>
+
+        <twig:Form:FormCard class="mt-8" title="{{ 'input.control-operations.legend'|trans }}" help="{{ "control_operations" }}">
+            <twig:Form:MultilineChoiceForm form="{{ form.control_operations }}"/>
+
+            {{ form_row(form.otherControlOperations, {
+                'attr': {
+                    'disabled': form.control_operations.vars.value != 'Other'
+                }
+            }) }}
+        </twig:Form:FormCard>
+    {% else %}
+        {% do form.manipulations.setRendered %}
+        {% do form.experimental_design.setRendered %}
+        {% do form.control_operations.setRendered %}
+        {% do form.otherControlOperations.setRendered %}
+    {% endif %}
+
+{% endblock %}
+
+

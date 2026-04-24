@@ -57,7 +57,7 @@ title:
     title: 'Describe your study'
   basic:
     title: 'Resource description'
-  theroies:
+  theories:
     title: 'Study goals'
   method:
     title: 'Study method'
@@ -180,6 +180,7 @@ generic:
 
 input:
   hidden: ''
+  autoSaved: 'Auto-saved at %time%'
   title:
     legend: 'Title'
     label: 'Provide a title for your dataset'

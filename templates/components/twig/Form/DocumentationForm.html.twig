@@ -1,0 +1,97 @@
+{% extends "components/twig/Form/_baseForm.html.twig" %}
+
+{% block title %}
+    {{ "title.basic.title"|trans }}
+{% endblock %}
+
+{% block form_content %}
+    <twig:Form:FormCard title="{{ 'input.title.legend'|trans }}" help="{{ "title" }}">
+        {{ form_row(form.title) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" title="{{ 'input.description.legend'|trans }}" help="{{ "description" }}">
+        {{ form_row(form.description) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" title="{{ 'input.relatedPubs.legend'|trans }}" help="{{ "related_publications" }}">
+        <twig:Form:CollectionForm
+            collection="{{ form.related_publications }}"
+            add_action="addRelatedPublication"
+            remove_action="removeRelatedPublication"
+            add_label="{{ 'input.relatedPubs.add'|trans }}"
+        />
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" title="{{ 'input.creator.legend'|trans }}" help="{{ "creator" }}">
+        {{ form_label(form.creators) }}
+        {{ form_errors(form.creators) }}
+        <div class="mt-1">
+            <ul>
+                {% for key, creator in form.creators %}
+                    <li class='items-baseline pb-4 mt-2 border rounded border-stone-400 first:mt-0'>
+                        <button type="button"
+                                data-action="live#action"
+                                data-live-action-param="removeCreator"
+                                data-live-index-param="{{ key }}"
+                                class="Creator-RemoveButton">
+                            {{ 'input.creator.remove'|trans }}
+                        </button>
+
+                        <div class="px-4 md:grid md:w-full md:grid-cols-2 md:gap-x-2">
+                            {{ form_row(creator.givenName) }}
+                            {{ form_row(creator.familyName) }}
+                            {{ form_row(creator.email) }}
+                            {{ form_row(creator.orcid) }}
+                            <span class="col-span-2">
+                                {{ form_row(creator.affiliation) }}
+                            </span>
+
+                        </div>
+
+                        <div class="px-4 col-span-2 mt-2.5">
+                            <ul class="xl:grid xl:grid-cols-2 xl:gap-x-3">
+                                {% for key2, credit_role in creator.creditRoles %}
+                                    <li class="flex mt-2 items-start">
+                                        {{ form_widget(credit_role) }}
+                                        <button type="button"
+                                                class="!rounded-l-none Button_tertiary_danger Button_fieldSize"
+                                                data-action="live#action"
+                                                data-live-action-param="removeCreditRole"
+                                                data-live-creatorindex-param="{{ key }}"
+                                                data-live-roleindex-param="{{ key2 }}"
+                                                title="{{ 'input.creator.credit.remove'|trans }}">
+                                            {{ include('components/icons/delete.svg') }}
+                                        </button>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+
+                            {% do creator.creditRoles.setRendered() %}
+
+                            <button type="button"
+                                    class="mt-2 Button_secondary_act Button_fieldSize"
+                                    data-action="live#action"
+                                    data-live-creatorindex-param="{{ key }}"
+                                    data-live-action-param="addCreditRole">
+                                {{ include('components/icons/add.svg') }}
+                                {{ 'input.creator.credit.add'|trans }}
+                            </button>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <button type="button"
+                    class="mt-2 Button_secondary_act Button_fieldSize"
+                    data-action="live#action"
+                    data-live-action-param="addCreator">
+                {{ include('components/icons/add.svg') }}
+                {{ 'input.creator.add'|trans }}
+            </button>
+        </div>
+    </twig:Form:FormCard>
+
+    {{ form_rest(form) }}
+{% endblock %}
+
+

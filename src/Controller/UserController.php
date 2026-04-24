@@ -16,7 +16,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class UserController extends AbstractController
 {
-    public function __construct(private readonly LoggerInterface $logger, private readonly KernelInterface $kernel) {}
+    public function __construct(private readonly LoggerInterface $logger, private readonly KernelInterface $kernel)
+    {
+    }
 
     /**
      * @throws \Exception

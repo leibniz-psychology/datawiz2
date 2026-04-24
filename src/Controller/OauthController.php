@@ -10,7 +10,9 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route(path: '/security', name: 'Security-', condition: "'%kernel.environment%' in ['dev', 'prod']")]
 class OauthController extends AbstractController
 {
-    public function __construct(private readonly ClientRegistry $clientRegistry) {}
+    public function __construct(private readonly ClientRegistry $clientRegistry)
+    {
+    }
 
     #[Route(path: '/login', name: 'login', methods: ['GET'])]
     public function login(): RedirectResponse
@@ -19,8 +21,12 @@ class OauthController extends AbstractController
     }
 
     #[Route(path: '/logout', name: 'logout', methods: ['GET'])]
-    public function logout(ClientRegistry $clientRegistry) {}
+    public function logout(ClientRegistry $clientRegistry)
+    {
+    }
 
     #[Route(path: '/login/check', name: 'check', methods: ['GET'])]
-    public function loginCheck() {}
+    public function loginCheck()
+    {
+    }
 }

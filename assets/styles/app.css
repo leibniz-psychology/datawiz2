@@ -1,7 +1,78 @@
-@import "./_base.css";
+@import "./base.css";
 @import "./_components.css";
 @import "./_utilities.css";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@source '../../vendor/symfony/twig-bridge/Resources/views/Form/tailwind_2_layout.html.twig';
+@source './templates/**/*.twig';
+@source './assets/**/*.js';
+@source './translations/help_markdown.en.yaml';
+
+@theme {
+    --font-*: initial;
+    --font-sans: Open Sans, sans-serif;
+    --font-condensed: Open Sans Condensed, sans-serif;
+    --font-serif: Zilla Slab, serif;
+    --font-mono: monospace;
+
+    --color-zpid-purple: #352071;
+    --color-zpid-purple-900: #100A21;
+    --color-zpid-purple-800: #221549;
+    --color-zpid-purple-700: #352071;
+    --color-zpid-purple-600: #472C98;
+    --color-zpid-purple-500: #5A37C0;
+    --color-zpid-purple-400: #785AD0;
+    --color-zpid-purple-300: #9982DB;
+    --color-zpid-purple-200: #B9A9E7;
+    --color-zpid-purple-100: #D9D1F2;
+    --color-zpid-purple-50: #EAE5F8;
+
+    --color-zpid-green: #A0B01E;
+    --color-zpid-green-900: #020200;
+    --color-zpid-green-800: #292D08;
+    --color-zpid-green-700: #51590F;
+    --color-zpid-green-600: #788417;
+    --color-zpid-green-500: #A0B01E;
+    --color-zpid-green-400: #D2E252;
+    --color-zpid-green-300: #D2E252;
+    --color-zpid-green-200: #DDE97E;
+    --color-zpid-green-100: #E9F0AA;
+    --color-zpid-green-50: #EEF4BF;
+
+    --color-zpid-blue: #0097C6;
+    --color-zpid-blue-900: #004960;
+    --color-zpid-blue-800: #007093;
+    --color-zpid-blue-700: #0097C6;
+    --color-zpid-blue-600: #00BEF9;
+    --color-zpid-blue-500: #2DCDFF;
+    --color-zpid-blue-400: #56D7FF;
+    --color-zpid-blue-300: #7FE0FF;
+    --color-zpid-blue-200: #A7EAFF;
+    --color-zpid-blue-100: #D0F4FF;
+    --color-zpid-blue-50: #E5F9FF;
+
+    --color-zpid-violet: #D927C4;
+    --color-zpid-violet-900: #2C0828;
+    --color-zpid-violet-800: #580F4F;
+    --color-zpid-violet-700: #831776;
+    --color-zpid-violet-600: #AE1F9D;
+    --color-zpid-violet-500: #D927C4;
+    --color-zpid-violet-400: #E152D0;
+    --color-zpid-violet-300: #E87EDC;
+    --color-zpid-violet-200: #F0A9E8;
+    --color-zpid-violet-100: #F8D4F3;
+    --color-zpid-violet-50: #FBEAF9;
+
+    --breakpoint-xl: 1440px;
+}
+
+@layer base {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-stone-200, currentcolor);
+    }
+}

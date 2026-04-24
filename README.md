@@ -1,7 +1,7 @@
 # DataWiz - Research Data Documentation Assistant
 
-![Symfony Version](https://img.shields.io/badge/Symfony-^7.0-success?logo=symfony&style=flat-square)
-![PHP Version](https://img.shields.io/badge/Php-^8.3-informational?logo=PHP&style=flat-square&logoColor=white)
+![Symfony Version](https://img.shields.io/badge/Symfony-^8.0-success?logo=symfony&style=flat-square)
+![PHP Version](https://img.shields.io/badge/Php-^8.4-informational?logo=PHP&style=flat-square&logoColor=white)
 ![Composer Version](https://img.shields.io/badge/Composer-^2.7-informational?logo=Composer&style=flat-square&logoColor=white)
 ![Nodejs Version](https://img.shields.io/badge/Nodejs-23_LTS-informational?logo=node.js&style=flat-square&logoColor=white)
 ![MariaDB Version](https://img.shields.io/badge/MariaDB-10.11-informational?logo=mariadb&style=flat-square&logoColor=white)
@@ -16,7 +16,7 @@ More details of how to use DataWiz and how to contribute can be found at our hom
 
 This is the second iteration of the DataWiz application. \
 For today, you can't use this code in production and changes will occur. \
-You can find and test the latest version of Datawiz 2 (currently in beta) [here](https://datawiz2.dev.zpid.de/).
+You can find and test the latest version of Datawiz 2 (currently in beta) under [datawiz2.beta.zpid.org](https://datawiz2.beta.zpid.org/).
 
 ## Supported development environments
 

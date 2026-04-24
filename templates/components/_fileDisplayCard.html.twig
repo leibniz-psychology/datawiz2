@@ -1,9 +1,9 @@
 {% macro fileDisplayCard(file, type, loopIndex) %}
     {% from "components/_macros.html.twig" import bytesToSize %}
-    <li class="pt-3 pb-4 mt-2 first:mt-0 bg-mono-100">
-        <div class="bg-mono-100">
+    <li class="pt-3 pb-4 mt-2 first:mt-0 bg-stone-100">
+        <div class="bg-stone-100">
             <h4 class="flex justify-between mx-4">
-                <span title="{{ file.originalName }}" class="text-lg font-semibold text-zpid-purple-700 whitespace-nowrap overflow-ellipsis overflow-hidden">
+                <span title="{{ file.originalName }}" class="text-lg font-semibold text-zpid-purple-700 whitespace-nowrap text-ellipsis overflow-hidden">
                     {{ file.originalName }}
                 </span>
 
@@ -52,7 +52,7 @@
 {% macro editDescription(file, loopIndex, updateURL) %}
     <div class="mx-4" {{ stimulus_controller('text-edit', {url: updateURL, text: file.description}) }}>
         {% if file.description %}
-            <p class="p-1 border rounded-sm bg-mono-200 mt-2" {{ stimulus_target('text-edit', 'displayArea') }}>{{ file.description }}</p>
+            <p class="p-1 border rounded-sm bg-stone-200 mt-2" {{ stimulus_target('text-edit', 'displayArea') }}>{{ file.description }}</p>
         {% endif %}
 
         <span {{ stimulus_target('text-edit', 'displayArea') }}>

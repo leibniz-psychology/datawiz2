@@ -7,27 +7,21 @@
 namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
-use App\Form\SettingsType;
-use App\Service\Questionnaire\Questionable;
+use App\Repository\SettingsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'experiment_settings')]
-#[ORM\Entity]
-class SettingsMetaDataGroup extends UuidEntity implements Questionable
+#[ORM\Entity(repositoryClass: SettingsRepository::class)]
+class SettingsMetaDataGroup extends UuidEntity
 {
     /**
      * One Settings section has One Experiment.
      */
-    #[ORM\OneToOne(inversedBy: 'settingsMetaDataGroup')]
+    #[ORM\OneToOne(inversedBy: 'settingsMetaDataGroup', cascade: ['persist', 'remove'])]
     protected ?Experiment $experiment = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $shortName = null;
-
-    public function getFormTypeForEntity(): string
-    {
-        return SettingsType::class;
-    }
 
     public function getShortName(): ?string
     {

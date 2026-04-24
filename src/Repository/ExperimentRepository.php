@@ -19,10 +19,16 @@ class ExperimentRepository extends ServiceEntityRepository
         parent::__construct($registry, Experiment::class);
     }
 
+    public function save(Experiment $entity): void
+    {
+        $this->getEntityManager()->persist($entity);
+        $this->getEntityManager()->flush();
+    }
+
     public function findByBasicMetadata(?array $orderBy = null, $limit = null, $offset = null)
     {
         $qb = $this->createQueryBuilder('e');
-        if (is_iterable($orderBy) && sizeof($orderBy) > 1) {
+        if (is_iterable($orderBy) && count($orderBy) > 1) {
             switch ($orderBy[0]) {
                 case 'shortName':
                     $qb->join('e.settingsMetaDataGroup', 'es')

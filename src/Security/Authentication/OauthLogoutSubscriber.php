@@ -14,7 +14,8 @@ readonly class OauthLogoutSubscriber implements EventSubscriberInterface
     public function __construct(
         private ClientRegistry $clientRegistry,
         private UrlGeneratorInterface $urlGenerator
-    ) {}
+    ) {
+    }
 
     /**
      * This function returns an array containing the subscribed events and the function that is called when the subscribed event is called.

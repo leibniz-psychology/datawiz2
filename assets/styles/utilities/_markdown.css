@@ -1,84 +1,84 @@
 .markdown {
-  a {
-    @apply underline;
-  }
-
-  p {
-    @apply mt-3 leading-snug max-w-prose first:mt-0;
-  }
-
-  blockquote {
-    @apply mt-2 font-mono first:mt-0;
+    a {
+        @apply underline;
+    }
 
     p {
-      @apply p-2 first:mt-0 bg-mono-200;
-
-      word-break: break-word;
-      word-wrap: break-word;
+        @apply mt-3 leading-snug max-w-prose first:mt-0;
     }
-  }
 
-  h1 {
-    @apply text-2xl font-semibold;
-  }
+    blockquote {
+        @apply mt-2 text-stone-800 first:mt-0;
 
-  h2 {
-    @apply mt-4 text-xl font-semibold;
+        p {
+            @apply p-2 first:mt-0 bg-stone-200;
 
-    & ~ p {
-      @apply mt-0.5;
+            word-break: break-word;
+            word-wrap: break-word;
+        }
     }
-  }
 
-  h3 {
-    @apply mt-4 text-lg font-semibold first:mt-0;
-
-    & ~ blockquote,
-    & ~ p {
-      @apply mt-0.5;
+    h1 {
+        @apply text-2xl font-semibold;
     }
-  }
 
-  h4 {
-    @apply mt-4 text-base font-semibold leading-tight first:mt-0;
-  }
+    h2 {
+        @apply mt-4 text-xl font-semibold;
 
-  h5 {
-    @apply mt-4 first:mt-0;
+        & ~ p {
+            @apply mt-0.5;
+        }
+    }
 
-    font-variant: small-caps;
-  }
+    h3 {
+        @apply mt-4 text-lg font-semibold first:mt-0;
 
-  h6 {
-    font-variant: small-caps;
-  }
+        & ~ blockquote,
+        & ~ p {
+            @apply mt-0.5;
+        }
+    }
 
-  ul,
-  ol {
-    @apply mt-4 leading-snug;
-  }
+    h4 {
+        @apply mt-4 text-base font-semibold leading-tight first:mt-0;
+    }
 
-  ul {
-    @apply mt-4 leading-snug list-disc;
-  }
+    h5 {
+        @apply mt-4 first:mt-0;
 
-  ol {
-    @apply mt-4 leading-snug list-decimal;
-  }
+        font-variant: small-caps;
+    }
 
-  li {
-    @apply mt-2 ml-4 max-w-prose;
-  }
+    h6 {
+        font-variant: small-caps;
+    }
 
-  dl {
-    @apply mt-4;
-  }
+    ul,
+    ol {
+        @apply mt-4 leading-snug;
+    }
 
-  dt {
-    @apply mt-2 font-bold first:mt-0 max-w-prose;
-  }
+    ul {
+        @apply mt-4 leading-snug list-disc;
+    }
 
-  dd {
-    @apply ml-1;
-  }
+    ol {
+        @apply mt-4 leading-snug list-decimal;
+    }
+
+    li {
+        @apply mt-2 ml-4 max-w-prose;
+    }
+
+    dl {
+        @apply mt-4;
+    }
+
+    dt {
+        @apply mt-2 font-bold first:mt-0 max-w-prose;
+    }
+
+    dd {
+        @apply ml-1;
+    }
 }

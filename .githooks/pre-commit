@@ -57,7 +57,7 @@ yarn markdownlint-cli2 '**/*.md' '#node_modules' '#vendor' '#tools' '#CHANGELOG.
 echo ""
 echo "Lint PHP Files..."
 
-FILES=` git status --porcelain | grep -e '^[AM]\(.*\).php$' | cut -c 3- | sed 's/config\/bundles.php//' | xargs`
+FILES=` git status --porcelain | grep -e '^[AM]\(.*\).php$' | cut -c 3- | sed 's/config\/bundles.php//' | sed 's/config\/reference.php//' | xargs`
 if [ -z "$FILES" ]
   then
       echo "No php files found in commit."
@@ -68,11 +68,14 @@ if [ -z "$FILES" ]
       git add ${FILES}
 fi
 
+echo "Check Dependencies..."
+vendor/bin/deptrac
+
 echo ""
-echo "Lint non-PHP Files..."
+echo "Lint other Files..."
 php ./bin/console lint:container
-php ./bin/console lint:twig
-php ./bin/console lint:yaml .github/workflows config/ translations/
+php ./bin/console lint:twig templates/
+php ./bin/console lint:yaml config/ translations/ .github/workflows
 php ./bin/console lint:container
 composer validate --strict
 echo ""

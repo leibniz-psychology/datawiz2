@@ -30,7 +30,8 @@ class FileManagementController extends AbstractController
         private readonly SavImportable $savImportable,
         private readonly EntityManagerInterface $em,
         private readonly LoggerInterface $logger
-    ) {}
+    ) {
+    }
 
     #[Route(path: '/preview/sav/{id}', name: 'preview-sav', methods: ['POST'])]
     public function previewSav(Dataset $dataset): JsonResponse
@@ -48,7 +49,7 @@ class FileManagementController extends AbstractController
 
         $data = $this->savImportable->savToArray($dataset);
 
-        if (key_exists('codebook', $data)) {
+        if (array_key_exists('codebook', $data)) {
             foreach ($data['codebook'] as $var) {
                 $this->em->persist(
                     DatasetVariables::createNew(
@@ -63,7 +64,7 @@ class FileManagementController extends AbstractController
                 );
             }
             $this->em->flush();
-            if (key_exists('records', $data)) {
+            if (array_key_exists('records', $data)) {
                 $this->crud->saveDatasetMatrix($data['records'], $dataset->getId());
             }
         }
@@ -95,13 +96,13 @@ class FileManagementController extends AbstractController
             $error = $this->crud->deleteDataset($dataset) ? false : 'error.import.csv.codebook.delete';
         } else {
             $data = $this->csvImportable->csvToArray($dataset->getStorageName(), $csvConfig->datasetImportDelimiter, $csvConfig->datasetImportEscape, $csvConfig->datasetImportHeaderRows);
-            if ($data && key_exists('header', $data) && is_iterable($data['header']) && sizeof($data['header']) > 0) {
+            if ($data && array_key_exists('header', $data) && is_iterable($data['header']) && count($data['header']) > 0) {
                 $varId = 1;
                 foreach ($data['header'] as $var) {
                     $this->em->persist(DatasetVariables::createNew($dataset, $varId++, $var));
                 }
                 $this->em->flush();
-            } elseif ($data && key_exists('records', $data) && is_iterable($data['records']) && sizeof($data['records']) > 0) {
+            } elseif ($data && array_key_exists('records', $data) && is_iterable($data['records']) && count($data['records']) > 0) {
                 $varId = 1;
                 foreach ($data['records'][0] as $ignored) {
                     $this->em->persist(DatasetVariables::createNew($dataset, $varId, "var_{$varId}"));
@@ -111,7 +112,7 @@ class FileManagementController extends AbstractController
             } else {
                 $error = 'error.import.csv.codebook.empty';
             }
-            if ($error == null && $data && key_exists('records', $data) && is_iterable($data['records']) && sizeof($data['records']) > 0) {
+            if ($error == null && $data && array_key_exists('records', $data) && is_iterable($data['records']) && count($data['records']) > 0) {
                 $this->crud->saveDatasetMatrix($data['records'], $dataset->getId());
             } else {
                 $error = 'error.import.csv.matrix.empty';

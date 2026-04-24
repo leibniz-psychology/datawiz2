@@ -28,7 +28,8 @@ class CodebookController extends AbstractController
         protected EntityManagerInterface $em,
         protected LoggerInterface $logger,
         private readonly FilesystemOperator $matrixFilesystem,
-    ) {}
+    ) {
+    }
 
     #[Route(path: '/{id}', name: 'index', methods: ['GET'])]
     public function codebookIndex(Dataset $dataset): Response
@@ -65,7 +66,7 @@ class CodebookController extends AbstractController
             }
         }
 
-        return new JsonResponse($viewMeasures, key_exists('measures', $viewMeasures) ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);
+        return new JsonResponse($viewMeasures, array_key_exists('measures', $viewMeasures) ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);
     }
 
     #[Route(path: '/{id}/matrix', name: 'matrix', methods: ['GET'])]
@@ -153,9 +154,9 @@ class CodebookController extends AbstractController
 
     private function saveCodebookVariables(array $arr)
     {
-        if ($arr && key_exists('variables', $arr) && !empty($arr['variables']) && is_iterable($arr['variables'])) {
+        if ($arr && array_key_exists('variables', $arr) && !empty($arr['variables']) && is_iterable($arr['variables'])) {
             foreach ($arr['variables'] as $variable) {
-                if (key_exists('var_db_id', $variable)) {
+                if (array_key_exists('var_db_id', $variable)) {
                     $values = $variable['values'] ? $this->setMissingArrayFields(array_values(array_filter($variable['values']))) : null;
                     $missings = $variable['missings'] ? $this->setMissingArrayFields(array_values(array_filter($variable['missings']))) : null;
                     $var = $this->em->getRepository(DatasetVariables::class)->find($variable['var_db_id']);
@@ -176,10 +177,10 @@ class CodebookController extends AbstractController
     {
         if ($arr != null) {
             foreach ($arr as &$item) {
-                if (key_exists('name', $item) && !key_exists('label', $item)) {
+                if (array_key_exists('name', $item) && !array_key_exists('label', $item)) {
                     $item['label'] = '';
                 }
-                if (!key_exists('name', $item) && key_exists('label', $item)) {
+                if (!array_key_exists('name', $item) && array_key_exists('label', $item)) {
                     $item['name'] = '';
                 }
             }

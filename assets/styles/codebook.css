@@ -1,4 +1,4 @@
-.CodeBookHead-Cell {
+@utility CodeBookHead-Cell {
   @apply px-1 py-2 text-sm font-semibold text-left text-gray-700 bg-gray-200 border-b border-gray-400;
 
   .tippy-content {
@@ -6,17 +6,8 @@
   }
 }
 
-.PopupLink {
+@utility PopupLink {
   width: max-content;
   min-width: 1.5rem;
   max-width: stretch;
-}
-
-.SearchInput {
-  /* prettier-ignore */
-  background:
-    url("../images/codicon:search.svg"
-    param(--color
-    theme("colors.mono.900")))
-    0.6125rem center no-repeat;
 }

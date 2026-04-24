@@ -4,23 +4,22 @@ namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
 use App\Entity\Constant\ReviewDataDictionary;
-use App\Form\MethodType;
-use App\Service\Questionnaire\Questionable;
+use App\Repository\MethodRepository;
 use App\Service\Review\Reviewable;
 use App\Service\Review\ReviewDataCollectable;
 use App\Service\Review\ReviewValidator;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Table(name: 'experiment_method')]
-#[ORM\Entity]
-class MethodMetaDataGroup extends UuidEntity implements Questionable, Reviewable
+#[ORM\Entity(repositoryClass: MethodRepository::class)]
+class MethodMetaDataGroup extends UuidEntity implements Reviewable
 {
     /**
      * One basic Information section has One Experiment.
      */
-    #[ORM\OneToOne(inversedBy: 'methodMetaDataGroup')]
+    #[ORM\OneToOne(inversedBy: 'methodMetaDataGroup', cascade: ['persist', 'remove'])]
     protected ?Experiment $experiment = null;
 
     #[ORM\Column(type: 'text', length: 1500, nullable: true)]
@@ -130,11 +129,6 @@ class MethodMetaDataGroup extends UuidEntity implements Questionable, Reviewable
                 $this->getResearchDesign() === 'Experimental'
             ),
         ];
-    }
-
-    public function getFormTypeForEntity(): string
-    {
-        return MethodType::class;
     }
 
     public function getSetting(): ?string

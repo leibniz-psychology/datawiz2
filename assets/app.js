@@ -1,6 +1,6 @@
+import './stimulus_bootstrap.js';
 import "./styles/app.css";
 
-import './bootstrap.js';
 
 
 import "./alpine.js";

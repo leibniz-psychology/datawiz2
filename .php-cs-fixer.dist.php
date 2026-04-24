@@ -5,8 +5,11 @@ use PhpCsFixer\Finder;
 
 $finder = Finder::create()
     ->exclude(['var', 'vendor', 'node_modules'])
-    ->notPath('config/bundles.php')
-    ->notName('bundles.php')
+    ->notPath([
+        'config/bundles.php',
+        'config/reference.php',
+    ])
+    ->notName(['bundles.php', 'reference.php'])
     ->in(__DIR__)
 ;
 
@@ -16,6 +19,8 @@ return $config->setRules([
     'yoda_style' => ['equal' => false, 'identical' => false, 'less_and_greater' => false],
     'blank_line_before_statement' => false,
     'multiline_whitespace_before_semicolons' => false,
+    'single_line_empty_body' => false,
+    'phpdoc_to_comment' => false,
 ])
     ->setFinder($finder)
 ;

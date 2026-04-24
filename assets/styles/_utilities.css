@@ -1,24 +1,22 @@
-@import "utilities/_markdown.css";
+@import './utilities/_markdown.css';
 
 [x-cloak] {
-  display: none !important;
+    display: none !important;
 }
 
-@layer utilities {
-  .underline-dotted {
+@utility underline-dotted {
     text-decoration-style: dotted;
-  }
 }
 
 .Label-Info {
-  &::before {
-    @apply p-2 mr-1 mt-0.5 border rounded-3xl;
+    &::before {
+        @apply p-2 mr-1 mt-0.5 border rounded-3xl;
 
-    align-self: baseline;
-    /* prettier-ignore */
-    background:
-      url("../images/mdi:information-variant.svg")
-      left center no-repeat theme("colors.zpid-purple.50");
-    content: "";
-  }
+        align-self: baseline;
+        /* prettier-ignore */
+        background:
+            url("../images/mdi:information-variant.svg")
+            left center no-repeat;
+        content: "";
+    }
 }

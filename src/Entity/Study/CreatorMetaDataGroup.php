@@ -4,19 +4,18 @@ namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
 use App\Entity\Constant\ReviewDataDictionary;
-use App\Service\Questionnaire\Questionable;
 use App\Service\Review\Reviewable;
 use App\Service\Review\ReviewDataCollectable;
 use App\Service\Review\ReviewValidator;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Table(name: 'experiment_basic_creators')]
 #[ORM\Entity]
-class CreatorMetaDataGroup extends UuidEntity implements Questionable, Reviewable
+class CreatorMetaDataGroup extends UuidEntity implements Reviewable
 {
-    #[ORM\ManyToOne(inversedBy: 'creators')]
+    #[ORM\ManyToOne(cascade: ['persist', 'remove'], inversedBy: 'creators')]
     #[ORM\JoinColumn(name: 'basic_id', referencedColumnName: 'id')]
     protected ?BasicInformationMetaDataGroup $basicInformation = null;
     #[ORM\Column(type: 'text', length: 100, nullable: true)]
@@ -48,11 +47,6 @@ class CreatorMetaDataGroup extends UuidEntity implements Questionable, Reviewabl
     #[SerializedName('roles')]
     #[Groups('study')]
     private ?array $creditRoles = null;
-
-    public function getFormTypeForEntity(): string
-    {
-        return CreatorMetaDataGroup::class;
-    }
 
     public function getReviewCollection(): array
     {

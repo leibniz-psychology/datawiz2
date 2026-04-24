@@ -11,8 +11,9 @@ use App\Repository\ExperimentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\SerializedName;
+use Gedmo\Mapping\Annotation\Timestampable;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Entity(repositoryClass: ExperimentRepository::class)]
 class Experiment extends UuidEntity
@@ -65,12 +66,12 @@ class Experiment extends UuidEntity
     #[ORM\OneToOne(mappedBy: 'experiment', cascade: ['persist', 'remove'])]
     private ?SettingsMetaDataGroup $settingsMetaDataGroup = null;
 
-    #[ORM\OneToMany(mappedBy: 'experiment', targetEntity: 'App\Entity\FileManagement\Dataset', cascade: ['persist'])]
+    #[ORM\OneToMany(targetEntity: Dataset::class, mappedBy: 'experiment', cascade: ['persist'])]
     #[SerializedName('datasets')]
     #[Groups(['dataset'])]
     private Collection $originalDatasets;
 
-    #[ORM\OneToMany(mappedBy: 'experiment', targetEntity: 'App\Entity\FileManagement\AdditionalMaterial', cascade: ['persist'])]
+    #[ORM\OneToMany(targetEntity: AdditionalMaterial::class, mappedBy: 'experiment', cascade: ['persist'])]
     #[SerializedName('material')]
     #[Groups(['material'])]
     private Collection $additionalMaterials;
@@ -79,6 +80,7 @@ class Experiment extends UuidEntity
     private ?DataWizUser $owner = null;
 
     #[ORM\Column]
+    #[Timestampable(on: 'create')]
     private ?\DateTime $dateCreated = null;
 
     #[ORM\Column(nullable: true)]
@@ -231,19 +233,5 @@ class Experiment extends UuidEntity
     public function removeOriginalDatasets(Dataset $originalDatasets): void
     {
         $this->originalDatasets->removeElement($originalDatasets);
-    }
-
-    public static function createNewExperiment(DataWizUser $owner): Experiment
-    {
-        $newExperiment = new Experiment();
-        $newExperiment->setSettingsMetaDataGroup(new SettingsMetaDataGroup());
-        $newExperiment->setBasicInformationMetaDataGroup(new BasicInformationMetaDataGroup());
-        $newExperiment->setTheoryMetaDataGroup(new TheoryMetaDataGroup());
-        $newExperiment->setSampleMetaDataGroup(new SampleMetaDataGroup());
-        $newExperiment->setMeasureMetaDataGroup(new MeasureMetaDataGroup());
-        $newExperiment->setMethodMetaDataGroup(new MethodMetaDataGroup());
-        $newExperiment->setOwner($owner);
-
-        return $newExperiment;
     }
 }

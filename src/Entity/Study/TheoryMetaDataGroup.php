@@ -4,23 +4,22 @@ namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
 use App\Entity\Constant\ReviewDataDictionary;
-use App\Form\TheoryType;
-use App\Service\Questionnaire\Questionable;
+use App\Repository\TheoryRepository;
 use App\Service\Review\Reviewable;
 use App\Service\Review\ReviewDataCollectable;
 use App\Service\Review\ReviewValidator;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Table(name: 'experiment_theory')]
-#[ORM\Entity]
-class TheoryMetaDataGroup extends UuidEntity implements Questionable, Reviewable
+#[ORM\Entity(repositoryClass: TheoryRepository::class)]
+class TheoryMetaDataGroup extends UuidEntity implements Reviewable
 {
     /**
      * One Theory section has One Experiment.
      */
-    #[ORM\OneToOne(inversedBy: 'theoryMetaDataGroup')]
+    #[ORM\OneToOne(inversedBy: 'theoryMetaDataGroup', cascade: ['persist', 'remove'])]
     protected ?Experiment $experiment = null;
 
     #[ORM\Column(type: 'text', length: 1500, nullable: true)]
@@ -47,11 +46,6 @@ class TheoryMetaDataGroup extends UuidEntity implements Questionable, Reviewable
                 ReviewValidator::validateSingleValue($this->getHypothesis())
             ),
         ];
-    }
-
-    public function getFormTypeForEntity(): string
-    {
-        return TheoryType::class;
     }
 
     public function getObjective(): ?string

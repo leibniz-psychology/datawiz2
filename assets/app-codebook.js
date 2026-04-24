@@ -210,7 +210,7 @@ Alpine.data("codebookHelp", (helpName) => ({
     },
     ["x-bind:class"]() {
       return this.$store.codebook[helpName] === true
-        ? "!bg-zpid-blue text-white"
+        ? "bg-zpid-blue! text-white"
         : "";
     },
   },

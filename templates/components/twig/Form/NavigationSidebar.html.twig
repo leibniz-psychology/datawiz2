@@ -1,0 +1,191 @@
+{% set route_name = app.current_route %}
+{% if needs_saving is not defined %}
+    {% set needs_saving = false %}
+{% endif %}
+
+<div class="py-4.5 pl-6 pr-3 border-b bg-stone-100 border-stone-300">
+    <span class="text-zpid-purple-700 text-xl font-bold break-all mr-0.5 leading-tight">{{ experiment.settingsMetaDataGroup.shortName }}
+    </span>
+    {%- if needs_saving -%}
+        <button {{ live_action('save', {route: 'Study-settings' })}}
+            class="Button_icon"
+            title="{{ "generic.edit"|trans }}">
+            {{ include('components/icons/edit.svg') }}
+        </button>
+    {%- else -%}
+        <a href="{{ path('Study-settings', {id: experiment.id}) }}"
+           class="Button_icon"
+           title="{{ "generic.edit"|trans }}">
+            {{ include('components/icons/edit.svg') }}
+        </a>
+    {%- endif -%}
+</div>
+
+<nav>
+    <ul>
+        <li>
+            {%- if needs_saving -%}
+                <button {{ live_action('save', {route: 'Study-introduction' })}}
+                    class="StudyNav-NavItem {{- route_name == 'Study-introduction' ? ' StudyNav-NavItem_active' -}}">{{ "title.introduction.title"|trans }}</button>
+            {% else %}
+                <a href="{{ path('Study-introduction', {id: experiment.id}) }}"
+                   class="StudyNav-NavItem {{- route_name == 'Study-introduction' ? ' StudyNav-NavItem_active' -}}">{{ "title.introduction.title"|trans }}</a>
+            {%- endif -%}
+        </li>
+        <li>
+            {%- if needs_saving -%}
+                <button {{ live_action('save', {route: 'Study-documentation' })}}
+                    class="StudyNav-NavItem
+                    {{- needs_saving ?' StudyNav-NavItem_active StudyNav-NavItem_active_isParent' -}}">
+                    1. {{ "title.describe-study.title"|trans }}
+                </button>
+            {%- else -%}
+                <a href="{{ path('Study-documentation', {id: experiment.id}) }}"
+                   class="StudyNav-NavItem
+                    {{- needs_saving ?' StudyNav-NavItem_active StudyNav-NavItem_active_isParent' -}}">
+                    1. {{ "title.describe-study.title"|trans }}
+                </a>
+            {%- endif -%}
+            <ul class="StudyNav-SubNav">
+                <li>
+                    {%- if needs_saving -%}
+                        <button {{ live_action('save', {route: 'Study-documentation' })}}
+                            class="StudyNav-SubNavItem
+                            {{- form_type == 'documentation' ? ' StudyNav-SubNavItem_active' -}}">
+                            {{ "title.basic.title"|trans }}
+                        </button>
+                    {%- else -%}
+                        <a href="{{ path('Study-documentation', {id: experiment.id}) }}"
+                           class="StudyNav-SubNavItem
+                            {{- route_name == 'Study-documentation' ? ' StudyNav-SubNavItem_active' -}}">
+                            {{ "title.basic.title"|trans }}
+                        </a>
+                    {%- endif -%}
+
+                </li>
+                <li>
+                    {%- if needs_saving -%}
+                        <button {{ live_action('save', {route: 'Study-theory' })}}
+                            class="StudyNav-SubNavItem
+                            {{- form_type == 'theory' ? ' StudyNav-SubNavItem_active' -}}">
+                            {{ "title.theories.title"|trans }}
+                        </button>
+                    {%- else -%}
+                        <a href="{{ path('Study-theory', {id: experiment.id}) }}"
+                           class="StudyNav-SubNavItem
+                            {{- route_name == 'Study-theory' ? ' StudyNav-SubNavItem_active' -}}">
+                            {{ "title.theories.title"|trans }}
+                        </a>
+                    {%- endif -%}
+                </li>
+                <li>
+                    {%- if needs_saving -%}
+                        <button {{ live_action('save', {route: 'Study-method' })}}
+                            class="StudyNav-SubNavItem
+                            {{- form_type == 'method' ? ' StudyNav-SubNavItem_active' -}}">
+                            {{ "title.method.title"|trans }}
+                        </button>
+                    {%- else -%}
+                        <a href="{{ path('Study-method', {id: experiment.id}) }}"
+                           class="StudyNav-SubNavItem
+                            {{- route_name == 'Study-method' ? ' StudyNav-SubNavItem_active' -}}">
+                            {{ "title.method.title"|trans }}
+                        </a>
+                    {%- endif -%}
+                </li>
+                <li>
+                    {%- if needs_saving -%}
+                        <button {{ live_action('save', {route: 'Study-measure' })}}
+                            class="StudyNav-SubNavItem
+                            {{- form_type == 'measure' ? ' StudyNav-SubNavItem_active' -}}">
+                            {{ "title.measures.title"|trans }}
+                        </button>
+                    {%- else -%}
+                        <a href="{{ path('Study-measure', {id: experiment.id}) }}"
+                           class="StudyNav-SubNavItem
+                            {{- route_name == 'Study-measure' ? ' StudyNav-SubNavItem_active' -}}">
+                            {{ "title.measures.title"|trans }}
+                        </a>
+                    {%- endif -%}
+                </li>
+                <li>
+                    {%- if needs_saving -%}
+                        <button {{ live_action('save', {route: 'Study-sample' })}}
+                            class="StudyNav-SubNavItem
+                           {{- form_type == 'sample' ? ' StudyNav-SubNavItem_active' -}}">
+                            {{ "title.samples.title"|trans }}
+                        </button>
+                    {%- else -%}
+                        <a href="{{ path('Study-sample', {id: experiment.id}) }}"
+                           class="StudyNav-SubNavItem
+                           {{- route_name == 'Study-sample' ? ' StudyNav-SubNavItem_active' -}}">
+                            {{ "title.samples.title"|trans }}
+                        </a>
+                    {%- endif -%}
+                </li>
+            </ul>
+        </li>
+        <li>
+            {%- if needs_saving -%}
+                <button {{ live_action('save', {route: 'Study-datasets' })}}
+                    class="StudyNav-NavItem {{- route_name == 'Study-datasets' ? ' StudyNav-NavItem_active' -}}">
+                    2. {{ "title.dataset.title"|trans }}</button>
+            {%- else -%}
+                <a href="{{ path('Study-datasets', {id: experiment.id}) }}"
+                   class="StudyNav-NavItem {{- route_name == 'Study-datasets' ? ' StudyNav-NavItem_active' -}}">
+                    2. {{ "title.dataset.title"|trans }}</a>
+            {%- endif -%}
+        </li>
+        <li>
+            {%- if needs_saving -%}
+                <button {{ live_action('save', {route: 'Study-materials' })}}
+                    class="StudyNav-NavItem {{- route_name == 'Study-materials' ? ' StudyNav-NavItem_active' -}}">
+                    3. {{ "title.material.title-short"|trans }}</button>
+            {%- else -%}
+                <a href="{{ path('Study-materials', {id: experiment.id}) }}"
+                   class="StudyNav-NavItem {{- route_name == 'Study-materials' ? ' StudyNav-NavItem_active' -}}">
+                    3. {{ "title.material.title-short"|trans }}</a>
+            {%- endif -%}
+        </li>
+        <li>
+            {%- if needs_saving -%}
+                <button {{ live_action('save', {route: 'Study-review' })}}
+                    class="StudyNav-NavItem {{- route_name == 'Study-review' ? ' StudyNav-NavItem_active' -}}">
+                    4. {{ "title.review.title"|trans }}</button>
+            {%- else -%}
+                <a href="{{ path('Study-review', {id: experiment.id}) }}"
+                   class="StudyNav-NavItem {{- route_name == 'Study-review' ? ' StudyNav-NavItem_active' -}}">
+                    4. {{ "title.review.title"|trans }}</a>
+            {%- endif -%}
+        </li>
+        <li>
+            {%- if needs_saving -%}
+                <button {{ live_action('save', {route: 'export_index' })}}
+                    class="StudyNav-NavItem {{- route_name == 'export_index' ? ' StudyNav-NavItem_active' -}}">
+                    5. {{ "title.export.title-short"|trans }}</button>
+            {%- else -%}
+                <a href="{{ path('export_index', {id: experiment.id}) }}"
+                   class="StudyNav-NavItem {{- route_name == 'export_index' ? ' StudyNav-NavItem_active' -}}">
+                    5. {{ "title.export.title-short"|trans }}</a>
+            {%- endif -%}
+        </li>
+        {# <hr class="border border-stone-400" /> #}
+        <li>
+            {%- if needs_saving -%}
+                <button {{ live_action('save', {route: 'Study-settings' })}}
+                    class="StudyNav-NavItem StudyNav-NavItem_settings
+                    {{- route_name == 'Study-settings' ? ' StudyNav-NavItem_active StudyNav-NavItem_settings_active' -}}">
+                    {{ include('components/icons/settings.svg') }}
+                    {{ "title.settings.title"|trans }}
+                </button>
+            {%- else -%}
+                <a href="{{ path('Study-settings', {id: experiment.id}) }}"
+                   class="StudyNav-NavItem StudyNav-NavItem_settings
+                    {{- route_name == 'Study-settings' ? ' StudyNav-NavItem_active StudyNav-NavItem_settings_active' -}}">
+                    {{ include('components/icons/settings.svg') }}
+                    {{ "title.settings.title"|trans }}
+                </a>
+            {%- endif -%}
+        </li>
+    </ul>
+</nav>

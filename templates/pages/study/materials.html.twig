@@ -18,17 +18,14 @@
     {{ include("components/_infoBridge.html.twig",{value: experiment.id}) }}
     <div class="mt-6">
         <form action="{{ oneup_uploader_endpoint("materials") }}"
-              class="mx-6 border-2 !border-dashed border-mono-500 dropzone"
+              class="mx-6 border-2 border-dashed! border-stone-500 dropzone"
               id="datawiz-dropzone">
             {{ dropzoneTemplate() }}
         </form>
     </div>
-    <div class="mt-6 MetaData-Title">
-        <legend class="MetaData-Legend">
-            {{ "title.material.h3"|trans }}
-        </legend>
-        {{ helpButton("my_materials") }}
-    </div>
+
+    <twig:Form:FormCard class="mt-6" title="{{ 'title.material.h3'|trans }}" help="{{ "my_materials" }}"/>
+
     {% if (experiment.additionalMaterials|length) > 0 %}
         <ul class="mx-6">
             {% for material in experiment.additionalMaterials %}
@@ -41,14 +38,12 @@
         </p>
     {% endif %}
 
-    {{ render(controller('App\\Controller\\NavigationController::savebarNavigation', {
-        request: app.request,
-        prevUrl: 'Study-datasets',
-        prevTitle: 'title.dataset.title-short'|trans,
-        nextUrl: 'Study-review',
-        nextTitle: 'title.review.title'|trans,
-        form: null
-    })) }}
+    <twig:NavigationSavebar
+        prevUrl="{{ path('Study-datasets', {id: experiment.id}) }}"
+        prevTitle="{{ 'title.dataset.title-short'|trans }}"
+        nextUrl="{{ path('Study-review', {id: experiment.id}) }}"
+        nextTitle="{{ 'title.review.title'|trans }}"
+    />
 
 {% endblock %}
 

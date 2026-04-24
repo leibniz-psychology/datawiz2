@@ -21,7 +21,8 @@ readonly class CrudService implements Crudable
         private FilesystemOperator $materialFilesystem,
         private EntityManagerInterface $em,
         private LoggerInterface $logger
-    ) {}
+    ) {
+    }
 
     /**
      * Wrapper for find from EntityManager.
@@ -144,7 +145,7 @@ readonly class CrudService implements Crudable
         try {
             $tmp = new \SplTempFileObject();
             foreach ($matrix as $record) {
-                $tmp->fputcsv($record);
+                $tmp->fputcsv($record, escape: '\\');
             }
             $reader = Reader::createFromFileObject($tmp);
             $this->matrixFilesystem->write("{$datasetId}.csv", $reader->toString());

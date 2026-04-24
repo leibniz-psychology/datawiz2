@@ -3,12 +3,13 @@
 namespace App\Entity\FileManagement;
 
 use App\Entity\Administration\UuidEntity;
+use App\Entity\Codebook\DatasetVariables;
 use App\Entity\Study\Experiment;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Entity]
 class Dataset extends UuidEntity
@@ -44,7 +45,7 @@ class Dataset extends UuidEntity
     #[Groups(['dataset'])]
     private ?string $description = null;
 
-    #[ORM\OneToMany(mappedBy: 'dataset', targetEntity: 'App\Entity\Codebook\DatasetVariables')]
+    #[ORM\OneToMany(targetEntity: DatasetVariables::class, mappedBy: 'dataset')]
     #[SerializedName('codebook')]
     #[Groups(['codebook'])]
     private Collection $codebook;

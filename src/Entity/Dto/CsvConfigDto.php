@@ -9,5 +9,6 @@ final readonly class CsvConfigDto
         public string $datasetImportEscape = 'double',
         public int $datasetImportHeaderRows = 0,
         public ?bool $datasetImportRemove = null,
-    ) {}
+    ) {
+    }
 }

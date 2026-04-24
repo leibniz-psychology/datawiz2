@@ -11,19 +11,19 @@
 {%- endblock widget_attributes -%}
 
 {%- block form_label -%}
-    {%- set label_attr = label_attr|merge({ class: label_attr.class|default(label_class|default('block mt-1 leading-snug max-w-prose') ) }) -%}
+    {%- set label_attr = label_attr|merge({ class: label_attr.class|default(label_class|default('block mt-1 leading-snug max-w-prose') ~ (disabled ? ' ' ~ '!text-stone-500') ) }) -%}
     {{- parent() -}}
 {%- endblock form_label -%}
 
 {% block form_label_content %}
     {{- parent() -}}
     {%- if required is defined and required -%}
-        <span class="required-star {% if disabled %} text-slate-300 {% else %} text-red-700 {% endif %}"> *</span>
+        <span class="required-star {% if disabled %} text-stone-300 {% else %} text-red-700 {% endif %}"> *</span>
     {%- endif -%}
 {% endblock form_label_content %}
 
 {%- block form_help -%}
-    {%- set help_attr = help_attr|merge({ class: help_attr.class|default(help_class|default('mt-1 text-sm font-light text-slate-500 disabled:text-slate-300!')) }) -%}
+    {%- set help_attr = help_attr|merge({ class: help_attr.class|default(help_class|default('mt-1 text-sm font-light text-stone-500 disabled:text-stone-300!')) }) -%}
     {{- parent() -}}
 {%- endblock form_help -%}
 
@@ -44,13 +44,13 @@
 {%- endblock form_errors -%}
 
 {%- block choice_widget_expanded -%}
-    {%- set attr = attr|merge({ class: attr.class|default('mt-2 flex flex-col') }) -%}
+    {%- set attr = attr|merge({ class: attr.class|default('mt-2 flex flex-col gap-2') }) -%}
     <div {{ block('widget_container_attributes') }}>
         {%- for child in form %}
-        <div class="flex items-start gap-2">
+        <div class="flex items-start">
             {% set child_disabled = child.vars.attr.disabled is defined and child.vars.attr.disabled == true %}
             {{- form_widget(child) -}}
-            {{- form_label(child, null, { translation_domain: choice_translation_domain, label_attr: {'class': 'block [&_.required-star]:hidden' ~ (child_disabled ? ' ' ~ 'cursor-normal text-neutral-300')} }) -}}
+            {{- form_label(child, null, { translation_domain: choice_translation_domain, label_attr: {'class': 'block [&_.required-star]:hidden' ~ (child_disabled ? ' ' ~ 'cursor-normal text-stone-500')} }) -}}
         </div>
         {% endfor -%}
     </div>

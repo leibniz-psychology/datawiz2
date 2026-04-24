@@ -123,3 +123,10 @@
 .Button_with_icon {
     @apply button-with-icon;
 }
+
+.Creator-RemoveButton {
+    @apply flex items-center float-right;
+    @apply border-l border-b border-t-0 border-r-0 rounded-tl-none rounded-br-none border-stone-400;
+    @apply button-tertiary-danger;
+    @apply button-fieldsize
+}

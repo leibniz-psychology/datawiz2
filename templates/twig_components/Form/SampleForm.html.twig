@@ -37,18 +37,8 @@
     </twig:Form:FormCard>
 
     <twig:Form:FormCard class="mt-8" title="{{ 'input.sampling.legend'|trans }}" help="{{ "sampling_method" }}">
-        {{ form_label(form.sampling_method) }}
-        <div>
-            {{ form_errors(form.sampling_method) }}
-            {%- for choice in form.sampling_method %}
-                {{ form_widget(choice) }}
-                {{ form_label(choice, null, {
-                    'label_attr': {
-                        'class': 'RadioButton-Label',
-                    }
-                }) }}
-            {% endfor -%}
-        </div>
+        <twig:Form:MultilineChoiceForm form="{{ form.sampling_method }}"/>
+
         {{ form_row(form.otherSamplingMethod, {
             'attr': {
                 'disabled': form.sampling_method.vars.value != 'Other'

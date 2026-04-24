@@ -25,8 +25,6 @@ class MethodType extends AbstractType
                 ],
                 'expanded' => true,
                 'label' => 'input.setting.label',
-                'attr' => ['class' => 'p-1'],
-                'choice_attr' => fn () => ['class' => 'RadioButton-Input'],
             ])
             ->add('settingLocation', TextareaType::class, [
                 'required' => false,
@@ -44,9 +42,7 @@ class MethodType extends AbstractType
                 ],
                 'expanded' => true,
                 'label' => 'input.design.label',
-                'choice_attr' => fn () => [
-                    'class' => 'RadioButton-Input',
-                ],
+                'label_html' => true,
             ])
             ->add('experimentalDetails', ChoiceType::class, [
                 'required' => false,
@@ -59,9 +55,6 @@ class MethodType extends AbstractType
                 'expanded' => true,
                 'label' => 'input.design.details.experimental.label',
                 'label_html' => true,
-                'choice_attr' => fn () => [
-                    'class' => 'RadioButton-Input',
-                ],
             ])
             ->add('nonExperimentalDetails', ChoiceType::class, [
                 'required' => false,
@@ -76,9 +69,6 @@ class MethodType extends AbstractType
                 'expanded' => true,
                 'label' => 'input.design.details.non-experimental.label',
                 'label_html' => true,
-                'choice_attr' => fn () => [
-                    'class' => 'RadioButton-Input',
-                ],
             ])
             ->add('observationalType', ChoiceType::class, [
                 'required' => false,
@@ -123,7 +113,6 @@ class MethodType extends AbstractType
                 ],
                 'expanded' => true,
                 'label' => 'input.control-operations.label',
-                'choice_attr' => fn () => ['class' => 'RadioButton-Input'],
             ])
             ->add('otherControlOperations', TextareaType::class, [
                 'required' => false,

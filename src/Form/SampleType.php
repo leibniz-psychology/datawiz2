@@ -71,7 +71,6 @@ class SampleType extends AbstractType
                     'input.sampling.choices.other' => 'Other',
                 ],
                 'label_html' => true,
-                'choice_attr' => fn () => ['class' => 'RadioButton-Input'],
             ])
             ->add('otherSamplingMethod', TextareaType::class, [
                 'required' => false,

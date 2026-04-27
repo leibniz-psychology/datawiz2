@@ -59,7 +59,7 @@ class StudyController extends AbstractController
 
         $this->denyAccessUnlessGranted('EDIT', $experiment);
 
-        return $this->render('pages/study/documentation.html.twig', [
+        return $this->render('pages/study/basic_information.html.twig', [
             'experiment' => $experiment,
         ]);
     }

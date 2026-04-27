@@ -7,13 +7,6 @@ final class MetaDataDictionary
     // SettingsMetaData
     public const string SHORTNAME = 'shortName';
 
-    // BasicInformationMetaData
-    public const string TITLE = 'title';
-    public const string CREATORS = 'creators';
-    public const string CONTACT = 'contact';
-    public const string DESCRIPTION = 'description';
-    public const string RELATED_PUBS = 'related_publications';
-
     // SampleMetaData
     public const string INCLUSION_CRITERIA = 'inclusion_criteria';
     public const string EXCLUSION_CRITERIA = 'exclusion_criteria';

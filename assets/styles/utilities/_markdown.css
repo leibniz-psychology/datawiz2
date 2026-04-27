@@ -25,7 +25,7 @@
     h2 {
         @apply mt-4 text-xl font-semibold;
 
-        & ~ p {
+        & + p {
             @apply mt-0.5;
         }
     }
@@ -55,15 +55,15 @@
 
     ul,
     ol {
-        @apply mt-4 leading-snug;
+        @apply mt-4 ml-4;
     }
 
     ul {
-        @apply mt-4 leading-snug list-disc;
+        @apply list-disc;
     }
 
     ol {
-        @apply mt-4 leading-snug list-decimal;
+        @apply list-decimal;
     }
 
     li {

@@ -1,0 +1,57 @@
+basic_information_meta_data_group:
+    title:
+        legend: 'Title'
+        label: 'Provide a title for your dataset'
+    title_translated:
+        legend: 'Translated title'
+        label: 'Is there an alternative title (e.g., abbreviation or translation)? If your title is not in English, please provide the English translation here.'
+    study_id:
+        legend: 'Study ID'
+        label: 'Provide a unique identifier for your study'
+    description:
+        legend: 'Description'
+        label: 'Provide a short summary of the study'
+    description_translated:
+        legend: 'Translated Description'
+        label: 'If your description is not in English, please provide the English translation here.'
+    data_status:
+        legend: 'Data status'
+        label: 'State whether the uploaded data is a complete or partial representation of the collected data.'
+    reuse_potential:
+        legend: 'Reuse potential'
+        label: 'State measures to ensure reuse potential of the subset'
+    study_relation:
+        legend: 'Study relation'
+        label: 'State the relation to previous work'
+    study_relation_other_description:
+        legend: 'Study relation description'
+        label: 'Provide a description of the relation to previous work'
+    used_softwares:
+        legend: 'Used software'
+        label: 'Indicate which software was used for which step'
+        help: 'Enter one software per field. Leave empty if not applicable'
+    related_publications:
+        legend: 'Related publications'
+        label: 'Provide citations and persistent identifiers of the publications directly based on this data collection.'
+        help: 'Enter one publication per field. Leave empty if not applicable'
+    conflicts_of_interest:
+        legend: 'Conflicts of interest'
+        label: 'State any existing conflicts of interest.'
+        help: 'Enter one conflict of interest per field. Leave empty if not applicable'
+    creators:
+        legend: 'Creators'
+        label: 'The persons responsible for the research data.'
+
+creator_meta_data_group:
+    given_name:
+        label: 'Given name'
+    family_name:
+        label: 'Family name'
+    email:
+        label: 'Email'
+    orcid:
+        label: 'ORCID'
+    affiliation:
+        label: 'Affiliation'
+    credit_roles:
+        label: 'Roles'

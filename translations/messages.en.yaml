@@ -182,53 +182,24 @@ input:
   hidden: ''
   autoSaved: 'Auto-saved at %time%'
   title:
-    legend: 'Title'
-    label: 'Provide a title for your dataset'
     empty: '<a href="#link#" class="#class#">Add title</a> to ensure the findability of your data'
   description:
-    legend: 'Description'
-    label: 'Briefly describe the study in which you collected the research data'
     empty: '<a href="#link#" class="#class#">Add description</a> to ensure the findability of your data'
-  relatedPubs:
-    legend: 'Related publications'
-    label:
-      '<span class="block">Cite publications that use the data from this dataset.</span><span
-      class="flex mt-1 text-sm Label-Info">Enter one publication per field. Leave empty if not applicable.</span>'
+  used_softwares:
+    add: 'Add another software'
+  related_publications:
     add: 'Add another related publication'
     empty: '<a href="#link#" class="#class#">Add related publications</a>'
+  conflicts_of_interest:
+    add: 'Add another conflict of interest'
   creator:
-    legend: 'Creators'
-    label: 'The persons responsible for the research data'
     empty: '<a href="#link#" class="#class#">Add creators</a> to ensure the findability of your data'
-    name:
-      given: 'Given name'
-      family: 'Family name'
-    email: 'Email'
-    orcid: 'ORCID'
-    affiliation: 'Affiliation'
-    roles: 'Roles'
     add: 'Add another creator'
     remove: 'Remove creator'
     credit:
       label: 'Creator roles'
       add: 'Add another role'
       remove: 'Remove role'
-      choices:
-        placeholder: 'Please select a role'
-        conceptualization: 'Conceptualization'
-        dataCuration: 'Data curation'
-        formalAnalysis: 'Formal Analysis'
-        fundingAcquisition: 'Funding acquisition'
-        investigation: 'Investigation'
-        methodology: 'Methodology'
-        projectAdministration: 'Project administration'
-        resources: 'Resources'
-        software: 'Software'
-        supervision: 'Supervision'
-        validation: 'Validation'
-        visualization: 'Visualization'
-        writingOriginalDraft: 'Writing - original draft'
-        WritingReviewEditing: 'Writing - review & editing'
   objective:
     legend: 'Objectives'
     label: 'The action(s) you will take in order to achieve your research aim(s)/

@@ -1,0 +1,9 @@
+data_status:
+    complete: 'Vollständige Studiendaten'
+    subset: 'Auszug aus den Studiendaten'
+
+study_relation:
+    replication: 'Replikation'
+    follow_up: 'Folgestudie'
+    other: 'Anderer'
+    no_relation: 'Kein Bezug'

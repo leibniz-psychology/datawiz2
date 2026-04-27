@@ -49,16 +49,39 @@ class DocumentationForm extends AbstractController
     }
 
     #[LiveAction]
+    public function addUsedSoftware(): void
+    {
+        $this->formValues['usedSoftwares'][] = [];
+    }
+
+    #[LiveAction]
+    public function removeUsedSoftware(#[LiveArg] int $index): void
+    {
+        unset($this->formValues['usedSoftwares'][$index]);
+    }
+
+    #[LiveAction]
     public function addRelatedPublication(): void
     {
-        $this->formValues['related_publications'][] = [];
+        $this->formValues['relatedPublications'][] = [];
     }
 
     #[LiveAction]
     public function removeRelatedPublication(#[LiveArg] int $index): void
     {
-        unset($this->formValues['related_publications'][$index]);
-        $this->formValues['related_publications'] = array_values($this->formValues['related_publications']);
+        unset($this->formValues['relatedPublications'][$index]);
+    }
+
+    #[LiveAction]
+    public function addConflictOfInterest(): void
+    {
+        $this->formValues['conflictsOfInterest'][] = [];
+    }
+
+    #[LiveAction]
+    public function removeConflictOfInterest(#[LiveArg] int $index): void
+    {
+        unset($this->formValues['conflictsOfInterest'][$index]);
     }
 
     #[LiveAction]

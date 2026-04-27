@@ -14,7 +14,7 @@ textarea {
 }
 
 select {
-    @apply p-2 bg-stone-200 disabled:bg-transparent disabled:text-stone-500;
+    @apply px-2 py-1 bg-stone-200 disabled:bg-transparent disabled:text-stone-500;
 }
 
 *:focus {

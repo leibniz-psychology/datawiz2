@@ -10,7 +10,11 @@
             {% for entry in item.dataValue %}
                 {% if entry != null and entry != '' %}
                     <li class="mx-6 mt-2 first:mt-0 max-w-prose">
-                        {{ entry }}
+                        {% if entry.label is defined %}
+                            {{ entry.label | trans([], 'enums') }}
+                        {% else %}
+                            {{ entry }}
+                        {% endif %}
                         {% if editUrl is defined and editUrl is not null %}
                             <a href="{{ editUrl }}"
                                class="Button_icon ml-0.5"

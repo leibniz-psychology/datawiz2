@@ -23,7 +23,7 @@
 {% endblock form_label_content %}
 
 {%- block form_help -%}
-    {%- set help_attr = help_attr|merge({ class: help_attr.class|default(help_class|default('mt-1 text-sm font-light text-stone-500 disabled:text-stone-300!')) }) -%}
+    {%- set help_attr = help_attr|merge({ class: help_attr.class|default(help_class|default('flex mt-1 text-sm Label-Info')) }) -%}
     {{- parent() -}}
 {%- endblock form_help -%}
 

@@ -16,7 +16,7 @@
         /* prettier-ignore */
         background:
             url("../images/mdi:information-variant.svg")
-            left center no-repeat;
+            left center no-repeat var(--color-zpid-purple-50);
         content: "";
     }
 }

@@ -4,6 +4,7 @@ namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
 use App\Entity\Constant\ReviewDataDictionary;
+use App\Enum\CreatorCreditRole;
 use App\Service\Review\Reviewable;
 use App\Service\Review\ReviewDataCollectable;
 use App\Service\Review\ReviewValidator;
@@ -43,7 +44,7 @@ class CreatorMetaDataGroup extends UuidEntity implements Reviewable
     #[Groups('study')]
     private ?string $affiliation = null;
 
-    #[ORM\Column(type: 'json', nullable: true)]
+    #[ORM\Column(nullable: true, enumType: CreatorCreditRole::class)]
     #[SerializedName('roles')]
     #[Groups('study')]
     private ?array $creditRoles = null;
@@ -142,7 +143,7 @@ class CreatorMetaDataGroup extends UuidEntity implements Reviewable
     public function getCreditRoles(): ?array
     {
         if ($this->creditRoles === null) {
-            $this->creditRoles = [''];
+            $this->creditRoles = [null];
         }
 
         return $this->creditRoles;

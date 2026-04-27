@@ -1,0 +1,27 @@
+creator_credit_role:
+    conceptualization: 'Conceptualization'
+    data_curation: 'Data curation'
+    formal_analysis: 'Formal Analysis'
+    funding_acquisition: 'Funding acquisition'
+    investigation: 'Investigation'
+    methodology: 'Methodology'
+    project_administration: 'Project administration'
+    resources: 'Resources'
+    software: 'Software'
+    supervision: 'Supervision'
+    validation: 'Validation'
+    visualization: 'Visualization'
+    writing_original_draft: 'Writing - original draft'
+    writing_review_editing: 'Writing - review & editing'
+
+    placeholder: 'Please select a role'
+
+data_status:
+    complete: 'Complete'
+    subset: 'Subset'
+
+study_relation:
+    replication: 'Replication'
+    follow_up: 'Follow-up Study'
+    other: 'Other'
+    no_relation: 'No relation'

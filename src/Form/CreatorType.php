@@ -3,10 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Study\CreatorMetaDataGroup;
+use App\Enum\CreatorCreditRole;
+use App\Enum\CreatorDictionary;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,58 +18,49 @@ class CreatorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('givenName', TextType::class, [
+            ->add(CreatorDictionary::GIVEN_NAME->value, TextType::class, [
                 'required' => false,
-                'label' => 'input.creator.name.given',
+                'label' => CreatorDictionary::GIVEN_NAME->label(),
             ])
-            ->add('familyName', TextType::class, [
+            ->add(CreatorDictionary::FAMILY_NAME->value, TextType::class, [
                 'required' => false,
-                'label' => 'input.creator.name.family',
+                'label' => CreatorDictionary::FAMILY_NAME->label(),
             ])
-            ->add('email', EmailType::class, [
+            ->add(CreatorDictionary::EMAIL->value, EmailType::class, [
                 'required' => false,
-                'label' => 'input.creator.email',
+                'label' => CreatorDictionary::EMAIL->label(),
             ])
-            ->add('orcid', TextType::class, [
+            ->add(CreatorDictionary::ORCID->value, TextType::class, [
                 'required' => false,
-                'label' => 'input.creator.orcid',
+                'label' => CreatorDictionary::ORCID->label(),
             ])
-            ->add('affiliation', TextType::class, [
+            ->add(CreatorDictionary::AFFILIATION->value, TextType::class, [
                 'required' => false,
-                'label' => 'input.creator.affiliation',
-            ])->add('creditRoles', CollectionType::class, [
+                'label' => CreatorDictionary::AFFILIATION->label(),
+            ])
+            ->add(CreatorDictionary::CREDIT_ROLES->value, CollectionType::class, [
                 'prototype' => true,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'label' => 'input.creator.credit.label',
+                'label' => CreatorDictionary::CREDIT_ROLES->label(),
                 'required' => false,
-                'entry_type' => ChoiceType::class,
-                'delete_empty' => fn (?string $role = null) => empty($role),
+                'entry_type' => EnumType::class,
+                'delete_empty' => fn (?CreatorCreditRole $role = null) => empty($role),
                 'entry_options' => [
-                    'placeholder' => 'input.creator.credit.choices.placeholder',
+                    'class' => CreatorCreditRole::class,
+                    'placeholder' => 'creator_credit_role.placeholder',
                     'required' => true,
-                    'choices' => [
-                        'input.creator.credit.choices.conceptualization' => 'Conceptualization',
-                        'input.creator.credit.choices.dataCuration' => 'Data curation',
-                        'input.creator.credit.choices.formalAnalysis' => 'Formal Analysis',
-                        'input.creator.credit.choices.fundingAcquisition' => 'Funding acquisition',
-                        'input.creator.credit.choices.investigation' => 'Investigation',
-                        'input.creator.credit.choices.methodology' => 'Methodology',
-                        'input.creator.credit.choices.projectAdministration' => 'Project administration',
-                        'input.creator.credit.choices.resources' => 'Resources',
-                        'input.creator.credit.choices.software' => 'Software',
-                        'input.creator.credit.choices.supervision' => 'Supervision',
-                        'input.creator.credit.choices.validation' => 'Validation',
-                        'input.creator.credit.choices.visualization' => 'Visualization',
-                        'input.creator.credit.choices.writingOriginalDraft' => 'Writing - original draft',
-                        'input.creator.credit.choices.WritingReviewEditing' => 'Writing - review & editing',
-                    ],
+                    'choice_label' => fn (CreatorCreditRole $role) => $role->label(),
+                    'translation_domain' => 'enums',
                 ],
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => CreatorMetaDataGroup::class]);
+        $resolver->setDefaults([
+            'data_class' => CreatorMetaDataGroup::class,
+            'translation_domain' => 'forms',
+        ]);
     }
 }

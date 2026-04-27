@@ -16,7 +16,7 @@ use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
 #[AsLiveComponent]
-class DocumentationForm extends AbstractController
+class BasicInformationForm extends AbstractController
 {
     use DefaultActionTrait;
     use ComponentWithFormTrait;

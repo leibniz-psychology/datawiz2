@@ -200,15 +200,14 @@ input:
       label: 'Creator roles'
       add: 'Add another role'
       remove: 'Remove role'
-  objective:
-    legend: 'Objectives'
-    label: 'The action(s) you will take in order to achieve your research aim(s)/
-      goal(s).'
+  objectives:
+    add: 'Add another objective'
     empty: "<a href='#link#'' class='#class#''>Add objectives</a> to increase the reusability of your data."
-  hypothesis:
-    legend: 'Hypotheses'
-    label: 'State the hypotheses examined, indicating which were prespecified.'
+  hypotheses:
+    add: 'Add another hypothesis'
     empty: "<a href='#link#'' class='#class#''>Add hypotheses</a> to increase the reusability of your data."
+  theories:
+    add: 'Add another theory'
   design:
     legend: 'Research design'
     label: 'Choose your type of research design'

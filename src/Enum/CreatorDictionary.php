@@ -2,9 +2,11 @@
 
 namespace App\Enum;
 
-enum CreatorDictionary: string
+enum CreatorDictionary: string implements DictionaryInterface
 {
-    // BasicInformationMetaData
+    use ExtendedEnum;
+    use DictionaryEnum;
+
     case GIVEN_NAME = 'givenName';
     case FAMILY_NAME = 'familyName';
     case EMAIL = 'email';

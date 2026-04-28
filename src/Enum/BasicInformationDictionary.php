@@ -2,9 +2,11 @@
 
 namespace App\Enum;
 
-enum BasicInformationDictionary: string
+enum BasicInformationDictionary: string implements DictionaryInterface
 {
-    // BasicInformationMetaData
+    use ExtendedEnum;
+    use DictionaryEnum;
+
     case TITLE = 'title';
     case TITLE_TRANSLATED = 'titleTranslated';
     case STUDY_ID = 'studyId';

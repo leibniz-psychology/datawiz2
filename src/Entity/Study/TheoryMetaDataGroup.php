@@ -22,50 +22,35 @@ class TheoryMetaDataGroup extends UuidEntity implements Reviewable
     #[ORM\OneToOne(inversedBy: 'theoryMetaDataGroup', cascade: ['persist', 'remove'])]
     protected ?Experiment $experiment = null;
 
-    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
-    #[SerializedName('objective')]
+    #[ORM\Column(nullable: true)]
+    #[SerializedName('objectives')]
     #[Groups(['study'])]
-    private ?string $objective = null;
+    private ?array $objectives = null;
 
-    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
-    #[SerializedName('hypothesis')]
+    #[ORM\Column(nullable: true)]
+    #[SerializedName('hypotheses')]
     #[Groups(['study'])]
-    private ?string $hypothesis = null;
+    private ?array $hypotheses = null;
+
+    #[ORM\Column(nullable: true)]
+    #[SerializedName('theories')]
+    #[Groups(['study'])]
+    private ?array $theories = null;
 
     public function getReviewCollection(): array
     {
         return [
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::OBJECTIVES,
-                [$this->getObjective()],
-                ReviewValidator::validateSingleValue($this->getObjective())
+                $this->getObjectives(),
+                ReviewValidator::validateArrayValues($this->getObjectives())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::HYPOTHESIS,
-                [$this->getHypothesis()],
-                ReviewValidator::validateSingleValue($this->getHypothesis())
+                $this->getHypotheses(),
+                ReviewValidator::validateArrayValues($this->getHypotheses())
             ),
         ];
-    }
-
-    public function getObjective(): ?string
-    {
-        return $this->objective;
-    }
-
-    public function setObjective(?string $objective): void
-    {
-        $this->objective = $objective;
-    }
-
-    public function getHypothesis(): ?string
-    {
-        return $this->hypothesis;
-    }
-
-    public function setHypothesis(?string $hypothesis): void
-    {
-        $this->hypothesis = $hypothesis;
     }
 
     public function getExperiment(): Experiment
@@ -76,5 +61,37 @@ class TheoryMetaDataGroup extends UuidEntity implements Reviewable
     public function setExperiment(Experiment $experiment): void
     {
         $this->experiment = $experiment;
+    }
+
+    public function getObjectives(): ?array
+    {
+        return $this->objectives;
+    }
+
+    public function setObjectives(?array $objectives): void
+    {
+        $this->objectives = $objectives;
+    }
+
+    public function getHypotheses(): ?array
+    {
+        return $this->hypotheses;
+    }
+
+    public function setHypotheses(?array $hypotheses): void
+    {
+        $this->hypotheses = $hypotheses;
+    }
+
+    public function getTheories(): ?array
+    {
+        return $this->theories;
+    }
+
+    public function setTheories(?array $theories): static
+    {
+        $this->theories = $theories;
+
+        return $this;
     }
 }

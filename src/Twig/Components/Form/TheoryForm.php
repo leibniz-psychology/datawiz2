@@ -48,6 +48,42 @@ class TheoryForm extends AbstractController
         return $this->redirectToRoute('Study-theory', ['id' => $theory->getExperiment()->getId()]);
     }
 
+    #[LiveAction]
+    public function addObjective(): void
+    {
+        $this->formValues['objectives'][] = [];
+    }
+
+    #[LiveAction]
+    public function removeObjective(#[LiveArg] int $index): void
+    {
+        unset($this->formValues['objectives'][$index]);
+    }
+
+    #[LiveAction]
+    public function addHypothesis(): void
+    {
+        $this->formValues['hypotheses'][] = [];
+    }
+
+    #[LiveAction]
+    public function removeHypothesis(#[LiveArg] int $index): void
+    {
+        unset($this->formValues['hypotheses'][$index]);
+    }
+
+    #[LiveAction]
+    public function addTheory(): void
+    {
+        $this->formValues['theories'][] = [];
+    }
+
+    #[LiveAction]
+    public function removeTheory(#[LiveArg] int $index): void
+    {
+        unset($this->formValues['theories'][$index]);
+    }
+
     protected function instantiateForm(): FormInterface
     {
         return $this->createForm(TheoryType::class, $this->initialFormData);

@@ -549,17 +549,26 @@ theory:
         # Objectives & hypotheses help
 
         State the problem under investigation. How did you go about answering your research question? Why did you pick this design to answer this question?
-    hypothesis: |
-        A hypothesis (plural hypotheses) is a precise, testable statement of what the researchers predict will be the outcome of the study.
-
-        ### Example
-
-        > With increasing loads on working memory and old age the asymptotic accuracy in the time-accuracy functions and the rate of approach to the asymptote decrease.
-    objective: |
-        Your aims answer the question, 'What are you doing?' The objectives are the answer to the question, 'How are you doing it?' Your objectives should be stated using action verbs that are specific enough to be measured, for example: to compare, to calculate, to assess, to test, to determine, to verify, to calculate, to describe, to explain, and so forth.
+    objectives: |
+        What is the specific objective/aim of your study, or what question(s) do you want to investigate?
+        Providing this information helps others to understand why the data was collected in the first place and puts it into context.
 
         ### Example
 
         > The general aim of this research is to differentiate moral obligation from moral norms and moral conviction, as well as to compare their ability to predict collective action. In order to do so, the research objectives are: (a) conceptualize and operationalize moral obligation (Study 1, N = 171); (b) test its predictive power for intention to participate in protests (Study 2, N = 622); and (c) test moral obligation in a real context (Study 3, N = 407).
+    hypotheses: |
+        If you tested hypotheses in your study,
+        it is important that these were formulated (and preregistered) before data collection or analysis so that they are not influenced by the data.
+        This is important to ensure that the conclusions you draw based on your findings are valid!
 
+        If you did not have any a priori hypotheses, your study was exploratory – in this case, report your research questions under the item ‘Exploratory research questions’ below.
 
+        ### Example
+
+        > With increasing loads on working memory and old age the asymptotic accuracy in the time-accuracy functions and the rate of approach to the asymptote decrease.
+    theories: |
+        Similar to the theoretical background section of a paper, you can describe here how you arrived at your research question/hypothesis, e.g., which research of others (or your own) or theories it is based on.
+        Providing the theoretical background to your data can help others to understand it and put it into context.
+
+        This field should contain any relevant theoretical and/or practical/methodological justification. If this is a replication or follow-up study of previous research, describe it and its relationship to the current study.
+        Please include references here and list them at the end of this document in the reference section (see R1).

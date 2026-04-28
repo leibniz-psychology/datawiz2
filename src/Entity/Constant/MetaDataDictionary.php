@@ -15,10 +15,6 @@ final class MetaDataDictionary
     public const string SAMPLE_SIZE = 'sample_size';
     public const string POWER_ANALYSIS = 'power_analysis';
 
-    // TheoryMetaData
-    public const string OBJECTIVE = 'objective';
-    public const string HYPOTHESIS = 'hypothesis';
-
     // MeasureMetaData
     public const string MEASURES = 'measures';
     public const string APPARATUS = 'apparatus';

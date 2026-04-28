@@ -55,3 +55,14 @@ creator_meta_data_group:
         label: 'Affiliation'
     credit_roles:
         label: 'Roles'
+
+theory_meta_data_group:
+    objectives:
+        legend: 'Objectives'
+        label: 'Outline the a) objectives and b) research questions that informed the methodology and analyses described below.'
+    hypotheses:
+        legend: 'Hypotheses'
+        label: 'State the hypotheses examined, indicating which were prespecified.'
+    theories:
+        legend: 'Relevant theories'
+        label: 'Provide a concise overview that justified the research questions/hypotheses.'

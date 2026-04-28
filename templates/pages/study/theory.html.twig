@@ -19,6 +19,7 @@
 {% endblock %}
 
 {% block help_for_metadata %}
-    {{ formHelp("theory", "objective", "input.objective.legend") }}
-    {{ formHelp("theory", "hypothesis", "input.hypothesis.legend") }}
+    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\TheoryDictionary').OBJECTIVES }}"/>
+    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\TheoryDictionary').HYPOTHESES }}"/>
+    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\TheoryDictionary').THEORIES }}"/>
 {% endblock %}

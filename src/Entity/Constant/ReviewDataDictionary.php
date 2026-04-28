@@ -16,8 +16,8 @@ class ReviewDataDictionary
     final public const array CREATOR_AFFILIATION = ['legend' => 'input.creator.affiliation', 'errorMsg' => 'input.creator.empty.affiliation', 'errorLevel' => ErrorType::MANDATORY];
     final public const array CREATOR_ROLES = ['legend' => 'input.creator.roles', 'errorMsg' => 'error.roles.empty', 'errorLevel' => ErrorType::MANDATORY];
     // THEORY
-    final public const array OBJECTIVES = ['legend' => 'input.objective.legend', 'errorMsg' => 'input.objective.empty', 'errorLevel' => ErrorType::RECOMMENDED];
-    final public const array HYPOTHESIS = ['legend' => 'input.hypothesis.legend', 'errorMsg' => 'input.hypothesis.empty', 'errorLevel' => ErrorType::RECOMMENDED];
+    final public const array OBJECTIVES = ['legend' => 'input.objective.legend', 'errorMsg' => 'input.objectives.empty', 'errorLevel' => ErrorType::RECOMMENDED];
+    final public const array HYPOTHESIS = ['legend' => 'input.hypothesis.legend', 'errorMsg' => 'input.hypotheses.empty', 'errorLevel' => ErrorType::RECOMMENDED];
     // METHOD
     final public const array DESIGN = ['legend' => 'input.design.legend', 'errorMsg' => 'input.design.empty', 'errorLevel' => ErrorType::RECOMMENDED];
     final public const array EXPERIMENTAL = ['legend' => 'input.design.details.legend', 'errorMsg' => 'input.design.details.empty', 'errorLevel' => ErrorType::RECOMMENDED];

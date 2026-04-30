@@ -6,7 +6,7 @@ use App\Entity\Dto\ExportDto;
 use App\Entity\FileManagement\AdditionalMaterial;
 use App\Entity\FileManagement\Dataset;
 use App\Entity\Study\Experiment;
-use App\Enum\ResearchMethod;
+use App\Enum\Study\ResearchMethod;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemException;

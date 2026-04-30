@@ -13,6 +13,10 @@ textarea {
     @apply p-2 bg-white border placeholder-stone-500 border-stone-500;
 }
 
+button {
+    @apply cursor-pointer;
+}
+
 select {
     @apply px-2 py-1 bg-stone-200 disabled:bg-transparent disabled:text-stone-500;
 }

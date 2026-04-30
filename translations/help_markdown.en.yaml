@@ -207,6 +207,8 @@ method:
         # Study method help
 
         How was your study carried out? Describe details of your study's method.
+    research_design: |
+        Please note that a cross-sectional data collection can also extend over a longer period of time. Please code longitudinal study only when there are two or more measurement occasions for each subject, and if findings regarding the time dimension are of interest (e.g. change in parameters between two measurement points).
     control_operations: |
         Which control operations did you use to limit the effects of participant variables (order and sequence effects)?
 
@@ -260,7 +262,7 @@ method:
         > For example, in Darley and Latané's experiment, the independent variable was the number of witnesses that participants believed to be present. The researchers manipulated this independent variable by telling participants that there were either one, two, or five other students involved in the discussion, thereby creating three conditions.
 
         <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[Darley, J. M., & Latané, B. (1968). Bystander intervention in emergencies: Diffusion of responsibility. Journal of Personality and Social Psychology, 4, 377-383.]</div> -->
-    research_design: |
+    research_method: |
         A research design is a strategic plan of the procedures to be followed during a study in order to reach valid conclusions, with particular consideration given to participant selection and assignment to conditions, data collection, and data analysis. Research designs may take a variety of forms, including not only experiments but also quasi-experiments, observational studies, longitudinal designs, surveys, focus groups, and other nonexperimental methods.
 
         ### Experimental vs. non-experimental designs
@@ -403,6 +405,28 @@ method:
         > The Appalachian National Scenic Trail (AT) stretches 2168 miles over fourteen different states along the eastern region of the United States. Data were users of the AT over the summer and fall of 1999. Sampling occurred along the entire length of the trail. A stratified sampling technique was employed to obtain a representative sample of all AT hikers. To accomplish this, the length of the trail was segmented into 22 sections basedon use estimates provided by the various associations chargedwith maintaining the trail.
 
         <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[Kyle, G., Graefe, A., Manning, R., & Bacon, J. (2004). Effects of place attachment on users' perceptions of social and environmental conditions in a natural setting. Journal of Environmental Psychology, 24, 213-225.]</div> -->
+    research_method_description: |
+        **Surveys:** You can provide information your survey instrument, that was not previously captured. Outline the item material that the participant receives as well as the order of presentation of measurement instrumentas. It is also possible to refer to an existing publication in order to describe the data collection instrument.
+
+        **Test development:** You can provide additional information on test development procedures that have not been captured in the measurement instrument dialogue.
+
+        **Experiments:** Describe the structure of the experiment (study procedure, spatial and temporal conditions). Special attention should be paid to the description of applied control techniques (randomization, stabilization, parallel groups, etc.).
+
+        **Other research methods:** Please describe the research method that was employed by your study.
+    constructs: |
+        ## Construct name
+
+        The name of the theoretical construct, not the measurement instrument or item used to assess the construct
+
+        ### Example
+
+        > Anxiety **not** State Trait Anxiety Inventory
+
+        > intelligence **not** HAWIE
+
+        ## Function
+
+        Function of the construct concerning the study's hypotheses.
 review:
     section: |
         # Review input help

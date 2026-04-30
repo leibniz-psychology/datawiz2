@@ -38,6 +38,10 @@ class MethodForm extends AbstractController
         /** @var MethodMetaDataGroup $method */
         $method = $this->getForm()->getData();
 
+        foreach ($method->getMeasurementOccasions() as $key => $measurementOccasion) {
+            $measurementOccasion->setPosition($key + 1);
+        }
+
         $this->methodRepository->save($method);
         if (!is_null($route)) {
             return $this->redirectToRoute($route, [
@@ -46,6 +50,57 @@ class MethodForm extends AbstractController
         }
 
         return $this->redirectToRoute('Study-method', ['id' => $method->getExperiment()->getId()]);
+    }
+
+    #[LiveAction]
+    public function addTreatmentGroup(): void
+    {
+        $this->formValues['treatmentGroups'][] = [];
+    }
+
+    #[LiveAction]
+    public function removeTreatmentGroup(#[LiveArg] int $index): void
+    {
+        unset($this->formValues['treatmentGroups'][$index]);
+    }
+
+    #[LiveAction]
+    public function addMeasurementOccasion(): void
+    {
+        $this->formValues['measurementOccasions'][] = [];
+    }
+
+    #[LiveAction]
+    public function removeMeasurementOccasion(#[LiveArg] int $index): void
+    {
+        unset($this->formValues['measurementOccasions'][$index]);
+        $this->formValues['measurementOccasions'] = array_values($this->formValues['measurementOccasions']);
+    }
+
+    #[LiveAction]
+    public function addConstruct(): void
+    {
+        $this->formValues['constructs'][] = [];
+    }
+
+    #[LiveAction]
+    public function removeConstruct(#[LiveArg] int $index): void
+    {
+        unset($this->formValues['constructs'][$index]);
+        $this->formValues['constructs'] = array_values($this->formValues['constructs']);
+    }
+
+    #[LiveAction]
+    public function addMeasurementInstrument(): void
+    {
+        $this->formValues['measurementInstruments'][] = [];
+    }
+
+    #[LiveAction]
+    public function removeMeasurementInstrument(#[LiveArg] int $index): void
+    {
+        unset($this->formValues['measurementInstruments'][$index]);
+        $this->formValues['measurementInstruments'] = array_values($this->formValues['measurementInstruments']);
     }
 
     protected function instantiateForm(): FormInterface

@@ -3,9 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Study\BasicInformationMetaDataGroup;
-use App\Enum\BasicInformationDictionary;
-use App\Enum\DataStatus;
-use App\Enum\StudyRelation;
+use App\Enum\Study\DataStatus;
+use App\Enum\Study\Dictionary\BasicInformationDictionary;
+use App\Enum\Study\StudyRelation;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;

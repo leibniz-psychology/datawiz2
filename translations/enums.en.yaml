@@ -1,3 +1,9 @@
+construct_function:
+    independent_variable: 'Independent variable'
+    dependent_variable: 'Dependent variable'
+    control_variable: 'Control variable'
+    other: 'Other'
+
 control_operations:
     none: 'None'
     block_randomization: 'Block randomization'
@@ -68,13 +74,19 @@ observational_type:
 
     placeholder: 'Choose an observational type'
 
+research_design:
+    cross_sectional: 'Cross-sectional'
+    longitudinal: 'Longitudinal'
+    extended:
+        cross_sectional: '<span class="block">Cross-sectional</span><span class="block text-sm">One measurement occasion per subject</span>'
+        longitudinal: '<span class="block">Longitudinal</span><span class="block text-sm">Multiple measurement occasions per subject</span>'
+
 research_method:
     experimental: 'Experimental'
     non_experimental: 'Non-experimental'
     test_development: 'Test development'
     extended:
-        experimental: '<span class="block">Experimental</span><span class="block text-sm">Your
-          study involved an experimental manipulation</span>'
+        experimental: '<span class="block">Experimental</span><span class="block text-sm">Your study involved an experimental manipulation</span>'
         non_experimental: '<span class="block">Non-experimental</span><span class="block text-sm">Your study did not involve an experimental manipulation</span>'
         test_development: '<span class="block">Test-development</span><span class="block text-sm">Your study involved a test-development process</span>'
 
@@ -92,3 +104,9 @@ study_setting:
         artificial: '<span>Artificial setting</span><span>Artificial setting (e.g. laboratory experiment)</span>'
         real_life: '<span>Real-life setting</span><span>Real-life setting (e.g., field experiment)</span>'
         natural: '<span>Natural setting</span><span>Natural setting (e.g., natural observations)</span>'
+
+survey_instrument_type:
+    fully_standardized: 'Fully standardized survey instrument (question phrasing and answer format predefined)'
+    partially_standardized: 'Partially standardized survey instrument (question phrasing predefined; open answer format)'
+    hardly_standardized: 'Hardly standardized survey instrument (question area predefined; open answer format)'
+    mixed: 'Mixed survey instrument (combination of hardly, partially and fully standardized parts)'

@@ -56,7 +56,64 @@ creator_meta_data_group:
     credit_roles:
         label: 'Roles'
 
+measurement_instrument:
+    title:
+        label: 'Title'
+    author:
+        label: 'Author'
+        help: 'You may skip this field, if a citation was provided for this instrument.'
+    citation:
+        label: 'Citation'
+    abstract:
+        label: 'Abstract'
+        help: 'This information is recommended for newly developed instruments only. A short description of the instrument.'
+    theoretical_background:
+        label: 'Instrument concept: theoretical background'
+        help: 'This information is recommended for newly developed instruments only. Details about the theoretical background of the procedure, underlying theoretical models, research contexts and goals of the procedure.'
+    structure:
+        label: 'Instrument concept: structure'
+        help: 'This information is recommended for newly developed instruments only. Details about number of items, existing sub scales, answering mode, evaluation procedure, further information on test procedures for non-questionnaires. '
+    development:
+        label: 'Instrument development'
+        help: 'This information is recommended for newly developed instruments only. Refers to the specific measurement model: classical or probabilistic test theory. Provides information on item pools, test pre-forms, item selection criteria and techniques, item parameter like item-total correlation or item difficulties, item and scale inter-correlations, person and item parameters, samples, factor analytical results, etc.'
+    objectivity:
+        label: 'Quality criteria: Objectivity'
+        help: 'This information is recommended for newly developed instruments only. Statement on the objectivity of the method regarding implementation, evaluation, and interpretation through rater/observer agreement.'
+    reliability:
+        label: 'Quality criteria: Instrument reliability'
+        help: 'This information is recommended for newly developed instruments only. Information regarding internal consistency, homogeneity, stability, parallel-forms reliability, split-half reliability, retest reliability, inter-rater reliability, etc.'
+    validity:
+        label: 'Quality Criteria: Instrument validity'
+        help: 'This information is recommended for newly developed instruments only. Information on validity (logical, content, curricular, differential, factor, internal, and external validity, construct validity, concurrent validity or empirical validity (criterion validity) as concurrent and predictive validity. '
+    norm_referenced:
+        label: 'Quality criteria: norm-referenced'
+        help: 'This information is recommended for newly developed instruments only. Make statements on the type of norm values that exist, or alternatively on mean values or comparative values for different samples. Gives details on calibration samples, or rather on the representativeness of the sample used.'
+
+measurement_occasion:
+    time_of_measurement:
+        label: 'Time of measurement'
+    intervention:
+        label: 'Intervention'
+    position:
+        label: 'Position'
+
+method_construct:
+    name:
+        label: 'Construct'
+    function:
+        label: 'Function'
+        placeholder: 'Choose a function'
+    other_function_description:
+        label: 'If other, please describe the function'
+
 method_meta_data_group:
+    research_design:
+        legend: 'Research Design'
+        label: 'State the time dimension of your data collection, whether it is a single or multiple measurement occasion'
+    research_design_description:
+        legend: 'Research Design Description'
+        label: 'Description of the Longitudinal Study Design'
+        help: 'Please provide information on the measurement plan that was applied (e.g. Follow-up, longitudinal analysis, cohort study, sequence model). If applicable differentiate information by group or cohort.'
     research_method:
         legend: 'Research method'
         label: 'Choose your type of research method'
@@ -64,6 +121,10 @@ method_meta_data_group:
         label: 'Further describe the <span class="font-semibold">experimental design</span> of your study'
     non_experimental_details:
         label: 'Further describe the <span class="font-semibold">non-experimental design</span> of your study'
+    survey_instrument_type:
+        legend: 'Survey instrument type'
+        label: 'Choose the type of survey instrument used'
+        placeholder: 'Choose a survey instrument type'
     setting:
         legend: 'Setting'
         label: 'Choose your setting'
@@ -86,6 +147,28 @@ method_meta_data_group:
         label: ''
     other_control_operations:
         label: 'If other, please specify'
+    treatment_groups:
+        legend: 'Study arms/Treatment groups'
+        label: 'A list including all study arms or treatment conditions or (treatment) groups.'
+        add: 'Add another treatment group'
+    research_method_description:
+        legend: 'Research method description'
+        label: 'Please provide a detailed description of the research methodology.'
+    measurement_occasions:
+        legend: 'Measurement occasions'
+        label: 'Name of a measurement occasion where data were collected (e.g. t1, baseline, follow-up).'
+        add: 'Add another measurement occasion'
+        remove: 'Remove Occasion'
+    constructs:
+        legend: 'Constructs'
+        label: 'Name all theoretical constructs collected during this study'
+        add: 'Add another construct'
+        remove: 'Remove Construct'
+    measurement_instruments:
+        legend: 'Measurement instruments'
+        label: 'Name all measurement instruments used during this study'
+        add: 'Add another instrument'
+        remove: 'Remove Instrument'
 
 theory_meta_data_group:
     objectives:

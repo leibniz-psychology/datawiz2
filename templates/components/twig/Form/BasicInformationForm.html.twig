@@ -5,45 +5,45 @@
 {% endblock %}
 
 {% block form_content %}
-    <twig:Form:FormCard entry="{{ enum('App\\Enum\\BasicInformationDictionary').TITLE }}">
+    <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').TITLE }}">
         {{ form_row(form.title) }}
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard entry="{{ enum('App\\Enum\\BasicInformationDictionary').TITLE_TRANSLATED }}">
+    <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').TITLE_TRANSLATED }}">
         {{ form_row(form.titleTranslated) }}
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard entry="{{ enum('App\\Enum\\BasicInformationDictionary').STUDY_ID }}">
+    <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').STUDY_ID }}">
         {{ form_row(form.studyId) }}
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\BasicInformationDictionary').DESCRIPTION }}">
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').DESCRIPTION }}">
         {{ form_row(form.description) }}
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\BasicInformationDictionary').DESCRIPTION_TRANSLATED }}">
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').DESCRIPTION_TRANSLATED }}">
         {{ form_row(form.descriptionTranslated) }}
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\BasicInformationDictionary').DATA_STATUS }}">
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').DATA_STATUS }}">
         {{ form_row(form.dataStatus) }}
         {{ form_row(form.reusePotentialOfDataSubset, {
             'attr': {
-                'disabled': form.dataStatus.vars.value != enum('App\\Enum\\DataStatus').SUBSET.value
+                'disabled': form.dataStatus.vars.value != enum('App\\Enum\\Study\\DataStatus').SUBSET.value
             }
         }) }}
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\BasicInformationDictionary').STUDY_RELATION }}">
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').STUDY_RELATION }}">
         {{ form_row(form.studyRelation) }}
         {{ form_row(form.studyRelationOtherDescription, {
             'attr': {
-                'disabled': form.studyRelation.vars.value != enum('App\\Enum\\StudyRelation').OTHER.value
+                'disabled': form.studyRelation.vars.value != enum('App\\Enum\\Study\\StudyRelation').OTHER.value
             }
         }) }}
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\BasicInformationDictionary').USED_SOFTWARES }}">
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').USED_SOFTWARES }}">
         <twig:Form:CollectionForm
             collection="{{ form.usedSoftwares }}"
             add_action="addUsedSoftware"
@@ -52,7 +52,7 @@
         />
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\BasicInformationDictionary').RELATED_PUBLICATIONS }}">
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').RELATED_PUBLICATIONS }}">
         <twig:Form:CollectionForm
             collection="{{ form.relatedPublications }}"
             add_action="addRelatedPublication"
@@ -61,7 +61,7 @@
         />
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\BasicInformationDictionary').CONFLICTS_OF_INTEREST }}">
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').CONFLICTS_OF_INTEREST }}">
         <twig:Form:CollectionForm
             collection="{{ form.conflictsOfInterest }}"
             add_action="addConflictOfInterest"
@@ -70,7 +70,7 @@
         />
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\BasicInformationDictionary').CREATORS }}">
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').CREATORS }}">
         {{ form_label(form.creators) }}
         {{ form_errors(form.creators) }}
         <div class="mt-1">

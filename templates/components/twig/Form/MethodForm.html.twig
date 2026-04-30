@@ -7,7 +7,17 @@
 {% set research_method = form.researchMethod.vars.value %}
 
 {% block form_content %}
-    <twig:Form:FormCard entry="{{ enum('App\\Enum\\MethodDictionary').RESEARCH_METHOD }}">
+    <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').RESEARCH_DESIGN }}">
+        <twig:Form:MultilineChoiceForm form="{{ form.researchDesign }}"/>
+
+        {{ form_row(form.researchDesignDescription, {
+            'attr': {
+                'disabled': form.researchDesign.vars.value != enum('App\\Enum\\Study\\ResearchDesign').LONGITUDINAL.value,
+            }
+        }) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').RESEARCH_METHOD }}">
         {{ form_label(form.researchMethod) }}
         {{ form_errors(form.researchMethod) }}
         <div class="mt-1 flex flex-col gap-2">
@@ -25,12 +35,13 @@
 
 
         <div class="mt-3">
-            {% if research_method == enum('App\\Enum\\ResearchMethod').EXPERIMENTAL.value %}
+            {% if research_method == enum('App\\Enum\\Study\\ResearchMethod').EXPERIMENTAL.value %}
                 <twig:Form:MultilineChoiceForm form="{{ form.experimentalDetails }}"/>
 
                 {% do form.nonExperimentalDetails.setRendered %}
                 {% do form.observationalType.setRendered %}
-            {% elseif research_method == enum('App\\Enum\\ResearchMethod').NON_EXPERIMENTAL.value %}
+                {% do form.surveyInstrumentType.setRendered %}
+            {% elseif research_method == enum('App\\Enum\\Study\\ResearchMethod').NON_EXPERIMENTAL.value %}
                 <div>
                     {{ form_label(form.nonExperimentalDetails) }}
                     {{ form_errors(form.nonExperimentalDetails) }}
@@ -44,9 +55,17 @@
                                     'label_html': true,
                                 }) }}
                             </div>
-                            {% if choice.vars.value == enum('App\\Enum\\NonExperimentalDetails').OBSERVATIONAL_STUDY.value %}
+                            {% if choice.vars.value == enum('App\\Enum\\Study\\NonExperimentalDetails').OBSERVATIONAL_STUDY.value %}
                                 <div class="ml-6">
                                     {{ form_row(form.observationalType, {
+                                        'attr': {
+                                            'disabled': not choice.vars.checked,
+                                        }
+                                    }) }}
+                                </div>
+                            {% elseif choice.vars.value == enum('App\\Enum\\Study\\NonExperimentalDetails').SURVEY_RESEARCH.value %}
+                                <div class="ml-6">
+                                    {{ form_row(form.surveyInstrumentType, {
                                         'attr': {
                                             'disabled': not choice.vars.checked,
                                         }
@@ -62,45 +81,195 @@
                 {% do form.experimentalDetails.setRendered %}
                 {% do form.nonExperimentalDetails.setRendered %}
                 {% do form.observationalType.setRendered %}
+                {% do form.surveyInstrumentType.setRendered %}
             {% endif %}
         </div>
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\MethodDictionary').SETTING }}">
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').SETTING }}">
         <twig:Form:MultilineChoiceForm form="{{ form.setting }}"/>
 
         {{ form_row(form.settingLocation, {
             'attr': {
-                'disabled': form.setting.vars.value == enum('App\\Enum\\StudySetting').ARTIFICIAL.value,
+                'disabled': form.setting.vars.value == enum('App\\Enum\\Study\\StudySetting').ARTIFICIAL.value,
             }
         }) }}
     </twig:Form:FormCard>
 
-    {% if research_method == enum('App\\Enum\\ResearchMethod').EXPERIMENTAL.value %}
-        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\MethodDictionary').MANIPULATIONS }}">
+    {% if research_method == enum('App\\Enum\\Study\\ResearchMethod').EXPERIMENTAL.value %}
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').MANIPULATIONS }}">
             {{ form_row(form.manipulations) }}
         </twig:Form:FormCard>
 
-        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\MethodDictionary').EXPERIMENTAL_DESIGN }}">
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').EXPERIMENTAL_DESIGN }}">
             <twig:Form:MultilineChoiceForm form="{{ form.experimentalDesign }}"/>
         </twig:Form:FormCard>
 
-        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\MethodDictionary').CONTROL_OPERATIONS }}">
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').CONTROL_OPERATIONS }}">
             <twig:Form:MultilineChoiceForm form="{{ form.controlOperations }}"/>
 
             {{ form_row(form.otherControlOperations, {
                 'attr': {
-                    'disabled': form.controlOperations.vars.value != enum('App\\Enum\\ControlOperations').OTHER.value,
+                    'disabled': form.controlOperations.vars.value != enum('App\\Enum\\Study\\ControlOperations').OTHER.value,
                 }
             }) }}
+        </twig:Form:FormCard>
+
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').TREATMENT_GROUPS }}">
+            <twig:Form:CollectionForm
+                collection="{{ form.treatmentGroups }}"
+                add_action="addTreatmentGroup"
+                remove_action="removeTreatmentGroup"
+                add_label="{{ 'method_meta_data_group.treatment_groups.add'|trans([], 'forms') }}"
+            />
         </twig:Form:FormCard>
     {% else %}
         {% do form.manipulations.setRendered %}
         {% do form.experimentalDesign.setRendered %}
         {% do form.controlOperations.setRendered %}
         {% do form.otherControlOperations.setRendered %}
+        {% do form.treatmentGroups.setRendered %}
     {% endif %}
 
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').MEASUREMENT_OCCASIONS }}">
+        {{ form_label(form.measurementOccasions) }}
+        {{ form_errors(form.measurementOccasions) }}
+        <div class="mt-1">
+            <ul>
+                {% for key, occasion in form.measurementOccasions %}
+                    <li class='pb-4 mt-2 border rounded border-stone-400 first:mt-0 text-stone-800'>
+                        <div class="flex justify-between items-center">
+                            <h2 class="pl-2 font-semibold">
+                                {{ 'input.measurement_occasions.name'|trans }} {{ key + 1 }}
+                            </h2>
+                            <button type="button"
+                                    data-action="live#action"
+                                    data-live-action-param="removeMeasurementOccasion"
+                                    data-live-index-param="{{ key }}"
+                                    class="Creator-RemoveButton">
+                                {{ 'method_meta_data_group.measurement_occasions.remove'|trans([], 'forms') }}
+                            </button>
+                        </div>
+
+                        <div class="px-4">
+                            {{ form_row(occasion.timeOfMeasurement) }}
+                            {% if research_method == enum('App\\Enum\\Study\\ResearchMethod').EXPERIMENTAL.value %}
+                                {{ form_row(occasion.intervention) }}
+                            {% else %}
+                                {% do occasion.intervention.setRendered %}
+                            {% endif %}
+                        </div>
+                        <span class="hidden">{{ form_row(occasion.position) }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <button type="button"
+                    class="mt-2 Button_secondary_act Button_fieldSize"
+                    data-action="live#action"
+                    data-live-action-param="addMeasurementOccasion">
+                {{ include('components/icons/add.svg') }}
+                {{ 'method_meta_data_group.measurement_occasions.add'|trans([], 'forms') }}
+            </button>
+        </div>
+        {% do form.measurementOccasions.setRendered %}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').CONSTRUCTS }}">
+        {{ form_label(form.constructs) }}
+        {{ form_errors(form.constructs) }}
+        <div class="mt-1">
+            <ul>
+                {% for key, construct in form.constructs %}
+                    <li class='pb-4 mt-2 border rounded border-stone-400 first:mt-0'>
+                        <div class="flex justify-between items-center">
+                            <h2 class="pl-2 font-semibold">
+                                {{ 'input.constructs.name'|trans }} {{ key + 1 }}
+                            </h2>
+                            <button type="button"
+                                    data-action="live#action"
+                                    data-live-action-param="removeConstruct"
+                                    data-live-index-param="{{ key }}"
+                                    class="Creator-RemoveButton">
+                                {{ 'method_meta_data_group.constructs.remove'|trans([], 'forms') }}
+                            </button>
+                        </div>
+
+
+                        <div class="w-full grid lg:grid-cols-4 gap-2 px-4">
+                            <span class="col-span-3">
+                                {{ form_row(construct.name) }}
+                            </span>
+                            {{ form_row(construct.constructFunction) }}
+                            <span class="col-span-4">
+                                {{ form_row(construct.otherFunctionDescription, {
+                                    'attr': {
+                                        'disabled': construct.constructFunction.vars.value != enum('App\\Enum\\Study\\ConstructFunction').OTHER.value,
+                                    }
+                                }) }}
+                            </span>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <button type="button"
+                    class="mt-2 Button_secondary_act Button_fieldSize"
+                    data-action="live#action"
+                    data-live-action-param="addConstruct">
+                {{ include('components/icons/add.svg') }}
+                {{ 'method_meta_data_group.constructs.add'|trans([], 'forms') }}
+            </button>
+        </div>
+        {% do form.constructs.setRendered %}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').MEASUREMENT_INSTRUMENTS }}">
+        {{ form_label(form.measurementInstruments) }}
+        {{ form_errors(form.measurementInstruments) }}
+        <div class="mt-1">
+            <ul>
+                {% for key, instrument in form.measurementInstruments %}
+                    <li class='pb-4 mt-2 border rounded border-stone-400 first:mt-0'>
+                        <button type="button"
+                                data-action="live#action"
+                                data-live-action-param="removeMeasurementInstrument"
+                                data-live-index-param="{{ key }}"
+                                class="Creator-RemoveButton">
+                            {{ 'method_meta_data_group.measurement_instruments.remove'|trans([], 'forms') }}
+                        </button>
+
+                        <div class="w-full px-4">
+                            {{ form_row(instrument.title) }}
+                            {{ form_row(instrument.author) }}
+                            {{ form_row(instrument.citation) }}
+                            {{ form_row(instrument.abstract) }}
+                            {{ form_row(instrument.theoreticalBackground) }}
+                            {{ form_row(instrument.structure) }}
+                            {{ form_row(instrument.development) }}
+                            {{ form_row(instrument.objectivity) }}
+                            {{ form_row(instrument.reliability) }}
+                            {{ form_row(instrument.validity) }}
+                            {{ form_row(instrument.normReferenced) }}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <button type="button"
+                    class="mt-2 Button_secondary_act Button_fieldSize"
+                    data-action="live#action"
+                    data-live-action-param="addMeasurementInstrument">
+                {{ include('components/icons/add.svg') }}
+                {{ 'method_meta_data_group.measurement_instruments.add'|trans([], 'forms') }}
+            </button>
+        </div>
+        {% do form.measurementInstruments.setRendered %}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').RESEARCH_METHOD_DESCRIPTION }}">
+        {{ form_row(form.researchMethodDescription) }}
+    </twig:Form:FormCard>
 {% endblock %}
 
 

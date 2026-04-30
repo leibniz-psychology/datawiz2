@@ -19,9 +19,12 @@
 {% endblock %}
 
 {% block help_for_metadata %}
-    {{ formHelp("method", "research_design", "input.design.legend") }}
-    {{ formHelp("method", "setting", "input.setting.legend") }}
-    {{ formHelp("method", "manipulations", "input.manipulations.legend") }}
-    {{ formHelp("method", "experimental_design", "input.experimental-design.legend") }}
-    {{ formHelp("method", "control_operations", "input.control-operations.legend") }}
+    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').RESEARCH_DESIGN }}"/>
+    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').RESEARCH_METHOD }}"/>
+    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').SETTING }}"/>
+    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').MANIPULATIONS }}"/>
+    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').EXPERIMENTAL_DESIGN }}"/>
+    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').CONTROL_OPERATIONS }}"/>
+    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').RESEARCH_METHOD_DESCRIPTION }}"/>
+    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').CONSTRUCTS }}"/>
 {% endblock %}

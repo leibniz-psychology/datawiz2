@@ -4,7 +4,7 @@ namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
 use App\Entity\Constant\ReviewDataDictionary;
-use App\Enum\CreatorCreditRole;
+use App\Enum\Study\CreatorCreditRole;
 use App\Service\Review\Reviewable;
 use App\Service\Review\ReviewDataCollectable;
 use App\Service\Review\ReviewValidator;
@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 #[ORM\Entity]
 class CreatorMetaDataGroup extends UuidEntity implements Reviewable
 {
-    #[ORM\ManyToOne(cascade: ['persist', 'remove'], inversedBy: 'creators')]
+    #[ORM\ManyToOne(inversedBy: 'creators')]
     #[ORM\JoinColumn(name: 'basic_id', referencedColumnName: 'id')]
     protected ?BasicInformationMetaDataGroup $basicInformation = null;
     #[ORM\Column(type: 'text', length: 100, nullable: true)]

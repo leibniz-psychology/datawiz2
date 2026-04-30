@@ -3,8 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Study\CreatorMetaDataGroup;
-use App\Enum\CreatorCreditRole;
-use App\Enum\CreatorDictionary;
+use App\Enum\Study\CreatorCreditRole;
+use App\Enum\Study\Dictionary\CreatorDictionary;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;

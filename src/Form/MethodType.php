@@ -2,10 +2,17 @@
 
 namespace App\Form;
 
-use App\Entity\Constant\MetaDataDictionary;
 use App\Entity\Study\MethodMetaDataGroup;
+use App\Enum\ControlOperations;
+use App\Enum\ExperimentalDesign;
+use App\Enum\ExperimentalDetails;
+use App\Enum\MethodDictionary;
+use App\Enum\NonExperimentalDetails;
+use App\Enum\ObservationalType;
+use App\Enum\ResearchMethod;
+use App\Enum\StudySetting;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,114 +22,97 @@ class MethodType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add(MetaDataDictionary::SETTING, ChoiceType::class, [
+            ->add(MethodDictionary::SETTING->value, EnumType::class, [
                 'required' => false,
                 'placeholder' => false,
-                'choices' => [
-                    'input.setting.choices.artificial' => 'Artificial setting',
-                    'input.setting.choices.rl' => 'Real-life setting',
-                    'input.setting.choices.natural' => 'Natural setting',
-                ],
+                'class' => StudySetting::class,
                 'expanded' => true,
-                'label' => 'input.setting.label',
+                'label' => MethodDictionary::SETTING->label(),
+                'choice_label' => fn (StudySetting $setting) => $setting->labelExtended(),
+                'choice_translation_domain' => 'enums',
             ])
-            ->add('settingLocation', TextareaType::class, [
+            ->add(MethodDictionary::SETTING_LOCATION->value, TextareaType::class, [
                 'required' => false,
-                'label' => 'input.setting.location.label',
+                'label' => MethodDictionary::SETTING_LOCATION->label(),
                 'attr' => [
                     'rows' => '3',
                 ],
             ])
-            ->add(MetaDataDictionary::RESEARCH_DESIGN, ChoiceType::class, [
+            ->add(MethodDictionary::RESEARCH_METHOD->value, EnumType::class, [
                 'required' => false,
                 'placeholder' => false,
-                'choices' => [
-                    'input.design.choices.experimental' => 'Experimental',
-                    'input.design.choices.non-experimental' => 'Non-experimental',
-                ],
+                'class' => ResearchMethod::class,
                 'expanded' => true,
-                'label' => 'input.design.label',
+                'label' => MethodDictionary::RESEARCH_METHOD->label(),
                 'label_html' => true,
+                'choice_label' => fn (ResearchMethod $method) => $method->labelExtended(),
+                'choice_translation_domain' => 'enums',
             ])
-            ->add('experimentalDetails', ChoiceType::class, [
+            ->add(MethodDictionary::EXPERIMENTAL_DETAILS->value, EnumType::class, [
                 'required' => false,
                 'placeholder' => false,
-                'choices' => [
-                    'input.design.details.experimental.choices.random-assignment' => 'Random assignment',
-                    'input.design.details.experimental.choices.non-random-assignment' => 'Non-random assignment',
-                    'input.design.details.experimental.choices.clinical-trial' => 'Clinical trial',
-                ],
+                'class' => ExperimentalDetails::class,
                 'expanded' => true,
-                'label' => 'input.design.details.experimental.label',
+                'label' => MethodDictionary::EXPERIMENTAL_DETAILS->label(),
                 'label_html' => true,
+                'choice_label' => fn (ExperimentalDetails $details) => $details->labelExtended(),
+                'choice_translation_domain' => 'enums',
             ])
-            ->add('nonExperimentalDetails', ChoiceType::class, [
+            ->add(MethodDictionary::NON_EXPERIMENTAL_DETAILS->value, EnumType::class, [
                 'required' => false,
                 'placeholder' => false,
-                'choices' => [
-                    'input.design.details.non-experimental.choices.observational-study' => 'Observational study',
-                    'input.design.details.non-experimental.choices.survey-research' => 'Survey research',
-                    'input.design.details.non-experimental.choices.correlational-research' => 'Correlational research',
-                    'input.design.details.non-experimental.choices.causal-comparative-research' => 'Causal-comparative research',
-                    'input.design.details.non-experimental.choices.single-case' => 'Single case',
-                ],
+                'class' => NonExperimentalDetails::class,
                 'expanded' => true,
-                'label' => 'input.design.details.non-experimental.label',
+                'label' => MethodDictionary::NON_EXPERIMENTAL_DETAILS->label(),
                 'label_html' => true,
+                'choice_label' => fn (NonExperimentalDetails $details) => $details->labelExtended(),
+                'choice_translation_domain' => 'enums',
             ])
-            ->add('observationalType', ChoiceType::class, [
+            ->add(MethodDictionary::OBSERVATIONAL_TYPE->value, EnumType::class, [
                 'required' => false,
-                'placeholder' => 'input.design.details.observationalType.placeholder',
-                'choices' => [
-                    'input.design.details.observationalType.choices.cohort-study' => 'Cohort study',
-                    'input.design.details.observationalType.choices.case-control-study' => 'Case-control study',
-                    'input.design.details.observationalType.choices.cross-sectional-study' => 'Cross-sectional study',
-                ],
-                'label' => 'input.design.details.observationalType.label',
+                'placeholder' => MethodDictionary::OBSERVATIONAL_TYPE->placeholder(),
+                'class' => ObservationalType::class,
+                'label' => MethodDictionary::OBSERVATIONAL_TYPE->label(),
+                'choice_label' => fn (ObservationalType $details) => $details->label(),
+                'choice_translation_domain' => 'enums',
             ])
-            ->add(MetaDataDictionary::MANIPULATIONS, TextareaType::class, [
+            ->add(MethodDictionary::MANIPULATIONS->value, TextareaType::class, [
                 'required' => false,
-                'label' => 'input.manipulations.label',
+                'label' => MethodDictionary::MANIPULATIONS->label(),
                 'attr' => [
                     'rows' => '5',
                 ],
             ])
-            ->add(MetaDataDictionary::EXPERIMENTAL_DESIGN, ChoiceType::class, [
+            ->add(MethodDictionary::EXPERIMENTAL_DESIGN->value, EnumType::class, [
                 'required' => false,
                 'placeholder' => false,
-                'choices' => [
-                    'input.experimental-design.choices.independent' => 'Independent measures / between-subjects design',
-                    'input.experimental-design.choices.repeated' => 'Repeated measures / within-subjects design',
-                    'input.experimental-design.choices.matched' => 'Matched pairs design',
-                ],
+                'class' => ExperimentalDesign::class,
                 'expanded' => true,
-                'label' => 'input.experimental-design.label',
+                'label' => MethodDictionary::EXPERIMENTAL_DESIGN->label(),
+                'choice_label' => fn (ExperimentalDesign $design) => $design->labelExtended(),
+                'choice_translation_domain' => 'enums',
             ])
-            ->add(MetaDataDictionary::CONTROL_OPERATIONS, ChoiceType::class, [
+            ->add(MethodDictionary::CONTROL_OPERATIONS->value, EnumType::class, [
                 'required' => false,
                 'placeholder' => false,
-                'choices' => [
-                    'input.control-operations.choices.none' => 'None',
-                    'input.control-operations.choices.block' => 'Block randomization',
-                    'input.control-operations.choices.complete' => 'Complete counterbalancing (all possible orders)',
-                    'input.control-operations.choices.incomplete' => 'Incomplete counterbalancing (partial counterbalancing)',
-                    'input.control-operations.choices.latin-square' => 'Latin Square',
-                    'input.control-operations.choices.rng-latin-square' => 'Latin Square using a random starting order with rotation (rotate order)',
-                    'input.control-operations.choices.reverse' => 'Reverse counterbalancing (ABBA-counterbalancing)',
-                    'input.control-operations.choices.other' => 'Other',
-                ],
+                'class' => ControlOperations::class,
                 'expanded' => true,
-                'label' => 'input.control-operations.label',
+                'label' => MethodDictionary::CONTROL_OPERATIONS->label(),
+                'choice_label' => fn (ControlOperations $controlOperations) => $controlOperations->label(),
+                'choice_translation_domain' => 'enums',
             ])
-            ->add('otherControlOperations', TextareaType::class, [
+            ->add(MethodDictionary::OTHER_CONTROL_OPERATIONS->value, TextareaType::class, [
                 'required' => false,
-                'label' => 'input.control-operations.other.label',
+                'label' => MethodDictionary::OTHER_CONTROL_OPERATIONS->label(),
                 'attr' => ['rows' => '4'],
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => MethodMetaDataGroup::class]);
+        $resolver->setDefaults([
+            'data_class' => MethodMetaDataGroup::class,
+            'translation_domain' => 'forms',
+        ]);
     }
 }

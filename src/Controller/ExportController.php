@@ -6,6 +6,7 @@ use App\Entity\Dto\ExportDto;
 use App\Entity\FileManagement\AdditionalMaterial;
 use App\Entity\FileManagement\Dataset;
 use App\Entity\Study\Experiment;
+use App\Enum\ResearchMethod;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemException;
@@ -123,8 +124,8 @@ class ExportController extends AbstractController
      */
     private function appendStudyToZip(Experiment $experiment, string $format, \ZipArchive $zip): bool
     {
-        $design = $experiment->getMethodMetaDataGroup()->getResearchDesign(
-        ) === 'Experimental' ? 'experimental' : ($experiment->getMethodMetaDataGroup()->getResearchDesign() === 'Non-experimental' ? 'non_experimental' : null);
+        $design = $experiment->getMethodMetaDataGroup()->getResearchMethod(
+        ) === ResearchMethod::EXPERIMENTAL ? 'experimental' : ($experiment->getMethodMetaDataGroup()->getResearchMethod() === ResearchMethod::NON_EXPERIMENTAL ? 'non_experimental' : null);
 
         $json = $this->serializer->serialize(
             $experiment,

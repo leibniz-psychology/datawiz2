@@ -4,6 +4,13 @@ namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
 use App\Entity\Constant\ReviewDataDictionary;
+use App\Enum\ControlOperations;
+use App\Enum\ExperimentalDesign;
+use App\Enum\ExperimentalDetails;
+use App\Enum\NonExperimentalDetails;
+use App\Enum\ObservationalType;
+use App\Enum\ResearchMethod;
+use App\Enum\StudySetting;
 use App\Repository\MethodRepository;
 use App\Service\Review\Reviewable;
 use App\Service\Review\ReviewDataCollectable;
@@ -22,173 +29,183 @@ class MethodMetaDataGroup extends UuidEntity implements Reviewable
     #[ORM\OneToOne(inversedBy: 'methodMetaDataGroup', cascade: ['persist', 'remove'])]
     protected ?Experiment $experiment = null;
 
-    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[ORM\Column(nullable: true, enumType: ResearchMethod::class)]
     #[SerializedName('research_design')]
     #[Groups(['study'])]
-    private ?string $research_design = null;
+    private ?ResearchMethod $researchMethod = null;
 
-    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[ORM\Column(nullable: true, enumType: ExperimentalDetails::class)]
     #[SerializedName('experimental_details')]
     #[Groups(['experimental'])]
-    private ?string $experimental_details = null;
+    private ?ExperimentalDetails $experimentalDetails = null;
 
-    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[ORM\Column(nullable: true, enumType: NonExperimentalDetails::class)]
     #[SerializedName('non_experimental_details')]
     #[Groups(['non_experimental'])]
-    private ?string $non_experimental_details = null;
+    private ?NonExperimentalDetails $nonExperimentalDetails = null;
 
-    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[ORM\Column(nullable: true, enumType: ObservationalType::class)]
     #[SerializedName('observational_type')]
     #[Groups(['non_experimental'])]
-    private ?string $observational_type = null;
+    private ?ObservationalType $observationalType = null;
 
-    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[ORM\Column(nullable: true, enumType: StudySetting::class)]
     #[SerializedName('setting')]
     #[Groups(['study'])]
-    private ?string $setting = null;
+    private ?StudySetting $setting = null;
 
     #[ORM\Column(type: 'text', length: 1500, nullable: true)]
     #[SerializedName('setting_location')]
     #[Groups(['study'])]
-    private ?string $setting_location = null;
+    private ?string $settingLocation = null;
 
     #[ORM\Column(type: 'text', length: 1500, nullable: true)]
     #[SerializedName('manipulations')]
     #[Groups(['experimental'])]
     private ?string $manipulations = null;
 
-    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[ORM\Column(nullable: true, enumType: ExperimentalDesign::class)]
     #[SerializedName('experimental_design')]
     #[Groups(['experimental'])]
-    private ?string $experimental_design = null;
+    private ?ExperimentalDesign $experimentalDesign = null;
 
-    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[ORM\Column(nullable: true, enumType: ControlOperations::class)]
     #[SerializedName('control_operations')]
     #[Groups(['experimental'])]
-    private ?string $control_operations = null;
+    private ?ControlOperations $controlOperations = null;
 
     #[ORM\Column(type: 'text', length: 1500, nullable: true)]
     #[SerializedName('other_control_operations')]
     #[Groups(['experimental'])]
-    private ?string $other_control_operations = null;
+    private ?string $otherControlOperations = null;
 
     public function getReviewCollection(): array
     {
         return [
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::DESIGN,
-                [$this->getResearchDesign()],
-                ReviewValidator::validateSingleValue($this->getResearchDesign())
+                [$this->getResearchMethod()],
+                ReviewValidator::validateSingleValue($this->getResearchMethod()->label())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::EXPERIMENTAL,
                 [$this->getExperimentalDetails()],
-                ReviewValidator::validateSingleValue($this->getExperimentalDetails()),
-                $this->getResearchDesign() === 'Experimental'
+                ReviewValidator::validateSingleValue($this->getExperimentalDetails()->label()),
+                $this->getResearchMethod() === ResearchMethod::EXPERIMENTAL
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::NON_EXPERIMENTAL,
                 [$this->getNonExperimentalDetails()],
-                ReviewValidator::validateSingleValue($this->getNonExperimentalDetails()),
-                $this->getResearchDesign() === 'Non-experimental'
+                ReviewValidator::validateSingleValue($this->getNonExperimentalDetails()->label()),
+                $this->getResearchMethod() === ResearchMethod::NON_EXPERIMENTAL
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::OBSERVABLE_TYPE,
                 [$this->getObservationalType()],
-                ReviewValidator::validateSingleValue($this->getObservationalType()),
-                $this->getResearchDesign() === 'Non-experimental' && $this->getNonExperimentalDetails() === 'Observational study'
+                ReviewValidator::validateSingleValue($this->getObservationalType()?->label()),
+                $this->getResearchMethod() === ResearchMethod::NON_EXPERIMENTAL && $this->getNonExperimentalDetails() === NonExperimentalDetails::OBSERVATIONAL_STUDY
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::SETTING,
                 [$this->getSetting()],
-                ReviewValidator::validateSingleValue($this->getSetting())
+                ReviewValidator::validateSingleValue($this->getSetting()->label())
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::SETTING_LOCATION,
                 [$this->getSettingLocation()],
                 ReviewValidator::validateSingleValue($this->getSettingLocation()),
-                $this->getSetting() === 'Real-life setting' || $this->getSetting() === 'Natural setting'
+                $this->getSetting() === StudySetting::REAL_LIFE || $this->getSetting() === StudySetting::NATURAL
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::MANIPULATIONS,
                 [$this->getManipulations()],
                 ReviewValidator::validateSingleValue($this->getManipulations()),
-                $this->getResearchDesign() === 'Experimental'
+                $this->getResearchMethod() === ResearchMethod::EXPERIMENTAL
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::EXPERIMENTAL_DESIGN,
                 [$this->getExperimentalDesign()],
                 ReviewValidator::validateSingleValue($this->getExperimentalDesign()),
-                $this->getResearchDesign() === 'Experimental'
+                $this->getResearchMethod() === ResearchMethod::EXPERIMENTAL
             ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::CONTROL_OPS,
-                [$this->getControlOperations() !== 'Other' ? $this->getControlOperations() : $this->getOtherControlOperations()],
-                ($this->getControlOperations() !== 'Other' && ReviewValidator::validateSingleValue($this->getControlOperations()))
-                || ($this->getControlOperations() === 'Other' && ReviewValidator::validateSingleValue($this->getOtherControlOperations())),
-                $this->getResearchDesign() === 'Experimental'
+                [$this->getControlOperations() !== ControlOperations::OTHER ? $this->getControlOperations() : $this->getOtherControlOperations()],
+                ($this->getControlOperations() !== ControlOperations::OTHER && ReviewValidator::validateSingleValue($this->getControlOperations()))
+                || ($this->getControlOperations() === ControlOperations::OTHER && ReviewValidator::validateSingleValue($this->getOtherControlOperations())),
+                $this->getResearchMethod() === ResearchMethod::EXPERIMENTAL
             ),
         ];
     }
 
-    public function getSetting(): ?string
+    public function getExperiment(): Experiment
+    {
+        return $this->experiment;
+    }
+
+    public function setExperiment(Experiment $experiment): void
+    {
+        $this->experiment = $experiment;
+    }
+
+    public function getSetting(): ?StudySetting
     {
         return $this->setting;
     }
 
-    public function setSetting(?string $setting): void
+    public function setSetting(?StudySetting $setting): void
     {
         $this->setting = $setting;
     }
 
     public function getSettingLocation(): ?string
     {
-        return $this->setting_location;
+        return $this->settingLocation;
     }
 
-    public function setSettingLocation(?string $setting_location): void
+    public function setSettingLocation(?string $settingLocation): void
     {
-        $this->setting_location = $setting_location;
+        $this->settingLocation = $settingLocation;
     }
 
-    public function getResearchDesign(): ?string
+    public function getResearchMethod(): ?ResearchMethod
     {
-        return $this->research_design;
+        return $this->researchMethod;
     }
 
-    public function setResearchDesign(?string $research_design): void
+    public function setResearchMethod(?ResearchMethod $researchMethod): void
     {
-        $this->research_design = $research_design;
+        $this->researchMethod = $researchMethod;
     }
 
-    public function getExperimentalDetails(): ?string
+    public function getExperimentalDetails(): ?ExperimentalDetails
     {
-        return $this->experimental_details;
+        return $this->experimentalDetails;
     }
 
-    public function setExperimentalDetails(?string $experimental_details): void
+    public function setExperimentalDetails(?ExperimentalDetails $experimentalDetails): void
     {
-        $this->experimental_details = $experimental_details;
+        $this->experimentalDetails = $experimentalDetails;
     }
 
-    public function getNonExperimentalDetails(): ?string
+    public function getNonExperimentalDetails(): ?NonExperimentalDetails
     {
-        return $this->non_experimental_details;
+        return $this->nonExperimentalDetails;
     }
 
-    public function setNonExperimentalDetails(?string $non_experimental_details): void
+    public function setNonExperimentalDetails(?NonExperimentalDetails $nonExperimentalDetails): void
     {
-        $this->non_experimental_details = $non_experimental_details;
+        $this->nonExperimentalDetails = $nonExperimentalDetails;
     }
 
-    public function getObservationalType(): ?string
+    public function getObservationalType(): ?ObservationalType
     {
-        return $this->observational_type;
+        return $this->observationalType;
     }
 
-    public function setObservationalType(?string $observational_type): void
+    public function setObservationalType(?ObservationalType $observationalType): void
     {
-        $this->observational_type = $observational_type;
+        $this->observationalType = $observationalType;
     }
 
     public function getManipulations(): ?string
@@ -201,43 +218,33 @@ class MethodMetaDataGroup extends UuidEntity implements Reviewable
         $this->manipulations = $manipulations;
     }
 
-    public function getExperimentalDesign(): ?string
+    public function getExperimentalDesign(): ?ExperimentalDesign
     {
-        return $this->experimental_design;
+        return $this->experimentalDesign;
     }
 
-    public function setExperimentalDesign(?string $experimental_design): void
+    public function setExperimentalDesign(?ExperimentalDesign $experimentalDesign): void
     {
-        $this->experimental_design = $experimental_design;
+        $this->experimentalDesign = $experimentalDesign;
     }
 
-    public function getControlOperations(): ?string
+    public function getControlOperations(): ?ControlOperations
     {
-        return $this->control_operations;
+        return $this->controlOperations;
     }
 
-    public function setControlOperations(?string $control_operations): void
+    public function setControlOperations(?ControlOperations $controlOperations): void
     {
-        $this->control_operations = $control_operations;
+        $this->controlOperations = $controlOperations;
     }
 
     public function getOtherControlOperations(): ?string
     {
-        return $this->other_control_operations;
+        return $this->otherControlOperations;
     }
 
-    public function setOtherControlOperations(?string $other_control_operations): void
+    public function setOtherControlOperations(?string $otherControlOperations): void
     {
-        $this->other_control_operations = $other_control_operations;
-    }
-
-    public function getExperiment(): Experiment
-    {
-        return $this->experiment;
-    }
-
-    public function setExperiment(Experiment $experiment): void
-    {
-        $this->experiment = $experiment;
+        $this->otherControlOperations = $otherControlOperations;
     }
 }

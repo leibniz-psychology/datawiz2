@@ -4,14 +4,14 @@
     {{ "title.theories.title"|trans }}
 {% endblock %}
 
-{% set experimentalDesign = (form.research_design.vars.value == form.research_design.vars.choices[0].value) %}
+{% set research_method = form.researchMethod.vars.value %}
 
 {% block form_content %}
-    <twig:Form:FormCard title="{{ 'input.design.legend'|trans }}" help="{{ "research_design" }}">
-        {{ form_label(form.research_design) }}
-        {{ form_errors(form.research_design) }}
+    <twig:Form:FormCard entry="{{ enum('App\\Enum\\MethodDictionary').RESEARCH_METHOD }}">
+        {{ form_label(form.researchMethod) }}
+        {{ form_errors(form.researchMethod) }}
         <div class="mt-1 flex flex-col gap-2">
-            {%- for choice in form.research_design %}
+            {%- for choice in form.researchMethod %}
                 <div class="w-full px-4 py-4 border rounded-lg border-stone-300 has-checked:bg-zpid-blue-50 flex items-start">
                     {{ form_widget(choice) }}
                     {{ form_label(choice, null, {
@@ -25,12 +25,12 @@
 
 
         <div class="mt-3">
-            {% if experimentalDesign %}
+            {% if research_method == enum('App\\Enum\\ResearchMethod').EXPERIMENTAL.value %}
                 <twig:Form:MultilineChoiceForm form="{{ form.experimentalDetails }}"/>
 
                 {% do form.nonExperimentalDetails.setRendered %}
                 {% do form.observationalType.setRendered %}
-            {% else %}
+            {% elseif research_method == enum('App\\Enum\\ResearchMethod').NON_EXPERIMENTAL.value %}
                 <div>
                     {{ form_label(form.nonExperimentalDetails) }}
                     {{ form_errors(form.nonExperimentalDetails) }}
@@ -44,7 +44,7 @@
                                     'label_html': true,
                                 }) }}
                             </div>
-                            {% if choice.vars.value == 'Observational study' %}
+                            {% if choice.vars.value == enum('App\\Enum\\NonExperimentalDetails').OBSERVATIONAL_STUDY.value %}
                                 <div class="ml-6">
                                     {{ form_row(form.observationalType, {
                                         'attr': {
@@ -58,42 +58,46 @@
 
                 </div>
                 {% do form.experimentalDetails.setRendered %}
+            {% else %}
+                {% do form.experimentalDetails.setRendered %}
+                {% do form.nonExperimentalDetails.setRendered %}
+                {% do form.observationalType.setRendered %}
             {% endif %}
         </div>
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard class="mt-8" title="{{ 'input.setting.legend'|trans }}" help="{{ "setting" }}">
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\MethodDictionary').SETTING }}">
         <twig:Form:MultilineChoiceForm form="{{ form.setting }}"/>
 
         {{ form_row(form.settingLocation, {
             'attr': {
-                'disabled': form.setting.vars.value == 'Artificial setting',
+                'disabled': form.setting.vars.value == enum('App\\Enum\\StudySetting').ARTIFICIAL.value,
             }
         }) }}
     </twig:Form:FormCard>
 
-    {% if experimentalDesign %}
-        <twig:Form:FormCard class="mt-8" title="{{ 'input.manipulations.legend'|trans }}" help="{{ "manipulations" }}">
+    {% if research_method == enum('App\\Enum\\ResearchMethod').EXPERIMENTAL.value %}
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\MethodDictionary').MANIPULATIONS }}">
             {{ form_row(form.manipulations) }}
         </twig:Form:FormCard>
 
-        <twig:Form:FormCard class="mt-8" title="{{ 'input.experimental-design.legend'|trans }}" help="{{ "experimental_design" }}">
-            <twig:Form:MultilineChoiceForm form="{{ form.experimental_design }}"/>
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\MethodDictionary').EXPERIMENTAL_DESIGN }}">
+            <twig:Form:MultilineChoiceForm form="{{ form.experimentalDesign }}"/>
         </twig:Form:FormCard>
 
-        <twig:Form:FormCard class="mt-8" title="{{ 'input.control-operations.legend'|trans }}" help="{{ "control_operations" }}">
-            <twig:Form:MultilineChoiceForm form="{{ form.control_operations }}"/>
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\MethodDictionary').CONTROL_OPERATIONS }}">
+            <twig:Form:MultilineChoiceForm form="{{ form.controlOperations }}"/>
 
             {{ form_row(form.otherControlOperations, {
                 'attr': {
-                    'disabled': form.control_operations.vars.value != 'Other'
+                    'disabled': form.controlOperations.vars.value != enum('App\\Enum\\ControlOperations').OTHER.value,
                 }
             }) }}
         </twig:Form:FormCard>
     {% else %}
         {% do form.manipulations.setRendered %}
-        {% do form.experimental_design.setRendered %}
-        {% do form.control_operations.setRendered %}
+        {% do form.experimentalDesign.setRendered %}
+        {% do form.controlOperations.setRendered %}
         {% do form.otherControlOperations.setRendered %}
     {% endif %}
 

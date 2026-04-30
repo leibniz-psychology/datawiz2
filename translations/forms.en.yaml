@@ -56,6 +56,37 @@ creator_meta_data_group:
     credit_roles:
         label: 'Roles'
 
+method_meta_data_group:
+    research_method:
+        legend: 'Research method'
+        label: 'Choose your type of research method'
+    experimental_details:
+        label: 'Further describe the <span class="font-semibold">experimental design</span> of your study'
+    non_experimental_details:
+        label: 'Further describe the <span class="font-semibold">non-experimental design</span> of your study'
+    setting:
+        legend: 'Setting'
+        label: 'Choose your setting'
+    setting_location:
+        legend: 'Location'
+        label: 'For real-life and natural settings enter the location where your study took place'
+    observational_type:
+        legend: 'Observational study'
+        label: 'Optionally define the observational type of your study'
+        placeholder: 'Choose an observational type'
+    manipulations:
+        legend: 'Experimental manipulations, treatments, or interventions'
+        label: 'Provide details of your experimental manipulation(s) including a summary
+          of the instructions. Clearly define your variables (treatments).'
+    experimental_design:
+        legend: 'Design'
+        label: 'How were participants allocated to the different conditions?'
+    control_operations:
+        legend: 'Control Operations'
+        label: ''
+    other_control_operations:
+        label: 'If other, please specify'
+
 theory_meta_data_group:
     objectives:
         legend: 'Objectives'

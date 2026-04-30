@@ -1,3 +1,13 @@
+control_operations:
+    none: 'None'
+    block_randomization: 'Block randomization'
+    complete_counterbalancing: 'Complete counterbalancing (all possible orders)'
+    incomplete_counterbalancing: 'Incomplete counterbalancing (partial counterbalancing)'
+    latin_square: 'Latin Square'
+    latin_square_rng: 'Latin Square using a random starting order with rotation (rotate order)'
+    reverse_counterbalancing: 'Reverse counterbalancing (ABBA-counterbalancing)'
+    other: 'Other'
+
 creator_credit_role:
     conceptualization: 'Conceptualization'
     data_curation: 'Data curation'
@@ -20,8 +30,65 @@ data_status:
     complete: 'Complete'
     subset: 'Subset'
 
+experimental_design:
+    independent_measures: 'Independent measures / between-subjects design'
+    repeated_measures: 'Repeated measures / within-subjects design'
+    matched_pairs: 'Matched pairs design'
+    extended:
+        independent_measures: '<span>Independent measures / between-subjects design</span><span>Different participants were used in each condition of the independent variable</span>'
+        repeated_measures: '<span>Repeated measures / within-subjects design</span><span>The same participants took part in each condition of the independent variable</span>'
+        matched_pairs: '<span>Matched pairs design</span><span>Each condition used different participants, but they were matched in terms of important characteristics</span>'
+
+experimental_details:
+    random_assignment: 'Random assignment'
+    non_random_assignment: 'Non-random assignment'
+    clinical_trial: 'Clinical trial'
+    extended:
+        random_assignment: '<span>Random assignment</span><span>Your study used random assignment to place participants in conditions</span>'
+        non_random_assignment: '<span>Non-random assignment</span><span>Your study did not use random assignment to place participants in conditions</span>'
+        clinical_trial: '<span>Clinical trial</span><span>Your study qualifies as a clinical trial (randomized trial, randomized controlled trial)</span>'
+
+non_experimental_details:
+    observational_study: 'Observational study'
+    survey_research: 'Survey research'
+    correlational_research: 'Correlational research'
+    causal_comparative_research: 'Causal-comparative research'
+    single_case: 'Single case'
+    extended:
+        observational_study: '<span>Observational study</span><span>You observed people''s behavior without experimental manipulation</span>'
+        survey_research: '<span>Survey research</span><span>You collected information from a sample of individuals through their responses to questions</span>'
+        correlational_research: '<span>Correlational research</span><span>You measured two variables and assessed the statistical relationship between them</span>'
+        causal_comparative_research: '<span>Causal-comparative research</span><span>You selected samples from two already-existing populations and investigated cause and effect relationship</span>'
+        single_case: '<span>Single case</span><span>Your study was conducted on a single individual (also known as case study or experience report)</span>'
+
+observational_type:
+    cohort: 'Cohort study'
+    case_control: 'Case-control study'
+    cross_sectional: 'Cross-sectional study'
+
+    placeholder: 'Choose an observational type'
+
+research_method:
+    experimental: 'Experimental'
+    non_experimental: 'Non-experimental'
+    test_development: 'Test development'
+    extended:
+        experimental: '<span class="block">Experimental</span><span class="block text-sm">Your
+          study involved an experimental manipulation</span>'
+        non_experimental: '<span class="block">Non-experimental</span><span class="block text-sm">Your study did not involve an experimental manipulation</span>'
+        test_development: '<span class="block">Test-development</span><span class="block text-sm">Your study involved a test-development process</span>'
+
 study_relation:
     replication: 'Replication'
     follow_up: 'Follow-up Study'
     other: 'Other'
     no_relation: 'No relation'
+
+study_setting:
+    artificial: 'Artificial setting'
+    real_life: 'Real-life setting'
+    natural: 'Natural setting'
+    extended:
+        artificial: '<span>Artificial setting</span><span>Artificial setting (e.g. laboratory experiment)</span>'
+        real_life: '<span>Real-life setting</span><span>Real-life setting (e.g., field experiment)</span>'
+        natural: '<span>Natural setting</span><span>Natural setting (e.g., natural observations)</span>'

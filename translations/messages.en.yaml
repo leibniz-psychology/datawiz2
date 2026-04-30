@@ -209,93 +209,18 @@ input:
   theories:
     add: 'Add another theory'
   design:
-    legend: 'Research design'
-    label: 'Choose your type of research design'
     empty: '<a href="#link#" class="#class#">Add research design</a> to increase the reusability of your data'
-    choices:
-      experimental: '<span class="block">Experimental</span><span class="block text-sm">Your
-        study involved an experimental manipulation</span>'
-      non-experimental: '<span class="block">Non-experimental</span><span class="block text-sm">Your study did not involve an experimental manipulation</span>'
     details:
       legend: 'Research design details'
       empty: '<a href="#link#" class="#class#">Further describe the research design</a> to increase the reusability of your data'
-      experimental:
-        label: 'Further describe the <span class="font-semibold">experimental design</span>
-          of your study'
-        choices:
-          random-assignment: '<span>Random assignment</span><span>Your study used
-            random assignment to place participants in conditions</span>'
-          non-random-assignment: '<span>Non-random assignment</span><span>Your study
-            did not use random assignment to place participants in conditions</span>'
-          clinical-trial: '<span>Clinical trial</span><span>Your study qualifies as
-            a clinical trial (randomized trial, randomized controlled trial)</span>'
-      non-experimental:
-        label: 'Further describe the <span class="font-semibold">non-experimental
-          design</span> of your study'
-        choices:
-          observational-study: '<span>Observational study</span><span>You observed
-             people''s behavior without experimental manipulation</span>'
-          survey-research: '<span>Survey research</span><span>You collected information
-            from a sample of individuals through their responses to questions</span>'
-          correlational-research: '<span>Correlational research</span><span>You measured
-            two variables and assessed the statistical relationship between them</span>'
-          causal-comparative-research: '<span>Causal-comparative research</span><span>You
-            selected samples from two already-existing populations and investigated
-            cause and effect relationship</span>'
-          single-case: '<span>Single case</span><span>Your study was conducted on
-            a single individual (also known as case study or experience report)</span>'
-      observationalType:
-        legend: 'Observational study'
-        label: 'Optionally define the observational type of your study'
-        placeholder: 'Choose an observational type'
-        choices:
-          cohort-study: 'Cohort study'
-          case-control-study: 'Case-control study'
-          cross-sectional-study: 'Cross-sectional study'
   manipulations:
-    legend: 'Experimental manipulations, treatments, or interventions'
-    label: 'Provide details of your experimental manipulation(s) including a summary
-      of the instructions. Clearly define your variables (treatments).'
     empty: '<a href="#link#" class="#class#">Add experimental manipulations, treatments or interventions</a> to increase the reusability of your data'
   experimental-design:
-    legend: 'Design'
-    label: 'How were participants allocated to the different conditions?'
     empty: '<a href="#link#" class="#class#">Add design</a> to increase the reusability of your data'
-    choices:
-      independent: '<span>Independent measures / between-subjects design</span><span>Different
-        participants were used in each condition of the independent variable</span>'
-      repeated: '<span>Repeated measures / within-subjects design</span><span>The
-        same participants took part in each condition of the independent variable</span>'
-      matched: '<span>Matched pairs design</span><span>Each condition used different
-        participants, but they were matched in terms of important characteristics</span>'
   control-operations:
-    legend: 'Control Operations'
-    label: ''
     empty: '<a href="#link#" class="#class#">Add control operations</a> to increase the reusability of your data'
-    choices:
-      none: 'None'
-      block: 'Block randomization'
-      complete: 'Complete counterbalancing (all possible orders)'
-      incomplete: 'Incomplete counterbalancing (partial counterbalancing)'
-      latin-square: 'Latin Square'
-      rng-latin-square: 'Latin Square using a random starting order with rotation
-        (rotate order)'
-      reverse: 'Reverse counterbalancing (ABBA-counterbalancing)'
-      other: 'Other'
-    other:
-      label: 'If other, please specify'
   setting:
-    legend: 'Setting'
-    label: 'Choose your setting'
     empty: '<a href="#link#" class="#class#">Add setting</a> to increase the reusability of your data'
-    choices:
-      artificial: '<span>Artificial setting</span><span>Artificial setting (e.g. laboratory
-        experiment)</span>'
-      rl: '<span>Real-life setting</span><span>Real-life setting (e.g., field experiment)</span>'
-      natural: '<span>Natural setting</span><span>Natural setting (e.g., natural observations)</span>'
-    location:
-      legend: 'Location'
-      label: 'For real-life and natural settings enter the location where your study took place'
   measures:
     legend: 'Tests and measures'
     label: 'Provide definitions of all measures you collected on participants. Provide

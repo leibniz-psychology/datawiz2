@@ -9,6 +9,11 @@ trait DictionaryEnum
         return null;
     }
 
+    public function placeholder(): ?string
+    {
+        return null;
+    }
+
     public function help(): ?string
     {
         return null;

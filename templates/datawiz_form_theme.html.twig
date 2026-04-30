@@ -1,7 +1,7 @@
 {% use 'tailwind_2_layout.html.twig' %}
 
 {%- block form_row -%}
-    {%- set row_attr = row_attr|merge({ class: row_attr.class|default(row_class|default('pt-1')) }) -%}
+    {%- set row_attr = row_attr|merge({ class: row_attr.class|default(row_class|default('group pt-1')) }) -%}
     {{- parent() -}}
 {%- endblock form_row -%}
 
@@ -11,7 +11,7 @@
 {%- endblock widget_attributes -%}
 
 {%- block form_label -%}
-    {%- set label_attr = label_attr|merge({ class: label_attr.class|default(label_class|default('block mt-1 leading-snug max-w-prose') ~ (disabled ? ' ' ~ '!text-stone-500') ) }) -%}
+    {%- set label_attr = label_attr|merge({ class: label_attr.class|default(label_class|default('block mt-1 leading-snug max-w-prose group-has-disabled:opacity-50') ) }) -%}
     {{- parent() -}}
 {%- endblock form_label -%}
 
@@ -23,7 +23,7 @@
 {% endblock form_label_content %}
 
 {%- block form_help -%}
-    {%- set help_attr = help_attr|merge({ class: help_attr.class|default(help_class|default('flex mt-1 text-sm Label-Info')) }) -%}
+    {%- set help_attr = help_attr|merge({ class: help_attr.class|default(help_class|default('flex mt-1 text-sm Label-Info group-has-disabled:opacity-50')) }) -%}
     {{- parent() -}}
 {%- endblock form_help -%}
 

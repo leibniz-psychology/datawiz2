@@ -4,8 +4,8 @@ namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
 use App\Entity\Constant\ReviewDataDictionary;
-use App\Enum\DataStatus;
-use App\Enum\StudyRelation;
+use App\Enum\Study\DataStatus;
+use App\Enum\Study\StudyRelation;
 use App\Repository\BasicInformationRepository;
 use App\Service\Review\Reviewable;
 use App\Service\Review\ReviewDataCollectable;

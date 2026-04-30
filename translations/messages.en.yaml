@@ -221,6 +221,10 @@ input:
     empty: '<a href="#link#" class="#class#">Add control operations</a> to increase the reusability of your data'
   setting:
     empty: '<a href="#link#" class="#class#">Add setting</a> to increase the reusability of your data'
+  measurement_occasions:
+    name: 'Occasion'
+  constructs:
+    name: 'Construct'
   measures:
     legend: 'Tests and measures'
     label: 'Provide definitions of all measures you collected on participants. Provide

@@ -1,6 +1,9 @@
 <?php
 
-namespace App\Enum;
+namespace App\Enum\Study;
+
+use App\Enum\ExtendedEnum;
+use App\Enum\ExtendedEnumInterface;
 
 enum DataStatus: string implements ExtendedEnumInterface
 {

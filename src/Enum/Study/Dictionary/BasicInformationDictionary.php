@@ -1,6 +1,10 @@
 <?php
 
-namespace App\Enum;
+namespace App\Enum\Study\Dictionary;
+
+use App\Enum\DictionaryEnum;
+use App\Enum\DictionaryInterface;
+use App\Enum\ExtendedEnum;
 
 enum BasicInformationDictionary: string implements DictionaryInterface
 {

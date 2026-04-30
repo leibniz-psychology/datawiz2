@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Codebook\DatasetVariables;
 use App\Entity\FileManagement\Dataset;
-use App\Entity\Study\MeasureMetaDataGroup;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
@@ -57,13 +56,9 @@ class CodebookController extends AbstractController
     {
         $this->logger->debug("Enter CodebookController::createViewMeasuresAction with [UUID: {$dataset->getId()}]");
         $viewMeasures = [];
-        $measures = $this->em->getRepository(MeasureMetaDataGroup::class)->findOneBy(['experiment' => $dataset->getExperiment()]);
-        if ($measures && $measures->getMeasures()) {
-            foreach ($measures->getMeasures() as $measure) {
-                if ($measure && $measure != '') {
-                    $viewMeasures['measures'][] = $measure;
-                }
-            }
+        $measures = $dataset->getExperiment()->getMethodMetaDataGroup()->getMeasurementInstruments();
+        foreach ($measures as $measure) {
+            $viewMeasures['measures'][] = $measure->getTitle();
         }
 
         return new JsonResponse($viewMeasures, array_key_exists('measures', $viewMeasures) ? Response::HTTP_OK : Response::HTTP_NO_CONTENT);

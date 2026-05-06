@@ -9,6 +9,7 @@ body {
 input[type="password"],
 input[type="text"],
 input[type="email"],
+input[type="date"],
 textarea {
     @apply p-2 bg-white border placeholder-stone-500 border-stone-500;
 }

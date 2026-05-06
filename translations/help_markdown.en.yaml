@@ -143,31 +143,47 @@ codebook:
         > age
 
         > pat_key
-data_collection:
+
+measure:
     section: |
         # Data collection help
 
         How did you gather the information on your variables of interest? Which measures and which eqipment did you use?
+    collection_mode: |
+        If the investigator was present during the data collection, please consider that observer expectancy effects might have occured, that is, participants' behavior might have been unintentionally influenced by the researchers' expectations about the study outcome (Rosenthal, 1976).
     apparatus: |
         Provide a description of apparatus used, such as specialized equipment by model and supplier, and their function in the experiment. Definition apparatus: any instrument or equipment used in an experiment or other research.
 
         ### Examples
 
         > The sentences were presented on the screen of a notebook computer. The speakers were recorded in a sound-treated room, using an AKG SE300B microphone, which was attached to an AKG N6-6E preamplifier, on a Tascam DA-P1 DAT recorder.
+    sampling_method: |
+        This item helps you outline the inclusion and exclusion criteria for your data collection in detail.
+        In addition to the inclusion and exclusion criteria of data points during the analysis (see items "Criteria for post-data collection exclusion of participants and outlier treatment" and "Criteria for post-data collection exclusions on trial or item level"), these can have a major influence on the sample.
+    recruiting: |
+        This item is designed to help you describe your population of interest, recruitment strategies, compensation, and the characteristics of your sample, (e.g., will your participants be WEIRD - White, Educated, Industrialized, Rich, Democratic?).
+        Providing detailed information about these is important because sampling bias can have an influence on any results based on the data (Vaughan-Johnston et al., 2024, <a href="https://doi.org/10.1177/01461672241293504" target="_blank">https://doi.org/10.1177/01461672241293504</a> ).
+        You can find a good overview of various recruitment strategies on this Qualtrics Blog: <a href="https://www.qualtrics.com/experience-management/research/sampling-methods/" target="_blank">https://www.qualtrics.com/experience-management/research/sampling-methods/</a>.
+        If you used panel providers to collect your sample, it is important to clarify exactly how the sampling process worked with them (e.g., how they considered your defined quotas).
+    special_circumstances: |
+        These could comprise, for example, participants' comments, equipment casualties, disturbances, systematic loss, deleted cases or abnormal data. Providing this information helps others interpret your data correctly.
+    raw_data_transformation: |
+        More information on data integrity, data cleaning and file formats is available at the RDC Knowledge Base:
+        - Data integrity and data cleaning: <a href="https://rdc-psychology.org/en/rdc-knowledge-base/before-data-collection/data-integrity-data-selection" target="_blank">https://rdc-psychology.org/en/rdc-knowledge-base/before-data-collection/data-integrity-data-selection</a>
+        - File formats: <a href="https://rdc-psychology.org/en/rdc-knowledge-base/during-data-collection/file-formats-versioning" target="_blank">https://rdc-psychology.org/en/rdc-knowledge-base/during-data-collection/file-formats-versioning</a>
 
-        <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[Adank, P., Evans, B. G., Stuart-Smith, J., & Scott, S. K. (2009). Comprehension of familiar and unfamiliar native accents under adverse listening conditions. Journal of Experimental Psychology: Human Perception and Performance, 35(2), 520-529. https://doi.org/10.1037/a0013552]</div> -->
-    measure: |
-        All data result from some form of measurement (including observations, collections, and so forth). The results of the measurement are so-called measures. A measure in psychology is an indicator of a not directly observable attribute/construct. Psychological measures are either numerical or categorical in nature. General types of numerical variables include: frequency measures (for example number of words recalled from a list), latency measures (for example reaction time to name a visual object), and intensity or strength measures (for example magnitude estimation of stimulus intensity). Ratings using numerical scales (for example 1 to 7) are sometimes referred to as Likert scales. Categorical variables involve classification of cases into distinct groups. Although numbers might be used to label the levels of categorical variables, especially when there are numerous classes (for example psychiatric diagnoses), the numbers have limited quantitative meaning and simply provide convenient labels for the distinct groups.
+        If your lab uses the same preprocessing pipelines for most of its work, these could be standardized as "standard lab practices".
+        This refers to a (timestamped) document, software package, or similar, which specifies standard pipelines, analytical decisions, etc. which always apply to certain types of research in a lab.
+    quality_indicators: |
+        For example, this item relates to how errors in participants' scores or reporting (e.g., entering the wrong age; making a mistake during a cognitive test; providing misleading or silly answers on purpose) were handled, as well as how data was coded during data collection (e.g., recoding cognitive scores or telephone survey responses).
 
-        ### Examples
+        It is also possible to standardize these kinds of decisions in a lab through "standard lab practices". This refers to a (timestamped) document, software package, or similar, which specifies standard pipelines, analytical decisions, etc. which always apply to certain types of research in a lab.
+    limitations: |
+        Clearly outlining the limitations of the data helps others to better understand it and draw meaningful conclusions when reusing the data. More information on data integrity is available at the RDC Knowledge Base: <a href="https://rdc-psychology.org/en/rdc-knowledge-base/before-data-collection/data-integrity-data-selection" target="_blank">https://rdc-psychology.org/en/rdc-knowledge-base/before-data-collection/data-integrity-data-selection</a>
 
-        > Evidence indicates that (cognitive) activation is a quantifiable dimension which can be measured by physiological indices. One such measure is the Galvanic Skin Response (GSR), which is the change in electrical conductance of the skin following stimulation. Scores in conductance units were obtained for each subject for the twelve experimental words.
-        >
-        > Nelson, J. Thor, "Approach and avoidance responses to a Tat dimension as related to reaction time and galvanic skin response on a word association test" (1961). Masters Theses 1911 - February 2014. 1828. Retrieved from https://scholarworks.umass.edu/theses/1828
+Aus Coding Scheme übernommen! TODO: Zitieren?
 
-        > Employment-related self-efficacy. The Perceived Employability subscale (PEM) of the Bigelow Quality of Life Questionnaire (BQQ; Bigelow, McFarland, Gareau, & Young, 1991) was used to measure employment-related self-efficacy. The PEM consists of eight items that assess an individual's confidence to find and maintain employment (for example, how comfortable do you feel going out to look for a job?). Items are rated on a 4-point Likert scale and summed, with higher scores indicating higher efficacy. Only five of the eight items from the PEM subscale were included . . . with adequate internal consistency (Cronbach's α = .72). (p. 301)
-        >
-        > This description reveals the construct of interest (employment-related self-efficacy), how it was measured (with a questionnaire), and that the measure had five questions each with four possible responses. [Cooper, Harris M.. Reporting Quantitative Research in Psychology. American Psychological Association. Kindle-Version.]
+
 data_documentation:
     section: |
         # Why data documentation is so important

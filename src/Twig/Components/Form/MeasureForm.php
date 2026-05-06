@@ -49,18 +49,6 @@ class MeasureForm extends AbstractController
     }
 
     #[LiveAction]
-    public function addMeasure(): void
-    {
-        $this->formValues['measures'][] = [];
-    }
-
-    #[LiveAction]
-    public function removeMeasure(#[LiveArg] int $index): void
-    {
-        unset($this->formValues['measures'][$index]);
-    }
-
-    #[LiveAction]
     public function addApparatus(): void
     {
         $this->formValues['apparatus'][] = [];

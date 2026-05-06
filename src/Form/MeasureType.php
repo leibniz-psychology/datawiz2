@@ -2,10 +2,16 @@
 
 namespace App\Form;
 
-use App\Entity\Constant\MetaDataDictionary;
 use App\Entity\Study\MeasureMetaDataGroup;
+use App\Enum\Study\CollectionMode;
+use App\Enum\Study\DataDigitization;
+use App\Enum\Study\Dictionary\MeasureDictionary;
+use App\Enum\Study\RecordType;
+use App\Enum\Study\SamplingMethod;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,21 +21,29 @@ class MeasureType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add(MetaDataDictionary::MEASURES, CollectionType::class, [
+            ->add(MeasureDictionary::DATA_COLLECTION_START->value, DateType::class, [
                 'required' => false,
-                'entry_type' => TextareaType::class,
-                'entry_options' => [
-                    'label' => false,
-                    'attr' => [
-                        'rows' => '3',
-                    ],
-                ],
-                'allow_add' => true,
-                'prototype' => true,
-                'allow_delete' => true,
-                'label' => 'input.measures.label',
+                'label' => MeasureDictionary::DATA_COLLECTION_START->label(),
+                'input' => 'date_point',
+                'widget' => 'single_text',
             ])
-            ->add(MetaDataDictionary::APPARATUS, CollectionType::class, [
+            ->add(MeasureDictionary::DATA_COLLECTION_END->value, DateType::class, [
+                'required' => false,
+                'label' => MeasureDictionary::DATA_COLLECTION_END->label(),
+                'input' => 'date_point',
+                'widget' => 'single_text',
+            ])
+            ->add(MeasureDictionary::COLLECTION_MODE->value, EnumType::class, [
+                'required' => false,
+                'placeholder' => false,
+                'class' => CollectionMode::class,
+                'expanded' => true,
+                'multiple' => true,
+                'label' => MeasureDictionary::COLLECTION_MODE->label(),
+                'choice_label' => fn (CollectionMode $details) => $details->label(),
+                'choice_translation_domain' => 'enums',
+            ])
+            ->add(MeasureDictionary::APPARATUS->value, CollectionType::class, [
                 'required' => false,
                 'entry_type' => TextareaType::class,
                 'entry_options' => [
@@ -41,12 +55,107 @@ class MeasureType extends AbstractType
                 'allow_add' => true,
                 'prototype' => true,
                 'allow_delete' => true,
-                'label' => 'input.apparatus.label',
-            ]);
+                'label' => MeasureDictionary::APPARATUS->label(),
+            ])
+            ->add(MeasureDictionary::COLLECTION_MODE_OTHER_DESCRIPTION->value, TextareaType::class, [
+                'required' => false,
+                'label' => MeasureDictionary::COLLECTION_MODE_OTHER_DESCRIPTION->label(),
+                'attr' => [
+                    'rows' => '3',
+                ],
+            ])
+            ->add(MeasureDictionary::SAMPLING_METHOD->value, EnumType::class, [
+                'required' => false,
+                'placeholder' => false,
+                'class' => SamplingMethod::class,
+                'expanded' => true,
+                'label' => MeasureDictionary::SAMPLING_METHOD->label(),
+                'choice_label' => fn (SamplingMethod $samplingMethod) => $samplingMethod->label(),
+                'choice_translation_domain' => 'enums',
+            ])
+            ->add(MeasureDictionary::SAMLING_METHOD_OTHER_DESCRIPTION->value, TextareaType::class, [
+                'required' => false,
+                'label' => MeasureDictionary::SAMLING_METHOD_OTHER_DESCRIPTION->label(),
+                'attr' => [
+                    'rows' => '3',
+                ],
+            ])
+            ->add(MeasureDictionary::RECRUITING->value, TextareaType::class, [
+                'required' => false,
+                'label' => MeasureDictionary::RECRUITING->label(),
+                'attr' => [
+                    'rows' => '3',
+                ],
+            ])
+            ->add(MeasureDictionary::ORIGINAL_RECORD_TYPE->value, EnumType::class, [
+                'required' => false,
+                'placeholder' => false,
+                'class' => RecordType::class,
+                'expanded' => true,
+                'multiple' => true,
+                'label' => MeasureDictionary::ORIGINAL_RECORD_TYPE->label(),
+                'choice_label' => fn (RecordType $recordType) => $recordType->label(),
+                'choice_translation_domain' => 'enums',
+            ])
+            ->add(MeasureDictionary::ORIGINAL_RECORD_TYPE_OTHER_DESCRIPTION->value, TextareaType::class, [
+                'required' => false,
+                'label' => MeasureDictionary::ORIGINAL_RECORD_TYPE_OTHER_DESCRIPTION->label(),
+                'attr' => [
+                    'rows' => '3',
+                ],
+            ])
+            ->add(MeasureDictionary::RAW_DATA_DIGITIZATION->value, EnumType::class, [
+                'required' => false,
+                'placeholder' => false,
+                'class' => DataDigitization::class,
+                'expanded' => true,
+                'label' => MeasureDictionary::RAW_DATA_DIGITIZATION->label(),
+                'choice_label' => fn (DataDigitization $dataDigitization) => $dataDigitization->label(),
+                'choice_translation_domain' => 'enums',
+            ])
+            ->add(MeasureDictionary::RAW_DATA_DIGITIZATION_DESCRIPTION->value, TextareaType::class, [
+                'required' => false,
+                'label' => MeasureDictionary::RAW_DATA_DIGITIZATION_DESCRIPTION->label(),
+                'attr' => [
+                    'rows' => '3',
+                ],
+            ])
+            ->add(MeasureDictionary::SPECIAL_CIRCUMSTANCES->value, TextareaType::class, [
+                'required' => false,
+                'label' => MeasureDictionary::SPECIAL_CIRCUMSTANCES->label(),
+                'attr' => [
+                    'rows' => '3',
+                ],
+            ])
+            ->add(MeasureDictionary::RAW_DATA_TRANSFORMATION->value, TextareaType::class, [
+                'required' => false,
+                'label' => MeasureDictionary::RAW_DATA_TRANSFORMATION->label(),
+                'attr' => [
+                    'rows' => '3',
+                ],
+            ])
+            ->add(MeasureDictionary::QUALITY_INDICATORS->value, TextareaType::class, [
+                'required' => false,
+                'label' => MeasureDictionary::QUALITY_INDICATORS->label(),
+                'attr' => [
+                    'rows' => '3',
+                ],
+            ])
+            ->add(MeasureDictionary::LIMITATIONS->value, TextareaType::class, [
+                'required' => false,
+                'label' => MeasureDictionary::LIMITATIONS->label(),
+                'attr' => [
+                    'rows' => '3',
+                ],
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => MeasureMetaDataGroup::class]);
+        $resolver->setDefaults([
+            'data_class' => MeasureMetaDataGroup::class,
+            'translation_domain' => 'forms',
+        ]);
     }
 }

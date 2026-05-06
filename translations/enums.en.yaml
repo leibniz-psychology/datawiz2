@@ -1,3 +1,15 @@
+collection_mode:
+    individual_presentation: 'Individual presentation'
+    group_presentation: 'Group presentation'
+    paper_pencil: 'Paper-pencil'
+    recordings: 'Photo, video or audio Recordings'
+    computer_support: 'Computer-supported'
+    special_apparatus: 'Specialized apparatus or measuring equipment'
+    telephone_survey: 'Telephone survey'
+    post_survey: 'Post survey'
+    online_survey: 'Online survey'
+    other: 'Other'
+
 construct_function:
     independent_variable: 'Independent variable'
     dependent_variable: 'Dependent variable'
@@ -31,6 +43,10 @@ creator_credit_role:
     writing_review_editing: 'Writing - review & editing'
 
     placeholder: 'Please select a role'
+
+data_digitization:
+    simple: 'Data matrix and original records are the same or the data matrix results from a direct transfer of the original records into a machine-readable format according to simple coding rules (e.g. digitized paper and pencil questionnaires)'
+    complex: 'Transfer of the original records into a data matrix required more complex steps (e.g. complex coding rules, rating procedures)'
 
 data_status:
     complete: 'Complete'
@@ -74,6 +90,13 @@ observational_type:
 
     placeholder: 'Choose an observational type'
 
+record_type:
+    questionnaires: 'Questionnaires filled out by the subject or investigator with closed and/or open response formats'
+    paper_pencil: 'Other paper-pencil reactions from the subjects such as drawings, diary notes, video recordings, photographs, audio recordings, etc.'
+    computer_supported: 'Records from computer-supported data collection (e.g. subject related data files)'
+    specialized_apparatus: 'Records from specialized apparatus (e.g. recording of biological signals)'
+    other: 'Other format'
+
 research_design:
     cross_sectional: 'Cross-sectional'
     longitudinal: 'Longitudinal'
@@ -89,6 +112,15 @@ research_method:
         experimental: '<span class="block">Experimental</span><span class="block text-sm">Your study involved an experimental manipulation</span>'
         non_experimental: '<span class="block">Non-experimental</span><span class="block text-sm">Your study did not involve an experimental manipulation</span>'
         test_development: '<span class="block">Test-development</span><span class="block text-sm">Your study involved a test-development process</span>'
+
+sampling_method:
+    convenience: 'Convenience sample (ad-hoc sampling)'
+    census: 'Census'
+    simple_random: 'Simple random sample'
+    cluster: 'Cluster sample'
+    stratified: 'Stratified systematic sample'
+    quota: 'Quota sample'
+    other: 'Other'
 
 study_relation:
     replication: 'Replication'

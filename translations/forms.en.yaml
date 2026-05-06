@@ -71,14 +71,6 @@ measure_meta_data_group:
         add: 'Add another apparatus'
     collection_mode_other_description:
         label: 'If other, please describe the method'
-    sampling_method:
-        legend: 'Sampling method'
-        label: 'Provide remarks on persons or institutions responsible for data collection.'
-    sampling_method_other_description:
-        label: 'If other, please describe the method'
-    recruiting:
-        legend: 'Recruiting'
-        label: 'The procedure for the recruitment of units.'
     original_record_type:
         legend: 'Original record type'
         label: 'The original record type of the data.'
@@ -215,6 +207,72 @@ method_meta_data_group:
         label: 'Name all measurement instruments used during this study'
         add: 'Add another instrument'
         remove: 'Remove Instrument'
+
+sample_meta_data_group:
+    participants:
+        legend: 'Participants'
+        label: 'Describe participants, specifying their pertinent characteristics for this study'
+    population:
+        legend: 'Population'
+        label: 'Indicate which population you were generally interested in, i.e., the group of persons or other elements that were the object of research and to which any analytic results refer'
+        add: 'Add another population'
+    inclusion_criteria:
+        legend: 'Inclusion criteria'
+        label: 'State inclusion criteria for participants'
+        add: 'Add another inclusion criteria'
+    exclusion_criteria:
+        legend: 'Exclusion criteria'
+        label: "Describe all criteria that led to the exclusion of a participant's data (e.g., attention checks, performance criteria, non-responding in physiological measures, incomplete data). Clarify whether a participant who was an outlier in one variable was only excluded from the analyses that involved that specific variable, or if they were excluded from all tests."
+        add: 'Add another exclusion criteria'
+    sampling_method:
+        legend: 'Sampling method'
+        label: 'Provide remarks on persons or institutions responsible for data collection.'
+    sampling_method_other_description:
+        label: 'If other, please describe the method'
+    recruiting:
+        legend: 'Recruiting'
+        label: 'The procedure for the recruitment of units.'
+    sample_size:
+        legend: 'Sample size'
+        label: 'Provide the achieved sample size as total number of cases N or as number of cases in subsamples n'
+    power_analysis:
+        legend: 'Power analysis (statistical)'
+        label: 'If applicable: Information on power analysis used for the determination of sample size before the study started. This information may include the formula and software used for determining the target sample size. If applicable, refer to corresponding documents under project materials.'
+    intended_sample_size:
+        legend: 'Intended sample size'
+        label: 'If applicable: Provide the intended sample size as total number of cases N or as number of cases in subsamples n'
+    unit_of_analysis:
+        legend: 'Unit of analysis'
+        label: 'Specify the unit of analysis'
+    unit_of_analysis_other_description:
+        label: 'If other, please describe the unit of analysis'
+    multilevel_structure:
+        legend: 'Multilevel structure'
+        label: 'If your data is clustered into multiple levels (e.g., students nested within classrooms, employees nested within organizations), provide more information about the data structure.'
+    sex:
+        legend: 'Sex'
+        label: 'Describe the sex distribution of the study sample'
+    age:
+        legend: 'Age'
+        label: 'Describe the age range of the study sample'
+    special_groups:
+        legend: 'Special groups'
+        label: 'Describe other important variables and their distribution (e.g. socioeconomic status, psychopathology)'
+    country:
+        legend: 'Geographic origin of the sample'
+        label: 'Country'
+    city:
+        legend: 'City'
+        label: 'City'
+    region:
+        legend: 'Region'
+        label: 'Region'
+    missing_values:
+        legend: 'Frequency of missing data'
+        label: 'Provide information on the frequency or percentages of missing data in your data'
+    return_dropout:
+        legend: 'Return/dropout'
+        label: 'Provide information on data return (e.g., response rate) and drop-out rates (i.e., participants that were recruited but withdrew before the study concluded).'
 
 theory_meta_data_group:
     objectives:

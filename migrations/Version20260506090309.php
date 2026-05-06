@@ -14,7 +14,7 @@ final class Version20260506090309 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Add more fields to experiment_measure table';
     }
 
     public function up(Schema $schema): void

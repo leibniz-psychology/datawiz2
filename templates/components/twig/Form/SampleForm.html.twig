@@ -5,53 +5,90 @@
 {% endblock %}
 
 {% block form_content %}
-    <twig:Form:FormCard title="{{ 'input.participants.legend'|trans }}" help="{{ "participants" }}">
+    <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').PARTICIPANTS }}">
         {{ form_row(form.participants) }}
+        {{ form_row(form.sex) }}
+        {{ form_row(form.age) }}
+        {{ form_row(form.specialGroups) }}
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard class="mt-8" title="{{ 'input.population.legend'|trans }}" help="{{ "population" }}">
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').POPULATION }}">
         <twig:Form:CollectionForm
             collection="{{ form.population }}"
             add_action="addPopulation"
             remove_action="removePopulation"
-            add_label="{{ 'input.population.add'|trans }}"
+            add_label="{{ 'sample_meta_data_group.population.add'|trans([], 'forms') }}"
         />
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard class="mt-8" title="{{ 'input.inclusion.legend'|trans }}" help="{{ "inclusion_criteria" }}">
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').INCLUSION_CRITERIA }}">
         <twig:Form:CollectionForm
-            collection="{{ form.inclusion_criteria }}"
+            collection="{{ form.inclusionCriteria }}"
             add_action="addInclusion"
             remove_action="removeInclusion"
-            add_label="{{ 'input.inclusion.add'|trans }}"
+            add_label="{{ 'sample_meta_data_group.inclusion_criteria.add'|trans([], 'forms') }}"
         />
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard class="mt-8" title="{{ 'input.exclusion.legend'|trans }}" help="{{ "exclusion_criteria" }}">
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').EXCLUSION_CRITERIA }}">
         <twig:Form:CollectionForm
-            collection="{{ form.exclusion_criteria }}"
+            collection="{{ form.exclusionCriteria }}"
             add_action="addExclusion"
             remove_action="removeExclusion"
-            add_label="{{ 'input.exclusion.add'|trans }}"
+            add_label="{{ 'sample_meta_data_group.exclusion_criteria.add'|trans([], 'forms') }}"
         />
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard class="mt-8" title="{{ 'input.sampling.legend'|trans }}" help="{{ "sampling_method" }}">
-        <twig:Form:MultilineChoiceForm form="{{ form.sampling_method }}"/>
-
-        {{ form_row(form.otherSamplingMethod, {
+    <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').SAMPLING_METHOD }}">
+        <twig:Form:MultilineChoiceForm form="{{ form.samplingMethod }}"/>
+        {{ form_row(form.samplingMethodOtherDescription, {
             'attr': {
-                'disabled': form.sampling_method.vars.value != 'Other'
+                'disabled': enum('App\\Enum\\Study\\SamplingMethod').OTHER.value != form.samplingMethod.vars.value,
             }
         }) }}
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard class="mt-8" title="{{ 'input.sample-size.legend'|trans }}" help="{{ "sample_size" }}">
-        {{ form_row(form.sample_size) }}
+    <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').RECRUITING }}">
+        {{ form_row(form.recruiting) }}
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard class="mt-8" title="{{ 'input.power-analysis.legend'|trans }}" help="{{ "power_analysis" }}">
-        {{ form_row(form.power_analysis) }}
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').SAMPLE_SIZE }}">
+        {{ form_row(form.sampleSize) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').POWER_ANALYSIS }}">
+        {{ form_row(form.powerAnalysis) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').INTENDED_SAMPLE_SIZE }}">
+        {{ form_row(form.intendedSampleSize) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').UNIT_OF_ANALYSIS }}">
+        {{ form_row(form.unitOfAnalysis) }}
+        {{ form_row(form.unitOfAnalysisOtherDescription, {
+            'attr': {
+                'disabled': enum('App\\Enum\\Study\\SampleAnalysisUnit').OTHER.value != form.unitOfAnalysis.vars.value,
+            }
+        }) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').MULTILEVEL_STRUCTURE }}">
+        {{ form_row(form.multilevelStructure) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').COUNTRY }}">
+        {{ form_row(form.country) }}
+        {{ form_row(form.city) }}
+        {{ form_row(form.region) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').MISSING_VALUES }}">
+        {{ form_row(form.missingValues) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').RETURN_DROPOUT }}">
+        {{ form_row(form.returnDropout) }}
     </twig:Form:FormCard>
 {% endblock %}
 

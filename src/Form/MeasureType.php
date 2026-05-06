@@ -7,7 +7,6 @@ use App\Enum\Study\CollectionMode;
 use App\Enum\Study\DataDigitization;
 use App\Enum\Study\Dictionary\MeasureDictionary;
 use App\Enum\Study\RecordType;
-use App\Enum\Study\SamplingMethod;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -60,29 +59,6 @@ class MeasureType extends AbstractType
             ->add(MeasureDictionary::COLLECTION_MODE_OTHER_DESCRIPTION->value, TextareaType::class, [
                 'required' => false,
                 'label' => MeasureDictionary::COLLECTION_MODE_OTHER_DESCRIPTION->label(),
-                'attr' => [
-                    'rows' => '3',
-                ],
-            ])
-            ->add(MeasureDictionary::SAMPLING_METHOD->value, EnumType::class, [
-                'required' => false,
-                'placeholder' => false,
-                'class' => SamplingMethod::class,
-                'expanded' => true,
-                'label' => MeasureDictionary::SAMPLING_METHOD->label(),
-                'choice_label' => fn (SamplingMethod $samplingMethod) => $samplingMethod->label(),
-                'choice_translation_domain' => 'enums',
-            ])
-            ->add(MeasureDictionary::SAMLING_METHOD_OTHER_DESCRIPTION->value, TextareaType::class, [
-                'required' => false,
-                'label' => MeasureDictionary::SAMLING_METHOD_OTHER_DESCRIPTION->label(),
-                'attr' => [
-                    'rows' => '3',
-                ],
-            ])
-            ->add(MeasureDictionary::RECRUITING->value, TextareaType::class, [
-                'required' => false,
-                'label' => MeasureDictionary::RECRUITING->label(),
                 'attr' => [
                     'rows' => '3',
                 ],

@@ -228,53 +228,18 @@ input:
   apparatus:
     empty: '<a href="#link#" class="#class#">Add apparatus, instruments or equipments</a> to increase the reusability of your data'
   participants:
-    legend: 'Participants'
-    label: 'Describe participants, specifying their pertinent characteristics for
-      this study'
     empty: '<a href="#link#" class="#class#">Add participants</a> to increase the reusability of your data'
   population:
-    legend: 'Population'
-    label: 'Provide information on the group of individuals to which your results
-      can be generalized'
     empty: '<a href="#link#" class="#class#">Add population</a> to increase the reusability of your data'
-    add: 'Add another population'
   inclusion:
-    legend: 'Inclusion criteria'
-    label: 'State inclusion criteria for participants'
     empty: '<a href="#link#" class="#class#">Add inclusion criteria</a> to increase the reusability of your data'
-    add: 'Add another inclusion criteria'
   exclusion:
-    legend: 'Exclusion criteria'
-    label: 'State exclusion criteria for participants'
     empty: '<a href="#link#" class="#class#">Add exclusion criteria</a> to increase the reusability of your data'
-    add: 'Add another exclusion criteria'
   sampling:
-    legend: 'Sampling method'
-    label: 'Choose your sampling method'
     empty: '<a href="#link#" class="#class#">Add sampling method</a> to increase the reusability of your data'
-    choices:
-      convenience: '<span>Convenience sampling (accidental sampling, opportunity sampling)</span><span>Your
-        individuals (observations, cases) were chosen non-randomly because they were
-        easily available</span>'
-      random: '<span>Random sampling</span><span>Your individuals (observations, cases)
-        were chosen randomly and entirely by chance</span>'
-      systematic: '<span>Systematic sampling (quasirandom sampling)</span><span>Your
-        individuals (observations, cases) were chosen randomly with a system</span>'
-      stratified: '<span>Stratified sampling</span><span>Your individuals (observations,
-        cases) were chosen randomly from subgroups (strata)</span>'
-      quota: '<span>Quota sampling</span><span>Your individuals (observations, cases)
-        were chosen non-randomly on the basis of a specific plan</span>'
-      other: 'Other'
-    other:
-      label: 'If other, please describe your sampling method. See help for a list of methods.'
   sample-size:
-    legend: 'Sample size'
-    label: 'Provide the achieved sample size as total number of cases N or as number
-      of cases in subsamples n'
     empty: '<a href="#link#" class="#class#">Add sample size</a> to increase the reusability of your data'
   power-analysis:
-    legend: 'Power analysis (statistical)'
-    label: 'Provide details of the power analysis used to calculate your sample size'
     empty: '<a href="#link#" class="#class#">Add power analysis</a> to increase the reusability of your data'
   documentation-name:
     legend: 'Documentation name'

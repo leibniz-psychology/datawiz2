@@ -15,10 +15,13 @@
 {% endblock %}
 
 {% block help_for_section %}
-    {{ sectionHelp("data_collection") }}
+    {{ sectionHelp("measure") }}
 {% endblock %}
 
 {% block help_for_metadata %}
-    {{ formHelp("data_collection", "measure", "input.measures.legend") }}
-    {{ formHelp("data_collection", "apparatus", "input.apparatus.legend") }}
+    {% for measure in enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').cases %}
+        {% if measure.descriptionHelp != null %}
+            <twig:Form:FormHelp dictionary="{{ measure }}"/>
+        {% endif %}
+    {% endfor %}
 {% endblock %}

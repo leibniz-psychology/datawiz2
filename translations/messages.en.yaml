@@ -225,17 +225,8 @@ input:
     name: 'Occasion'
   constructs:
     name: 'Construct'
-  measures:
-    legend: 'Tests and measures'
-    label: 'Provide definitions of all measures you collected on participants. Provide
-      the proper name of standardized measures (tests).'
-    empty: '<a href="#link#" class="#class#">Add measures</a> to increase the reusability of your data'
-    add: 'Add another measure'
   apparatus:
-    legend: 'Apparatus (instruments, equipment)'
-    label: 'Which instruments (apparatus, equipment) did you use in your study?'
     empty: '<a href="#link#" class="#class#">Add apparatus, instruments or equipments</a> to increase the reusability of your data'
-    add: 'Add another apparatus'
   participants:
     legend: 'Participants'
     label: 'Describe participants, specifying their pertinent characteristics for

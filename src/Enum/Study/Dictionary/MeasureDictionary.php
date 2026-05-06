@@ -1,0 +1,96 @@
+<?php
+
+namespace App\Enum\Study\Dictionary;
+
+use App\Enum\DictionaryEnum;
+use App\Enum\DictionaryInterface;
+use App\Enum\ExtendedEnum;
+
+enum MeasureDictionary: string implements DictionaryInterface
+{
+    use ExtendedEnum;
+    use DictionaryEnum;
+
+    case DATA_COLLECTION_START = 'dataCollectionStart';
+    case DATA_COLLECTION_END = 'dataCollectionEnd';
+    case COLLECTION_MODE = 'collectionMode';
+    case APPARATUS = 'apparatus';
+    case COLLECTION_MODE_OTHER_DESCRIPTION = 'collectionModeOtherDescription';
+    case SAMPLING_METHOD = 'samplingMethod';
+    case SAMLING_METHOD_OTHER_DESCRIPTION = 'samplingMethodOtherDescription';
+    case RECRUITING = 'recruiting';
+    case ORIGINAL_RECORD_TYPE = 'originalRecordType';
+    case ORIGINAL_RECORD_TYPE_OTHER_DESCRIPTION = 'originalRecordTypeOtherDescription';
+    case RAW_DATA_DIGITIZATION = 'rawDataDigitization';
+    case RAW_DATA_DIGITIZATION_DESCRIPTION = 'rawDataDigitizationDescription';
+    case SPECIAL_CIRCUMSTANCES = 'specialCircumstances';
+    case RAW_DATA_TRANSFORMATION = 'rawDataTransformation';
+    case QUALITY_INDICATORS = 'qualityIndicators';
+    case LIMITATIONS = 'limitations';
+
+    public function legend(): string
+    {
+        return match ($this) {
+            self::DATA_COLLECTION_START => 'measure_meta_data_group.data_collection_start.legend',
+            self::DATA_COLLECTION_END => 'measure_meta_data_group.data_collection_end.legend',
+            self::COLLECTION_MODE => 'measure_meta_data_group.collection_mode.legend',
+            self::APPARATUS => 'measure_meta_data_group.apparatus.legend',
+            self::COLLECTION_MODE_OTHER_DESCRIPTION => 'measure_meta_data_group.collection_other_description.legend',
+            self::SAMPLING_METHOD => 'measure_meta_data_group.sampling_method.legend',
+            self::SAMLING_METHOD_OTHER_DESCRIPTION => 'measure_meta_data_group.sampling_method_other_description.legend',
+            self::RECRUITING => 'measure_meta_data_group.recruiting.legend',
+            self::ORIGINAL_RECORD_TYPE => 'measure_meta_data_group.original_record_type.legend',
+            self::ORIGINAL_RECORD_TYPE_OTHER_DESCRIPTION => 'measure_meta_data_group.original_record_type_other_description.legend',
+            self::RAW_DATA_DIGITIZATION => 'measure_meta_data_group.raw_data_digitization.legend',
+            self::RAW_DATA_DIGITIZATION_DESCRIPTION => 'measure_meta_data_group.raw_data_digitization_description.legend',
+            self::SPECIAL_CIRCUMSTANCES => 'measure_meta_data_group.special_circumstances.legend',
+            self::RAW_DATA_TRANSFORMATION => 'measure_meta_data_group.raw_data_transformation.legend',
+            self::QUALITY_INDICATORS => 'measure_meta_data_group.quality_indicators.legend',
+            self::LIMITATIONS => 'measure_meta_data_group.limitations.legend',
+        };
+    }
+
+    public function label(): string
+    {
+        return match ($this) {
+            self::DATA_COLLECTION_START => 'measure_meta_data_group.data_collection_start.label',
+            self::DATA_COLLECTION_END => 'measure_meta_data_group.data_collection_end.label',
+            self::COLLECTION_MODE => 'measure_meta_data_group.collection_mode.label',
+            self::APPARATUS => 'measure_meta_data_group.apparatus.label',
+            self::COLLECTION_MODE_OTHER_DESCRIPTION => 'measure_meta_data_group.collection_mode_other_description.label',
+            self::SAMPLING_METHOD => 'measure_meta_data_group.sampling_method.label',
+            self::SAMLING_METHOD_OTHER_DESCRIPTION => 'measure_meta_data_group.sampling_method_other_description.label',
+            self::RECRUITING => 'measure_meta_data_group.recruiting.label',
+            self::ORIGINAL_RECORD_TYPE => 'measure_meta_data_group.original_record_type.label',
+            self::ORIGINAL_RECORD_TYPE_OTHER_DESCRIPTION => 'measure_meta_data_group.original_record_type_other_description.label',
+            self::RAW_DATA_DIGITIZATION => 'measure_meta_data_group.raw_data_digitization.label',
+            self::RAW_DATA_DIGITIZATION_DESCRIPTION => 'measure_meta_data_group.raw_data_digitization_description.label',
+            self::SPECIAL_CIRCUMSTANCES => 'measure_meta_data_group.special_circumstances.label',
+            self::RAW_DATA_TRANSFORMATION => 'measure_meta_data_group.raw_data_transformation.label',
+            self::QUALITY_INDICATORS => 'measure_meta_data_group.quality_indicators.label',
+            self::LIMITATIONS => 'measure_meta_data_group.limitations.label',
+        };
+    }
+
+    public function help(): ?string
+    {
+        return match ($this) {
+            default => null,
+        };
+    }
+
+    public function descriptionHelp(): ?string
+    {
+        return match ($this) {
+            self::COLLECTION_MODE => 'measure.collection_mode',
+            self::APPARATUS => 'measure.apparatus',
+            self::SAMPLING_METHOD => 'measure.sampling_method',
+            self::RECRUITING => 'measure.recruiting',
+            self::SPECIAL_CIRCUMSTANCES => 'measure.special_circumstances',
+            self::RAW_DATA_TRANSFORMATION => 'measure.raw_data_transformation',
+            self::QUALITY_INDICATORS => 'measure.quality_indicators',
+            self::LIMITATIONS => 'measure.limitations',
+            default => null,
+        };
+    }
+}

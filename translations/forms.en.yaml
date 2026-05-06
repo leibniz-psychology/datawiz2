@@ -56,6 +56,52 @@ creator_meta_data_group:
     credit_roles:
         label: 'Roles'
 
+measure_meta_data_group:
+    data_collection_start:
+        legend: 'Data collection Period'
+        label: 'Data collection start'
+    data_collection_end:
+        label: 'Data collection end'
+    collection_mode:
+        legend: 'Collection mode'
+        label: 'Describe the method that was used to collect data.'
+    apparatus:
+        legend: 'Apparatus (instruments, equipment)'
+        label: 'Which instruments (apparatus, equipment) did you use in your study?'
+        add: 'Add another apparatus'
+    collection_mode_other_description:
+        label: 'If other, please describe the method'
+    sampling_method:
+        legend: 'Sampling method'
+        label: 'Provide remarks on persons or institutions responsible for data collection.'
+    sampling_method_other_description:
+        label: 'If other, please describe the method'
+    recruiting:
+        legend: 'Recruiting'
+        label: 'The procedure for the recruitment of units.'
+    original_record_type:
+        legend: 'Original record type'
+        label: 'The original record type of the data.'
+    original_record_type_other_description:
+        label: 'If other, please describe the original record type'
+    raw_data_digitization:
+        legend: 'Digitization of raw data'
+        label: 'Describe to which degree the uploaded data reflects the information contained in the original records.'
+    raw_data_digitization_description:
+        label: 'Please describe the digitization process'
+    special_circumstances:
+        legend: 'Special circumstances'
+        label: 'Describe any special circumstances of the data collection.'
+    raw_data_transformation:
+        legend: 'Transformation or aggregation of raw data'
+        label: 'Describe transformations or aggregations of raw data (e.g. reversed-polarity, index creation, calculation of scale values) or refer to documents or syntax containing the relevant information under study materials.'
+    quality_indicators:
+        legend: 'Quality indicators'
+        label: 'Indicate all measures of data quality control during data collection (e.g., standard lab practices, lab protocols, interrater reliability training, approaches for coding of data, discarding of cases, correction of scores, or dealing with participants who were incorrectly sampled although they do not meet the inclusion criteria).'
+    limitations:
+        legend: 'Limitations'
+        label: 'Describe any limitations to data quality, e.g., baseline differences, low measurement reliability.'
+
 measurement_instrument:
     title:
         label: 'Title'

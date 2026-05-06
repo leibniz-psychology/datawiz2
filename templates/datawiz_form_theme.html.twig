@@ -27,6 +27,11 @@
     {{- parent() -}}
 {%- endblock form_help -%}
 
+{%- block checkbox_widget -%}
+    {%- set widget_class = widget_class|default('mr-2 checkbox') -%}
+    {{- parent() -}}
+{%- endblock checkbox_widget -%}
+
 {%- block radio_widget -%}
     {%- set widget_class = widget_class|default('mr-2 radio') -%}
     {{- parent() -}}

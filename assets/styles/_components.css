@@ -13,11 +13,13 @@
     @apply min-h-4 max-h-4 min-w-4 max-w-4 my-1 cursor-pointer disabled:bg-slate-200;
     @apply hover:ring-zpid-blue hover:ring-3 checked:bg-zpid-purple hover:checked:border-1 hover:checked:cursor-default;
     @apply disabled:bg-stone-300 disabled:hover:bg-stone-300 disabled:hover:ring-0;
+    @apply checked:bg-[url("../images/checkmark.svg")];
 }
 
 @utility radio {
     @apply checkbox rounded-full;
     @apply checked:inset-ring-2 checked:inset-ring-white;
+    @apply checked:bg-none
 }
 
 .MetaDataGroup-Title {

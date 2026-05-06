@@ -4,10 +4,15 @@ namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
 use App\Entity\Constant\ReviewDataDictionary;
+use App\Enum\Study\CollectionMode;
+use App\Enum\Study\DataDigitization;
+use App\Enum\Study\RecordType;
+use App\Enum\Study\SamplingMethod;
 use App\Repository\MeasureRepository;
 use App\Service\Review\Reviewable;
 use App\Service\Review\ReviewDataCollectable;
 use App\Service\Review\ReviewValidator;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
@@ -22,24 +27,89 @@ class MeasureMetaDataGroup extends UuidEntity implements Reviewable
     #[ORM\OneToOne(inversedBy: 'measureMetaDataGroup', cascade: ['persist', 'remove'])]
     protected ?Experiment $experiment = null;
 
-    #[ORM\Column(type: 'json', length: 1500, nullable: true)]
-    #[SerializedName('measures')]
+    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    #[SerializedName('data_collection_start')]
     #[Groups(['study'])]
-    private ?array $measures = null;
+    private ?\DateTimeImmutable $dataCollectionStart = null;
 
-    #[ORM\Column(type: 'json', length: 1500, nullable: true)]
+    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    #[SerializedName('data_collection_end')]
+    #[Groups(['study'])]
+    private ?\DateTimeImmutable $dataCollectionEnd = null;
+
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true, enumType: CollectionMode::class)]
+    #[SerializedName('collection_mode')]
+    #[Groups(['study'])]
+    private ?array $collectionMode = null;
+
+    #[ORM\Column(length: 1500, nullable: true)]
     #[SerializedName('apparatus')]
     #[Groups(['study'])]
     private ?array $apparatus = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[SerializedName('collection_mode_other_description')]
+    #[Groups(['study'])]
+    private ?string $collectionModeOtherDescription = null;
+
+    #[ORM\Column(nullable: true, enumType: SamplingMethod::class)]
+    #[SerializedName('sampling_method')]
+    #[Groups(['study'])]
+    private ?SamplingMethod $samplingMethod = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[SerializedName('sampling_method_other_description')]
+    #[Groups(['study'])]
+    private ?string $samplingMethodOtherDescription = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[SerializedName('recruiting')]
+    #[Groups(['study'])]
+    private ?string $recruiting = null;
+
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true, enumType: RecordType::class)]
+    #[SerializedName('original_record_type')]
+    #[Groups(['study'])]
+    private ?array $originalRecordType = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[SerializedName('original_record_type_other_description')]
+    #[Groups(['study'])]
+    private ?string $originalRecordTypeOtherDescription = null;
+
+    #[ORM\Column(nullable: true, enumType: DataDigitization::class)]
+    #[SerializedName('raw_data_digitization')]
+    #[Groups(['study'])]
+    private ?DataDigitization $rawDataDigitization = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[SerializedName('raw_data_digitization_description')]
+    #[Groups(['study'])]
+    private ?string $rawDataDigitizationDescription = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[SerializedName('special_circumstances')]
+    #[Groups(['study'])]
+    private ?string $specialCircumstances = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[SerializedName('raw_data_transformation')]
+    #[Groups(['study'])]
+    private ?string $rawDataTransformation = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[SerializedName('quality_indicators')]
+    #[Groups(['study'])]
+    private ?string $qualityIndicators = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[SerializedName('limitations')]
+    #[Groups(['study'])]
+    private ?string $limitations = null;
+
     public function getReviewCollection(): array
     {
         return [
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::MEASURES,
-                $this->getMeasures(),
-                ReviewValidator::validateArrayValues($this->getMeasures())
-            ),
             ReviewDataCollectable::createFrom(
                 ReviewDataDictionary::APPARATUS,
                 $this->getApparatus(),
@@ -48,14 +118,50 @@ class MeasureMetaDataGroup extends UuidEntity implements Reviewable
         ];
     }
 
-    public function getMeasures(): ?array
+    public function getExperiment(): Experiment
     {
-        return $this->measures;
+        return $this->experiment;
     }
 
-    public function setMeasures(?array $measures): void
+    public function setExperiment(Experiment $experiment): void
     {
-        $this->measures = $measures == null ? null : array_values($measures);
+        $this->experiment = $experiment;
+    }
+
+    public function getDataCollectionStart(): ?\DateTimeImmutable
+    {
+        return $this->dataCollectionStart;
+    }
+
+    public function setDataCollectionStart(?\DateTimeImmutable $dataCollectionStart): static
+    {
+        $this->dataCollectionStart = $dataCollectionStart;
+
+        return $this;
+    }
+
+    public function getDataCollectionEnd(): ?\DateTimeImmutable
+    {
+        return $this->dataCollectionEnd;
+    }
+
+    public function setDataCollectionEnd(?\DateTimeImmutable $dataCollectionEnd): static
+    {
+        $this->dataCollectionEnd = $dataCollectionEnd;
+
+        return $this;
+    }
+
+    public function getCollectionMode(): ?array
+    {
+        return $this->collectionMode;
+    }
+
+    public function setCollectionMode(?array $collectionMode): static
+    {
+        $this->collectionMode = $collectionMode;
+
+        return $this;
     }
 
     public function getApparatus(): ?array
@@ -68,13 +174,150 @@ class MeasureMetaDataGroup extends UuidEntity implements Reviewable
         $this->apparatus = $apparatus == null ? null : array_values($apparatus);
     }
 
-    public function getExperiment(): Experiment
+    public function getCollectionModeOtherDescription(): ?string
     {
-        return $this->experiment;
+        return $this->collectionModeOtherDescription;
     }
 
-    public function setExperiment(Experiment $experiment): void
+    public function setCollectionModeOtherDescription(?string $collectionModeOtherDescription): static
     {
-        $this->experiment = $experiment;
+        $this->collectionModeOtherDescription = $collectionModeOtherDescription;
+
+        return $this;
+    }
+
+    public function getSamplingMethod(): ?SamplingMethod
+    {
+        return $this->samplingMethod;
+    }
+
+    public function setSamplingMethod(?SamplingMethod $samplingMethod): static
+    {
+        $this->samplingMethod = $samplingMethod;
+
+        return $this;
+    }
+
+    public function getSamplingMethodOtherDescription(): ?string
+    {
+        return $this->samplingMethodOtherDescription;
+    }
+
+    public function setSamplingMethodOtherDescription(?string $samplingMethodOtherDescription): static
+    {
+        $this->samplingMethodOtherDescription = $samplingMethodOtherDescription;
+
+        return $this;
+    }
+
+    public function getRecruiting(): ?string
+    {
+        return $this->recruiting;
+    }
+
+    public function setRecruiting(?string $recruiting): static
+    {
+        $this->recruiting = $recruiting;
+
+        return $this;
+    }
+
+    /**
+     * @return null|RecordType[]
+     */
+    public function getOriginalRecordType(): ?array
+    {
+        return $this->originalRecordType;
+    }
+
+    public function setOriginalRecordType(?array $originalRecordType): static
+    {
+        $this->originalRecordType = $originalRecordType;
+
+        return $this;
+    }
+
+    public function getOriginalRecordTypeOtherDescription(): ?string
+    {
+        return $this->originalRecordTypeOtherDescription;
+    }
+
+    public function setOriginalRecordTypeOtherDescription(?string $originalRecordTypeOtherDescription): static
+    {
+        $this->originalRecordTypeOtherDescription = $originalRecordTypeOtherDescription;
+
+        return $this;
+    }
+
+    public function getRawDataDigitization(): ?DataDigitization
+    {
+        return $this->rawDataDigitization;
+    }
+
+    public function setRawDataDigitization(?DataDigitization $rawDataDigitization): static
+    {
+        $this->rawDataDigitization = $rawDataDigitization;
+
+        return $this;
+    }
+
+    public function getRawDataDigitizationDescription(): ?string
+    {
+        return $this->rawDataDigitizationDescription;
+    }
+
+    public function setRawDataDigitizationDescription(?string $rawDataDigitizationDescription): static
+    {
+        $this->rawDataDigitizationDescription = $rawDataDigitizationDescription;
+
+        return $this;
+    }
+
+    public function getSpecialCircumstances(): ?string
+    {
+        return $this->specialCircumstances;
+    }
+
+    public function setSpecialCircumstances(string $specialCircumstances): static
+    {
+        $this->specialCircumstances = $specialCircumstances;
+
+        return $this;
+    }
+
+    public function getRawDataTransformation(): ?string
+    {
+        return $this->rawDataTransformation;
+    }
+
+    public function setRawDataTransformation(?string $rawDataTransformation): static
+    {
+        $this->rawDataTransformation = $rawDataTransformation;
+
+        return $this;
+    }
+
+    public function getQualityIndicators(): ?string
+    {
+        return $this->qualityIndicators;
+    }
+
+    public function setQualityIndicators(?string $qualityIndicators): static
+    {
+        $this->qualityIndicators = $qualityIndicators;
+
+        return $this;
+    }
+
+    public function getLimitations(): ?string
+    {
+        return $this->limitations;
+    }
+
+    public function setLimitations(?string $limitations): static
+    {
+        $this->limitations = $limitations;
+
+        return $this;
     }
 }

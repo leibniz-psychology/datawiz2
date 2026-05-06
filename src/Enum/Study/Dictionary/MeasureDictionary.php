@@ -16,9 +16,6 @@ enum MeasureDictionary: string implements DictionaryInterface
     case COLLECTION_MODE = 'collectionMode';
     case APPARATUS = 'apparatus';
     case COLLECTION_MODE_OTHER_DESCRIPTION = 'collectionModeOtherDescription';
-    case SAMPLING_METHOD = 'samplingMethod';
-    case SAMLING_METHOD_OTHER_DESCRIPTION = 'samplingMethodOtherDescription';
-    case RECRUITING = 'recruiting';
     case ORIGINAL_RECORD_TYPE = 'originalRecordType';
     case ORIGINAL_RECORD_TYPE_OTHER_DESCRIPTION = 'originalRecordTypeOtherDescription';
     case RAW_DATA_DIGITIZATION = 'rawDataDigitization';
@@ -36,9 +33,6 @@ enum MeasureDictionary: string implements DictionaryInterface
             self::COLLECTION_MODE => 'measure_meta_data_group.collection_mode.legend',
             self::APPARATUS => 'measure_meta_data_group.apparatus.legend',
             self::COLLECTION_MODE_OTHER_DESCRIPTION => 'measure_meta_data_group.collection_other_description.legend',
-            self::SAMPLING_METHOD => 'measure_meta_data_group.sampling_method.legend',
-            self::SAMLING_METHOD_OTHER_DESCRIPTION => 'measure_meta_data_group.sampling_method_other_description.legend',
-            self::RECRUITING => 'measure_meta_data_group.recruiting.legend',
             self::ORIGINAL_RECORD_TYPE => 'measure_meta_data_group.original_record_type.legend',
             self::ORIGINAL_RECORD_TYPE_OTHER_DESCRIPTION => 'measure_meta_data_group.original_record_type_other_description.legend',
             self::RAW_DATA_DIGITIZATION => 'measure_meta_data_group.raw_data_digitization.legend',
@@ -58,9 +52,6 @@ enum MeasureDictionary: string implements DictionaryInterface
             self::COLLECTION_MODE => 'measure_meta_data_group.collection_mode.label',
             self::APPARATUS => 'measure_meta_data_group.apparatus.label',
             self::COLLECTION_MODE_OTHER_DESCRIPTION => 'measure_meta_data_group.collection_mode_other_description.label',
-            self::SAMPLING_METHOD => 'measure_meta_data_group.sampling_method.label',
-            self::SAMLING_METHOD_OTHER_DESCRIPTION => 'measure_meta_data_group.sampling_method_other_description.label',
-            self::RECRUITING => 'measure_meta_data_group.recruiting.label',
             self::ORIGINAL_RECORD_TYPE => 'measure_meta_data_group.original_record_type.label',
             self::ORIGINAL_RECORD_TYPE_OTHER_DESCRIPTION => 'measure_meta_data_group.original_record_type_other_description.label',
             self::RAW_DATA_DIGITIZATION => 'measure_meta_data_group.raw_data_digitization.label',
@@ -72,20 +63,11 @@ enum MeasureDictionary: string implements DictionaryInterface
         };
     }
 
-    public function help(): ?string
-    {
-        return match ($this) {
-            default => null,
-        };
-    }
-
     public function descriptionHelp(): ?string
     {
         return match ($this) {
             self::COLLECTION_MODE => 'measure.collection_mode',
             self::APPARATUS => 'measure.apparatus',
-            self::SAMPLING_METHOD => 'measure.sampling_method',
-            self::RECRUITING => 'measure.recruiting',
             self::SPECIAL_CIRCUMSTANCES => 'measure.special_circumstances',
             self::RAW_DATA_TRANSFORMATION => 'measure.raw_data_transformation',
             self::QUALITY_INDICATORS => 'measure.quality_indicators',

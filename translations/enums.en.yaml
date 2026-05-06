@@ -101,8 +101,8 @@ research_design:
     cross_sectional: 'Cross-sectional'
     longitudinal: 'Longitudinal'
     extended:
-        cross_sectional: '<span class="block">Cross-sectional</span><span class="block text-sm">One measurement occasion per subject</span>'
-        longitudinal: '<span class="block">Longitudinal</span><span class="block text-sm">Multiple measurement occasions per subject</span>'
+        cross_sectional: '<span>Cross-sectional</span><span>One measurement occasion per subject</span>'
+        longitudinal: '<span>Longitudinal</span><span>Multiple measurement occasions per subject</span>'
 
 research_method:
     experimental: 'Experimental'
@@ -113,6 +113,14 @@ research_method:
         non_experimental: '<span class="block">Non-experimental</span><span class="block text-sm">Your study did not involve an experimental manipulation</span>'
         test_development: '<span class="block">Test-development</span><span class="block text-sm">Your study involved a test-development process</span>'
 
+sample_analysis_unit:
+    individuals: 'Individuals'
+    dyads: 'Dyads'
+    families: 'Families'
+    groups: 'Groups'
+    organizations: 'Organizations'
+    other: 'Other'
+
 sampling_method:
     convenience: 'Convenience sample (ad-hoc sampling)'
     census: 'Census'
@@ -121,6 +129,14 @@ sampling_method:
     stratified: 'Stratified systematic sample'
     quota: 'Quota sample'
     other: 'Other'
+    extended:
+        convenience: '<span>Convenience sampling (accidental sampling, opportunity sampling)</span><span>Your individuals (observations, cases) were chosen non-randomly because they were easily available</span>'
+        census: 'Census'
+        simple_random: '<span>Simple random sample</span><span>Your individuals (observations, cases) were chosen randomly and entirely by chance</span>'
+        cluster: 'Cluster sample'
+        stratified: '<span>Stratified sampling</span><span>Your individuals (observations, cases) were chosen randomly from subgroups (strata)</span>'
+        quota: '<span>Quota sampling</span><span>Your individuals (observations, cases) were chosen non-randomly on the basis of a specific plan</span>'
+        other: 'Other'
 
 study_relation:
     replication: 'Replication'

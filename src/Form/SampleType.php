@@ -2,11 +2,13 @@
 
 namespace App\Form;
 
-use App\Entity\Constant\MetaDataDictionary;
 use App\Entity\Study\SampleMetaDataGroup;
+use App\Enum\Study\Dictionary\SampleDictionary;
+use App\Enum\Study\SampleAnalysisUnit;
+use App\Enum\Study\SamplingMethod;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,14 +19,14 @@ class SampleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('participants', TextareaType::class, [
+            ->add(SampleDictionary::PARTICIPANTS->value, TextareaType::class, [
                 'required' => false,
-                'label' => 'input.participants.label',
+                'label' => SampleDictionary::PARTICIPANTS->label(),
                 'attr' => [
                     'rows' => '3',
                 ],
             ])
-            ->add(MetaDataDictionary::POPULATION, CollectionType::class, [
+            ->add(SampleDictionary::POPULATION->value, CollectionType::class, [
                 'required' => false,
                 'entry_type' => TextType::class,
                 'entry_options' => [
@@ -33,9 +35,9 @@ class SampleType extends AbstractType
                 'allow_add' => true,
                 'prototype' => true,
                 'allow_delete' => true,
-                'label' => 'input.population.label',
+                'label' => SampleDictionary::POPULATION->label(),
             ])
-            ->add(MetaDataDictionary::INCLUSION_CRITERIA, CollectionType::class, [
+            ->add(SampleDictionary::INCLUSION_CRITERIA->value, CollectionType::class, [
                 'required' => false,
                 'entry_type' => TextType::class,
                 'entry_options' => [
@@ -44,9 +46,9 @@ class SampleType extends AbstractType
                 'allow_add' => true,
                 'prototype' => true,
                 'allow_delete' => true,
-                'label' => 'input.inclusion.label',
+                'label' => SampleDictionary::INCLUSION_CRITERIA->label(),
             ])
-            ->add(MetaDataDictionary::EXCLUSION_CRITERIA, CollectionType::class, [
+            ->add(SampleDictionary::EXCLUSION_CRITERIA->value, CollectionType::class, [
                 'required' => false,
                 'entry_type' => TextType::class,
                 'entry_options' => [
@@ -55,39 +57,104 @@ class SampleType extends AbstractType
                 'allow_add' => true,
                 'prototype' => true,
                 'allow_delete' => true,
-                'label' => 'input.exclusion.label',
+                'label' => SampleDictionary::EXCLUSION_CRITERIA->label(),
             ])
-            ->add(MetaDataDictionary::SAMPLING_METHOD, ChoiceType::class, [
+            ->add(SampleDictionary::SAMPLING_METHOD->value, EnumType::class, [
                 'required' => false,
-                'expanded' => true,
                 'placeholder' => false,
-                'label' => 'input.sampling.label',
-                'choices' => [
-                    'input.sampling.choices.convenience' => 'Convenience sampling (accidental sampling, opportunity sampling)',
-                    'input.sampling.choices.random' => 'Random sampling (probability sampling)',
-                    'input.sampling.choices.systematic' => 'Systematic sampling (quasirandom sampling)',
-                    'input.sampling.choices.stratified' => 'Stratified sampling',
-                    'input.sampling.choices.quota' => 'Quota sampling',
-                    'input.sampling.choices.other' => 'Other',
-                ],
+                'class' => SamplingMethod::class,
+                'expanded' => true,
+                'label' => SampleDictionary::SAMPLING_METHOD->label(),
                 'label_html' => true,
+                'choice_label' => fn (SamplingMethod $samplingMethod) => $samplingMethod->labelExtended(),
+                'choice_translation_domain' => 'enums',
             ])
-            ->add('otherSamplingMethod', TextareaType::class, [
+            ->add(SampleDictionary::SAMPLING_METHOD_OTHER_DESCRIPTION->value, TextareaType::class, [
                 'required' => false,
-                'label' => 'input.sampling.other.label',
+                'label' => SampleDictionary::SAMPLING_METHOD_OTHER_DESCRIPTION->label(),
+                'attr' => [
+                    'rows' => '3',
+                ],
             ])
-            ->add(MetaDataDictionary::SAMPLE_SIZE, TextareaType::class, [
+            ->add(SampleDictionary::RECRUITING->value, TextareaType::class, [
                 'required' => false,
-                'label' => 'input.sample-size.label',
+                'label' => SampleDictionary::RECRUITING->label(),
+                'attr' => [
+                    'rows' => '3',
+                ],
             ])
-            ->add(MetaDataDictionary::POWER_ANALYSIS, TextareaType::class, [
+            ->add(SampleDictionary::SAMPLE_SIZE->value, TextareaType::class, [
                 'required' => false,
-                'label' => 'input.power-analysis.label',
-            ]);
+                'label' => SampleDictionary::SAMPLE_SIZE->label(),
+            ])
+            ->add(SampleDictionary::POWER_ANALYSIS->value, TextareaType::class, [
+                'required' => false,
+                'label' => SampleDictionary::POWER_ANALYSIS->label(),
+            ])
+            ->add(SampleDictionary::INTENDED_SAMPLE_SIZE->value, TextareaType::class, [
+                'required' => false,
+                'label' => SampleDictionary::INTENDED_SAMPLE_SIZE->label(),
+            ])
+            ->add(SampleDictionary::UNIT_OF_ANALYSIS->value, EnumType::class, [
+                'required' => false,
+                'placeholder' => false,
+                'class' => SampleAnalysisUnit::class,
+                'expanded' => true,
+                'label' => SampleDictionary::UNIT_OF_ANALYSIS->label(),
+                'choice_label' => fn (SampleAnalysisUnit $unit) => $unit->label(),
+                'choice_translation_domain' => 'enums',
+            ])
+            ->add(SampleDictionary::UNIT_OF_ANALYSIS_OTHER_DESCRIPTION->value, TextareaType::class, [
+                'required' => false,
+                'label' => SampleDictionary::UNIT_OF_ANALYSIS_OTHER_DESCRIPTION->label(),
+                'attr' => [
+                    'rows' => '3',
+                ],
+            ])
+            ->add(SampleDictionary::MULTILEVEL_STRUCTURE->value, TextareaType::class, [
+                'required' => false,
+                'label' => SampleDictionary::MULTILEVEL_STRUCTURE->label(),
+            ])
+            ->add(SampleDictionary::SEX->value, TextType::class, [
+                'required' => false,
+                'label' => SampleDictionary::SEX->label(),
+            ])
+            ->add(SampleDictionary::AGE->value, TextType::class, [
+                'required' => false,
+                'label' => SampleDictionary::AGE->label(),
+            ])
+            ->add(SampleDictionary::SPECIAL_GROUPS->value, TextType::class, [
+                'required' => false,
+                'label' => SampleDictionary::SPECIAL_GROUPS->label(),
+            ])
+            ->add(SampleDictionary::COUNTRY->value, TextType::class, [
+                'required' => false,
+                'label' => SampleDictionary::COUNTRY->label(),
+            ])
+            ->add(SampleDictionary::CITY->value, TextType::class, [
+                'required' => false,
+                'label' => SampleDictionary::CITY->label(),
+            ])
+            ->add(SampleDictionary::REGION->value, TextType::class, [
+                'required' => false,
+                'label' => SampleDictionary::REGION->label(),
+            ])
+            ->add(SampleDictionary::MISSING_VALUES->value, TextareaType::class, [
+                'required' => false,
+                'label' => SampleDictionary::MISSING_VALUES->label(),
+            ])
+            ->add(SampleDictionary::RETURN_DROPOUT->value, TextareaType::class, [
+                'required' => false,
+                'label' => SampleDictionary::RETURN_DROPOUT->label(),
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => SampleMetaDataGroup::class]);
+        $resolver->setDefaults([
+            'data_class' => SampleMetaDataGroup::class,
+            'translation_domain' => 'forms',
+        ]);
     }
 }

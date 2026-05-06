@@ -29,4 +29,17 @@ enum SamplingMethod: string implements ExtendedEnumInterface
             self::OTHER => 'sampling_method.other',
         };
     }
+
+    public function labelExtended(): string
+    {
+        return match ($this) {
+            self::CONVENIANCE => 'sampling_method.extended.convenience',
+            self::CENSUS => 'sampling_method.extended.census',
+            self::SIMPLE_RANDOM => 'sampling_method.extended.simple_random',
+            self::CLUSTER => 'sampling_method.extended.cluster',
+            self::STRATIFIED => 'sampling_method.extended.stratified',
+            self::QUOTA => 'sampling_method.extended.quota',
+            self::OTHER => 'sampling_method.extended.other',
+        };
+    }
 }

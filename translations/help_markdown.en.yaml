@@ -157,14 +157,6 @@ measure:
         ### Examples
 
         > The sentences were presented on the screen of a notebook computer. The speakers were recorded in a sound-treated room, using an AKG SE300B microphone, which was attached to an AKG N6-6E preamplifier, on a Tascam DA-P1 DAT recorder.
-    sampling_method: |
-        This item helps you outline the inclusion and exclusion criteria for your data collection in detail.
-        In addition to the inclusion and exclusion criteria of data points during the analysis (see items "Criteria for post-data collection exclusion of participants and outlier treatment" and "Criteria for post-data collection exclusions on trial or item level"), these can have a major influence on the sample.
-    recruiting: |
-        This item is designed to help you describe your population of interest, recruitment strategies, compensation, and the characteristics of your sample, (e.g., will your participants be WEIRD - White, Educated, Industrialized, Rich, Democratic?).
-        Providing detailed information about these is important because sampling bias can have an influence on any results based on the data (Vaughan-Johnston et al., 2024, <a href="https://doi.org/10.1177/01461672241293504" target="_blank">https://doi.org/10.1177/01461672241293504</a> ).
-        You can find a good overview of various recruitment strategies on this Qualtrics Blog: <a href="https://www.qualtrics.com/experience-management/research/sampling-methods/" target="_blank">https://www.qualtrics.com/experience-management/research/sampling-methods/</a>.
-        If you used panel providers to collect your sample, it is important to clarify exactly how the sampling process worked with them (e.g., how they considered your defined quotas).
     special_circumstances: |
         These could comprise, for example, participants' comments, equipment casualties, disturbances, systematic loss, deleted cases or abnormal data. Providing this information helps others interpret your data correctly.
     raw_data_transformation: |
@@ -448,27 +440,26 @@ review:
         # Review input help
 
         **TODO** _Add review help here_ {.bg-pink-50 .mx-6}
-sampling:
+sample:
     section: |
         # Sampling help
 
         How did you select participants (observations, cases) from a population of specific interest for your study?
     exclusion_criteria: |
-        The description of participant characteristics in your report should include the exclusion criteria you applied when picking participants, including any restrictions based on demographic or other characteristics.
+        It is important to report all exclusion criteria transparently, especially if excluded individuals are no longer included in the shared dataset.
+        Describe your approach in as much detail as possible.
+        Ideally, these exclusion criteria should be defined (and preregistered) before data collection or analysis so that they are not influenced by the data.
+        Therefore, report transparently if exclusion criteria were added during data analysis.
 
         ### Example
 
         > Exclusion criteria included age over 60 years, psychosis, bipolar diagnosis, severe suicidal intent, alcohol or drug dependence during the year before intake, organic brain damage, pregnancy, or unwillingness to undergo psychotherapy.
-
-        <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[Vinnars, B., Thormählen, B., Gallop, R., Norén, K., & Barber, J. P. (2009). Do personality problems improve during psychodynamic supportive-expressive psychotherapy? Secondary outcome results from a randomized controlled trial for psychiatric outpatients with personality disorders. Psychotherapy: Theory, Research, Practice, Training, 46(3), 362-375. https://doi.org/10.1037/a0017002]</div> -->
     inclusion_criteria: |
         The description of participant characteristics in your report should include the inclusion criteria you applied when picking participants, including any restrictions based on demographic or other characteristics.
 
         ### Example
 
         > The inclusion criteria consisted of presence of at least one DSM-IV personality disorder diagnosis, or a diagnosis of passive-aggressive or depressive personality disorder from the DSM-IV appendix.
-
-        <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[Vinnars, B., Thormählen, B., Gallop, R., Norén, K., & Barber, J. P. (2009). Do personality problems improve during psychodynamic supportive-expressive psychotherapy? Secondary outcome results from a randomized controlled trial for psychiatric outpatients with personality disorders. Psychotherapy: Theory, Research, Practice, Training, 46(3), 362-375. https://doi.org/10.1037/a0017002]</div> -->
     participants: |
         Who took part in the study? Report major demographic characteristics (for example, age, sex, ethnicity, socioeconomic status) as well as important topic-specific characteristics (for example, achievement level in studies of educational interventions). In order to produce generalizable results, the subjects selected must be representative of the population about which new knowledge is being sought.
 
@@ -485,70 +476,45 @@ sampling:
         > Study samples had to comprise trauma-exposed, nonclinical adult populations to be included in the analysis.
 
         <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[Zalta, A. K., Tirone, V., Orlowska, D., Blais, R. K., Lofgreen, A., Klassen, B., Held, P., Stevens, N. R., Adkins, E., & Dent, A. L. (2021). Examining moderators of the relationship between social support and self-reported PTSD symptoms: A meta-analysis. Psychological Bulletin, 147(1), 33-54. https://doi.org/10.1037/bul0000316]</div> -->
+    sampling_method: |
+        This item helps you outline the inclusion and exclusion criteria for your data collection in detail.
+        In addition to the inclusion and exclusion criteria of data points during the analysis (see items "Criteria for post-data collection exclusion of participants and outlier treatment" and "Criteria for post-data collection exclusions on trial or item level"), these can have a major influence on the sample.
+    recruiting: |
+        This item is designed to help you describe your population of interest, recruitment strategies, compensation, and the characteristics of your sample, (e.g., will your participants be WEIRD - White, Educated, Industrialized, Rich, Democratic?).
+        Providing detailed information about these is important because sampling bias can have an influence on any results based on the data (Vaughan-Johnston et al., 2024, <a href="https://doi.org/10.1177/01461672241293504" target="_blank">https://doi.org/10.1177/01461672241293504</a> ).
+        You can find a good overview of various recruitment strategies on this Qualtrics Blog: <a href="https://www.qualtrics.com/experience-management/research/sampling-methods/" target="_blank">https://www.qualtrics.com/experience-management/research/sampling-methods/</a>.
+        If you used panel providers to collect your sample, it is important to clarify exactly how the sampling process worked with them (e.g., how they considered your defined quotas).
     power_analysis: |
         Statistical power (also called power of a hypothesis test) is the probability that a test will correctly reject a false null hypothesis (Polak, 2020). It is a measure of how effective a statistical procedure is at identifying real differences between populations: It is the probability that use of the test will lead to the null hypothesis of no effect being rejected when the alternative hypothesis is true. For example, if a given statistical test has a power of .70, then there is a 70% probability that its use will result in the null hypothesis correctly being rejected as false, with a corresponding 30% chance that its use will lead to a type ii error. Power ranges from 0 to 1, with values of .80 or above generally considered acceptable. Researchers try to maximize power in their study designs prior to data gathering. (APA Dictionary, 2014) You can use G\*Power as a general stand-alone power analysis program for statistical tests commonly used in social and behavioral research (Erdfelder, Faul, & Buchner, 1996)
 
         ### Example
 
         > Required sample sizes of ~30 for each protocol (n = 15 M + n = 15 F) were calculated a priori following pilot and previous observations in our laboratory of sex differences in novel tank test (d = 1.25, power = 0.8, alpha = 0.05).
-
-        <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer float-right underline' : cursor !== 'default' }" class="text-xs">[Fontana, B. D., Cleal, M., & Parker, M. O. (2019). Female adult zebrafish (Danio rerio) show higher levels of anxiety-like behavior than males, but do not differ in learning and memory capacity. European Journal of Neuroscience, ejn.14588. https://doi.org/10.1111/ejn.14588]</div> -->
     sample_size: |
         The sample size is the number of observations (cases, individuals, units) included in the sample to be studied.
+
+        Sample size is a critical factor in determining statistical power, especially in designs that test against a null hypothesis.
+        If your statistical power is low, you may fail to detect an existing effect, or you may detect an effect that is not real.
+        Daniel Lakens provides an excellent overview of different approaches to justifying sample size in this article:
+        <a href="doi.org/10.1525/collabra.33267" target="_blank">doi.org/10.1525/collabra.33267</a>
 
         ### Examples
 
         > In total, 41 of the participants completed all of their sessions in their own home ("home group"), 27 participants completed all of their sessions in the lab ("lab group"), and 11 participants completed some sessions at home and some in the lab ("mixed group").
 
-        <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[Xu, Z., Adam, K.C.S., Fang, X. et al. The reliability and stability of visual working memory capacity. Behav Res 50, 576-588 (2018). https://doi.org/10.3758/s13428-017-0886-6]</div> -->
-
         > There were 76 children tested, all attending Royce primary school, Manchester. They were divided into four age categories according to school class group, as detailed in Table 1.
 
-        <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[J.N. Towse & G.J. Hitch (1995) Is there a Relationship between Task Demand and Storage Space in Tests of Working Memory Capacity?, The Quarterly Journal of Experimental Psychology Section A, 48:1, 108-124, DOI: 10.1080/14640749508401379]</div> -->
-
         > One hundred sixty-six subjects (M age = 20.0 years, 103 female) were recruited from the Washington University in St. Louis Department of Psychology human subject pool.
+    multilevel_structure: |
+        More information and guidance on multilevel modelling is provided in this book chapter by Leyland & Groenewegen (2020):
+        <a href="https://doi.org/10.1007/978-3-030-34801-4_3" target="_blank">https://doi.org/10.1007/978-3-030-34801-4_3</a>
+    missing_values: |
+        Specify whether the missingness applies to the whole dataset or specific variables (e.g., 5% missing values for item 2). If no data are missing, indicate "none".
+    return_dropout: |
+        This is important to consider because dropout affects your sample size, and the sample size affects your budget and your statistical power.
+        In addition, it can be useful to indicate at which point in the study drop-outs occured.
+        If systematic drop-out occured, this could bias the results of your study (e.g., if a certain subgroup of participants drops out at a specific question).
 
-        <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[Pooja K. Agarwal, Jason R. Finley, Nathan S. Rose & Henry L. Roediger III (2016): Benefits from retrieval practice are greater for students with lower working memory capacity, Memory, DOI: 10.1080/09658211.2016.1220579]</div> -->
-    sampling_method: |
-        Sampling is the process of selecting individuals (observations, cases) from a population of specific interest.
-
-        ### Convenience sampling
-
-        Convenience sampling is any process for selecting a sample of individuals or cases that is neither random nor systematic but rather is governed by chance or ready availability. Interviewing the first 50 people to exit a store is an example of convenience sampling. Data obtained from convenience sampling do not generalize to the larger population; there may be significant sampling bias, and sampling error cannot be estimated. Also called accidental sampling; opportunity sampling. (APA Dictionary) Convenience sampling is by far the most common non-probability sampling strategy: It is cheap, efficient, and simple to implement.
-
-        #### Example
-
-        > One of the most common examples of convenience sampling in psychology is the use of student volunteers as study participants. Recommendation for further reading: Bornstein MH, Jager J, Putnick DL. Sampling in developmental science: Situations, shortcomings, solutions, and standards. Developmental Review. 2013;33:357-370. [PMC free article]
-
-        ### Random sampling
-
-        (Simple) random sampling is the most basic approach to drawing a random sample of cases, observations, or individuals from a population, in which the cases are selected individually using a fair process, such as the toss of a coin or a table of random digits. Also called independent random sampling or r representative sampling. (APA Dictionary) Probability sampling strategies yield an unbiased sample that is representative of the target population; however, probability samples can be cost-prohibitive.
-
-        #### Example
-
-        > Random sampling for a TV violence study. Our first step is to define the population. We might begin by considering the population as all children in the United States that are 5-15 years old. Our next step will be to obtain an exhaustive list of these children. Using U. S. Census data would be one approach. The third step is to select a random sample. The simplest technique would be to use a database of the population and instruct the database software to randomly select children from the population. The number to be selected is determined by the researcher and is typically based on the largest number that can be sampled given the logistical resources of the researcher. The larger the sample, the more accurately it will represent the population. After the sample is selected from the population, the final step is to contact the parents of these children to obtain consent to participate. [Authorized free PDF version of Free Fundamentals of Behavioral Research Textbook by William J. Lammers and Pietro Badia]
-
-        ### Systematic sampling (quasirandom sampling)
-
-        Systematic sampling is a type of sampling process in which all the members of a population are listed and then some objective, orderly procedure is applied to randomly choose specific cases. For example, the population might be listed alphabetically and every seventh case selected. Also called quasirandom sampling; systematic random sampling. (APA Dictionary)
-
-        #### Example
-
-        > Suppose a supermarket wants to study buying habits of their customers, then using systematic sampling they can choose every 10th or 15th customer entering the supermarket and conduct the study on this sample. This is random sampling with a system. From the sampling frame, a starting point is chosen at random, and choices thereafter are at regular intervals. (Wikipedia "Systematic sampling")
-
-        ### Quota sampling
-
-        Quota sampling is a method of forming a sample in which a prespecified number of individuals with certain background characteristics, such as a particular age, race, ethnicity, sex, or education, are selected for inclusion. Often, participants are recruited as they arrive; once the quota for a given demographic group is filled, the researcher stops recruiting subjects from that group. A researcher who uses this approach can obtain a final study sample that has the same proportional characteristics as the target population, enabling statistical testing to be performed on a subset of cases that is appropriately representative of the larger group of interest. (APA Dictionary) Quota sampling is the non probability version of stratified sampling.
-
-        #### Example
-
-        > The UK adult population aged 18+ years was the target population for the COVID‐19 psychological research consortium (C19PRC) study. A longitudinal, internet panel survey was designed to assess: (1) COVID‐19 related knowledge, attitudes, and behaviors; (2) the occurrence of common mental health disorders as well as the role of (3) psychological factors and (4) social and political attitudes, in influencing the public's response to the pandemic. Quota sampling (age, sex, and household income) was used to recruit a nationally representative sample of adults.
-
-        <!-- <div x-data="{ count: 5, string: $el.innerHTML, cursor: 'pointer' }" x-text="$truncate(string, { words: count, ellipsis: '] - show full citation' })" @click="count = undefined, cursor = 'default'" :class="{ 'cursor-default' : cursor === 'default', 'cursor-pointer text-right underline' : cursor !== 'default' }" class="text-xs">[McBride, O., Murphy, J., Shevlin, M., Gibson-Miller, J., Hartman, T. K., Hyland, P., et al. (2020). Monitoring the psychological, social, and economic impact of the COVID-19 pandemic in the population: Context, design and conduct of the longitudinal COVID-19 psychological research consortium (C19PRC) study. International Journal of Methods in Psychiatric Research. https://doi.org/10.1002/mpr.1861.]</div> -->
-
-        ### Other sampling methods
-
-        There are many more sampling methods than those listed. If your method is not included, please type it in the appropriate field. Other methods could be, for example: self-selected sampling (volunteer sampling), cohort sampling, diversity sampling, experience sampling (event sampling, diary study), prospective sampling, retrospective sampling, theoretical sampling, clustered sampling, purposive sampling (judgement sampling), snowball sampling, etc.
 settings:
     section: |
         # Settings help

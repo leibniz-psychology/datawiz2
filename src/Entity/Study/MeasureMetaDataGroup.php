@@ -7,7 +7,6 @@ use App\Entity\Constant\ReviewDataDictionary;
 use App\Enum\Study\CollectionMode;
 use App\Enum\Study\DataDigitization;
 use App\Enum\Study\RecordType;
-use App\Enum\Study\SamplingMethod;
 use App\Repository\MeasureRepository;
 use App\Service\Review\Reviewable;
 use App\Service\Review\ReviewDataCollectable;
@@ -51,21 +50,6 @@ class MeasureMetaDataGroup extends UuidEntity implements Reviewable
     #[SerializedName('collection_mode_other_description')]
     #[Groups(['study'])]
     private ?string $collectionModeOtherDescription = null;
-
-    #[ORM\Column(nullable: true, enumType: SamplingMethod::class)]
-    #[SerializedName('sampling_method')]
-    #[Groups(['study'])]
-    private ?SamplingMethod $samplingMethod = null;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[SerializedName('sampling_method_other_description')]
-    #[Groups(['study'])]
-    private ?string $samplingMethodOtherDescription = null;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[SerializedName('recruiting')]
-    #[Groups(['study'])]
-    private ?string $recruiting = null;
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true, enumType: RecordType::class)]
     #[SerializedName('original_record_type')]
@@ -182,42 +166,6 @@ class MeasureMetaDataGroup extends UuidEntity implements Reviewable
     public function setCollectionModeOtherDescription(?string $collectionModeOtherDescription): static
     {
         $this->collectionModeOtherDescription = $collectionModeOtherDescription;
-
-        return $this;
-    }
-
-    public function getSamplingMethod(): ?SamplingMethod
-    {
-        return $this->samplingMethod;
-    }
-
-    public function setSamplingMethod(?SamplingMethod $samplingMethod): static
-    {
-        $this->samplingMethod = $samplingMethod;
-
-        return $this;
-    }
-
-    public function getSamplingMethodOtherDescription(): ?string
-    {
-        return $this->samplingMethodOtherDescription;
-    }
-
-    public function setSamplingMethodOtherDescription(?string $samplingMethodOtherDescription): static
-    {
-        $this->samplingMethodOtherDescription = $samplingMethodOtherDescription;
-
-        return $this;
-    }
-
-    public function getRecruiting(): ?string
-    {
-        return $this->recruiting;
-    }
-
-    public function setRecruiting(?string $recruiting): static
-    {
-        $this->recruiting = $recruiting;
 
         return $this;
     }

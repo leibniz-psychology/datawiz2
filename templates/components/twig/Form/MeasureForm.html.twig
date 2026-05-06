@@ -22,30 +22,17 @@
     </twig:Form:FormCard>
 
     {% if enum('App\\Enum\\Study\\CollectionMode').SPECIAL_APPARATUS.value in form.collectionMode.vars.value %}
-    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').APPARATUS }}">
-        <twig:Form:CollectionForm
-            collection="{{ form.apparatus }}"
-            add_action="addApparatus"
-            remove_action="removeApparatus"
-            add_label="{{ 'input.apparatus.add'|trans }}"
-        />
-    </twig:Form:FormCard>
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').APPARATUS }}">
+            <twig:Form:CollectionForm
+                collection="{{ form.apparatus }}"
+                add_action="addApparatus"
+                remove_action="removeApparatus"
+                add_label="{{ 'measure_meta_data_group.apparatus.add'|trans([], 'forms') }}"
+            />
+        </twig:Form:FormCard>
     {% else %}
         {% do form.apparatus.setRendered %}
     {% endif %}
-
-    <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').SAMPLING_METHOD }}">
-        {{ form_row(form.samplingMethod) }}
-        {{ form_row(form.samplingMethodOtherDescription, {
-            'attr': {
-                'disabled': enum('App\\Enum\\Study\\SamplingMethod').OTHER.value != form.samplingMethod.vars.value,
-            }
-        }) }}
-    </twig:Form:FormCard>
-
-    <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').RECRUITING }}">
-        {{ form_row(form.recruiting) }}
-    </twig:Form:FormCard>
 
     <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').ORIGINAL_RECORD_TYPE }}">
         {{ form_row(form.originalRecordType) }}

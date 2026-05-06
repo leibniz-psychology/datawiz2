@@ -15,15 +15,13 @@
 {% endblock %}
 
 {% block help_for_section %}
-    {{ sectionHelp("sampling") }}
+    {{ sectionHelp("sample") }}
 {% endblock %}
 
 {% block help_for_metadata %}
-    {{ formHelp("sampling", "participants", "input.participants.legend") }}
-    {{ formHelp("sampling", "population", "input.population.legend") }}
-    {{ formHelp("sampling", "inclusion_criteria", "input.inclusion.legend") }}
-    {{ formHelp("sampling", "exclusion_criteria", "input.exclusion.legend") }}
-    {{ formHelp("sampling", "sampling_method", "input.sampling.legend") }}
-    {{ formHelp("sampling", "sample_size", "input.sample-size.legend") }}
-    {{ formHelp("sampling", "power_analysis", "input.power-analysis.legend") }}
+    {% for entry in enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').cases %}
+        {% if entry.descriptionHelp != null %}
+            <twig:Form:FormHelp dictionary="{{ entry }}"/>
+        {% endif %}
+    {% endfor %}
 {% endblock %}

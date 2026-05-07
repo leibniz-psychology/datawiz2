@@ -4,6 +4,7 @@ namespace App\Service\Study;
 
 use App\Entity\Administration\DataWizUser;
 use App\Entity\Study\BasicInformationMetaDataGroup;
+use App\Entity\Study\EthicsMetaDataGroup;
 use App\Entity\Study\Experiment;
 use App\Entity\Study\MeasureMetaDataGroup;
 use App\Entity\Study\MethodMetaDataGroup;
@@ -22,6 +23,7 @@ class ExperimentService
         $newExperiment->setSampleMetaDataGroup(new SampleMetaDataGroup());
         $newExperiment->setMeasureMetaDataGroup(new MeasureMetaDataGroup());
         $newExperiment->setMethodMetaDataGroup(new MethodMetaDataGroup());
+        $newExperiment->setEthicsMetaDataGroup(new EthicsMetaDataGroup());
         $newExperiment->setOwner($owner);
 
         return $newExperiment;

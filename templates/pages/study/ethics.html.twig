@@ -1,0 +1,27 @@
+{% extends "layouts/threeColumn.html.twig" %}
+{% from "components/_macros.html.twig" import helpButton %}
+{% from "components/_macros.html.twig" import sectionHelp %}
+{% from "components/_macros.html.twig" import formHelp %}
+
+{% set isPartOfStudyDocumentation = true %}
+{% set isStudyDescriptionSubItem = true %}
+
+{% block title %}
+    {{ "title.ethics.title"|trans }}
+{% endblock %}
+
+{% block navigation_and_content %}
+    <twig:Form:EthicsForm initialFormData="{{ experiment.ethicsMetaDataGroup }}"/>
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("ethics") }}
+{% endblock %}
+
+{% block help_for_metadata %}
+    {% for entry in enum('App\\Enum\\Study\\Dictionary\\EthicsDictionary').cases %}
+        {% if entry.descriptionHelp != null %}
+            <twig:Form:FormHelp dictionary="{{ entry }}"/>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

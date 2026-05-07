@@ -515,6 +515,48 @@ sample:
         In addition, it can be useful to indicate at which point in the study drop-outs occured.
         If systematic drop-out occured, this could bias the results of your study (e.g., if a certain subgroup of participants drops out at a specific question).
 
+ethics:
+    section: |
+        # Ethical and Legal Aspects help
+
+        It is important for you to address ethical and legal aspects of your data in order to determine how you can make your data available to potential subsequent users. At the same time, an explicit documentation of the legal characteristics of the data for coordination in the project is indispensable in order to prevent any unintentional breaches of law due to ignorance.
+    ethical_review: |
+        Obtaining ethical approval is important whenever your study includes human or animal subjects.
+        Among other things, this is intended to minimize risks for subjects, analyze costs and benefits of a study, and ensure that informed consent is obtained appropriately.
+        Typically, universities provide ethics committees for this purpose.
+        More information regarding the circumstances under which an ethics approval is necessary is available at the RDC Knowledge Base:
+        <a href="https://rdc-psychology.org/en/rdc-knowledge-base/before-data-collection/ethical-considerations" target="_blank">https://rdc-psychology.org/en/rdc-knowledge-base/before-data-collection/ethical-considerations</a>
+    informed_consent: |
+        An informed consent consists of two parts:
+
+        1. an information sheet which provides information on the study’s purpose, applied procedures and handling of personal data
+        2. a consent form which is signed by the participant.
+
+        More information on informed consent forms is available at the RDC Knowledge Base:
+        <a href="https://rdc-psychology.org/en/rdc-knowledge-base/before-data-collection/copyright-and-data-privacy" target="_blank">https://rdc-psychology.org/en/rdc-knowledge-base/before-data-collection/copyright-and-data-privacy</a>
+    personal_data: |
+        In which cases would the data be (partially) person-related? If the research data are person-related, this may be because it is indispensable for the purpose of the research (e.g., audio/video recordings or brain images). If the research data are not directly person-related but can be related to individuals with little additional knowledge, this is typically only plausible in the case of data collection from a closed group with rare values or combinations of values.
+
+        More information on data privacy is available at the RDC Knowledge Base:
+
+        - Copyright & Data Privacy:
+          <a href="https://rdc-psychology.org/en/rdc-knowledge-base/before-data-collection/copyright-and-data-privacy" target="_blank">https://rdc-psychology.org/en/rdc-knowledge-base/before-data-collection/copyright-and-data-privacy</a>
+        - Privacy in Data Storing and Publication:
+          <a href="https://rdc-psychology.org/en/rdc-knowledge-base/after-data-collection/privacy-in-data-storing-licenses" target="_blank">https://rdc-psychology.org/en/rdc-knowledge-base/after-data-collection/privacy-in-data-storing-licenses</a>
+    copyright: |
+        Copyright is often overlooked when it comes to data, but is important to consider.
+        More information is provided at the RDC Knowledge Base:
+        <a href="https://rdc-psychology.org/en/rdc-knowledge-base/before-data-collection/copyright-and-data-privacy" target="_blank">https://rdc-psychology.org/en/rdc-knowledge-base/before-data-collection/copyright-and-data-privacy</a>
+
+        Additionally, assigning licenses to your data is vital if you want other researchers to know if and under which circumstances they can use it.
+        More information on licences is also available at the RDC Knowledge Base:
+        <a href="https://rdc-psychology.org/en/rdc-knowledge-base/after-data-collection/privacy-in-data-storing-licenses" target="_blank">https://rdc-psychology.org/en/rdc-knowledge-base/after-data-collection/privacy-in-data-storing-licenses</a>
+    third_party_rights: |
+        Before sharing data, software, or measurement instruments produced by others, you should consider whether the redistribution of these materials is permitted.
+        The copyright is usually indicated alongside the respective materials.
+        More information on licenses is available at the RDC Knowledge Base:
+        <a href="https://rdc-psychology.org/en/rdc-knowledge-base/after-data-collection/privacy-in-data-storing-licenses" target="_blank">https://rdc-psychology.org/en/rdc-knowledge-base/after-data-collection/privacy-in-data-storing-licenses</a>
+
 settings:
     section: |
         # Settings help

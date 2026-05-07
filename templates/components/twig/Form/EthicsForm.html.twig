@@ -1,0 +1,29 @@
+{% extends "components/twig/Form/_baseForm.html.twig" %}
+
+{% block title %}
+    {{ "title.ethics.title"|trans }}
+{% endblock %}
+
+{% block form_content %}
+    <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\EthicsDictionary').ETHICAL_REVIEW }}">
+        {{ form_row(form.ethicalReview) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\EthicsDictionary').INFORMED_CONSENT }}">
+        {{ form_row(form.informedConsent) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\EthicsDictionary').PERSONAL_DATA }}">
+        {{ form_row(form.personalData) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\EthicsDictionary').COPYRIGHT }}">
+        {{ form_row(form.copyright) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\EthicsDictionary').THIRD_PARTY_RIGHTS }}">
+        {{ form_row(form.thirdPartyRights) }}
+    </twig:Form:FormCard>
+{% endblock %}
+
+

@@ -20,31 +20,31 @@ trait DatawizFormTrait
             'type' => 'documentation',
             'route' => 'Study-documentation',
             'title' => 'title.basic.title',
-            'translation' => 'study.form.general',
         ],
         [
             'type' => 'theory',
             'route' => 'Study-theory',
             'title' => 'title.theories.title',
-            'translation' => 'study.form.general',
         ],
         [
             'type' => 'method',
             'route' => 'Study-method',
             'title' => 'title.method.title',
-            'translation' => 'study.form.general',
         ],
         [
             'type' => 'measure',
             'route' => 'Study-measure',
             'title' => 'title.measures.title',
-            'translation' => 'study.form.general',
         ],
         [
             'type' => 'sample',
             'route' => 'Study-sample',
             'title' => 'title.samples.title',
-            'translation' => 'study.form.general',
+        ],
+        [
+            'type' => 'ethics',
+            'route' => 'Study-ethics',
+            'title' => 'title.ethics.title',
         ],
     ];
 

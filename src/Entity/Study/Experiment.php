@@ -59,6 +59,14 @@ class Experiment extends UuidEntity
     private ?SampleMetaDataGroup $sampleMetaDataGroup = null;
 
     /**
+     * One Experiment has One Ethics section.
+     */
+    #[SerializedName('ethics')]
+    #[Groups(['study'])]
+    #[ORM\OneToOne(mappedBy: 'experiment', cascade: ['persist', 'remove'])]
+    private ?EthicsMetaDataGroup $ethicsMetaDataGroup = null;
+
+    /**
      * One Experiment has One Settings section.
      */
     #[SerializedName('settings')]
@@ -169,6 +177,17 @@ class Experiment extends UuidEntity
     {
         $this->methodMetaDataGroup = $methodMetaDataGroup;
         $methodMetaDataGroup->setExperiment($this);
+    }
+
+    public function getEthicsMetaDataGroup(): EthicsMetaDataGroup
+    {
+        return $this->ethicsMetaDataGroup;
+    }
+
+    public function setEthicsMetaDataGroup(EthicsMetaDataGroup $ethicsMetaDataGroup): void
+    {
+        $this->ethicsMetaDataGroup = $ethicsMetaDataGroup;
+        $ethicsMetaDataGroup->setExperiment($this);
     }
 
     public function getAdditionalMaterials(): Collection

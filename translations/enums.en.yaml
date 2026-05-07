@@ -158,3 +158,7 @@ survey_instrument_type:
     partially_standardized: 'Partially standardized survey instrument (question phrasing predefined; open answer format)'
     hardly_standardized: 'Hardly standardized survey instrument (question area predefined; open answer format)'
     mixed: 'Mixed survey instrument (combination of hardly, partially and fully standardized parts)'
+
+yes_no:
+    yes: 'Yes'
+    no: 'No'

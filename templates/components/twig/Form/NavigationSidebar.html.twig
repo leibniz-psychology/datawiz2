@@ -123,6 +123,21 @@
                         </a>
                     {%- endif -%}
                 </li>
+                <li>
+                    {%- if needs_saving -%}
+                        <button {{ live_action('save', {route: 'Study-ethics' })}}
+                            class="StudyNav-SubNavItem
+                           {{- form_type == 'ethics' ? ' StudyNav-SubNavItem_active' -}}">
+                            {{ "title.ethics.title"|trans }}
+                        </button>
+                    {%- else -%}
+                        <a href="{{ path('Study-ethics', {id: experiment.id}) }}"
+                           class="StudyNav-SubNavItem
+                           {{- route_name == 'Study-ethics' ? ' StudyNav-SubNavItem_active' -}}">
+                            {{ "title.ethics.title"|trans }}
+                        </a>
+                    {%- endif -%}
+                </li>
             </ul>
         </li>
         <li>

@@ -65,6 +65,8 @@ title:
     title: 'Data collection'
   samples:
     title: 'Sampling'
+  ethics:
+    title: 'Ethical and Legal aspects'
   dataset:
     title: 'Upload and describe datasets'
     title-short: 'Upload datasets'

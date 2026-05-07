@@ -112,6 +112,18 @@ class StudyController extends AbstractController
         ]);
     }
 
+    #[Route(path: '/{id}/ethics', name: 'ethics')]
+    public function ethics(Experiment $experiment): Response
+    {
+        $this->logger->debug("Enter StudyController::ethicsAction with [UUID: {$experiment->getId()}]");
+
+        $this->denyAccessUnlessGranted('EDIT', $experiment);
+
+        return $this->render('pages/study/ethics.html.twig', [
+            'experiment' => $experiment,
+        ]);
+    }
+
     #[Route(path: '/{id}/materials', name: 'materials')]
     public function materials(Experiment $experiment): Response
     {

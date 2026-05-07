@@ -56,6 +56,30 @@ creator_meta_data_group:
     credit_roles:
         label: 'Roles'
 
+ethics_meta_data_group:
+    ethical_review:
+        legend: 'Ethical review'
+        label: 'State whether you obtained approval by an Institutional Review Board or Ethics Committee for this study.'
+        placeholder: 'Please select'
+    informed_consent:
+        legend: 'Informed consent'
+        label: 'State whether informed consent was obtained prior to collecting data for this study.'
+        placeholder: 'Please select'
+    personal_data:
+        legend: 'Personal data'
+        label: 'State whether personal data were collected for this study.'
+        placeholder: 'Please select'
+    copyright:
+        legend: 'Copyright'
+        label: 'State whether the research data, measurement instruments or software, which are created within this study, are subject to copyright, patent law or other intellectual property rights?'
+        placeholder: 'Please select'
+    third_party_rights:
+        legend: 'Third party rights'
+        label: 'State whether there are any external research data, software or measurement instrument employed within this study, which are subject to copyright, patent law or other intellectual property rights. If applicable, refer to corresponding documents under study materials.'
+        placeholder: 'Please select'
+
+
+
 measure_meta_data_group:
     data_collection_start:
         legend: 'Data collection Period'

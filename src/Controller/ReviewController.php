@@ -18,13 +18,6 @@ class ReviewController extends AbstractController
 
         return $this->render('pages/review/index.html.twig', [
             'experiment' => $experiment,
-            'experimentName' => $experiment->getSettingsMetaDataGroup()->getShortName(),
-            'basicInfoReview' => $experiment->getBasicInformationMetaDataGroup()->getReviewCollection(),
-            'basicCreatorInfoReview' => $experiment->getBasicInformationMetaDataGroup()->getCreators(),
-            'theoryReview' => $experiment->getTheoryMetaDataGroup()->getReviewCollection(),
-            'methodReview' => $experiment->getMethodMetaDataGroup()->getReviewCollection(),
-            'measureReview' => $experiment->getMeasureMetaDataGroup()->getReviewCollection(),
-            'sampleReview' => $experiment->getSampleMetaDataGroup()->getReviewCollection(),
         ]);
     }
 }

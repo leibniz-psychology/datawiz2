@@ -2,6 +2,8 @@
 
 namespace App\Enum;
 
+use App\Entity\Dto\ReviewDataDto;
+
 trait DictionaryEnum
 {
     public function legend(): ?string
@@ -20,6 +22,11 @@ trait DictionaryEnum
     }
 
     public function descriptionHelp(): ?string
+    {
+        return null;
+    }
+
+    public function reviewData(): ?ReviewDataDto
     {
         return null;
     }

@@ -2,8 +2,10 @@
 
 namespace App\Enum\Study\Dictionary;
 
+use App\Entity\Dto\ReviewDataDto;
 use App\Enum\DictionaryEnum;
 use App\Enum\DictionaryInterface;
+use App\Enum\ErrorType;
 use App\Enum\ExtendedEnum;
 
 enum EthicsDictionary: string implements DictionaryInterface
@@ -58,6 +60,17 @@ enum EthicsDictionary: string implements DictionaryInterface
             self::PERSONAL_DATA => 'ethics.personal_data',
             self::COPYRIGHT => 'ethics.copyright',
             self::THIRD_PARTY_RIGHTS => 'ethics.third_party_rights',
+        };
+    }
+
+    public function reviewData(): ReviewDataDto
+    {
+        return match ($this) {
+            self::ETHICAL_REVIEW => new ReviewDataDto('ethics_meta_data_group.ethical_review.error_message', ErrorType::RECOMMENDED),
+            self::INFORMED_CONSENT => new ReviewDataDto('ethics_meta_data_group.informed_consent.error_message', ErrorType::RECOMMENDED),
+            self::PERSONAL_DATA => new ReviewDataDto('ethics_meta_data_group.personal_data.error_message', ErrorType::RECOMMENDED),
+            self::COPYRIGHT => new ReviewDataDto('ethics_meta_data_group.copyright.error_message', ErrorType::RECOMMENDED),
+            self::THIRD_PARTY_RIGHTS => new ReviewDataDto('ethics_meta_data_group.third_party_rights.error_message', ErrorType::RECOMMENDED),
         };
     }
 }

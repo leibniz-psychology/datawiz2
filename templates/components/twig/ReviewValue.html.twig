@@ -1,0 +1,48 @@
+{% if route is defined and route is not null %}
+    {% set editUrl = route ~ '/#' ~ entry.legend|trans([], 'forms')|slug %}
+{% endif %}
+
+<div class="mt-6">
+    <h3 class="text-lg font-semibold text-zpid-purple-700">{{ entry.legend|trans([], 'forms') }}</h3>
+    <ul class="">
+        {% set items = getAttribute(entity, entry.value) %}
+        {% if items is not iterable %}
+            {% set items = [items] %}
+        {% endif %}
+
+        {% set items = items|filter(item => item is not null) %}
+        {% for item in items %}
+            {% if item != null and item != '' %}
+                <li class="mt-2 first:mt-0 max-w-prose">
+                    {% if item.label is defined %}
+                        {{ item.label | trans([], 'enums') }}
+                    {% else %}
+                        {{ item }}
+                    {% endif %}
+                    {% if editUrl is defined and editUrl is not null %}
+                        <a href="{{ editUrl }}"
+                           class="Button_icon ml-0.5"
+                           title="{{ 'generic.edit'|trans }}">
+                            {{ include('components/icons/edit.svg') }}
+                        </a>
+                    {% endif %}
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    {% if items | length == 0 and entry.reviewData %}
+        {% if entry.reviewData.errorType == enum('App\\Enum\\ErrorType').MANDATORY %}
+            <div class="inline-block mt-0 max-w-prose ReviewItem-Highlight ReviewItem-Highlight_mandatory ">
+                {{ entry.reviewData.errorMessage|trans({'#link#': editUrl, '#class#':'underline'}, 'forms')|raw }}
+            </div>
+        {% elseif entry.reviewData.errorType == enum('App\\Enum\\ErrorType').RECOMMENDED %}
+            <div class="inline-block mt-0 max-w-prose ReviewItem-Highlight ReviewItem-Highlight_recommended">
+                {{ entry.reviewData.errorMessage|trans({'#link#': editUrl, '#class#':'underline'}, 'forms')|raw }}
+            </div>
+        {% else %}
+            <div class="inline-block mt-0 max-w-prose">
+                {{ entry.reviewData.errorMessage|trans({'#link#': editUrl, '#class#':'underline'}, 'forms')|raw }}
+            </div>
+        {% endif %}
+    {% endif %}
+</div>

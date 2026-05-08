@@ -4,7 +4,7 @@
 {% from "components/_macros.html.twig" import formHelp %}
 
 {% macro sectionTitle(titleText) %}
-    <h2 class="mx-6 text-xl font-bold border-b text-zpid-purple border-zpid-purple">{{ titleText }}</h2>
+    <h2 class="text-xl font-bold border-b text-zpid-purple border-zpid-purple">{{ titleText }}</h2>
 {% endmacro %}
 
 {% set isPartOfStudyDocumentation = true %}
@@ -21,43 +21,57 @@
     <p class="mx-6 mt-3 max-w-prose">
         {{ "title.review.description"|trans }}
     </p>
-    <article>
+    <article class="px-6">
         <section class="mt-8">
             {{ _self.sectionTitle("title.basic.title"|trans) }}
-            {% for reviewItem in basicInfoReview %}
-                {% include 'components/_reviewValue.html.twig' with {item: reviewItem, route: 'Study-documentation' } %}
+            {% for entry in enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').cases %}
+                {% if entry != enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').CREATORS %}
+                    <twig:ReviewValue entity="{{ experiment.basicInformationMetaDataGroup }}" route="{{ path('Study-documentation', {id: experiment.id}) }}" entry="{{ entry }}" />
+                {% endif %}
             {% endfor %}
-            <div class="mt-5">
-                <h2 class="mx-6 text-xl font-bold text-zpid-purple-700">{{ "input.creator.legend"|trans }}</h2>
-                {% for reviewCreator in basicCreatorInfoReview %}
-                    {% for reviewItem in reviewCreator.reviewCollection %}
-                        {% include 'components/_reviewValue.html.twig' with {item: reviewItem, route: 'Study-documentation'} %}
+            {% if experiment.basicInformationMetaDataGroup.creators | length == 0 %}
+                <twig:ReviewValue entity="{{ experiment.basicInformationMetaDataGroup }}" route="{{ path('Study-documentation', {id: experiment.id}) }}" entry="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').CREATORS }}" />
+            {% else %}
+                <div class="mt-5">
+                    <h2 class="text-xl font-bold text-zpid-purple-700">{{ "basic_information_meta_data_group.creators.legend"|trans([], 'forms') }}</h2>
+                    {% for creator in experiment.basicInformationMetaDataGroup.creators %}
+                        <div class="px-6 pb-4 mb-4 border border-stone-300 rounded-lg">
+                            {% for entry in enum('App\\Enum\\Study\\Dictionary\\CreatorDictionary').cases %}
+                                <twig:ReviewValue entity="{{ creator }}" route="{{ path('Study-documentation', {id: experiment.id}) }}" entry="{{ entry }}" />
+                            {% endfor %}
+                        </div>
                     {% endfor %}
-                {% endfor %}
-            </div>
+                </div>
+            {% endif %}
         </section>
         <section class="mt-8">
             {{ _self.sectionTitle("title.theories.title"|trans) }}
-            {% for reviewItem in theoryReview %}
-                {% include 'components/_reviewValue.html.twig' with {item: reviewItem, route: 'Study-theory'} %}
+            {% for entry in enum('App\\Enum\\Study\\Dictionary\\TheoryDictionary').cases %}
+                <twig:ReviewValue entity="{{ experiment.theoryMetaDataGroup }}" route="{{ path('Study-theory', {id: experiment.id}) }}" entry="{{ entry }}" />
             {% endfor %}
         </section>
         <section class="mt-8">
             {{ _self.sectionTitle("title.method.title"|trans) }}
-            {% for reviewItem in methodReview %}
-                {% include 'components/_reviewValue.html.twig' with {item: reviewItem, route: 'Study-method'} %}
+            {% for entry in enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').cases %}
+                <twig:ReviewValue entity="{{ experiment.methodMetaDataGroup }}" route="{{ path('Study-method', {id: experiment.id}) }}" entry="{{ entry }}" />
             {% endfor %}
         </section>
         <section class="mt-8">
             {{ _self.sectionTitle("title.measures.title"|trans) }}
-            {% for reviewItem in measureReview %}
-                {% include 'components/_reviewValue.html.twig' with {item: reviewItem, route: 'Study-measure'} %}
+            {% for entry in enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').cases %}
+                <twig:ReviewValue entity="{{ experiment.measureMetaDataGroup }}" route="{{ path('Study-measure', {id: experiment.id}) }}" entry="{{ entry }}" />
             {% endfor %}
         </section>
         <section class="mt-8">
             {{ _self.sectionTitle("title.samples.title"|trans) }}
-            {% for reviewItem in sampleReview %}
-                {% include 'components/_reviewValue.html.twig' with {item: reviewItem, route: 'Study-sample'} %}
+            {% for entry in enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').cases %}
+                <twig:ReviewValue entity="{{ experiment.sampleMetaDataGroup }}" route="{{ path('Study-sample', {id: experiment.id}) }}" entry="{{ entry }}" />
+            {% endfor %}
+        </section>
+        <section class="mt-8">
+            {{ _self.sectionTitle("title.ethics.title"|trans) }}
+            {% for entry in enum('App\\Enum\\Study\\Dictionary\\EthicsDictionary').cases %}
+                <twig:ReviewValue entity="{{ experiment.ethicsMetaDataGroup }}" route="{{ path('Study-ethics', {id: experiment.id}) }}" entry="{{ entry }}" />
             {% endfor %}
         </section>
         {# TODO Add list of datasets #}

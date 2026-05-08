@@ -2,8 +2,10 @@
 
 namespace App\Enum\Study\Dictionary;
 
+use App\Entity\Dto\ReviewDataDto;
 use App\Enum\DictionaryEnum;
 use App\Enum\DictionaryInterface;
+use App\Enum\ErrorType;
 use App\Enum\ExtendedEnum;
 
 enum MethodDictionary: string implements DictionaryInterface
@@ -107,6 +109,30 @@ enum MethodDictionary: string implements DictionaryInterface
             self::RESEARCH_METHOD_DESCRIPTION => 'method.research_method_description',
             self::CONSTRUCTS => 'method.constructs',
             default => null,
+        };
+    }
+
+    public function reviewData(): ReviewDataDto
+    {
+        return match ($this) {
+            self::RESEARCH_METHOD => new ReviewDataDto('method_meta_data_group.name.error_message', ErrorType::MANDATORY),
+            self::EXPERIMENTAL_DETAILS => new ReviewDataDto('method_meta_data_group.experimental_details.error_message', ErrorType::OPTIONAL),
+            self::NON_EXPERIMENTAL_DETAILS => new ReviewDataDto('method_meta_data_group.non_experimental_details.error_message', ErrorType::OPTIONAL),
+            self::SETTING => new ReviewDataDto('method_meta_data_group.setting.error_message', ErrorType::OPTIONAL),
+            self::SETTING_LOCATION => new ReviewDataDto('method_meta_data_group.setting_location.error_message', ErrorType::OPTIONAL),
+            self::OBSERVATIONAL_TYPE => new ReviewDataDto('method_meta_data_group.observational_type.error_message', ErrorType::OPTIONAL),
+            self::MANIPULATIONS => new ReviewDataDto('method_meta_data_group.manipulations.error_message', ErrorType::OPTIONAL),
+            self::EXPERIMENTAL_DESIGN => new ReviewDataDto('method_meta_data_group.experimental_design.error_message', ErrorType::OPTIONAL),
+            self::CONTROL_OPERATIONS => new ReviewDataDto('method_meta_data_group.control_operations.error_message', ErrorType::OPTIONAL),
+            self::OTHER_CONTROL_OPERATIONS => new ReviewDataDto('method_meta_data_group.other_control_operations.error_message', ErrorType::OPTIONAL),
+            self::RESEARCH_DESIGN => new ReviewDataDto('method_meta_data_group.research_design.error_message', ErrorType::OPTIONAL),
+            self::RESEARCH_DESIGN_DESCRIPTION => new ReviewDataDto('method_meta_data_group.research_design_description.error_message', ErrorType::OPTIONAL),
+            self::SURVEY_INSTRUMENT_TYPE => new ReviewDataDto('method_meta_data_group.survey_instrument_type.error_message', ErrorType::OPTIONAL),
+            self::TREATMENT_GROUPS => new ReviewDataDto('method_meta_data_group.treatment_groups.error_message', ErrorType::OPTIONAL),
+            self::RESEARCH_METHOD_DESCRIPTION => new ReviewDataDto('method_meta_data_group.research_method_description.error_message', ErrorType::OPTIONAL),
+            self::MEASUREMENT_OCCASIONS => new ReviewDataDto('method_meta_data_group.measurement_occasions.error_message', ErrorType::OPTIONAL),
+            self::CONSTRUCTS => new ReviewDataDto('method_meta_data_group.constructs.error_message', ErrorType::OPTIONAL),
+            self::MEASUREMENT_INSTRUMENTS => new ReviewDataDto('method_meta_data_group.measurement_instruments.error_message', ErrorType::OPTIONAL),
         };
     }
 }

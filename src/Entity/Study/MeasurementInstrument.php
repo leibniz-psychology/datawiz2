@@ -71,6 +71,11 @@ class MeasurementInstrument extends UuidEntity
     #[Groups('study')]
     private ?string $normReferenced = null;
 
+    public function __toString(): string
+    {
+        return $this->title ?? '';
+    }
+
     public function getMethod(): MethodMetaDataGroup
     {
         return $this->method;

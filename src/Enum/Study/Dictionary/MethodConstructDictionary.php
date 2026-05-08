@@ -2,8 +2,10 @@
 
 namespace App\Enum\Study\Dictionary;
 
+use App\Entity\Dto\ReviewDataDto;
 use App\Enum\DictionaryEnum;
 use App\Enum\DictionaryInterface;
+use App\Enum\ErrorType;
 use App\Enum\ExtendedEnum;
 
 enum MethodConstructDictionary: string implements DictionaryInterface
@@ -29,6 +31,15 @@ enum MethodConstructDictionary: string implements DictionaryInterface
         return match ($this) {
             self::CONSTRUCT_FUNCTION => 'method_construct.function.placeholder',
             default => null,
+        };
+    }
+
+    public function reviewData(): ReviewDataDto
+    {
+        return match ($this) {
+            self::NAME => new ReviewDataDto('method_construct.name.error_message', ErrorType::MANDATORY),
+            self::CONSTRUCT_FUNCTION => new ReviewDataDto('method_construct.function.error_message', ErrorType::MANDATORY),
+            self::OTHER_FUNCTION_DESCRIPTION => new ReviewDataDto('method_construct.other_function_description.error_message', ErrorType::OPTIONAL),
         };
     }
 }

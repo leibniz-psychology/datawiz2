@@ -3,18 +3,14 @@
 namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
-use App\Entity\Constant\ReviewDataDictionary;
 use App\Repository\TheoryRepository;
-use App\Service\Review\Reviewable;
-use App\Service\Review\ReviewDataCollectable;
-use App\Service\Review\ReviewValidator;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Table(name: 'experiment_theory')]
 #[ORM\Entity(repositoryClass: TheoryRepository::class)]
-class TheoryMetaDataGroup extends UuidEntity implements Reviewable
+class TheoryMetaDataGroup extends UuidEntity
 {
     /**
      * One Theory section has One Experiment.
@@ -36,22 +32,6 @@ class TheoryMetaDataGroup extends UuidEntity implements Reviewable
     #[SerializedName('theories')]
     #[Groups(['study'])]
     private ?array $theories = null;
-
-    public function getReviewCollection(): array
-    {
-        return [
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::OBJECTIVES,
-                $this->getObjectives(),
-                ReviewValidator::validateArrayValues($this->getObjectives())
-            ),
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::HYPOTHESIS,
-                $this->getHypotheses(),
-                ReviewValidator::validateArrayValues($this->getHypotheses())
-            ),
-        ];
-    }
 
     public function getExperiment(): Experiment
     {

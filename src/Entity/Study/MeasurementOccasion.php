@@ -30,6 +30,11 @@ class MeasurementOccasion extends UuidEntity
     #[Groups('study')]
     private ?int $position = null;
 
+    public function __toString(): string
+    {
+        return $this->timeOfMeasurement ?? '';
+    }
+
     public function getMethod(): MethodMetaDataGroup
     {
         return $this->method;

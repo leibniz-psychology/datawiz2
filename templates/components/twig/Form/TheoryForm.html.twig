@@ -10,7 +10,7 @@
             collection="{{ form.objectives }}"
             add_action="addObjective"
             remove_action="removeObjective"
-            add_label="{{ 'input.objectives.add'|trans }}"
+            add_label="{{ 'theory_meta_data_group.objectives.add'|trans([], 'forms') }}"
         />
     </twig:Form:FormCard>
 
@@ -19,7 +19,7 @@
             collection="{{ form.hypotheses }}"
             add_action="addHypothesis"
             remove_action="removeHypothesis"
-            add_label="{{ 'input.hypotheses.add'|trans }}"
+            add_label="{{ 'theory_meta_data_group.hypotheses.add'|trans([], 'forms') }}"
         />
     </twig:Form:FormCard>
 
@@ -28,7 +28,7 @@
             collection="{{ form.theories }}"
             add_action="addTheory"
             remove_action="removeTheory"
-            add_label="{{ 'input.theories.add'|trans }}"
+            add_label="{{ 'theory_meta_data_group.theories.add'|trans([], 'forms') }}"
         />
     </twig:Form:FormCard>
 {% endblock %}

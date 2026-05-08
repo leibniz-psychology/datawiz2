@@ -32,6 +32,11 @@ class MethodConstruct extends UuidEntity
     #[Groups('study')]
     private ?string $otherFunctionDescription = null;
 
+    public function __toString(): string
+    {
+        return $this->name;
+    }
+
     public function getMethod(): MethodMetaDataGroup
     {
         return $this->method;

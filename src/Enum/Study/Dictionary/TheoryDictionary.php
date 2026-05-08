@@ -2,8 +2,10 @@
 
 namespace App\Enum\Study\Dictionary;
 
+use App\Entity\Dto\ReviewDataDto;
 use App\Enum\DictionaryEnum;
 use App\Enum\DictionaryInterface;
+use App\Enum\ErrorType;
 use App\Enum\ExtendedEnum;
 
 enum TheoryDictionary: string implements DictionaryInterface
@@ -39,6 +41,15 @@ enum TheoryDictionary: string implements DictionaryInterface
             self::OBJECTIVES => 'theory.objectives',
             self::HYPOTHESES => 'theory.hypotheses',
             self::THEORIES => 'theory.theories',
+        };
+    }
+
+    public function reviewData(): ReviewDataDto
+    {
+        return match ($this) {
+            self::OBJECTIVES => new ReviewDataDto('theory_meta_data_group.objectives.error_message', ErrorType::MANDATORY),
+            self::HYPOTHESES => new ReviewDataDto('theory_meta_data_group.hypotheses.error_message', ErrorType::MANDATORY),
+            self::THEORIES => new ReviewDataDto('theory_meta_data_group.theories.error_message', ErrorType::MANDATORY),
         };
     }
 }

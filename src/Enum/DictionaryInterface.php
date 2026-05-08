@@ -2,6 +2,8 @@
 
 namespace App\Enum;
 
+use App\Entity\Dto\ReviewDataDto;
+
 interface DictionaryInterface extends ExtendedEnumInterface
 {
     public function legend(): ?string;
@@ -9,4 +11,6 @@ interface DictionaryInterface extends ExtendedEnumInterface
     public function help(): ?string;
 
     public function descriptionHelp(): ?string;
+
+    public function reviewData(): ?ReviewDataDto;
 }

@@ -3,13 +3,9 @@
 namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
-use App\Entity\Constant\ReviewDataDictionary;
 use App\Enum\Study\SampleAnalysisUnit;
 use App\Enum\Study\SamplingMethod;
 use App\Repository\SampleRepository;
-use App\Service\Review\Reviewable;
-use App\Service\Review\ReviewDataCollectable;
-use App\Service\Review\ReviewValidator;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -17,7 +13,7 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Table(name: 'experiment_sample')]
 #[ORM\Entity(repositoryClass: SampleRepository::class)]
-class SampleMetaDataGroup extends UuidEntity implements Reviewable
+class SampleMetaDataGroup extends UuidEntity
 {
     /**
      * One Sample section has One Experiment.
@@ -129,48 +125,6 @@ class SampleMetaDataGroup extends UuidEntity implements Reviewable
     #[SerializedName('return_dropout')]
     #[Groups(['study'])]
     private ?string $returnDropout = null;
-
-    public function getReviewCollection(): array
-    {
-        return [
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::PARTICIPANTS,
-                [$this->getParticipants()],
-                ReviewValidator::validateSingleValue($this->getParticipants())
-            ),
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::POPULATION,
-                $this->getPopulation(),
-                ReviewValidator::validateArrayValues($this->getPopulation())
-            ),
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::INCLUSION,
-                $this->getInclusionCriteria(),
-                ReviewValidator::validateArrayValues($this->getInclusionCriteria())
-            ),
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::EXCLUSION,
-                $this->getExclusionCriteria(),
-                ReviewValidator::validateArrayValues($this->getExclusionCriteria())
-            ),
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::SAMPLING,
-                [$this->getSamplingMethod() !== SamplingMethod::OTHER ? $this->getSamplingMethod() : $this->getSamplingMethodOtherDescription()],
-                ($this->getSamplingMethod() !== SamplingMethod::OTHER && ReviewValidator::validateSingleValue($this->getSamplingMethod()))
-                || ($this->getSamplingMethod() === SamplingMethod::OTHER && ReviewValidator::validateSingleValue($this->getSamplingMethodOtherDescription()))
-            ),
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::SAMPLE_SIZE,
-                [$this->getSampleSize()],
-                ReviewValidator::validateSingleValue($this->getSampleSize())
-            ),
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::POWER_ANALYSIS,
-                [$this->getPowerAnalysis()],
-                ReviewValidator::validateSingleValue($this->getPowerAnalysis())
-            ),
-        ];
-    }
 
     public function getParticipants(): ?string
     {

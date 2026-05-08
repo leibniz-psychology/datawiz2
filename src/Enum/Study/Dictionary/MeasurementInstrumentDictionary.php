@@ -2,8 +2,10 @@
 
 namespace App\Enum\Study\Dictionary;
 
+use App\Entity\Dto\ReviewDataDto;
 use App\Enum\DictionaryEnum;
 use App\Enum\DictionaryInterface;
+use App\Enum\ErrorType;
 use App\Enum\ExtendedEnum;
 
 enum MeasurementInstrumentDictionary: string implements DictionaryInterface
@@ -53,6 +55,23 @@ enum MeasurementInstrumentDictionary: string implements DictionaryInterface
             self::VALIDITY => 'measurement_instrument.validity.help',
             self::NORM_REFERENCED => 'measurement_instrument.norm_referenced.help',
             default => null,
+        };
+    }
+
+    public function reviewData(): ReviewDataDto
+    {
+        return match ($this) {
+            self::TITLE => new ReviewDataDto('measure_meta_data_group.title.error_message', ErrorType::MANDATORY),
+            self::AUTHOR => new ReviewDataDto('measure_meta_data_group.author.error_message', ErrorType::RECOMMENDED),
+            self::CITATION => new ReviewDataDto('measure_meta_data_group.citation.error_message', ErrorType::RECOMMENDED),
+            self::ABSTRACT => new ReviewDataDto('measure_meta_data_group.abstract.error_message', ErrorType::OPTIONAL),
+            self::THEORETICAL_BACKGROUND => new ReviewDataDto('measure_meta_data_group.theoretical_background.error_message', ErrorType::OPTIONAL),
+            self::STRUCTURE => new ReviewDataDto('measure_meta_data_group.structure.error_message', ErrorType::OPTIONAL),
+            self::DEVELOPMENT => new ReviewDataDto('measure_meta_data_group.development.error_message', ErrorType::OPTIONAL),
+            self::OBJECTIVITY => new ReviewDataDto('measure_meta_data_group.objectivity.error_message', ErrorType::OPTIONAL),
+            self::RELIABILITY => new ReviewDataDto('measure_meta_data_group.reliability.error_message', ErrorType::OPTIONAL),
+            self::VALIDITY => new ReviewDataDto('measure_meta_data_group.validity.error_message', ErrorType::OPTIONAL),
+            self::NORM_REFERENCED => new ReviewDataDto('measure_meta_data_group.norm_referenced.error_message', ErrorType::OPTIONAL),
         };
     }
 }

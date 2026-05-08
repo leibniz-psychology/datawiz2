@@ -3,7 +3,6 @@
 namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
-use App\Entity\Constant\ReviewDataDictionary;
 use App\Enum\Study\ControlOperations;
 use App\Enum\Study\ExperimentalDesign;
 use App\Enum\Study\ExperimentalDetails;
@@ -14,9 +13,6 @@ use App\Enum\Study\ResearchMethod;
 use App\Enum\Study\StudySetting;
 use App\Enum\Study\SurveyInstrumentType;
 use App\Repository\MethodRepository;
-use App\Service\Review\Reviewable;
-use App\Service\Review\ReviewDataCollectable;
-use App\Service\Review\ReviewValidator;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -26,7 +22,7 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Table(name: 'experiment_method')]
 #[ORM\Entity(repositoryClass: MethodRepository::class)]
-class MethodMetaDataGroup extends UuidEntity implements Reviewable
+class MethodMetaDataGroup extends UuidEntity
 {
     /**
      * One basic Information section has One Experiment.
@@ -129,65 +125,6 @@ class MethodMetaDataGroup extends UuidEntity implements Reviewable
         $this->measurementOccasions = new ArrayCollection();
         $this->constructs = new ArrayCollection();
         $this->measurementInstruments = new ArrayCollection();
-    }
-
-    public function getReviewCollection(): array
-    {
-        return [
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::DESIGN,
-                [$this->getResearchMethod()],
-                ReviewValidator::validateSingleValue($this->getResearchMethod()->label())
-            ),
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::EXPERIMENTAL,
-                [$this->getExperimentalDetails()],
-                ReviewValidator::validateSingleValue($this->getExperimentalDetails()->label()),
-                $this->getResearchMethod() === ResearchMethod::EXPERIMENTAL
-            ),
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::NON_EXPERIMENTAL,
-                [$this->getNonExperimentalDetails()],
-                ReviewValidator::validateSingleValue($this->getNonExperimentalDetails()->label()),
-                $this->getResearchMethod() === ResearchMethod::NON_EXPERIMENTAL
-            ),
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::OBSERVABLE_TYPE,
-                [$this->getObservationalType()],
-                ReviewValidator::validateSingleValue($this->getObservationalType()?->label()),
-                $this->getResearchMethod() === ResearchMethod::NON_EXPERIMENTAL && $this->getNonExperimentalDetails() === NonExperimentalDetails::OBSERVATIONAL_STUDY
-            ),
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::SETTING,
-                [$this->getSetting()],
-                ReviewValidator::validateSingleValue($this->getSetting()->label())
-            ),
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::SETTING_LOCATION,
-                [$this->getSettingLocation()],
-                ReviewValidator::validateSingleValue($this->getSettingLocation()),
-                $this->getSetting() === StudySetting::REAL_LIFE || $this->getSetting() === StudySetting::NATURAL
-            ),
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::MANIPULATIONS,
-                [$this->getManipulations()],
-                ReviewValidator::validateSingleValue($this->getManipulations()),
-                $this->getResearchMethod() === ResearchMethod::EXPERIMENTAL
-            ),
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::EXPERIMENTAL_DESIGN,
-                [$this->getExperimentalDesign()],
-                ReviewValidator::validateSingleValue($this->getExperimentalDesign()),
-                $this->getResearchMethod() === ResearchMethod::EXPERIMENTAL
-            ),
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::CONTROL_OPS,
-                [$this->getControlOperations() !== ControlOperations::OTHER ? $this->getControlOperations() : $this->getOtherControlOperations()],
-                ($this->getControlOperations() !== ControlOperations::OTHER && ReviewValidator::validateSingleValue($this->getControlOperations()))
-                || ($this->getControlOperations() === ControlOperations::OTHER && ReviewValidator::validateSingleValue($this->getOtherControlOperations())),
-                $this->getResearchMethod() === ResearchMethod::EXPERIMENTAL
-            ),
-        ];
     }
 
     public function getExperiment(): Experiment

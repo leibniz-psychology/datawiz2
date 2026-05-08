@@ -2,8 +2,10 @@
 
 namespace App\Enum\Study\Dictionary;
 
+use App\Entity\Dto\ReviewDataDto;
 use App\Enum\DictionaryEnum;
 use App\Enum\DictionaryInterface;
+use App\Enum\ErrorType;
 use App\Enum\ExtendedEnum;
 
 enum MeasureDictionary: string implements DictionaryInterface
@@ -32,7 +34,7 @@ enum MeasureDictionary: string implements DictionaryInterface
             self::DATA_COLLECTION_END => 'measure_meta_data_group.data_collection_end.legend',
             self::COLLECTION_MODE => 'measure_meta_data_group.collection_mode.legend',
             self::APPARATUS => 'measure_meta_data_group.apparatus.legend',
-            self::COLLECTION_MODE_OTHER_DESCRIPTION => 'measure_meta_data_group.collection_other_description.legend',
+            self::COLLECTION_MODE_OTHER_DESCRIPTION => 'measure_meta_data_group.collection_mode_other_description.legend',
             self::ORIGINAL_RECORD_TYPE => 'measure_meta_data_group.original_record_type.legend',
             self::ORIGINAL_RECORD_TYPE_OTHER_DESCRIPTION => 'measure_meta_data_group.original_record_type_other_description.legend',
             self::RAW_DATA_DIGITIZATION => 'measure_meta_data_group.raw_data_digitization.legend',
@@ -73,6 +75,25 @@ enum MeasureDictionary: string implements DictionaryInterface
             self::QUALITY_INDICATORS => 'measure.quality_indicators',
             self::LIMITATIONS => 'measure.limitations',
             default => null,
+        };
+    }
+
+    public function reviewData(): ReviewDataDto
+    {
+        return match ($this) {
+            self::DATA_COLLECTION_START => new ReviewDataDto('measure_meta_data_group.data_collection_start.error_message', ErrorType::RECOMMENDED),
+            self::DATA_COLLECTION_END => new ReviewDataDto('measure_meta_data_group.data_collection_end.error_message', ErrorType::RECOMMENDED),
+            self::COLLECTION_MODE => new ReviewDataDto('measure_meta_data_group.collection_mode.error_message', ErrorType::RECOMMENDED),
+            self::APPARATUS => new ReviewDataDto('measure_meta_data_group.apparatus.error_message', ErrorType::RECOMMENDED),
+            self::COLLECTION_MODE_OTHER_DESCRIPTION => new ReviewDataDto('measure_meta_data_group.collection_mode_other_description.error_message', ErrorType::OPTIONAL),
+            self::ORIGINAL_RECORD_TYPE => new ReviewDataDto('measure_meta_data_group.original_record_type.error_message', ErrorType::RECOMMENDED),
+            self::ORIGINAL_RECORD_TYPE_OTHER_DESCRIPTION => new ReviewDataDto('measure_meta_data_group.original_record_type_other_description.error_message', ErrorType::OPTIONAL),
+            self::RAW_DATA_DIGITIZATION => new ReviewDataDto('measure_meta_data_group.raw_data_digitization.error_message', ErrorType::RECOMMENDED),
+            self::RAW_DATA_DIGITIZATION_DESCRIPTION => new ReviewDataDto('measure_meta_data_group.raw_data_digitization_description.error_message', ErrorType::OPTIONAL),
+            self::SPECIAL_CIRCUMSTANCES => new ReviewDataDto('measure_meta_data_group.special_circumstances.error_message', ErrorType::RECOMMENDED),
+            self::RAW_DATA_TRANSFORMATION => new ReviewDataDto('measure_meta_data_group.raw_data_transformation.error_message', ErrorType::RECOMMENDED),
+            self::QUALITY_INDICATORS => new ReviewDataDto('measure_meta_data_group.quality_indicators.error_message', ErrorType::RECOMMENDED),
+            self::LIMITATIONS => new ReviewDataDto('measure_meta_data_group.limitations.error_message', ErrorType::RECOMMENDED),
         };
     }
 }

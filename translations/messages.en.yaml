@@ -183,66 +183,10 @@ generic:
 input:
   hidden: ''
   autoSaved: 'Auto-saved at %time%'
-  title:
-    empty: '<a href="#link#" class="#class#">Add title</a> to ensure the findability of your data'
-  description:
-    empty: '<a href="#link#" class="#class#">Add description</a> to ensure the findability of your data'
-  used_softwares:
-    add: 'Add another software'
-  related_publications:
-    add: 'Add another related publication'
-    empty: '<a href="#link#" class="#class#">Add related publications</a>'
-  conflicts_of_interest:
-    add: 'Add another conflict of interest'
-  creator:
-    empty: '<a href="#link#" class="#class#">Add creators</a> to ensure the findability of your data'
-    add: 'Add another creator'
-    remove: 'Remove creator'
-    credit:
-      label: 'Creator roles'
-      add: 'Add another role'
-      remove: 'Remove role'
-  objectives:
-    add: 'Add another objective'
-    empty: "<a href='#link#'' class='#class#''>Add objectives</a> to increase the reusability of your data."
-  hypotheses:
-    add: 'Add another hypothesis'
-    empty: "<a href='#link#'' class='#class#''>Add hypotheses</a> to increase the reusability of your data."
-  theories:
-    add: 'Add another theory'
-  design:
-    empty: '<a href="#link#" class="#class#">Add research design</a> to increase the reusability of your data'
-    details:
-      legend: 'Research design details'
-      empty: '<a href="#link#" class="#class#">Further describe the research design</a> to increase the reusability of your data'
-  manipulations:
-    empty: '<a href="#link#" class="#class#">Add experimental manipulations, treatments or interventions</a> to increase the reusability of your data'
-  experimental-design:
-    empty: '<a href="#link#" class="#class#">Add design</a> to increase the reusability of your data'
-  control-operations:
-    empty: '<a href="#link#" class="#class#">Add control operations</a> to increase the reusability of your data'
-  setting:
-    empty: '<a href="#link#" class="#class#">Add setting</a> to increase the reusability of your data'
   measurement_occasions:
     name: 'Occasion'
   constructs:
     name: 'Construct'
-  apparatus:
-    empty: '<a href="#link#" class="#class#">Add apparatus, instruments or equipments</a> to increase the reusability of your data'
-  participants:
-    empty: '<a href="#link#" class="#class#">Add participants</a> to increase the reusability of your data'
-  population:
-    empty: '<a href="#link#" class="#class#">Add population</a> to increase the reusability of your data'
-  inclusion:
-    empty: '<a href="#link#" class="#class#">Add inclusion criteria</a> to increase the reusability of your data'
-  exclusion:
-    empty: '<a href="#link#" class="#class#">Add exclusion criteria</a> to increase the reusability of your data'
-  sampling:
-    empty: '<a href="#link#" class="#class#">Add sampling method</a> to increase the reusability of your data'
-  sample-size:
-    empty: '<a href="#link#" class="#class#">Add sample size</a> to increase the reusability of your data'
-  power-analysis:
-    empty: '<a href="#link#" class="#class#">Add power analysis</a> to increase the reusability of your data'
   documentation-name:
     legend: 'Documentation name'
     label: 'Provide a short name for your documentation'

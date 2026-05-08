@@ -2,8 +2,10 @@
 
 namespace App\Enum\Study\Dictionary;
 
+use App\Entity\Dto\ReviewDataDto;
 use App\Enum\DictionaryEnum;
 use App\Enum\DictionaryInterface;
+use App\Enum\ErrorType;
 use App\Enum\ExtendedEnum;
 
 enum SampleDictionary: string implements DictionaryInterface
@@ -41,19 +43,22 @@ enum SampleDictionary: string implements DictionaryInterface
             self::EXCLUSION_CRITERIA => 'sample_meta_data_group.exclusion_criteria.legend',
             self::POPULATION => 'sample_meta_data_group.population.legend',
             self::SAMPLING_METHOD => 'sample_meta_data_group.sampling_method.legend',
+            self::SAMPLING_METHOD_OTHER_DESCRIPTION => 'sample_meta_data_group.sampling_method_other_description.legend',
             self::RECRUITING => 'sample_meta_data_group.recruiting.legend',
             self::SAMPLE_SIZE => 'sample_meta_data_group.sample_size.legend',
             self::POWER_ANALYSIS => 'sample_meta_data_group.power_analysis.legend',
             self::INTENDED_SAMPLE_SIZE => 'sample_meta_data_group.intended_sample_size.legend',
             self::UNIT_OF_ANALYSIS => 'sample_meta_data_group.unit_of_analysis.legend',
+            self::UNIT_OF_ANALYSIS_OTHER_DESCRIPTION => 'sample_meta_data_group.unit_of_analysis_other_description.legend',
             self::MULTILEVEL_STRUCTURE => 'sample_meta_data_group.multilevel_structure.legend',
             self::SEX => 'sample_meta_data_group.sex.legend',
             self::AGE => 'sample_meta_data_group.age.legend',
             self::SPECIAL_GROUPS => 'sample_meta_data_group.special_groups.legend',
             self::COUNTRY => 'sample_meta_data_group.country.legend',
+            self::CITY => 'sample_meta_data_group.city.legend',
+            self::REGION => 'sample_meta_data_group.region.legend',
             self::MISSING_VALUES => 'sample_meta_data_group.missing_values.legend',
             self::RETURN_DROPOUT => 'sample_meta_data_group.return_dropout.legend',
-            default => '',
         };
     }
 
@@ -99,6 +104,33 @@ enum SampleDictionary: string implements DictionaryInterface
             self::MISSING_VALUES => 'sample.missing_values',
             self::RETURN_DROPOUT => 'sample.return_dropout',
             default => null,
+        };
+    }
+
+    public function reviewData(): ReviewDataDto
+    {
+        return match ($this) {
+            self::PARTICIPANTS => new ReviewDataDto('sample_meta_data_group.participants.error_message', ErrorType::MANDATORY),
+            self::INCLUSION_CRITERIA => new ReviewDataDto('sample_meta_data_group.inclusion_criteria.error_message', ErrorType::MANDATORY),
+            self::EXCLUSION_CRITERIA => new ReviewDataDto('sample_meta_data_group.exclusion_criteria.error_message', ErrorType::MANDATORY),
+            self::POPULATION => new ReviewDataDto('sample_meta_data_group.population.error_message', ErrorType::MANDATORY),
+            self::SAMPLING_METHOD => new ReviewDataDto('sample_meta_data_group.sampling_method.error_message', ErrorType::MANDATORY),
+            self::SAMPLING_METHOD_OTHER_DESCRIPTION => new ReviewDataDto('sample_meta_data_group.sampling_method_other_description.error_message', ErrorType::OPTIONAL),
+            self::RECRUITING => new ReviewDataDto('sample_meta_data_group.recruiting.error_message', ErrorType::MANDATORY),
+            self::SAMPLE_SIZE => new ReviewDataDto('sample_meta_data_group.sample_size.error_message', ErrorType::MANDATORY),
+            self::POWER_ANALYSIS => new ReviewDataDto('sample_meta_data_group.power_analysis.error_message', ErrorType::OPTIONAL),
+            self::INTENDED_SAMPLE_SIZE => new ReviewDataDto('sample_meta_data_group.intended_sample_size.error_message', ErrorType::OPTIONAL),
+            self::UNIT_OF_ANALYSIS => new ReviewDataDto('sample_meta_data_group.unit_of_analysis.error_message', ErrorType::MANDATORY),
+            self::UNIT_OF_ANALYSIS_OTHER_DESCRIPTION => new ReviewDataDto('sample_meta_data_group.unit_of_analysis_other_description.error_message', ErrorType::OPTIONAL),
+            self::MULTILEVEL_STRUCTURE => new ReviewDataDto('sample_meta_data_group.multilevel_structure.error_message', ErrorType::OPTIONAL),
+            self::SEX => new ReviewDataDto('sample_meta_data_group.sex.error_message', ErrorType::MANDATORY),
+            self::AGE => new ReviewDataDto('sample_meta_data_group.age.error_message', ErrorType::MANDATORY),
+            self::SPECIAL_GROUPS => new ReviewDataDto('sample_meta_data_group.special_groups.error_message', ErrorType::OPTIONAL),
+            self::COUNTRY => new ReviewDataDto('sample_meta_data_group.country.error_message', ErrorType::MANDATORY),
+            self::CITY => new ReviewDataDto('sample_meta_data_group.city.error_message', ErrorType::OPTIONAL),
+            self::REGION => new ReviewDataDto('sample_meta_data_group.region.error_message', ErrorType::OPTIONAL),
+            self::MISSING_VALUES => new ReviewDataDto('sample_meta_data_group.missing_values.error_message', ErrorType::OPTIONAL),
+            self::RETURN_DROPOUT => new ReviewDataDto('sample_meta_data_group.return_dropout.error_message', ErrorType::OPTIONAL),
         };
     }
 }

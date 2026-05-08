@@ -3,14 +3,10 @@
 namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
-use App\Entity\Constant\ReviewDataDictionary;
 use App\Enum\Study\CollectionMode;
 use App\Enum\Study\DataDigitization;
 use App\Enum\Study\RecordType;
 use App\Repository\MeasureRepository;
-use App\Service\Review\Reviewable;
-use App\Service\Review\ReviewDataCollectable;
-use App\Service\Review\ReviewValidator;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -18,7 +14,7 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Table(name: 'experiment_measure')]
 #[ORM\Entity(repositoryClass: MeasureRepository::class)]
-class MeasureMetaDataGroup extends UuidEntity implements Reviewable
+class MeasureMetaDataGroup extends UuidEntity
 {
     /**
      * One basic Information section has One Experiment.
@@ -90,17 +86,6 @@ class MeasureMetaDataGroup extends UuidEntity implements Reviewable
     #[SerializedName('limitations')]
     #[Groups(['study'])]
     private ?string $limitations = null;
-
-    public function getReviewCollection(): array
-    {
-        return [
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::APPARATUS,
-                $this->getApparatus(),
-                ReviewValidator::validateArrayValues($this->getApparatus())
-            ),
-        ];
-    }
 
     public function getExperiment(): Experiment
     {

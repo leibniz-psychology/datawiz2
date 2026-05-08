@@ -3,18 +3,14 @@
 namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
-use App\Entity\Constant\ReviewDataDictionary;
 use App\Enum\Study\CreatorCreditRole;
-use App\Service\Review\Reviewable;
-use App\Service\Review\ReviewDataCollectable;
-use App\Service\Review\ReviewValidator;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Table(name: 'experiment_basic_creators')]
 #[ORM\Entity]
-class CreatorMetaDataGroup extends UuidEntity implements Reviewable
+class CreatorMetaDataGroup extends UuidEntity
 {
     #[ORM\ManyToOne(inversedBy: 'creators')]
     #[ORM\JoinColumn(name: 'basic_id', referencedColumnName: 'id')]
@@ -48,42 +44,6 @@ class CreatorMetaDataGroup extends UuidEntity implements Reviewable
     #[SerializedName('roles')]
     #[Groups('study')]
     private ?array $creditRoles = null;
-
-    public function getReviewCollection(): array
-    {
-        return [
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::CREATOR_GIVEN,
-                [$this->getGivenName()],
-                ReviewValidator::validateSingleValue($this->getGivenName())
-            ),
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::CREATOR_FAMILY,
-                [$this->getFamilyName()],
-                ReviewValidator::validateSingleValue($this->getFamilyName())
-            ),
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::CREATOR_EMAIL,
-                [$this->getEmail()],
-                ReviewValidator::validateSingleValue($this->getEmail())
-            ),
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::CREATOR_ORCID,
-                [$this->getOrcid()],
-                ReviewValidator::validateSingleValue($this->getOrcid())
-            ),
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::CREATOR_AFFILIATION,
-                [$this->getAffiliation()],
-                ReviewValidator::validateSingleValue($this->getAffiliation())
-            ),
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::CREATOR_ROLES,
-                $this->getCreditRoles(),
-                ReviewValidator::validateArrayValues($this->getCreditRoles())
-            ),
-        ];
-    }
 
     public function isEmpty(): bool
     {

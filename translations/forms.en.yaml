@@ -2,81 +2,112 @@ basic_information_meta_data_group:
     title:
         legend: 'Title'
         label: 'Provide a title for your dataset'
+        error_message: '<a href="#link#" class="#class#">Add title</a> to ensure the findability of your data'
     title_translated:
         legend: 'Translated title'
         label: 'Is there an alternative title (e.g., abbreviation or translation)? If your title is not in English, please provide the English translation here.'
+        error_message: '<a href="#link#" class="#class#">Add translated title</a> to ensure the findability of your data'
     study_id:
         legend: 'Study ID'
         label: 'Provide a unique identifier for your study'
+        error_message: '<a href="#link#" class="#class#">Add study id</a>'
     description:
         legend: 'Description'
         label: 'Provide a short summary of the study'
+        error_message: '<a href="#link#" class="#class#">Add description</a> to ensure the findability of your data'
     description_translated:
         legend: 'Translated Description'
         label: 'If your description is not in English, please provide the English translation here.'
+        error_message: '<a href="#link#" class="#class#">Add translated description</a> to ensure the findability of your data'
     data_status:
         legend: 'Data status'
         label: 'State whether the uploaded data is a complete or partial representation of the collected data.'
+        error_message: '<a href="#link#" class="#class#">Add data status</a>'
     reuse_potential:
         legend: 'Reuse potential'
         label: 'State measures to ensure reuse potential of the subset'
+        error_message: '<a href="#link#" class="#class#">Add measures</a> to ensure reusability of your data'
     study_relation:
         legend: 'Study relation'
         label: 'State the relation to previous work'
+        error_message: '<a href="#link#" class="#class#">Add relation</a>'
     study_relation_other_description:
         legend: 'Study relation description'
         label: 'Provide a description of the relation to previous work'
+        error_message: '<a href="#link#" class="#class#">Add a description</a> of your study relation'
     used_softwares:
         legend: 'Used software'
         label: 'Indicate which software was used for which step'
         help: 'Enter one software per field. Leave empty if not applicable'
+        add: 'Add another software'
+        error_message: '<a href="#link#" class="#class#">Add used software</a>'
     related_publications:
         legend: 'Related publications'
         label: 'Provide citations and persistent identifiers of the publications directly based on this data collection.'
         help: 'Enter one publication per field. Leave empty if not applicable'
+        add: 'Add another related publication'
+        error_message: '<a href="#link#" class="#class#">Add related publications</a>'
     conflicts_of_interest:
         legend: 'Conflicts of interest'
         label: 'State any existing conflicts of interest.'
         help: 'Enter one conflict of interest per field. Leave empty if not applicable'
+        add: 'Add another conflict of interest'
+        error_message: '<a href="#link#" class="#class#">Add a conflict of interest</a>'
     creators:
         legend: 'Creators'
         label: 'The persons responsible for the research data.'
+        add: 'Add another creator'
+        remove: 'Remove creator'
+        error_message: '<a href="#link#" class="#class#">Add creators</a> to ensure the findability of your data'
 
 creator_meta_data_group:
     given_name:
         label: 'Given name'
+        error_message: '<a href="#link#" class="#class#">Add given name</a>'
     family_name:
         label: 'Family name'
+        error_message: '<a href="#link#" class="#class#">Add family name</a>'
     email:
         label: 'Email'
+        error_message: '<a href="#link#" class="#class#">Add email</a>'
     orcid:
         label: 'ORCID'
+        error_message: '<a href="#link#" class="#class#">Add ORCID</a>'
     affiliation:
         label: 'Affiliation'
+        error_message: '<a href="#link#" class="#class#">Add affiliation</a>'
     credit_roles:
         label: 'Roles'
+        add: 'Add another role'
+        remove: 'Remove role'
+        error_message: '<a href="#link#" class="#class#">Add a credit role</a>'
 
 ethics_meta_data_group:
     ethical_review:
         legend: 'Ethical review'
         label: 'State whether you obtained approval by an Institutional Review Board or Ethics Committee for this study.'
         placeholder: 'Please select'
+        error_message: '<a href="#link#" class="#class#">State</a> whether you obtained an ethical review'
     informed_consent:
         legend: 'Informed consent'
         label: 'State whether informed consent was obtained prior to collecting data for this study.'
         placeholder: 'Please select'
+        error_message: '<a href="#link#" class="#class#">State</a> whether you obtained informed consent'
     personal_data:
         legend: 'Personal data'
         label: 'State whether personal data were collected for this study.'
         placeholder: 'Please select'
+        error_message: '<a href="#link#" class="#class#">State</a> whether you collected personal data'
     copyright:
         legend: 'Copyright'
         label: 'State whether the research data, measurement instruments or software, which are created within this study, are subject to copyright, patent law or other intellectual property rights?'
         placeholder: 'Please select'
+        error_message: '<a href="#link#" class="#class#">State</a> whether your data is subject to copyright'
     third_party_rights:
         legend: 'Third party rights'
         label: 'State whether there are any external research data, software or measurement instrument employed within this study, which are subject to copyright, patent law or other intellectual property rights. If applicable, refer to corresponding documents under study materials.'
         placeholder: 'Please select'
+        error_message: '<a href="#link#" class="#class#">State</a> whether third party rights apply'
 
 
 
@@ -84,227 +115,310 @@ measure_meta_data_group:
     data_collection_start:
         legend: 'Data collection Period'
         label: 'Data collection start'
+        error_message: '<a href="#link#" class="#class#">Add data collection</a> start date'
     data_collection_end:
+        legend: 'Data collection end'
         label: 'Data collection end'
+        error_message: '<a href="#link#" class="#class#">Add data collection</a> end date'
     collection_mode:
         legend: 'Collection mode'
         label: 'Describe the method that was used to collect data.'
+        error_message: '<a href="#link#" class="#class#">Add collection mode</a>'
     apparatus:
         legend: 'Apparatus (instruments, equipment)'
         label: 'Which instruments (apparatus, equipment) did you use in your study?'
         add: 'Add another apparatus'
+        error_message: '<a href="#link#" class="#class#">Add apparatus, instruments or equipments</a> to increase the reusability of your data'
     collection_mode_other_description:
+        legend: 'Collection mode description'
         label: 'If other, please describe the method'
+        error_message: '<a href="#link#" class="#class#">Add collection mode description</a>'
     original_record_type:
         legend: 'Original record type'
         label: 'The original record type of the data.'
+        error_message: '<a href="#link#" class="#class#">Add original record type</a>'
     original_record_type_other_description:
+        legend: 'Original record type description'
         label: 'If other, please describe the original record type'
+        error_message: '<a href="#link#" class="#class#">Add original record type description</a>'
     raw_data_digitization:
         legend: 'Digitization of raw data'
         label: 'Describe to which degree the uploaded data reflects the information contained in the original records.'
+        error_message: '<a href="#link#" class="#class#">Add raw data digitization</a>'
     raw_data_digitization_description:
+        legend: 'Digitization of raw data description'
         label: 'Please describe the digitization process'
+        error_message: '<a href="#link#" class="#class#">Add raw data digitization description</a>'
     special_circumstances:
         legend: 'Special circumstances'
         label: 'Describe any special circumstances of the data collection.'
+        error_message: '<a href="#link#" class="#class#">Add special circumstances</a>'
     raw_data_transformation:
         legend: 'Transformation or aggregation of raw data'
         label: 'Describe transformations or aggregations of raw data (e.g. reversed-polarity, index creation, calculation of scale values) or refer to documents or syntax containing the relevant information under study materials.'
+        error_message: '<a href="#link#" class="#class#">Add raw data transformation</a>'
     quality_indicators:
         legend: 'Quality indicators'
         label: 'Indicate all measures of data quality control during data collection (e.g., standard lab practices, lab protocols, interrater reliability training, approaches for coding of data, discarding of cases, correction of scores, or dealing with participants who were incorrectly sampled although they do not meet the inclusion criteria).'
+        error_message: '<a href="#link#" class="#class#">Add quality indicators</a>'
     limitations:
         legend: 'Limitations'
         label: 'Describe any limitations to data quality, e.g., baseline differences, low measurement reliability.'
+        error_message: '<a href="#link#" class="#class#">Add limitations</a>'
 
 measurement_instrument:
     title:
         label: 'Title'
+        error_message: '<a href="#link#" class="#class#">Add title</a>'
     author:
         label: 'Author'
         help: 'You may skip this field, if a citation was provided for this instrument.'
+        error_message: '<a href="#link#" class="#class#">Add Author</a>'
     citation:
         label: 'Citation'
+        error_message: '<a href="#link#" class="#class#">Add citation</a>'
     abstract:
         label: 'Abstract'
         help: 'This information is recommended for newly developed instruments only. A short description of the instrument.'
+        error_message: '<a href="#link#" class="#class#">Add abstract</a>'
     theoretical_background:
         label: 'Instrument concept: theoretical background'
         help: 'This information is recommended for newly developed instruments only. Details about the theoretical background of the procedure, underlying theoretical models, research contexts and goals of the procedure.'
+        error_message: '<a href="#link#" class="#class#">Add theoretical background</a>'
     structure:
         label: 'Instrument concept: structure'
         help: 'This information is recommended for newly developed instruments only. Details about number of items, existing sub scales, answering mode, evaluation procedure, further information on test procedures for non-questionnaires. '
+        error_message: '<a href="#link#" class="#class#">Add structure</a>'
     development:
         label: 'Instrument development'
         help: 'This information is recommended for newly developed instruments only. Refers to the specific measurement model: classical or probabilistic test theory. Provides information on item pools, test pre-forms, item selection criteria and techniques, item parameter like item-total correlation or item difficulties, item and scale inter-correlations, person and item parameters, samples, factor analytical results, etc.'
+        error_message: '<a href="#link#" class="#class#">Add instrument development</a>'
     objectivity:
         label: 'Quality criteria: Objectivity'
         help: 'This information is recommended for newly developed instruments only. Statement on the objectivity of the method regarding implementation, evaluation, and interpretation through rater/observer agreement.'
+        error_message: '<a href="#link#" class="#class#">Add objectivity</a>'
     reliability:
         label: 'Quality criteria: Instrument reliability'
         help: 'This information is recommended for newly developed instruments only. Information regarding internal consistency, homogeneity, stability, parallel-forms reliability, split-half reliability, retest reliability, inter-rater reliability, etc.'
+        error_message: '<a href="#link#" class="#class#">Add reliability</a>'
     validity:
         label: 'Quality Criteria: Instrument validity'
         help: 'This information is recommended for newly developed instruments only. Information on validity (logical, content, curricular, differential, factor, internal, and external validity, construct validity, concurrent validity or empirical validity (criterion validity) as concurrent and predictive validity. '
+        error_message: '<a href="#link#" class="#class#">Add validity</a>'
     norm_referenced:
         label: 'Quality criteria: norm-referenced'
         help: 'This information is recommended for newly developed instruments only. Make statements on the type of norm values that exist, or alternatively on mean values or comparative values for different samples. Gives details on calibration samples, or rather on the representativeness of the sample used.'
+        error_message: '<a href="#link#" class="#class#">Add norm-referenced information</a>'
 
 measurement_occasion:
     time_of_measurement:
         label: 'Time of measurement'
+        error_message: '<a href="#link#" class="#class#">Add time of measurement</a>'
     intervention:
         label: 'Intervention'
+        error_message: '<a href="#link#" class="#class#">Add intervention</a>'
     position:
         label: 'Position'
+        error_message: '<a href="#link#" class="#class#">Add position</a>'
 
 method_construct:
     name:
         label: 'Construct'
+        error_message: '<a href="#link#" class="#class#">Add construct</a>'
     function:
         label: 'Function'
         placeholder: 'Choose a function'
+        error_message: '<a href="#link#" class="#class#">Add function</a>'
     other_function_description:
         label: 'If other, please describe the function'
+        error_message: '<a href="#link#" class="#class#">Add function description</a>'
 
 method_meta_data_group:
     research_design:
         legend: 'Research Design'
         label: 'State the time dimension of your data collection, whether it is a single or multiple measurement occasion'
+        error_message: '<a href="#link#" class="#class#">Add research design</a> to increase the reusability of your data'
     research_design_description:
         legend: 'Research Design Description'
         label: 'Description of the Longitudinal Study Design'
         help: 'Please provide information on the measurement plan that was applied (e.g. Follow-up, longitudinal analysis, cohort study, sequence model). If applicable differentiate information by group or cohort.'
+        error_message: '<a href="#link#" class="#class#">Add research design description</a> to increase the reusability of your data'
     research_method:
         legend: 'Research method'
         label: 'Choose your type of research method'
+        error_message: '<a href="#link#" class="#class#">Add research method</a> to increase the reusability of your data'
     experimental_details:
+        legend: 'Experimental design details'
         label: 'Further describe the <span class="font-semibold">experimental design</span> of your study'
+        error_message: '<a href="#link#" class="#class#">Further describe the experimental design</a> to increase the reusability of your data'
     non_experimental_details:
+        legend: 'Non-experimental design details'
         label: 'Further describe the <span class="font-semibold">non-experimental design</span> of your study'
+        error_message: '<a href="#link#" class="#class#">Further describe the non-experimental design</a> to increase the reusability of your data'
     survey_instrument_type:
         legend: 'Survey instrument type'
         label: 'Choose the type of survey instrument used'
         placeholder: 'Choose a survey instrument type'
+        error_message: '<a href="#link#" class="#class#">Add survey instrument type</a> to increase the reusability of your data'
     setting:
         legend: 'Setting'
         label: 'Choose your setting'
+        error_message: '<a href="#link#" class="#class#">Add setting</a> to increase the reusability of your data'
     setting_location:
         legend: 'Location'
         label: 'For real-life and natural settings enter the location where your study took place'
+        error_message: '<a href="#link#" class="#class#">Add location</a> to increase the reusability of your data'
     observational_type:
         legend: 'Observational study'
         label: 'Optionally define the observational type of your study'
         placeholder: 'Choose an observational type'
+        error_message: '<a href="#link#" class="#class#">Add observational type</a> to increase the reusability of your data'
     manipulations:
         legend: 'Experimental manipulations, treatments, or interventions'
-        label: 'Provide details of your experimental manipulation(s) including a summary
-          of the instructions. Clearly define your variables (treatments).'
+        label: 'Provide details of your experimental manipulation(s) including a summary of the instructions. Clearly define your variables (treatments).'
+        error_message: '<a href="#link#" class="#class#">Add experimental manipulations, treatments or interventions</a> to increase the reusability of your data'
     experimental_design:
         legend: 'Design'
         label: 'How were participants allocated to the different conditions?'
+        error_message: '<a href="#link#" class="#class#">Add design</a> to increase the reusability of your data'
     control_operations:
         legend: 'Control Operations'
         label: ''
+        error_message: '<a href="#link#" class="#class#">Add control operations</a> to increase the reusability of your data'
     other_control_operations:
+        legend: 'Other control operations'
         label: 'If other, please specify'
+        error_message: '<a href="#link#" class="#class#">Add other control operations</a> to increase the reusability of your data'
     treatment_groups:
         legend: 'Study arms/Treatment groups'
         label: 'A list including all study arms or treatment conditions or (treatment) groups.'
         add: 'Add another treatment group'
+        error_message: '<a href="#link#" class="#class#">Add treatment groups</a> to increase the reusability of your data'
     research_method_description:
         legend: 'Research method description'
         label: 'Please provide a detailed description of the research methodology.'
+        error_message: '<a href="#link#" class="#class#">Add research method description</a> to increase the reusability of your data'
     measurement_occasions:
         legend: 'Measurement occasions'
         label: 'Name of a measurement occasion where data were collected (e.g. t1, baseline, follow-up).'
         add: 'Add another measurement occasion'
         remove: 'Remove Occasion'
+        error_message: '<a href="#link#" class="#class#">Add measurement occasion</a> to increase the reusability of your data'
     constructs:
         legend: 'Constructs'
         label: 'Name all theoretical constructs collected during this study'
         add: 'Add another construct'
         remove: 'Remove Construct'
+        error_message: '<a href="#link#" class="#class#">Add construct</a> to increase the reusability of your data'
     measurement_instruments:
         legend: 'Measurement instruments'
         label: 'Name all measurement instruments used during this study'
         add: 'Add another instrument'
         remove: 'Remove Instrument'
+        error_message: '<a href="#link#" class="#class#">Add measurement instrument</a> to increase the reusability of your data'
 
 sample_meta_data_group:
     participants:
         legend: 'Participants'
         label: 'Describe participants, specifying their pertinent characteristics for this study'
+        error_message: '<a href="#link#" class="#class#">Add participants</a> to increase the reusability of your data'
     population:
         legend: 'Population'
         label: 'Indicate which population you were generally interested in, i.e., the group of persons or other elements that were the object of research and to which any analytic results refer'
         add: 'Add another population'
+        error_message: '<a href="#link#" class="#class#">Add population</a> to increase the reusability of your data'
     inclusion_criteria:
         legend: 'Inclusion criteria'
         label: 'State inclusion criteria for participants'
         add: 'Add another inclusion criteria'
+        error_message: '<a href="#link#" class="#class#">Add inclusion criteria</a> to increase the reusability of your data'
     exclusion_criteria:
         legend: 'Exclusion criteria'
         label: "Describe all criteria that led to the exclusion of a participant's data (e.g., attention checks, performance criteria, non-responding in physiological measures, incomplete data). Clarify whether a participant who was an outlier in one variable was only excluded from the analyses that involved that specific variable, or if they were excluded from all tests."
         add: 'Add another exclusion criteria'
+        error_message: '<a href="#link#" class="#class#">Add exclusion criteria</a> to increase the reusability of your data'
     sampling_method:
         legend: 'Sampling method'
         label: 'Provide remarks on persons or institutions responsible for data collection.'
+        error_message: '<a href="#link#" class="#class#">Add sampling method</a> to increase the reusability of your data'
     sampling_method_other_description:
+        legend: 'Sampling method description'
         label: 'If other, please describe the method'
+        error_message: '<a href="#link#" class="#class#">Add sampling method description</a> to increase the reusability of your data'
     recruiting:
         legend: 'Recruiting'
         label: 'The procedure for the recruitment of units.'
+        error_message: '<a href="#link#" class="#class#">Add recruiting</a> to increase the reusability of your data'
     sample_size:
         legend: 'Sample size'
         label: 'Provide the achieved sample size as total number of cases N or as number of cases in subsamples n'
+        error_message: '<a href="#link#" class="#class#">Add sample size</a> to increase the reusability of your data'
     power_analysis:
         legend: 'Power analysis (statistical)'
         label: 'If applicable: Information on power analysis used for the determination of sample size before the study started. This information may include the formula and software used for determining the target sample size. If applicable, refer to corresponding documents under project materials.'
+        error_message: '<a href="#link#" class="#class#">Add power analysis</a> to increase the reusability of your data'
     intended_sample_size:
         legend: 'Intended sample size'
         label: 'If applicable: Provide the intended sample size as total number of cases N or as number of cases in subsamples n'
+        error_message: '<a href="#link#" class="#class#">Add intended sample size</a> to increase the reusability of your data'
     unit_of_analysis:
         legend: 'Unit of analysis'
         label: 'Specify the unit of analysis'
+        error_message: '<a href="#link#" class="#class#">Add unit of analysis</a>'
     unit_of_analysis_other_description:
+        legend: 'Unit of analysis description'
         label: 'If other, please describe the unit of analysis'
+        error_message: '<a href="#link#" class="#class#">Add unit of analysis description</a>'
     multilevel_structure:
         legend: 'Multilevel structure'
         label: 'If your data is clustered into multiple levels (e.g., students nested within classrooms, employees nested within organizations), provide more information about the data structure.'
+        error_message: '<a href="#link#" class="#class#">Add multilevel structure</a>'
     sex:
         legend: 'Sex'
         label: 'Describe the sex distribution of the study sample'
+        error_message: '<a href="#link#" class="#class#">Add sex distribution</a>'
     age:
         legend: 'Age'
         label: 'Describe the age range of the study sample'
+        error_message: '<a href="#link#" class="#class#">Add age distribution</a>'
     special_groups:
         legend: 'Special groups'
         label: 'Describe other important variables and their distribution (e.g. socioeconomic status, psychopathology)'
+        error_message: '<a href="#link#" class="#class#">Add special groups</a>'
     country:
         legend: 'Geographic origin of the sample'
         label: 'Country'
+        error_message: '<a href="#link#" class="#class#">Add country of origin</a>'
     city:
         legend: 'City'
         label: 'City'
+        error_message: '<a href="#link#" class="#class#">Add city of origin</a>'
     region:
         legend: 'Region'
         label: 'Region'
+        error_message: '<a href="#link#" class="#class#">Add region of origin</a>'
     missing_values:
         legend: 'Frequency of missing data'
         label: 'Provide information on the frequency or percentages of missing data in your data'
+        error_message: '<a href="#link#" class="#class#">Add missing data information</a>'
     return_dropout:
         legend: 'Return/dropout'
         label: 'Provide information on data return (e.g., response rate) and drop-out rates (i.e., participants that were recruited but withdrew before the study concluded).'
+        error_message: '<a href="#link#" class="#class#">Add return/dropout information</a>'
 
 theory_meta_data_group:
     objectives:
         legend: 'Objectives'
         label: 'Outline the a) objectives and b) research questions that informed the methodology and analyses described below.'
+        add: 'Add another objective'
+        error_message: "<a href='#link#'' class='#class#''>Add objectives</a> to increase the reusability of your data."
     hypotheses:
         legend: 'Hypotheses'
         label: 'State the hypotheses examined, indicating which were prespecified.'
+        add: 'Add another hypothesis'
+        error_message: "<a href='#link#'' class='#class#''>Add hypotheses</a> to increase the reusability of your data."
     theories:
         legend: 'Relevant theories'
         label: 'Provide a concise overview that justified the research questions/hypotheses.'
+        add: 'Add another theory'
+        error_message: "<a href='#link#'' class='#class#''>Add theories</a> to increase the reusability of your data."

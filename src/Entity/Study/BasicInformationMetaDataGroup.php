@@ -3,13 +3,9 @@
 namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
-use App\Entity\Constant\ReviewDataDictionary;
 use App\Enum\Study\DataStatus;
 use App\Enum\Study\StudyRelation;
 use App\Repository\BasicInformationRepository;
-use App\Service\Review\Reviewable;
-use App\Service\Review\ReviewDataCollectable;
-use App\Service\Review\ReviewValidator;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -19,7 +15,7 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Table(name: 'experiment_basic')]
 #[ORM\Entity(repositoryClass: BasicInformationRepository::class)]
-class BasicInformationMetaDataGroup extends UuidEntity implements Reviewable
+class BasicInformationMetaDataGroup extends UuidEntity
 {
     /**
      * One basic Information section has One Experiment.
@@ -100,27 +96,6 @@ class BasicInformationMetaDataGroup extends UuidEntity implements Reviewable
     public function __construct()
     {
         $this->creators = new ArrayCollection();
-    }
-
-    public function getReviewCollection(): array
-    {
-        return [
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::TITLE,
-                [$this->getTitle()],
-                ReviewValidator::validateSingleValue($this->getTitle())
-            ),
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::DESCRIPTION,
-                [$this->getDescription()],
-                ReviewValidator::validateSingleValue($this->getDescription())
-            ),
-            ReviewDataCollectable::createFrom(
-                ReviewDataDictionary::RELATED_PUBS,
-                $this->getRelatedPublications(),
-                ReviewValidator::validateArrayValues($this->getRelatedPublications())
-            ),
-        ];
     }
 
     public function getExperiment(): Experiment

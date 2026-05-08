@@ -2,8 +2,10 @@
 
 namespace App\Enum\Study\Dictionary;
 
+use App\Entity\Dto\ReviewDataDto;
 use App\Enum\DictionaryEnum;
 use App\Enum\DictionaryInterface;
+use App\Enum\ErrorType;
 use App\Enum\ExtendedEnum;
 
 enum BasicInformationDictionary: string implements DictionaryInterface
@@ -87,6 +89,25 @@ enum BasicInformationDictionary: string implements DictionaryInterface
             self::CONFLICTS_OF_INTEREST => 'basic.conflicts_of_interest',
             self::CREATORS => 'basic.creators',
             default => null,
+        };
+    }
+
+    public function reviewData(): ReviewDataDto
+    {
+        return match ($this) {
+            self::TITLE => new ReviewDataDto('basic_information_meta_data_group.title.error_message', ErrorType::MANDATORY),
+            self::TITLE_TRANSLATED => new ReviewDataDto('basic_information_meta_data_group.title_translated.error_message', ErrorType::RECOMMENDED),
+            self::STUDY_ID => new ReviewDataDto('basic_information_meta_data_group.study_id.error_message', ErrorType::OPTIONAL),
+            self::DESCRIPTION => new ReviewDataDto('basic_information_meta_data_group.description.error_message', ErrorType::MANDATORY),
+            self::DESCRIPTION_TRANSLATED => new ReviewDataDto('basic_information_meta_data_group.description_translated.error_message', ErrorType::RECOMMENDED),
+            self::DATA_STATUS => new ReviewDataDto('basic_information_meta_data_group.data_status.error_message', ErrorType::RECOMMENDED),
+            self::REUSE_POTENTIAL => new ReviewDataDto('basic_information_meta_data_group.reuse_potential.error_message', ErrorType::RECOMMENDED),
+            self::STUDY_RELATION => new ReviewDataDto('basic_information_meta_data_group.study_relation.error_message', ErrorType::OPTIONAL),
+            self::STUDY_RELATION_OTHER_DESCRIPTION => new ReviewDataDto('basic_information_meta_data_group.study_relation_other_description.error_message', ErrorType::OPTIONAL),
+            self::USED_SOFTWARES => new ReviewDataDto('basic_information_meta_data_group.used_softwares.error_message', ErrorType::OPTIONAL),
+            self::RELATED_PUBLICATIONS => new ReviewDataDto('basic_information_meta_data_group.related_publications.error_message', ErrorType::OPTIONAL),
+            self::CONFLICTS_OF_INTEREST => new ReviewDataDto('basic_information_meta_data_group.conflicts_of_interest.error_message', ErrorType::MANDATORY),
+            self::CREATORS => new ReviewDataDto('basic_information_meta_data_group.creators.error_message', ErrorType::MANDATORY),
         };
     }
 }

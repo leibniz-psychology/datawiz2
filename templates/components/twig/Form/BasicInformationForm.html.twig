@@ -48,7 +48,7 @@
             collection="{{ form.usedSoftwares }}"
             add_action="addUsedSoftware"
             remove_action="removeUsedSoftware"
-            add_label="{{ 'input.used_softwares.add'|trans }}"
+            add_label="{{ 'basic_information_meta_data_group.used_softwares.add'|trans([], 'forms') }}"
         />
     </twig:Form:FormCard>
 
@@ -57,7 +57,7 @@
             collection="{{ form.relatedPublications }}"
             add_action="addRelatedPublication"
             remove_action="removeRelatedPublication"
-            add_label="{{ 'input.related_publications.add'|trans }}"
+            add_label="{{ 'basic_information_meta_data_group.related_publications.add'|trans([], 'forms') }}"
         />
     </twig:Form:FormCard>
 
@@ -66,7 +66,7 @@
             collection="{{ form.conflictsOfInterest }}"
             add_action="addConflictOfInterest"
             remove_action="removeConflictOfInterest"
-            add_label="{{ 'input.conflicts_of_interest.add'|trans }}"
+            add_label="{{ 'basic_information_meta_data_group.conflicts_of_interest.add'|trans([], 'forms') }}"
         />
     </twig:Form:FormCard>
 
@@ -82,7 +82,7 @@
                                 data-live-action-param="removeCreator"
                                 data-live-index-param="{{ key }}"
                                 class="Creator-RemoveButton">
-                            {{ 'input.creator.remove'|trans }}
+                            {{ 'basic_information_meta_data_group.creators.remove'|trans([], 'forms') }}
                         </button>
 
                         <div class="px-4 md:grid md:w-full md:grid-cols-2 md:gap-x-2">
@@ -108,7 +108,7 @@
                                                 data-live-action-param="removeCreditRole"
                                                 data-live-creatorindex-param="{{ key }}"
                                                 data-live-roleindex-param="{{ key2 }}"
-                                                title="{{ 'input.creator.credit.remove'|trans }}">
+                                                title="{{ 'creator_meta_data_group.credit_roles.remove'|trans([], 'forms') }}">
                                             {{ include('components/icons/delete.svg') }}
                                         </button>
                                     </li>
@@ -123,7 +123,7 @@
                                     data-live-creatorindex-param="{{ key }}"
                                     data-live-action-param="addCreditRole">
                                 {{ include('components/icons/add.svg') }}
-                                {{ 'input.creator.credit.add'|trans }}
+                                {{ 'creator_meta_data_group.credit_roles.add'|trans([], 'forms') }}
                             </button>
                         </div>
                     </li>
@@ -135,7 +135,7 @@
                     data-action="live#action"
                     data-live-action-param="addCreator">
                 {{ include('components/icons/add.svg') }}
-                {{ 'input.creator.add'|trans }}
+                {{ 'basic_information_meta_data_group.creators.add'|trans([], 'forms') }}
             </button>
         </div>
         {% do form.creators.setRendered %}

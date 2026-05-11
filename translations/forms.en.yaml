@@ -76,11 +76,12 @@ creator_meta_data_group:
     affiliation:
         label: 'Affiliation'
         error_message: '<a href="#link#" class="#class#">Add affiliation</a>'
-    credit_roles:
-        label: 'Roles'
-        add: 'Add another role'
-        remove: 'Remove role'
-        error_message: '<a href="#link#" class="#class#">Add a credit role</a>'
+    responsibilities:
+        label: 'Responsibilities'
+        error_message: '<a href="#link#" class="#class#">Add a role</a>'
+    responsibilities_other_description:
+        label: 'If other, please describe the role'
+        error_message: '<a href="#link#" class="#class#">Add other role description</a>'
 
 ethics_meta_data_group:
     ethical_review:

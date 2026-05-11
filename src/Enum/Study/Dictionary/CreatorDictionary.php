@@ -18,7 +18,8 @@ enum CreatorDictionary: string implements DictionaryInterface
     case EMAIL = 'email';
     case ORCID = 'orcid';
     case AFFILIATION = 'affiliation';
-    case CREDIT_ROLES = 'creditRoles';
+    case RESPONSIBILITIES = 'responsibilities';
+    case RESPONSIBILITIES_OTHER_DESCRIPTION = 'responsibilitiesOtherDescription';
 
     public function legend(): string
     {
@@ -28,7 +29,8 @@ enum CreatorDictionary: string implements DictionaryInterface
             self::EMAIL => 'creator_meta_data_group.email.label',
             self::ORCID => 'creator_meta_data_group.orcid.label',
             self::AFFILIATION => 'creator_meta_data_group.affiliation.label',
-            self::CREDIT_ROLES => 'creator_meta_data_group.credit_roles.label',
+            self::RESPONSIBILITIES => 'creator_meta_data_group.responsibilities.label',
+            self::RESPONSIBILITIES_OTHER_DESCRIPTION => 'creator_meta_data_group.responsibilities_other_description.label',
         };
     }
 
@@ -40,7 +42,8 @@ enum CreatorDictionary: string implements DictionaryInterface
             self::EMAIL => 'creator_meta_data_group.email.label',
             self::ORCID => 'creator_meta_data_group.orcid.label',
             self::AFFILIATION => 'creator_meta_data_group.affiliation.label',
-            self::CREDIT_ROLES => 'creator_meta_data_group.credit_roles.label',
+            self::RESPONSIBILITIES => 'creator_meta_data_group.responsibilities.label',
+            self::RESPONSIBILITIES_OTHER_DESCRIPTION => 'creator_meta_data_group.responsibilities_other_description.label',
         };
     }
 
@@ -52,7 +55,8 @@ enum CreatorDictionary: string implements DictionaryInterface
             self::EMAIL => new ReviewDataDto('creator_meta_data_group.email.error_message', ErrorType::RECOMMENDED),
             self::ORCID => new ReviewDataDto('creator_meta_data_group.orcid.error_message', ErrorType::OPTIONAL),
             self::AFFILIATION => new ReviewDataDto('creator_meta_data_group.affiliation.error_message', ErrorType::MANDATORY),
-            self::CREDIT_ROLES => new ReviewDataDto('creator_meta_data_group.credit_roles.error_message', ErrorType::MANDATORY),
+            self::RESPONSIBILITIES => new ReviewDataDto('creator_meta_data_group.responsibilities.error_message', ErrorType::MANDATORY),
+            self::RESPONSIBILITIES_OTHER_DESCRIPTION => new ReviewDataDto('creator_meta_data_group.responsibilities_other_description.error_message', ErrorType::OPTIONAL),
         };
     }
 }

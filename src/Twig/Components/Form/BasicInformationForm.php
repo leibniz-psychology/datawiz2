@@ -97,18 +97,6 @@ class BasicInformationForm extends AbstractController
         $this->formValues['creators'] = array_values($this->formValues['creators']);
     }
 
-    #[LiveAction]
-    public function addCreditRole(#[LiveArg] int $creatorindex): void
-    {
-        $this->formValues['creators'][$creatorindex]['creditRoles'][] = [];
-    }
-
-    #[LiveAction]
-    public function removeCreditRole(#[LiveArg] int $creatorindex, #[LiveArg] int $roleindex): void
-    {
-        unset($this->formValues['creators'][$creatorindex]['creditRoles'][$roleindex]);
-    }
-
     protected function instantiateForm(): FormInterface
     {
         return $this->createForm(BasicInformationType::class, $this->initialFormData);

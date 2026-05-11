@@ -3,10 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Study\CreatorMetaDataGroup;
-use App\Enum\Study\CreatorCreditRole;
+use App\Enum\Study\CreatorResponsibility;
 use App\Enum\Study\Dictionary\CreatorDictionary;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -38,22 +37,21 @@ class CreatorType extends AbstractType
                 'required' => false,
                 'label' => CreatorDictionary::AFFILIATION->label(),
             ])
-            ->add(CreatorDictionary::CREDIT_ROLES->value, CollectionType::class, [
-                'prototype' => true,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'label' => CreatorDictionary::CREDIT_ROLES->label(),
+            ->add(CreatorDictionary::RESPONSIBILITIES->value, EnumType::class, [
                 'required' => false,
-                'entry_type' => EnumType::class,
-                'delete_empty' => fn (?CreatorCreditRole $role = null) => empty($role),
-                'entry_options' => [
-                    'class' => CreatorCreditRole::class,
-                    'placeholder' => 'creator_credit_role.placeholder',
-                    'required' => true,
-                    'choice_label' => fn (CreatorCreditRole $role) => $role->label(),
-                    'translation_domain' => 'enums',
-                ],
-            ]);
+                'placeholder' => false,
+                'class' => CreatorResponsibility::class,
+                'expanded' => true,
+                'multiple' => true,
+                'label' => CreatorDictionary::RESPONSIBILITIES->label(),
+                'choice_label' => fn (CreatorResponsibility $details) => $details->label(),
+                'choice_translation_domain' => 'enums',
+            ])
+            ->add(CreatorDictionary::RESPONSIBILITIES_OTHER_DESCRIPTION->value, TextType::class, [
+                'required' => false,
+                'label' => CreatorDictionary::RESPONSIBILITIES_OTHER_DESCRIPTION->label(),
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

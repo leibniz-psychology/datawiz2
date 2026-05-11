@@ -26,21 +26,12 @@ control_operations:
     reverse_counterbalancing: 'Reverse counterbalancing (ABBA-counterbalancing)'
     other: 'Other'
 
-creator_credit_role:
-    conceptualization: 'Conceptualization'
-    data_curation: 'Data curation'
-    formal_analysis: 'Formal Analysis'
-    funding_acquisition: 'Funding acquisition'
-    investigation: 'Investigation'
-    methodology: 'Methodology'
-    project_administration: 'Project administration'
-    resources: 'Resources'
-    software: 'Software'
-    supervision: 'Supervision'
-    validation: 'Validation'
-    visualization: 'Visualization'
-    writing_original_draft: 'Writing - original draft'
-    writing_review_editing: 'Writing - review & editing'
+creator_responsibility:
+    principal_investigator: 'Principal investigator/project lead'
+    scientific_contribution: 'Scientific contribution'
+    data_collection: 'Data collection'
+    data_processing: 'Data processing'
+    other: 'Other role'
 
     placeholder: 'Please select a role'
 

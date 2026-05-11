@@ -92,39 +92,14 @@
                             {{ form_row(creator.orcid) }}
                             <span class="col-span-2">
                                 {{ form_row(creator.affiliation) }}
+                                {{ form_row(creator.responsibilities) }}
+                                {% if enum('App\\Enum\\Study\\CreatorResponsibility').OTHER.value in creator.responsibilities.vars.value %}
+                                    {{ form_row(creator.responsibilitiesOtherDescription) }}
+                                {% else %}
+                                    {% do creator.responsibilitiesOtherDescription.setRendered %}
+                                {% endif %}
                             </span>
 
-                        </div>
-
-                        <div class="px-4 col-span-2 mt-2.5">
-                            {{ form_label(creator.creditRoles) }}
-                            <ul class="xl:grid xl:grid-cols-2 xl:gap-x-3">
-                                {% for key2, credit_role in creator.creditRoles %}
-                                    <li class="flex mt-2 items-center">
-                                        {{ form_widget(credit_role) }}
-                                        <button type="button"
-                                                class="!rounded-l-none Button_tertiary_danger Button_fieldSize"
-                                                data-action="live#action"
-                                                data-live-action-param="removeCreditRole"
-                                                data-live-creatorindex-param="{{ key }}"
-                                                data-live-roleindex-param="{{ key2 }}"
-                                                title="{{ 'creator_meta_data_group.credit_roles.remove'|trans([], 'forms') }}">
-                                            {{ include('components/icons/delete.svg') }}
-                                        </button>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-
-                            {% do creator.creditRoles.setRendered() %}
-
-                            <button type="button"
-                                    class="mt-2 Button_secondary_act Button_fieldSize"
-                                    data-action="live#action"
-                                    data-live-creatorindex-param="{{ key }}"
-                                    data-live-action-param="addCreditRole">
-                                {{ include('components/icons/add.svg') }}
-                                {{ 'creator_meta_data_group.credit_roles.add'|trans([], 'forms') }}
-                            </button>
                         </div>
                     </li>
                 {% endfor %}

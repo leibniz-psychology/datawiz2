@@ -3,7 +3,8 @@
 namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
-use App\Enum\Study\CreatorCreditRole;
+use App\Enum\Study\CreatorResponsibility;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
@@ -15,39 +16,54 @@ class CreatorMetaDataGroup extends UuidEntity
     #[ORM\ManyToOne(inversedBy: 'creators')]
     #[ORM\JoinColumn(name: 'basic_id', referencedColumnName: 'id')]
     protected ?BasicInformationMetaDataGroup $basicInformation = null;
-    #[ORM\Column(type: 'text', length: 100, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, length: 100, nullable: true)]
     #[SerializedName('given_name')]
     #[Groups('study')]
     private ?string $givenName = null;
 
-    #[ORM\Column(type: 'text', length: 100, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, length: 100, nullable: true)]
     #[SerializedName('family_name')]
     #[Groups('study')]
     private ?string $familyName = null;
 
-    #[ORM\Column(type: 'text', length: 250, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, length: 250, nullable: true)]
     #[SerializedName('email')]
     #[Groups('study')]
     private ?string $email = null;
 
-    #[ORM\Column(type: 'text', length: 250, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, length: 250, nullable: true)]
     #[SerializedName('orcid')]
     #[Groups('study')]
     private ?string $orcid = null;
 
-    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, length: 1500, nullable: true)]
     #[SerializedName('affiliation')]
     #[Groups('study')]
     private ?string $affiliation = null;
 
-    #[ORM\Column(nullable: true, enumType: CreatorCreditRole::class)]
-    #[SerializedName('roles')]
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true, enumType: CreatorResponsibility::class)]
+    #[SerializedName('responsibilities')]
     #[Groups('study')]
-    private ?array $creditRoles = null;
+    private ?array $responsibilities = null;
+
+    #[ORM\Column(nullable: true)]
+    #[SerializedName('responsibilities_other_description')]
+    #[Groups('study')]
+    private ?string $responsibilitiesOtherDescription = null;
 
     public function isEmpty(): bool
     {
         return empty($this->getFamilyName()) && empty($this->getGivenName()) && empty($this->getEmail());
+    }
+
+    public function getBasicInformation(): BasicInformationMetaDataGroup
+    {
+        return $this->basicInformation;
+    }
+
+    public function setBasicInformation(BasicInformationMetaDataGroup $basicInformation): void
+    {
+        $this->basicInformation = $basicInformation;
     }
 
     public function getGivenName(): ?string
@@ -100,27 +116,23 @@ class CreatorMetaDataGroup extends UuidEntity
         $this->affiliation = $affiliation;
     }
 
-    public function getCreditRoles(): ?array
+    public function getResponsibilities(): ?array
     {
-        if ($this->creditRoles === null) {
-            $this->creditRoles = [null];
-        }
-
-        return $this->creditRoles;
+        return $this->responsibilities;
     }
 
-    public function setCreditRoles(?array $creditRoles): void
+    public function setResponsibilities(?array $responsibilities): void
     {
-        $this->creditRoles = $creditRoles == null ? null : array_values($creditRoles);
+        $this->responsibilities = $responsibilities == null ? null : array_values($responsibilities);
     }
 
-    public function getBasicInformation(): BasicInformationMetaDataGroup
+    public function getResponsibilitiesOtherDescription(): ?string
     {
-        return $this->basicInformation;
+        return $this->responsibilitiesOtherDescription;
     }
 
-    public function setBasicInformation(BasicInformationMetaDataGroup $basicInformation): void
+    public function setResponsibilitiesOtherDescription(?string $responsibilitiesOtherDescription): void
     {
-        $this->basicInformation = $basicInformation;
+        $this->responsibilitiesOtherDescription = $responsibilitiesOtherDescription;
     }
 }

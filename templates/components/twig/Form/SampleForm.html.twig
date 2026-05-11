@@ -41,11 +41,11 @@
 
     <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').SAMPLING_METHOD }}">
         <twig:Form:MultilineChoiceForm form="{{ form.samplingMethod }}"/>
-        {{ form_row(form.samplingMethodOtherDescription, {
-            'attr': {
-                'disabled': enum('App\\Enum\\Study\\SamplingMethod').OTHER.value != form.samplingMethod.vars.value,
-            }
-        }) }}
+        {% if form.samplingMethod.vars.value == enum('App\\Enum\\Study\\SamplingMethod').OTHER.value %}
+            {{ form_row(form.samplingMethodOtherDescription) }}
+        {% else %}
+            {% do form.samplingMethodOtherDescription.setRendered %}
+        {% endif %}
     </twig:Form:FormCard>
 
     <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').RECRUITING }}">
@@ -66,11 +66,11 @@
 
     <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').UNIT_OF_ANALYSIS }}">
         {{ form_row(form.unitOfAnalysis) }}
-        {{ form_row(form.unitOfAnalysisOtherDescription, {
-            'attr': {
-                'disabled': enum('App\\Enum\\Study\\SampleAnalysisUnit').OTHER.value != form.unitOfAnalysis.vars.value,
-            }
-        }) }}
+        {% if form.unitOfAnalysis.vars.value == enum('App\\Enum\\Study\\SampleAnalysisUnit').OTHER.value %}
+            {{ form_row(form.unitOfAnalysisOtherDescription) }}
+        {% else %}
+            {% do form.unitOfAnalysisOtherDescription.setRendered %}
+        {% endif %}
     </twig:Form:FormCard>
 
     <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').MULTILEVEL_STRUCTURE }}">

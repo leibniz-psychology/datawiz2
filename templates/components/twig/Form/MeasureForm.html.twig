@@ -14,11 +14,11 @@
 
     <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').COLLECTION_MODE }}">
         {{ form_row(form.collectionMode) }}
-        {{ form_row(form.collectionModeOtherDescription, {
-            'attr': {
-                'disabled': enum('App\\Enum\\Study\\CollectionMode').OTHER.value not in form.collectionMode.vars.value,
-            }
-        }) }}
+        {% if enum('App\\Enum\\Study\\CollectionMode').OTHER.value in form.collectionMode.vars.value  %}
+            {{ form_row(form.collectionModeOtherDescription) }}
+        {% else %}
+            {% do form.collectionModeOtherDescription.setRendered %}
+        {% endif %}
     </twig:Form:FormCard>
 
     {% if enum('App\\Enum\\Study\\CollectionMode').SPECIAL_APPARATUS.value in form.collectionMode.vars.value %}
@@ -36,20 +36,20 @@
 
     <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').ORIGINAL_RECORD_TYPE }}">
         {{ form_row(form.originalRecordType) }}
-        {{ form_row(form.originalRecordTypeOtherDescription, {
-            'attr': {
-                'disabled': enum('App\\Enum\\Study\\RecordType').OTHER.value not in form.originalRecordType.vars.value,
-            }
-        }) }}
+        {% if enum('App\\Enum\\Study\\RecordType').OTHER.value in form.originalRecordType.vars.value %}
+            {{ form_row(form.originalRecordTypeOtherDescription) }}
+        {% else %}
+            {% do form.originalRecordTypeOtherDescription.setRendered %}
+        {% endif %}
     </twig:Form:FormCard>
 
     <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').RAW_DATA_DIGITIZATION }}">
         {{ form_row(form.rawDataDigitization) }}
-        {{ form_row(form.rawDataDigitizationDescription, {
-            'attr': {
-                'disabled': enum('App\\Enum\\Study\\DataDigitization').COMPLEX.value != form.rawDataDigitization.vars.value,
-            }
-        }) }}
+        {% if form.rawDataDigitization.vars.value == enum('App\\Enum\\Study\\DataDigitization').COMPLEX.value %}
+            {{ form_row(form.rawDataDigitizationDescription) }}
+        {% else %}
+            {% do form.rawDataDigitizationDescription.setRendered %}
+        {% endif %}
     </twig:Form:FormCard>
 
     <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').SPECIAL_CIRCUMSTANCES }}">

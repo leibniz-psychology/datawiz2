@@ -10,11 +10,11 @@
     <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').RESEARCH_DESIGN }}">
         <twig:Form:MultilineChoiceForm form="{{ form.researchDesign }}"/>
 
-        {{ form_row(form.researchDesignDescription, {
-            'attr': {
-                'disabled': form.researchDesign.vars.value != enum('App\\Enum\\Study\\ResearchDesign').LONGITUDINAL.value,
-            }
-        }) }}
+        {% if form.researchDesign.vars.value == enum('App\\Enum\\Study\\ResearchDesign').LONGITUDINAL.value %}
+            {{ form_row(form.researchDesignDescription) }}
+        {% else %}
+            {% do form.researchDesignDescription.setRendered %}
+        {% endif %}
     </twig:Form:FormCard>
 
     <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').RESEARCH_METHOD }}">
@@ -57,19 +57,19 @@
                             </div>
                             {% if choice.vars.value == enum('App\\Enum\\Study\\NonExperimentalDetails').OBSERVATIONAL_STUDY.value %}
                                 <div class="ml-6">
-                                    {{ form_row(form.observationalType, {
-                                        'attr': {
-                                            'disabled': not choice.vars.checked,
-                                        }
-                                    }) }}
+                                    {% if choice.vars.checked %}
+                                        {{ form_row(form.observationalType) }}
+                                    {% else %}
+                                        {% do form.observationalType.setRendered %}
+                                    {% endif %}
                                 </div>
                             {% elseif choice.vars.value == enum('App\\Enum\\Study\\NonExperimentalDetails').SURVEY_RESEARCH.value %}
                                 <div class="ml-6">
-                                    {{ form_row(form.surveyInstrumentType, {
-                                        'attr': {
-                                            'disabled': not choice.vars.checked,
-                                        }
-                                    }) }}
+                                    {% if choice.vars.checked %}
+                                        {{ form_row(form.surveyInstrumentType) }}
+                                    {% else %}
+                                        {% do form.surveyInstrumentType.setRendered %}
+                                    {% endif %}
                                 </div>
                             {% endif %}
                         {% endfor -%}
@@ -89,11 +89,11 @@
     <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').SETTING }}">
         <twig:Form:MultilineChoiceForm form="{{ form.setting }}"/>
 
-        {{ form_row(form.settingLocation, {
-            'attr': {
-                'disabled': form.setting.vars.value == enum('App\\Enum\\Study\\StudySetting').ARTIFICIAL.value,
-            }
-        }) }}
+        {% if form.setting.vars.value != enum('App\\Enum\\Study\\StudySetting').ARTIFICIAL.value %}
+            {{ form_row(form.settingLocation) }}
+        {% else %}
+            {% do form.settingLocation.setRendered %}
+        {% endif %}
     </twig:Form:FormCard>
 
     {% if research_method == enum('App\\Enum\\Study\\ResearchMethod').EXPERIMENTAL.value %}
@@ -108,11 +108,11 @@
         <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').CONTROL_OPERATIONS }}">
             <twig:Form:MultilineChoiceForm form="{{ form.controlOperations }}"/>
 
-            {{ form_row(form.otherControlOperations, {
-                'attr': {
-                    'disabled': form.controlOperations.vars.value != enum('App\\Enum\\Study\\ControlOperations').OTHER.value,
-                }
-            }) }}
+            {% if form.controlOperations.vars.value == enum('App\\Enum\\Study\\ControlOperations').OTHER.value %}
+                {{ form_row(form.otherControlOperations) }}
+            {% else %}
+                {% do form.otherControlOperations.setRendered %}
+            {% endif %}
         </twig:Form:FormCard>
 
         <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').TREATMENT_GROUPS }}">
@@ -202,11 +202,11 @@
                             </span>
                             {{ form_row(construct.constructFunction) }}
                             <span class="col-span-4">
-                                {{ form_row(construct.otherFunctionDescription, {
-                                    'attr': {
-                                        'disabled': construct.constructFunction.vars.value != enum('App\\Enum\\Study\\ConstructFunction').OTHER.value,
-                                    }
-                                }) }}
+                                {% if construct.constructFunction.vars.value == enum('App\\Enum\\Study\\ConstructFunction').OTHER.value %}
+                                    {{ form_row(construct.otherFunctionDescription) }}
+                                {% else %}
+                                    {% do construct.otherFunctionDescription.setRendered %}
+                                {% endif %}
                             </span>
                         </div>
                     </li>

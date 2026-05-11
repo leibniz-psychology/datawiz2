@@ -27,20 +27,20 @@
 
     <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').DATA_STATUS }}">
         {{ form_row(form.dataStatus) }}
-        {{ form_row(form.reusePotentialOfDataSubset, {
-            'attr': {
-                'disabled': form.dataStatus.vars.value != enum('App\\Enum\\Study\\DataStatus').SUBSET.value
-            }
-        }) }}
+        {% if form.dataStatus.vars.value == enum('App\\Enum\\Study\\DataStatus').SUBSET.value %}
+            {{ form_row(form.reusePotentialOfDataSubset) }}
+        {% else %}
+            {% do form.reusePotentialOfDataSubset.setRendered %}
+        {% endif %}
     </twig:Form:FormCard>
 
     <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').STUDY_RELATION }}">
         {{ form_row(form.studyRelation) }}
-        {{ form_row(form.studyRelationOtherDescription, {
-            'attr': {
-                'disabled': form.studyRelation.vars.value != enum('App\\Enum\\Study\\StudyRelation').OTHER.value
-            }
-        }) }}
+        {% if form.studyRelation.vars.value == enum('App\\Enum\\Study\\StudyRelation').OTHER.value %}
+            {{ form_row(form.studyRelationOtherDescription) }}
+        {% else %}
+            {% do form.studyRelationOtherDescription.setRendered %}
+        {% endif %}
     </twig:Form:FormCard>
 
     <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').USED_SOFTWARES }}">

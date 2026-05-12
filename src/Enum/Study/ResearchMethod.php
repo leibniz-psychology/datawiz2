@@ -10,14 +10,14 @@ enum ResearchMethod: string implements ExtendedEnumInterface
     use ExtendedEnum;
 
     case EXPERIMENTAL = 'Experimental';
-    case NON_EXPERIMENTAL = 'Non-experimental';
+    case SURVEY = 'Survey';
     case TEST_DEVELOPMENT = 'Test development';
 
     public function label(): string
     {
         return match ($this) {
             self::EXPERIMENTAL => 'research_method.experimental',
-            self::NON_EXPERIMENTAL => 'research_method.non_experimental',
+            self::SURVEY => 'research_method.survey',
             self::TEST_DEVELOPMENT => 'research_method.test_development',
         };
     }
@@ -26,7 +26,7 @@ enum ResearchMethod: string implements ExtendedEnumInterface
     {
         return match ($this) {
             self::EXPERIMENTAL => 'research_method.extended.experimental',
-            self::NON_EXPERIMENTAL => 'research_method.extended.non_experimental',
+            self::SURVEY => 'research_method.extended.non_experimental',
             self::TEST_DEVELOPMENT => 'research_method.extended.test_development',
         };
     }

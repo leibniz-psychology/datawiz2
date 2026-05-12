@@ -8,7 +8,6 @@ use App\Enum\Study\DataDigitization;
 use App\Enum\Study\Dictionary\MeasureDictionary;
 use App\Enum\Study\RecordType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -42,19 +41,12 @@ class MeasureType extends AbstractType
                 'choice_label' => fn (CollectionMode $details) => $details->label(),
                 'choice_translation_domain' => 'enums',
             ])
-            ->add(MeasureDictionary::APPARATUS->value, CollectionType::class, [
+            ->add(MeasureDictionary::APPARATUS->value, TextareaType::class, [
                 'required' => false,
-                'entry_type' => TextareaType::class,
-                'entry_options' => [
-                    'label' => false,
-                    'attr' => [
-                        'rows' => '3',
-                    ],
-                ],
-                'allow_add' => true,
-                'prototype' => true,
-                'allow_delete' => true,
                 'label' => MeasureDictionary::APPARATUS->label(),
+                'attr' => [
+                    'rows' => '3',
+                ],
             ])
             ->add(MeasureDictionary::COLLECTION_MODE_OTHER_DESCRIPTION->value, TextareaType::class, [
                 'required' => false,

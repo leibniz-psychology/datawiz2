@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Study\MeasurementInstrument;
 use App\Enum\Study\Dictionary\MeasurementInstrumentDictionary;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,6 +31,10 @@ class MeasurementInstrumentType extends AbstractType
                 'attr' => [
                     'rows' => '3',
                 ],
+            ])
+            ->add(MeasurementInstrumentDictionary::NEWLY_DEVELOPED->value, CheckboxType::class, [
+                'required' => false,
+                'label' => MeasurementInstrumentDictionary::NEWLY_DEVELOPED->label(),
             ])
             ->add(MeasurementInstrumentDictionary::ABSTRACT->value, TextareaType::class, [
                 'required' => false,

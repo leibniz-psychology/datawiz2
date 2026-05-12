@@ -89,26 +89,55 @@ ethics_meta_data_group:
         label: 'State whether you obtained approval by an Institutional Review Board or Ethics Committee for this study.'
         placeholder: 'Please select'
         error_message: '<a href="#link#" class="#class#">State</a> whether you obtained an ethical review'
+    ethical_review_description:
+        legend: 'Ethical review description'
+        label: 'Ethics committee and implications of the ethical review.'
+        help: "State location and name of the Institutional Review Board or Ethics Committee. If applicable, provide information on amendments to the initial proposal. List requirements on the study's data management, which resulted from the ethical review (if they were not already reported elsewhere). If applicable, refer to corresponding documents under study materials."
+        error_message: '<a href="#link#" class="#class#">Add ethical review description</a>'
     informed_consent:
         legend: 'Informed consent'
         label: 'State whether informed consent was obtained prior to collecting data for this study.'
         placeholder: 'Please select'
         error_message: '<a href="#link#" class="#class#">State</a> whether you obtained informed consent'
+    data_sharing:
+        legend: 'Data sharing Provision'
+        label: 'State whether data sharing was considered in the informed consent.'
+        placeholder: 'Please select'
+        error_message: '<a href="#link#" class="#class#">State</a> whether data sharing was considered'
     personal_data:
         legend: 'Personal data'
         label: 'State whether personal data were collected for this study.'
         placeholder: 'Please select'
         error_message: '<a href="#link#" class="#class#">State</a> whether you collected personal data'
+    anonymization:
+        legend: 'Anonymization'
+        label: 'State whether uploaded datasets include personal data.'
+        help: 'Single direct identifiers (e.g. names, full address, phone number) or a set of indirect identifiers (e.g. sex, age, profession, location) may allow the re-identification of subjects.'
+        error_message: '<a href="#link#" class="#class#">State</a> whether anonymization was applied'
+    anonymization_description:
+        legend: 'Anonymization description'
+        label: 'Describe procedures used for anonymization (e.g. removal of variables, recoding of extreme values).'
+        help: 'If applicable, refer to corresponding documents under study materials.'
+        error_message: '<a href="#link#" class="#class#">Add anonymization description</a>'
     copyright:
         legend: 'Copyright'
         label: 'State whether the research data, measurement instruments or software, which are created within this study, are subject to copyright, patent law or other intellectual property rights?'
         placeholder: 'Please select'
         error_message: '<a href="#link#" class="#class#">State</a> whether your data is subject to copyright'
+    copyright_licenses:
+        legend: 'Copyright licenses'
+        label: 'List objects concerned and state who is holding or will be holding rights on objects concerned. Under what conditions can these objects be used? (e.g. restricted access, terms of use or licenses).'
+        error_message: '<a href="#link#" class="#class#">State</a> copyright license'
     third_party_rights:
         legend: 'Third party rights'
         label: 'State whether there are any external research data, software or measurement instrument employed within this study, which are subject to copyright, patent law or other intellectual property rights. If applicable, refer to corresponding documents under study materials.'
         placeholder: 'Please select'
         error_message: '<a href="#link#" class="#class#">State</a> whether third party rights apply'
+    third_party_licenses:
+        legend: 'Third party licenses'
+        label: 'List objects concerned and state who is holding or will be holding rights on objects concerned. Under what conditions can these objects be used? (e.g. restricted distribution or licenses on distribution, attribution, restrictions on the publication of certain elements like labels of measurement instruments).'
+        help: 'If applicable, refer to corresponding documents under study materials.'
+        error_message: '<a href="#link#" class="#class#">State</a> third party license'
 
 
 
@@ -178,37 +207,41 @@ measurement_instrument:
     citation:
         label: 'Citation'
         error_message: '<a href="#link#" class="#class#">Add citation</a>'
+    newly_developed:
+        legend: 'Newly developed instrument'
+        label: 'This is a newly developed instrument'
+        error_message: '<a href="#link#" class="#class#">State</a> whether this is a newly developed instrument'
     abstract:
         label: 'Abstract'
-        help: 'This information is recommended for newly developed instruments only. A short description of the instrument.'
+        help: 'A short description of the instrument.'
         error_message: '<a href="#link#" class="#class#">Add abstract</a>'
     theoretical_background:
         label: 'Instrument concept: theoretical background'
-        help: 'This information is recommended for newly developed instruments only. Details about the theoretical background of the procedure, underlying theoretical models, research contexts and goals of the procedure.'
+        help: 'Details about the theoretical background of the procedure, underlying theoretical models, research contexts and goals of the procedure.'
         error_message: '<a href="#link#" class="#class#">Add theoretical background</a>'
     structure:
         label: 'Instrument concept: structure'
-        help: 'This information is recommended for newly developed instruments only. Details about number of items, existing sub scales, answering mode, evaluation procedure, further information on test procedures for non-questionnaires. '
+        help: 'Details about number of items, existing sub scales, answering mode, evaluation procedure, further information on test procedures for non-questionnaires. '
         error_message: '<a href="#link#" class="#class#">Add structure</a>'
     development:
         label: 'Instrument development'
-        help: 'This information is recommended for newly developed instruments only. Refers to the specific measurement model: classical or probabilistic test theory. Provides information on item pools, test pre-forms, item selection criteria and techniques, item parameter like item-total correlation or item difficulties, item and scale inter-correlations, person and item parameters, samples, factor analytical results, etc.'
+        help: 'Refers to the specific measurement model: classical or probabilistic test theory. Provides information on item pools, test pre-forms, item selection criteria and techniques, item parameter like item-total correlation or item difficulties, item and scale inter-correlations, person and item parameters, samples, factor analytical results, etc.'
         error_message: '<a href="#link#" class="#class#">Add instrument development</a>'
     objectivity:
         label: 'Quality criteria: Objectivity'
-        help: 'This information is recommended for newly developed instruments only. Statement on the objectivity of the method regarding implementation, evaluation, and interpretation through rater/observer agreement.'
+        help: 'Statement on the objectivity of the method regarding implementation, evaluation, and interpretation through rater/observer agreement.'
         error_message: '<a href="#link#" class="#class#">Add objectivity</a>'
     reliability:
         label: 'Quality criteria: Instrument reliability'
-        help: 'This information is recommended for newly developed instruments only. Information regarding internal consistency, homogeneity, stability, parallel-forms reliability, split-half reliability, retest reliability, inter-rater reliability, etc.'
+        help: 'Information regarding internal consistency, homogeneity, stability, parallel-forms reliability, split-half reliability, retest reliability, inter-rater reliability, etc.'
         error_message: '<a href="#link#" class="#class#">Add reliability</a>'
     validity:
         label: 'Quality Criteria: Instrument validity'
-        help: 'This information is recommended for newly developed instruments only. Information on validity (logical, content, curricular, differential, factor, internal, and external validity, construct validity, concurrent validity or empirical validity (criterion validity) as concurrent and predictive validity. '
+        help: 'Information on validity (logical, content, curricular, differential, factor, internal, and external validity, construct validity, concurrent validity or empirical validity (criterion validity) as concurrent and predictive validity. '
         error_message: '<a href="#link#" class="#class#">Add validity</a>'
     norm_referenced:
         label: 'Quality criteria: norm-referenced'
-        help: 'This information is recommended for newly developed instruments only. Make statements on the type of norm values that exist, or alternatively on mean values or comparative values for different samples. Gives details on calibration samples, or rather on the representativeness of the sample used.'
+        help: 'Make statements on the type of norm values that exist, or alternatively on mean values or comparative values for different samples. Gives details on calibration samples, or rather on the representativeness of the sample used.'
         error_message: '<a href="#link#" class="#class#">Add norm-referenced information</a>'
 
 measurement_occasion:
@@ -252,10 +285,10 @@ method_meta_data_group:
         legend: 'Experimental design details'
         label: 'Further describe the <span class="font-semibold">experimental design</span> of your study'
         error_message: '<a href="#link#" class="#class#">Further describe the experimental design</a> to increase the reusability of your data'
-    non_experimental_details:
-        legend: 'Non-experimental design details'
-        label: 'Further describe the <span class="font-semibold">non-experimental design</span> of your study'
-        error_message: '<a href="#link#" class="#class#">Further describe the non-experimental design</a> to increase the reusability of your data'
+    randomization:
+        legend: 'Randomization'
+        label: 'Choose the randomization of participants and/or experimental materials'
+        error_message: '<a href="#link#" class="#class#">Add randomization</a> to increase the reusability of your data'
     survey_instrument_type:
         legend: 'Survey instrument type'
         label: 'Choose the type of survey instrument used'
@@ -267,13 +300,8 @@ method_meta_data_group:
         error_message: '<a href="#link#" class="#class#">Add setting</a> to increase the reusability of your data'
     setting_location:
         legend: 'Location'
-        label: 'For real-life and natural settings enter the location where your study took place'
+        label: 'For field experiments, enter the location where your study took place'
         error_message: '<a href="#link#" class="#class#">Add location</a> to increase the reusability of your data'
-    observational_type:
-        legend: 'Observational study'
-        label: 'Optionally define the observational type of your study'
-        placeholder: 'Choose an observational type'
-        error_message: '<a href="#link#" class="#class#">Add observational type</a> to increase the reusability of your data'
     manipulations:
         legend: 'Experimental manipulations, treatments, or interventions'
         label: 'Provide details of your experimental manipulation(s) including a summary of the instructions. Clearly define your variables (treatments).'
@@ -319,10 +347,27 @@ method_meta_data_group:
         error_message: '<a href="#link#" class="#class#">Add measurement instrument</a> to increase the reusability of your data'
 
 sample_meta_data_group:
-    participants:
-        legend: 'Participants'
-        label: 'Describe participants, specifying their pertinent characteristics for this study'
-        error_message: '<a href="#link#" class="#class#">Add participants</a> to increase the reusability of your data'
+    inclusion_exclusion_criteria:
+        legend: 'Inclusion/Exclusion criteria'
+    participant_min_age:
+        legend: 'Minimum age'
+        label: 'Minimum age of participants'
+        error_message: '<a href="#link#" class="#class#">Add minimum age</a> to increase the reusability of your data'
+    participant_max_age:
+        legend: 'Maximum age'
+        label: 'Maximum age of participants'
+        error_message: '<a href="#link#" class="#class#">Add maximum age</a> to increase the reusability of your data'
+    participant_max_age_unlimited:
+        legend: 'Maximum age unlimited'
+        label: 'unlimited'
+    participant_groups:
+        legend: 'Participant groups'
+        label: 'Indicate which groups of participants you included in your study'
+        error_message: '<a href="#link#" class="#class#">Add participant group</a> to increase the reusability of your data'
+    participant_groups_other_description:
+        legend: 'Participant groups description'
+        label: 'Please describe the other groups'
+        error_message: '<a href="#link#" class="#class#">Add participant group description</a> to increase the reusability of your data'
     population:
         legend: 'Population'
         label: 'Indicate which population you were generally interested in, i.e., the group of persons or other elements that were the object of research and to which any analytic results refer'
@@ -374,6 +419,8 @@ sample_meta_data_group:
         legend: 'Multilevel structure'
         label: 'If your data is clustered into multiple levels (e.g., students nested within classrooms, employees nested within organizations), provide more information about the data structure.'
         error_message: '<a href="#link#" class="#class#">Add multilevel structure</a>'
+    participants:
+        legend: 'Participants'
     sex:
         legend: 'Sex'
         label: 'Describe the sex distribution of the study sample'
@@ -386,6 +433,8 @@ sample_meta_data_group:
         legend: 'Special groups'
         label: 'Describe other important variables and their distribution (e.g. socioeconomic status, psychopathology)'
         error_message: '<a href="#link#" class="#class#">Add special groups</a>'
+    geographic_origin:
+        legend: 'Geographic origin'
     country:
         legend: 'Geographic origin of the sample'
         label: 'Country'
@@ -418,6 +467,11 @@ theory_meta_data_group:
         label: 'State the hypotheses examined, indicating which were prespecified.'
         add: 'Add another hypothesis'
         error_message: "<a href='#link#'' class='#class#''>Add hypotheses</a> to increase the reusability of your data."
+    exploratory_research_questions:
+        legend: 'Exploratory Research Questions'
+        label: 'Report exploratory research questions you examined in your study.'
+        add: 'Add another research question'
+        error_message: "<a href='#link#'' class='#class#''>Add exploratory research questions</a> to increase the reusability of your data."
     theories:
         legend: 'Relevant theories'
         label: 'Provide a concise overview that justified the research questions/hypotheses.'

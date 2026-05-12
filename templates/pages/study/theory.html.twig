@@ -19,7 +19,9 @@
 {% endblock %}
 
 {% block help_for_metadata %}
-    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\TheoryDictionary').OBJECTIVES }}"/>
-    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\TheoryDictionary').HYPOTHESES }}"/>
-    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\TheoryDictionary').THEORIES }}"/>
+    {% for entry in enum('App\\Enum\\Study\\Dictionary\\TheoryDictionary').cases %}
+        {% if entry.descriptionHelp != null %}
+            <twig:Form:FormHelp dictionary="{{ entry }}"/>
+        {% endif %}
+    {% endfor %}
 {% endblock %}

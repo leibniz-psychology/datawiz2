@@ -1,11 +1,16 @@
-<details class="w-full border last:rounded-b-lg Help-Text" id="details_{{ dictionary.descriptionHelp }}"
+{% if dictionary is defined %}
+    {% set title = dictionary.legend %}
+    {% set help = dictionary.descriptionHelp %}
+{% endif %}
+
+<details class="w-full border last:rounded-b-lg Help-Text" id="details_{{ help }}"
          @click="$nextTick(() => { $store.app.helpSelected = '' })" x-data=""
-         :class="$store.app.helpSelected === 'details_{{ dictionary.descriptionHelp }}' && 'Help-Text_isHighlighted'">
+         :class="$store.app.helpSelected === 'details_{{ help }}' && 'Help-Text_isHighlighted'">
     <summary
         class="px-4 py-3 text-base font-semibold outline-none cursor-pointer text-zpid-purple focus:ring-inset bg-stone-50">
-        <span class="mr-2">{{ dictionary.legend|trans([], 'forms') }}</span>
+        <span class="mr-2">{{ title|trans([], 'forms') }}</span>
     </summary>
     <div class="pb-8 markdown Details-SlideOut">
-        {{ dictionary.descriptionHelp|trans({},'help_markdown')|raw|markdown_to_html }}
+        {{ help|trans({},'help_markdown')|raw|markdown_to_html }}
     </div>
 </details>

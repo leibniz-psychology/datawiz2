@@ -9,25 +9,25 @@ enum ExperimentalDesign: string implements ExtendedEnumInterface
 {
     use ExtendedEnum;
 
-    case INDEPENDENT_MEASURES = 'Independent measures / between-subjects design';
-    case REPEATED_MEASURES = 'Repeated measures / within-subjects design';
-    case MATCHED_PAIRS = 'Matched pairs design';
+    case REPEATED_MEASURES = 'Repeated measures';
+    case GROUP_COMPARISON = 'Group comparison';
+    case MIXED = 'Mixed';
 
     public function label(): string
     {
         return match ($this) {
-            self::INDEPENDENT_MEASURES => 'experimental_design.independent_measures',
             self::REPEATED_MEASURES => 'experimental_design.repeated_measures',
-            self::MATCHED_PAIRS => 'experimental_design.matched_pairs',
+            self::GROUP_COMPARISON => 'experimental_design.group_comparison',
+            self::MIXED => 'experimental_design.mixed',
         };
     }
 
     public function labelExtended(): string
     {
         return match ($this) {
-            self::INDEPENDENT_MEASURES => 'experimental_design.extended.independent_measures',
             self::REPEATED_MEASURES => 'experimental_design.extended.repeated_measures',
-            self::MATCHED_PAIRS => 'experimental_design.extended.matched_pairs',
+            self::GROUP_COMPARISON => 'experimental_design.extended.group_comparison',
+            self::MIXED => 'experimental_design.extended.mixed',
         };
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
+use App\Enum\Study\ParticipantGroup;
 use App\Enum\Study\SampleAnalysisUnit;
 use App\Enum\Study\SamplingMethod;
 use App\Repository\SampleRepository;
@@ -21,20 +22,30 @@ class SampleMetaDataGroup extends UuidEntity
     #[ORM\OneToOne(inversedBy: 'sampleMetaDataGroup', cascade: ['persist', 'remove'])]
     protected ?Experiment $experiment = null;
 
+    #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    #[SerializedName('participant_minimum_age')]
+    #[Groups(['study'])]
+    private ?int $participantMinAge = null;
+
+    #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    #[SerializedName('participant_maximum_age')]
+    #[Groups(['study'])]
+    private ?int $participantMaxAge = null;
+
+    #[ORM\Column(nullable: true)]
+    #[SerializedName('participant_maximum_age_unlimited')]
+    #[Groups(['study'])]
+    private ?bool $participantMaxAgeUnlimited = null;
+
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true, enumType: ParticipantGroup::class)]
+    #[SerializedName('participant_groups')]
+    #[Groups('study')]
+    private ?array $participantGroups = null;
+
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[SerializedName('participants')]
+    #[SerializedName('participant_groups_other_description')]
     #[Groups(['study'])]
-    private ?string $participants = null;
-
-    #[ORM\Column(nullable: true)]
-    #[SerializedName('inclusion_criteria')]
-    #[Groups(['study'])]
-    private ?array $inclusionCriteria = null;
-
-    #[ORM\Column(nullable: true)]
-    #[SerializedName('exclusion_criteria')]
-    #[Groups(['study'])]
-    private ?array $exclusionCriteria = null;
+    private ?string $participantGroupsOtherDescription = null;
 
     #[ORM\Column(nullable: true)]
     #[SerializedName('population')]
@@ -126,34 +137,54 @@ class SampleMetaDataGroup extends UuidEntity
     #[Groups(['study'])]
     private ?string $returnDropout = null;
 
-    public function getParticipants(): ?string
+    public function getParticipantMinAge(): ?int
     {
-        return $this->participants;
+        return $this->participantMinAge;
     }
 
-    public function setParticipants(?string $participants): void
+    public function setParticipantMinAge(?int $participantMinAge): void
     {
-        $this->participants = $participants;
+        $this->participantMinAge = $participantMinAge;
     }
 
-    public function getInclusionCriteria(): ?array
+    public function getParticipantMaxAge(): ?int
     {
-        return $this->inclusionCriteria;
+        return $this->participantMaxAge;
     }
 
-    public function setInclusionCriteria(?array $inclusionCriteria): void
+    public function setParticipantMaxAge(?int $participantMaxAge): void
     {
-        $this->inclusionCriteria = $inclusionCriteria == null ? null : array_values($inclusionCriteria);
+        $this->participantMaxAge = $participantMaxAge;
     }
 
-    public function getExclusionCriteria(): ?array
+    public function getParticipantMaxAgeUnlimited(): ?bool
     {
-        return $this->exclusionCriteria;
+        return $this->participantMaxAgeUnlimited;
     }
 
-    public function setExclusionCriteria(?array $exclusionCriteria): void
+    public function setParticipantMaxAgeUnlimited(?bool $participantMaxAgeUnlimited): void
     {
-        $this->exclusionCriteria = $exclusionCriteria == null ? null : array_values($exclusionCriteria);
+        $this->participantMaxAgeUnlimited = $participantMaxAgeUnlimited;
+    }
+
+    public function getParticipantGroups(): ?array
+    {
+        return $this->participantGroups;
+    }
+
+    public function setParticipantGroups(?array $participantGroups): void
+    {
+        $this->participantGroups = $participantGroups == null ? null : array_values($participantGroups);
+    }
+
+    public function getParticipantGroupsOtherDescription(): ?string
+    {
+        return $this->participantGroupsOtherDescription;
+    }
+
+    public function setParticipantGroupsOtherDescription(?string $participantGroupsOtherDescription): void
+    {
+        $this->participantGroupsOtherDescription = $participantGroupsOtherDescription;
     }
 
     public function getPopulation(): ?array

@@ -19,12 +19,9 @@
 {% endblock %}
 
 {% block help_for_metadata %}
-    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').RESEARCH_DESIGN }}"/>
-    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').RESEARCH_METHOD }}"/>
-    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').SETTING }}"/>
-    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').MANIPULATIONS }}"/>
-    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').EXPERIMENTAL_DESIGN }}"/>
-    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').CONTROL_OPERATIONS }}"/>
-    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').RESEARCH_METHOD_DESCRIPTION }}"/>
-    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').CONSTRUCTS }}"/>
+    {% for entry in enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').cases %}
+        {% if entry.descriptionHelp != null %}
+            <twig:Form:FormHelp dictionary="{{ entry }}"/>
+        {% endif %}
+    {% endfor %}
 {% endblock %}

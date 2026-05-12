@@ -31,6 +31,11 @@ class MeasurementInstrument extends UuidEntity
     #[Groups('study')]
     private ?string $citation = null;
 
+    #[ORM\Column(nullable: true)]
+    #[SerializedName('newly_developed')]
+    #[Groups('study')]
+    private ?bool $newlyDeveloped = null;
+
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[SerializedName('abstract')]
     #[Groups('study')]
@@ -114,6 +119,16 @@ class MeasurementInstrument extends UuidEntity
     public function setCitation(?string $citation): void
     {
         $this->citation = $citation;
+    }
+
+    public function getNewlyDeveloped(): ?bool
+    {
+        return $this->newlyDeveloped;
+    }
+
+    public function setNewlyDeveloped(?bool $newlyDeveloped): void
+    {
+        $this->newlyDeveloped = $newlyDeveloped;
     }
 
     public function getAbstract(): ?string

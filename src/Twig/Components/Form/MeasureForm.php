@@ -48,18 +48,6 @@ class MeasureForm extends AbstractController
         return $this->redirectToRoute('Study-measure', ['id' => $measure->getExperiment()->getId()]);
     }
 
-    #[LiveAction]
-    public function addApparatus(): void
-    {
-        $this->formValues['apparatus'][] = [];
-    }
-
-    #[LiveAction]
-    public function removeApparatus(#[LiveArg] int $index): void
-    {
-        unset($this->formValues['apparatus'][$index]);
-    }
-
     protected function instantiateForm(): FormInterface
     {
         return $this->createForm(MeasureType::class, $this->initialFormData);

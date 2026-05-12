@@ -6,8 +6,7 @@ use App\Entity\Administration\UuidEntity;
 use App\Enum\Study\ControlOperations;
 use App\Enum\Study\ExperimentalDesign;
 use App\Enum\Study\ExperimentalDetails;
-use App\Enum\Study\NonExperimentalDetails;
-use App\Enum\Study\ObservationalType;
+use App\Enum\Study\Randomization;
 use App\Enum\Study\ResearchDesign;
 use App\Enum\Study\ResearchMethod;
 use App\Enum\Study\StudySetting;
@@ -30,25 +29,15 @@ class MethodMetaDataGroup extends UuidEntity
     #[ORM\OneToOne(inversedBy: 'methodMetaDataGroup', cascade: ['persist', 'remove'])]
     protected ?Experiment $experiment = null;
 
-    #[ORM\Column(nullable: true, enumType: ResearchMethod::class)]
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true, enumType: ResearchMethod::class)]
     #[SerializedName('research_design')]
     #[Groups(['study'])]
-    private ?ResearchMethod $researchMethod = null;
+    private ?array $researchMethod = null;
 
     #[ORM\Column(nullable: true, enumType: ExperimentalDetails::class)]
     #[SerializedName('experimental_details')]
-    #[Groups(['experimental'])]
+    #[Groups(['study'])]
     private ?ExperimentalDetails $experimentalDetails = null;
-
-    #[ORM\Column(nullable: true, enumType: NonExperimentalDetails::class)]
-    #[SerializedName('non_experimental_details')]
-    #[Groups(['non_experimental'])]
-    private ?NonExperimentalDetails $nonExperimentalDetails = null;
-
-    #[ORM\Column(nullable: true, enumType: ObservationalType::class)]
-    #[SerializedName('observational_type')]
-    #[Groups(['non_experimental'])]
-    private ?ObservationalType $observationalType = null;
 
     #[ORM\Column(nullable: true, enumType: StudySetting::class)]
     #[SerializedName('setting')]
@@ -60,24 +49,24 @@ class MethodMetaDataGroup extends UuidEntity
     #[Groups(['study'])]
     private ?string $settingLocation = null;
 
-    #[ORM\Column(type: 'text', length: 1500, nullable: true)]
-    #[SerializedName('manipulations')]
-    #[Groups(['experimental'])]
-    private ?string $manipulations = null;
-
     #[ORM\Column(nullable: true, enumType: ExperimentalDesign::class)]
     #[SerializedName('experimental_design')]
-    #[Groups(['experimental'])]
+    #[Groups(['study'])]
     private ?ExperimentalDesign $experimentalDesign = null;
+
+    #[ORM\Column(nullable: true, enumType: Randomization::class)]
+    #[SerializedName('randomization')]
+    #[Groups(['study'])]
+    private ?Randomization $randomization = null;
 
     #[ORM\Column(nullable: true, enumType: ControlOperations::class)]
     #[SerializedName('control_operations')]
-    #[Groups(['experimental'])]
+    #[Groups(['study'])]
     private ?ControlOperations $controlOperations = null;
 
     #[ORM\Column(type: 'text', length: 1500, nullable: true)]
     #[SerializedName('other_control_operations')]
-    #[Groups(['experimental'])]
+    #[Groups(['study'])]
     private ?string $otherControlOperations = null;
 
     #[ORM\Column(nullable: true, enumType: ResearchDesign::class)]
@@ -92,12 +81,12 @@ class MethodMetaDataGroup extends UuidEntity
 
     #[ORM\Column(nullable: true, enumType: SurveyInstrumentType::class)]
     #[SerializedName('survey_instrument_type')]
-    #[Groups(['non_experimental'])]
+    #[Groups(['study'])]
     private ?SurveyInstrumentType $surveyInstrumentType = null;
 
     #[ORM\Column(nullable: true)]
     #[SerializedName('treatment_groups')]
-    #[Groups(['experimental'])]
+    #[Groups(['study'])]
     private ?array $treatmentGroups = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -157,12 +146,12 @@ class MethodMetaDataGroup extends UuidEntity
         $this->settingLocation = $settingLocation;
     }
 
-    public function getResearchMethod(): ?ResearchMethod
+    public function getResearchMethod(): ?array
     {
         return $this->researchMethod;
     }
 
-    public function setResearchMethod(?ResearchMethod $researchMethod): void
+    public function setResearchMethod(?array $researchMethod): void
     {
         $this->researchMethod = $researchMethod;
     }
@@ -177,36 +166,6 @@ class MethodMetaDataGroup extends UuidEntity
         $this->experimentalDetails = $experimentalDetails;
     }
 
-    public function getNonExperimentalDetails(): ?NonExperimentalDetails
-    {
-        return $this->nonExperimentalDetails;
-    }
-
-    public function setNonExperimentalDetails(?NonExperimentalDetails $nonExperimentalDetails): void
-    {
-        $this->nonExperimentalDetails = $nonExperimentalDetails;
-    }
-
-    public function getObservationalType(): ?ObservationalType
-    {
-        return $this->observationalType;
-    }
-
-    public function setObservationalType(?ObservationalType $observationalType): void
-    {
-        $this->observationalType = $observationalType;
-    }
-
-    public function getManipulations(): ?string
-    {
-        return $this->manipulations;
-    }
-
-    public function setManipulations(?string $manipulations): void
-    {
-        $this->manipulations = $manipulations;
-    }
-
     public function getExperimentalDesign(): ?ExperimentalDesign
     {
         return $this->experimentalDesign;
@@ -215,6 +174,16 @@ class MethodMetaDataGroup extends UuidEntity
     public function setExperimentalDesign(?ExperimentalDesign $experimentalDesign): void
     {
         $this->experimentalDesign = $experimentalDesign;
+    }
+
+    public function getRandomization(): ?Randomization
+    {
+        return $this->randomization;
+    }
+
+    public function setRandomization(?Randomization $randomization): void
+    {
+        $this->randomization = $randomization;
     }
 
     public function getControlOperations(): ?ControlOperations

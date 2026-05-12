@@ -19,6 +19,7 @@
 {% endblock %}
 
 {% block help_for_metadata %}
+    <twig:Form:FormHelp title="{{ 'sample_meta_data_group.inclusion_exclusion_criteria.legend' }}" help="{{ 'sample.inclusion_exclusion_criteria' }}"/>
     {% for entry in enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').cases %}
         {% if entry.descriptionHelp != null %}
             <twig:Form:FormHelp dictionary="{{ entry }}"/>

@@ -23,6 +23,15 @@
         />
     </twig:Form:FormCard>
 
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\TheoryDictionary').EXPLORATORY_RESEARCH_QUESTIONS }}">
+        <twig:Form:CollectionForm
+            collection="{{ form.exploratoryResearchQuestions }}"
+            add_action="addExploratoryResearchQuestion"
+            remove_action="removeExploratoryResearchQuestion"
+            add_label="{{ 'theory_meta_data_group.exploratory_research_questions.add'|trans([], 'forms') }}"
+        />
+    </twig:Form:FormCard>
+
     <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\TheoryDictionary').THEORIES }}">
         <twig:Form:CollectionForm
             collection="{{ form.theories }}"

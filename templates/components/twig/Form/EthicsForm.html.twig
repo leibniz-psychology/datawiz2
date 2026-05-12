@@ -7,22 +7,53 @@
 {% block form_content %}
     <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\EthicsDictionary').ETHICAL_REVIEW }}">
         {{ form_row(form.ethicalReview) }}
+        {% if form.ethicalReview.vars.value == enum('App\\Enum\\YesNo').YES.value %}
+            {{ form_row(form.ethicalReviewDescription) }}
+        {% else %}
+            {% do form.ethicalReviewDescription.setRendered %}
+        {% endif %}
     </twig:Form:FormCard>
 
     <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\EthicsDictionary').INFORMED_CONSENT }}">
         {{ form_row(form.informedConsent) }}
+        {% if form.informedConsent.vars.value == enum('App\\Enum\\YesNo').YES.value %}
+            {{ form_row(form.dataSharing) }}
+        {% else %}
+            {% do form.dataSharing.setRendered %}
+        {% endif %}
     </twig:Form:FormCard>
 
     <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\EthicsDictionary').PERSONAL_DATA }}">
         {{ form_row(form.personalData) }}
+        {% if form.personalData.vars.value == enum('App\\Enum\\YesNo').YES.value %}
+            <twig:Form:MultilineChoiceForm form="{{ form.anonymization }}"/>
+            {% if form.anonymization.vars.value == enum('App\\Enum\\Study\\Anonymization').ANONYMIZED.value %}
+                {{ form_row(form.anonymizationDescription) }}
+            {% else %}
+                {% do form.anonymizationDescription.setRendered %}
+            {% endif %}
+        {% else %}
+            {% do form.anonymization.setRendered %}
+            {% do form.anonymizationDescription.setRendered %}
+        {% endif %}
     </twig:Form:FormCard>
 
     <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\EthicsDictionary').COPYRIGHT }}">
         {{ form_row(form.copyright) }}
+        {% if form.copyright.vars.value == enum('App\\Enum\\YesNo').YES.value %}
+            {{ form_row(form.copyrightLicenses) }}
+        {% else %}
+            {% do form.copyrightLicenses.setRendered %}
+        {% endif %}
     </twig:Form:FormCard>
 
     <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\EthicsDictionary').THIRD_PARTY_RIGHTS }}">
         {{ form_row(form.thirdPartyRights) }}
+        {% if form.thirdPartyRights.vars.value == enum('App\\Enum\\YesNo').YES.value %}
+            {{ form_row(form.thirdPartyLicenses) }}
+        {% else %}
+            {% do form.thirdPartyLicenses.setRendered %}
+        {% endif %}
     </twig:Form:FormCard>
 {% endblock %}
 

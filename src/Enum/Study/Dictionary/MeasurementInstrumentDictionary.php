@@ -16,6 +16,7 @@ enum MeasurementInstrumentDictionary: string implements DictionaryInterface
     case TITLE = 'title';
     case AUTHOR = 'author';
     case CITATION = 'citation';
+    case NEWLY_DEVELOPED = 'newlyDeveloped';
     case ABSTRACT = 'abstract';
     case THEORETICAL_BACKGROUND = 'theoreticalBackground';
     case STRUCTURE = 'structure';
@@ -31,6 +32,7 @@ enum MeasurementInstrumentDictionary: string implements DictionaryInterface
             self::TITLE => 'measurement_instrument.title.label',
             self::AUTHOR => 'measurement_instrument.author.label',
             self::CITATION => 'measurement_instrument.citation.label',
+            self::NEWLY_DEVELOPED => 'measurement_instrument.newly_developed.label',
             self::ABSTRACT => 'measurement_instrument.abstract.label',
             self::THEORETICAL_BACKGROUND => 'measurement_instrument.theoretical_background.label',
             self::STRUCTURE => 'measurement_instrument.structure.label',
@@ -64,6 +66,7 @@ enum MeasurementInstrumentDictionary: string implements DictionaryInterface
             self::TITLE => new ReviewDataDto('measure_meta_data_group.title.error_message', ErrorType::MANDATORY),
             self::AUTHOR => new ReviewDataDto('measure_meta_data_group.author.error_message', ErrorType::RECOMMENDED),
             self::CITATION => new ReviewDataDto('measure_meta_data_group.citation.error_message', ErrorType::RECOMMENDED),
+            self::NEWLY_DEVELOPED => new ReviewDataDto('measure_meta_data_group.newly_developed.error_message', ErrorType::OPTIONAL),
             self::ABSTRACT => new ReviewDataDto('measure_meta_data_group.abstract.error_message', ErrorType::OPTIONAL),
             self::THEORETICAL_BACKGROUND => new ReviewDataDto('measure_meta_data_group.theoretical_background.error_message', ErrorType::OPTIONAL),
             self::STRUCTURE => new ReviewDataDto('measure_meta_data_group.structure.error_message', ErrorType::OPTIONAL),

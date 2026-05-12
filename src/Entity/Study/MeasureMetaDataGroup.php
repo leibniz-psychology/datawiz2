@@ -37,10 +37,10 @@ class MeasureMetaDataGroup extends UuidEntity
     #[Groups(['study'])]
     private ?array $collectionMode = null;
 
-    #[ORM\Column(length: 1500, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[SerializedName('apparatus')]
     #[Groups(['study'])]
-    private ?array $apparatus = null;
+    private ?string $apparatus = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[SerializedName('collection_mode_other_description')]
@@ -92,9 +92,11 @@ class MeasureMetaDataGroup extends UuidEntity
         return $this->experiment;
     }
 
-    public function setExperiment(Experiment $experiment): void
+    public function setExperiment(Experiment $experiment): static
     {
         $this->experiment = $experiment;
+
+        return $this;
     }
 
     public function getDataCollectionStart(): ?\DateTimeImmutable
@@ -133,14 +135,16 @@ class MeasureMetaDataGroup extends UuidEntity
         return $this;
     }
 
-    public function getApparatus(): ?array
+    public function getApparatus(): ?string
     {
         return $this->apparatus;
     }
 
-    public function setApparatus(?array $apparatus): void
+    public function setApparatus(?string $apparatus): static
     {
-        $this->apparatus = $apparatus == null ? null : array_values($apparatus);
+        $this->apparatus = $apparatus;
+
+        return $this;
     }
 
     public function getCollectionModeOtherDescription(): ?string

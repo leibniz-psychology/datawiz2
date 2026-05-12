@@ -13,9 +13,11 @@ enum SampleDictionary: string implements DictionaryInterface
     use ExtendedEnum;
     use DictionaryEnum;
 
-    case PARTICIPANTS = 'participants';
-    case INCLUSION_CRITERIA = 'inclusionCriteria';
-    case EXCLUSION_CRITERIA = 'exclusionCriteria';
+    case PARTICIPANT_MIN_AGE = 'participantMinAge';
+    case PARTICIPANT_MAX_AGE = 'participantMaxAge';
+    case PARTICIPANT_MAX_AGE_UNLIMITED = 'participantMaxAgeUnlimited';
+    case PARTICIPANT_GROUPS = 'participantGroups';
+    case PARTICIPANT_GROUPS_OTHER_DESCRIPTION = 'participantGroupsOtherDescription';
     case POPULATION = 'population';
     case SAMPLING_METHOD = 'samplingMethod';
     case SAMPLING_METHOD_OTHER_DESCRIPTION = 'samplingMethodOtherDescription';
@@ -38,9 +40,11 @@ enum SampleDictionary: string implements DictionaryInterface
     public function legend(): string
     {
         return match ($this) {
-            self::PARTICIPANTS => 'sample_meta_data_group.participants.legend',
-            self::INCLUSION_CRITERIA => 'sample_meta_data_group.inclusion_criteria.legend',
-            self::EXCLUSION_CRITERIA => 'sample_meta_data_group.exclusion_criteria.legend',
+            self::PARTICIPANT_MIN_AGE => 'sample_meta_data_group.participant_min_age.legend',
+            self::PARTICIPANT_MAX_AGE => 'sample_meta_data_group.participant_max_age.legend',
+            self::PARTICIPANT_MAX_AGE_UNLIMITED => 'sample_meta_data_group.participant_max_age_unlimited.legend',
+            self::PARTICIPANT_GROUPS => 'sample_meta_data_group.participant_groups.legend',
+            self::PARTICIPANT_GROUPS_OTHER_DESCRIPTION => 'sample_meta_data_group.participant_groups_other_description.legend',
             self::POPULATION => 'sample_meta_data_group.population.legend',
             self::SAMPLING_METHOD => 'sample_meta_data_group.sampling_method.legend',
             self::SAMPLING_METHOD_OTHER_DESCRIPTION => 'sample_meta_data_group.sampling_method_other_description.legend',
@@ -65,9 +69,11 @@ enum SampleDictionary: string implements DictionaryInterface
     public function label(): string
     {
         return match ($this) {
-            self::PARTICIPANTS => 'sample_meta_data_group.participants.label',
-            self::INCLUSION_CRITERIA => 'sample_meta_data_group.inclusion_criteria.label',
-            self::EXCLUSION_CRITERIA => 'sample_meta_data_group.exclusion_criteria.label',
+            self::PARTICIPANT_MIN_AGE => 'sample_meta_data_group.participant_min_age.label',
+            self::PARTICIPANT_MAX_AGE => 'sample_meta_data_group.participant_max_age.label',
+            self::PARTICIPANT_MAX_AGE_UNLIMITED => 'sample_meta_data_group.participant_max_age_unlimited.label',
+            self::PARTICIPANT_GROUPS => 'sample_meta_data_group.participant_groups.label',
+            self::PARTICIPANT_GROUPS_OTHER_DESCRIPTION => 'sample_meta_data_group.participant_groups_other_description.label',
             self::POPULATION => 'sample_meta_data_group.population.label',
             self::SAMPLING_METHOD => 'sample_meta_data_group.sampling_method.label',
             self::SAMPLING_METHOD_OTHER_DESCRIPTION => 'sample_meta_data_group.sampling_method_other_description.label',
@@ -92,9 +98,6 @@ enum SampleDictionary: string implements DictionaryInterface
     public function descriptionHelp(): ?string
     {
         return match ($this) {
-            self::PARTICIPANTS => 'sample.participants',
-            self::INCLUSION_CRITERIA => 'sample.inclusion_criteria',
-            self::EXCLUSION_CRITERIA => 'sample.exclusion_criteria',
             self::POPULATION => 'sample.population',
             self::SAMPLE_SIZE => 'sample.sample_size',
             self::POWER_ANALYSIS => 'sample.power_analysis',
@@ -110,9 +113,11 @@ enum SampleDictionary: string implements DictionaryInterface
     public function reviewData(): ReviewDataDto
     {
         return match ($this) {
-            self::PARTICIPANTS => new ReviewDataDto('sample_meta_data_group.participants.error_message', ErrorType::MANDATORY),
-            self::INCLUSION_CRITERIA => new ReviewDataDto('sample_meta_data_group.inclusion_criteria.error_message', ErrorType::MANDATORY),
-            self::EXCLUSION_CRITERIA => new ReviewDataDto('sample_meta_data_group.exclusion_criteria.error_message', ErrorType::MANDATORY),
+            self::PARTICIPANT_MIN_AGE => new ReviewDataDto('sample_meta_data_group.participant_min_age.error_message', ErrorType::MANDATORY),
+            self::PARTICIPANT_MAX_AGE => new ReviewDataDto('sample_meta_data_group.participant_max_age.error_message', ErrorType::MANDATORY),
+            self::PARTICIPANT_MAX_AGE_UNLIMITED => new ReviewDataDto('sample_meta_data_group.participant_max_age_unlimited.error_message', ErrorType::MANDATORY),
+            self::PARTICIPANT_GROUPS => new ReviewDataDto('sample_meta_data_group.participant_groups.error_message', ErrorType::MANDATORY),
+            self::PARTICIPANT_GROUPS_OTHER_DESCRIPTION => new ReviewDataDto('sample_meta_data_group.participant_groups_other_description.error_message', ErrorType::OPTIONAL),
             self::POPULATION => new ReviewDataDto('sample_meta_data_group.population.error_message', ErrorType::MANDATORY),
             self::SAMPLING_METHOD => new ReviewDataDto('sample_meta_data_group.sampling_method.error_message', ErrorType::MANDATORY),
             self::SAMPLING_METHOD_OTHER_DESCRIPTION => new ReviewDataDto('sample_meta_data_group.sampling_method_other_description.error_message', ErrorType::OPTIONAL),

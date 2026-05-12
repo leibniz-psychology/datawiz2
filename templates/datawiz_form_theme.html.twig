@@ -48,6 +48,22 @@
     {%- endif -%}
 {%- endblock form_errors -%}
 
+{%- block checkbox_row -%}
+    {%- set row_attr = row_attr|merge({class: row_attr.class|default(row_class|default('group pt-1'))}) -%}
+    {%- set widget_attr = {} -%}
+    {%- if help -%}
+        {%- set widget_attr = {attr: {'aria-describedby': id ~ '_help'}} -%}
+    {%- endif -%}
+    <div{% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
+        {{- form_errors(form) -}}
+        <div class="flex items-start">
+            {{- form_widget(form, widget_attr) -}}
+            {{- form_label(form, null, {label_attr: {class: 'block leading-snug max-w-prose group-has-disabled:opacity-50'}}) -}}
+        </div>
+        {{- form_help(form) -}}
+    </div>
+{%- endblock checkbox_row -%}
+
 {%- block choice_widget_expanded -%}
     {%- set attr = attr|merge({ class: attr.class|default('mt-2 flex flex-col gap-2') }) -%}
     <div {{ block('widget_container_attributes') }}>

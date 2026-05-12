@@ -1,3 +1,10 @@
+anonymization:
+    anonymized: 'Anonymized'
+    not_anonymized: 'Not anonymized'
+    extended:
+        anonymized: '<span>Anonymized</span><span>Datasets of this study do not include personal data (i.e. less than three indirect identifiers and no direct identifiers)</span>'
+        not_anonymized: '<span>Not anonymized</span><span>Datasets of this study include personal data (i.e. at least one direct identifier or three indirect identifiers)</span>'
+
 collection_mode:
     individual_presentation: 'Individual presentation'
     group_presentation: 'Group presentation'
@@ -44,42 +51,41 @@ data_status:
     subset: 'Subset'
 
 experimental_design:
-    independent_measures: 'Independent measures / between-subjects design'
-    repeated_measures: 'Repeated measures / within-subjects design'
-    matched_pairs: 'Matched pairs design'
+    repeated_measures: 'Repeated measures'
+    group_comparison: 'Group comparison'
+    mixed: 'Mixed Design'
     extended:
-        independent_measures: '<span>Independent measures / between-subjects design</span><span>Different participants were used in each condition of the independent variable</span>'
-        repeated_measures: '<span>Repeated measures / within-subjects design</span><span>The same participants took part in each condition of the independent variable</span>'
-        matched_pairs: '<span>Matched pairs design</span><span>Each condition used different participants, but they were matched in terms of important characteristics</span>'
+        repeated_measures: '<span>Design with repeated measures</span><span>Only "within subjects" variables</span>'
+        group_comparison: '<span>Group comparison</span><span>Only "between subjects" variables</span>'
+        mixed: '<span>Mixed Design</span><span>"within subjects" and "between subjects" variables</span>'
 
 experimental_details:
+    experimental: 'Experimental design'
+    quasi_experimental: 'Quasi-experimental design'
+
+participant_group:
+    healthy: 'Healthy individuals'
+    physical_illness: 'Individuals with physical illnesses or impairments'
+    mental_illness: 'Individuals with mental illnesses or impairments'
+    in_treatment: 'Individuals in medical or psychotherapeutic treatment'
+    institutionalized: 'Institutionalized individuals'
+    incapable_of_giving_consent: 'Individuals incapable of giving consent'
+    vulnerable_situation: 'Individuals in vulnerable situations'
+    dependent_relationship: 'Individuals in dependent relationship to project contributors'
+    other: 'Other groups'
+    extended:
+        mental_illness: '<span>Individuals with mental illnesses or impairments</span><span>e.g. individuals with learning difficulties or depressive disorder</span>'
+        institutionalized: '<span>Institutionalized individuals</span><span>e.g. prisoners, psychiatric in-patients</span>'
+        incapable_of_giving_consent: '<span>Individuals incapable of giving consent</span><span>e.g. children and adolescents, persons with severe dementia</span>'
+        vulnerable_situation: '<span>Individuals in particularly vulnerable (life) situations</span><span>e.g. persons from a conflict/war zone, refugees</span>'
+        dependent_relationship: '<span>Individuals in a dependent relationship to project contributors</span><span>e.g., students of own university courses, own employees, family members/friends</span>'
+
+randomization:
     random_assignment: 'Random assignment'
     non_random_assignment: 'Non-random assignment'
-    clinical_trial: 'Clinical trial'
     extended:
         random_assignment: '<span>Random assignment</span><span>Your study used random assignment to place participants in conditions</span>'
         non_random_assignment: '<span>Non-random assignment</span><span>Your study did not use random assignment to place participants in conditions</span>'
-        clinical_trial: '<span>Clinical trial</span><span>Your study qualifies as a clinical trial (randomized trial, randomized controlled trial)</span>'
-
-non_experimental_details:
-    observational_study: 'Observational study'
-    survey_research: 'Survey research'
-    correlational_research: 'Correlational research'
-    causal_comparative_research: 'Causal-comparative research'
-    single_case: 'Single case'
-    extended:
-        observational_study: '<span>Observational study</span><span>You observed people''s behavior without experimental manipulation</span>'
-        survey_research: '<span>Survey research</span><span>You collected information from a sample of individuals through their responses to questions</span>'
-        correlational_research: '<span>Correlational research</span><span>You measured two variables and assessed the statistical relationship between them</span>'
-        causal_comparative_research: '<span>Causal-comparative research</span><span>You selected samples from two already-existing populations and investigated cause and effect relationship</span>'
-        single_case: '<span>Single case</span><span>Your study was conducted on a single individual (also known as case study or experience report)</span>'
-
-observational_type:
-    cohort: 'Cohort study'
-    case_control: 'Case-control study'
-    cross_sectional: 'Cross-sectional study'
-
-    placeholder: 'Choose an observational type'
 
 record_type:
     questionnaires: 'Questionnaires filled out by the subject or investigator with closed and/or open response formats'
@@ -97,12 +103,12 @@ research_design:
 
 research_method:
     experimental: 'Experimental'
-    non_experimental: 'Non-experimental'
+    survey: 'Survey'
     test_development: 'Test development'
     extended:
-        experimental: '<span class="block">Experimental</span><span class="block text-sm">Your study involved an experimental manipulation</span>'
-        non_experimental: '<span class="block">Non-experimental</span><span class="block text-sm">Your study did not involve an experimental manipulation</span>'
-        test_development: '<span class="block">Test-development</span><span class="block text-sm">Your study involved a test-development process</span>'
+        experimental: '<span class="block">Experimental</span><span class="block text-sm">Your study involved an experimental manipulation.</span>'
+        non_experimental: '<span class="block">Survey</span><span class="block text-sm">Your study involved information collection on human experience and behaviour without an intervention.</span>'
+        test_development: '<span class="block">Test development</span><span class="block text-sm">Your study involved a test development process</span>'
 
 sample_analysis_unit:
     individuals: 'Individuals'
@@ -136,13 +142,8 @@ study_relation:
     no_relation: 'No relation'
 
 study_setting:
-    artificial: 'Artificial setting'
-    real_life: 'Real-life setting'
-    natural: 'Natural setting'
-    extended:
-        artificial: '<span>Artificial setting</span><span>Artificial setting (e.g. laboratory experiment)</span>'
-        real_life: '<span>Real-life setting</span><span>Real-life setting (e.g., field experiment)</span>'
-        natural: '<span>Natural setting</span><span>Natural setting (e.g., natural observations)</span>'
+    laboratory: 'Laboratory experiment'
+    field: 'Field experiment'
 
 survey_instrument_type:
     fully_standardized: 'Fully standardized survey instrument (question phrasing and answer format predefined)'

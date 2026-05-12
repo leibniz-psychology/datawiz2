@@ -1,7 +1,7 @@
 {% extends "components/twig/Form/_baseForm.html.twig" %}
 
 {% block title %}
-    {{ "title.theories.title"|trans }}
+    {{ "title.method.title"|trans }}
 {% endblock %}
 
 {% set research_method = form.researchMethod.vars.value %}
@@ -23,82 +23,42 @@
         <div class="mt-1 flex flex-col gap-2">
             {%- for choice in form.researchMethod %}
                 <div class="w-full px-4 py-4 border rounded-lg border-stone-300 has-checked:bg-zpid-blue-50 flex items-start">
-                    {{ form_widget(choice) }}
-                    {{ form_label(choice, null, {
-                        label_attr: {
-                            class: 'm-0'
-                        }
-                    }) }}
+                    {{ form_row(choice) }}
                 </div>
-            {% endfor -%}
-        </div>
-
-
-        <div class="mt-3">
-            {% if research_method == enum('App\\Enum\\Study\\ResearchMethod').EXPERIMENTAL.value %}
-                <twig:Form:MultilineChoiceForm form="{{ form.experimentalDetails }}"/>
-
-                {% do form.nonExperimentalDetails.setRendered %}
-                {% do form.observationalType.setRendered %}
-                {% do form.surveyInstrumentType.setRendered %}
-            {% elseif research_method == enum('App\\Enum\\Study\\ResearchMethod').NON_EXPERIMENTAL.value %}
-                <div>
-                    {{ form_label(form.nonExperimentalDetails) }}
-                    {{ form_errors(form.nonExperimentalDetails) }}
-
-                    <div class="flex flex-col gap-2 mt-1">
-                        {%- for choice in form.nonExperimentalDetails %}
-                            <div class="flex">
-                                {{ form_widget(choice) }}
-                                {{ form_label(choice, null, {
-                                    'label_attr': {'class': '[&_span]:block [&_span]:last:text-sm [&_span]:last:text-stone-600'},
-                                    'label_html': true,
-                                }) }}
+                {% if choice.vars.value == enum('App\\Enum\\Study\\ResearchMethod').EXPERIMENTAL.value %}
+                        {% if choice.vars.checked %}
+                            <div class="ml-6 mb-3">
+                                <twig:Form:MultilineChoiceForm form="{{ form.experimentalDetails }}"/>
                             </div>
-                            {% if choice.vars.value == enum('App\\Enum\\Study\\NonExperimentalDetails').OBSERVATIONAL_STUDY.value %}
-                                <div class="ml-6">
-                                    {% if choice.vars.checked %}
-                                        {{ form_row(form.observationalType) }}
-                                    {% else %}
-                                        {% do form.observationalType.setRendered %}
-                                    {% endif %}
-                                </div>
-                            {% elseif choice.vars.value == enum('App\\Enum\\Study\\NonExperimentalDetails').SURVEY_RESEARCH.value %}
-                                <div class="ml-6">
-                                    {% if choice.vars.checked %}
-                                        {{ form_row(form.surveyInstrumentType) }}
-                                    {% else %}
-                                        {% do form.surveyInstrumentType.setRendered %}
-                                    {% endif %}
-                                </div>
-                            {% endif %}
-                        {% endfor -%}
-                    </div>
-
-                </div>
-                {% do form.experimentalDetails.setRendered %}
-            {% else %}
-                {% do form.experimentalDetails.setRendered %}
-                {% do form.nonExperimentalDetails.setRendered %}
-                {% do form.observationalType.setRendered %}
-                {% do form.surveyInstrumentType.setRendered %}
-            {% endif %}
+                        {% else %}
+                            {% do form.experimentalDetails.setRendered %}
+                        {% endif %}
+                {% elseif choice.vars.value == enum('App\\Enum\\Study\\ResearchMethod').SURVEY.value %}
+                    {% if choice.vars.checked %}
+                        <div class="ml-6 mb-3">
+                            {{ form_row(form.surveyInstrumentType) }}
+                        </div>
+                    {% else %}
+                        {% do form.surveyInstrumentType.setRendered %}
+                    {% endif %}
+                {% endif %}
+            {% endfor -%}
         </div>
     </twig:Form:FormCard>
 
     <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').SETTING }}">
         <twig:Form:MultilineChoiceForm form="{{ form.setting }}"/>
 
-        {% if form.setting.vars.value != enum('App\\Enum\\Study\\StudySetting').ARTIFICIAL.value %}
+        {% if form.setting.vars.value == enum('App\\Enum\\Study\\StudySetting').FIELD.value %}
             {{ form_row(form.settingLocation) }}
         {% else %}
             {% do form.settingLocation.setRendered %}
         {% endif %}
     </twig:Form:FormCard>
 
-    {% if research_method == enum('App\\Enum\\Study\\ResearchMethod').EXPERIMENTAL.value %}
-        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').MANIPULATIONS }}">
-            {{ form_row(form.manipulations) }}
+    {% if enum('App\\Enum\\Study\\ResearchMethod').EXPERIMENTAL.value in research_method %}
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').RANDOMIZATION }}">
+            <twig:Form:MultilineChoiceForm form="{{ form.randomization }}"/>
         </twig:Form:FormCard>
 
         <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').EXPERIMENTAL_DESIGN }}">
@@ -124,7 +84,6 @@
             />
         </twig:Form:FormCard>
     {% else %}
-        {% do form.manipulations.setRendered %}
         {% do form.experimentalDesign.setRendered %}
         {% do form.controlOperations.setRendered %}
         {% do form.otherControlOperations.setRendered %}
@@ -153,7 +112,7 @@
 
                         <div class="px-4">
                             {{ form_row(occasion.timeOfMeasurement) }}
-                            {% if research_method == enum('App\\Enum\\Study\\ResearchMethod').EXPERIMENTAL.value %}
+                            {% if enum('App\\Enum\\Study\\ResearchMethod').EXPERIMENTAL.value in research_method  %}
                                 {{ form_row(occasion.intervention) }}
                             {% else %}
                                 {% do occasion.intervention.setRendered %}
@@ -243,14 +202,17 @@
                             {{ form_row(instrument.title) }}
                             {{ form_row(instrument.author) }}
                             {{ form_row(instrument.citation) }}
-                            {{ form_row(instrument.abstract) }}
-                            {{ form_row(instrument.theoreticalBackground) }}
-                            {{ form_row(instrument.structure) }}
-                            {{ form_row(instrument.development) }}
-                            {{ form_row(instrument.objectivity) }}
-                            {{ form_row(instrument.reliability) }}
-                            {{ form_row(instrument.validity) }}
-                            {{ form_row(instrument.normReferenced) }}
+                            {{ form_row(instrument.newlyDeveloped) }}
+                            {% if instrument.newlyDeveloped.vars.checked %}
+                                {{ form_row(instrument.abstract) }}
+                                {{ form_row(instrument.theoreticalBackground) }}
+                                {{ form_row(instrument.structure) }}
+                                {{ form_row(instrument.development) }}
+                                {{ form_row(instrument.objectivity) }}
+                                {{ form_row(instrument.reliability) }}
+                                {{ form_row(instrument.validity) }}
+                                {{ form_row(instrument.normReferenced) }}
+                            {% endif %}
                         </div>
                     </li>
                 {% endfor %}

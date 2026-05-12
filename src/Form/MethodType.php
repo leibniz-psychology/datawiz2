@@ -7,8 +7,7 @@ use App\Enum\Study\ControlOperations;
 use App\Enum\Study\Dictionary\MethodDictionary;
 use App\Enum\Study\ExperimentalDesign;
 use App\Enum\Study\ExperimentalDetails;
-use App\Enum\Study\NonExperimentalDetails;
-use App\Enum\Study\ObservationalType;
+use App\Enum\Study\Randomization;
 use App\Enum\Study\ResearchDesign;
 use App\Enum\Study\ResearchMethod;
 use App\Enum\Study\StudySetting;
@@ -48,7 +47,7 @@ class MethodType extends AbstractType
                 'class' => StudySetting::class,
                 'expanded' => true,
                 'label' => MethodDictionary::SETTING->label(),
-                'choice_label' => fn (StudySetting $setting) => $setting->labelExtended(),
+                'choice_label' => fn (StudySetting $setting) => $setting->label(),
                 'choice_translation_domain' => 'enums',
             ])
             ->add(MethodDictionary::SETTING_LOCATION->value, TextareaType::class, [
@@ -63,6 +62,7 @@ class MethodType extends AbstractType
                 'placeholder' => false,
                 'class' => ResearchMethod::class,
                 'expanded' => true,
+                'multiple' => true,
                 'label' => MethodDictionary::RESEARCH_METHOD->label(),
                 'label_html' => true,
                 'choice_label' => fn (ResearchMethod $method) => $method->labelExtended(),
@@ -75,33 +75,18 @@ class MethodType extends AbstractType
                 'expanded' => true,
                 'label' => MethodDictionary::EXPERIMENTAL_DETAILS->label(),
                 'label_html' => true,
-                'choice_label' => fn (ExperimentalDetails $details) => $details->labelExtended(),
+                'choice_label' => fn (ExperimentalDetails $details) => $details->label(),
                 'choice_translation_domain' => 'enums',
             ])
-            ->add(MethodDictionary::NON_EXPERIMENTAL_DETAILS->value, EnumType::class, [
+            ->add(MethodDictionary::RANDOMIZATION->value, EnumType::class, [
                 'required' => false,
                 'placeholder' => false,
-                'class' => NonExperimentalDetails::class,
+                'class' => Randomization::class,
                 'expanded' => true,
-                'label' => MethodDictionary::NON_EXPERIMENTAL_DETAILS->label(),
+                'label' => MethodDictionary::RANDOMIZATION->label(),
                 'label_html' => true,
-                'choice_label' => fn (NonExperimentalDetails $details) => $details->labelExtended(),
+                'choice_label' => fn (Randomization $randomization) => $randomization->labelExtended(),
                 'choice_translation_domain' => 'enums',
-            ])
-            ->add(MethodDictionary::OBSERVATIONAL_TYPE->value, EnumType::class, [
-                'required' => false,
-                'placeholder' => MethodDictionary::OBSERVATIONAL_TYPE->placeholder(),
-                'class' => ObservationalType::class,
-                'label' => MethodDictionary::OBSERVATIONAL_TYPE->label(),
-                'choice_label' => fn (ObservationalType $details) => $details->label(),
-                'choice_translation_domain' => 'enums',
-            ])
-            ->add(MethodDictionary::MANIPULATIONS->value, TextareaType::class, [
-                'required' => false,
-                'label' => MethodDictionary::MANIPULATIONS->label(),
-                'attr' => [
-                    'rows' => '5',
-                ],
             ])
             ->add(MethodDictionary::EXPERIMENTAL_DESIGN->value, EnumType::class, [
                 'required' => false,

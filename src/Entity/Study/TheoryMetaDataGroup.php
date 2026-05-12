@@ -29,6 +29,11 @@ class TheoryMetaDataGroup extends UuidEntity
     private ?array $hypotheses = null;
 
     #[ORM\Column(nullable: true)]
+    #[SerializedName('exploratory_research_questions')]
+    #[Groups(['study'])]
+    private ?array $exploratoryResearchQuestions = null;
+
+    #[ORM\Column(nullable: true)]
     #[SerializedName('theories')]
     #[Groups(['study'])]
     private ?array $theories = null;
@@ -61,6 +66,16 @@ class TheoryMetaDataGroup extends UuidEntity
     public function setHypotheses(?array $hypotheses): void
     {
         $this->hypotheses = $hypotheses;
+    }
+
+    public function getExploratoryResearchQuestions(): ?array
+    {
+        return $this->exploratoryResearchQuestions;
+    }
+
+    public function setExploratoryResearchQuestions(?array $exploratoryResearchQuestions): void
+    {
+        $this->exploratoryResearchQuestions = $exploratoryResearchQuestions;
     }
 
     public function getTheories(): ?array

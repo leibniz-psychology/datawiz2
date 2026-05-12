@@ -43,6 +43,20 @@ class TheoryType extends AbstractType
                 'allow_delete' => true,
                 'label' => TheoryDictionary::HYPOTHESES->label(),
             ])
+            ->add(TheoryDictionary::EXPLORATORY_RESEARCH_QUESTIONS->value, CollectionType::class, [
+                'required' => false,
+                'entry_type' => TextareaType::class,
+                'entry_options' => [
+                    'label' => false,
+                    'attr' => [
+                        'rows' => '4',
+                    ],
+                ],
+                'allow_add' => true,
+                'prototype' => true,
+                'allow_delete' => true,
+                'label' => TheoryDictionary::EXPLORATORY_RESEARCH_QUESTIONS->label(),
+            ])
             ->add(TheoryDictionary::THEORIES->value, CollectionType::class, [
                 'required' => false,
                 'entry_type' => TextareaType::class,

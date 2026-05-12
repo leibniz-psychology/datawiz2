@@ -19,13 +19,9 @@
 {% endblock %}
 
 {% block help_for_metadata %}
-    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').TITLE }}"/>
-    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').TITLE_TRANSLATED }}"/>
-    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').DESCRIPTION }}"/>
-    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').DESCRIPTION_TRANSLATED }}"/>
-    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').DATA_STATUS }}"/>
-    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').USED_SOFTWARES }}"/>
-    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').RELATED_PUBLICATIONS }}"/>
-    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').CONFLICTS_OF_INTEREST }}"/>
-    <twig:Form:FormHelp dictionary="{{ enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').CREATORS }}"/>
+    {% for entry in enum('App\\Enum\\Study\\Dictionary\\BasicInformationDictionary').cases %}
+        {% if entry.descriptionHelp != null %}
+            <twig:Form:FormHelp dictionary="{{ entry }}"/>
+        {% endif %}
+    {% endfor %}
 {% endblock %}

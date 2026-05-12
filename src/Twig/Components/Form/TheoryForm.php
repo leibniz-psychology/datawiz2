@@ -73,6 +73,18 @@ class TheoryForm extends AbstractController
     }
 
     #[LiveAction]
+    public function addExploratoryResearchQuestion(): void
+    {
+        $this->formValues['exploratoryResearchQuestions'][] = [];
+    }
+
+    #[LiveAction]
+    public function removeExploratoryResearchQuestion(#[LiveArg] int $index): void
+    {
+        unset($this->formValues['exploratoryResearchQuestions'][$index]);
+    }
+
+    #[LiveAction]
     public function addTheory(): void
     {
         $this->formValues['theories'][] = [];

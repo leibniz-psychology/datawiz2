@@ -69,7 +69,6 @@ enum MeasureDictionary: string implements DictionaryInterface
     {
         return match ($this) {
             self::COLLECTION_MODE => 'measure.collection_mode',
-            self::APPARATUS => 'measure.apparatus',
             self::SPECIAL_CIRCUMSTANCES => 'measure.special_circumstances',
             self::RAW_DATA_TRANSFORMATION => 'measure.raw_data_transformation',
             self::QUALITY_INDICATORS => 'measure.quality_indicators',

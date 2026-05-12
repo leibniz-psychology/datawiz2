@@ -7,7 +7,9 @@
 namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
+use App\Enum\Study\Anonymization;
 use App\Enum\YesNo;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
@@ -24,25 +26,55 @@ class EthicsMetaDataGroup extends UuidEntity
     #[Groups('study')]
     private ?YesNo $ethicalReview = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[SerializedName('ethical_review_description')]
+    #[Groups('study')]
+    private ?string $ethicalReviewDescription = null;
+
     #[ORM\Column(nullable: true, enumType: YesNo::class)]
     #[SerializedName('informed_consent')]
     #[Groups('study')]
     private ?YesNo $informedConsent = null;
 
     #[ORM\Column(nullable: true, enumType: YesNo::class)]
+    #[SerializedName('data_sharing_provision')]
+    #[Groups('study')]
+    private ?YesNo $dataSharing = null;
+
+    #[ORM\Column(nullable: true, enumType: YesNo::class)]
     #[SerializedName('personal_data_collection')]
     #[Groups('study')]
     private ?YesNo $personalData = null;
+
+    #[ORM\Column(nullable: true, enumType: Anonymization::class)]
+    #[SerializedName('anonymization')]
+    #[Groups('study')]
+    private ?Anonymization $anonymization = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[SerializedName('anonymization_description')]
+    #[Groups('study')]
+    private ?string $anonymizationDescription = null;
 
     #[ORM\Column(nullable: true, enumType: YesNo::class)]
     #[SerializedName('copyright')]
     #[Groups('study')]
     private ?YesNo $copyright = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[SerializedName('copyright_licenses')]
+    #[Groups('study')]
+    private ?string $copyrightLicenses = null;
+
     #[ORM\Column(nullable: true, enumType: YesNo::class)]
     #[SerializedName('third_party_rights')]
     #[Groups('study')]
     private ?YesNo $thirdPartyRights = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[SerializedName('third_party_licenses')]
+    #[Groups('study')]
+    private ?string $thirdPartyLicenses = null;
 
     public function getExperiment(): ?Experiment
     {
@@ -66,6 +98,18 @@ class EthicsMetaDataGroup extends UuidEntity
         return $this;
     }
 
+    public function getEthicalReviewDescription(): ?string
+    {
+        return $this->ethicalReviewDescription;
+    }
+
+    public function setEthicalReviewDescription(?string $ethicalReviewDescription): static
+    {
+        $this->ethicalReviewDescription = $ethicalReviewDescription;
+
+        return $this;
+    }
+
     public function getInformedConsent(): ?YesNo
     {
         return $this->informedConsent;
@@ -74,6 +118,18 @@ class EthicsMetaDataGroup extends UuidEntity
     public function setInformedConsent(?YesNo $informedConsent): static
     {
         $this->informedConsent = $informedConsent;
+
+        return $this;
+    }
+
+    public function getDataSharing(): ?YesNo
+    {
+        return $this->dataSharing;
+    }
+
+    public function setDataSharing(?YesNo $dataSharing): static
+    {
+        $this->dataSharing = $dataSharing;
 
         return $this;
     }
@@ -90,6 +146,30 @@ class EthicsMetaDataGroup extends UuidEntity
         return $this;
     }
 
+    public function getAnonymization(): ?Anonymization
+    {
+        return $this->anonymization;
+    }
+
+    public function setAnonymization(?Anonymization $anonymization): static
+    {
+        $this->anonymization = $anonymization;
+
+        return $this;
+    }
+
+    public function getAnonymizationDescription(): ?string
+    {
+        return $this->anonymizationDescription;
+    }
+
+    public function setAnonymizationDescription(?string $anonymizationDescription): static
+    {
+        $this->anonymizationDescription = $anonymizationDescription;
+
+        return $this;
+    }
+
     public function getCopyright(): ?YesNo
     {
         return $this->copyright;
@@ -102,6 +182,18 @@ class EthicsMetaDataGroup extends UuidEntity
         return $this;
     }
 
+    public function getCopyrightLicenses(): ?string
+    {
+        return $this->copyrightLicenses;
+    }
+
+    public function setCopyrightLicenses(?string $copyrightLicenses): static
+    {
+        $this->copyrightLicenses = $copyrightLicenses;
+
+        return $this;
+    }
+
     public function getThirdPartyRights(): ?YesNo
     {
         return $this->thirdPartyRights;
@@ -110,6 +202,18 @@ class EthicsMetaDataGroup extends UuidEntity
     public function setThirdPartyRights(?YesNo $thirdPartyRights): static
     {
         $this->thirdPartyRights = $thirdPartyRights;
+
+        return $this;
+    }
+
+    public function getThirdPartyLicenses(): ?string
+    {
+        return $this->thirdPartyLicenses;
+    }
+
+    public function setThirdPartyLicenses(?string $thirdPartyLicenses): static
+    {
+        $this->thirdPartyLicenses = $thirdPartyLicenses;
 
         return $this;
     }

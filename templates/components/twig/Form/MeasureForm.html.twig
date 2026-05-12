@@ -12,29 +12,33 @@
         </div>
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').COLLECTION_MODE }}">
-        {{ form_row(form.collectionMode) }}
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').COLLECTION_MODE }}">
+        {{ form_label(form.collectionMode) }}
+        {{ form_errors(form.collectionMode) }}
+        <div class="mt-1 flex flex-col gap-2">
+            {%- for choice in form.collectionMode %}
+                {{ form_row(choice) }}
+                {% if choice.vars.value == enum('App\\Enum\\Study\\CollectionMode').SPECIAL_APPARATUS.value %}
+                    {% if choice.vars.checked %}
+                        <div class="ml-6 mb-3">
+                            {{ form_row(form.apparatus) }}
+                        </div>
+                    {% else %}
+                        {% do form.apparatus.setRendered %}
+                    {% endif %}
+                {% endif %}
+            {% endfor -%}
+        </div>
         {% if enum('App\\Enum\\Study\\CollectionMode').OTHER.value in form.collectionMode.vars.value  %}
-            {{ form_row(form.collectionModeOtherDescription) }}
+            <div class="ml-6">
+                {{ form_row(form.collectionModeOtherDescription) }}
+            </div>
         {% else %}
             {% do form.collectionModeOtherDescription.setRendered %}
         {% endif %}
     </twig:Form:FormCard>
 
-    {% if enum('App\\Enum\\Study\\CollectionMode').SPECIAL_APPARATUS.value in form.collectionMode.vars.value %}
-        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').APPARATUS }}">
-            <twig:Form:CollectionForm
-                collection="{{ form.apparatus }}"
-                add_action="addApparatus"
-                remove_action="removeApparatus"
-                add_label="{{ 'measure_meta_data_group.apparatus.add'|trans([], 'forms') }}"
-            />
-        </twig:Form:FormCard>
-    {% else %}
-        {% do form.apparatus.setRendered %}
-    {% endif %}
-
-    <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').ORIGINAL_RECORD_TYPE }}">
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').ORIGINAL_RECORD_TYPE }}">
         {{ form_row(form.originalRecordType) }}
         {% if enum('App\\Enum\\Study\\RecordType').OTHER.value in form.originalRecordType.vars.value %}
             {{ form_row(form.originalRecordTypeOtherDescription) }}
@@ -43,7 +47,7 @@
         {% endif %}
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').RAW_DATA_DIGITIZATION }}">
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').RAW_DATA_DIGITIZATION }}">
         {{ form_row(form.rawDataDigitization) }}
         {% if form.rawDataDigitization.vars.value == enum('App\\Enum\\Study\\DataDigitization').COMPLEX.value %}
             {{ form_row(form.rawDataDigitizationDescription) }}
@@ -52,19 +56,19 @@
         {% endif %}
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').SPECIAL_CIRCUMSTANCES }}">
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').SPECIAL_CIRCUMSTANCES }}">
         {{ form_row(form.specialCircumstances) }}
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').RAW_DATA_TRANSFORMATION }}">
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').RAW_DATA_TRANSFORMATION }}">
         {{ form_row(form.rawDataTransformation) }}
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').QUALITY_INDICATORS }}">
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').QUALITY_INDICATORS }}">
         {{ form_row(form.qualityIndicators) }}
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').LIMITATIONS }}">
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').LIMITATIONS }}">
         {{ form_row(form.limitations) }}
     </twig:Form:FormCard>
 {% endblock %}

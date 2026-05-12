@@ -5,11 +5,21 @@
 {% endblock %}
 
 {% block form_content %}
-    <twig:Form:FormCard entry="{{ enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').PARTICIPANTS }}">
-        {{ form_row(form.participants) }}
-        {{ form_row(form.sex) }}
-        {{ form_row(form.age) }}
-        {{ form_row(form.specialGroups) }}
+    <twig:Form:FormCard title="{{ 'sample_meta_data_group.inclusion_exclusion_criteria.legend'|trans([], 'forms') }}" help="{{ 'sample.inclusion_exclusion_criteria' }}">
+        <div class="md:grid md:grid-cols-2 md:gap-x-4">
+            {{ form_row(form.participantMinAge) }}
+            {{ form_row(form.participantMaxAge, {
+                'attr': {
+                    'disabled': form.participantMaxAgeUnlimited.vars.checked,
+                }
+            }) }}
+            <span class="hidden md:block"></span>
+            {{ form_row(form.participantMaxAgeUnlimited) }}
+        </div>
+        <twig:Form:MultilineChoiceForm form="{{ form.participantGroups }}"/>
+        {% if enum('App\\Enum\\Study\\ParticipantGroup').OTHER.value in form.participantGroups.vars.value %}
+            {{ form_row(form.participantGroupsOtherDescription) }}
+        {% endif %}
     </twig:Form:FormCard>
 
     <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').POPULATION }}">
@@ -18,24 +28,6 @@
             add_action="addPopulation"
             remove_action="removePopulation"
             add_label="{{ 'sample_meta_data_group.population.add'|trans([], 'forms') }}"
-        />
-    </twig:Form:FormCard>
-
-    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').INCLUSION_CRITERIA }}">
-        <twig:Form:CollectionForm
-            collection="{{ form.inclusionCriteria }}"
-            add_action="addInclusion"
-            remove_action="removeInclusion"
-            add_label="{{ 'sample_meta_data_group.inclusion_criteria.add'|trans([], 'forms') }}"
-        />
-    </twig:Form:FormCard>
-
-    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').EXCLUSION_CRITERIA }}">
-        <twig:Form:CollectionForm
-            collection="{{ form.exclusionCriteria }}"
-            add_action="addExclusion"
-            remove_action="removeExclusion"
-            add_label="{{ 'sample_meta_data_group.exclusion_criteria.add'|trans([], 'forms') }}"
         />
     </twig:Form:FormCard>
 
@@ -77,7 +69,13 @@
         {{ form_row(form.multilevelStructure) }}
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\SampleDictionary').COUNTRY }}">
+    <twig:Form:FormCard title="{{ 'sample_meta_data_group.participants.legend'|trans([], 'forms') }}">
+        {{ form_row(form.sex) }}
+        {{ form_row(form.age) }}
+        {{ form_row(form.specialGroups) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" title="{{ 'sample_meta_data_group.geographic_origin.legend'|trans([], 'forms') }}">
         {{ form_row(form.country) }}
         {{ form_row(form.city) }}
         {{ form_row(form.region) }}

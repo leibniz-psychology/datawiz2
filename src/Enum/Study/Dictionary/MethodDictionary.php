@@ -16,9 +16,7 @@ enum MethodDictionary: string implements DictionaryInterface
     case RESEARCH_DESIGN = 'researchDesign';
     case RESEARCH_METHOD = 'researchMethod';
     case EXPERIMENTAL_DETAILS = 'experimentalDetails';
-    case NON_EXPERIMENTAL_DETAILS = 'nonExperimentalDetails';
-    case OBSERVATIONAL_TYPE = 'observationalType';
-    case MANIPULATIONS = 'manipulations';
+    case RANDOMIZATION = 'randomization';
     case EXPERIMENTAL_DESIGN = 'experimentalDesign';
     case CONTROL_OPERATIONS = 'controlOperations';
     case OTHER_CONTROL_OPERATIONS = 'otherControlOperations';
@@ -38,12 +36,10 @@ enum MethodDictionary: string implements DictionaryInterface
             self::RESEARCH_DESIGN => 'method_meta_data_group.research_design.legend',
             self::RESEARCH_METHOD => 'method_meta_data_group.research_method.legend',
             self::EXPERIMENTAL_DETAILS => 'method_meta_data_group.experimental_details.legend',
-            self::NON_EXPERIMENTAL_DETAILS => 'method_meta_data_group.non_experimental_details.legend',
             self::SETTING => 'method_meta_data_group.setting.legend',
             self::SETTING_LOCATION => 'method_meta_data_group.setting_location.legend',
-            self::OBSERVATIONAL_TYPE => 'method_meta_data_group.observational_type.legend',
-            self::MANIPULATIONS => 'method_meta_data_group.manipulations.legend',
             self::EXPERIMENTAL_DESIGN => 'method_meta_data_group.experimental_design.legend',
+            self::RANDOMIZATION => 'method_meta_data_group.randomization.legend',
             self::CONTROL_OPERATIONS => 'method_meta_data_group.control_operations.legend',
             self::OTHER_CONTROL_OPERATIONS => 'method_meta_data_group.other_control_operations.legend',
             self::RESEARCH_DESIGN_DESCRIPTION => 'method_meta_data_group.research_design_description.legend',
@@ -61,12 +57,10 @@ enum MethodDictionary: string implements DictionaryInterface
         return match ($this) {
             self::RESEARCH_METHOD => 'method_meta_data_group.research_method.label',
             self::EXPERIMENTAL_DETAILS => 'method_meta_data_group.experimental_details.label',
-            self::NON_EXPERIMENTAL_DETAILS => 'method_meta_data_group.non_experimental_details.label',
             self::SETTING => 'method_meta_data_group.setting.label',
             self::SETTING_LOCATION => 'method_meta_data_group.setting_location.label',
-            self::OBSERVATIONAL_TYPE => 'method_meta_data_group.observational_type.label',
-            self::MANIPULATIONS => 'method_meta_data_group.manipulations.label',
             self::EXPERIMENTAL_DESIGN => 'method_meta_data_group.experimental_design.label',
+            self::RANDOMIZATION => 'method_meta_data_group.randomization.label',
             self::CONTROL_OPERATIONS => 'method_meta_data_group.control_operations.label',
             self::OTHER_CONTROL_OPERATIONS => 'method_meta_data_group.other_control_operations.label',
             self::RESEARCH_DESIGN => 'method_meta_data_group.research_design.label',
@@ -83,7 +77,6 @@ enum MethodDictionary: string implements DictionaryInterface
     public function placeholder(): ?string
     {
         return match ($this) {
-            self::OBSERVATIONAL_TYPE => 'method_meta_data_group.observational_type.placeholder',
             self::SURVEY_INSTRUMENT_TYPE => 'method_meta_data_group.survey_instrument_type.placeholder',
             default => null,
         };
@@ -102,8 +95,7 @@ enum MethodDictionary: string implements DictionaryInterface
         return match ($this) {
             self::RESEARCH_DESIGN => 'method.research_design',
             self::RESEARCH_METHOD => 'method.research_method',
-            self::SETTING => 'method.setting',
-            self::MANIPULATIONS => 'method.manipulations',
+            self::RANDOMIZATION => 'method.randomization',
             self::EXPERIMENTAL_DESIGN => 'method.experimental_design',
             self::CONTROL_OPERATIONS => 'method.control_operations',
             self::RESEARCH_METHOD_DESCRIPTION => 'method.research_method_description',
@@ -117,11 +109,9 @@ enum MethodDictionary: string implements DictionaryInterface
         return match ($this) {
             self::RESEARCH_METHOD => new ReviewDataDto('method_meta_data_group.name.error_message', ErrorType::MANDATORY),
             self::EXPERIMENTAL_DETAILS => new ReviewDataDto('method_meta_data_group.experimental_details.error_message', ErrorType::OPTIONAL),
-            self::NON_EXPERIMENTAL_DETAILS => new ReviewDataDto('method_meta_data_group.non_experimental_details.error_message', ErrorType::OPTIONAL),
+            self::RANDOMIZATION => new ReviewDataDto('method_meta_data_group.randomization.error_message', ErrorType::OPTIONAL),
             self::SETTING => new ReviewDataDto('method_meta_data_group.setting.error_message', ErrorType::OPTIONAL),
             self::SETTING_LOCATION => new ReviewDataDto('method_meta_data_group.setting_location.error_message', ErrorType::OPTIONAL),
-            self::OBSERVATIONAL_TYPE => new ReviewDataDto('method_meta_data_group.observational_type.error_message', ErrorType::OPTIONAL),
-            self::MANIPULATIONS => new ReviewDataDto('method_meta_data_group.manipulations.error_message', ErrorType::OPTIONAL),
             self::EXPERIMENTAL_DESIGN => new ReviewDataDto('method_meta_data_group.experimental_design.error_message', ErrorType::OPTIONAL),
             self::CONTROL_OPERATIONS => new ReviewDataDto('method_meta_data_group.control_operations.error_message', ErrorType::OPTIONAL),
             self::OTHER_CONTROL_OPERATIONS => new ReviewDataDto('method_meta_data_group.other_control_operations.error_message', ErrorType::OPTIONAL),

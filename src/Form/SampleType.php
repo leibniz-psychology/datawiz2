@@ -4,11 +4,14 @@ namespace App\Form;
 
 use App\Entity\Study\SampleMetaDataGroup;
 use App\Enum\Study\Dictionary\SampleDictionary;
+use App\Enum\Study\ParticipantGroup;
 use App\Enum\Study\SampleAnalysisUnit;
 use App\Enum\Study\SamplingMethod;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,9 +22,32 @@ class SampleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add(SampleDictionary::PARTICIPANTS->value, TextareaType::class, [
+            ->add(SampleDictionary::PARTICIPANT_MIN_AGE->value, IntegerType::class, [
                 'required' => false,
-                'label' => SampleDictionary::PARTICIPANTS->label(),
+                'label' => SampleDictionary::PARTICIPANT_MIN_AGE->label(),
+            ])
+            ->add(SampleDictionary::PARTICIPANT_MAX_AGE->value, IntegerType::class, [
+                'required' => false,
+                'label' => SampleDictionary::PARTICIPANT_MAX_AGE->label(),
+            ])
+            ->add(SampleDictionary::PARTICIPANT_MAX_AGE_UNLIMITED->value, CheckboxType::class, [
+                'required' => false,
+                'label' => SampleDictionary::PARTICIPANT_MAX_AGE_UNLIMITED->label(),
+            ])
+            ->add(SampleDictionary::PARTICIPANT_GROUPS->value, EnumType::class, [
+                'required' => false,
+                'placeholder' => false,
+                'class' => ParticipantGroup::class,
+                'multiple' => true,
+                'expanded' => true,
+                'label' => SampleDictionary::PARTICIPANT_GROUPS->label(),
+                'label_html' => true,
+                'choice_label' => fn (ParticipantGroup $group) => $group->labelExtended(),
+                'choice_translation_domain' => 'enums',
+            ])
+            ->add(SampleDictionary::PARTICIPANT_GROUPS_OTHER_DESCRIPTION->value, TextareaType::class, [
+                'required' => false,
+                'label' => SampleDictionary::PARTICIPANT_GROUPS_OTHER_DESCRIPTION->label(),
                 'attr' => [
                     'rows' => '3',
                 ],
@@ -36,28 +62,6 @@ class SampleType extends AbstractType
                 'prototype' => true,
                 'allow_delete' => true,
                 'label' => SampleDictionary::POPULATION->label(),
-            ])
-            ->add(SampleDictionary::INCLUSION_CRITERIA->value, CollectionType::class, [
-                'required' => false,
-                'entry_type' => TextType::class,
-                'entry_options' => [
-                    'label' => false,
-                ],
-                'allow_add' => true,
-                'prototype' => true,
-                'allow_delete' => true,
-                'label' => SampleDictionary::INCLUSION_CRITERIA->label(),
-            ])
-            ->add(SampleDictionary::EXCLUSION_CRITERIA->value, CollectionType::class, [
-                'required' => false,
-                'entry_type' => TextType::class,
-                'entry_options' => [
-                    'label' => false,
-                ],
-                'allow_add' => true,
-                'prototype' => true,
-                'allow_delete' => true,
-                'label' => SampleDictionary::EXCLUSION_CRITERIA->label(),
             ])
             ->add(SampleDictionary::SAMPLING_METHOD->value, EnumType::class, [
                 'required' => false,

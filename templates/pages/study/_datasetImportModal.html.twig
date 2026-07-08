@@ -95,15 +95,20 @@
                 </div>
             </div>
             <!--footer-->
-            <div class="flex items-center justify-end p-6 border-t border-gray-200 border-solid rounded-b-sm">
-                <button
+            <div class="flex items-center justify-end p-6 border-t border-gray-200 border-solid rounded-b-sm gap-2">
+                <div class="flex items-center mr-auto">
+                    <input required type="checkbox" id="datasetImportAnonymized" name="datasetImportAnonymized" onchange="document.getElementById('dataset-import-submit').disabled = !this.checked;"
+                           value="1" x-model="anonymized" class="w-4 h-4 mr-2">
+                    <label class="block" for="datasetImportAnonymized">I confirm that the uploaded data is anonymized<span class="text-red-600">*</span></label>
+                </div>
+                <button disabled
                         class="Button_primary_act Button_standalone"
                         type="button"
                         id="dataset-import-submit">
                     Import dataset
                 </button>
                 <button
-                        class="ml-2 Button_tertiary_act Button_standalone"
+                        class="Button_tertiary_act Button_standalone"
                         type="button"
                         id="dataset-import-cancel" x-ref="cancelUpload">
                     Cancel

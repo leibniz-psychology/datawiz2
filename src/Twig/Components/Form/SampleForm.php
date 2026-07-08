@@ -60,32 +60,11 @@ class SampleForm extends AbstractController
         unset($this->formValues['population'][$index]);
     }
 
-    #[LiveAction]
-    public function addInclusion(): void
-    {
-        $this->formValues['inclusion_criteria'][] = [];
-    }
-
-    #[LiveAction]
-    public function removeInclusion(#[LiveArg] int $index): void
-    {
-        unset($this->formValues['inclusion_criteria'][$index]);
-    }
-
-    #[LiveAction]
-    public function addExclusion(): void
-    {
-        $this->formValues['exclusion_criteria'][] = [];
-    }
-
-    #[LiveAction]
-    public function removeExclusion(#[LiveArg] int $index): void
-    {
-        unset($this->formValues['exclusion_criteria'][$index]);
-    }
-
     protected function instantiateForm(): FormInterface
     {
+        if ($this->initialFormData->getPopulation() == [] or $this->initialFormData->getPopulation() == null) {
+            $this->initialFormData->setPopulation(['']);
+        }
         return $this->createForm(SampleType::class, $this->initialFormData);
     }
 }

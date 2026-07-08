@@ -2,6 +2,9 @@
 
 namespace App\Twig\Components\Form;
 
+use App\Entity\Study\MeasurementInstrument;
+use App\Entity\Study\MeasurementOccasion;
+use App\Entity\Study\MethodConstruct;
 use App\Entity\Study\MethodMetaDataGroup;
 use App\Form\MethodType;
 use App\Repository\MethodRepository;
@@ -105,6 +108,19 @@ class MethodForm extends AbstractController
 
     protected function instantiateForm(): FormInterface
     {
+        if ($this->initialFormData->getMeasurementOccasions()->isEmpty()) {
+            $this->initialFormData->addMeasurementOccasion(new MeasurementOccasion());
+        }
+        if ($this->initialFormData->getConstructs()->isEmpty()) {
+            $this->initialFormData->addConstruct(new MethodConstruct());
+        }
+        if ($this->initialFormData->getMeasurementInstruments()->isEmpty()) {
+            $this->initialFormData->addMeasurementInstrument(new MeasurementInstrument());
+        }
+        if ($this->initialFormData->getTreatmentGroups() == [] or $this->initialFormData->getTreatmentGroups() == null) {
+            $this->initialFormData->setTreatmentGroups(['']);
+        }
+
         return $this->createForm(MethodType::class, $this->initialFormData);
     }
 }

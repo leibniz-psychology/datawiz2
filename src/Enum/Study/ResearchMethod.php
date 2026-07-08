@@ -26,7 +26,7 @@ enum ResearchMethod: string implements ExtendedEnumInterface
     {
         return match ($this) {
             self::EXPERIMENTAL => 'research_method.extended.experimental',
-            self::SURVEY => 'research_method.extended.non_experimental',
+            self::SURVEY => 'research_method.extended.survey',
             self::TEST_DEVELOPMENT => 'research_method.extended.test_development',
         };
     }

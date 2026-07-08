@@ -38,6 +38,11 @@ class MeasureMetaDataGroup extends UuidEntity
     private ?array $collectionMode = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[SerializedName('collection_investigator_presence')]
+    #[Groups(['study'])]
+    private ?string $collectionInvestigatorPresence = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[SerializedName('apparatus')]
     #[Groups(['study'])]
     private ?string $apparatus = null;
@@ -131,6 +136,18 @@ class MeasureMetaDataGroup extends UuidEntity
     public function setCollectionMode(?array $collectionMode): static
     {
         $this->collectionMode = $collectionMode;
+
+        return $this;
+    }
+
+    public function getCollectionInvestigatorPresence(): ?string
+    {
+        return $this->collectionInvestigatorPresence;
+    }
+
+    public function setCollectionInvestigatorPresence(?string $collectionInvestigatorPresence): static
+    {
+        $this->collectionInvestigatorPresence = $collectionInvestigatorPresence;
 
         return $this;
     }

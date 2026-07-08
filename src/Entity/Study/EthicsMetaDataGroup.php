@@ -7,7 +7,7 @@
 namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
-use App\Enum\Study\Anonymization;
+use App\Enum\Study\SharingLevel;
 use App\Enum\YesNo;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -41,20 +41,20 @@ class EthicsMetaDataGroup extends UuidEntity
     #[Groups('study')]
     private ?YesNo $dataSharing = null;
 
+    #[ORM\Column(nullable: true, enumType: SharingLevel::class)]
+    #[SerializedName('data_sharing_level')]
+    #[Groups('study')]
+    private ?SharingLevel $dataSharingLevel = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[SerializedName('data_sharing_infrastructure')]
+    #[Groups('study')]
+    private ?string $dataSharingInfrastructure = null;
+
     #[ORM\Column(nullable: true, enumType: YesNo::class)]
     #[SerializedName('personal_data_collection')]
     #[Groups('study')]
     private ?YesNo $personalData = null;
-
-    #[ORM\Column(nullable: true, enumType: Anonymization::class)]
-    #[SerializedName('anonymization')]
-    #[Groups('study')]
-    private ?Anonymization $anonymization = null;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[SerializedName('anonymization_description')]
-    #[Groups('study')]
-    private ?string $anonymizationDescription = null;
 
     #[ORM\Column(nullable: true, enumType: YesNo::class)]
     #[SerializedName('copyright')]
@@ -134,6 +134,30 @@ class EthicsMetaDataGroup extends UuidEntity
         return $this;
     }
 
+    public function getDataSharingLevel(): ?SharingLevel
+    {
+        return $this->dataSharingLevel;
+    }
+
+    public function setDataSharingLevel(?SharingLevel $dataSharingLevel): static
+    {
+        $this->dataSharingLevel = $dataSharingLevel;
+
+        return $this;
+    }
+
+    public function getDataSharingInfrastructure(): ?string
+    {
+        return $this->dataSharingInfrastructure;
+    }
+
+    public function setDataSharingInfrastructure(?string $dataSharingInfrastructure): static
+    {
+        $this->dataSharingInfrastructure = $dataSharingInfrastructure;
+
+        return $this;
+    }
+
     public function getPersonalData(): ?YesNo
     {
         return $this->personalData;
@@ -142,30 +166,6 @@ class EthicsMetaDataGroup extends UuidEntity
     public function setPersonalData(?YesNo $personalData): static
     {
         $this->personalData = $personalData;
-
-        return $this;
-    }
-
-    public function getAnonymization(): ?Anonymization
-    {
-        return $this->anonymization;
-    }
-
-    public function setAnonymization(?Anonymization $anonymization): static
-    {
-        $this->anonymization = $anonymization;
-
-        return $this;
-    }
-
-    public function getAnonymizationDescription(): ?string
-    {
-        return $this->anonymizationDescription;
-    }
-
-    public function setAnonymizationDescription(?string $anonymizationDescription): static
-    {
-        $this->anonymizationDescription = $anonymizationDescription;
 
         return $this;
     }

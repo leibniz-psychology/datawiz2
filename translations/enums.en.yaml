@@ -102,13 +102,13 @@ research_design:
         longitudinal: '<span>Longitudinal</span><span>Multiple measurement occasions per subject</span>'
 
 research_method:
-    experimental: 'Experimental'
+    experimental: 'Experiment'
     survey: 'Survey'
     test_development: 'Test development'
     extended:
-        experimental: '<span class="block">Experimental</span><span class="block text-sm">Your study involved an experimental manipulation.</span>'
-        non_experimental: '<span class="block">Survey</span><span class="block text-sm">Your study involved information collection on human experience and behaviour without an intervention.</span>'
-        test_development: '<span class="block">Test development</span><span class="block text-sm">Your study involved a test development process</span>'
+        experimental: '<span class="block">Experiment</span><span class="block text-sm">(Quasi-)Experiments manipulate or control certain conditions in order to analyze (causal) effects.</span>'
+        survey: '<span class="block">Survey</span><span class="block text-sm">Surveys collect information on human experience and behavior (no intervention).</span>'
+        test_development: '<span class="block">Test development</span><span class="block text-sm">Test data aim at the development or standardization of psychological instruments or tests.</span>'
 
 sample_analysis_unit:
     individuals: 'Individuals'
@@ -134,6 +134,17 @@ sampling_method:
         stratified: '<span>Stratified sampling</span><span>Your individuals (observations, cases) were chosen randomly from subgroups (strata)</span>'
         quota: '<span>Quota sampling</span><span>Your individuals (observations, cases) were chosen non-randomly on the basis of a specific plan</span>'
         other: 'Other'
+
+sharing_level:
+    public: 'Public use'
+    scientific: 'Scientific use'
+    restricted_scientific: 'Restricted scientific use'
+    secure: 'Secure use'
+    extended:
+        public: '<span>Public use</span><span>The data is publicly available</span>'
+        scientific: '<span>Scientific use</span><span>The data is available under standardised conditions (e.g. solely for scientific and non-commercial purposes)</span>'
+        restricted_scientific: '<span>Restricted scientific use</span><span>The data is available through individualised contracts.</span>'
+        secure: '<span>Secure use</span><span>The data is only available under data protection restrictions (e.g. online via a secured channel or on-site in a research data center) within the framework of an individual contract.</span>'
 
 study_relation:
     replication: 'Replication'

@@ -36,6 +36,9 @@
         {% else %}
             {% do form.collectionModeOtherDescription.setRendered %}
         {% endif %}
+        <div class="mt-2">
+            {{ form_row(form.collectionInvestigatorPresence) }}
+        </div>
     </twig:Form:FormCard>
 
     <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MeasureDictionary').ORIGINAL_RECORD_TYPE }}">

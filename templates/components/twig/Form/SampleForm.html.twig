@@ -19,6 +19,8 @@
         <twig:Form:MultilineChoiceForm form="{{ form.participantGroups }}"/>
         {% if enum('App\\Enum\\Study\\ParticipantGroup').OTHER.value in form.participantGroups.vars.value %}
             {{ form_row(form.participantGroupsOtherDescription) }}
+        {% else %}
+            {% do form.participantGroupsOtherDescription.setRendered %}
         {% endif %}
     </twig:Form:FormCard>
 

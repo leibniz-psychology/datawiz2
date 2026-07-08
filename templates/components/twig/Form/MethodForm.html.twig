@@ -28,7 +28,7 @@
                 {% if choice.vars.value == enum('App\\Enum\\Study\\ResearchMethod').EXPERIMENTAL.value %}
                         {% if choice.vars.checked %}
                             <div class="ml-6 mb-3">
-                                <twig:Form:MultilineChoiceForm form="{{ form.experimentalDetails }}"/>
+                                {{ form_row(form.experimentalDetails) }}
                             </div>
                         {% else %}
                             {% do form.experimentalDetails.setRendered %}
@@ -46,17 +46,17 @@
         </div>
     </twig:Form:FormCard>
 
-    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').SETTING }}">
-        <twig:Form:MultilineChoiceForm form="{{ form.setting }}"/>
-
-        {% if form.setting.vars.value == enum('App\\Enum\\Study\\StudySetting').FIELD.value %}
-            {{ form_row(form.settingLocation) }}
-        {% else %}
-            {% do form.settingLocation.setRendered %}
-        {% endif %}
-    </twig:Form:FormCard>
-
     {% if enum('App\\Enum\\Study\\ResearchMethod').EXPERIMENTAL.value in research_method %}
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').SETTING }}">
+            <twig:Form:MultilineChoiceForm form="{{ form.setting }}"/>
+
+            {% if form.setting.vars.value == enum('App\\Enum\\Study\\StudySetting').FIELD.value %}
+                {{ form_row(form.settingLocation) }}
+            {% else %}
+                {% do form.settingLocation.setRendered %}
+            {% endif %}
+        </twig:Form:FormCard>
+
         <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\MethodDictionary').RANDOMIZATION }}">
             <twig:Form:MultilineChoiceForm form="{{ form.randomization }}"/>
         </twig:Form:FormCard>

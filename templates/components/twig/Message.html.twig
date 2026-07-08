@@ -1,0 +1,15 @@
+{% if type is not defined or type == null %}
+    {% set type_class = 'bg-stone-100 border-stone-400 text-stone-800 ' %}
+{% elseif type == 'error' %}
+    {% set type_class = 'bg-red-100 border-red-400 text-red-800 ' %}
+{% elseif type == 'warning' %}
+    {% set type_class = 'bg-amber-100 border-amber-400 text-amber-800 ' %}
+{% elseif type == 'info' %}
+    {% set type_class = 'bg-blue-100 border-blue-400 text-blue-800 ' %}
+{% elseif type == 'success' %}
+    {% set type_class = 'bg-green-100 border-green-400 text-green-800 ' %}
+{% endif %}
+
+<div {{ attributes.defaults({class: 'border px-4 py-3 rounded ' ~ type_class }) }}>
+    {% block content %}{% endblock %}
+</div>

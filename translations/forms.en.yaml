@@ -80,7 +80,7 @@ creator_meta_data_group:
         label: 'Responsibilities'
         error_message: '<a href="#link#" class="#class#">Add a role</a>'
     responsibilities_other_description:
-        label: 'If other, please describe the role'
+        label: 'Please describe the role'
         error_message: '<a href="#link#" class="#class#">Add other role description</a>'
 
 ethics_meta_data_group:
@@ -104,24 +104,23 @@ ethics_meta_data_group:
         label: 'State whether data sharing was considered in the informed consent.'
         placeholder: 'Please select'
         error_message: '<a href="#link#" class="#class#">State</a> whether data sharing was considered'
+    data_sharing_level:
+        legend: 'Data sharing level'
+        label: 'State how and to whom anonymised research data will be provided.'
+        error_message: '<a href="#link#" class="#class#">State</a> how and to whom anonymised research data will be provided.'
+    data_sharing_infrastructure:
+        legend: 'Data sharing infrastructure'
+        label: 'State which infrastructure will be used for data sharing.'
+        help: 'State the used Data Archive, Research Data Center and other infrastructure or type of data transfer (e.g. using OFS, Zenodo, Psycharchives/RDC at ZPID, own infrastructure, encrypted E-mail)'
+        error_message: '<a href="#link#" class="#class#">State</a> which infrastructure will be used for data sharing.'
     personal_data:
         legend: 'Personal data'
         label: 'State whether personal data were collected for this study.'
         placeholder: 'Please select'
         error_message: '<a href="#link#" class="#class#">State</a> whether you collected personal data'
-    anonymization:
-        legend: 'Anonymization'
-        label: 'State whether uploaded datasets include personal data.'
-        help: 'Single direct identifiers (e.g. names, full address, phone number) or a set of indirect identifiers (e.g. sex, age, profession, location) may allow the re-identification of subjects.'
-        error_message: '<a href="#link#" class="#class#">State</a> whether anonymization was applied'
-    anonymization_description:
-        legend: 'Anonymization description'
-        label: 'Describe procedures used for anonymization (e.g. removal of variables, recoding of extreme values).'
-        help: 'If applicable, refer to corresponding documents under study materials.'
-        error_message: '<a href="#link#" class="#class#">Add anonymization description</a>'
     copyright:
         legend: 'Copyright'
-        label: 'State whether the research data, measurement instruments or software, which are created within this study, are subject to copyright, patent law or other intellectual property rights?'
+        label: 'State whether the research data, measurement instruments or software, which are created within this study, are subject to copyright, patent law or other intellectual property rights.'
         placeholder: 'Please select'
         error_message: '<a href="#link#" class="#class#">State</a> whether your data is subject to copyright'
     copyright_licenses:
@@ -161,15 +160,19 @@ measure_meta_data_group:
         error_message: '<a href="#link#" class="#class#">Add apparatus, instruments or equipments</a> to increase the reusability of your data'
     collection_mode_other_description:
         legend: 'Collection mode description'
-        label: 'If other, please describe the method'
+        label: 'Please describe the method'
         error_message: '<a href="#link#" class="#class#">Add collection mode description</a>'
+    collection_investigator_presence:
+        legend: 'Presence of an investigator during data collection'
+        label: 'Please indicate whether the investigator was present during data collection.'
+        error_message: '<a href="#link#" class="#class#">Please indicate</a> whether the investigator was present during data collection.'
     original_record_type:
         legend: 'Original record type'
         label: 'The original record type of the data.'
         error_message: '<a href="#link#" class="#class#">Add original record type</a>'
     original_record_type_other_description:
         legend: 'Original record type description'
-        label: 'If other, please describe the original record type'
+        label: 'Please describe the original record type'
         error_message: '<a href="#link#" class="#class#">Add original record type description</a>'
     raw_data_digitization:
         legend: 'Digitization of raw data'
@@ -264,7 +267,7 @@ method_construct:
         placeholder: 'Choose a function'
         error_message: '<a href="#link#" class="#class#">Add function</a>'
     other_function_description:
-        label: 'If other, please describe the function'
+        label: 'Please describe the function'
         error_message: '<a href="#link#" class="#class#">Add function description</a>'
 
 method_meta_data_group:
@@ -316,7 +319,7 @@ method_meta_data_group:
         error_message: '<a href="#link#" class="#class#">Add control operations</a> to increase the reusability of your data'
     other_control_operations:
         legend: 'Other control operations'
-        label: 'If other, please specify'
+        label: 'Please specify'
         error_message: '<a href="#link#" class="#class#">Add other control operations</a> to increase the reusability of your data'
     treatment_groups:
         legend: 'Study arms/Treatment groups'
@@ -389,7 +392,7 @@ sample_meta_data_group:
         error_message: '<a href="#link#" class="#class#">Add sampling method</a> to increase the reusability of your data'
     sampling_method_other_description:
         legend: 'Sampling method description'
-        label: 'If other, please describe the method'
+        label: 'Please describe the method'
         error_message: '<a href="#link#" class="#class#">Add sampling method description</a> to increase the reusability of your data'
     recruiting:
         legend: 'Recruiting'
@@ -413,7 +416,7 @@ sample_meta_data_group:
         error_message: '<a href="#link#" class="#class#">Add unit of analysis</a>'
     unit_of_analysis_other_description:
         legend: 'Unit of analysis description'
-        label: 'If other, please describe the unit of analysis'
+        label: 'Please describe the unit of analysis'
         error_message: '<a href="#link#" class="#class#">Add unit of analysis description</a>'
     multilevel_structure:
         legend: 'Multilevel structure'

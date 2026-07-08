@@ -41,6 +41,13 @@ class MeasureType extends AbstractType
                 'choice_label' => fn (CollectionMode $details) => $details->label(),
                 'choice_translation_domain' => 'enums',
             ])
+            ->add(MeasureDictionary::COLLECTION_INVESTIGATOR_PRESENCE->value, TextareaType::class, [
+                'required' => false,
+                'label' => MeasureDictionary::COLLECTION_INVESTIGATOR_PRESENCE->label(),
+                'attr' => [
+                    'rows' => '3',
+                ],
+            ])
             ->add(MeasureDictionary::APPARATUS->value, TextareaType::class, [
                 'required' => false,
                 'label' => MeasureDictionary::APPARATUS->label(),

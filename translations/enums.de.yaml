@@ -1,3 +1,14 @@
+sharing_level:
+    public: 'Öffentliche Nutzung'
+    scientific: 'Wissenschaftliche Nutzung'
+    restricted_scientific: 'Eingeschränkte wissenschaftliche Nutzung'
+    secure: 'Gesicherte Nutzung'
+    extended:
+        public: '<span>Öffentliche Nutzung</span><span>Die Daten werden öffentlich zugänglich gemacht</span>'
+        scientific: '<span>Wissenschaftliche Nutzung</span><span>Die Daten werden Dritten unter Standardbedingungen, wie z.B. Bestätigung ausschließlich wissenschaftlicher oder nichtkommerzieller Nutzung, zugänglich gemacht.</span>'
+        restricted_scientific: '<span>Eingeschränkte wissenschaftliche Nutzung</span><span>Die Daten werden Dritten über individualisierte Nutzungsverträge zugänglich gemacht.</span>'
+        secure: '<span>Gesicherte Nutzung</span><span>Die Daten werden Dritten nur unter datenschutzrechtlich gebotenen Einschränkungen (z.B. online über einen entsprechend abgesicherten Kanal oder vor Ort in einem Forschungsdatenzentrum) im Rahmen eines individuellen Vertrags zugänglich gemacht.</span>'
+
 data_status:
     complete: 'Vollständige Studiendaten'
     subset: 'Auszug aus den Studiendaten'

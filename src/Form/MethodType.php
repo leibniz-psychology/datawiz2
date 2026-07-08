@@ -73,8 +73,7 @@ class MethodType extends AbstractType
                 'placeholder' => false,
                 'class' => ExperimentalDetails::class,
                 'expanded' => true,
-                'label' => MethodDictionary::EXPERIMENTAL_DETAILS->label(),
-                'label_html' => true,
+                'label' => ' ',
                 'choice_label' => fn (ExperimentalDetails $details) => $details->label(),
                 'choice_translation_domain' => 'enums',
             ])

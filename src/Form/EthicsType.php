@@ -8,8 +8,8 @@
 namespace App\Form;
 
 use App\Entity\Study\EthicsMetaDataGroup;
-use App\Enum\Study\Anonymization;
 use App\Enum\Study\Dictionary\EthicsDictionary;
+use App\Enum\Study\SharingLevel;
 use App\Enum\YesNo;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
@@ -55,6 +55,24 @@ class EthicsType extends AbstractType
                 'choice_label' => fn (YesNo $unit) => $unit->label(),
                 'choice_translation_domain' => 'enums',
             ])
+            ->add(EthicsDictionary::DATA_SHARING_LEVEL->value, EnumType::class, [
+                'required' => false,
+                'class' => SharingLevel::class,
+                'label' => EthicsDictionary::DATA_SHARING_LEVEL->label(),
+                'help' => EthicsDictionary::DATA_SHARING_LEVEL->help(),
+                'placeholder' => false,
+                'expanded' => true,
+                'choice_label' => fn (SharingLevel $sharingLevel) => $sharingLevel->labelExtended(),
+                'choice_translation_domain' => 'enums',
+            ])
+            ->add(EthicsDictionary::DATA_SHARING_INFRASTRUCTURE->value, TextareaType::class, [
+                'required' => false,
+                'label' => EthicsDictionary::DATA_SHARING_INFRASTRUCTURE->label(),
+                'help' => EthicsDictionary::DATA_SHARING_INFRASTRUCTURE->help(),
+                'attr' => [
+                    'rows' => '3',
+                ],
+            ])
             ->add(EthicsDictionary::PERSONAL_DATA->value, EnumType::class, [
                 'required' => false,
                 'class' => YesNo::class,
@@ -62,25 +80,6 @@ class EthicsType extends AbstractType
                 'placeholder' => EthicsDictionary::PERSONAL_DATA->placeholder(),
                 'choice_label' => fn (YesNo $unit) => $unit->label(),
                 'choice_translation_domain' => 'enums',
-            ])
-            ->add(EthicsDictionary::ANONYMIZATION->value, EnumType::class, [
-                'required' => false,
-                'class' => Anonymization::class,
-                'expanded' => true,
-                'label' => EthicsDictionary::ANONYMIZATION->label(),
-                'placeholder' => false,
-                'help' => EthicsDictionary::ANONYMIZATION->help(),
-                'label_html' => true,
-                'choice_label' => fn (Anonymization $anonymization) => $anonymization->labelExtended(),
-                'choice_translation_domain' => 'enums',
-            ])
-            ->add(EthicsDictionary::ANONYMIZATION_DESCRIPTION->value, TextareaType::class, [
-                'required' => false,
-                'label' => EthicsDictionary::ANONYMIZATION_DESCRIPTION->label(),
-                'help' => EthicsDictionary::ANONYMIZATION_DESCRIPTION->help(),
-                'attr' => [
-                    'rows' => '3',
-                ],
             ])
             ->add(EthicsDictionary::COPYRIGHT->value, EnumType::class, [
                 'required' => false,

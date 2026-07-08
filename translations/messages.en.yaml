@@ -67,6 +67,7 @@ title:
     title: 'Sampling'
   ethics:
     title: 'Ethical and Legal aspects'
+    anonymisation_notice: 'Please note that DataWiz aims at supporting the publication of anonymized data, therefore you are only allowed to upload anonymized data to this tool.'
   dataset:
     title: 'Upload and describe datasets'
     title-short: 'Upload datasets'

@@ -16,6 +16,7 @@ enum MeasureDictionary: string implements DictionaryInterface
     case DATA_COLLECTION_START = 'dataCollectionStart';
     case DATA_COLLECTION_END = 'dataCollectionEnd';
     case COLLECTION_MODE = 'collectionMode';
+    case COLLECTION_INVESTIGATOR_PRESENCE = 'collectionInvestigatorPresence';
     case APPARATUS = 'apparatus';
     case COLLECTION_MODE_OTHER_DESCRIPTION = 'collectionModeOtherDescription';
     case ORIGINAL_RECORD_TYPE = 'originalRecordType';
@@ -33,6 +34,7 @@ enum MeasureDictionary: string implements DictionaryInterface
             self::DATA_COLLECTION_START => 'measure_meta_data_group.data_collection_start.legend',
             self::DATA_COLLECTION_END => 'measure_meta_data_group.data_collection_end.legend',
             self::COLLECTION_MODE => 'measure_meta_data_group.collection_mode.legend',
+            self::COLLECTION_INVESTIGATOR_PRESENCE => 'measure_meta_data_group.collection_investigator_presence.legend',
             self::APPARATUS => 'measure_meta_data_group.apparatus.legend',
             self::COLLECTION_MODE_OTHER_DESCRIPTION => 'measure_meta_data_group.collection_mode_other_description.legend',
             self::ORIGINAL_RECORD_TYPE => 'measure_meta_data_group.original_record_type.legend',
@@ -52,6 +54,7 @@ enum MeasureDictionary: string implements DictionaryInterface
             self::DATA_COLLECTION_START => 'measure_meta_data_group.data_collection_start.label',
             self::DATA_COLLECTION_END => 'measure_meta_data_group.data_collection_end.label',
             self::COLLECTION_MODE => 'measure_meta_data_group.collection_mode.label',
+            self::COLLECTION_INVESTIGATOR_PRESENCE => 'measure_meta_data_group.collection_investigator_presence.label',
             self::APPARATUS => 'measure_meta_data_group.apparatus.label',
             self::COLLECTION_MODE_OTHER_DESCRIPTION => 'measure_meta_data_group.collection_mode_other_description.label',
             self::ORIGINAL_RECORD_TYPE => 'measure_meta_data_group.original_record_type.label',
@@ -83,6 +86,7 @@ enum MeasureDictionary: string implements DictionaryInterface
             self::DATA_COLLECTION_START => new ReviewDataDto('measure_meta_data_group.data_collection_start.error_message', ErrorType::RECOMMENDED),
             self::DATA_COLLECTION_END => new ReviewDataDto('measure_meta_data_group.data_collection_end.error_message', ErrorType::RECOMMENDED),
             self::COLLECTION_MODE => new ReviewDataDto('measure_meta_data_group.collection_mode.error_message', ErrorType::RECOMMENDED),
+            self::COLLECTION_INVESTIGATOR_PRESENCE => new ReviewDataDto('measure_meta_data_group.collection_investigator_presence.error_message', ErrorType::RECOMMENDED),
             self::APPARATUS => new ReviewDataDto('measure_meta_data_group.apparatus.error_message', ErrorType::RECOMMENDED),
             self::COLLECTION_MODE_OTHER_DESCRIPTION => new ReviewDataDto('measure_meta_data_group.collection_mode_other_description.error_message', ErrorType::OPTIONAL),
             self::ORIGINAL_RECORD_TYPE => new ReviewDataDto('measure_meta_data_group.original_record_type.error_message', ErrorType::RECOMMENDED),

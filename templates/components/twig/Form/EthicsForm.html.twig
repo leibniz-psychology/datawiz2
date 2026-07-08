@@ -21,20 +21,22 @@
         {% else %}
             {% do form.dataSharing.setRendered %}
         {% endif %}
+
+        {% if form.informedConsent.vars.value == enum('App\\Enum\\YesNo').YES.value and form.dataSharing.vars.value == enum('App\\Enum\\YesNo').YES.value %}
+            <twig:Form:MultilineChoiceForm form="{{ form.dataSharingLevel }}"/>
+            {{ form_row(form.dataSharingInfrastructure) }}
+        {% else %}
+            {% do form.dataSharingLevel.setRendered %}
+            {% do form.dataSharingInfrastructure.setRendered %}
+        {% endif %}
     </twig:Form:FormCard>
 
     <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Study\\Dictionary\\EthicsDictionary').PERSONAL_DATA }}">
         {{ form_row(form.personalData) }}
         {% if form.personalData.vars.value == enum('App\\Enum\\YesNo').YES.value %}
-            <twig:Form:MultilineChoiceForm form="{{ form.anonymization }}"/>
-            {% if form.anonymization.vars.value == enum('App\\Enum\\Study\\Anonymization').ANONYMIZED.value %}
-                {{ form_row(form.anonymizationDescription) }}
-            {% else %}
-                {% do form.anonymizationDescription.setRendered %}
-            {% endif %}
-        {% else %}
-            {% do form.anonymization.setRendered %}
-            {% do form.anonymizationDescription.setRendered %}
+            <twig:Message type="error" class="mt-3">
+                {{ 'title.ethics.anonymisation_notice' | trans }}
+            </twig:Message>
         {% endif %}
     </twig:Form:FormCard>
 

@@ -3,6 +3,7 @@
 namespace App\Twig\Components\Form;
 
 use App\Entity\Study\BasicInformationMetaDataGroup;
+use App\Entity\Study\CreatorMetaDataGroup;
 use App\Form\BasicInformationType;
 use App\Repository\BasicInformationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -99,6 +100,19 @@ class BasicInformationForm extends AbstractController
 
     protected function instantiateForm(): FormInterface
     {
+        if ($this->initialFormData->getUsedSoftwares() == [] or $this->initialFormData->getUsedSoftwares() == null) {
+            $this->initialFormData->setUsedSoftwares(['']);
+        }
+        if ($this->initialFormData->getRelatedPublications() == [] or $this->initialFormData->getRelatedPublications() == null) {
+            $this->initialFormData->setRelatedPublications(['']);
+        }
+        if ($this->initialFormData->getConflictsOfInterest() == [] or $this->initialFormData->getConflictsOfInterest() == null) {
+            $this->initialFormData->setConflictsOfInterest(['']);
+        }
+        if ($this->initialFormData->getCreators()->isEmpty()) {
+            $this->initialFormData->addCreator(new CreatorMetaDataGroup());
+        }
+
         return $this->createForm(BasicInformationType::class, $this->initialFormData);
     }
 }

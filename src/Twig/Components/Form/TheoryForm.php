@@ -98,6 +98,18 @@ class TheoryForm extends AbstractController
 
     protected function instantiateForm(): FormInterface
     {
+        if ($this->initialFormData->getObjectives() == [] or $this->initialFormData->getObjectives() == null) {
+            $this->initialFormData->setObjectives(['']);
+        }
+        if ($this->initialFormData->getHypotheses() == [] or $this->initialFormData->getHypotheses() == null) {
+            $this->initialFormData->setHypotheses(['']);
+        }
+        if ($this->initialFormData->getExploratoryResearchQuestions() == [] or $this->initialFormData->getExploratoryResearchQuestions() == null) {
+            $this->initialFormData->setExploratoryResearchQuestions(['']);
+        }
+        if ($this->initialFormData->getTheories() == [] or $this->initialFormData->getTheories() == null) {
+            $this->initialFormData->setTheories(['']);
+        }
         return $this->createForm(TheoryType::class, $this->initialFormData);
     }
 }

@@ -26,13 +26,13 @@
                     {{ form_row(choice) }}
                 </div>
                 {% if choice.vars.value == enum('App\\Enum\\Study\\ResearchMethod').EXPERIMENTAL.value %}
-                        {% if choice.vars.checked %}
-                            <div class="ml-6 mb-3">
-                                {{ form_row(form.experimentalDetails) }}
-                            </div>
-                        {% else %}
-                            {% do form.experimentalDetails.setRendered %}
-                        {% endif %}
+                    {% if choice.vars.checked %}
+                        <div class="ml-6 mb-3">
+                            {{ form_row(form.experimentalDetails) }}
+                        </div>
+                    {% else %}
+                        {% do form.experimentalDetails.setRendered %}
+                    {% endif %}
                 {% elseif choice.vars.value == enum('App\\Enum\\Study\\ResearchMethod').SURVEY.value %}
                     {% if choice.vars.checked %}
                         <div class="ml-6 mb-3">
@@ -84,6 +84,9 @@
             />
         </twig:Form:FormCard>
     {% else %}
+        {% do form.setting.setRendered %}
+        {% do form.settingLocation.setRendered %}
+        {% do form.randomization.setRendered %}
         {% do form.experimentalDesign.setRendered %}
         {% do form.controlOperations.setRendered %}
         {% do form.otherControlOperations.setRendered %}

@@ -6,7 +6,7 @@
 ![Nodejs Version](https://img.shields.io/badge/Nodejs-23_LTS-informational?logo=node.js&style=flat-square&logoColor=white)
 ![MariaDB Version](https://img.shields.io/badge/MariaDB-10.11-informational?logo=mariadb&style=flat-square&logoColor=white)
 [![DataWiz 2 Build](https://github.com/leibniz-psychology/datawiz2/actions/workflows/wf-main.yml/badge.svg?branch=main)](https://github.com/leibniz-psychology/datawiz2/actions/workflows/wf-main.yml)
-[![Übersetzungsstatus](http://weblate.zpid.de/widgets/datawiz/-/datawiz-2/svg-badge.svg)](http://weblate.zpid.de/engage/datawiz/)
+[![Übersetzungsstatus](http://weblate.zpid.de/widgets/datawiz/-/datawiz-2/svg-badge.svg)](https://hosted.weblate.org/engage/datawiz2/)
 
 DataWiz helps Psychologist with their research documentation.
 As web based system DataWiz is free to use by anyone and contributions are welcome.
@@ -26,21 +26,25 @@ For those who want to use `windows`, please consider running __Windows Subsystem
 While there is no intention to maintain any `windows` specific configuration from our side,
 you are still welcome to contribute and maintain those changes.
 
-## Development setup
+## ⚙️&nbsp; Installation
 
-To start developing you will need a local installation of
-`php`, `composer`, `nodejs (and yarn)`, `make`, `core utils`, `awk` and the `symfony cli`.
-Please consider our recommended versions, if you encounter any problems running a development instance of DataWiz.
+For system requirements see the dockerfile in `.github/workflows/manifests/php`.
+Then run:
 
-### Githooks
-
-To enable the custom project githooks run:
-
-```shell
-git config core.hooksPath .githooks
+```bash
+composer install
+symfony console importmap:install
 ```
 
-## Deployment
+To setup the database run:
+
+```bash
+php bin/console doctrine:database:create --if-not-exists
+php bin/console doctrine:migrations:migrate
+php bin/console doctrine:fixtures:load
+```
+
+## 🚀&nbsp; Deployment
 
 DataWiz depends on multiple vendors.
 
@@ -52,11 +56,35 @@ If you still wish to deploy DataWiz yourself, please contact our IT-Service depa
 available resources.
 Consider before your deployment, that we offer a production instance free of charge under our product portfolio.
 
+Otherwise, to deploy the website locally, run
+
+```bash
+symfony serve
+```
+
 ### Moderation
 
 To enable the moderation for yourself, add your email address in `src/Controller/UserController.php`.
 Afterwards, log into Datawiz as a normal user and navigate to `<url>/admin/install` in your browser.
 You should now have admin rights.
+
+## 🛠️&nbsp; Updating
+
+```bash
+composer update
+composer recipes:update
+symfony console importmap:update
+symfony console tailwind:update
+```
+
+## 🤖&nbsp; CI/CD
+
+to enable local continuous integration via githooks run:
+
+```bash
+yarn install
+git config core.hooksPath .githooks
+```
 
 ## How to get help?
 

@@ -1,12 +1,13 @@
 FROM composer:lts AS composer
 
 
-FROM node:23-alpine AS builder
+FROM node:26-alpine AS builder
 COPY . /build
 RUN apk add --no-cache \
     python3 \
     make \
     g++ \
+    yarn \
     && rm -rf /var/cache/apk/* \
     && yarn global add node-gyp
 

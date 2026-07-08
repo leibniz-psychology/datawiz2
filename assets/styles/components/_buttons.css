@@ -8,6 +8,7 @@
 @utility button {
     @apply border border-transparent rounded-md;
     @apply button-with-icon;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
 }
 
 @utility button-primary {
@@ -61,6 +62,7 @@
 .Button_primary_act {
     @apply button-primary;
     @apply bg-zpid-green border-zpid-green-600 hover:bg-zpid-green-600 hover:border-zpid-green-600;
+    @apply disabled:hover:bg-zpid-green;
 }
 
 .Button_secondary_act {

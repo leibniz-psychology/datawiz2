@@ -1,5 +1,28 @@
 # Datawiz2 Semantic Versioning Changelog
 
+# [2.3.0](https://github.com/leibniz-psychology/datawiz2/compare/v2.2.0...v2.3.0) (2026-07-08)
+
+
+### Bug Fixes
+
+* remove wrongly displayed fields in study method form ([15c6395](https://github.com/leibniz-psychology/datawiz2/commit/15c6395c543a94f8def7dd65fdb42ae556d1555d))
+
+
+### Features
+
+* add ethics meta data group to study form ([553781d](https://github.com/leibniz-psychology/datawiz2/commit/553781dceaf88da2cab50263e4f80cebe4877dd7))
+* add more fields to Study Basic Information ([ba0473e](https://github.com/leibniz-psychology/datawiz2/commit/ba0473efec1ba8c96ea102307be34290e68527c4))
+* add more fields to study measure form ([889bd9d](https://github.com/leibniz-psychology/datawiz2/commit/889bd9df50365bbfbcd6f9ea975fa513d436bf0c))
+* add more fields to study method form ([b663961](https://github.com/leibniz-psychology/datawiz2/commit/b6639610c8ad5cd4e08a3acadfa950c7fc807ca9))
+* add more fields to study sample form ([badcaaf](https://github.com/leibniz-psychology/datawiz2/commit/badcaaf45f399aa17ddd20ae01c5ecdc579aeffd))
+* before uploading a dataset, confirm that it is anonymized ([b007be5](https://github.com/leibniz-psychology/datawiz2/commit/b007be5b0b31cc06763b12b735273c653324fa00))
+* change creator credit roles to responsibilities ([e29ea3f](https://github.com/leibniz-psychology/datawiz2/commit/e29ea3f74bb0baaa5ec70518e4316fa1ef5f1cb3))
+* extend theory metadata form ([eba7ba4](https://github.com/leibniz-psychology/datawiz2/commit/eba7ba404bb309797c04c7d21f7648c7051445bb))
+* form array fields always display at least one item ([2e79ba9](https://github.com/leibniz-psychology/datawiz2/commit/2e79ba93e694afa5f7fba724c1b848ab4935853a))
+* improve study documentation form ([6486d46](https://github.com/leibniz-psychology/datawiz2/commit/6486d46b282cfd7e6354225d7faafea65a6f502c))
+* in study form instead of disabling fields, set them to hidden ([98455d6](https://github.com/leibniz-psychology/datawiz2/commit/98455d64ba5dbabb853c3775783dd6fe1941a9a5))
+* make study form more similar to DataWiz1 form ([60e4ea6](https://github.com/leibniz-psychology/datawiz2/commit/60e4ea61f02bfed85fa02aec7911deb55e98453c))
+
 # [2.2.0](https://github.com/leibniz-psychology/datawiz2/compare/v2.1.0...v2.2.0) (2026-04-24)
 
 

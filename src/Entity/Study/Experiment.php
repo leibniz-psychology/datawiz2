@@ -7,7 +7,7 @@ use App\Entity\Administration\UuidEntity;
 use App\Entity\Constant\States;
 use App\Entity\FileManagement\AdditionalMaterial;
 use App\Entity\FileManagement\Dataset;
-use App\Repository\ExperimentRepository;
+use App\Repository\Study\ExperimentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;

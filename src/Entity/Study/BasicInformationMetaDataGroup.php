@@ -5,7 +5,7 @@ namespace App\Entity\Study;
 use App\Entity\Administration\UuidEntity;
 use App\Enum\Study\DataStatus;
 use App\Enum\Study\StudyRelation;
-use App\Repository\BasicInformationRepository;
+use App\Repository\Study\BasicInformationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;

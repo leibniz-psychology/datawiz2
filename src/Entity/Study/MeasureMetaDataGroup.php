@@ -6,7 +6,7 @@ use App\Entity\Administration\UuidEntity;
 use App\Enum\Study\CollectionMode;
 use App\Enum\Study\DataDigitization;
 use App\Enum\Study\RecordType;
-use App\Repository\MeasureRepository;
+use App\Repository\Study\MeasureRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;

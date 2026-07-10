@@ -11,7 +11,7 @@ use App\Enum\Study\ResearchDesign;
 use App\Enum\Study\ResearchMethod;
 use App\Enum\Study\StudySetting;
 use App\Enum\Study\SurveyInstrumentType;
-use App\Repository\MethodRepository;
+use App\Repository\Study\MethodRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;

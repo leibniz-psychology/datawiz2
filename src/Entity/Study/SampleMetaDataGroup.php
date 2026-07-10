@@ -6,7 +6,7 @@ use App\Entity\Administration\UuidEntity;
 use App\Enum\Study\ParticipantGroup;
 use App\Enum\Study\SampleAnalysisUnit;
 use App\Enum\Study\SamplingMethod;
-use App\Repository\SampleRepository;
+use App\Repository\Study\SampleRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;

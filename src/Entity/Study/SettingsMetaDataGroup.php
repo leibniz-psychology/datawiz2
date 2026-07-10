@@ -7,7 +7,7 @@
 namespace App\Entity\Study;
 
 use App\Entity\Administration\UuidEntity;
-use App\Repository\SettingsRepository;
+use App\Repository\Study\SettingsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'experiment_settings')]

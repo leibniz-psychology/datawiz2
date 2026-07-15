@@ -445,3 +445,28 @@ theory:
 
         This field should contain any relevant theoretical and/or practical/methodological justification. If this is a replication or follow-up study of previous research, describe it and its relationship to the current study.
         Please include references here and list them at the end of this document in the reference section (see R1).
+
+data_management_plan:
+    section: |
+        # Why you need a data management plan
+
+        Data Management Plans are a crucial part of the data management process. They outline the steps that should be taken to ensure that your data are stored in a safe and secure manner, and that they are accessible to the intended audience.
+    administrative_data:
+        section: |
+            # Administrative data help
+
+            Here you can provide general information regarding the framework of your project.
+        target_audiences: |
+            The plan may be required by the funding agency or your institution. It may also aim at coordinating project partners or proving good scientific practice.
+    introduction:
+        section: |
+            # Help getting started
+
+            Here you'll find a quick introduction about how to use DataWiz to create a data management plan.
+        help_intro: |
+            A click on a (?)-button reveals further help and background information about the respective element. You'll find examples or online resources that should make using DataWiz a breeze
+    review:
+        section: |
+            # Review your plan
+
+            Here you can review your data management plan and check for completion and correctness.

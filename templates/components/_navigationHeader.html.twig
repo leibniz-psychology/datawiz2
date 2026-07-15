@@ -14,6 +14,14 @@
                 {{ "title.dashboard.modules.documentation.title"|trans }}
             </div>
         </a>
+
+        <a href="{{ path("Dmp-overview") }}"
+           class="ml-4 Button_navigation border-transparent
+            {{- isPartOfDmp|default(false) ? ' border-zpid-blue font-semibold' -}}">
+            <div>
+                {{ "data_management_plan.title"|trans }}
+            </div>
+        </a>
         {% if is_granted("ROLE_REVIEWER") %}
             {# <a href="{{ path("admin_dashboard") }}"
                class="flex items-center ring-inset h-full px-3 ml-4 text-base pt-1 border-b-4 border-transparent hover:border-zpid-blue

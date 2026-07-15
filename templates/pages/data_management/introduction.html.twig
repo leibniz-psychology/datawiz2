@@ -1,0 +1,51 @@
+{% extends "layouts/dataManagement.html.twig" %}
+{% from "components/_macros.html.twig" import helpButton %}
+{% from "components/_macros.html.twig" import sectionHelp %}
+{% from "components/_macros.html.twig" import formHelp %}
+
+{% set isPartOfDmp = true %}
+
+{% macro startButton(startUrl) %}
+    <a href="{{ startUrl }}"
+       class="table mx-auto mt-6 mb-10 no-underline! Button_primary_go Button_standalone">
+        {{ 'data_management_plan.introduction.get_started'|trans }}
+    </a>
+{% endmacro %}
+
+{% block title %}
+    {{ 'data_management_plan.introduction.title'|trans }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="MetaDataGroup-Title">
+        {{ 'data_management_plan.introduction.title'|trans }}
+    </h2>
+
+    <div class="px-6 markdown">
+        {{ "data_management_plan.introduction.intro"
+        | trans({
+            '#helpBtn#':helpButton('help_intro'),
+            '#startBtn#':_self.startButton(path('Dmp-edit-administrative', {id: dataManagementPlan.id}))})
+        | markdown_to_html }}
+    </div>
+
+    <twig:NavigationSavebar
+        nextUrl="{{ path('Dmp-edit-administrative', {id: dataManagementPlan.id}) }}"
+        nextTitle="{{ 'data_management_plan.administrative_data.title'|trans }}"
+    />
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("data_management_plan.introduction") }}
+{% endblock %}
+
+{% block help_for_metadata %}
+    {{ formHelp("study_introduction", "help_intro", "title.introduction.h3_2") }}
+{% endblock %}
+
+{% macro startButton(startUrl) %}
+    <a href="{{ startUrl }}"
+       class="table mx-auto mt-6 mb-10 no-underline! Button_primary_go Button_standalone">Start
+        with step 1</a>
+{% endmacro %}
+

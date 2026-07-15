@@ -480,3 +480,35 @@ theory_meta_data_group:
         label: 'Provide a concise overview that justified the research questions/hypotheses.'
         add: 'Add another theory'
         error_message: "<a href='#link#'' class='#class#''>Add theories</a> to increase the reusability of your data."
+
+data_management_plan:
+    administrative_data:
+        project_name:
+            legend: 'Project name'
+            label: 'Provide the name of the project'
+            error_message: '<a href="#link#" class="#class#">Add project name</a>'
+        project_goals:
+            legend: 'Project objectives and scope'
+            label: 'Provide a short description of the project goals'
+            error_message: '<a href="#link#" class="#class#">Add project objectives</a>'
+        funding:
+            legend: 'Funding'
+            label: 'Provide funding information'
+            error_message: '<a href="#link#" class="#class#">Add funding information</a>'
+        project_duration:
+            legend: 'Project duration'
+            label: 'Provide information on project start date and project end date.'
+            help: 'If project start date and project end date are unknown provide information on the intended project duration.'
+            error_message: '<a href="#link#" class="#class#">Add project duration</a>'
+        project_partners:
+            legend: 'Project partners'
+            label: 'Name all organizations, institutions or companies which are involved in the research project.'
+            error_message: '<a href="#link#" class="#class#">Add project partners</a>'
+        principal_investigator:
+            legend: 'Principal investigator'
+            label: 'Provide the names of the principal investigators of the project.'
+            error_message: '<a href="#link#" class="#class#">Add principal investigator</a>'
+        target_audiences:
+            legend: 'Aim or target audiences'
+            label: 'Provide information on the intended audience of the project.'
+            error_message: '<a href="#link#" class="#class#">Add target audiences</a>'

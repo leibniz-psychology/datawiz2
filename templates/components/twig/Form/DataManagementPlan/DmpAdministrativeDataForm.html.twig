@@ -1,0 +1,35 @@
+{% extends "components/twig/Form/DataManagementPlan/_baseForm.html.twig" %}
+
+{% block title %}
+    {{ "data_management_plan.administrative_data.title"|trans }}
+{% endblock %}
+
+{% block form_content %}
+    <twig:Form:FormCard entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpAdministrativeDataDictionary').PROJECT_NAME }}">
+        {{ form_row(form.projectName) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpAdministrativeDataDictionary').PROJECT_GOALS }}">
+        {{ form_row(form.projectGoals) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpAdministrativeDataDictionary').FUNDING }}">
+        {{ form_row(form.funding) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpAdministrativeDataDictionary').PROJECT_DURATION }}">
+        {{ form_row(form.projectDuration) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpAdministrativeDataDictionary').PROJECT_PARTNERS }}">
+        {{ form_row(form.projectPartners) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpAdministrativeDataDictionary').PRINCIPAL_INVESTIGATOR }}">
+        {{ form_row(form.principalInvestigator) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpAdministrativeDataDictionary').TARGET_AUDIENCES }}">
+        {{ form_row(form.targetAudiences) }}
+    </twig:Form:FormCard>
+{% endblock %}

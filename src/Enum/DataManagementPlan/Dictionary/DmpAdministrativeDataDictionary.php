@@ -68,12 +68,12 @@ enum DmpAdministrativeDataDictionary: string implements DictionaryInterface
     public function reviewData(): ReviewDataDto
     {
         return match ($this) {
-            self::PROJECT_NAME => new ReviewDataDto('data_management_plan.administrative_data.project_name.error_message', ErrorType::RECOMMENDED),
-            self::PROJECT_GOALS => new ReviewDataDto('data_management_plan.administrative_data.project_goals.error_message', ErrorType::OPTIONAL),
-            self::FUNDING => new ReviewDataDto('data_management_plan.administrative_data.funding.error_message', ErrorType::OPTIONAL),
+            self::PROJECT_NAME => new ReviewDataDto('data_management_plan.administrative_data.project_name.error_message', ErrorType::MANDATORY),
+            self::PROJECT_GOALS => new ReviewDataDto('data_management_plan.administrative_data.project_goals.error_message', ErrorType::RECOMMENDED),
+            self::FUNDING => new ReviewDataDto('data_management_plan.administrative_data.funding.error_message', ErrorType::RECOMMENDED),
             self::PROJECT_DURATION => new ReviewDataDto('data_management_plan.administrative_data.project_duration.error_message', ErrorType::OPTIONAL),
             self::PROJECT_PARTNERS => new ReviewDataDto('data_management_plan.administrative_data.project_partners.error_message', ErrorType::OPTIONAL),
-            self::PRINCIPAL_INVESTIGATOR => new ReviewDataDto('data_management_plan.administrative_data.principal_investigator.error_message', ErrorType::OPTIONAL),
+            self::PRINCIPAL_INVESTIGATOR => new ReviewDataDto('data_management_plan.administrative_data.principal_investigator.error_message', ErrorType::MANDATORY),
             self::TARGET_AUDIENCES => new ReviewDataDto('data_management_plan.administrative_data.target_audiences.error_message', ErrorType::OPTIONAL),
         };
     }

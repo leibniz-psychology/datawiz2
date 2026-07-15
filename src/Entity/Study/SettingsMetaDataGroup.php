@@ -20,7 +20,7 @@ class SettingsMetaDataGroup extends UuidEntity
     #[ORM\OneToOne(inversedBy: 'settingsMetaDataGroup', cascade: ['persist', 'remove'])]
     protected ?Experiment $experiment = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $shortName = null;
 
     public function getShortName(): ?string

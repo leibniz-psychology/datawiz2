@@ -14,7 +14,7 @@ final class Version20260714091002 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Add Data Management Plan Entity';
     }
 
     public function up(Schema $schema): void

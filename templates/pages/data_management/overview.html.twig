@@ -35,22 +35,26 @@
                                     <h4 class="text-2xl font-semibold text-zpid-purple-700 col-span-full">
                                         <a class="underline"
                                            href="{{ path('Dmp-introduction', {id: dmp.id}) }}">
-                                            {{ dmp.administrativeData.projectName ?? ('data_management_plan.untitled'|trans) }}
+                                            {{ dmp.settings.shortName ?? ('data_management_plan.untitled'|trans) }}
                                         </a>
                                     </h4>
-                                    {% if dmp.administrativeData %}
-                                        {% if dmp.administrativeData.principalInvestigator %}
-                                            <div class="mt-2 col-span-full">
-                                                <span class="font-semibold">{{ 'data_management_plan.principal_investigator.label'|trans({}, 'forms') }}:</span>
-                                                <span>{{ dmp.administrativeData.principalInvestigator }}</span>
-                                            </div>
-                                        {% endif %}
-                                        {% if dmp.administrativeData.funding %}
-                                            <div class="col-span-full">
-                                                <span class="font-semibold">{{ 'data_management_plan.funding.label'|trans({}, 'forms') }}:</span>
-                                                <span>{{ dmp.administrativeData.funding }}</span>
-                                            </div>
-                                        {% endif %}
+                                    {% if dmp.administrativeData.projectName %}
+                                        <div class="mt-2 col-span-full">
+                                            <span class="font-semibold">{{ 'data_management_plan.administrative_data.project_name.legend'|trans({}, 'forms') }}:</span>
+                                            <span>{{ dmp.administrativeData.projectName }}</span>
+                                        </div>
+                                    {% endif %}
+                                    {% if dmp.administrativeData.principalInvestigator %}
+                                        <div class="col-span-full">
+                                            <span class="font-semibold">{{ 'data_management_plan.administrative_data.principal_investigator.legend'|trans({}, 'forms') }}:</span>
+                                            <span>{{ dmp.administrativeData.principalInvestigator }}</span>
+                                        </div>
+                                    {% endif %}
+                                    {% if dmp.administrativeData.funding %}
+                                        <div class="col-span-full">
+                                            <span class="font-semibold">{{ 'data_management_plan.administrative_data.funding.legend'|trans({}, 'forms') }}:</span>
+                                            <span>{{ dmp.administrativeData.funding }}</span>
+                                        </div>
                                     {% endif %}
                                 </div>
                             </li>

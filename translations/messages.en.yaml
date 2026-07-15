@@ -18,10 +18,10 @@ title:
         title: 'PreReg in Psychology'
         title-linktitle: 'Go to PreReg in Psychology website'
         description: 'By using preregistration, researchers can verify that their studies have been conducted, analyzed, and reported as initially specified.'
-      psychnotebook:
-        title: 'PsychNotebook'
-        title-linktitle: 'Go to PsychNotebook website'
-        description: 'PsychNotebook is a web-based platform for planning and analyzing studies in the field of psychology and related disciplines.'
+      ethiktool:
+        title: 'Ethiktool'
+        title-linktitle: 'Go to Ethiktool website'
+        description: 'Ethiktool is a web-based platform that supports applicants in writing their ethics proposal.'
   overview:
     title: 'Data documentation'
     intro: 'Document research data, add datasets and materials, describe your data with codebooks, then export and share your data in one convenient zip file.'

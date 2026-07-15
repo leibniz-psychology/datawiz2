@@ -1,0 +1,50 @@
+{% extends "layouts/dataManagement.html.twig" %}
+{% from "components/_macros.html.twig" import sectionHelp %}
+
+{% set isPartOfDmp = true %}
+
+{% block title %}
+    {{ "data_management_plan.settings.title"|trans }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="MetaDataGroup-Title">
+        {{ "data_management_plan.settings.title"|trans }}
+    </h2>
+
+    <twig:Form:DataManagementPlan:DmpSettingsForm initialFormData="{{ dataManagementPlan.settings }}"/>
+
+    <twig:Form:FormCard class="pb-8 mt-25" title="{{ 'input.danger-zone.legend'|trans }}">
+        {{ "input.danger-zone.label"|trans }}
+        <div class="p-4! border border-red-500 rounded mt-2">
+            <h4 class="text-lg font-semibold">{{ "data_management_plan.settings.delete.title"|trans }}</h4>
+            <div class="">
+                <div class="mt-2">
+                    {{ "data_management_plan.settings.delete.description"|trans }}
+                </div>
+
+                <div {{ stimulus_controller('modal', {
+                    'onSubmit': 'navigateToUrl',
+                    'url': path('Dmp-delete', { "id": dataManagementPlan.id })
+                }) }}>
+                    {{ include('components/_deleteModal.html.twig', {
+                        'title': "title.dataset.deleteModal.title",
+                        'description': 'data_management_plan.settings.delete.modal_body',
+                        'confirm': 'data_management_plan.settings.delete.confirm',
+                        'name': dataManagementPlan.administrativeData.projectName ?? 'data_management_plan.untitled'|trans,
+                    }) }}
+
+                    <button class="self-start mt-4 Button_secondary_danger Button_standalone"
+                        {{ stimulus_action('modal', 'openModal') }}>
+                        {{ include('components/icons/delete.svg') }}
+                        {{ "data_management_plan.settings.delete.action"|trans }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </twig:Form:FormCard>
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("data_management_plan.settings") }}
+{% endblock %}

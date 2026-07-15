@@ -470,3 +470,8 @@ data_management_plan:
             # Review your plan
 
             Here you can review your data management plan and check for completion and correctness.
+    settings:
+        section: |
+            # Settings help
+
+            **TODO** _Add settings help here_ {.bg-pink-50 .mx-6}

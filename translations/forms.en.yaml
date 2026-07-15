@@ -512,3 +512,8 @@ data_management_plan:
             legend: 'Aim or target audiences'
             label: 'Provide information on the intended audience of the project.'
             error_message: '<a href="#link#" class="#class#">Add target audiences</a>'
+
+    settings:
+        short_name:
+            legend: 'Data Management Plan Name'
+            label: 'Provide a short name for the project'

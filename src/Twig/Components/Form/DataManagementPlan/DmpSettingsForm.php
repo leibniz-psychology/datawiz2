@@ -2,11 +2,10 @@
 
 namespace App\Twig\Components\Form\DataManagementPlan;
 
-use App\Controller\BaseController;
 use App\Entity\DataManagementPlan\DmpSettings;
 use App\Form\DataManagementPlan\DmpSettingsType;
-use App\Repository\DataManagementPlan\DataManagementPlanRepository;
-use App\Service\DataManagementPlan\DataManagementPlanService;
+use App\Repository\DataManagementPlan\DmpSettingsRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -16,7 +15,7 @@ use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
 #[AsLiveComponent]
-class NewPlanForm extends BaseController
+class DmpSettingsForm extends AbstractController
 {
     use DefaultActionTrait;
     use ComponentWithFormTrait;
@@ -25,8 +24,7 @@ class NewPlanForm extends BaseController
     public ?DmpSettings $initialFormData = null;
 
     public function __construct(
-        private readonly DataManagementPlanRepository $dataManagementPlanRepository,
-        private readonly DataManagementPlanService $dataManagementService,
+        private readonly DmpSettingsRepository $settingsRepository,
     ) {
     }
 
@@ -37,12 +35,9 @@ class NewPlanForm extends BaseController
         /** @var DmpSettings $settings */
         $settings = $this->getForm()->getData();
 
-        $newDataManagementPlan = $this->dataManagementService->createNewDataManagementPlan($this->getUser());
-        $newDataManagementPlan->setSettings($settings);
+        $this->settingsRepository->save($settings);
 
-        $this->dataManagementPlanRepository->save($newDataManagementPlan);
-
-        return $this->redirectToRoute('Dmp-introduction', ['id' => $newDataManagementPlan->getId()]);
+        return $this->redirectToRoute('Study-settings', ['id' => $settings->getDataManagementPlan()->getId()]);
     }
 
     protected function instantiateForm(): FormInterface

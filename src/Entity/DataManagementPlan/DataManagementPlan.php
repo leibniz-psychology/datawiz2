@@ -9,6 +9,7 @@ use App\Entity\Administration\UuidEntity;
 use App\Repository\DataManagementPlan\DataManagementPlanRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation\Timestampable;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Table(name: 'data_management_plan')]
@@ -16,8 +17,14 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 class DataManagementPlan extends UuidEntity
 {
     #[SerializedName('administrative_data')]
+    #[Groups(['data_management_plan'])]
     #[ORM\OneToOne(mappedBy: 'dataManagementPlan', cascade: ['persist', 'remove'])]
     private ?DmpAdministrativeData $administrativeData = null;
+
+    #[SerializedName('settings')]
+    #[Groups(['settings'])]
+    #[ORM\OneToOne(mappedBy: 'dataManagementPlan', cascade: ['persist', 'remove'])]
+    private ?DmpSettings $settings = null;
 
     #[ORM\ManyToOne]
     private ?DataWizUser $owner = null;
@@ -34,7 +41,19 @@ class DataManagementPlan extends UuidEntity
     public function setAdministrativeData(?DmpAdministrativeData $administrativeData): static
     {
         $this->administrativeData = $administrativeData;
+        $administrativeData->setDataManagementPlan($this);
+        return $this;
+    }
 
+    public function getSettings(): ?DmpSettings
+    {
+        return $this->settings;
+    }
+
+    public function setSettings(?DmpSettings $settings): static
+    {
+        $this->settings = $settings;
+        $settings->setDataManagementPlan($this);
         return $this;
     }
 

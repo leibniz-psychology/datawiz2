@@ -18,10 +18,10 @@ class DmpAdministrativeData extends UuidEntity
     /**
      * One Settings section has One Experiment.
      */
-    #[ORM\OneToOne(inversedBy: 'administrativeData', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'administrativeData')]
     protected ?DataManagementPlan $dataManagementPlan = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $projectName = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]

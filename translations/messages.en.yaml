@@ -75,7 +75,7 @@ title:
     empty: 'Uploaded datasets will appear here.'
     deleteModal:
       title: 'Are you absolutely sure?'
-      body: 'This action cannot be undone. This will permanently delete the #datasetName#
+      body: 'This action cannot be undone. This will permanently delete the #name#
         dataset including its codebook.'
       confirm: 'I understand, delete this dataset'
     description:
@@ -94,7 +94,7 @@ title:
     h3: 'My materials'
     empty: 'Uploaded materials will appear here.'
     deleteModal:
-      body: 'This action cannot be undone. This will permanently delete the #materialName#
+      body: 'This action cannot be undone. This will permanently delete the #name#
         material.'
       confirm: 'I understand, delete this material'
   review:
@@ -121,7 +121,7 @@ title:
   settings:
     title: 'Settings'
     deleteModal:
-      body: 'This action cannot be undone. This will permanently delete the #studyName#
+      body: 'This action cannot be undone. This will permanently delete the #name#
         documentation including its study data, uploaded datasets, codebooks and materials.'
       confirm: 'I understand, delete this documentation'
   admin:
@@ -314,6 +314,14 @@ data_management_plan:
     review:
         title: 'Review input'
         description: 'Review your data management plan and check for completion and correctness.'
+    settings:
+        title: 'Settings'
+        delete:
+            title: 'Delete data management plan'
+            description: 'Deleting a data management plan permanenetly deletes all its data.'
+            action: 'Delete this data management plan'
+            modal_body: 'This action cannot be undone. This will permanently delete the data management plan #name#.'
+            confirm: 'I understand, delete this data management plan'
     sidebar:
         data_management_plan: 'Plan your data management'
 

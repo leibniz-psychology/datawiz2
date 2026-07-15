@@ -72,6 +72,16 @@ class DmpController extends AbstractController
         ]);
     }
 
+    #[Route(path: '/{id}/settings', name: 'settings', methods: ['GET'])]
+    public function settings(DataManagementPlan $dataManagementPlan): Response
+    {
+        $this->logger->debug("Enter DmpController::settingsAction with [UUID: {$dataManagementPlan->getId()}]");
+
+        return $this->render('pages/data_management/settings.html.twig', [
+            'dataManagementPlan' => $dataManagementPlan,
+        ]);
+    }
+
     #[Route(path: '/{id}/delete', name: 'delete', methods: ['GET'])]
     public function delete(DataManagementPlan $dataManagementPlan): Response
     {
@@ -79,6 +89,6 @@ class DmpController extends AbstractController
 
         $this->dmpService->remove($dataManagementPlan);
 
-        return $this->redirectToRoute('Dmp-list');
+        return $this->redirectToRoute('Dmp-overview');
     }
 }

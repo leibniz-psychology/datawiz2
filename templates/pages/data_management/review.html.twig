@@ -1,0 +1,39 @@
+{% extends "layouts/dataManagement.html.twig" %}
+{% from "components/_macros.html.twig" import sectionHelp %}
+{% from "components/_macros.html.twig" import formHelp %}
+
+{% set isPartOfDmp = true %}
+
+{% macro sectionTitle(titleText) %}
+    <h2 class="text-xl font-bold border-b text-zpid-purple border-zpid-purple">{{ titleText }}</h2>
+{% endmacro %}
+
+{% block title %}
+    {{ 'data_management_plan.review.title'|trans }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="MetaDataGroup-Title">
+        {{ 'data_management_plan.review.title'|trans }}
+    </h2>
+    <p class="mx-6 mt-3 max-w-prose">
+        {{ 'data_management_plan.review.description'|trans }}
+    </p>
+    <article class="px-6">
+        <section class="mt-8">
+            {{ _self.sectionTitle('data_management_plan.administrative_data.title'|trans) }}
+            {% for entry in enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpAdministrativeDataDictionary').cases %}
+                <twig:ReviewValue entity="{{ dataManagementPlan.administrativeData }}" route="{{ path('Dmp-edit-administrative', {id: dataManagementPlan.id}) }}" entry="{{ entry }}" />
+            {% endfor %}
+        </section>
+    </article>
+
+    <twig:NavigationSavebar
+        prevUrl="{{ path('Dmp-edit-administrative', {id: dataManagementPlan.id}) }}"
+        prevTitle="{{ 'data_management_plan.administrative_data.title'|trans }}"
+    />
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp('data_management_plan.review') }}
+{% endblock %}

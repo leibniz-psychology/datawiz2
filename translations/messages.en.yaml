@@ -290,3 +290,30 @@ aria:
   sort:
     ascending: 'messages'
     descending: 'messages'
+
+data_management_plan:
+    title: 'Data Management Plan'
+    untitled: 'Untitled'
+    administrative_data:
+        title: 'Administrative data'
+    dashboard:
+        description: 'Create standardised data management plans for your research data.'
+        open: 'Open data management tool'
+    introduction:
+        title: 'Getting started'
+        intro: "DataWiz will guide you through a few short **steps** to create your data management plan. \n\nYou can **navigate** the steps using the sidebar 👈 on the left or use the buttons at the bottom of each page to move forward or back.\n\nIf you need **help** with any input field, you'll find more info in the sidebar 👉 on the right - just click the #helpBtn# button.\n\nThere's a brief summary of each step below, or you can jump right in: #startBtn#"
+    new:
+        title: 'Create new data management plan'
+        create: 'Create data management plan'
+    overview:
+        title: 'Data Management Plans'
+        intro: 'Create standardised data management plans for your research data.'
+        new: 'Create new data management plan'
+        list:
+            header: 'My data management plans'
+    review:
+        title: 'Review input'
+        description: 'Review your data management plan and check for completion and correctness.'
+    sidebar:
+        data_management_plan: 'Plan your data management'
+

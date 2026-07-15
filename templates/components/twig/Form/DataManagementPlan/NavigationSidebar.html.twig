@@ -1,0 +1,79 @@
+{% set route_name = app.current_route %}
+{% if needs_saving is not defined %}
+    {% set needs_saving = false %}
+{% endif %}
+
+<div class="py-4.5 pl-6 pr-3 border-b bg-stone-100 border-stone-300">
+    <span class="text-zpid-purple-700 text-xl font-bold break-all mr-0.5 leading-tight">{{ dataManagementPlan.administrativeData.projectName ?? ('data_management_plan.untitled'|trans) }}
+    </span>
+    {%- if needs_saving -%}
+        <button {{ live_action('save', {route: 'Dmp-introduction' })}}
+            class="Button_icon"
+            title="{{ 'generic.edit'|trans }}">
+            {{ include('components/icons/edit.svg') }}
+        </button>
+    {%- else -%}
+        <a href="{{ path('Dmp-edit-administrative', {id: dataManagementPlan.id}) }}"
+           class="Button_icon"
+           title="{{ 'generic.edit'|trans }}">
+            {{ include('components/icons/edit.svg') }}
+        </a>
+    {%- endif -%}
+</div>
+
+<nav>
+    <ul>
+        <li>
+            {%- if needs_saving -%}
+                <button {{ live_action('save', {route: 'Dmp-introduction' })}}
+                    class="StudyNav-NavItem {{- route_name == 'Dmp-introduction' ? ' StudyNav-NavItem_active' -}}">
+                    {{ 'data_management_plan.introduction.title'|trans }}
+                </button>
+            {%- else -%}
+                <a href="{{ path('Dmp-introduction', {id: dataManagementPlan.id}) }}"
+                   class="StudyNav-NavItem {{- route_name == 'Dmp-introduction' ? ' StudyNav-NavItem_active' -}}">
+                    {{ 'data_management_plan.introduction.title'|trans }}
+                </a>
+            {%- endif -%}
+        </li>
+        <li>
+            {%- if needs_saving -%}
+                <button {{ live_action('save', {route: 'Dmp-edit-administrative' })}}
+                    class="StudyNav-NavItem {{- needs_saving ?' StudyNav-NavItem_active StudyNav-NavItem_active_isParent' -}}">
+                    1. {{ 'data_management_plan.sidebar.data_management_plan'|trans }}
+                </button>
+            {%- else -%}
+                <a href="{{ path('Dmp-edit-administrative', {id: dataManagementPlan.id}) }}"
+                   class="StudyNav-NavItem {{- needs_saving ?' StudyNav-NavItem_active StudyNav-NavItem_active_isParent' -}}">
+                    1. {{ 'data_management_plan.sidebar.data_management_plan'|trans }}
+                </a>
+            {%- endif -%}
+            <ul class="StudyNav-SubNav">
+                {%- if needs_saving -%}
+                    <button {{ live_action('save', {route: 'Dmp-edit-administrative' })}}
+                        class="StudyNav-SubNavItem {{- form_type == 'administrativeData' ? ' StudyNav-SubNavItem_active' -}}">
+                        {{ 'data_management_plan.administrative_data.title'|trans }}
+                    </button>
+                {%- else -%}
+                    <a href="{{ path('Dmp-edit-administrative', {id: dataManagementPlan.id}) }}"
+                       class="StudyNav-SubNavItem {{- route_name == 'Dmp-edit-administrative' ? ' StudyNav-SubNavItem_active' -}}">
+                        {{ 'data_management_plan.administrative_data.title'|trans }}
+                    </a>
+                {%- endif -%}
+            </ul>
+        </li>
+        <li>
+            {%- if needs_saving -%}
+                <button {{ live_action('save', {route: 'Dmp-review' })}}
+                    class="StudyNav-NavItem {{- route_name == 'Dmp-review' ? ' StudyNav-NavItem_active' -}}">
+                    2. {{ 'data_management_plan.review.title'|trans }}
+                </button>
+            {%- else -%}
+                <a href="{{ path('Dmp-review', {id: dataManagementPlan.id}) }}"
+                   class="StudyNav-NavItem {{- route_name == 'Dmp-review' ? ' StudyNav-NavItem_active' -}}">
+                   2. {{ 'data_management_plan.review.title'|trans }}
+                </a>
+            {%- endif -%}
+        </li>
+    </ul>
+</nav>

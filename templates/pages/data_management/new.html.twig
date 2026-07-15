@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+
+{% set isPartOfStudyDocumentation = true %}
+
+{% block title %}
+    {{ "data_management_plan.new.title"|trans }}
+{% endblock %}
+
+{% block body %}
+    <div class="max-w-(--breakpoint-xl) pl-4 mx-auto flex">
+        <a href="{{ path("Dmp-overview") }}"
+           class="mt-2 underline Button_tertiary_go Button_standalone justify-self-start">
+            {{ include('components/icons/arrow-left.svg') }}
+            {{ "data_management_plan.overview.title"|trans }}
+        </a>
+    </div>
+
+    <main class="max-w-(--breakpoint-xl) mx-auto mt-9 min-h-[calc(100%-12.5rem)] px-8">
+
+        <h2 class="text-3xl font-bold text-zpid-purple-700">
+            {{ "data_management_plan.new.title"|trans }}
+        </h2>
+
+        <twig:Form:DataManagementPlan:NewPlanForm/>
+    </main>
+
+{% endblock %}

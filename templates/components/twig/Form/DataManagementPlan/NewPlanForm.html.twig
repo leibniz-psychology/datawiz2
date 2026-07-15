@@ -1,0 +1,21 @@
+<div {{ attributes }}>
+    {{ form_start(form, {
+        attr: {
+            'onkeydown': 'if(event.key === "Enter") {event.preventDefault(); event.stopPropagation();}',
+            'data-action': 'live#action:prevent',
+            'data-live-action-param': 'save'
+        }
+    }) }}
+
+    <div class="mt-6 max-w-prose">
+        {{ form_row(form.projectName) }}
+    </div>
+
+    <button class="Button_primary_act Button_standalone mt-4">
+        {{ 'data_management_plan.new.create' | trans }}
+    </button>
+
+    {{ form_rest(form) }}
+
+    {{ form_end(form) }}
+</div>

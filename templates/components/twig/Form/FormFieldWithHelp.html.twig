@@ -1,0 +1,15 @@
+{% from "components/_macros.html.twig" import helpButton %}
+
+{% if entry is defined %}
+    {% set label = entry.label %}
+    {% set legend = entry.legend %}
+    {% set help = entry.descriptionHelp %}
+{% endif %}
+<div {{ attributes.without('form').without('entry') }}>
+    <span class="flex justify-between items-end gap-3 mt-1">
+        {{ form_label(form) }}
+        {{ helpButton(help) }}
+    </span>
+
+    {{ form_widget(form) }}
+</div>

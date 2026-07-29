@@ -60,6 +60,18 @@
                         {{ 'data_management_plan.administrative_data.title'|trans }}
                     </a>
                 {%- endif -%}
+
+                {%- if needs_saving -%}
+                    <button {{ live_action('save', {route: 'Dmp-edit-research-data' })}}
+                        class="StudyNav-SubNavItem {{- form_type == 'researchData' ? ' StudyNav-SubNavItem_active' -}}">
+                        {{ 'data_management_plan.research_data.title'|trans }}
+                    </button>
+                {%- else -%}
+                    <a href="{{ path('Dmp-edit-research-data', {id: dataManagementPlan.id}) }}"
+                       class="StudyNav-SubNavItem {{- route_name == 'Dmp-edit-research-data' ? ' StudyNav-SubNavItem_active' -}}">
+                        {{ 'data_management_plan.research_data.title'|trans }}
+                    </a>
+                {%- endif -%}
             </ul>
         </li>
         <li>

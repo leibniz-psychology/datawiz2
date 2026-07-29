@@ -311,6 +311,8 @@ data_management_plan:
         new: 'Create new data management plan'
         list:
             header: 'My data management plans'
+    research_data:
+        title: 'Research data'
     review:
         title: 'Review input'
         description: 'Review your data management plan and check for completion and correctness.'

@@ -1,0 +1,25 @@
+{% extends "layouts/dataManagement.html.twig" %}
+{% from "components/_macros.html.twig" import sectionHelp %}
+{% from "components/_macros.html.twig" import formHelp %}
+
+{% set isPartOfDmp = true %}
+
+{% block title %}
+    {{ 'data_management_plan.research_data.title'|trans }}
+{% endblock %}
+
+{% block navigation_and_content %}
+    <twig:Form:DataManagementPlan:DmpResearchDataForm initialFormData="{{ dataManagementPlan.researchData }}"/>
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp('data_management_plan.research_data') }}
+{% endblock %}
+
+{% block help_for_metadata %}
+    {% for entry in enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpResearchDataDictionary').cases %}
+        {% if entry.descriptionHelp != null %}
+            <twig:Form:FormHelp dictionary="{{ entry }}"/>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

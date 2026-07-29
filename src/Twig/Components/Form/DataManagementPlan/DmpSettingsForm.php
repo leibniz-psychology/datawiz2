@@ -37,7 +37,7 @@ class DmpSettingsForm extends AbstractController
 
         $this->settingsRepository->save($settings);
 
-        return $this->redirectToRoute('Study-settings', ['id' => $settings->getDataManagementPlan()->getId()]);
+        return $this->redirectToRoute('Dmp-settings', ['id' => $settings->getDataManagementPlan()->getId()]);
     }
 
     protected function instantiateForm(): FormInterface

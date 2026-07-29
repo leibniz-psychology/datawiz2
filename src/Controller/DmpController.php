@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\DataManagementPlan\DataManagementPlan;
+use App\Entity\DataManagementPlan\DmpAdministrativeData;
 use App\Entity\DataManagementPlan\DmpDataSharing;
 use App\Entity\DataManagementPlan\DmpDocumentation;
 use App\Entity\DataManagementPlan\DmpResearchData;
+use App\Entity\DataManagementPlan\DmpSettings;
 use App\Service\DataManagementPlan\DataManagementPlanService;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -59,6 +61,11 @@ class DmpController extends AbstractController
     public function editAdministrativeData(DataManagementPlan $dataManagementPlan): Response
     {
         $this->logger->debug("Enter DmpController::editAction with [UUID: {$dataManagementPlan->getId()}]");
+
+        if ($dataManagementPlan->getAdministrativeData() === null) {
+            $dataManagementPlan->setAdministrativeData(new DmpAdministrativeData());
+            $this->dmpService->save($dataManagementPlan);
+        }
 
         return $this->render('pages/data_management/administrative_data.html.twig', [
             'dataManagementPlan' => $dataManagementPlan,
@@ -124,6 +131,11 @@ class DmpController extends AbstractController
     public function settings(DataManagementPlan $dataManagementPlan): Response
     {
         $this->logger->debug("Enter DmpController::settingsAction with [UUID: {$dataManagementPlan->getId()}]");
+
+        if ($dataManagementPlan->getSettings() === null) {
+            $dataManagementPlan->setSettings(new DmpSettings());
+            $this->dmpService->save($dataManagementPlan);
+        }
 
         return $this->render('pages/data_management/settings.html.twig', [
             'dataManagementPlan' => $dataManagementPlan,

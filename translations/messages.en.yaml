@@ -313,6 +313,8 @@ data_management_plan:
             header: 'My data management plans'
     research_data:
         title: 'Research data'
+    documentation:
+        title: 'Documentation'
     review:
         title: 'Review input'
         description: 'Review your data management plan and check for completion and correctness.'

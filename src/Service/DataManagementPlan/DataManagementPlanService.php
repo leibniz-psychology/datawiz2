@@ -7,6 +7,7 @@ namespace App\Service\DataManagementPlan;
 use App\Entity\Administration\DataWizUser;
 use App\Entity\DataManagementPlan\DataManagementPlan;
 use App\Entity\DataManagementPlan\DmpAdministrativeData;
+use App\Entity\DataManagementPlan\DmpDocumentation;
 use App\Entity\DataManagementPlan\DmpResearchData;
 use App\Entity\DataManagementPlan\DmpSettings;
 use App\Repository\DataManagementPlan\DataManagementPlanRepository;
@@ -41,6 +42,7 @@ readonly class DataManagementPlanService
         $newDataManagementPlan = new DataManagementPlan();
         $newDataManagementPlan->setAdministrativeData(new DmpAdministrativeData());
         $newDataManagementPlan->setResearchData(new DmpResearchData());
+        $newDataManagementPlan->setDocumentation(new DmpDocumentation());
         $newDataManagementPlan->setSettings(new DmpSettings());
         $newDataManagementPlan->setOwner($owner);
 

@@ -1,0 +1,39 @@
+{% extends "components/twig/Form/DataManagementPlan/_baseForm.html.twig" %}
+
+{% block title %}
+    {{ "data_management_plan.documentation.title"|trans }}
+{% endblock %}
+
+{% block form_content %}
+    <twig:Form:FormCard entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpDocumentationDictionary').PURPOSE }}">
+        {{ form_label(form.purpose) }}
+        {{ form_errors(form.purpose) }}
+        <div class="mt-1 flex flex-col gap-2">
+            {%- for choice in form.purpose %}
+                <div class="w-full px-4 py-4 border rounded-lg border-stone-300 has-checked:bg-zpid-blue-50 flex items-start">
+                    {{ form_row(choice) }}
+                </div>
+            {% endfor -%}
+        </div>
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpDocumentationDictionary').CONTENT }}">
+        {{ form_row(form.content) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpDocumentationDictionary').STANDARDIZATION }}">
+        {{ form_row(form.standardization) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpDocumentationDictionary').GENERATING_PROCEDURE }}">
+        {{ form_row(form.generatingProcedure) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpDocumentationDictionary').MONITORING }}">
+        {{ form_row(form.monitoring) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpDocumentationDictionary').EXCHANGE_AND_STORAGE_FORMAT }}">
+        {{ form_row(form.exchangeAndStorageFormat) }}
+    </twig:Form:FormCard>
+{% endblock %}

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\DataManagementPlan\DataManagementPlan;
+use App\Entity\DataManagementPlan\DmpDocumentation;
 use App\Entity\DataManagementPlan\DmpResearchData;
 use App\Service\DataManagementPlan\DataManagementPlanService;
 use Psr\Log\LoggerInterface;
@@ -59,6 +60,21 @@ class DmpController extends AbstractController
         $this->logger->debug("Enter DmpController::editAction with [UUID: {$dataManagementPlan->getId()}]");
 
         return $this->render('pages/data_management/administrative_data.html.twig', [
+            'dataManagementPlan' => $dataManagementPlan,
+        ]);
+    }
+
+    #[Route(path: '/{id}/edit/documentation', name: 'edit-documentation', methods: ['GET'])]
+    public function editDocumentation(DataManagementPlan $dataManagementPlan): Response
+    {
+        $this->logger->debug("Enter DmpController::editDocumentation with [UUID: {$dataManagementPlan->getId()}]");
+
+        if ($dataManagementPlan->getDocumentation() === null) {
+            $dataManagementPlan->setDocumentation(new DmpDocumentation());
+            $this->dmpService->save($dataManagementPlan);
+        }
+
+        return $this->render('pages/data_management/documentation.html.twig', [
             'dataManagementPlan' => $dataManagementPlan,
         ]);
     }

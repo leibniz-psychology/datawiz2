@@ -167,6 +167,16 @@ yes_no:
     no: 'No'
 
 data_management_plan:
+    documentation_purpose:
+        interpretation: 'Interpretation'
+        exchange: 'Exchange'
+        administration: 'Administration'
+        extended:
+            interpretation: '<span class="block">Interpretation</span><span class="block text-sm">e.g. information on data collection</span>'
+            exchange: '<span class="block">Exchange</span><span class="block text-sm">e.g. information necessary to exchange information between cooperation partners</span>'
+            administration: '<span class="block">Administration</span><span class="block text-sm">e.g. copyright</span>'
+
+
     existing_data_reuse:
         yes: 'Existing data are used'
         none_found: 'Search for already existing data was not successful'

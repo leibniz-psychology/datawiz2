@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\DataManagementPlan\DataManagementPlan;
+use App\Entity\DataManagementPlan\DmpResearchData;
 use App\Service\DataManagementPlan\DataManagementPlanService;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -58,6 +59,21 @@ class DmpController extends AbstractController
         $this->logger->debug("Enter DmpController::editAction with [UUID: {$dataManagementPlan->getId()}]");
 
         return $this->render('pages/data_management/administrative_data.html.twig', [
+            'dataManagementPlan' => $dataManagementPlan,
+        ]);
+    }
+
+    #[Route(path: '/{id}/edit/research-data', name: 'edit-research-data', methods: ['GET'])]
+    public function editResearchData(DataManagementPlan $dataManagementPlan): Response
+    {
+        $this->logger->debug("Enter DmpController::editResearchData with [UUID: {$dataManagementPlan->getId()}]");
+
+        if ($dataManagementPlan->getResearchData() === null) {
+            $dataManagementPlan->setResearchData(new DmpResearchData());
+            $this->dmpService->save($dataManagementPlan);
+        }
+
+        return $this->render('pages/data_management/research_data.html.twig', [
             'dataManagementPlan' => $dataManagementPlan,
         ]);
     }

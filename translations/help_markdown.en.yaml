@@ -470,6 +470,53 @@ data_management_plan:
             # Review your plan
 
             Here you can review your data management plan and check for completion and correctness.
+    research_data:
+        section: |
+            # Research data help
+
+            In order to plan the research data management it is first of all important to indicate which type of research data you are going to generate, use and save during the project.
+        existing_data_reuse: |
+            At the beginning of the project it should be checked if new data needs to be collected. The search for already existing data should include data catalogues of the researcher's institution and of third parties. For economical reasons, research questions should, if possible, be answered using publicly accessible data of national panel studies or existing data sets in repositories.
+            Using already existing data does not preclude the generation of additional new data, for example existing data could be used as comparison group.
+        data_collection_reproducibility: |
+            To what extent is the data collection process reproducible? Data collections for secondary analyses (reuse of existing research data, meta analyses, bibliographical analyses) or simulation studies typically show a high degree of reproducibility.
+        file_formats: |
+            In which file formats will the data exist after data collection or digitalization of original records? Which file formats will be used in the course of the project (e.g. transformation of data for import in statistical software)? Will data be saved in different file formats in order to increase accessibility?
+        data_preservation_working_copy: |
+            In most projects, all data collected during the project will be stored as working copies during the project. This also applies to data types such as person related data, which will not be archived or made accessible for reuse, because those data contain information that is required during the project for contacting study participants. Explain, to which data this reason applies and how long they are stored, under storage duration.
+        data_preservation_good_scientific_practice_proof: |
+            Data which are the foundation of a publication should be preserved for at least 10 years according to the DFG recommendations for Safeguarding Good Scientific Practice. Explain, to which data this reason applies and how long they are stored, under storage duration.
+        data_preservation_legal_obligations: |
+            Are the data subject to legal (e.g. Pharmaceutical Drug Law, Patent Law) or contractual requirements (e.g. contracts with funder or publisher) pertaining to their storage? Explain, to which data this reason applies and how long they are stored, under storage duration. Which data have to be stored according to these contractual requirements?
+        storage_duration: |
+            Storage duration may vary depending on the type of data concerned. For example, personal data should be deleted as soon as they are no longer needed to fulfill the research's purpose. If relevant documents exist, we recommend storing these under project materials.
+        deletion_procedures: |
+            Which procedures are deployed for deleting digital data or disposing non-digital data(e.g. paper questionnaires, biological samples)? How are you going to document the deletion/disposal? How will compliance with data protection laws be ensured? In case you created Standard Operating Procedures, we recommend storing the respective documents under project materials.
+        data_selection: |
+            Data selection can also take place as the consequence of data cleaning procedures.
+
+            ### Examples
+
+            > deletion of test runs
+
+            > interrupted measures
+
+            > unprocessed raw data
+
+            > analog data
+
+            > working copies
+
+            > laboratory measures
+
+            > personal data
+
+            > protocols
+
+            > scripts
+
+            > simulated data
+
     settings:
         section: |
             # Settings help

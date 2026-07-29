@@ -1,0 +1,105 @@
+{% extends "components/twig/Form/DataManagementPlan/_baseForm.html.twig" %}
+{% from "components/_macros.html.twig" import helpButton %}
+
+{% block title %}
+    {{ "data_management_plan.research_data.title"|trans }}
+{% endblock %}
+
+{% block form_content %}
+    <twig:Form:FormCard entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpResearchDataDictionary').EXISTING_DATA_REUSE }}">
+        {{ form_row(form.existingDataReuse) }}
+        {% if form.existingDataReuse.vars.value == enum('App\\Enum\\DataManagementPlan\\ExistingDataReuse').YES.value %}
+            {{ form_row(form.existingDataCitation) }}
+            {{ form_row(form.existingDataRelevance) }}
+            {{ form_row(form.existingDataIntegration) }}
+        {% else %}
+            {% do form.existingDataCitation.setRendered %}
+            {% do form.existingDataRelevance.setRendered %}
+            {% do form.existingDataIntegration.setRendered %}
+        {% endif %}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpResearchDataDictionary').RESEARCH_METHOD }}">
+        {{ form_row(form.researchMethod) }}
+        {% if enum('App\\Enum\\DataManagementPlan\\ResearchMethod').OTHER.value in form.researchMethod.vars.value  %}
+            <div class="ml-6">
+                {{ form_row(form.researchMethodOtherDescription) }}
+            </div>
+        {% else %}
+            {% do form.researchMethodOtherDescription.setRendered %}
+        {% endif %}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpResearchDataDictionary').DATA_COLLECTION_REPRODUCIBILITY }}">
+        {{ form_row(form.dataCollectionReproducibility) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpResearchDataDictionary').COLLECTION_MODE }}">
+        {{ form_label(form.collectionMode) }}
+        {{ form_errors(form.collectionMode) }}
+        <div class="mt-1 flex flex-col gap-2">
+            {%- for choice in form.collectionMode %}
+                {{ form_row(choice) }}
+                {% if choice.vars.value == enum('App\\Enum\\Study\\CollectionMode').SPECIAL_APPARATUS.value %}
+                    {% if choice.vars.checked %}
+                        <div class="ml-6 mb-3">
+                            {{ form_row(form.collectionApparatus) }}
+                        </div>
+                    {% else %}
+                        {% do form.collectionApparatus.setRendered %}
+                    {% endif %}
+                {% endif %}
+            {% endfor -%}
+        </div>
+        {% if enum('App\\Enum\\Study\\CollectionMode').OTHER.value in form.collectionMode.vars.value  %}
+            <div class="ml-6">
+                {{ form_row(form.collectionModeOtherDescription) }}
+            </div>
+        {% else %}
+            {% do form.collectionModeOtherDescription.setRendered %}
+        {% endif %}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpResearchDataDictionary').RESEARCH_DESIGN }}">
+        {{ form_row(form.researchDesign) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" title="{{ 'data_management_plan.research_data.quality_assurance' }}">
+        {{ form_row(form.dataCollectorTraining) }}
+        {{ form_row(form.constructsMultipleMeasurement) }}
+        {{ form_row(form.qualityAssuranceOtherDescription) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpResearchDataDictionary').FILE_FORMATS }}">
+        {{ form_row(form.fileFormats) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" title="{{ 'data_management_plan.research_data.data_preservation' }}">
+        <twig:Form:FormFieldWithHelp form="{{ form.dataPreservationWorkingCopy }}" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpResearchDataDictionary').DATA_PRESERVATION_WORKING_COPY }}"/>
+        <twig:Form:FormFieldWithHelp form="{{ form.dataPreservationGoodScientificPracticeProof }}" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpResearchDataDictionary').DATA_PRESERVATION_GOOD_SCIENTIFIC_PRACTICE_PROOF }}"/>
+
+        {{ form_row(form.dataPreservationReproducibility) }}
+        <twig:Form:FormFieldWithHelp form="{{ form.dataPreservationLegalObligations }}" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpResearchDataDictionary').DATA_PRESERVATION_LEGAL_OBLIGATIONS }}"/>
+
+        {{ form_row(form.dataPreservationBestPractice) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpResearchDataDictionary').STORAGE_DURATION }}">
+        {{ form_row(form.storageDuration) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpResearchDataDictionary').DELETION_PROCEDURES }}">
+        {{ form_row(form.deletionProcedures) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpResearchDataDictionary').DATA_SELECTION }}">
+        {{ form_row(form.dataSelection) }}
+        {% if form.dataSelection.vars.value == enum('App\\Enum\\YesNo').YES.value %}
+            {{ form_row(form.dataSelectionTimePoint) }}
+            {{ form_row(form.dataSelectionProcedures) }}
+        {% else %}
+            {% do form.dataSelectionTimePoint.setRendered %}
+            {% do form.dataSelectionProcedures.setRendered %}
+        {% endif %}
+    </twig:Form:FormCard>
+{% endblock %}

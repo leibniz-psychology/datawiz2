@@ -513,6 +513,126 @@ data_management_plan:
             label: 'Provide information on the intended audience of the project.'
             error_message: '<a href="#link#" class="#class#">Add target audiences</a>'
 
+    research_data:
+        title:
+            legend: 'Research Data'
+            label: 'Research Data'
+        existing_data_reuse:
+            legend: 'Reuse of already existing data'
+            label: 'Are you reusing existing data?'
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add existing data reuse</a>'
+        existing_data_citation:
+            legend: 'Data citation'
+            label: 'Provide data citations for all data that were used for secondary analyses.'
+            error_message: '<a href="#link#" class="#class#">Add existing data citation</a>'
+        existing_data_relevance:
+            legend: 'Data relevance'
+            label: "Describe the relevance of existing and generated data to the project's objective."
+            help: 'Describe the role for each, existing and collected data with reference to the goals of your research project (e.g. existing data constitute the comparison group, or new data are collected to serve as a follow-up). In case this is already explained in other documents (e.g. your project proposal), we recommend storing the relevant documents under project materials.'
+            error_message: '<a href="#link#" class="#class#">Add existing data relevance</a>'
+        existing_data_integration:
+            legend: 'Data integration'
+            label: 'Describe the integration of already existing and generated data'
+            help: 'How will you document the origin and quality of data if data from several sources are merged? Is re-coding of variables necessary for data harmonization or should records be merged following specific assignment rules? In case you created Standard Operating Procedures, we recommend storing the respective documents under project materials.'
+            error_message: '<a href="#link#" class="#class#">Add existing data integration</a>'
+        research_method:
+            legend: 'Research method'
+            label: 'Characterize the type of data by means of research method'
+            error_message: '<a href="#link#" class="#class#">Add research method</a>'
+        research_method_other:
+            legend: 'Other research method'
+            label: 'Please specify'
+            help: 'e.g. program source code, machine-readable text, transaction data, administrative records data, coded documents'
+            error_message: '<a href="#link#" class="#class#">Add other research method</a>'
+        data_collection_reproducibility:
+            legend: 'Data collection reproducibility'
+            label: 'Describe the reproducibility of the data collection'
+            error_message: '<a href="#link#" class="#class#">Add data collection reproducibility</a>'
+        collection_mode:
+            legend: 'Collection mode'
+            label: 'Describe the method that is used to collect data.'
+            error_message: '<a href="#link#" class="#class#">Add collection mode</a>'
+        collection_apparatus:
+            legend: 'Collection apparatus'
+            label: 'Which instruments (apparatus, equipment) will you use in your study?'
+            error_message: '<a href="#link#" class="#class#">Add collection apparatus</a>'
+        collection_mode_other:
+            legend: 'Other collection mode'
+            label: 'Please describe the method'
+            error_message: '<a href="#link#" class="#class#">Add other collection mode</a>'
+        research_design:
+            legend: 'Research design'
+            label: 'Please state whether the research design is longitudinal or cross-sectional. Please code your data collection as longitudinal only, if at least two separate within-subjects measurement occasions exist.'
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add research design</a>'
+        quality_assurance: 'Quality assurance and quality management'
+        data_collector_training:
+            legend: 'Training to ensure reliability of data collectors'
+            label: 'Describe the training provided to data collectors (interviewer training, process testing, compliance with standards etc.). In case you created manuals, we recommend storing the respective documents under project materials.'
+            error_message: '<a href="#link#" class="#class#">Add data collector training</a>'
+        constructs_multiple_measurement:
+            legend: 'Multiple measurements for constructs'
+            label: 'State if you assess constructs by multiple measurements (for example, different methods for assessing outcomes).'
+            error_message: '<a href="#link#" class="#class#">Add constructs multiple measurement</a>'
+        quality_assurance_other:
+            legend: 'Other quality assurance'
+            label: 'State other information regarding quality assurance.'
+            help: 'e.g. calibration or validation of measurement instruments, double entry, data cleaning, compliance with applicable standards. (If applicable, refer to corresponding documents under project materials).'
+            error_message: '<a href="#link#" class="#class#">Add other quality assurance</a>'
+        file_formats:
+            legend: 'File formats'
+            label: 'Describe which file formats will be used.'
+            error_message: '<a href="#link#" class="#class#">Add file formats</a>'
+        data_preservation: 'Reasons for data preservation'
+        data_preservation_working_copy:
+            legend: 'Working copy'
+            label: 'Will a working copy be preserved?'
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add working copy</a> regarding data preservation'
+        data_preservation_good_scientific_practice_proof:
+            legend: 'Proof of good scientific practice'
+            label: 'Will data be preserved according to good scientific practice?'
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add proof of good scientific practice</a> regarding data preservation'
+        data_preservation_reproducibility:
+            legend: 'Reproducibility'
+            label: 'Are data stored in order to allow other researchers to reproduce the results of specific analyses?'
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add reproducibility</a> regarding data preservation'
+        data_preservation_legal_obligations:
+            legend: 'Legal obligations'
+            label: 'Are the data subject to legal obligations?'
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add legal obligations</a> regarding data preservation'
+        data_preservation_best_practice:
+            legend: 'Best practice'
+            label: 'Are data stored in order to be shared with the scientific community or publicly?'
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add best practice</a> regarding data preservation'
+        storage_duration:
+            legend: 'Storage duration'
+            label: 'Describe the storage duration'
+            error_message: '<a href="#link#" class="#class#">Add storage duration</a>'
+        deletion_procedures:
+            legend: 'Deletion or disposal procedures'
+            label: 'Describe the deletion or disposal procedures'
+            error_message: '<a href="#link#" class="#class#">Add deletion procedures</a>'
+        data_selection:
+            legend: 'Data selection and data cleaning'
+            label: 'Will all data be stored, archived and made accessible or are any procedures deployed which result in data deletion during or after the project?'
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add data selection</a>'
+        data_selection_time_point:
+            legend: 'Time of data selection and data cleaning'
+            label: 'Describe the time of data selection depending on the data concerned'
+            error_message: '<a href="#link#" class="#class#">Add data selection time point</a>'
+        data_selection_procedures:
+            legend: 'Data selection and data cleaning procedures '
+            label: 'Describe the data selection and data cleaning procedures'
+            help: 'Who is responsible for selection (e.g. principal investigator)? Which tools (e.g. software) are used for selection? On which criteria is selection based (e.g. coefficient of variation for laboratory measures or other measures of measurement quality)? In case you created Standard Operating Procedures, we recommend storing the respective documents under project materials.'
+            error_message: '<a href="#link#" class="#class#">Add data selection procedures</a>'
+
     settings:
         short_name:
             legend: 'Data Management Plan Name'

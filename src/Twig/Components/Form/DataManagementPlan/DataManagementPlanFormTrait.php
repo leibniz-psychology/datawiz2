@@ -21,6 +21,11 @@ trait DataManagementPlanFormTrait
             'route' => 'Dmp-edit-administrative',
             'title' => 'title.basic.title',
         ],
+        [
+            'type' => 'researchData',
+            'route' => 'Dmp-edit-research-data',
+            'title' => 'data_management_plan.research_data.title',
+        ],
     ];
 
     public function __construct(

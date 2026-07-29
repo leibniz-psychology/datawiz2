@@ -662,6 +662,92 @@ data_management_plan:
             label: 'Describe in which format are the metadata saved and exchanged.'
             error_message: '<a href="#link#" class="#class#">Add exchange and storage format</a>'
 
+    data_sharing:
+        title:
+            legend: 'Data Sharing'
+            label: 'Data Sharing'
+        sharing_obligation:
+            legend: 'Obligation to share data'
+            label: 'Specify if there is an obligation to share data.'
+            placeholder: 'Please select'
+            help: 'e.g. by funder, institution, scientific societies.'
+            error_message: '<a href="#link#" class="#class#">Add sharing obligation</a>'
+        intended_use:
+            legend: 'Intended or expected use'
+            label: 'Describe the intended or expected use of the data.'
+            error_message: '<a href="#link#" class="#class#">Add intended use</a>'
+        third_party_access:
+            legend: 'Third party access'
+            label: 'Specify how the data will be made accessible to third parties.'
+            error_message: '<a href="#link#" class="#class#">Add third party access</a>'
+        repository_name:
+            legend: 'Repository or archive'
+            label: 'State name and rationale of choice for a repository or archive.'
+            help: 'If applicable, refer to corresponding documents (e.g. acquisition agreement) under project materials.'
+            error_message: '<a href="#link#" class="#class#">Add repository name</a>'
+        data_searchability:
+            legend: 'Data searchability'
+            label: 'Describe if and how other researchers will be able to find your data.'
+            help: 'Are data included in any catalogs or registers?'
+            error_message: '<a href="#link#" class="#class#">Add data searchability</a>'
+        deposit_timepoint:
+            legend: 'Time of data deposit'
+            label: 'Describe in which project phase the data will be transferred.'
+            help: 'e.g. after data collection, at the end of the project, after each wave, in association with a publication'
+            error_message: '<a href="#link#" class="#class#">Add deposit timepoint</a>'
+        sensitive_data_requirements:
+            legend: 'Sensitive data requirements'
+            label: 'Describe special requirements on data sharing because of sensitive data.'
+            help: 'Does your data include personal data or confidential data that requires the implementation of usage restrictions (e.g. scientific use only)? If applicable, refer to corresponding documents (e.g. acquisition agreement) under project materials.'
+            error_message: '<a href="#link#" class="#class#">Add sensitive data requirements</a>'
+        initial_use_right:
+            legend: 'Right to initial use'
+            label: 'Describe who has the initial right to use the data.'
+            help: 'Is there an embargo period where only the data creator(s) are allowed to use the data? When are others allowed to access the data? If applicable, refer to corresponding documents (e.g. acquisition agreement) under project materials.'
+            error_message: '<a href="#link#" class="#class#">Add initial use right</a>'
+        usage_restriction:
+            legend: 'Usage restriction'
+            label: 'Describe any usage restriction or license terms within the archive or repository'
+            error_message: '<a href="#link#" class="#class#">Add usage restriction</a>'
+        access_cost:
+            legend: 'Access charges'
+            label: 'Specify if the data usage will be subject to charges.'
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add access cost</a>'
+        repository_responsibilities_fixation:
+            legend: 'Repository responsibilities fixation'
+            label: "Specify if the data producer's and data archive's or repository's responsibilities have been fixated."
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add repository responsibilities fixation</a>'
+        acquisition_agreement:
+            legend: 'Acquisition agreement'
+            label: 'Specify if there is an acquisition agreement with the repository or archive.'
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add acquisition agreement</a>'
+        persistent_identifier_use:
+            legend: 'Persistent identifier use'
+            label: 'State which persistent identifier will be used for the data.'
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add persistent identifier use</a>'
+        persistent_identifier_use_other_description:
+            legend: 'Other persistent identifier'
+            label: 'Please specify the persistent identifier'
+            error_message: '<a href="#link#" class="#class#">Add other persistent identifier</a>'
+        no_repository_explanation:
+            legend: 'On demand access Explanation'
+            label: 'Explain why data will not be deposited within a repository or archive.'
+            error_message: '<a href="#link#" class="#class#">Add no repository explanation</a>'
+        no_sharing_explanation:
+            legend: 'No sharing explanation'
+            label: 'Explain why data will not be shared'
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add no sharing explanation</a>'
+        no_sharing_explanation_other_description:
+            legend: 'Other no sharing explanation'
+            label: 'Please specify'
+            help: 'Please provide additional details'
+            error_message: '<a href="#link#" class="#class#">Add other no sharing explanation</a>'
+
     settings:
         short_name:
             legend: 'Data Management Plan Name'

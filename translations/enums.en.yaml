@@ -182,8 +182,23 @@ data_management_plan:
         none_found: 'Search for already existing data was not successful'
         no: 'No search for already existing data was carried out'
 
+    no_sharing_explanation:
+        data_protection: 'Data protection'
+        confidentiality: 'Confidentiality'
+        other: 'Other'
+
+    persistent_identifier_use:
+        no: 'No allocation of persistent identifiers'
+        doi: 'DOI'
+        other: 'Other'
+
     research_method:
         experimental: 'Experiment data'
         survey: 'Survey data'
         test: 'Test data'
         other: 'Other'
+
+    third_party_access:
+        repository: 'Data are accessible via a repository or data archive'
+        on_demand: 'Data access on demand only'
+        none: 'Data are not accessible'

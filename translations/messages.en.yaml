@@ -315,6 +315,8 @@ data_management_plan:
         title: 'Research data'
     documentation:
         title: 'Documentation'
+    data_sharing:
+        title: 'Data sharing'
     review:
         title: 'Review input'
         description: 'Review your data management plan and check for completion and correctness.'

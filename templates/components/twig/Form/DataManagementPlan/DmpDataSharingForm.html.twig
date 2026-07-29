@@ -1,0 +1,104 @@
+{% extends "components/twig/Form/DataManagementPlan/_baseForm.html.twig" %}
+
+{% block title %}
+    {{ "data_management_plan.data_sharing.title"|trans }}
+{% endblock %}
+
+{% block form_content %}
+    <twig:Form:FormCard entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpDataSharingDictionary').SHARING_OBLIGATION }}">
+        {{ form_row(form.sharingObligation) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpDataSharingDictionary').INTENDED_USE }}">
+        {{ form_row(form.intendedUse) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpDataSharingDictionary').THIRD_PARTY_ACCESS }}">
+        {{ form_row(form.thirdPartyAccess) }}
+    </twig:Form:FormCard>
+
+    {% if form.thirdPartyAccess.vars.value == enum('App\\Enum\\DataManagementPlan\\ThirdPartyAccess').REPOSITORY.value %}
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpDataSharingDictionary').REPOSITORY_NAME }}">
+            {{ form_row(form.repositoryName) }}
+        </twig:Form:FormCard>
+
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpDataSharingDictionary').DATA_SEARCHABILITY }}">
+            {{ form_row(form.dataSearchability) }}
+        </twig:Form:FormCard>
+
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpDataSharingDictionary').DEPOSIT_TIMEPOINT }}">
+            {{ form_row(form.depositTimepoint) }}
+        </twig:Form:FormCard>
+
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpDataSharingDictionary').SENSITIVE_DATA_REQUIREMENTS }}">
+            {{ form_row(form.sensitiveDataRequirements) }}
+        </twig:Form:FormCard>
+
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpDataSharingDictionary').INITIAL_USE_RIGHT }}">
+            {{ form_row(form.initialUseRight) }}
+        </twig:Form:FormCard>
+
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpDataSharingDictionary').USAGE_RESTRICTION }}">
+            {{ form_row(form.usageRestriction) }}
+        </twig:Form:FormCard>
+
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpDataSharingDictionary').ACCESS_COST }}">
+            {{ form_row(form.accessCost) }}
+        </twig:Form:FormCard>
+
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpDataSharingDictionary').REPOSITORY_RESPONSIBILITIES_FIXATION }}">
+            {{ form_row(form.repositoryResponsibilitiesFixation) }}
+        </twig:Form:FormCard>
+
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpDataSharingDictionary').ACQUISITION_AGREEMENT }}">
+            {{ form_row(form.acquisitionAgreement) }}
+        </twig:Form:FormCard>
+
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpDataSharingDictionary').PERSISTENT_IDENTIFIER_USE }}">
+            {{ form_row(form.persistentIdentifierUse) }}
+            {% if form.persistentIdentifierUse.vars.value == enum('App\\Enum\\DataManagementPlan\\PersistentIdentifierUse').OTHER.value %}
+                {{ form_row(form.persistentIdentifierUseOtherDescription) }}
+            {% else %}
+                {% do form.persistentIdentifierUseOtherDescription.setRendered %}
+            {% endif %}
+        </twig:Form:FormCard>
+    {% else  %}
+        {% do form.repositoryName.setRendered %}
+        {% do form.depositTimepoint.setRendered %}
+        {% do form.sensitiveDataRequirements.setRendered %}
+        {% do form.initialUseRight.setRendered %}
+        {% do form.usageRestriction.setRendered %}
+        {% do form.accessCost.setRendered %}
+        {% do form.repositoryResponsibilitiesFixation.setRendered %}
+        {% do form.acquisitionAgreement.setRendered %}
+        {% do form.persistentIdentifierUse.setRendered %}
+        {% do form.persistentIdentifierUseOtherDescription.setRendered %}
+    {% endif %}
+
+    {% if form.thirdPartyAccess.vars.value == enum('App\\Enum\\DataManagementPlan\\ThirdPartyAccess').ON_DEMAND.value %}
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpDataSharingDictionary').DATA_SEARCHABILITY }}">
+            {{ form_row(form.dataSearchability) }}
+        </twig:Form:FormCard>
+
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpDataSharingDictionary').NO_REPOSITORY_EXPLANATION }}">
+            {{ form_row(form.noRepositoryExplanation) }}
+        </twig:Form:FormCard>
+    {% else %}
+        {% do form.noRepositoryExplanation.setRendered %}
+        {% do form.dataSearchability.setRendered %}
+    {% endif %}
+
+    {% if form.thirdPartyAccess.vars.value == enum('App\\Enum\\DataManagementPlan\\ThirdPartyAccess').NONE.value %}
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpDataSharingDictionary').NO_SHARING_EXPLANATION }}">
+            {{ form_row(form.noSharingExplanation) }}
+            {% if form.noSharingExplanation.vars.value == enum('App\\Enum\\DataManagementPlan\\NoSharingExplanation').OTHER.value %}
+                {{ form_row(form.noSharingExplanationOtherDescription) }}
+            {% else %}
+                {% do form.noSharingExplanationOtherDescription.setRendered %}
+            {% endif %}
+        </twig:Form:FormCard>
+    {% else %}
+        {% do form.noSharingExplanation.setRendered %}
+        {% do form.noSharingExplanationOtherDescription.setRendered %}
+    {% endif %}
+{% endblock %}

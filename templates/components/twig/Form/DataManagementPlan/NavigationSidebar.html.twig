@@ -84,6 +84,18 @@
                         {{ 'data_management_plan.documentation.title'|trans }}
                     </a>
                 {%- endif -%}
+
+                {%- if needs_saving -%}
+                    <button {{ live_action('save', {route: 'Dmp-edit-data-sharing' })}}
+                        class="StudyNav-SubNavItem {{- form_type == 'dataSharing' ? ' StudyNav-SubNavItem_active' -}}">
+                        {{ 'data_management_plan.data_sharing.title'|trans }}
+                    </button>
+                {%- else -%}
+                    <a href="{{ path('Dmp-edit-data-sharing', {id: dataManagementPlan.id}) }}"
+                       class="StudyNav-SubNavItem {{- route_name == 'Dmp-edit-data-sharing' ? ' StudyNav-SubNavItem_active' -}}">
+                        {{ 'data_management_plan.data_sharing.title'|trans }}
+                    </a>
+                {%- endif -%}
             </ul>
         </li>
         <li>

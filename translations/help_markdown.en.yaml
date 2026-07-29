@@ -521,7 +521,7 @@ data_management_plan:
         section: |
             # Documentation help
 
-            In this section you can describe the documentation of your research data, including its purpose, content, standardization, generating procedures, monitoring, and exchange and storage formats.
+            In order to enable other researchers to use your research data sustainably, it is necessary to describe the project and the collected data as precisely as possible.
         purpose: |
             What purpose should the metadata serve or what is their use?
             The most frequent purpose of documenting the data generated during your project will probably be to generate "interpretable" data.
@@ -549,6 +549,34 @@ data_management_plan:
             Metadata standards often provide predefined schemes to ensure formal accuracy of the metadata.
             Even if you document your data in a self-developed framework you can use data entry forms that only allow a set of predefined values for each field.
             In case you created Standard Operating Procedures, we recommend storing the respective documents under project materials.
+    data_sharing:
+        section: |
+            # Data sharing help
+
+            Data sharing should be considered by all means during the planning of handling research data. If there are reasons which hinder data sharing, these reasons should be listed.
+        intended_use: |
+            Information regarding institutions or groups which will probably be interested in using the data and how they are expected to use the data (e.g. scientific, political, or commercial relevance and potential of the data).
+            If applicable, provide information on potential risks, such as re-identification of subjects.
+        usage_restriction: |
+            Are (standardized) licenses assigned? Licenses allow data depositors to determine how their data can be used.
+            Additionally, some data centers stipulate further terms of use of their own.
+            If applicable, refer to corresponding documents (e.g. acquisition agreement) under project materials.
+        repository_responsibilities_fixation: |
+            Are the data producer's and data archive's or repository's rights and responsibilities clarified?
+            Who is responsible for which part of the data ingest?
+            Are there contractual regulations for tasks like generating additional metadata, conversion of files, and implementation of the agreed access conditions?
+            If applicable, refer to corresponding documents (e.g. acquisition agreement) under project materials.
+        acquisition_agreement: |
+            For large data volumes or data in unusual formats and data requiring further processing for reasons of data protection, an acquisition agreement can be useful.
+            Fixing such an agreement beforehand should also be considered, if data are supposed to be published on a specific date (e.g. as a publication's appendix).
+            If applicable, refer to corresponding documents under project materials.
+        persistent_identifier_use: |
+            In contrast to describing the storage location of a file via web address (URL), describing the storage location using a persistent identifier will ensure findability even if the web address changes (e.g. during a restructuring of the data archive's website).
+            A persistent identifier guarantees therefore long-term findability of digital objects on the internet.
+            Thus, using persistent identifiers is required for making data permanently citable.
+            Digital Object Identifier (DOI) are commonly used as persistent identifiers in psychology and assigned to both, journal and data publications.
+        no_sharing_explanation: |
+            Will data not be shared for reasons of data protection (e.g. sharing prohibited by ethics committee), for reasons of confidentiality (e.g. contractual agreement for data collections within a company) or for other reasons?
     settings:
         section: |
             # Settings help

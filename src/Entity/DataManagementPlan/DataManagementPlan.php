@@ -26,6 +26,11 @@ class DataManagementPlan extends UuidEntity
     #[ORM\OneToOne(mappedBy: 'dataManagementPlan', cascade: ['persist', 'remove'])]
     private ?DmpResearchData $researchData = null;
 
+    #[SerializedName('documentation')]
+    #[Groups(['data_management_plan'])]
+    #[ORM\OneToOne(mappedBy: 'dataManagementPlan', cascade: ['persist', 'remove'])]
+    private ?DmpDocumentation $documentation = null;
+
     #[SerializedName('settings')]
     #[Groups(['settings'])]
     #[ORM\OneToOne(mappedBy: 'dataManagementPlan', cascade: ['persist', 'remove'])]
@@ -59,6 +64,18 @@ class DataManagementPlan extends UuidEntity
     {
         $this->researchData = $researchData;
         $researchData->setDataManagementPlan($this);
+        return $this;
+    }
+
+    public function getDocumentation(): ?DmpDocumentation
+    {
+        return $this->documentation;
+    }
+
+    public function setDocumentation(?DmpDocumentation $documentation): static
+    {
+        $this->documentation = $documentation;
+        $documentation->setDataManagementPlan($this);
         return $this;
     }
 

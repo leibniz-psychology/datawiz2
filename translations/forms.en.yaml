@@ -633,6 +633,35 @@ data_management_plan:
             help: 'Who is responsible for selection (e.g. principal investigator)? Which tools (e.g. software) are used for selection? On which criteria is selection based (e.g. coefficient of variation for laboratory measures or other measures of measurement quality)? In case you created Standard Operating Procedures, we recommend storing the respective documents under project materials.'
             error_message: '<a href="#link#" class="#class#">Add data selection procedures</a>'
 
+    documentation:
+        title:
+            legend: 'Documentation'
+            label: 'Documentation'
+        purpose:
+            legend: 'Purpose of the documentation'
+            label: 'What is the purpose of the documentation?'
+            error_message: '<a href="#link#" class="#class#">Add purpose of the documentation</a>'
+        content:
+            legend: 'Content of the documentation'
+            label: 'Describe which metadata is to be described by the documentation.'
+            error_message: '<a href="#link#" class="#class#">Add content of the documentation</a>'
+        standardization:
+            legend: 'Standardization'
+            label: 'Describe the standards which can be applied for generating the metadata.'
+            error_message: '<a href="#link#" class="#class#">Add standardization</a>'
+        generating_procedure:
+            legend: 'Generating procedure'
+            label: 'Describe the metadata generating procedure.'
+            error_message: '<a href="#link#" class="#class#">Add generating procedure</a>'
+        monitoring:
+            legend: 'Monitoring'
+            label: 'Describe the metadata standardization monitoring procedures.'
+            error_message: '<a href="#link#" class="#class#">Add monitoring</a>'
+        exchange_and_storage_format:
+            legend: 'Exchange and storage format'
+            label: 'Describe in which format are the metadata saved and exchanged.'
+            error_message: '<a href="#link#" class="#class#">Add exchange and storage format</a>'
+
     settings:
         short_name:
             legend: 'Data Management Plan Name'

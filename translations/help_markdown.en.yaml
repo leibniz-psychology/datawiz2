@@ -517,6 +517,38 @@ data_management_plan:
 
             > simulated data
 
+    documentation:
+        section: |
+            # Documentation help
+
+            In this section you can describe the documentation of your research data, including its purpose, content, standardization, generating procedures, monitoring, and exchange and storage formats.
+        purpose: |
+            What purpose should the metadata serve or what is their use?
+            The most frequent purpose of documenting the data generated during your project will probably be to generate "interpretable" data.
+
+            ## Interpretation
+            Refers to providing additional information to ensure the comprehensibility of the data (including study-level information regarding the context of the data collection or variable-level information which is often found in codebooks).
+
+            ## Exchange
+            Refers to information which is used to synchronize the data. This can be useful when data have been collected on separate locations and have to be merged or synchronized based on this information.
+
+            ## Administration
+            Refers to information used to manage data. This includes versioning and name schemes as well as checksums.
+        content: |
+            Which information is to be described by metadata (e.g. information on data collection, technical equipment, instruments, encoding or software)?
+            The content of the documentation should be tailored to the purpose of the documentation and the intended subsequent use of the data.
+        standardization: |
+            Does a specific (discipline specific or multidisciplinary) standard exist, which can be applied for generating the metadata (e.g. DDI or Dublin Core), or is the documentation generated unstandardized or by means of self-developed reports and forms?
+            Which meanings can be depicted with specific standards (usually standards will not cover all aspects of your documentation)?
+            If applicable, refer to corresponding reports or forms under project materials.
+        generating_procedure: |
+            When and by whom will which metadata be generated? Can metadata be collected automatically (e.g. log-files, versioning tools)?
+            In case you created Standard Operating Procedures, we recommend storing the respective documents under project materials.
+        monitoring: |
+            Using specialized software such as DataWiz automatically ensures technical accuracy of the metadata that you entered.
+            Metadata standards often provide predefined schemes to ensure formal accuracy of the metadata.
+            Even if you document your data in a self-developed framework you can use data entry forms that only allow a set of predefined values for each field.
+            In case you created Standard Operating Procedures, we recommend storing the respective documents under project materials.
     settings:
         section: |
             # Settings help

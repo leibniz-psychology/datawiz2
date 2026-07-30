@@ -8,6 +8,7 @@ use App\Entity\DataManagementPlan\DataManagementPlan;
 use App\Entity\DataManagementPlan\DmpAdministrativeData;
 use App\Entity\DataManagementPlan\DmpDataSharing;
 use App\Entity\DataManagementPlan\DmpDocumentation;
+use App\Entity\DataManagementPlan\DmpEthicalLegal;
 use App\Entity\DataManagementPlan\DmpOrganizationPolicies;
 use App\Entity\DataManagementPlan\DmpResearchData;
 use App\Entity\DataManagementPlan\DmpSettings;
@@ -70,6 +71,21 @@ class DmpController extends AbstractController
         }
 
         return $this->render('pages/data_management/administrative_data.html.twig', [
+            'dataManagementPlan' => $dataManagementPlan,
+        ]);
+    }
+
+    #[Route(path: '/{id}/edit/ethical-legal', name: 'edit-ethical-legal', methods: ['GET'])]
+    public function editEthicalLegal(DataManagementPlan $dataManagementPlan): Response
+    {
+        $this->logger->debug("Enter DmpController::editEthicalLegal with [UUID: {$dataManagementPlan->getId()}]");
+
+        if ($dataManagementPlan->getEthicalLegal() === null) {
+            $dataManagementPlan->setEthicalLegal(new DmpEthicalLegal());
+            $this->dmpService->save($dataManagementPlan);
+        }
+
+        return $this->render('pages/data_management/ethical_legal.html.twig', [
             'dataManagementPlan' => $dataManagementPlan,
         ]);
     }

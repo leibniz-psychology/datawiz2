@@ -1,0 +1,61 @@
+{% extends "components/twig/Form/DataManagementPlan/_baseForm.html.twig" %}
+
+{% block title %}
+    {{ "data_management_plan.ethical_legal.title"|trans }}
+{% endblock %}
+
+{% block form_content %}
+    <twig:Form:FormCard entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpEthicalLegalDictionary').ETHICAL_REVIEW }}">
+        {{ form_row(form.ethicalReview) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpEthicalLegalDictionary').INFORMED_CONSENT }}">
+        {{ form_row(form.informedConsent) }}
+        {% if form.informedConsent.vars.value == enum('App\\Enum\\YesNo').YES.value %}
+            {{ form_row(form.informedConsentDataSharing) }}
+            {% do form.noInformedConsentReason.setRendered %}
+        {% elseif form.informedConsent.vars.value == enum('App\\Enum\\YesNo').NO.value %}
+            {% do form.informedConsentDataSharing.setRendered %}
+            {{ form_row(form.noInformedConsentReason) }}
+        {% else %}
+            {% do form.informedConsentDataSharing.setRendered %}
+            {% do form.noInformedConsentReason.setRendered %}
+        {% endif %}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpEthicalLegalDictionary').PERSONAL_DATA }}">
+        {{ form_row(form.personalData) }}
+        {% if form.personalData.vars.value == enum('App\\Enum\\YesNo').YES.value %}
+            {{ form_row(form.personalDataProtectionMeasures) }}
+        {% else %}
+            {% do form.personalDataProtectionMeasures.setRendered %}
+        {% endif %}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpEthicalLegalDictionary').COMMERCIAL_SENSITIVE_DATA }}">
+        {{ form_row(form.commercialSensitiveData) }}
+        {% if form.commercialSensitiveData.vars.value == enum('App\\Enum\\YesNo').YES.value %}
+            {{ form_row(form.commercialDataProtectionMeasures) }}
+        {% else %}
+            {% do form.commercialDataProtectionMeasures.setRendered %}
+        {% endif %}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpEthicalLegalDictionary').COPYRIGHT }}">
+        {{ form_row(form.copyright) }}
+        {% if form.copyright.vars.value == enum('App\\Enum\\YesNo').YES.value %}
+            {{ form_row(form.copyrightLicenses) }}
+        {% else %}
+            {% do form.copyrightLicenses.setRendered %}
+        {% endif %}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpEthicalLegalDictionary').THIRD_PARTY_RIGHTS }}">
+        {{ form_row(form.thirdPartyRights) }}
+        {% if form.thirdPartyRights.vars.value == enum('App\\Enum\\YesNo').YES.value %}
+            {{ form_row(form.thirdPartyLicenses) }}
+        {% else %}
+            {% do form.thirdPartyLicenses.setRendered %}
+        {% endif %}
+    </twig:Form:FormCard>
+{% endblock %}

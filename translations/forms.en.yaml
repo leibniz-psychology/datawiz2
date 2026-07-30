@@ -835,6 +835,67 @@ data_management_plan:
             label: 'Describe how, when, and by whom the adherence to planning is monitored and verified. Further state if you will document these monitorings.'
             error_message: '<a href="#link#" class="#class#">Add data management plan adherence</a>'
 
+    ethical_legal:
+        ethical_review:
+            legend: 'Ethical review'
+            label: "In case an ethical review has taken place, give information on the ethics committee and amendments to the initial proposal (if applicable). List all requirements on the project's data management, which resulted from the ethical review."
+            error_message: '<a href="#link#" class="#class#">Add ethical review</a>'
+        informed_consent:
+            legend: 'Informed consent'
+            label: 'State if informed consent was obtained from the participants.'
+            help: 'Obtaining informed consent is obligatory with only a few exceptions according to most ethical guidelines for psychological research on humans.'
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add informed consent</a>'
+        informed_consent_data_sharing:
+            legend: 'Consideration of data sharing'
+            label: 'Does the informed consent cover data sharing?'
+            help: 'When planning to share data with third parties, this information should be included in the informed consent.'
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add informed consent data sharing</a>'
+        no_informed_consent_reason:
+            legend: 'Reasons for not obtaining informed consent'
+            label: 'Explain why informed consent was not obtained.'
+            error_message: '<a href="#link#" class="#class#">Add Reasons</a> for not obtaining informed consent'
+        personal_data:
+            legend: 'Collection of personal data'
+            label: 'State if personal data was collected.'
+            help: 'Check whether Bundesdatenschutzgesetz (BDSG) § 3 or the Directive 95/46/EC of the European Parliament (Article 2(a)) applies to your data.'
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add whether personal data was collected</a>'
+        personal_data_protection_measures:
+            legend: 'Measures to comply with data protection laws'
+            label: 'Describe which measures were taken to fulfill data protection requirements (e.g. anonymization, pseudonymization). If applicable, also describe how you handle special kinds of person related data.'
+            error_message: '<a href="#link#" class="#class#">Add personal data protection measures</a>'
+        commercial_sensitive_data:
+            legend: 'Collection of commercial or sensitive data'
+            label: 'State if any sensitive data other than personal data were collected (e.g. military research, research in companies or schools, "Bundesstatistiken")'
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add whether commercial or sensitive data</a> has been collected.'
+        commercial_data_protection_measures:
+            legend: 'Measures to protect commercially or otherwise sensitive data'
+            label: 'Describe which measures were taken to protect commercial or otherwise sensitive (non-personal) data.'
+            error_message: '<a href="#link#" class="#class#">Add commercial data protection measures</a>'
+        copyright:
+            legend: 'Copyright on project outputs'
+            label: 'State whether research data, measurement instruments or software, which were generated within the scope of this project are subject to copyright, patent law, or other intellectual property rights.'
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add copyright</a>'
+        copyright_licenses:
+            legend: 'Copyright licenses'
+            label: 'Describe who holds rights on the objects concerned and how they can be used.'
+            help: "e.g. rights belong to the principal investigator, the principal investigator's institution or the funding agency; limitations or delays in data availability or availability under specific licenses or conditions"
+            error_message: '<a href="#link#" class="#class#">Add copyright licenses</a>'
+        third_party_rights:
+            legend: 'Third party rights'
+            label: 'State whether external research data, measurement instruments or software has been employed, which are subject to copyright, patent law or other intellectual property rights.'
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add third party rights</a>'
+        third_party_licenses:
+            legend: 'Third party licenses'
+            label: 'Describe who holds rights on the objects concerned and under which conditions they can be used.'
+            help: 'e.g. restricted distribution or publication of certain elements, such as item wording of psychological tests'
+            error_message: '<a href="#link#" class="#class#">Add third party licenses</a>'
+
     settings:
         short_name:
             legend: 'Data Management Plan Name'

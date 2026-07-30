@@ -46,6 +46,11 @@ trait DataManagementPlanFormTrait
             'route' => 'Dmp-edit-organization-policies',
             'title' => 'data_management_plan.organization_policies.title',
         ],
+        [
+            'type' => 'ethicalLegal',
+            'route' => 'Dmp-edit-ethical-legal',
+            'title' => 'data_management_plan.ethical_legal.title',
+        ],
     ];
 
     public function __construct(

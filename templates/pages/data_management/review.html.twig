@@ -47,11 +47,18 @@
                 <twig:ReviewValue entity="{{ dataManagementPlan.dataSharing }}" route="{{ path('Dmp-edit-data-sharing', {id: dataManagementPlan.id}) }}" entry="{{ entry }}" />
             {% endfor %}
         </section>
+
+        <section class="mt-8">
+            {{ _self.sectionTitle('data_management_plan.storage_infrastructure.title'|trans) }}
+            {% for entry in enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpStorageInfrastructureDictionary').cases %}
+                <twig:ReviewValue entity="{{ dataManagementPlan.storageInfrastructure }}" route="{{ path('Dmp-edit-storage-infrastructure', {id: dataManagementPlan.id}) }}" entry="{{ entry }}" />
+            {% endfor %}
+        </section>
     </article>
 
     <twig:NavigationSavebar
-        prevUrl="{{ path('Dmp-edit-data-sharing', {id: dataManagementPlan.id}) }}"
-        prevTitle="{{ 'data_management_plan.data_sharing.title'|trans }}"
+        prevUrl="{{ path('Dmp-edit-storage-infrastructure', {id: dataManagementPlan.id}) }}"
+        prevTitle="{{ 'data_management_plan.storage_infrastructure.title'|trans }}"
     />
 {% endblock %}
 

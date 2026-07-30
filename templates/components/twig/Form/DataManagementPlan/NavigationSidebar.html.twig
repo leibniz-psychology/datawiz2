@@ -96,6 +96,18 @@
                         {{ 'data_management_plan.data_sharing.title'|trans }}
                     </a>
                 {%- endif -%}
+
+                {%- if needs_saving -%}
+                    <button {{ live_action('save', {route: 'Dmp-edit-storage-infrastructure' })}}
+                        class="StudyNav-SubNavItem {{- form_type == 'storageInfrastructure' ? ' StudyNav-SubNavItem_active' -}}">
+                        {{ 'data_management_plan.storage_infrastructure.title'|trans }}
+                    </button>
+                {%- else -%}
+                    <a href="{{ path('Dmp-edit-storage-infrastructure', {id: dataManagementPlan.id}) }}"
+                       class="StudyNav-SubNavItem {{- route_name == 'Dmp-edit-storage-infrastructure' ? ' StudyNav-SubNavItem_active' -}}">
+                        {{ 'data_management_plan.storage_infrastructure.title'|trans }}
+                    </a>
+                {%- endif -%}
             </ul>
         </li>
         <li>

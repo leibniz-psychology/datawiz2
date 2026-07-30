@@ -36,6 +36,11 @@ trait DataManagementPlanFormTrait
             'route' => 'Dmp-edit-data-sharing',
             'title' => 'data_management_plan.data_sharing.title',
         ],
+        [
+            'type' => 'storageInfrastructure',
+            'route' => 'Dmp-edit-storage-infrastructure',
+            'title' => 'data_management_plan.storage_infrastructure.title',
+        ],
     ];
 
     public function __construct(

@@ -10,6 +10,7 @@ use App\Entity\Administration\UuidEntity;
 use App\Repository\DataManagementPlan\DmpAdministrativeDataRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Table(name: 'dmp_administrative_data')]
 #[ORM\Entity(repositoryClass: DmpAdministrativeDataRepository::class)]
@@ -21,24 +22,31 @@ class DmpAdministrativeData extends UuidEntity
     #[ORM\OneToOne(inversedBy: 'administrativeData')]
     protected ?DataManagementPlan $dataManagementPlan = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $projectName = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $projectGoals = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $funding = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $projectDuration = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $projectPartners = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $principalInvestigator = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $targetAudiences = null;
 

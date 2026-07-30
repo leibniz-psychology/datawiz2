@@ -7,6 +7,7 @@ use App\Enum\DataManagementPlan\DocumentationPurpose;
 use App\Repository\DataManagementPlan\DmpDocumentationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Table(name: 'dmp_documentation')]
 #[ORM\Entity(repositoryClass: DmpDocumentationRepository::class)]
@@ -15,21 +16,27 @@ class DmpDocumentation extends UuidEntity
     #[ORM\OneToOne(inversedBy: 'documentation', cascade: ['persist', 'remove'])]
     protected ?DataManagementPlan $dataManagementPlan = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true, enumType: DocumentationPurpose::class)]
     private ?array $purpose = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $content = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $standardization = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $generatingProcedure = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $monitoring = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $exchangeAndStorageFormat = null;
 

@@ -6,6 +6,7 @@ use App\Entity\Administration\UuidEntity;
 use App\Repository\DataManagementPlan\DmpStorageInfrastructureRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Table(name: 'dmp_storage_infrastructure')]
 #[ORM\Entity(repositoryClass: DmpStorageInfrastructureRepository::class)]
@@ -14,27 +15,35 @@ class DmpStorageInfrastructure extends UuidEntity
     #[ORM\OneToOne(inversedBy: 'storageInfrastructure', cascade: ['persist', 'remove'])]
     protected ?DataManagementPlan $dataManagementPlan = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $responsibilities = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $namingConventions = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $storageLocations = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $backupPlan = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $transferDuringProject = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $expectedVolume = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $specificTechnicalRequirements = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $successionPlan = null;
 

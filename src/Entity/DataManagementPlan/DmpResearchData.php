@@ -11,6 +11,7 @@ use App\Enum\YesNo;
 use App\Repository\DataManagementPlan\DmpResearchDataRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Table(name: 'dmp_research_data')]
 #[ORM\Entity(repositoryClass: DmpResearchDataRepository::class)]
@@ -19,78 +20,103 @@ class DmpResearchData extends UuidEntity
     #[ORM\OneToOne(inversedBy: 'researchData', cascade: ['persist', 'remove'])]
     protected ?DataManagementPlan $dataManagementPlan = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: ExistingDataReuse::class)]
     private ?ExistingDataReuse $existingDataReuse = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $existingDataCitation = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $existingDataRelevance = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $existingDataIntegration = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true, enumType: ResearchMethod::class)]
     private ?array $researchMethod = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $researchMethodOtherDescription = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $dataCollectionReproducibility = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true, enumType: CollectionMode::class)]
     private ?array $collectionMode = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $collectionApparatus = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $collectionModeOtherDescription = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: ResearchDesign::class)]
     private ?ResearchDesign $researchDesign = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $dataCollectorTraining = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $constructsMultipleMeasurement = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $qualityAssuranceOtherDescription = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $fileFormats = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: YesNo::class)]
     private ?YesNo $dataPreservationWorkingCopy = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: YesNo::class)]
     private ?YesNo $dataPreservationGoodScientificPracticeProof = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: YesNo::class)]
     private ?YesNo $dataPreservationReproducibility = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: YesNo::class)]
     private ?YesNo $dataPreservationLegalObligations = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: YesNo::class)]
     private ?YesNo $dataPreservationBestPractice = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $storageDuration = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $deletionProcedures = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: YesNo::class)]
     private ?YesNo $dataSelection = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $dataSelectionTimePoint = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $dataSelectionProcedures = null;
 

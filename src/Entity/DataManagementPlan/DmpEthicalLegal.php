@@ -7,6 +7,7 @@ use App\Enum\YesNo;
 use App\Repository\DataManagementPlan\DmpEthicalLegalRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Table(name: 'dmp_ethical_legal')]
 #[ORM\Entity(repositoryClass: DmpEthicalLegalRepository::class)]
@@ -15,39 +16,51 @@ class DmpEthicalLegal extends UuidEntity
     #[ORM\OneToOne(inversedBy: 'ethicalLegal', cascade: ['persist', 'remove'])]
     protected ?DataManagementPlan $dataManagementPlan = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $ethicalReview = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: YesNo::class)]
     private ?YesNo $informedConsent = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: YesNo::class)]
     private ?YesNo $informedConsentDataSharing = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $noInformedConsentReason = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: YesNo::class)]
     private ?YesNo $personalData = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $personalDataProtectionMeasures = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: YesNo::class)]
     private ?YesNo $commercialSensitiveData = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $commercialDataProtectionMeasures = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: YesNo::class)]
     private ?YesNo $copyright = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $copyrightLicenses = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: YesNo::class)]
     private ?YesNo $thirdPartyRights = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $thirdPartyLicenses = null;
 

@@ -7,6 +7,7 @@ use App\Enum\DataManagementPlan\DataManagementCosting;
 use App\Repository\DataManagementPlan\DmpCostsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Table(name: 'dmp_costs')]
 #[ORM\Entity(repositoryClass: DmpCostsRepository::class)]
@@ -15,12 +16,15 @@ class DmpCosts extends UuidEntity
     #[ORM\OneToOne(inversedBy: 'costs', cascade: ['persist', 'remove'])]
     protected ?DataManagementPlan $dataManagementPlan = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: DataManagementCosting::class)]
     private ?DataManagementCosting $dataManagementCosting = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $costsAssessment = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $costsAssumption = null;
 

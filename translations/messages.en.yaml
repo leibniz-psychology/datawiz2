@@ -320,7 +320,9 @@ data_management_plan:
     storage_infrastructure:
         title: 'Storage and infrastructure'
     organization_policies:
-        title: 'Organization and policies'
+        title: 'Organizational policies'
+    ethical_legal:
+        title: 'Ethical and legal aspects'
     review:
         title: 'Review input'
         description: 'Review your data management plan and check for completion and correctness.'

@@ -120,6 +120,18 @@
                         {{ 'data_management_plan.organization_policies.title'|trans }}
                     </a>
                 {%- endif -%}
+
+                {%- if needs_saving -%}
+                    <button {{ live_action('save', {route: 'Dmp-edit-ethical-legal' })}}
+                        class="StudyNav-SubNavItem {{- form_type == 'ethicalLegal' ? ' StudyNav-SubNavItem_active' -}}">
+                        {{ 'data_management_plan.ethical_legal.title'|trans }}
+                    </button>
+                {%- else -%}
+                    <a href="{{ path('Dmp-edit-ethical-legal', {id: dataManagementPlan.id}) }}"
+                       class="StudyNav-SubNavItem {{- route_name == 'Dmp-edit-ethical-legal' ? ' StudyNav-SubNavItem_active' -}}">
+                        {{ 'data_management_plan.ethical_legal.title'|trans }}
+                    </a>
+                {%- endif -%}
             </ul>
         </li>
         <li>

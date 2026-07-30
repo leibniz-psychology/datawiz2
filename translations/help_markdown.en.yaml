@@ -597,6 +597,15 @@ data_management_plan:
             # Organization and policies help
 
             If you are conducting research in projects which involve a multitude of contributors and project partners it is recommendable to define expected contributions of single coworkers or project partners.
+    ethical_legal:
+        section: |
+            # Ethical and legal aspects help
+
+            Ethical and legal requirements which are placed upon psychological research (in Germany) include the adherence to the ethical guidelines of the DGPs, to the Bundesdatenschutzgesetz (BDSG) as well as to copyright laws (Urheberrechtsgesetz, UrhG) and other related property rights.
+        ethical_review: |
+            For your guidance on the necessity of an ethics committee approval, you can refer to the
+            <a href="https://rdc-psychology.org/en/rdc-knowledge-base/before-data-collection/ethical-considerations" target="_blank">knowledge base</a>
+            . In case that an ethical review has been received, we recommend storing the respective documents under project materials.
     settings:
         section: |
             # Settings help

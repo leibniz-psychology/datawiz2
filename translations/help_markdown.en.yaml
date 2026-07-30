@@ -606,6 +606,15 @@ data_management_plan:
             For your guidance on the necessity of an ethics committee approval, you can refer to the
             <a href="https://rdc-psychology.org/en/rdc-knowledge-base/before-data-collection/ethical-considerations" target="_blank">knowledge base</a>
             . In case that an ethical review has been received, we recommend storing the respective documents under project materials.
+    costs:
+        section: |
+            # Costs help
+
+            High-quality data management is labor-intensive and can lead to costs.
+            Many funders will bear these additional costs if they are outlined in the project proposal and if the data resulting from the project are published.
+            It is therefore in your best interest to plan the costs associated with data management in advance.
+        data_management_costing: |
+            Costs can, amongst others, be assessed by using reference values, which means assessment based on pilot studies' or comparable studies' available data. Alternatively costs can be assessed using a lifecycle analysis, which means estimating and adding up all costs which arise during the life cycle of the data per data management step.
     settings:
         section: |
             # Settings help

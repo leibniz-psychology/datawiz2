@@ -202,3 +202,9 @@ data_management_plan:
         repository: 'Data are accessible via a repository or data archive'
         on_demand: 'Data access on demand only'
         none: 'Data are not accessible'
+
+    data_management_costing:
+        no_costing: 'No costing'
+        based_on_reference_values: 'Costing based on reference values'
+        based_on_lifecycle_analysis: 'Costing based on lifecycle analysis'
+        based_on_other_methods: 'Costing based on other methods'

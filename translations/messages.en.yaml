@@ -323,6 +323,8 @@ data_management_plan:
         title: 'Organizational policies'
     ethical_legal:
         title: 'Ethical and legal aspects'
+    costs:
+        title: 'Costs'
     review:
         title: 'Review input'
         description: 'Review your data management plan and check for completion and correctness.'

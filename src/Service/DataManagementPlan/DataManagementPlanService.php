@@ -7,6 +7,7 @@ namespace App\Service\DataManagementPlan;
 use App\Entity\Administration\DataWizUser;
 use App\Entity\DataManagementPlan\DataManagementPlan;
 use App\Entity\DataManagementPlan\DmpAdministrativeData;
+use App\Entity\DataManagementPlan\DmpCosts;
 use App\Entity\DataManagementPlan\DmpDataSharing;
 use App\Entity\DataManagementPlan\DmpDocumentation;
 use App\Entity\DataManagementPlan\DmpEthicalLegal;
@@ -51,6 +52,7 @@ readonly class DataManagementPlanService
         $newDataManagementPlan->setStorageInfrastructure(new DmpStorageInfrastructure());
         $newDataManagementPlan->setOrganizationPolicies(new DmpOrganizationPolicies());
         $newDataManagementPlan->setEthicalLegal(new DmpEthicalLegal());
+        $newDataManagementPlan->setCosts(new DmpCosts());
         $newDataManagementPlan->setSettings(new DmpSettings());
         $newDataManagementPlan->setOwner($owner);
 

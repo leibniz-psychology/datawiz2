@@ -1,0 +1,58 @@
+{% extends "components/twig/Form/DataManagementPlan/_baseForm.html.twig" %}
+
+{% block title %}
+    {{ "data_management_plan.organization_policies.title"|trans }}
+{% endblock %}
+
+{% block form_content %}
+    <twig:Form:FormCard entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpOrganizationPoliciesDictionary').CROSS_BORDER_COLLABORATION }}">
+        {{ form_row(form.crossBorderCollaboration) }}
+        {% if form.crossBorderCollaboration.vars.value == enum('App\\Enum\\YesNo').YES.value %}
+            {{ form_row(form.crossBorderDataManagementRequirements) }}
+        {% else %}
+            {% do form.crossBorderDataManagementRequirements.setRendered %}
+        {% endif %}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpOrganizationPoliciesDictionary').DATA_MANAGEMENT_RESPONSIBILITIES }}">
+        {{ form_row(form.dataManagementResponsibilities) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpOrganizationPoliciesDictionary').DATA_MANAGEMENT_PARTNERS }}">
+        {{ form_row(form.dataManagementPartners) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpOrganizationPoliciesDictionary').PARTNER_INFORMED }}">
+        {{ form_row(form.partnerInformed) }}
+        {% if form.partnerInformed.vars.value == enum('App\\Enum\\YesNo').YES.value %}
+            {{ form_row(form.partnerContributionsDefined) }}
+            {% if form.partnerContributionsDefined.vars.value == enum('App\\Enum\\YesNo').YES.value %}
+                {{ form_row(form.partnerContributions) }}
+                {{ form_row(form.partnerContributionsResponsibilityAcceptance) }}
+            {% else %}
+                {% do form.partnerContributions.setRendered %}
+                {% do form.partnerContributionsResponsibilityAcceptance.setRendered %}
+            {% endif %}
+        {% else %}
+            {% do form.partnerContributionsDefined.setRendered %}
+            {% do form.partnerContributions.setRendered %}
+            {% do form.partnerContributionsResponsibilityAcceptance.setRendered %}
+        {% endif %}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpOrganizationPoliciesDictionary').DATA_MANAGEMENT_WORKFLOW_DESCRIPTION }}">
+        {{ form_row(form.dataManagementWorkflowDescription) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpOrganizationPoliciesDictionary').STAFF_RESOURCE_ASSESSMENT }}">
+        {{ form_row(form.staffResourceAssessment) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpOrganizationPoliciesDictionary').INSTITUTION_POLICIES }}">
+        {{ form_row(form.institutionPolicies) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpOrganizationPoliciesDictionary').DATA_MANAGEMENT_PLAN_ADHERENCE }}">
+        {{ form_row(form.dataManagementPlanAdherence) }}
+    </twig:Form:FormCard>
+{% endblock %}

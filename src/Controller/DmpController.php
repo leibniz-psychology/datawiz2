@@ -8,6 +8,7 @@ use App\Entity\DataManagementPlan\DataManagementPlan;
 use App\Entity\DataManagementPlan\DmpAdministrativeData;
 use App\Entity\DataManagementPlan\DmpDataSharing;
 use App\Entity\DataManagementPlan\DmpDocumentation;
+use App\Entity\DataManagementPlan\DmpOrganizationPolicies;
 use App\Entity\DataManagementPlan\DmpResearchData;
 use App\Entity\DataManagementPlan\DmpSettings;
 use App\Entity\DataManagementPlan\DmpStorageInfrastructure;
@@ -69,6 +70,21 @@ class DmpController extends AbstractController
         }
 
         return $this->render('pages/data_management/administrative_data.html.twig', [
+            'dataManagementPlan' => $dataManagementPlan,
+        ]);
+    }
+
+    #[Route(path: '/{id}/edit/organization-policies', name: 'edit-organization-policies', methods: ['GET'])]
+    public function editOrganizationPolicies(DataManagementPlan $dataManagementPlan): Response
+    {
+        $this->logger->debug("Enter DmpController::editOrganizationPolicies with [UUID: {$dataManagementPlan->getId()}]");
+
+        if ($dataManagementPlan->getOrganizationPolicies() === null) {
+            $dataManagementPlan->setOrganizationPolicies(new DmpOrganizationPolicies());
+            $this->dmpService->save($dataManagementPlan);
+        }
+
+        return $this->render('pages/data_management/organization_policies.html.twig', [
             'dataManagementPlan' => $dataManagementPlan,
         ]);
     }

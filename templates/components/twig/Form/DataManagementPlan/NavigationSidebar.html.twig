@@ -108,6 +108,18 @@
                         {{ 'data_management_plan.storage_infrastructure.title'|trans }}
                     </a>
                 {%- endif -%}
+
+                {%- if needs_saving -%}
+                    <button {{ live_action('save', {route: 'Dmp-edit-organization-policies' })}}
+                        class="StudyNav-SubNavItem {{- form_type == 'organizationPolicies' ? ' StudyNav-SubNavItem_active' -}}">
+                        {{ 'data_management_plan.organization_policies.title'|trans }}
+                    </button>
+                {%- else -%}
+                    <a href="{{ path('Dmp-edit-organization-policies', {id: dataManagementPlan.id}) }}"
+                       class="StudyNav-SubNavItem {{- route_name == 'Dmp-edit-organization-policies' ? ' StudyNav-SubNavItem_active' -}}">
+                        {{ 'data_management_plan.organization_policies.title'|trans }}
+                    </a>
+                {%- endif -%}
             </ul>
         </li>
         <li>

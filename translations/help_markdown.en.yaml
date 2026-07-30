@@ -577,6 +577,21 @@ data_management_plan:
             Digital Object Identifier (DOI) are commonly used as persistent identifiers in psychology and assigned to both, journal and data publications.
         no_sharing_explanation: |
             Will data not be shared for reasons of data protection (e.g. sharing prohibited by ethics committee), for reasons of confidentiality (e.g. contractual agreement for data collections within a company) or for other reasons?
+    storage_infrastructure:
+        section: |
+            # Storage infrastructure help
+
+            Data loss or unintended file changes can be avoided by applying appropriate measures for securing and storing research data.
+        storage_locations: |
+            Regarding the handling of digital data, please refer to the policies of the responsible data center or of other responsible parties for storing the data.
+            Digital copies should not be saved exclusively locally (e.g. local drive on computer) by all means. Because of data protection reasons (BDSG § 40 (2)), personal data, which allow identification of research subjects (e.g. address), and research data has to be stored separately.
+            Furthermore, regarding the storage of analog data, appropriate precautions should be addressed at an early stage (e.g. questionnaires with personal data, appropriate storage of biological samples).
+            In case you created Standard Operating Procedures, we recommend storing the respective documents under project materials.
+        expected_volume: |
+            Please try to roughly estimate the unit of the volume of generated data (MB, GB, TB).
+            Data volume of most psychological studies will not exceed GB and therefore can be easily handled.
+            If you will produce significantly larger volumes of data, you should consider this when planning data storage and transfer.
+            Furthermore, you should clarify that the expected data volume does not present a problem for your repository, data center or other responsible persons.
     settings:
         section: |
             # Settings help

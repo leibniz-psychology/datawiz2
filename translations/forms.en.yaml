@@ -514,9 +514,6 @@ data_management_plan:
             error_message: '<a href="#link#" class="#class#">Add target audiences</a>'
 
     research_data:
-        title:
-            legend: 'Research Data'
-            label: 'Research Data'
         existing_data_reuse:
             legend: 'Reuse of already existing data'
             label: 'Are you reusing existing data?'
@@ -634,9 +631,6 @@ data_management_plan:
             error_message: '<a href="#link#" class="#class#">Add data selection procedures</a>'
 
     documentation:
-        title:
-            legend: 'Documentation'
-            label: 'Documentation'
         purpose:
             legend: 'Purpose of the documentation'
             label: 'What is the purpose of the documentation?'
@@ -663,9 +657,6 @@ data_management_plan:
             error_message: '<a href="#link#" class="#class#">Add exchange and storage format</a>'
 
     data_sharing:
-        title:
-            legend: 'Data Sharing'
-            label: 'Data Sharing'
         sharing_obligation:
             legend: 'Obligation to share data'
             label: 'Specify if there is an obligation to share data.'
@@ -747,6 +738,44 @@ data_management_plan:
             label: 'Please specify'
             help: 'Please provide additional details'
             error_message: '<a href="#link#" class="#class#">Add other no sharing explanation</a>'
+
+    storage_infrastructure:
+        responsibilities:
+            legend: 'Responsibilities for data storage'
+            label: 'Describe who is responsible for data storage during the project and who will be responsible for data storage after the project is finished.'
+            help: 'e.g. institutional or project related data center'
+            error_message: '<a href="#link#" class="#class#">Add responsibilities</a>'
+        naming_conventions:
+            legend: 'Naming conventions'
+            label: 'Describe conventions for naming data in your project.'
+            error_message: '<a href="#link#" class="#class#">Add naming conventions</a>'
+        storage_locations:
+            legend: 'Storage locations'
+            label: 'Describe where the data will be stored.'
+            error_message: '<a href="#link#" class="#class#">Add storage locations</a>'
+        backup_plan:
+            legend: 'Backup plan'
+            label: 'Describe the backup procedures.'
+            help: 'Is data backuped regularly? Are these backups controlled for transmission errors (e.g. monitoring based on checksums)?'
+            error_message: '<a href="#link#" class="#class#">Add backup plan</a>'
+        transfer_during_project:
+            legend: 'Data transfer during project'
+            label: 'Describe how the data will be transferred between project partners.'
+            help: 'e.g. (un)encrypted via mail, shared drives or virtual research environments (DataWiz, Open Science Framework, ...)'
+            error_message: '<a href="#link#" class="#class#">Add transfer during project</a>'
+        expected_volume:
+            legend: 'Expected data volume'
+            label: 'Describe how big the expected data volume will be.'
+            error_message: '<a href="#link#" class="#class#">Add expected volume</a>'
+        specific_technical_requirements:
+            legend: 'Specific technical requirements'
+            label: 'Describe any specific technical requirements that need to be fulfilled to use the data.'
+            help: 'e.g. specific software for accessing data that is stored in proprietary formats, used software runs only on a specific operating system, special demands on hardware'
+            error_message: '<a href="#link#" class="#class#">Add specific technical requirements</a>'
+        succession_plan:
+            legend: 'Succession plan'
+            label: 'Describe if there is a succession plan, in case the institution, which stores the data, can no longer fulfill its obligation.'
+            error_message: '<a href="#link#" class="#class#">Add succession plan</a>'
 
     settings:
         short_name:

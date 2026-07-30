@@ -36,6 +36,11 @@ class DataManagementPlan extends UuidEntity
     #[ORM\OneToOne(mappedBy: 'dataManagementPlan', cascade: ['persist', 'remove'])]
     private ?DmpDataSharing $dataSharing = null;
 
+    #[SerializedName('storage_infrastructure')]
+    #[Groups(['data_management_plan'])]
+    #[ORM\OneToOne(mappedBy: 'dataManagementPlan', cascade: ['persist', 'remove'])]
+    private ?DmpStorageInfrastructure $storageInfrastructure = null;
+
     #[SerializedName('settings')]
     #[Groups(['settings'])]
     #[ORM\OneToOne(mappedBy: 'dataManagementPlan', cascade: ['persist', 'remove'])]
@@ -93,6 +98,18 @@ class DataManagementPlan extends UuidEntity
     {
         $this->dataSharing = $dataSharing;
         $dataSharing->setDataManagementPlan($this);
+        return $this;
+    }
+
+    public function getStorageInfrastructure(): ?DmpStorageInfrastructure
+    {
+        return $this->storageInfrastructure;
+    }
+
+    public function setStorageInfrastructure(?DmpStorageInfrastructure $storageInfrastructure): static
+    {
+        $this->storageInfrastructure = $storageInfrastructure;
+        $storageInfrastructure->setDataManagementPlan($this);
         return $this;
     }
 

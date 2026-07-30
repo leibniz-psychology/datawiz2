@@ -1,0 +1,39 @@
+{% extends "components/twig/Form/DataManagementPlan/_baseForm.html.twig" %}
+
+{% block title %}
+    {{ "data_management_plan.storage_infrastructure.title"|trans }}
+{% endblock %}
+
+{% block form_content %}
+    <twig:Form:FormCard entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpStorageInfrastructureDictionary').RESPONSIBILITIES }}">
+        {{ form_row(form.responsibilities) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpStorageInfrastructureDictionary').NAMING_CONVENTIONS }}">
+        {{ form_row(form.namingConventions) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpStorageInfrastructureDictionary').STORAGE_LOCATIONS }}">
+        {{ form_row(form.storageLocations) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpStorageInfrastructureDictionary').BACKUP_PLAN }}">
+        {{ form_row(form.backupPlan) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpStorageInfrastructureDictionary').TRANSFER_DURING_PROJECT }}">
+        {{ form_row(form.transferDuringProject) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpStorageInfrastructureDictionary').EXPECTED_VOLUME }}">
+        {{ form_row(form.expectedVolume) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpStorageInfrastructureDictionary').SPECIFIC_TECHNICAL_REQUIREMENTS }}">
+        {{ form_row(form.specificTechnicalRequirements) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpStorageInfrastructureDictionary').SUCCESSION_PLAN }}">
+        {{ form_row(form.successionPlan) }}
+    </twig:Form:FormCard>
+{% endblock %}

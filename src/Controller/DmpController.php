@@ -10,6 +10,7 @@ use App\Entity\DataManagementPlan\DmpDataSharing;
 use App\Entity\DataManagementPlan\DmpDocumentation;
 use App\Entity\DataManagementPlan\DmpResearchData;
 use App\Entity\DataManagementPlan\DmpSettings;
+use App\Entity\DataManagementPlan\DmpStorageInfrastructure;
 use App\Service\DataManagementPlan\DataManagementPlanService;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -68,6 +69,21 @@ class DmpController extends AbstractController
         }
 
         return $this->render('pages/data_management/administrative_data.html.twig', [
+            'dataManagementPlan' => $dataManagementPlan,
+        ]);
+    }
+
+    #[Route(path: '/{id}/edit/storage-infrastructure', name: 'edit-storage-infrastructure', methods: ['GET'])]
+    public function editStorageInfrastructure(DataManagementPlan $dataManagementPlan): Response
+    {
+        $this->logger->debug("Enter DmpController::editStorageInfrastructure with [UUID: {$dataManagementPlan->getId()}]");
+
+        if ($dataManagementPlan->getStorageInfrastructure() === null) {
+            $dataManagementPlan->setStorageInfrastructure(new DmpStorageInfrastructure());
+            $this->dmpService->save($dataManagementPlan);
+        }
+
+        return $this->render('pages/data_management/storage_infrastructure.html.twig', [
             'dataManagementPlan' => $dataManagementPlan,
         ]);
     }

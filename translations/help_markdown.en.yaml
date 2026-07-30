@@ -592,6 +592,11 @@ data_management_plan:
             Data volume of most psychological studies will not exceed GB and therefore can be easily handled.
             If you will produce significantly larger volumes of data, you should consider this when planning data storage and transfer.
             Furthermore, you should clarify that the expected data volume does not present a problem for your repository, data center or other responsible persons.
+    organization_policies:
+        section: |
+            # Organization and policies help
+
+            If you are conducting research in projects which involve a multitude of contributors and project partners it is recommendable to define expected contributions of single coworkers or project partners.
     settings:
         section: |
             # Settings help

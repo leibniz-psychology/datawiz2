@@ -777,6 +777,64 @@ data_management_plan:
             label: 'Describe if there is a succession plan, in case the institution, which stores the data, can no longer fulfill its obligation.'
             error_message: '<a href="#link#" class="#class#">Add succession plan</a>'
 
+    organization_policies:
+        cross_border_collaboration:
+            legend: 'Cross-border collaboration'
+            label: 'State if any cross-border collaborations will take place.'
+            help: "Is the project's framework national or international?"
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add cross-border collaboration</a>'
+        cross_border_data_management_requirements:
+            legend: 'Cross-border data management requirements'
+            label: 'Describe any specific requirements for data management that arise from cross-border collaborations.'
+            help: 'e.g. transmission of personal data, generation of metadata in different languages, harmonization of codings'
+            error_message: '<a href="#link#" class="#class#">Add cross-border data management requirements</a>'
+        data_management_responsibilities:
+            legend: 'Responsibilities for data management'
+            label: 'Describe who (i.e. which person or project partner) is responsible for data management.'
+            error_message: '<a href="#link#" class="#class#">Add data management responsibilities</a>'
+        data_management_partners:
+            legend: 'Co-worker/project partner for data management'
+            label: 'Describe which institutions, persons, organizations are involved in data management.'
+            error_message: '<a href="#link#" class="#class#">Add data management partners</a>'
+        partner_informed:
+            legend: 'Information of co-workers/project partners'
+            label: 'State if the institutions, organizations and persons involved are informed.'
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add if partners are informed</a>'
+        partner_contributions_defined:
+            legend: "Definition of the co-workers'/project partners' contributions"
+            label: 'State if the contributions of the involved institutions, organizations and/or persons are defined.'
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add if partner contributions are defined</a>'
+        partner_contributions:
+            legend: "Co-workers'/project partners' contributions"
+            label: 'Please list the expected contributions of co-workers/project partners concisely or refer to corresponding documents.'
+            error_message: '<a href="#link#" class="#class#">Add partner contributions</a>'
+        partner_contributions_responsibility_acceptance:
+            legend: 'Acceptance of responsibility'
+            label: 'State the acceptance of responsibility for expected contributions by involved persons.'
+            help: 'Was the consent of institutions, organizations or persons concerned obtained?'
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add acceptance of responsibility</a>'
+        data_management_workflow_description:
+            legend: 'Data management workflow description'
+            label: 'Describe the data management workflow.'
+            error_message: '<a href="#link#" class="#class#">Add data management workflow description</a>'
+        staff_resource_assessment:
+            legend: 'Assessment of staff and other resources'
+            label: 'Describe your assessment of the needed staff and other resources for data management.'
+            help: 'An assessment of these resources is necessary in order to be able to bear their costs in mind during your project application.'
+            error_message: '<a href="#link#" class="#class#">Add staff and resource assessment</a>'
+        institution_policies:
+            legend: 'Policies of funding agencies or institutions'
+            label: 'Describe which requirements and specifications for your data management are put forth by funders, by institutions or by the scientific community and how are they implemented.'
+            error_message: '<a href="#link#" class="#class#">Add institution policies</a>'
+        data_management_plan_adherence:
+            legend: 'Adherence to data management planning'
+            label: 'Describe how, when, and by whom the adherence to planning is monitored and verified. Further state if you will document these monitorings.'
+            error_message: '<a href="#link#" class="#class#">Add data management plan adherence</a>'
+
     settings:
         short_name:
             legend: 'Data Management Plan Name'

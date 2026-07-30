@@ -41,6 +41,11 @@ class DataManagementPlan extends UuidEntity
     #[ORM\OneToOne(mappedBy: 'dataManagementPlan', cascade: ['persist', 'remove'])]
     private ?DmpStorageInfrastructure $storageInfrastructure = null;
 
+    #[SerializedName('organization_policies')]
+    #[Groups(['data_management_plan'])]
+    #[ORM\OneToOne(mappedBy: 'dataManagementPlan', cascade: ['persist', 'remove'])]
+    private ?DmpOrganizationPolicies $organizationPolicies = null;
+
     #[SerializedName('settings')]
     #[Groups(['settings'])]
     #[ORM\OneToOne(mappedBy: 'dataManagementPlan', cascade: ['persist', 'remove'])]
@@ -110,6 +115,18 @@ class DataManagementPlan extends UuidEntity
     {
         $this->storageInfrastructure = $storageInfrastructure;
         $storageInfrastructure->setDataManagementPlan($this);
+        return $this;
+    }
+
+    public function getOrganizationPolicies(): ?DmpOrganizationPolicies
+    {
+        return $this->organizationPolicies;
+    }
+
+    public function setOrganizationPolicies(?DmpOrganizationPolicies $organizationPolicies): static
+    {
+        $this->organizationPolicies = $organizationPolicies;
+        $organizationPolicies->setDataManagementPlan($this);
         return $this;
     }
 

@@ -319,6 +319,8 @@ data_management_plan:
         title: 'Data sharing'
     storage_infrastructure:
         title: 'Storage and infrastructure'
+    organization_policies:
+        title: 'Organization and policies'
     review:
         title: 'Review input'
         description: 'Review your data management plan and check for completion and correctness.'

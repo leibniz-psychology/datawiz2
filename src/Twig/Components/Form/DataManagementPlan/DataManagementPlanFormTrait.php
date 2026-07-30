@@ -41,6 +41,11 @@ trait DataManagementPlanFormTrait
             'route' => 'Dmp-edit-storage-infrastructure',
             'title' => 'data_management_plan.storage_infrastructure.title',
         ],
+        [
+            'type' => 'organizationPolicies',
+            'route' => 'Dmp-edit-organization-policies',
+            'title' => 'data_management_plan.organization_policies.title',
+        ],
     ];
 
     public function __construct(

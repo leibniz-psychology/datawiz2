@@ -9,6 +9,7 @@ use App\Entity\DataManagementPlan\DataManagementPlan;
 use App\Entity\DataManagementPlan\DmpAdministrativeData;
 use App\Entity\DataManagementPlan\DmpDataSharing;
 use App\Entity\DataManagementPlan\DmpDocumentation;
+use App\Entity\DataManagementPlan\DmpOrganizationPolicies;
 use App\Entity\DataManagementPlan\DmpResearchData;
 use App\Entity\DataManagementPlan\DmpSettings;
 use App\Entity\DataManagementPlan\DmpStorageInfrastructure;
@@ -47,6 +48,7 @@ readonly class DataManagementPlanService
         $newDataManagementPlan->setDocumentation(new DmpDocumentation());
         $newDataManagementPlan->setDataSharing(new DmpDataSharing());
         $newDataManagementPlan->setStorageInfrastructure(new DmpStorageInfrastructure());
+        $newDataManagementPlan->setOrganizationPolicies(new DmpOrganizationPolicies());
         $newDataManagementPlan->setSettings(new DmpSettings());
         $newDataManagementPlan->setOwner($owner);
 

@@ -10,6 +10,7 @@ use App\Enum\YesNo;
 use App\Repository\DataManagementPlan\DmpDataSharingRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Table(name: 'dmp_data_sharing')]
 #[ORM\Entity(repositoryClass: DmpDataSharingRepository::class)]
@@ -18,54 +19,71 @@ class DmpDataSharing extends UuidEntity
     #[ORM\OneToOne(inversedBy: 'dataSharing', cascade: ['persist', 'remove'])]
     protected ?DataManagementPlan $dataManagementPlan = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: YesNo::class)]
     private ?YesNo $sharingObligation = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $intendedUse = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: ThirdPartyAccess::class)]
     private ?ThirdPartyAccess $thirdPartyAccess = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $repositoryName = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $dataSearchability = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $depositTimepoint = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $sensitiveDataRequirements = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $initialUseRight = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $usageRestriction = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: YesNo::class)]
     private ?YesNo $accessCost = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: YesNo::class)]
     private ?YesNo $repositoryResponsibilitiesFixation = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: YesNo::class)]
     private ?YesNo $acquisitionAgreement = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: PersistentIdentifierUse::class)]
     private ?PersistentIdentifierUse $persistentIdentifierUse = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $persistentIdentifierUseOtherDescription = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $noRepositoryExplanation = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: NoSharingExplanation::class)]
     private ?NoSharingExplanation $noSharingExplanation = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $noSharingExplanationOtherDescription = null;
 

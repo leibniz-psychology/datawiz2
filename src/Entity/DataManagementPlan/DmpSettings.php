@@ -9,6 +9,7 @@ namespace App\Entity\DataManagementPlan;
 use App\Entity\Administration\UuidEntity;
 use App\Repository\DataManagementPlan\DmpSettingsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Table(name: 'dmp_settings')]
 #[ORM\Entity(repositoryClass: DmpSettingsRepository::class)]
@@ -17,6 +18,7 @@ class DmpSettings extends UuidEntity
     #[ORM\OneToOne(inversedBy: 'settings')]
     protected ?DataManagementPlan $dataManagementPlan = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $shortName = null;
 

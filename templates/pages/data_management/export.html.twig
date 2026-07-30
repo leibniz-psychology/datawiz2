@@ -1,0 +1,43 @@
+{% extends "layouts/dataManagement.html.twig" %}
+{% from "components/_macros.html.twig" import sectionHelp %}
+
+{% set isPartOfDmp = true %}
+
+{% block title %}
+    {{ 'data_management_plan.export.title'|trans }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="MetaDataGroup-Title">
+        {{ 'data_management_plan.export.title'|trans }}
+    </h2>
+    <p class="mx-6 mt-8 max-w-prose">
+        {{ 'data_management_plan.export.description'|trans }}
+    </p>
+
+    <form action="{{ path('Dmp-export-action', {id: dataManagementPlan.id}) }}" method="POST">
+        <twig:Form:FormCard title="{{ 'data_management_plan.export.format.title'|trans }}">
+            <p class="mb-2">{{ 'data_management_plan.export.format.description'|trans }}</p>
+            <div class="mt-1">
+                <input id="exportAsJson" type="radio" name="format" value="json" checked>
+                <label for="exportAsJson">{{ 'data_management_plan.export.format.json'|trans }}</label>
+                <input id="exportAsXml" type="radio" name="format" value="xml">
+                <label for="exportAsXml">{{ 'data_management_plan.export.format.xml'|trans }}</label>
+            </div>
+        </twig:Form:FormCard>
+
+        <div class="mx-6 mt-4">
+            <button type="submit"
+                    class="Button_primary_act Button_standalone">{{ 'data_management_plan.export.export'|trans }}</button>
+        </div>
+    </form>
+
+    <twig:NavigationSavebar
+        prevUrl="{{ path('Dmp-review', {id: dataManagementPlan.id}) }}"
+        prevTitle="{{ 'data_management_plan.review.title'|trans }}"
+    />
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp('data_management_plan.export') }}
+{% endblock %}

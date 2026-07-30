@@ -7,6 +7,7 @@ use App\Enum\YesNo;
 use App\Repository\DataManagementPlan\DmpOrganizationPoliciesRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Table(name: 'dmp_organization_policies')]
 #[ORM\Entity(repositoryClass: DmpOrganizationPoliciesRepository::class)]
@@ -15,39 +16,51 @@ class DmpOrganizationPolicies extends UuidEntity
     #[ORM\OneToOne(inversedBy: 'organizationPolicies', cascade: ['persist', 'remove'])]
     protected ?DataManagementPlan $dataManagementPlan = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: YesNo::class)]
     private ?YesNo $crossBorderCollaboration = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $crossBorderDataManagementRequirements = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $dataManagementResponsibilities = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $dataManagementPartners = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: YesNo::class)]
     private ?YesNo $partnerInformed = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: YesNo::class)]
     private ?YesNo $partnerContributionsDefined = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $partnerContributions = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(length: 255, nullable: true, enumType: YesNo::class)]
     private ?YesNo $partnerContributionsResponsibilityAcceptance = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $dataManagementWorkflowDescription = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $staffResourceAssessment = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $institutionPolicies = null;
 
+    #[Groups(['data_management_plan'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $dataManagementPlanAdherence = null;
 

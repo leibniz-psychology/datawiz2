@@ -615,6 +615,11 @@ data_management_plan:
             It is therefore in your best interest to plan the costs associated with data management in advance.
         data_management_costing: |
             Costs can, amongst others, be assessed by using reference values, which means assessment based on pilot studies' or comparable studies' available data. Alternatively costs can be assessed using a lifecycle analysis, which means estimating and adding up all costs which arise during the life cycle of the data per data management step.
+    export:
+        section: |
+            # Export help
+
+            **TODO** _Add export help here_ {.bg-pink-50 .mx-6}
     settings:
         section: |
             # Settings help

@@ -336,6 +336,16 @@ data_management_plan:
             action: 'Delete this data management plan'
             modal_body: 'This action cannot be undone. This will permanently delete the data management plan #name#.'
             confirm: 'I understand, delete this data management plan'
+    export:
+        title: 'Export data management plan'
+        navigation: 'Export'
+        description: 'Export your data management plan as a JSON or XML file.'
+        export: 'Export data management plan'
+        format:
+            title: 'Export format'
+            description: 'Choose the file format for the export.'
+            json: 'Export as JSON'
+            xml: 'Export as XML'
     sidebar:
         data_management_plan: 'Plan your data management'
 

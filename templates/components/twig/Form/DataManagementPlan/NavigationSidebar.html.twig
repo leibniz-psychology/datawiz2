@@ -161,6 +161,21 @@
         </li>
         <li>
             {%- if needs_saving -%}
+                <button {{ live_action('save', {route: 'Dmp-export' })}}
+                    class="StudyNav-NavItem
+                    {{- route_name == 'Dmp-export' ? ' StudyNav-NavItem_active StudyNav-NavItem_settings_active' -}}">
+                    3. {{ 'data_management_plan.export.navigation'|trans }}
+                </button>
+            {%- else -%}
+                <a href="{{ path('Dmp-export', {id: dataManagementPlan.id}) }}"
+                    class="StudyNav-NavItem
+                    {{- route_name == 'Dmp-export' ? ' StudyNav-NavItem_active StudyNav-NavItem_settings_active' -}}">
+                    3.  {{ 'data_management_plan.export.navigation'|trans }}
+                </a>
+            {%- endif -%}
+        </li>
+        <li>
+            {%- if needs_saving -%}
                 <button {{ live_action('save', {route: 'Dmp-settings' })}}
                     class="StudyNav-NavItem StudyNav-NavItem_settings
                     {{- route_name == 'Dmp-settings' ? ' StudyNav-NavItem_active StudyNav-NavItem_settings_active' -}}">

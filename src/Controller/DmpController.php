@@ -17,9 +17,12 @@ use App\Entity\DataManagementPlan\DmpStorageInfrastructure;
 use App\Service\DataManagementPlan\DataManagementPlanService;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route(path: '/data-management-plans', name: 'Dmp-')]
 #[IsGranted('ROLE_USER')]
@@ -28,6 +31,7 @@ class DmpController extends AbstractController
     public function __construct(
         private readonly LoggerInterface $logger,
         private readonly DataManagementPlanService $dmpService,
+        private readonly SerializerInterface $serializer,
     ) {
     }
 
@@ -206,6 +210,48 @@ class DmpController extends AbstractController
         ]);
     }
 
+    #[Route(path: '/{id}/export', name: 'export', methods: ['GET'])]
+    public function export(DataManagementPlan $dataManagementPlan): Response
+    {
+        $this->logger->debug("Enter DmpController::export with [UUID: {$dataManagementPlan->getId()}]");
+
+        return $this->render('pages/data_management/export.html.twig', [
+            'dataManagementPlan' => $dataManagementPlan,
+        ]);
+    }
+
+    #[Route(path: '/{id}/export', name: 'export-action', methods: ['POST'])]
+    public function exportAction(DataManagementPlan $dataManagementPlan, Request $request): Response
+    {
+        $this->logger->debug("Enter DmpController::exportAction with [UUID: {$dataManagementPlan->getId()}]");
+
+        $format = $request->request->get('format', 'json');
+
+        $content = $this->serializer->serialize(
+            $dataManagementPlan,
+            $format,
+            [
+                'xml_root_node_name' => 'data_management_plan',
+                'xml_encoding' => 'utf-8',
+                'xml_format_output' => true,
+                AbstractNormalizer::GROUPS => ['data_management_plan'],
+                'json_encode_options' => JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT,
+            ]
+        );
+
+        $filename = $this->sanitizeFilename($dataManagementPlan->getSettings()?->getShortName()).'.'.$format;
+
+        return new Response(
+            $content,
+            Response::HTTP_OK,
+            [
+                'Content-Type' => 'application/'.$format,
+                'Content-Disposition' => 'attachment; filename="'.$filename.'"',
+                'Content-Length' => strlen($content),
+            ]
+        );
+    }
+
     #[Route(path: '/{id}/delete', name: 'delete', methods: ['GET'])]
     public function delete(DataManagementPlan $dataManagementPlan): Response
     {
@@ -214,5 +260,12 @@ class DmpController extends AbstractController
         $this->dmpService->remove($dataManagementPlan);
 
         return $this->redirectToRoute('Dmp-overview');
+    }
+
+    private function sanitizeFilename(?string $name): string
+    {
+        $chars = [' ', '"', "'", '&', '/', '\\', '?', '#', '<', '>', '.', ','];
+
+        return $name !== null ? strtolower(trim(str_replace($chars, '_', $name))) : 'data_management_plan';
     }
 }

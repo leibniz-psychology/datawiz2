@@ -132,6 +132,18 @@
                         {{ 'data_management_plan.ethical_legal.title'|trans }}
                     </a>
                 {%- endif -%}
+
+                {%- if needs_saving -%}
+                    <button {{ live_action('save', {route: 'Dmp-edit-costs' })}}
+                        class="StudyNav-SubNavItem {{- form_type == 'costs' ? ' StudyNav-SubNavItem_active' -}}">
+                        {{ 'data_management_plan.costs.title'|trans }}
+                    </button>
+                {%- else -%}
+                    <a href="{{ path('Dmp-edit-costs', {id: dataManagementPlan.id}) }}"
+                       class="StudyNav-SubNavItem {{- route_name == 'Dmp-edit-costs' ? ' StudyNav-SubNavItem_active' -}}">
+                        {{ 'data_management_plan.costs.title'|trans }}
+                    </a>
+                {%- endif -%}
             </ul>
         </li>
         <li>

@@ -896,6 +896,22 @@ data_management_plan:
             help: 'e.g. restricted distribution or publication of certain elements, such as item wording of psychological tests'
             error_message: '<a href="#link#" class="#class#">Add third party licenses</a>'
 
+    costs:
+        data_management_costing:
+            legend: 'Data management costing'
+            label: 'State how data management specific costs and staff expenditures have been assessed.'
+            placeholder: 'Please select'
+            error_message: '<a href="#link#" class="#class#">Add data management costing approach</a>'
+        costs_assessment:
+            legend: 'Costs assessment'
+            label: 'Explain your assessment of costs and expenditures. How high are the costs? Which aspects of the data management cause considerable costs (e.g. staff and resources for data entry, data cleaning, generating metadata, data deposit in a repository, etc.)? Which reference values or tools were used?'
+            error_message: '<a href="#link#" class="#class#">Add cost assessment</a>'
+        costs_assumption:
+            legend: 'Costs assumption'
+            label: 'Describe who will bear the costs and how large the budget is for data management within the project.'
+            help: 'funding agencies may bear project specific costs of infrastructure and staff, while facilities have to finance unspecific costs by themselves'
+            error_message: '<a href="#link#" class="#class#">Add cost assumption</a>'
+
     settings:
         short_name:
             legend: 'Data Management Plan Name'

@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\DataManagementPlan\DataManagementPlan;
 use App\Entity\DataManagementPlan\DmpAdministrativeData;
+use App\Entity\DataManagementPlan\DmpCosts;
 use App\Entity\DataManagementPlan\DmpDataSharing;
 use App\Entity\DataManagementPlan\DmpDocumentation;
 use App\Entity\DataManagementPlan\DmpEthicalLegal;
@@ -161,6 +162,21 @@ class DmpController extends AbstractController
         }
 
         return $this->render('pages/data_management/research_data.html.twig', [
+            'dataManagementPlan' => $dataManagementPlan,
+        ]);
+    }
+
+    #[Route(path: '/{id}/edit/costs', name: 'edit-costs', methods: ['GET'])]
+    public function editCosts(DataManagementPlan $dataManagementPlan): Response
+    {
+        $this->logger->debug("Enter DmpController::editCosts with [UUID: {$dataManagementPlan->getId()}]");
+
+        if ($dataManagementPlan->getCosts() === null) {
+            $dataManagementPlan->setCosts(new DmpCosts());
+            $this->dmpService->save($dataManagementPlan);
+        }
+
+        return $this->render('pages/data_management/costs.html.twig', [
             'dataManagementPlan' => $dataManagementPlan,
         ]);
     }

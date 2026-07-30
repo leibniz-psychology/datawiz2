@@ -1,0 +1,25 @@
+{% extends "components/twig/Form/DataManagementPlan/_baseForm.html.twig" %}
+
+{% block title %}
+    {{ "data_management_plan.costs.title"|trans }}
+{% endblock %}
+
+{% block form_content %}
+    <twig:Form:FormCard entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpCostsDictionary').DATA_MANAGEMENT_COSTING }}">
+        {{ form_row(form.dataManagementCosting) }}
+
+    </twig:Form:FormCard>
+
+    {% if form.dataManagementCosting.vars.value != null and form.dataManagementCosting.vars.value != enum('App\\Enum\\DataManagementPlan\\DataManagementCosting').NO_COSTING.value %}
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpCostsDictionary').COSTS_ASSESSMENT }}">
+            {{ form_row(form.costsAssessment) }}
+        </twig:Form:FormCard>
+
+        <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpCostsDictionary').COSTS_ASSUMPTION }}">
+            {{ form_row(form.costsAssumption) }}
+        </twig:Form:FormCard>
+    {% else %}
+        {% do form.costsAssessment.setRendered %}
+        {% do form.costsAssumption.setRendered %}
+    {% endif %}
+{% endblock %}

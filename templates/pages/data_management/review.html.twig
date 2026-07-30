@@ -68,11 +68,18 @@
                 <twig:ReviewValue entity="{{ dataManagementPlan.ethicalLegal }}" route="{{ path('Dmp-edit-ethical-legal', {id: dataManagementPlan.id}) }}" entry="{{ entry }}" />
             {% endfor %}
         </section>
+
+        <section class="mt-8">
+            {{ _self.sectionTitle('data_management_plan.costs.title'|trans) }}
+            {% for entry in enum('App\\Enum\\DataManagementPlan\\Dictionary\\DmpCostsDictionary').cases %}
+                <twig:ReviewValue entity="{{ dataManagementPlan.costs }}" route="{{ path('Dmp-edit-costs', {id: dataManagementPlan.id}) }}" entry="{{ entry }}" />
+            {% endfor %}
+        </section>
     </article>
 
     <twig:NavigationSavebar
-        prevUrl="{{ path('Dmp-edit-ethical-legal', {id: dataManagementPlan.id}) }}"
-        prevTitle="{{ 'data_management_plan.ethical_legal.title'|trans }}"
+        prevUrl="{{ path('Dmp-edit-costs', {id: dataManagementPlan.id}) }}"
+        prevTitle="{{ 'data_management_plan.costs.title'|trans }}"
     />
 {% endblock %}
 

@@ -51,6 +51,11 @@ class DataManagementPlan extends UuidEntity
     #[ORM\OneToOne(mappedBy: 'dataManagementPlan', cascade: ['persist', 'remove'])]
     private ?DmpEthicalLegal $ethicalLegal = null;
 
+    #[SerializedName('costs')]
+    #[Groups(['data_management_plan'])]
+    #[ORM\OneToOne(mappedBy: 'dataManagementPlan', cascade: ['persist', 'remove'])]
+    private ?DmpCosts $costs = null;
+
     #[SerializedName('settings')]
     #[Groups(['settings'])]
     #[ORM\OneToOne(mappedBy: 'dataManagementPlan', cascade: ['persist', 'remove'])]
@@ -144,6 +149,18 @@ class DataManagementPlan extends UuidEntity
     {
         $this->ethicalLegal = $ethicalLegal;
         $ethicalLegal->setDataManagementPlan($this);
+        return $this;
+    }
+
+    public function getCosts(): ?DmpCosts
+    {
+        return $this->costs;
+    }
+
+    public function setCosts(?DmpCosts $costs): static
+    {
+        $this->costs = $costs;
+        $costs->setDataManagementPlan($this);
         return $this;
     }
 

@@ -112,7 +112,7 @@ class FileManagementController extends AbstractController
             } else {
                 $error = 'error.import.csv.codebook.empty';
             }
-            if ($error == null && $data && array_key_exists('records', $data) && is_iterable($data['records']) && count($data['records']) > 0) {
+            if ($error == null && array_key_exists('records', $data) && is_iterable($data['records']) && count($data['records']) > 0) {
                 $this->crud->saveDatasetMatrix($data['records'], $dataset->getId());
             } else {
                 $error = 'error.import.csv.matrix.empty';

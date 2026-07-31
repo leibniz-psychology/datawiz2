@@ -1,0 +1,27 @@
+{% extends "components/twig/Form/Project/_baseForm.html.twig" %}
+
+{% block title %}
+    {{ "project.administrative_data.title"|trans }}
+{% endblock %}
+
+{% block form_content %}
+    <twig:Form:FormCard entry="{{ enum('App\\Enum\\Project\\Dictionary\\ProjectAdministrativeDataDictionary').PROJECT_TITLE }}">
+        {{ form_row(form.projectTitle) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Project\\Dictionary\\ProjectAdministrativeDataDictionary').PROJECT_ID }}">
+        {{ form_row(form.projectId) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Project\\Dictionary\\ProjectAdministrativeDataDictionary').PROJECT_OBJECTIVES }}">
+        {{ form_row(form.projectObjectives) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Project\\Dictionary\\ProjectAdministrativeDataDictionary').FUNDING }}">
+        {{ form_row(form.funding) }}
+    </twig:Form:FormCard>
+
+    <twig:Form:FormCard class="mt-8" entry="{{ enum('App\\Enum\\Project\\Dictionary\\ProjectAdministrativeDataDictionary').GRANT_NUMBER }}">
+        {{ form_row(form.grantNumber) }}
+    </twig:Form:FormCard>
+{% endblock %}

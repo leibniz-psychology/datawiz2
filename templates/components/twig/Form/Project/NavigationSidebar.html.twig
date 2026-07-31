@@ -1,0 +1,96 @@
+{% set route_name = app.current_route %}
+{% if needs_saving is not defined %}
+    {% set needs_saving = false %}
+{% endif %}
+
+<div class="py-4.5 pl-6 pr-3 border-b bg-stone-100 border-stone-300">
+    <span class="text-zpid-purple-700 text-xl font-bold break-all mr-0.5 leading-tight">{{ project.settings.shortName ?? project.administrativeData.projectTitle ?? ('project.untitled'|trans) }}
+    </span>
+    {%- if needs_saving -%}
+        <button {{ live_action('save', {route: 'Project-introduction' })}}
+            class="Button_icon"
+            title="{{ 'generic.edit'|trans }}">
+            {{ include('components/icons/edit.svg') }}
+        </button>
+    {%- else -%}
+        <a href="{{ path('Project-edit-administrative', {id: project.id}) }}"
+           class="Button_icon"
+           title="{{ 'generic.edit'|trans }}">
+            {{ include('components/icons/edit.svg') }}
+        </a>
+    {%- endif -%}
+</div>
+
+<nav>
+    <ul>
+        <li>
+            {%- if needs_saving -%}
+                <button {{ live_action('save', {route: 'Project-introduction' })}}
+                    class="StudyNav-NavItem {{- route_name == 'Project-introduction' ? ' StudyNav-NavItem_active' -}}">
+                    {{ 'project.introduction.title'|trans }}
+                </button>
+            {%- else -%}
+                <a href="{{ path('Project-introduction', {id: project.id}) }}"
+                   class="StudyNav-NavItem {{- route_name == 'Project-introduction' ? ' StudyNav-NavItem_active' -}}">
+                    {{ 'project.introduction.title'|trans }}
+                </a>
+            {%- endif -%}
+        </li>
+        <li>
+            {%- if needs_saving -%}
+                <button {{ live_action('save', {route: 'Project-edit-administrative' })}}
+                    class="StudyNav-NavItem {{- needs_saving ?' StudyNav-NavItem_active StudyNav-NavItem_active_isParent' -}}">
+                    1. {{ 'project.sidebar.project'|trans }}
+                </button>
+            {%- else -%}
+                <a href="{{ path('Project-edit-administrative', {id: project.id}) }}"
+                   class="StudyNav-NavItem {{- needs_saving ?' StudyNav-NavItem_active StudyNav-NavItem_active_isParent' -}}">
+                    1. {{ 'project.sidebar.project'|trans }}
+                </a>
+            {%- endif -%}
+            <ul class="StudyNav-SubNav">
+                {%- if needs_saving -%}
+                    <button {{ live_action('save', {route: 'Project-edit-administrative' })}}
+                        class="StudyNav-SubNavItem {{- form_type == 'administrativeData' ? ' StudyNav-SubNavItem_active' -}}">
+                        {{ 'project.administrative_data.title'|trans }}
+                    </button>
+                {%- else -%}
+                    <a href="{{ path('Project-edit-administrative', {id: project.id}) }}"
+                       class="StudyNav-SubNavItem {{- route_name == 'Project-edit-administrative' ? ' StudyNav-SubNavItem_active' -}}">
+                        {{ 'project.administrative_data.title'|trans }}
+                    </a>
+                {%- endif -%}
+            </ul>
+        </li>
+        <li>
+            {%- if needs_saving -%}
+                <button {{ live_action('save', {route: 'Project-review' })}}
+                    class="StudyNav-NavItem {{- route_name == 'Project-review' ? ' StudyNav-NavItem_active' -}}">
+                    2. {{ 'project.review.title'|trans }}
+                </button>
+            {%- else -%}
+                <a href="{{ path('Project-review', {id: project.id}) }}"
+                   class="StudyNav-NavItem {{- route_name == 'Project-review' ? ' StudyNav-NavItem_active' -}}">
+                   2. {{ 'project.review.title'|trans }}
+                </a>
+            {%- endif -%}
+        </li>
+        <li>
+            {%- if needs_saving -%}
+                <button {{ live_action('save', {route: 'Project-settings' })}}
+                    class="StudyNav-NavItem StudyNav-NavItem_settings
+                    {{- route_name == 'Project-settings' ? ' StudyNav-NavItem_active StudyNav-NavItem_settings_active' -}}">
+                    {{ include('components/icons/settings.svg') }}
+                    {{ 'project.settings.title'|trans }}
+                </button>
+            {%- else -%}
+                <a href="{{ path('Project-settings', {id: project.id}) }}"
+                   class="StudyNav-NavItem StudyNav-NavItem_settings
+                   {{- route_name == 'Project-settings' ? ' StudyNav-NavItem_active StudyNav-NavItem_settings_active' -}}">
+                    {{ include('components/icons/settings.svg') }}
+                    {{ 'project.settings.title'|trans }}
+                </a>
+            {%- endif -%}
+        </li>
+    </ul>
+</nav>

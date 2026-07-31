@@ -636,3 +636,30 @@ data_management_plan:
             # Settings help
 
             **TODO** _Add settings help here_ {.bg-pink-50 .mx-6}
+
+project:
+    section: |
+        # Why you should document your project
+
+        You are now in the higher-level documentation for your research project.
+    introduction:
+        section: |
+            # Help getting started
+
+            Here you'll find a quick introduction about how to use DataWiz to document your project.
+    administrative_data:
+        section: |
+            # Administrative data help
+
+            Enter basic information about your project here.
+            It is not obligatory to provide information on this section in order to be able to use the remaining features.
+    review:
+        section: |
+            # Review your project
+
+            Here you can review your project documentation and check for completion and correctness.
+    settings:
+        section: |
+            # Settings help
+
+            Here you can delete your project.

@@ -360,3 +360,36 @@ data_management_plan:
     sidebar:
         data_management_plan: 'Plan your data management'
 
+project:
+    title: 'Projects'
+    untitled: 'Untitled'
+    administrative_data:
+        title: 'Administrative data'
+    introduction:
+        title: 'Getting started'
+        get_started: 'Start with step 1'
+        intro: "DataWiz will guide you through a few short **steps** to document your project.\n\nYou can **navigate** the steps using the sidebar 👈 on the left or use the buttons at the bottom of each page to move forward or back.\n\nIf you need **help** with any input field, you'll find more info in the sidebar 👉 on the right.\n\nThere's a brief summary of each step below, or you can jump right in: #startBtn#"
+    new:
+        title: 'Create new project'
+        create: 'Create project'
+    overview:
+        title: 'Projects'
+        intro: 'Document and manage your research projects.'
+        new: 'Create new project'
+        list:
+            header: 'My projects'
+            empty: 'There are no projects yet.'
+    review:
+        title: 'Review input'
+        description: 'Review your project and check for completion and correctness.'
+    settings:
+        title: 'Settings'
+        delete:
+            title: 'Delete project'
+            description: 'Deleting a project permanently deletes all its data.'
+            action: 'Delete this project'
+            modal_body: 'This action cannot be undone. This will permanently delete the project #name#.'
+            confirm: 'I understand, delete this project'
+    sidebar:
+        project: 'Document your project'
+

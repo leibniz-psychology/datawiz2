@@ -1,0 +1,40 @@
+{% extends "layouts/project.html.twig" %}
+{% from "components/_macros.html.twig" import sectionHelp %}
+
+{% set isPartOfProject = true %}
+
+{% macro sectionTitle(titleText) %}
+    <h2 class="text-xl font-bold border-b text-zpid-purple border-zpid-purple">{{ titleText }}</h2>
+{% endmacro %}
+
+{% block title %}
+    {{ 'project.review.title'|trans }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="MetaDataGroup-Title">
+        {{ 'project.review.title'|trans }}
+    </h2>
+    <p class="mx-6 mt-3 max-w-prose">
+        {{ 'project.review.description'|trans }}
+    </p>
+    <article class="px-6">
+        <section class="mt-8">
+            {{ _self.sectionTitle('project.administrative_data.title'|trans) }}
+            {% for entry in enum('App\\Enum\\Project\\Dictionary\\ProjectAdministrativeDataDictionary').cases %}
+                <twig:ReviewValue entity="{{ project.administrativeData }}" route="{{ path('Project-edit-administrative', {id: project.id}) }}" entry="{{ entry }}" />
+            {% endfor %}
+        </section>
+    </article>
+
+    <twig:NavigationSavebar
+        prevUrl="{{ path('Project-edit-administrative', {id: project.id}) }}"
+        prevTitle="{{ 'project.administrative_data.title'|trans }}"
+        nextUrl="{{ path('Project-settings', {id: project.id}) }}"
+        nextTitle="{{ 'project.settings.title'|trans }}"
+    />
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp('project.review') }}
+{% endblock %}

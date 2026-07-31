@@ -1,0 +1,50 @@
+{% extends "layouts/project.html.twig" %}
+{% from "components/_macros.html.twig" import sectionHelp %}
+
+{% set isPartOfProject = true %}
+
+{% block title %}
+    {{ "project.settings.title"|trans }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="MetaDataGroup-Title">
+        {{ "project.settings.title"|trans }}
+    </h2>
+
+    <twig:Form:Project:ProjectSettingsForm initialFormData="{{ project.settings }}"/>
+
+    <twig:Form:FormCard class="pb-8 mt-25" title="{{ 'input.danger-zone.legend'|trans }}">
+        {{ "input.danger-zone.label"|trans }}
+        <div class="p-4! border border-red-500 rounded mt-2">
+            <h4 class="text-lg font-semibold">{{ "project.settings.delete.title"|trans }}</h4>
+            <div class="">
+                <div class="mt-2">
+                    {{ "project.settings.delete.description"|trans }}
+                </div>
+
+                <div {{ stimulus_controller('modal', {
+                    'onSubmit': 'navigateToUrl',
+                    'url': path('Project-delete', { "id": project.id })
+                }) }}>
+                    {{ include('components/_deleteModal.html.twig', {
+                        'title': "title.dataset.deleteModal.title",
+                        'description': 'project.settings.delete.modal_body',
+                        'confirm': 'project.settings.delete.confirm',
+                        'name': project.administrativeData.projectTitle ?? 'project.untitled'|trans,
+                    }) }}
+
+                    <button class="self-start mt-4 Button_secondary_danger Button_standalone"
+                        {{ stimulus_action('modal', 'openModal') }}>
+                        {{ include('components/icons/delete.svg') }}
+                        {{ "project.settings.delete.action"|trans }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </twig:Form:FormCard>
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("project.settings") }}
+{% endblock %}

@@ -916,3 +916,32 @@ data_management_plan:
         short_name:
             legend: 'Data Management Plan Name'
             label: 'Provide a short name for the project'
+
+project:
+    administrative_data:
+        project_title:
+            legend: 'Project title'
+            label: 'Provide the title of the project.'
+            error_message: '<a href="#link#" class="#class#">Add project title</a>'
+        project_id:
+            legend: 'Project ID'
+            label: 'Provide the internal identification number of the project, if available.'
+            error_message: '<a href="#link#" class="#class#">Add project ID</a>'
+        project_objectives:
+            legend: 'Project objectives'
+            label: 'Provide additional information describing the purpose, nature, and scope of the project.'
+            error_message: '<a href="#link#" class="#class#">Add project objectives</a>'
+        funding:
+            legend: 'Funding'
+            label: 'State which institutions are funding the project.'
+            help: 'We recommend to employ controlled vocabularies for this field.'
+            error_message: '<a href="#link#" class="#class#">Add funding information</a>'
+        grant_number:
+            legend: 'Grant number'
+            label: 'Please indicate the grant number of your project, if available.'
+            error_message: '<a href="#link#" class="#class#">Add grant number</a>'
+
+    settings:
+        short_name:
+            legend: 'Project Name'
+            label: 'Provide a short name for the project'

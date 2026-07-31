@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Administration\DataWizUser;
+use App\Entity\DataManagementPlan\DataManagementPlan;
 use App\Entity\Study\Experiment;
 use App\Form\UserDetailForm;
 use Doctrine\ORM\EntityManagerInterface;
@@ -65,6 +66,34 @@ class AdministrationController extends AbstractController
             [
                 'studies' => $this->em->getRepository(Experiment::class)->findAll(),
                 'backPath' => $this->generateUrl('moderation_dashboard'),
+            ]
+        );
+    }
+
+    #[Route(path: '/admin/data-management-plans', name: 'admin_data_management_plans', methods: ['GET'])]
+    public function listDataManagementPlans(): Response
+    {
+        $this->logger->debug('AdministrationController::listDataManagementPlans: Enter');
+
+        return $this->render(
+            'pages/administration/admin/data_management_plans.html.twig',
+            [
+                'dataManagementPlans' => $this->em->getRepository(DataManagementPlan::class)->findAll(),
+                'backPath' => $this->generateUrl('moderation_dashboard'),
+            ]
+        );
+    }
+
+    #[Route(path: '/admin/user/{id}/data-management-plans', name: 'admin_user_data_management_plans', methods: ['GET'])]
+    public function listDataManagementPlansForUser(DataWizUser $owner): Response
+    {
+        $this->logger->debug('AdministrationController::listDataManagementPlans: Enter');
+
+        return $this->render(
+            'pages/administration/admin/data_management_plans.html.twig',
+            [
+                'dataManagementPlans' => $this->em->getRepository(DataManagementPlan::class)->findBy(['owner' => $owner]),
+                'backPath' => $this->generateUrl('admin_user'),
             ]
         );
     }

@@ -144,6 +144,7 @@ title:
           title: 'User Details'
         action: 'Actions'
         studies: 'Show Studies'
+        data_management_plans: 'Show Data Management Plans'
       studies:
         title: 'Studies'
         description: 'Overview of all studies. Administrators can edit studies and also delete them. Be warned!'
@@ -155,6 +156,15 @@ title:
           created: 'Date Created'
           submitted: 'Date Submitted'
           state: 'State'
+      data_management_plans:
+        title: 'Data Management Plans'
+        description: 'Overview of all data management plans. Administrators can edit data management plans and also delete them. Be warned!'
+        open: 'Show all data management plans'
+        table:
+          shortName: 'Short Name'
+          projectName: 'Project Name'
+          contributor: 'Contributor'
+          created: 'Date Created'
       ph:
         title: 'Placeholder'
         description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut'

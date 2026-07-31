@@ -1,0 +1,67 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    {{ "title.admin.dashboard.data_management_plans.open"|trans }}
+{% endblock %}
+
+
+{% block body %}
+    <main class="max-w-(--breakpoint-xl) mx-auto mt-12 min-h-[calc(100%-15.5rem)] mb-12 flex flex-col">
+        <h2 class="flex items-center text-3xl font-bold text-zpid-purple-700">
+            {{ "title.admin.dashboard.data_management_plans.title"|trans }}
+        </h2>
+        <div class="relative flex flex-col w-full mt-6 px-8 pt-6 pb-8 border border-gray-300 rounded-md shadow-md bg-gray-50">
+            <table class="data-table text-sm pt-6">
+                <thead>
+                <tr>
+                    <th>
+                        {{ 'title.admin.dashboard.data_management_plans.table.shortName'|trans }}
+                    </th>
+                    <th>
+                        {{ 'title.admin.dashboard.data_management_plans.table.projectName'|trans }}
+                    </th>
+                    <th>
+                        {{ 'title.admin.dashboard.data_management_plans.table.contributor'|trans }}
+                    </th>
+                    <th>
+                        {{ 'title.admin.dashboard.data_management_plans.table.created'|trans }}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for dmp in dataManagementPlans %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('Dmp-introduction', {id:dmp.id}) }}" class="underline">
+                                {{ dmp.settings.shortName ?? ('data_management_plan.untitled'|trans) }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ path('Dmp-introduction', {id:dmp.id}) }}" class="underline">
+                                {{ dmp.administrativeData.projectName }}
+                            </a>
+                        </td>
+                        <td>
+                            {% if dmp.owner is not null %}
+                                {{ dmp.owner.firstName }} {{ dmp.owner.lastName }} ({{ dmp.owner.email }})
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ dmp.dateCreated|date('Y-m-d H:i:s') }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="flex pt-8 justify-between">
+                <div>
+                    <a class="underline Button_tertiary_go Button_standalone"
+                       href="{{ backPath }}">
+                        {{ include('components/icons/arrow-left.svg') }}
+                        {{ 'link.back'|trans }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

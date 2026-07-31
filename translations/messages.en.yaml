@@ -311,6 +311,7 @@ data_management_plan:
         new: 'Create new data management plan'
         list:
             header: 'My data management plans'
+            empty: 'There are no data management plans yet.'
     research_data:
         title: 'Research data'
     documentation:

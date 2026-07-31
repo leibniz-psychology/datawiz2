@@ -450,7 +450,18 @@ data_management_plan:
     section: |
         # Why you need a data management plan
 
-        Data Management Plans are a crucial part of the data management process. They outline the steps that should be taken to ensure that your data are stored in a safe and secure manner, and that they are accessible to the intended audience.
+        This section helps you to plan the handling of research data before your project actually started.
+        Therefore, this sections aims at guiding principal investigators at a project's planning stage.
+        It assists you in
+
+        1. generating a data management plan according to the requirements of research funders or
+        2. planning the research data management of your project according to best practice.
+
+        You can then export the planning as data management plan.
+        The exported planning can then serve as proof for your funding organization.
+
+        For more information on data management plans, see the
+        <a href="https://rdc-psychology.org/en/rdc-knowledge-base/before-data-collection/data-management-plan" target="_blank">rdc knowledge base</a>
     administrative_data:
         section: |
             # Administrative data help

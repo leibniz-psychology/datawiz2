@@ -1760,27 +1760,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         live_component?: LiveComponentConfig,
  *         stof_doctrine_extensions?: StofDoctrineExtensionsConfig,
  *     },
- *     "when@local"?: array{
- *         imports?: ImportsConfig,
- *         parameters?: ParametersConfig,
- *         services?: ServicesConfig,
- *         framework?: FrameworkConfig,
- *         twig?: TwigConfig,
- *         twig_extra?: TwigExtraConfig,
- *         web_profiler?: WebProfilerConfig,
- *         doctrine?: DoctrineConfig,
- *         doctrine_migrations?: DoctrineMigrationsConfig,
- *         monolog?: MonologConfig,
- *         security?: SecurityConfig,
- *         knpu_oauth2_client?: KnpuOauth2ClientConfig,
- *         oneup_flysystem?: OneupFlysystemConfig,
- *         oneup_uploader?: OneupUploaderConfig,
- *         stimulus?: StimulusConfig,
- *         symfonycasts_tailwind?: SymfonycastsTailwindConfig,
- *         twig_component?: TwigComponentConfig,
- *         live_component?: LiveComponentConfig,
- *         stof_doctrine_extensions?: StofDoctrineExtensionsConfig,
- *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -1905,7 +1884,6 @@ namespace Symfony\Component\Routing\Loader\Configurator;
  * }
  * @psalm-type RoutesConfig = array{
  *     "when@dev"?: array<string, RouteConfig|ImportConfig|AliasConfig>,
- *     "when@local"?: array<string, RouteConfig|ImportConfig|AliasConfig>,
  *     "when@prod"?: array<string, RouteConfig|ImportConfig|AliasConfig>,
  *     "when@test"?: array<string, RouteConfig|ImportConfig|AliasConfig>,
  *     ...<string, RouteConfig|ImportConfig|AliasConfig>

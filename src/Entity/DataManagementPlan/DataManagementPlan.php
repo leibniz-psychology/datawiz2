@@ -6,7 +6,10 @@ namespace App\Entity\DataManagementPlan;
 
 use App\Entity\Administration\DataWizUser;
 use App\Entity\Administration\UuidEntity;
+use App\Entity\Project\Project;
 use App\Repository\DataManagementPlan\DataManagementPlanRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation\Timestampable;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -67,6 +70,14 @@ class DataManagementPlan extends UuidEntity
     #[ORM\Column]
     #[Timestampable(on: 'create')]
     private ?\DateTime $dateCreated = null;
+
+    #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'dataManagementPlans')]
+    private Collection $projects;
+
+    public function __construct()
+    {
+        $this->projects = new ArrayCollection();
+    }
 
     public function getAdministrativeData(): ?DmpAdministrativeData
     {
@@ -179,6 +190,26 @@ class DataManagementPlan extends UuidEntity
     public function getOwner(): ?DataWizUser
     {
         return $this->owner;
+    }
+
+    /**
+     * @return Collection<int, Project>
+     */
+    public function getProjects(): Collection
+    {
+        return $this->projects;
+    }
+
+    public function addProject(Project $project): void
+    {
+        if (!$this->projects->contains($project)) {
+            $this->projects->add($project);
+        }
+    }
+
+    public function removeProject(Project $project): void
+    {
+        $this->projects->removeElement($project);
     }
 
     public function setOwner(?DataWizUser $owner): static

@@ -25,6 +25,24 @@
                 <twig:ReviewValue entity="{{ project.administrativeData }}" route="{{ path('Project-edit-administrative', {id: project.id}) }}" entry="{{ entry }}" />
             {% endfor %}
         </section>
+
+        <section class="mt-8 flex flex-col gap-2">
+            {{ _self.sectionTitle('project.studies.title'|trans) }}
+            {% for study in project.experiments %}
+                <a href="{{ path('Study-documentation', {id: study.id}) }}" class="underline">
+                    {{ study.basicInformationMetaDataGroup.title ?? study.settingsMetaDataGroup.shortName ?? ('project.untitled'|trans) }}
+                </a>
+            {% endfor %}
+        </section>
+
+        <section class="mt-8 flex flex-col gap-2">
+            {{ _self.sectionTitle('project.data_management_plans.title'|trans) }}
+            {% for dmp in project.dataManagementPlans %}
+                <a href="{{ path('Dmp-edit-administrative', {id: dmp.id}) }}" class="underline">
+                    {{ dmp.administrativeData.projectName ?? dmp.settings.shortName ?? ('data_management_plan.untitled'|trans) }}
+                </a>
+            {% endfor %}
+        </section>
     </article>
 
     <twig:NavigationSavebar

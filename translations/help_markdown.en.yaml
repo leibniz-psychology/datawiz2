@@ -658,6 +658,11 @@ project:
             # Link studies to your project
 
             Here you can add the studies you documented to your project. The relationship is not one-to-one: A study can be part of several projects, and a project can contain several experiments.
+    data_management_plans:
+        section: |
+            # Link data management plans to your project
+
+            Here you can add the data management plans you documented to your project. The relationship is not one-to-one: A data management plan can be part of several projects, and a project can contain several data management plans.
     materials:
         section: |
             # Upload project materials

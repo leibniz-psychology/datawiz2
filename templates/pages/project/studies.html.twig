@@ -1,0 +1,16 @@
+{% extends "layouts/project.html.twig" %}
+{% from "components/_macros.html.twig" import sectionHelp %}
+
+{% set isPartOfProject = true %}
+
+{% block title %}
+    {{ "project.studies.title"|trans }}
+{% endblock %}
+
+{% block navigation_and_content %}
+    <twig:Form:Project:ProjectStudiesForm initialFormData="{{ project }}"/>
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("project.studies") }}
+{% endblock %}

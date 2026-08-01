@@ -941,6 +941,10 @@ project:
             label: 'Please indicate the grant number of your project, if available.'
             error_message: '<a href="#link#" class="#class#">Add grant number</a>'
 
+    studies:
+        list:
+            label: 'Select the studies you want to add to this project'
+
     settings:
         short_name:
             legend: 'Project Name'

@@ -365,6 +365,9 @@ project:
     untitled: 'Untitled'
     administrative_data:
         title: 'Administrative data'
+    studies:
+        title: 'Studies'
+        description: 'Select the studies you want to link to this project.'
     introduction:
         title: 'Getting started'
         get_started: 'Start with step 1'

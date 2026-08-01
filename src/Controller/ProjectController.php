@@ -75,6 +75,18 @@ class ProjectController extends AbstractController
         ]);
     }
 
+    #[Route(path: '/{id}/studies', name: 'studies', methods: ['GET'])]
+    public function studies(Project $project): Response
+    {
+        $this->logger->debug("Enter ProjectController::studies with [UUID: {$project->getId()}]");
+
+        $this->denyAccessUnlessGranted('EDIT', $project);
+
+        return $this->render('pages/project/studies.html.twig', [
+            'project' => $project,
+        ]);
+    }
+
     #[Route(path: '/{id}/materials', name: 'materials', methods: ['GET'])]
     public function materials(Project $project): Response
     {

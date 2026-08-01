@@ -653,6 +653,11 @@ project:
 
             Enter basic information about your project here.
             It is not obligatory to provide information on this section in order to be able to use the remaining features.
+    studies:
+        section: |
+            # Link studies to your project
+
+            Here you can add the studies you documented to your project. The relationship is not one-to-one: A study can be part of several projects, and a project can contain several experiments.
     materials:
         section: |
             # Upload project materials

@@ -945,6 +945,10 @@ project:
         list:
             label: 'Select the studies you want to add to this project'
 
+    data_management_plans:
+        list:
+            label: 'Select the data management plans you want to add to this project'
+
     settings:
         short_name:
             legend: 'Project Name'

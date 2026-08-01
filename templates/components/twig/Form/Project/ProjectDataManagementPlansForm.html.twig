@@ -1,0 +1,11 @@
+{% extends "components/twig/Form/Project/_baseForm.html.twig" %}
+
+{% block title %}
+    {{ "project.data_management_plans.title"|trans }}
+{% endblock %}
+
+{% block form_content %}
+    <twig:Form:FormCard title="{{ 'project.data_management_plans.title'|trans }}">
+        {{ form_row(form.dataManagementPlans) }}
+    </twig:Form:FormCard>
+{% endblock %}

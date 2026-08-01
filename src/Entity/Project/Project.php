@@ -6,6 +6,7 @@ namespace App\Entity\Project;
 
 use App\Entity\Administration\DataWizUser;
 use App\Entity\Administration\UuidEntity;
+use App\Entity\DataManagementPlan\DataManagementPlan;
 use App\Entity\Study\Experiment;
 use App\Repository\Project\ProjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -38,6 +39,10 @@ class Project extends UuidEntity
     #[ORM\JoinTable(name: 'project_experiment')]
     private Collection $experiments;
 
+    #[ORM\ManyToMany(targetEntity: DataManagementPlan::class, inversedBy: 'projects')]
+    #[ORM\JoinTable(name: 'project_data_management_plan')]
+    private Collection $dataManagementPlans;
+
     #[ORM\ManyToOne]
     private ?DataWizUser $owner = null;
 
@@ -49,6 +54,7 @@ class Project extends UuidEntity
     {
         $this->materials = new ArrayCollection();
         $this->experiments = new ArrayCollection();
+        $this->dataManagementPlans = new ArrayCollection();
     }
 
     public function getAdministrativeData(): ?ProjectAdministrativeData
@@ -125,6 +131,33 @@ class Project extends UuidEntity
     {
         if ($this->experiments->removeElement($experiment)) {
             $experiment->removeProject($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DataManagementPlan>
+     */
+    public function getDataManagementPlans(): Collection
+    {
+        return $this->dataManagementPlans;
+    }
+
+    public function addDataManagementPlan(DataManagementPlan $dataManagementPlan): static
+    {
+        if (!$this->dataManagementPlans->contains($dataManagementPlan)) {
+            $this->dataManagementPlans->add($dataManagementPlan);
+            $dataManagementPlan->addProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDataManagementPlan(DataManagementPlan $dataManagementPlan): static
+    {
+        if ($this->dataManagementPlans->removeElement($dataManagementPlan)) {
+            $dataManagementPlan->removeProject($this);
         }
 
         return $this;

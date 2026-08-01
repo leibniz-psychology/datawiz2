@@ -368,6 +368,9 @@ project:
     studies:
         title: 'Studies'
         description: 'Select the studies you want to link to this project.'
+    data_management_plans:
+        title: 'Data management plans'
+        description: 'Select the data management plans you want to link to this project.'
     introduction:
         title: 'Getting started'
         get_started: 'Start with step 1'

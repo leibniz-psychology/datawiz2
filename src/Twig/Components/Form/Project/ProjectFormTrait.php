@@ -27,6 +27,11 @@ trait ProjectFormTrait
             'title' => 'project.studies.title',
         ],
         [
+            'type' => 'dataManagementPlans',
+            'route' => 'Project-data-management-plans',
+            'title' => 'project.data_management_plans.title',
+        ],
+        [
             'type' => 'materials',
             'route' => 'Project-materials',
             'title' => 'project.materials.title-short',

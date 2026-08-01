@@ -1,0 +1,16 @@
+{% extends "layouts/project.html.twig" %}
+{% from "components/_macros.html.twig" import sectionHelp %}
+
+{% set isPartOfProject = true %}
+
+{% block title %}
+    {{ "project.data_management_plans.title"|trans }}
+{% endblock %}
+
+{% block navigation_and_content %}
+    <twig:Form:Project:ProjectDataManagementPlansForm initialFormData="{{ project }}"/>
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("project.data_management_plans") }}
+{% endblock %}

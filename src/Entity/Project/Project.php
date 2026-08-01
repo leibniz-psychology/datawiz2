@@ -7,6 +7,8 @@ namespace App\Entity\Project;
 use App\Entity\Administration\DataWizUser;
 use App\Entity\Administration\UuidEntity;
 use App\Repository\Project\ProjectRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation\Timestampable;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -26,12 +28,22 @@ class Project extends UuidEntity
     #[ORM\OneToOne(mappedBy: 'project', cascade: ['persist', 'remove'])]
     private ?ProjectSettings $settings = null;
 
+    #[ORM\OneToMany(targetEntity: ProjectMaterial::class, mappedBy: 'project', cascade: ['persist'])]
+    #[SerializedName('material')]
+    #[Groups(['project_material'])]
+    private Collection $materials;
+
     #[ORM\ManyToOne]
     private ?DataWizUser $owner = null;
 
     #[ORM\Column]
     #[Timestampable(on: 'create')]
     private ?\DateTime $dateCreated = null;
+
+    public function __construct()
+    {
+        $this->materials = new ArrayCollection();
+    }
 
     public function getAdministrativeData(): ?ProjectAdministrativeData
     {
@@ -55,6 +67,32 @@ class Project extends UuidEntity
     {
         $this->settings = $settings;
         $settings?->setProject($this);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProjectMaterial>
+     */
+    public function getMaterials(): Collection
+    {
+        return $this->materials;
+    }
+
+    public function addMaterial(?ProjectMaterial $material): static
+    {
+        if (!$this->materials->contains($material)) {
+            $this->materials->add($material);
+        }
+
+        return $this;
+    }
+
+    public function removeMaterial(ProjectMaterial $material): static
+    {
+        if ($this->materials->removeElement($material)) {
+            $material->setProject($this);
+        }
 
         return $this;
     }

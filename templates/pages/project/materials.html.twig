@@ -1,0 +1,56 @@
+{% extends "layouts/project.html.twig" %}
+{% from "components/_macros.html.twig" import sectionHelp %}
+{% from "components/_macros.html.twig" import formHelp %}
+{% from "components/_macros.html.twig" import dropzoneTemplate %}
+{% from "components/_fileDisplayCard.html.twig" import fileDisplayCard %}
+
+{% set isPartOfProject = true %}
+
+{% block title %}
+    {{ "project.materials.title"|trans }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="MetaDataGroup-Title">
+        {{ "project.materials.title"|trans }}
+    </h2>
+    {{ include("components/_infoBridge.html.twig",{value: project.id}) }}
+    <div class="mt-6">
+        <form action="{{ oneup_uploader_endpoint("project_materials") }}"
+              class="mx-6 border-2 border-dashed! border-stone-500 dropzone"
+              id="datawiz-dropzone"
+              data-parent-id-field="projectId">
+            {{ dropzoneTemplate() }}
+        </form>
+    </div>
+
+    <twig:Form:FormCard class="mt-6" title="{{ 'project.materials.h3'|trans }}" help="{{ "project_materials" }}"/>
+
+    {% if (project.materials|length) > 0 %}
+        <ul class="mx-6">
+            {% for material in project.materials %}
+                    {{ fileDisplayCard(material, 'material', loop.index, 'ProjectFile') }}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="mx-6">
+            {{ "project.materials.empty"|trans }}
+        </p>
+    {% endif %}
+
+    <twig:NavigationSavebar
+        prevUrl="{{ path('Project-edit-administrative', {id: project.id}) }}"
+        prevTitle="{{ 'project.administrative_data.title'|trans }}"
+        nextUrl="{{ path('Project-review', {id: project.id}) }}"
+        nextTitle="{{ 'project.review.title'|trans }}"
+    />
+
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp("project.materials") }}
+{% endblock %}
+
+{% block help_for_metadata %}
+    {{ formHelp("project.materials", "project_materials", "project.materials.h3") }}
+{% endblock %}

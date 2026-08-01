@@ -4,6 +4,8 @@ namespace App\Service\Crud;
 
 use App\Entity\FileManagement\AdditionalMaterial;
 use App\Entity\FileManagement\Dataset;
+use App\Entity\Project\Project;
+use App\Entity\Project\ProjectMaterial;
 use App\Entity\Study\Experiment;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Exception;
@@ -19,6 +21,7 @@ readonly class CrudService implements Crudable
         private FilesystemOperator $matrixFilesystem,
         private FilesystemOperator $datasetFilesystem,
         private FilesystemOperator $materialFilesystem,
+        private FilesystemOperator $projectMaterialFilesystem,
         private EntityManagerInterface $em,
         private LoggerInterface $logger
     ) {
@@ -187,6 +190,44 @@ readonly class CrudService implements Crudable
         }
         if ($success) {
             $this->em->remove($experiment);
+            $this->em->flush();
+        }
+
+        return $success;
+    }
+
+    public function deleteProjectMaterial(ProjectMaterial $material): bool
+    {
+        try {
+            if ($this->projectMaterialFilesystem->has($material->getStorageName())) {
+                $this->projectMaterialFilesystem->delete($material->getStorageName());
+            }
+            $this->em->remove($material);
+            $this->em->flush();
+            $success = true;
+        } catch (UnableToReadFile $e) {
+            $this->logger->error("CrudService::deleteProjectMaterial Unable to read file: {$e->getMessage()}");
+            $success = false;
+        } catch (FilesystemException $e) {
+            $this->logger->error("CrudService::deleteProjectMaterial FilesystemException: {$e->getMessage()}");
+            $success = false;
+        }
+
+        return $success;
+    }
+
+    public function deleteProject(Project $project): bool
+    {
+        $success = true;
+        foreach ($project->getMaterials() as $material) {
+            if (!$this->deleteProjectMaterial($material)) {
+                $success = false;
+                break;
+            }
+        }
+
+        if ($success) {
+            $this->em->remove($project);
             $this->em->flush();
         }
 

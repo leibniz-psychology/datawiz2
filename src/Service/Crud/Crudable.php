@@ -4,6 +4,8 @@ namespace App\Service\Crud;
 
 use App\Entity\FileManagement\AdditionalMaterial;
 use App\Entity\FileManagement\Dataset;
+use App\Entity\Project\Project;
+use App\Entity\Project\ProjectMaterial;
 use App\Entity\Study\Experiment;
 
 interface Crudable
@@ -27,4 +29,8 @@ interface Crudable
     public function deleteStudy(Experiment $experiment): bool;
 
     public function saveDatasetMatrix(array $matrix, string $datasetId): bool;
+
+    public function deleteProjectMaterial(ProjectMaterial $material): bool;
+
+    public function deleteProject(Project $project): bool;
 }

@@ -382,6 +382,14 @@ project:
     review:
         title: 'Review input'
         description: 'Review your project and check for completion and correctness.'
+    materials:
+        title: 'Upload materials'
+        title-short: 'Materials'
+        h3: 'Uploaded materials'
+        empty: 'There are no materials uploaded yet.'
+        upload:
+            button: 'Upload materials'
+            dragDrop: 'or drop files here'
     settings:
         title: 'Settings'
         delete:

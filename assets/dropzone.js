@@ -8,8 +8,11 @@ Dropzone.options.datawizDropzone = {
         this.on("sending", function (file, xhr, formData) {
             formData.append("originalFilename", file.name);
             // require templates/components/_infoBridge.html.twig -> experiment.id as value
+            const parentIdField = document
+                .querySelector("#datawiz-dropzone")
+                .getAttribute("data-parent-id-field") || "studyId";
             formData.append(
-                "studyId",
+                parentIdField,
                 document.getElementById("infobridge").innerHTML.trim()
             );
         });

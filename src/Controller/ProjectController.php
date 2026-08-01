@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Entity\Project\Project;
 use App\Entity\Project\ProjectAdministrativeData;
 use App\Entity\Project\ProjectSettings;
+use App\Service\Crud\Crudable;
 use App\Service\Project\ProjectService;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,6 +22,7 @@ class ProjectController extends AbstractController
     public function __construct(
         private readonly LoggerInterface $logger,
         private readonly ProjectService $projectService,
+        private readonly Crudable $crud,
     ) {
     }
 
@@ -49,6 +51,8 @@ class ProjectController extends AbstractController
     {
         $this->logger->debug("Enter ProjectController::introduction with [UUID: {$project->getId()}]");
 
+        $this->denyAccessUnlessGranted('EDIT', $project);
+
         return $this->render('pages/project/introduction.html.twig', [
             'project' => $project,
         ]);
@@ -58,6 +62,8 @@ class ProjectController extends AbstractController
     public function editAdministrativeData(Project $project): Response
     {
         $this->logger->debug("Enter ProjectController::editAdministrativeData with [UUID: {$project->getId()}]");
+
+        $this->denyAccessUnlessGranted('EDIT', $project);
 
         if ($project->getAdministrativeData() === null) {
             $project->setAdministrativeData(new ProjectAdministrativeData());
@@ -69,10 +75,24 @@ class ProjectController extends AbstractController
         ]);
     }
 
+    #[Route(path: '/{id}/materials', name: 'materials', methods: ['GET'])]
+    public function materials(Project $project): Response
+    {
+        $this->logger->debug("Enter ProjectController::materials with [UUID: {$project->getId()}]");
+
+        $this->denyAccessUnlessGranted('EDIT', $project);
+
+        return $this->render('pages/project/materials.html.twig', [
+            'project' => $project,
+        ]);
+    }
+
     #[Route(path: '/{id}/review', name: 'review', methods: ['GET'])]
     public function review(Project $project): Response
     {
         $this->logger->debug("Enter ProjectController::review with [UUID: {$project->getId()}]");
+
+        $this->denyAccessUnlessGranted('REVIEW', $project);
 
         return $this->render('pages/project/review.html.twig', [
             'project' => $project,
@@ -83,6 +103,8 @@ class ProjectController extends AbstractController
     public function settings(Project $project): Response
     {
         $this->logger->debug("Enter ProjectController::settings with [UUID: {$project->getId()}]");
+
+        $this->denyAccessUnlessGranted('EDIT', $project);
 
         if ($project->getSettings() === null) {
             $project->setSettings(new ProjectSettings());
@@ -99,8 +121,10 @@ class ProjectController extends AbstractController
     {
         $this->logger->debug("Enter ProjectController::delete with [UUID: {$project->getId()}]");
 
-        $this->projectService->remove($project);
+        $this->denyAccessUnlessGranted('EDIT', $project);
 
-        return $this->redirectToRoute('Proj-overview');
+        $this->crud->deleteProject($project);
+
+        return $this->redirectToRoute('Project-overview');
     }
 }

@@ -60,6 +60,17 @@
                         {{ 'project.administrative_data.title'|trans }}
                     </a>
                 {%- endif -%}
+                {%- if needs_saving -%}
+                    <button {{ live_action('save', {route: 'Project-studies' })}}
+                        class="StudyNav-SubNavItem {{- form_type == 'studies' ? ' StudyNav-SubNavItem_active' -}}">
+                        {{ 'project.studies.title'|trans }}
+                    </button>
+                {%- else -%}
+                    <a href="{{ path('Project-studies', {id: project.id}) }}"
+                       class="StudyNav-SubNavItem {{- route_name == 'Project-studies' ? ' StudyNav-SubNavItem_active' -}}">
+                        {{ 'project.studies.title'|trans }}
+                    </a>
+                {%- endif -%}
             </ul>
         </li>
         <li>

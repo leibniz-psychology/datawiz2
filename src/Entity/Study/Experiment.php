@@ -7,6 +7,7 @@ use App\Entity\Administration\UuidEntity;
 use App\Entity\Constant\States;
 use App\Entity\FileManagement\AdditionalMaterial;
 use App\Entity\FileManagement\Dataset;
+use App\Entity\Project\Project;
 use App\Repository\Study\ExperimentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -84,6 +85,9 @@ class Experiment extends UuidEntity
     #[Groups(['material'])]
     private Collection $additionalMaterials;
 
+    #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'experiments')]
+    private Collection $projects;
+
     #[ORM\ManyToOne]
     private ?DataWizUser $owner = null;
 
@@ -101,6 +105,7 @@ class Experiment extends UuidEntity
     {
         $this->additionalMaterials = new ArrayCollection();
         $this->originalDatasets = new ArrayCollection();
+        $this->projects = new ArrayCollection();
     }
 
     public function getOwner(): DataWizUser
@@ -205,6 +210,26 @@ class Experiment extends UuidEntity
     public function removeAdditionalMaterials(AdditionalMaterial $materials): void
     {
         $this->additionalMaterials->removeElement($materials);
+    }
+
+    /**
+     * @return Collection<int, Project>
+     */
+    public function getProjects(): Collection
+    {
+        return $this->projects;
+    }
+
+    public function addProject(Project $project): void
+    {
+        if (!$this->projects->contains($project)) {
+            $this->projects->add($project);
+        }
+    }
+
+    public function removeProject(Project $project): void
+    {
+        $this->projects->removeElement($project);
     }
 
     public function getOriginalDatasets(): Collection

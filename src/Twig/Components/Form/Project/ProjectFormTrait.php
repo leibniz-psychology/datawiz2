@@ -22,6 +22,11 @@ trait ProjectFormTrait
             'title' => 'project.administrative_data.title',
         ],
         [
+            'type' => 'studies',
+            'route' => 'Project-studies',
+            'title' => 'project.studies.title',
+        ],
+        [
             'type' => 'materials',
             'route' => 'Project-materials',
             'title' => 'project.materials.title-short',

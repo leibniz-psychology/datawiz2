@@ -32,7 +32,7 @@
                                     <h4 class="text-2xl font-semibold text-zpid-purple-700 col-span-full">
                                         <a class="underline"
                                            href="{{ path('Project-introduction', {id: project.id}) }}">
-                                            {{ project.administrativeData.projectTitle ?? ('project.untitled'|trans) }}
+                                            {{ project.settings.shortName ?? ('project.untitled'|trans) }}
                                         </a>
                                     </h4>
                                     {% if project.administrativeData.projectId %}

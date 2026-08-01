@@ -60,6 +60,8 @@ class DmpController extends AbstractController
     {
         $this->logger->debug("Enter DmpController::introductionAction with [UUID: {$dataManagementPlan->getId()}]");
 
+        $this->denyAccessUnlessGranted('EDIT', $dataManagementPlan);
+
         return $this->render('pages/data_management/introduction.html.twig', [
             'dataManagementPlan' => $dataManagementPlan,
         ]);
@@ -69,6 +71,8 @@ class DmpController extends AbstractController
     public function editAdministrativeData(DataManagementPlan $dataManagementPlan): Response
     {
         $this->logger->debug("Enter DmpController::editAction with [UUID: {$dataManagementPlan->getId()}]");
+
+        $this->denyAccessUnlessGranted('EDIT', $dataManagementPlan);
 
         if ($dataManagementPlan->getAdministrativeData() === null) {
             $dataManagementPlan->setAdministrativeData(new DmpAdministrativeData());
@@ -85,6 +89,8 @@ class DmpController extends AbstractController
     {
         $this->logger->debug("Enter DmpController::editEthicalLegal with [UUID: {$dataManagementPlan->getId()}]");
 
+        $this->denyAccessUnlessGranted('EDIT', $dataManagementPlan);
+
         if ($dataManagementPlan->getEthicalLegal() === null) {
             $dataManagementPlan->setEthicalLegal(new DmpEthicalLegal());
             $this->dmpService->save($dataManagementPlan);
@@ -99,6 +105,8 @@ class DmpController extends AbstractController
     public function editOrganizationPolicies(DataManagementPlan $dataManagementPlan): Response
     {
         $this->logger->debug("Enter DmpController::editOrganizationPolicies with [UUID: {$dataManagementPlan->getId()}]");
+
+        $this->denyAccessUnlessGranted('EDIT', $dataManagementPlan);
 
         if ($dataManagementPlan->getOrganizationPolicies() === null) {
             $dataManagementPlan->setOrganizationPolicies(new DmpOrganizationPolicies());
@@ -115,6 +123,8 @@ class DmpController extends AbstractController
     {
         $this->logger->debug("Enter DmpController::editStorageInfrastructure with [UUID: {$dataManagementPlan->getId()}]");
 
+        $this->denyAccessUnlessGranted('EDIT', $dataManagementPlan);
+
         if ($dataManagementPlan->getStorageInfrastructure() === null) {
             $dataManagementPlan->setStorageInfrastructure(new DmpStorageInfrastructure());
             $this->dmpService->save($dataManagementPlan);
@@ -129,6 +139,8 @@ class DmpController extends AbstractController
     public function editDataSharing(DataManagementPlan $dataManagementPlan): Response
     {
         $this->logger->debug("Enter DmpController::editDataSharing with [UUID: {$dataManagementPlan->getId()}]");
+
+        $this->denyAccessUnlessGranted('EDIT', $dataManagementPlan);
 
         if ($dataManagementPlan->getDataSharing() === null) {
             $dataManagementPlan->setDataSharing(new DmpDataSharing());
@@ -145,6 +157,8 @@ class DmpController extends AbstractController
     {
         $this->logger->debug("Enter DmpController::editDocumentation with [UUID: {$dataManagementPlan->getId()}]");
 
+        $this->denyAccessUnlessGranted('EDIT', $dataManagementPlan);
+
         if ($dataManagementPlan->getDocumentation() === null) {
             $dataManagementPlan->setDocumentation(new DmpDocumentation());
             $this->dmpService->save($dataManagementPlan);
@@ -159,6 +173,8 @@ class DmpController extends AbstractController
     public function editResearchData(DataManagementPlan $dataManagementPlan): Response
     {
         $this->logger->debug("Enter DmpController::editResearchData with [UUID: {$dataManagementPlan->getId()}]");
+
+        $this->denyAccessUnlessGranted('EDIT', $dataManagementPlan);
 
         if ($dataManagementPlan->getResearchData() === null) {
             $dataManagementPlan->setResearchData(new DmpResearchData());
@@ -175,6 +191,8 @@ class DmpController extends AbstractController
     {
         $this->logger->debug("Enter DmpController::editCosts with [UUID: {$dataManagementPlan->getId()}]");
 
+        $this->denyAccessUnlessGranted('EDIT', $dataManagementPlan);
+
         if ($dataManagementPlan->getCosts() === null) {
             $dataManagementPlan->setCosts(new DmpCosts());
             $this->dmpService->save($dataManagementPlan);
@@ -190,6 +208,8 @@ class DmpController extends AbstractController
     {
         $this->logger->debug("Enter DmpController::reviewAction with [UUID: {$dataManagementPlan->getId()}]");
 
+        $this->denyAccessUnlessGranted('REVIEW', $dataManagementPlan);
+
         return $this->render('pages/data_management/review.html.twig', [
             'dataManagementPlan' => $dataManagementPlan,
         ]);
@@ -199,6 +219,8 @@ class DmpController extends AbstractController
     public function settings(DataManagementPlan $dataManagementPlan): Response
     {
         $this->logger->debug("Enter DmpController::settingsAction with [UUID: {$dataManagementPlan->getId()}]");
+
+        $this->denyAccessUnlessGranted('EDIT', $dataManagementPlan);
 
         if ($dataManagementPlan->getSettings() === null) {
             $dataManagementPlan->setSettings(new DmpSettings());
@@ -215,6 +237,8 @@ class DmpController extends AbstractController
     {
         $this->logger->debug("Enter DmpController::export with [UUID: {$dataManagementPlan->getId()}]");
 
+        $this->denyAccessUnlessGranted('EDIT', $dataManagementPlan);
+
         return $this->render('pages/data_management/export.html.twig', [
             'dataManagementPlan' => $dataManagementPlan,
         ]);
@@ -224,6 +248,8 @@ class DmpController extends AbstractController
     public function exportAction(DataManagementPlan $dataManagementPlan, Request $request): Response
     {
         $this->logger->debug("Enter DmpController::exportAction with [UUID: {$dataManagementPlan->getId()}]");
+
+        $this->denyAccessUnlessGranted('EDIT', $dataManagementPlan);
 
         $format = $request->request->get('format', 'json');
 
@@ -256,6 +282,8 @@ class DmpController extends AbstractController
     public function delete(DataManagementPlan $dataManagementPlan): Response
     {
         $this->logger->debug("Enter DmpController::deleteAction with [UUID: {$dataManagementPlan->getId()}]");
+
+        $this->denyAccessUnlessGranted('EDIT', $dataManagementPlan);
 
         $this->dmpService->remove($dataManagementPlan);
 

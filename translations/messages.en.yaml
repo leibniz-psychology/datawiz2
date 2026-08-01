@@ -388,6 +388,16 @@ project:
     review:
         title: 'Review input'
         description: 'Review your project and check for completion and correctness.'
+    export:
+        title: 'Export project'
+        navigation: 'Export'
+        description: 'Export your project as a ZIP file containing the project documentation, its studies and data management plans.'
+        export: 'Export project'
+        format:
+            title: 'Export format'
+            description: 'Choose the file format for the project documentation. JSON is way geekier, XML is harder to read.'
+            json: 'Export as JSON'
+            xml: 'Export as XML'
     materials:
         title: 'Upload materials'
         title-short: 'Materials'

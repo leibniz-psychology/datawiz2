@@ -677,6 +677,11 @@ project:
             # Review your project
 
             Here you can review your project documentation and check for completion and correctness.
+    export:
+        section: |
+            # Export your project
+
+            Here you can export your project documentation. The ZIP file contains the project administrative data, a folder with the exported documentation of each linked study and a folder with the data of each linked data management plan.
     settings:
         section: |
             # Settings help

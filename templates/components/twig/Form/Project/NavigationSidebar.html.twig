@@ -112,6 +112,19 @@
         </li>
         <li>
             {%- if needs_saving -%}
+                <button {{ live_action('save', {route: 'Project-export' })}}
+                    class="StudyNav-NavItem {{- route_name == 'Project-export' ? ' StudyNav-NavItem_active' -}}">
+                    4. {{ 'project.export.navigation'|trans }}
+                </button>
+            {%- else -%}
+                <a href="{{ path('Project-export', {id: project.id}) }}"
+                   class="StudyNav-NavItem {{- route_name == 'Project-export' ? ' StudyNav-NavItem_active' -}}">
+                    4. {{ 'project.export.navigation'|trans }}
+                </a>
+            {%- endif -%}
+        </li>
+        <li>
+            {%- if needs_saving -%}
                 <button {{ live_action('save', {route: 'Project-settings' })}}
                     class="StudyNav-NavItem StudyNav-NavItem_settings
                     {{- route_name == 'Project-settings' ? ' StudyNav-NavItem_active StudyNav-NavItem_settings_active' -}}">

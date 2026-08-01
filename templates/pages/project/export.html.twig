@@ -1,0 +1,49 @@
+{% extends "layouts/project.html.twig" %}
+{% from "components/_macros.html.twig" import sectionHelp %}
+
+{% set isPartOfProject = true %}
+
+{% block title %}
+    {{ 'project.export.title'|trans }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="MetaDataGroup-Title">
+        {{ 'project.export.title'|trans }}
+    </h2>
+    <p class="mx-6 mt-8 max-w-prose">
+        {{ 'project.export.description'|trans }}
+    </p>
+
+    {% if export_error is not null %}
+        <div class="mx-6 mt-4 p-4 border border-red-500 rounded">
+            <p class="text-red-700">{{ export_error|trans }}</p>
+        </div>
+    {% endif %}
+
+    <form action="{{ path('Project-export-action', {id: project.id}) }}" method="POST">
+        <twig:Form:FormCard title="{{ 'project.export.format.title'|trans }}">
+            <p class="mb-2">{{ 'project.export.format.description'|trans }}</p>
+            <div class="mt-1">
+                <input id="exportAsJson" type="radio" name="format" value="json" checked>
+                <label for="exportAsJson">{{ 'project.export.format.json'|trans }}</label>
+                <input id="exportAsXml" type="radio" name="format" value="xml">
+                <label for="exportAsXml">{{ 'project.export.format.xml'|trans }}</label>
+            </div>
+        </twig:Form:FormCard>
+
+        <div class="mx-6 mt-4">
+            <button type="submit"
+                    class="Button_primary_act Button_standalone">{{ 'project.export.export'|trans }}</button>
+        </div>
+    </form>
+
+    <twig:NavigationSavebar
+        prevUrl="{{ path('Project-review', {id: project.id}) }}"
+        prevTitle="{{ 'project.review.title'|trans }}"
+    />
+{% endblock %}
+
+{% block help_for_section %}
+    {{ sectionHelp('project.export') }}
+{% endblock %}

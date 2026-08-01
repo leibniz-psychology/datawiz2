@@ -8,9 +8,11 @@ use App\Entity\Project\Project;
 use App\Entity\Project\ProjectAdministrativeData;
 use App\Entity\Project\ProjectSettings;
 use App\Service\Crud\Crudable;
+use App\Service\Project\ProjectExportService;
 use App\Service\Project\ProjectService;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -22,6 +24,7 @@ class ProjectController extends AbstractController
     public function __construct(
         private readonly LoggerInterface $logger,
         private readonly ProjectService $projectService,
+        private readonly ProjectExportService $projectExportService,
         private readonly Crudable $crud,
     ) {
     }
@@ -121,6 +124,57 @@ class ProjectController extends AbstractController
         return $this->render('pages/project/review.html.twig', [
             'project' => $project,
         ]);
+    }
+
+    #[Route(path: '/{id}/export', name: 'export', methods: ['GET'])]
+    public function export(Project $project): Response
+    {
+        $this->logger->debug("Enter ProjectController::export with [UUID: {$project->getId()}]");
+
+        $this->denyAccessUnlessGranted('EDIT', $project);
+
+        return $this->render('pages/project/export.html.twig', [
+            'project' => $project,
+            'export_error' => null,
+        ]);
+    }
+
+    #[Route(path: '/{id}/export', name: 'export-action', methods: ['POST'])]
+    public function exportAction(Project $project, Request $request): Response
+    {
+        $this->logger->debug("Enter ProjectController::exportAction with [UUID: {$project->getId()}]");
+
+        $this->denyAccessUnlessGranted('EDIT', $project);
+
+        $format = $request->request->get('format', 'json');
+        if (!in_array($format, ['json', 'xml'], true)) {
+            $format = 'json';
+        }
+
+        $zipPath = $this->projectExportService->createExportZip($project, $format);
+
+        if ($zipPath === null) {
+            $this->logger->warning("ProjectController::exportAction: Error during creating ZIP file for [UUID: {$project->getId()}]");
+
+            return $this->render('pages/project/export.html.twig', [
+                'project' => $project,
+                'export_error' => 'error.export.zip.create',
+            ]);
+        }
+
+        $response = new Response(
+            file_get_contents($zipPath),
+            Response::HTTP_OK,
+            [
+                'Content-Type' => 'application/zip',
+                'Content-Disposition' => 'attachment; filename="'.basename($zipPath).'"',
+                'Content-Length' => filesize($zipPath),
+            ]
+        );
+
+        unlink($zipPath);
+
+        return $response;
     }
 
     #[Route(path: '/{id}/settings', name: 'settings', methods: ['GET'])]

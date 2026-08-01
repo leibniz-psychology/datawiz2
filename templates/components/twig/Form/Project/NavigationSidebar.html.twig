@@ -64,14 +64,27 @@
         </li>
         <li>
             {%- if needs_saving -%}
+                <button {{ live_action('save', {route: 'Project-materials' })}}
+                    class="StudyNav-NavItem {{- route_name == 'Project-materials' ? ' StudyNav-NavItem_active' -}}">
+                    2. {{ 'project.materials.title-short'|trans }}
+                </button>
+            {%- else -%}
+                <a href="{{ path('Project-materials', {id: project.id}) }}"
+                   class="StudyNav-NavItem {{- route_name == 'Project-materials' ? ' StudyNav-NavItem_active' -}}">
+                    2. {{ 'project.materials.title-short'|trans }}
+                </a>
+            {%- endif -%}
+        </li>
+        <li>
+            {%- if needs_saving -%}
                 <button {{ live_action('save', {route: 'Project-review' })}}
                     class="StudyNav-NavItem {{- route_name == 'Project-review' ? ' StudyNav-NavItem_active' -}}">
-                    2. {{ 'project.review.title'|trans }}
+                    3. {{ 'project.review.title'|trans }}
                 </button>
             {%- else -%}
                 <a href="{{ path('Project-review', {id: project.id}) }}"
                    class="StudyNav-NavItem {{- route_name == 'Project-review' ? ' StudyNav-NavItem_active' -}}">
-                   2. {{ 'project.review.title'|trans }}
+                   3. {{ 'project.review.title'|trans }}
                 </a>
             {%- endif -%}
         </li>

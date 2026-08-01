@@ -13,6 +13,9 @@ oneup_flysystem:
         matrix_adapter:
             local:
                 location: '%kernel.project_dir%/var/uploads/matrix'
+        project_material_adapter:
+            local:
+                location: '%kernel.project_dir%/var/uploads/project_materials'
 
     filesystems:
         default:
@@ -24,3 +27,5 @@ oneup_flysystem:
             adapter: material_adapter
         matrix:
             adapter: matrix_adapter
+        project_material:
+            adapter: project_material_adapter

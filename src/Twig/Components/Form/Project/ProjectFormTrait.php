@@ -18,8 +18,13 @@ trait ProjectFormTrait
     public const array formOrder = [
         [
             'type' => 'administrativeData',
-            'route' => 'Proj-edit-administrative',
+            'route' => 'Project-edit-administrative',
             'title' => 'project.administrative_data.title',
+        ],
+        [
+            'type' => 'materials',
+            'route' => 'Project-materials',
+            'title' => 'project.materials.title-short',
         ],
     ];
 

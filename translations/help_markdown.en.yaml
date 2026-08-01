@@ -653,6 +653,15 @@ project:
 
             Enter basic information about your project here.
             It is not obligatory to provide information on this section in order to be able to use the remaining features.
+    materials:
+        section: |
+            # Upload project materials
+
+            Supplementary information is material that helps understanding how you carried out your research and evaluating your scientific claims. Materials can be publications (pre- or post-prints), reports, lab books, stimuli, computer code, data management plans, ethics approval forms, consent forms, pre-registration documents, multimedia files or anything that helps to understand your project.
+
+            It is considered good practice of scientific research to be as open and transparent as possible. Open science not only means making data and publications accessible to the community but also the methodologies and workflows.
+        project_materials: |
+            Upload the materials you want to add to your project documentation here. You can add a description for each material after uploading.
     review:
         section: |
             # Review your project

@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="WizNavBar">
-                    <button type="submit" class="underline justify-self-start Button_tertiary_go Button_standalone" type="submit" {% if this.prevForm == null %} {{ live_action('save', { route: 'Proj-introduction' }) }} {% else %} {{ live_action('save', { route: this.prevForm.route }) }} {% endif %}>
+                    <button type="submit" class="underline justify-self-start Button_tertiary_go Button_standalone" type="submit" {% if this.prevForm == null %} {{ live_action('save', { route: 'Project-introduction' }) }} {% else %} {{ live_action('save', { route: this.prevForm.route }) }} {% endif %}>
                         {{ include('components/icons/arrow-left.svg') }}
                         {% if this.prevForm == null %}
                             {{ 'project.introduction.title' | trans }}
@@ -43,7 +43,7 @@
                         </button>
                     {% endif %}
 
-                    <button type="submit" class="underline justify-self-end Button_tertiary_go Button_standalone" type="submit" {% if this.nextForm == null %} {{ live_action('save', { route: 'Proj-review' }) }} {% else %} {{ live_action('save', { route: this.nextForm.route }) }} {% endif %}>
+                    <button type="submit" class="underline justify-self-end Button_tertiary_go Button_standalone" type="submit" {% if this.nextForm == null %} {{ live_action('save', { route: 'Project-review' }) }} {% else %} {{ live_action('save', { route: this.nextForm.route }) }} {% endif %}>
                         {% if this.nextForm == null %}
                             {{ 'project.review.title' | trans }}
                         {% else %}

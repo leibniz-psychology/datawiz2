@@ -1,5 +1,38 @@
 # Datawiz2 Semantic Versioning Changelog
 
+# [2.4.0](https://github.com/leibniz-psychology/datawiz2/compare/v2.3.0...v2.4.0) (2026-08-04)
+
+
+### Bug Fixes
+
+* data management plan settings do not save correctly ([68e8c7c](https://github.com/leibniz-psychology/datawiz2/commit/68e8c7c94dc184f4872a5fa991c6ec8228fff72c))
+* participant_groups in study sample contains invalid values ([a9fda9d](https://github.com/leibniz-psychology/datawiz2/commit/a9fda9d6cfd2697da8bb66d12efbe1a1b4261aa1))
+* projects should use the shortName for representation ([06cc786](https://github.com/leibniz-psychology/datawiz2/commit/06cc7869453d45b7ec8ef96e40ac051a109a33d5))
+
+
+### Features
+
+* add access limits for data management plans ([3419158](https://github.com/leibniz-psychology/datawiz2/commit/3419158b159f2bc00f5e6742cfd6165017bb4c61))
+* add admin page for data management plans ([a8f75e3](https://github.com/leibniz-psychology/datawiz2/commit/a8f75e35f46a556547f68ead27c45dc8b6168497))
+* add costs to data management plan ([cc60901](https://github.com/leibniz-psychology/datawiz2/commit/cc60901a60e79c1145400d13bad32c09d355ac85))
+* add data management plan entity ([1482ea3](https://github.com/leibniz-psychology/datawiz2/commit/1482ea3f4edcac74524555ea79480cdc20db33ec))
+* add data management plan export ([ad986d3](https://github.com/leibniz-psychology/datawiz2/commit/ad986d365e9865836fefa66e992470905100ea5f))
+* add data management plans to projects ([2dfcc74](https://github.com/leibniz-psychology/datawiz2/commit/2dfcc743f2e9ac6644fb7c7418b5add97d9b8369))
+* add data sharing to data management plans ([992ec13](https://github.com/leibniz-psychology/datawiz2/commit/992ec13d1037e7a1a2629fb7adea68217d83049e))
+* add documentation to data management plans ([066cc7a](https://github.com/leibniz-psychology/datawiz2/commit/066cc7a81f3a1fb5195c8a8c86db411f2899d137))
+* add ethical and legal aspects to data management plans ([7678098](https://github.com/leibniz-psychology/datawiz2/commit/7678098e681dca0374ba78469dfd60809b25e17d))
+* add export for projects ([02afebe](https://github.com/leibniz-psychology/datawiz2/commit/02afebe447742032b68c8b24d93173f65e76c4ed))
+* add material uploads for projects ([913fca7](https://github.com/leibniz-psychology/datawiz2/commit/913fca720c4467c44142a7852b9f9d753717967d))
+* add organization and policies to data management plans ([e412c83](https://github.com/leibniz-psychology/datawiz2/commit/e412c8312ce89112ab11e4976b7f11844fe5a0f2))
+* add project entity ([d1d1e40](https://github.com/leibniz-psychology/datawiz2/commit/d1d1e40b1541587911e5d5f2fa4d990584d1b2b3))
+* add research data to data management plans ([4a746f5](https://github.com/leibniz-psychology/datawiz2/commit/4a746f50c854031876d74bd45b5267fece2132f5))
+* add settings to Data Management Plans ([bd4850b](https://github.com/leibniz-psychology/datawiz2/commit/bd4850b1a39afa3cc16d858b63197bf5902d63cf))
+* add storage infrastructure to data management plans ([176ec10](https://github.com/leibniz-psychology/datawiz2/commit/176ec1000e53fcb7a953347a88de753ae4147741))
+* add studies to projects ([c820260](https://github.com/leibniz-psychology/datawiz2/commit/c820260008c443c18bd1bae1281ec115afb5a0cb))
+* update data management plan overview texts ([290438c](https://github.com/leibniz-psychology/datawiz2/commit/290438cc1581a8bc9e28201ecb38c7e562fcbaa8))
+* update landing page data management plan image ([b752607](https://github.com/leibniz-psychology/datawiz2/commit/b752607ef7a149df36a39d2a0e0a945ece9b16db))
+* update other product information ([167e7c5](https://github.com/leibniz-psychology/datawiz2/commit/167e7c5784537c66407cd84a44bec49ac9bf45fc))
+
 # [2.3.0](https://github.com/leibniz-psychology/datawiz2/compare/v2.2.0...v2.3.0) (2026-07-08)
 
 

@@ -1,0 +1,14 @@
+---
+version: 2
+updates:
+    - package-ecosystem: "docker"
+      directories:
+          - "/.github/workflows/manifests/nginx"
+          - "/.github/workflows/manifests/php"
+      schedule:
+          interval: "weekly"
+
+    - package-ecosystem: "github-actions"
+      directory: "/"
+      schedule:
+          interval: "weekly"

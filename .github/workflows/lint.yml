@@ -18,7 +18,7 @@ jobs:
             matrix:
                 node-version: [ '23' ]
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v7
               with:
                   fetch-depth: 0
 
@@ -55,7 +55,7 @@ jobs:
 
         steps:
             - name: Check out code
-              uses: actions/checkout@v4
+              uses: actions/checkout@v7
 
             - name: Lint readme file
               uses: DavidAnson/markdownlint-cli2-action@v15
@@ -120,7 +120,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v7
 
             - name: Collect lint results for dockerfile
               uses: hadolint/hadolint-action@v3.0.0

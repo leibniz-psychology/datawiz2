@@ -42,19 +42,25 @@ jobs:
             - name: Build and push PHP-FPM image
               run: |
                   ACR="${{ secrets.ACR_NAME }}.azurecr.io"
+                  CR_IMAGE_SHA="$ACR/${{ inputs.repo-name }}/${{ env.APP }}_php_fpm:${{ env.GH_SHA }}"
+                  CR_IMAGE_TAG="$ACR/${{ inputs.repo-name }}/${{ env.APP }}_php_fpm:${{ inputs.container-tag }}"
+
                   docker build . \
-                    -t "$ACR/${{ inputs.repo-name }}/${{ env.APP }}_php_fpm:${{ env.GH_SHA }}" \
-                    -t "$ACR/${{ env.APP }}_php_fpm:${{ inputs.container-tag }}" \
+                    -t "${CR_IMAGE_SHA}" \
+                    -t "${CR_IMAGE_TAG}" \
                     --file .github/workflows/manifests/php/${{ inputs.build-stage }}.Dockerfile
-                  docker push "$ACR/${{ inputs.repo-name }}/${{ env.APP }}_php_fpm:${{ env.GH_SHA }}"
-                  docker push "$ACR/${{ env.APP }}_php_fpm:${{ inputs.container-tag }}"
+                  docker push "${CR_IMAGE_SHA}"
+                  docker push "${CR_IMAGE_TAG}"
 
             - name: Build and push NGINX image
               run: |
                   ACR="${{ secrets.ACR_NAME }}.azurecr.io"
+                  CR_IMAGE_SHA="$ACR/${{ inputs.repo-name }}/${{ env.APP }}_nginx:${{ env.GH_SHA }}"
+                  CR_IMAGE_TAG="$ACR/${{ inputs.repo-name }}/${{ env.APP }}_nginx:${{ inputs.container-tag }}"
+
                   docker build . \
-                    -t "$ACR/${{ inputs.repo-name }}/${{ env.APP }}_nginx:${{ env.GH_SHA }}" \
-                    -t "$ACR/${{ inputs.repo-name }}/${{ env.APP }}_nginx:${{ inputs.container-tag }}" \
+                    -t "${CR_IMAGE_SHA}" \
+                    -t "${CR_IMAGE_TAG}" \
                     --file .github/workflows/manifests/nginx/Dockerfile
-                  docker push "$ACR/${{ inputs.repo-name }}/${{ env.APP }}_nginx:${{ env.GH_SHA }}"
-                  docker push "$ACR/${{ inputs.repo-name }}/${{ env.APP }}_nginx:${{ inputs.container-tag }}"
+                  docker push "${CR_IMAGE_SHA}"
+                  docker push "${CR_IMAGE_TAG}"

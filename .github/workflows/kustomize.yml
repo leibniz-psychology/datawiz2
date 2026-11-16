@@ -4,6 +4,10 @@ name: Kustomize
 on:
   workflow_call:
     inputs:
+      repo-name:
+        type: string
+        description: 'Repository name'
+        required: true
       k8s-path:
         type: string
         description: 'Type: dev/stg/prod'
@@ -35,8 +39,8 @@ jobs:
       - name: Switch out image tag
         run: |
           cd ${{ inputs.k8s-path }}
-          kustomize edit set image crzpiddev.azurecr.io/${{ env.APP }}_php_fpm:${{ github.sha }}
-          kustomize edit set image crzpiddev.azurecr.io/${{ env.APP }}_nginx:${{ github.sha }}
+          kustomize edit set image crzpiddev.azurecr.io/${{ inputs.repo-name }}/${{ env.APP }}_php_fpm:${{ github.sha }}
+          kustomize edit set image crzpiddev.azurecr.io/${{ inputs.repo-name }}/${{ env.APP }}_nginx:${{ github.sha }}
           cat kustomization.yaml
 
       - name: Commit files

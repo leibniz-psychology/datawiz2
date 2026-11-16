@@ -3,6 +3,10 @@ name: Container Build
 on:
     workflow_call:
         inputs:
+            repo-name:
+                type: string
+                description: 'Repository name (folder in the container repository)'
+                required: true
             container-tag:
                 type: string
                 description: 'Container tag'
@@ -37,22 +41,22 @@ jobs:
 
             - name: Create PHP-FPM image build and push to a Azure Container Registry (ACR)
               run: |
-                  docker build . -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_php_fpm:${{ env.GH_SHA }}  --file .github/workflows/manifests/php/${{ inputs.build-stage }}.Dockerfile
-                  docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_php_fpm:${{ env.GH_SHA }}
+                  docker build . -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ inputs.repo-name }}/${{ env.APP }}_php_fpm:${{ env.GH_SHA }}  --file .github/workflows/manifests/php/${{ inputs.build-stage }}.Dockerfile
+                  docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ inputs.repo-name }}/${{ env.APP }}_php_fpm:${{ env.GH_SHA }}
 
             - name: set PHP-FPM container tag
               run: |
-                  docker pull ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_php_fpm:${{ env.GH_SHA }}
-                  docker tag ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_php_fpm:${{ env.GH_SHA }} ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_php_fpm:${{ inputs.container-tag }}
-                  docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_php_fpm:${{ inputs.container-tag }}
+                  docker pull ${{ secrets.ACR_NAME }}.azurecr.io/${{ inputs.repo-name }}/${{ env.APP }}_php_fpm:${{ env.GH_SHA }}
+                  docker tag ${{ secrets.ACR_NAME }}.azurecr.io/${{ inputs.repo-name }}/${{ env.APP }}_php_fpm:${{ env.GH_SHA }} ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_php_fpm:${{ inputs.container-tag }}
+                  docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ inputs.repo-name }}/${{ env.APP }}_php_fpm:${{ inputs.container-tag }}
 
             - name: Create NGINX image and push to a Azure Container Registry (ACR)
               run: |
-                  docker build . -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_nginx:${{ env.GH_SHA }}  --file .github/workflows/manifests/nginx/Dockerfile
-                  docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_nginx:${{ env.GH_SHA }}
+                  docker build . -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ inputs.repo-name }}/${{ env.APP }}_nginx:${{ env.GH_SHA }}  --file .github/workflows/manifests/nginx/Dockerfile
+                  docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ inputs.repo-name }}/${{ env.APP }}_nginx:${{ env.GH_SHA }}
 
             - name: set NGINX container tag
               run: |
-                  docker pull ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_nginx:${{ env.GH_SHA }}
-                  docker tag ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_nginx:${{ env.GH_SHA }} ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_nginx:${{ inputs.container-tag }}
-                  docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_nginx:${{ inputs.container-tag }}
+                  docker pull ${{ secrets.ACR_NAME }}.azurecr.io/${{ inputs.repo-name }}/${{ env.APP }}_nginx:${{ env.GH_SHA }}
+                  docker tag ${{ secrets.ACR_NAME }}.azurecr.io/${{ inputs.repo-name }}/${{ env.APP }}_nginx:${{ env.GH_SHA }} ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_nginx:${{ inputs.container-tag }}
+                  docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ inputs.repo-name }}/${{ env.APP }}_nginx:${{ inputs.container-tag }}

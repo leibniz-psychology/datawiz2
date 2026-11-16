@@ -49,6 +49,7 @@ jobs:
             - release
         uses: ./.github/workflows/container-build.yml
         with:
+            repo-name: ${{ vars.REPO_NAME }}
             container-tag: ${{ needs.release.outputs.app_version }}
             build-stage: prod
         secrets: inherit

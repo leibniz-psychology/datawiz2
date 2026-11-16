@@ -18,6 +18,7 @@ jobs:
             - call-test-workflow
         uses: ./.github/workflows/container-build.yml
         with:
+            repo-name: ${{ vars.REPO_NAME }}
             container-tag: latest
             build-stage: prod
         secrets: inherit

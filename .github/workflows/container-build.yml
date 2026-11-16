@@ -3,6 +3,10 @@ name: Container Build
 on:
     workflow_call:
         inputs:
+            repo-name:
+                type: string
+                description: 'Repository name (folder in the container repository)'
+                required: true
             container-tag:
                 type: string
                 description: 'Container tag'
@@ -35,24 +39,30 @@ jobs:
               run: |
                   az acr login --name ${{ secrets.ACR_NAME }}
 
-            - name: Create PHP-FPM image build and push to a Azure Container Registry (ACR)
+            - name: Build and push PHP-FPM image
               run: |
-                  docker build . -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_php_fpm:${{ env.GH_SHA }}  --file .github/workflows/manifests/php/${{ inputs.build-stage }}.Dockerfile
-                  docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_php_fpm:${{ env.GH_SHA }}
+                  ACR="${{ secrets.ACR_NAME }}.azurecr.io"
+                  PHP_FPM_IMAGE="$ACR/${{ inputs.repo-name }}/${{ env.APP }}_php_fpm"
+                  CR_IMAGE_SHA="${PHP_FPM_IMAGE}:${{ env.GH_SHA }}"
+                  CR_IMAGE_TAG="${PHP_FPM_IMAGE}:${{ inputs.container-tag }}"
 
-            - name: set PHP-FPM container tag
-              run: |
-                  docker pull ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_php_fpm:${{ env.GH_SHA }}
-                  docker tag ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_php_fpm:${{ env.GH_SHA }} ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_php_fpm:${{ inputs.container-tag }}
-                  docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_php_fpm:${{ inputs.container-tag }}
+                  docker build . \
+                    -t "${CR_IMAGE_SHA}" \
+                    -t "${CR_IMAGE_TAG}" \
+                    --file .github/workflows/manifests/php/${{ inputs.build-stage }}.Dockerfile
+                  docker push "${CR_IMAGE_SHA}"
+                  docker push "${CR_IMAGE_TAG}"
 
-            - name: Create NGINX image and push to a Azure Container Registry (ACR)
+            - name: Build and push NGINX image
               run: |
-                  docker build . -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_nginx:${{ env.GH_SHA }}  --file .github/workflows/manifests/nginx/Dockerfile
-                  docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_nginx:${{ env.GH_SHA }}
+                  ACR="${{ secrets.ACR_NAME }}.azurecr.io"
+                  NGINX_IMAGE="$ACR/${{ inputs.repo-name }}/${{ env.APP }}_nginx"
+                  CR_IMAGE_SHA="${NGINX_IMAGE}:${{ env.GH_SHA }}"
+                  CR_IMAGE_TAG="${NGINX_IMAGE}:${{ inputs.container-tag }}"
 
-            - name: set NGINX container tag
-              run: |
-                  docker pull ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_nginx:${{ env.GH_SHA }}
-                  docker tag ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_nginx:${{ env.GH_SHA }} ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_nginx:${{ inputs.container-tag }}
-                  docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.APP }}_nginx:${{ inputs.container-tag }}
+                  docker build . \
+                    -t "${CR_IMAGE_SHA}" \
+                    -t "${CR_IMAGE_TAG}" \
+                    --file .github/workflows/manifests/nginx/Dockerfile
+                  docker push "${CR_IMAGE_SHA}"
+                  docker push "${CR_IMAGE_TAG}"

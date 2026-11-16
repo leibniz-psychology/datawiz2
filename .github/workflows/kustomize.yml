@@ -28,7 +28,7 @@ jobs:
           # path: config
 
       - name: Setup Kustomize
-        uses: imranismail/setup-kustomize@v1
+        uses: imranismail/setup-kustomize@v3
         with:
           kustomize-version: "3.6.1"
 

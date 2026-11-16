@@ -24,10 +24,10 @@ jobs:
             GH_SHA: ${{ github.sha }}
         steps:
             - name: Check out the repo
-              uses: actions/checkout@v4
+              uses: actions/checkout@v7
 
             - name: Azure Login
-              uses: azure/login@v1
+              uses: azure/login@v3
               with:
                   creds: "${{ secrets.AZURE_CREDENTIALS }}"
 

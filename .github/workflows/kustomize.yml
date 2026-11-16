@@ -19,7 +19,7 @@ jobs:
       APP: datawiz2
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
         with:
           repository: leibniz-psychology/k8s-argocd-datawiz2-config
           ref: main
@@ -28,7 +28,7 @@ jobs:
           # path: config
 
       - name: Setup Kustomize
-        uses: imranismail/setup-kustomize@v1
+        uses: imranismail/setup-kustomize@v3
         with:
           kustomize-version: "3.6.1"
 

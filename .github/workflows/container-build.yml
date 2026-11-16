@@ -42,8 +42,9 @@ jobs:
             - name: Build and push PHP-FPM image
               run: |
                   ACR="${{ secrets.ACR_NAME }}.azurecr.io"
-                  CR_IMAGE_SHA="$ACR/${{ inputs.repo-name }}/${{ env.APP }}_php_fpm:${{ env.GH_SHA }}"
-                  CR_IMAGE_TAG="$ACR/${{ inputs.repo-name }}/${{ env.APP }}_php_fpm:${{ inputs.container-tag }}"
+                  PHP_FPM_IMAGE="$ACR/${{ inputs.repo-name }}/${{ env.APP }}_php_fpm"
+                  CR_IMAGE_SHA="${PHP_FPM_IMAGE}:${{ env.GH_SHA }}"
+                  CR_IMAGE_TAG="${PHP_FPM_IMAGE}:${{ inputs.container-tag }}"
 
                   docker build . \
                     -t "${CR_IMAGE_SHA}" \
@@ -55,8 +56,9 @@ jobs:
             - name: Build and push NGINX image
               run: |
                   ACR="${{ secrets.ACR_NAME }}.azurecr.io"
-                  CR_IMAGE_SHA="$ACR/${{ inputs.repo-name }}/${{ env.APP }}_nginx:${{ env.GH_SHA }}"
-                  CR_IMAGE_TAG="$ACR/${{ inputs.repo-name }}/${{ env.APP }}_nginx:${{ inputs.container-tag }}"
+                  NGINX_IMAGE="$ACR/${{ inputs.repo-name }}/${{ env.APP }}_nginx"
+                  CR_IMAGE_SHA="${NGINX_IMAGE}:${{ env.GH_SHA }}"
+                  CR_IMAGE_TAG="${NGINX_IMAGE}:${{ inputs.container-tag }}"
 
                   docker build . \
                     -t "${CR_IMAGE_SHA}" \

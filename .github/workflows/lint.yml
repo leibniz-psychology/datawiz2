@@ -123,7 +123,7 @@ jobs:
               uses: actions/checkout@v7
 
             - name: Collect lint results for dockerfile
-              uses: hadolint/hadolint-action@v3.0.0
+              uses: hadolint/hadolint-action@v3.5.0
               with:
                   dockerfile: ".github/**/*.Dockerfile"
                   recursive: true
@@ -135,7 +135,7 @@ jobs:
               run: cat hadolint.validation
 
             - name: Lint dockerfile (fail on error)
-              uses: hadolint/hadolint-action@v3.0.0
+              uses: hadolint/hadolint-action@v3.5.0
               with:
                   dockerfile: ".github/**/*.Dockerfile"
                   recursive: true
